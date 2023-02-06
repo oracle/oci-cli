@@ -6,6 +6,58 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.22.5 - 2023-02-07
+--------------------
+Added
+~~~~~
+* Support for Autonomous Container Database role in the Database service
+
+  * Support for new command
+
+    * ``oci db autonomous-container-database change-dataguard-role``
+    * ``oci db autonomous-container-database-version list``
+
+  * Support for new optional parameter
+
+    * ``oci db autonomous-container-database create --fast-start-fail-over-lag-limit-in-seconds --version-preference --db-version``
+    * ``oci db autonomous-container-database-dataguard update --fast-start-fail-over-lag-limit-in-seconds --protection-mode``
+    * ``oci db autonomous-container-database update --version-preference``
+
+* Devops Deploy service
+
+  * Support for new optional parameters
+
+    * ``oci devops deploy-stage create-oke-helm-chart-stage --cleanup-on-fail --debug-helm --force-helm --history-max --no-hooks --render-subchart-notes --reset-values --reuse-values --set-string --set-values --skip-crds --wait-helm``
+    * ``oci devops deploy-stage update-oke-helm-chart-stage --cleanup-on-fail --debug-helm --force-helm --history-max --no-hooks --render-subchart-notes --reset-values --reuse-values --set-string --set-values --skip-crds --wait-helm``
+
+  * Support for new optional helm-verification-key-source parameter
+
+    * ``oci devops deploy-artifact --create-helm-repository-artifact --helm-verification-key-source``
+    * ``oci devops deploy-artifact --update-helm-repository-artifact --helm-verification-key-source``
+
+  * Support for new optional dry-run parameter
+
+    * ``oci devops deployment create-pipeline-deployment --dry-run``
+    * ``oci devops deployment create-single-stage-deployment --dry-run``
+
+* Support for new Uploading MasterKey Wallets commands in the OCI GoldenGate Deployments service
+
+  * ``oci goldengate deployment wallet-exists``
+  * ``oci goldengate deployment export-wallet``
+  * ``oci goldengate deployment import-wallet``
+  * ``oci goldengate deployment-wallets list-wallet-operations``
+
+* Support for new Custom configuration commands in the OPSI service
+
+  * ``oci opsi opsi-configurations create-opsi-ux-configuration-details``
+  * ``oci opsi opsi-configurations list``
+  * ``oci opsi opsi-configurations get``
+  * ``oci opsi opsi-configurations delete``
+  * ``oci opsi opsi-configurations update-opsi-ux-configuration-details``
+  * ``oci opsi opsi-configurations change``
+  * ``oci opsi opsi-configurations summarize-configuration-items``
+
+
 3.22.4 - 2023-01-31
 --------------------
 Added

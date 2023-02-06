@@ -49,8 +49,9 @@ class InitAuth:
 
         auth_manager = ApplianceAuthManager(appliance_config_spec, cert_fingerprint, config_manager, cert_manager)
 
-        click.echo('Registering and initializing the authentication between the CLI and the appliance')
+        click.echo("Establishing Authentication between the Control Host CLI and the Appliance... ", nl=False)
         auth_manager.initialize_auth()
+        click.echo("done")
 
     @staticmethod
     def get_access_token():

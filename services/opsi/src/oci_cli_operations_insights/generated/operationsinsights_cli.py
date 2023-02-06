@@ -47,6 +47,16 @@ def operations_insights_warehouses_group():
     pass
 
 
+@click.command(cli_util.override('opsi.opsi_configurations_group.command_name', 'opsi-configurations'), cls=CommandGroupWithAlias, help="""An OPSI configuration resource is a container for storing custom values for customizable configuration items exposed by Operations Insights.
+
+Operations Insights exposes different sets of customizable configuration items through different OPSI configuration types. UX_CONFIGURATION: OPSI configuration resource of this type can be created only once in each compartment. It is a compartment level singleton resource.
+
+When configuration values, for an OPSI configuration type that supports compartment level singleton (e.g: UX_CONFIGURATION) resource, are queried for a compartment, following will be the order of preference. 1. If the specified compartment has an OPSI configuration resource, first preference will be given to the custom values inside that. 2. If the root compartment has an OPSI configuration resource, it will be considered as applicable to all compartments of that tenency, hence second preference will be given to the custom values inside that. 3. Default configuration will be considered as a final fallback option.""")
+@cli_util.help_option_group
+def opsi_configurations_group():
+    pass
+
+
 @click.command(cli_util.override('opsi.database_insights_group.command_name', 'database-insights'), cls=CommandGroupWithAlias, help="""Logical grouping used for Operations Insights database-targeted operations.""")
 @cli_util.help_option_group
 def database_insights_group():
@@ -87,6 +97,7 @@ opsi_root_group.add_command(enterprise_manager_bridges_group)
 opsi_root_group.add_command(opsi_data_objects_group)
 opsi_root_group.add_command(exadata_insights_group)
 opsi_root_group.add_command(operations_insights_warehouses_group)
+opsi_root_group.add_command(opsi_configurations_group)
 opsi_root_group.add_command(database_insights_group)
 opsi_root_group.add_command(awr_hubs_group)
 opsi_root_group.add_command(host_insights_group)
@@ -537,6 +548,63 @@ def change_operations_insights_private_endpoint_compartment(ctx, from_json, wait
     result = client.change_operations_insights_private_endpoint_compartment(
         operations_insights_private_endpoint_id=operations_insights_private_endpoint_id,
         change_operations_insights_private_endpoint_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@opsi_configurations_group.command(name=cli_util.override('opsi.change_opsi_configuration_compartment.command_name', 'change'), help=u"""Moves an OpsiConfiguration resource from one compartment to another. \n[Command Reference](changeOpsiConfigurationCompartment)""")
+@cli_util.option('--opsi-configuration-id', required=True, help=u"""[OCID] of OPSI configuration resource.""")
+@cli_util.option('--compartment-id', required=True, help=u"""[OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_opsi_configuration_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, opsi_configuration_id, compartment_id, if_match):
+
+    if isinstance(opsi_configuration_id, six.string_types) and len(opsi_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --opsi-configuration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.change_opsi_configuration_compartment(
+        opsi_configuration_id=opsi_configuration_id,
+        change_opsi_configuration_compartment_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -1765,6 +1833,188 @@ def create_operations_insights_warehouse_user(ctx, from_json, wait_for_state, ma
     cli_util.render_response(result, ctx)
 
 
+@opsi_configurations_group.command(name=cli_util.override('opsi.create_opsi_configuration.command_name', 'create'), help=u"""Create an OPSI configuration resource. \n[Command Reference](createOpsiConfiguration)""")
+@cli_util.option('--opsi-config-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["UX_CONFIGURATION"]), help=u"""OPSI configuration type.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--display-name', help=u"""User-friendly display name for the OPSI configuration. The name does not have to be unique.""")
+@cli_util.option('--description', help=u"""Description of OPSI configuration.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""System tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--config-items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of configuration items with custom values. All and only configuration items requiring custom values should be part of this array.
+
+This option is a JSON list with items of type CreateConfigurationItemDetails.  For documentation on CreateConfigurationItemDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/operationsinsights/20200630/datatypes/CreateConfigurationItemDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--opsi-config-field', type=custom_types.CliCaseInsensitiveChoice(["configItems"]), multiple=True, help=u"""Optional fields to return as part of OpsiConfiguration object. Unless requested, these fields will not be returned by default.""")
+@cli_util.option('--config-item-custom-status', type=custom_types.CliCaseInsensitiveChoice(["customized", "nonCustomized"]), multiple=True, help=u"""Specifies whether only customized configuration items or only non-customized configuration items or both have to be returned. By default only customized configuration items are returned.""")
+@cli_util.option('--config-items-applicable-context', multiple=True, help=u"""Returns the configuration items filtered by applicable contexts sent in this param. By default configuration items of all applicable contexts are returned.""")
+@cli_util.option('--config-item-field', type=custom_types.CliCaseInsensitiveChoice(["name", "value", "defaultValue", "metadata", "applicableContexts"]), multiple=True, help=u"""Specifies the fields to return in a config item summary.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'config-items': {'module': 'opsi', 'class': 'list[CreateConfigurationItemDetails]'}, 'config-items-applicable-context': {'module': 'opsi', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'config-items': {'module': 'opsi', 'class': 'list[CreateConfigurationItemDetails]'}, 'config-items-applicable-context': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'OpsiConfiguration'})
+@cli_util.wrap_exceptions
+def create_opsi_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, opsi_config_type, compartment_id, display_name, description, freeform_tags, defined_tags, system_tags, config_items, opsi_config_field, config_item_custom_status, config_items_applicable_context, config_item_field):
+
+    kwargs = {}
+    if opsi_config_field is not None and len(opsi_config_field) > 0:
+        kwargs['opsi_config_field'] = opsi_config_field
+    if config_item_custom_status is not None and len(config_item_custom_status) > 0:
+        kwargs['config_item_custom_status'] = config_item_custom_status
+    if config_items_applicable_context is not None and len(config_items_applicable_context) > 0:
+        kwargs['config_items_applicable_context'] = config_items_applicable_context
+    if config_item_field is not None and len(config_item_field) > 0:
+        kwargs['config_item_field'] = config_item_field
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['opsiConfigType'] = opsi_config_type
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if system_tags is not None:
+        _details['systemTags'] = cli_util.parse_json_parameter("system_tags", system_tags)
+
+    if config_items is not None:
+        _details['configItems'] = cli_util.parse_json_parameter("config_items", config_items)
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.create_opsi_configuration(
+        create_opsi_configuration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@opsi_configurations_group.command(name=cli_util.override('opsi.create_opsi_configuration_create_opsi_ux_configuration_details.command_name', 'create-opsi-configuration-create-opsi-ux-configuration-details'), help=u"""Create an OPSI configuration resource. \n[Command Reference](createOpsiConfiguration)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--display-name', help=u"""User-friendly display name for the OPSI configuration. The name does not have to be unique.""")
+@cli_util.option('--description', help=u"""Description of OPSI configuration.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""System tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--config-items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of configuration items with custom values. All and only configuration items requiring custom values should be part of this array.
+
+This option is a JSON list with items of type CreateConfigurationItemDetails.  For documentation on CreateConfigurationItemDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/operationsinsights/20200630/datatypes/CreateConfigurationItemDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--opsi-config-field', type=custom_types.CliCaseInsensitiveChoice(["configItems"]), multiple=True, help=u"""Optional fields to return as part of OpsiConfiguration object. Unless requested, these fields will not be returned by default.""")
+@cli_util.option('--config-item-custom-status', type=custom_types.CliCaseInsensitiveChoice(["customized", "nonCustomized"]), multiple=True, help=u"""Specifies whether only customized configuration items or only non-customized configuration items or both have to be returned. By default only customized configuration items are returned.""")
+@cli_util.option('--config-items-applicable-context', multiple=True, help=u"""Returns the configuration items filtered by applicable contexts sent in this param. By default configuration items of all applicable contexts are returned.""")
+@cli_util.option('--config-item-field', type=custom_types.CliCaseInsensitiveChoice(["name", "value", "defaultValue", "metadata", "applicableContexts"]), multiple=True, help=u"""Specifies the fields to return in a config item summary.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'config-items': {'module': 'opsi', 'class': 'list[CreateConfigurationItemDetails]'}, 'config-items-applicable-context': {'module': 'opsi', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'config-items': {'module': 'opsi', 'class': 'list[CreateConfigurationItemDetails]'}, 'config-items-applicable-context': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'OpsiConfiguration'})
+@cli_util.wrap_exceptions
+def create_opsi_configuration_create_opsi_ux_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, description, freeform_tags, defined_tags, system_tags, config_items, opsi_config_field, config_item_custom_status, config_items_applicable_context, config_item_field):
+
+    kwargs = {}
+    if opsi_config_field is not None and len(opsi_config_field) > 0:
+        kwargs['opsi_config_field'] = opsi_config_field
+    if config_item_custom_status is not None and len(config_item_custom_status) > 0:
+        kwargs['config_item_custom_status'] = config_item_custom_status
+    if config_items_applicable_context is not None and len(config_items_applicable_context) > 0:
+        kwargs['config_items_applicable_context'] = config_items_applicable_context
+    if config_item_field is not None and len(config_item_field) > 0:
+        kwargs['config_item_field'] = config_item_field
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if system_tags is not None:
+        _details['systemTags'] = cli_util.parse_json_parameter("system_tags", system_tags)
+
+    if config_items is not None:
+        _details['configItems'] = cli_util.parse_json_parameter("config_items", config_items)
+
+    _details['opsiConfigType'] = 'UX_CONFIGURATION'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.create_opsi_configuration(
+        create_opsi_configuration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @awr_hubs_group.command(name=cli_util.override('opsi.delete_awr_hub.command_name', 'delete'), help=u"""Deletes an AWR hub. \n[Command Reference](deleteAwrHub)""")
 @cli_util.option('--awr-hub-id', required=True, help=u"""Unique Awr Hub identifier""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2153,6 +2403,58 @@ def delete_operations_insights_warehouse_user(ctx, from_json, wait_for_state, ma
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.delete_operations_insights_warehouse_user(
         operations_insights_warehouse_user_id=operations_insights_warehouse_user_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@opsi_configurations_group.command(name=cli_util.override('opsi.delete_opsi_configuration.command_name', 'delete'), help=u"""Deletes an OPSI configuration resource. \n[Command Reference](deleteOpsiConfiguration)""")
+@cli_util.option('--opsi-configuration-id', required=True, help=u"""[OCID] of OPSI configuration resource.""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_opsi_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, opsi_configuration_id, if_match):
+
+    if isinstance(opsi_configuration_id, six.string_types) and len(opsi_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --opsi-configuration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.delete_opsi_configuration(
+        opsi_configuration_id=opsi_configuration_id,
         **kwargs
     )
     if wait_for_state:
@@ -3277,6 +3579,40 @@ def get_operations_insights_warehouse_user(ctx, from_json, operations_insights_w
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.get_operations_insights_warehouse_user(
         operations_insights_warehouse_user_id=operations_insights_warehouse_user_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@opsi_configurations_group.command(name=cli_util.override('opsi.get_opsi_configuration.command_name', 'get'), help=u"""Gets details of an OPSI configuration resource. Values specified in configItemField and configItemCustomStatus query params will be considered, only if configItems field is requested as part of opsiConfigField query param. Values specified in configItemCustomStatus will determine whether only customized configuration items or only non-customized configuration items or both have to be returned. \n[Command Reference](getOpsiConfiguration)""")
+@cli_util.option('--opsi-configuration-id', required=True, help=u"""[OCID] of OPSI configuration resource.""")
+@cli_util.option('--opsi-config-field', type=custom_types.CliCaseInsensitiveChoice(["configItems"]), multiple=True, help=u"""Optional fields to return as part of OpsiConfiguration object. Unless requested, these fields will not be returned by default.""")
+@cli_util.option('--config-item-custom-status', type=custom_types.CliCaseInsensitiveChoice(["customized", "nonCustomized"]), multiple=True, help=u"""Specifies whether only customized configuration items or only non-customized configuration items or both have to be returned. By default only customized configuration items are returned.""")
+@cli_util.option('--config-items-applicable-context', multiple=True, help=u"""Returns the configuration items filtered by applicable contexts sent in this param. By default configuration items of all applicable contexts are returned.""")
+@cli_util.option('--config-item-field', type=custom_types.CliCaseInsensitiveChoice(["name", "value", "defaultValue", "metadata", "applicableContexts"]), multiple=True, help=u"""Specifies the fields to return in a config item summary.""")
+@json_skeleton_utils.get_cli_json_input_option({'config-items-applicable-context': {'module': 'opsi', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config-items-applicable-context': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'OpsiConfiguration'})
+@cli_util.wrap_exceptions
+def get_opsi_configuration(ctx, from_json, opsi_configuration_id, opsi_config_field, config_item_custom_status, config_items_applicable_context, config_item_field):
+
+    if isinstance(opsi_configuration_id, six.string_types) and len(opsi_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --opsi-configuration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if opsi_config_field is not None and len(opsi_config_field) > 0:
+        kwargs['opsi_config_field'] = opsi_config_field
+    if config_item_custom_status is not None and len(config_item_custom_status) > 0:
+        kwargs['config_item_custom_status'] = config_item_custom_status
+    if config_items_applicable_context is not None and len(config_items_applicable_context) > 0:
+        kwargs['config_items_applicable_context'] = config_items_applicable_context
+    if config_item_field is not None and len(config_item_field) > 0:
+        kwargs['config_item_field'] = config_item_field
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.get_opsi_configuration(
+        opsi_configuration_id=opsi_configuration_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -4838,6 +5174,69 @@ def list_operations_insights_warehouses(ctx, from_json, all_pages, page_size, co
     cli_util.render_response(result, ctx)
 
 
+@opsi_configurations_group.command(name=cli_util.override('opsi.list_opsi_configurations.command_name', 'list'), help=u"""Gets a list of OPSI configuration resources based on the query parameters specified. \n[Command Reference](listOpsiConfigurations)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--display-name', help=u"""Filter to return based on resources that match the entire display name.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help=u"""Filter to return based on Lifecycle state of OPSI configuration.""")
+@cli_util.option('--opsi-config-type', type=custom_types.CliCaseInsensitiveChoice(["UX_CONFIGURATION"]), multiple=True, help=u"""Filter to return based on configuration type of OPSI configuration.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName"]), help=u"""OPSI configurations list sort options.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'OpsiConfigurationsCollection'})
+@cli_util.wrap_exceptions
+def list_opsi_configurations(ctx, from_json, all_pages, page_size, compartment_id, display_name, lifecycle_state, opsi_config_type, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if lifecycle_state is not None and len(lifecycle_state) > 0:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if opsi_config_type is not None and len(opsi_config_type) > 0:
+        kwargs['opsi_config_type'] = opsi_config_type
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_opsi_configurations,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_opsi_configurations,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_opsi_configurations(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @opsi_data_objects_group.command(name=cli_util.override('opsi.list_opsi_data_objects.command_name', 'list'), help=u"""Gets a list of OPSI data objects based on the query parameters specified. CompartmentId id query parameter must be specified. \n[Command Reference](listOpsiDataObjects)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--data-object-type', type=custom_types.CliCaseInsensitiveChoice(["DATABASE_INSIGHTS_DATA_OBJECT", "HOST_INSIGHTS_DATA_OBJECT", "EXADATA_INSIGHTS_DATA_OBJECT"]), multiple=True, help=u"""OPSI data object types.""")
@@ -5915,6 +6314,44 @@ def summarize_awr_sources_summaries(ctx, from_json, awr_hub_id, compartment_id, 
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.summarize_awr_sources_summaries(
         awr_hub_id=awr_hub_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@opsi_configurations_group.command(name=cli_util.override('opsi.summarize_configuration_items.command_name', 'summarize-configuration-items'), help=u"""Gets the applicable configuration items based on the query parameters specified. Configuration items for an opsiConfigType with respect to a compartmentId can be fetched. Values specified in configItemField param will determine what fields for each configuration items have to be returned. \n[Command Reference](summarizeConfigurationItems)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--opsi-config-type', type=custom_types.CliCaseInsensitiveChoice(["UX_CONFIGURATION"]), help=u"""Filter to return configuration items based on configuration type of OPSI configuration.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--config-items-applicable-context', multiple=True, help=u"""Returns the configuration items filtered by applicable contexts sent in this param. By default configuration items of all applicable contexts are returned.""")
+@cli_util.option('--config-item-field', type=custom_types.CliCaseInsensitiveChoice(["name", "value", "defaultValue", "valueSourceConfig", "metadata", "applicableContexts"]), multiple=True, help=u"""Specifies the fields to return in a config item summary.""")
+@cli_util.option('--name', help=u"""A filter to return only configuration items that match the entire name.""")
+@json_skeleton_utils.get_cli_json_input_option({'config-items-applicable-context': {'module': 'opsi', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config-items-applicable-context': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'ConfigurationItemsCollection'})
+@cli_util.wrap_exceptions
+def summarize_configuration_items(ctx, from_json, compartment_id, opsi_config_type, limit, page, config_items_applicable_context, config_item_field, name):
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if opsi_config_type is not None:
+        kwargs['opsi_config_type'] = opsi_config_type
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if config_items_applicable_context is not None and len(config_items_applicable_context) > 0:
+        kwargs['config_items_applicable_context'] = config_items_applicable_context
+    if config_item_field is not None and len(config_item_field) > 0:
+        kwargs['config_item_field'] = config_item_field
+    if name is not None:
+        kwargs['name'] = name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.summarize_configuration_items(
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -7019,7 +7456,7 @@ def summarize_exadata_members(ctx, from_json, exadata_insight_id, exadata_type, 
 
 @host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_resource_capacity_trend.command_name', 'summarize-host-insight-resource-capacity-trend'), help=u"""Returns response with time series data (endTimestamp, capacity) for the time period specified. The maximum time range for analysis is 2 years, hence this is intentionally not paginated. If compartmentIdInSubtree is specified, aggregates resources in a compartment and in all sub-compartments. \n[Command Reference](summarizeHostInsightResourceCapacityTrend)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric. Supported values are CPU, MEMORY, and LOGICAL_MEMORY.""")
+@cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -7094,7 +7531,7 @@ def summarize_host_insight_resource_capacity_trend(ctx, from_json, compartment_i
 
 @host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_resource_forecast_trend.command_name', 'summarize-host-insight-resource-forecast-trend'), help=u"""Get Forecast predictions for CPU or memory resources since a time in the past. If compartmentIdInSubtree is specified, aggregates resources in a compartment and in all sub-compartments. \n[Command Reference](summarizeHostInsightResourceForecastTrend)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric. Supported values are CPU, MEMORY, and LOGICAL_MEMORY.""")
+@cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -7175,7 +7612,7 @@ def summarize_host_insight_resource_forecast_trend(ctx, from_json, compartment_i
 
 @host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_resource_statistics.command_name', 'summarize-host-insight-resource-statistics'), help=u"""Lists the resource statistics (usage, capacity, usage change percent, utilization percent, load) for each host filtered by utilization level in a compartment and in all sub-compartments if specified. \n[Command Reference](summarizeHostInsightResourceStatistics)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric. Supported values are CPU, MEMORY, and LOGICAL_MEMORY.""")
+@cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -7259,7 +7696,7 @@ def summarize_host_insight_resource_statistics(ctx, from_json, compartment_id, r
 
 @host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_resource_usage.command_name', 'summarize-host-insight-resource-usage'), help=u"""A cumulative distribution function is used to rank the usage data points per host within the specified time period. For each host, the minimum data point with a ranking > the percentile value is included in the summation. Linear regression functions are used to calculate the usage change percentage. If compartmentIdInSubtree is specified, aggregates resources in a compartment and in all sub-compartments. \n[Command Reference](summarizeHostInsightResourceUsage)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric. Supported values are CPU, MEMORY, and LOGICAL_MEMORY.""")
+@cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -7328,7 +7765,7 @@ def summarize_host_insight_resource_usage(ctx, from_json, compartment_id, resour
 
 @host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_resource_usage_trend.command_name', 'summarize-host-insight-resource-usage-trend'), help=u"""Returns response with time series data (endTimestamp, usage, capacity) for the time period specified. The maximum time range for analysis is 2 years, hence this is intentionally not paginated. If compartmentIdInSubtree is specified, aggregates resources in a compartment and in all sub-compartments. \n[Command Reference](summarizeHostInsightResourceUsageTrend)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric. Supported values are CPU, MEMORY, and LOGICAL_MEMORY.""")
+@cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -7400,7 +7837,7 @@ def summarize_host_insight_resource_usage_trend(ctx, from_json, compartment_id, 
 
 @host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_resource_utilization_insight.command_name', 'summarize-host-insight-resource-utilization-insight'), help=u"""Gets resources with current utilization (high and low) and projected utilization (high and low) for a resource type over specified time period. If compartmentIdInSubtree is specified, aggregates resources in a compartment and in all sub-compartments. \n[Command Reference](summarizeHostInsightResourceUtilizationInsight)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric. Supported values are CPU, MEMORY, and LOGICAL_MEMORY.""")
+@cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -9076,6 +9513,182 @@ def update_operations_insights_warehouse_user(ctx, from_json, force, wait_for_st
     result = client.update_operations_insights_warehouse_user(
         operations_insights_warehouse_user_id=operations_insights_warehouse_user_id,
         update_operations_insights_warehouse_user_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@opsi_configurations_group.command(name=cli_util.override('opsi.update_opsi_configuration.command_name', 'update'), help=u"""Updates an OPSI configuration resource with the given ID. \n[Command Reference](updateOpsiConfiguration)""")
+@cli_util.option('--opsi-configuration-id', required=True, help=u"""[OCID] of OPSI configuration resource.""")
+@cli_util.option('--opsi-config-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["UX_CONFIGURATION"]), help=u"""OPSI configuration type.""")
+@cli_util.option('--display-name', help=u"""User-friendly display name for the OPSI configuration. The name does not have to be unique.""")
+@cli_util.option('--description', help=u"""Description of OPSI configuration.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""System tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--config-items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of configuration items with custom values. All and only configuration items requiring custom values should be part of this array. This array overwrites the existing custom configuration items array for this resource.
+
+This option is a JSON list with items of type UpdateConfigurationItemDetails.  For documentation on UpdateConfigurationItemDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/operationsinsights/20200630/datatypes/UpdateConfigurationItemDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'config-items': {'module': 'opsi', 'class': 'list[UpdateConfigurationItemDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'config-items': {'module': 'opsi', 'class': 'list[UpdateConfigurationItemDetails]'}})
+@cli_util.wrap_exceptions
+def update_opsi_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, opsi_configuration_id, opsi_config_type, display_name, description, freeform_tags, defined_tags, system_tags, config_items, if_match):
+
+    if isinstance(opsi_configuration_id, six.string_types) and len(opsi_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --opsi-configuration-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags or system_tags or config_items:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and system-tags and config-items will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['opsiConfigType'] = opsi_config_type
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if system_tags is not None:
+        _details['systemTags'] = cli_util.parse_json_parameter("system_tags", system_tags)
+
+    if config_items is not None:
+        _details['configItems'] = cli_util.parse_json_parameter("config_items", config_items)
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.update_opsi_configuration(
+        opsi_configuration_id=opsi_configuration_id,
+        update_opsi_configuration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@opsi_configurations_group.command(name=cli_util.override('opsi.update_opsi_configuration_update_opsi_ux_configuration_details.command_name', 'update-opsi-configuration-update-opsi-ux-configuration-details'), help=u"""Updates an OPSI configuration resource with the given ID. \n[Command Reference](updateOpsiConfiguration)""")
+@cli_util.option('--opsi-configuration-id', required=True, help=u"""[OCID] of OPSI configuration resource.""")
+@cli_util.option('--display-name', help=u"""User-friendly display name for the OPSI configuration. The name does not have to be unique.""")
+@cli_util.option('--description', help=u"""Description of OPSI configuration.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""System tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--config-items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of configuration items with custom values. All and only configuration items requiring custom values should be part of this array. This array overwrites the existing custom configuration items array for this resource.
+
+This option is a JSON list with items of type UpdateConfigurationItemDetails.  For documentation on UpdateConfigurationItemDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/operationsinsights/20200630/datatypes/UpdateConfigurationItemDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'config-items': {'module': 'opsi', 'class': 'list[UpdateConfigurationItemDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'config-items': {'module': 'opsi', 'class': 'list[UpdateConfigurationItemDetails]'}})
+@cli_util.wrap_exceptions
+def update_opsi_configuration_update_opsi_ux_configuration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, opsi_configuration_id, display_name, description, freeform_tags, defined_tags, system_tags, config_items, if_match):
+
+    if isinstance(opsi_configuration_id, six.string_types) and len(opsi_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --opsi-configuration-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags or system_tags or config_items:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and system-tags and config-items will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if system_tags is not None:
+        _details['systemTags'] = cli_util.parse_json_parameter("system_tags", system_tags)
+
+    if config_items is not None:
+        _details['configItems'] = cli_util.parse_json_parameter("config_items", config_items)
+
+    _details['opsiConfigType'] = 'UX_CONFIGURATION'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.update_opsi_configuration(
+        opsi_configuration_id=opsi_configuration_id,
+        update_opsi_configuration_details=_details,
         **kwargs
     )
     if wait_for_state:

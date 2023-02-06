@@ -13,6 +13,21 @@ from oci_cli import json_skeleton_utils  # noqa: F401
 # oci devops deploy-artifact deploy-artifact-summary list-deploy-artifacts -> oci devops deploy-artifact deploy-artifact-summary list
 cli_util.rename_command(devops_cli, devops_cli.deploy_artifact_summary_group, devops_cli.list_deploy_artifacts, "list")
 
+# oci devops deploy-artifact create-deploy-artifact-helm-repository-deploy-artifact-source -> oci devops deploy-artifact create-helm-repository-artifact
+cli_util.rename_command(devops_cli, devops_cli.deploy_artifact_group, devops_cli.create_deploy_artifact_helm_repository_deploy_artifact_source, "create-helm-repository-artifact")
+
+
+# oci devops deploy-artifact update-deploy-artifact-helm-repository-deploy-artifact-source -> oci devops deploy-artifact update-helm-repository-artifact
+cli_util.rename_command(devops_cli, devops_cli.deploy_artifact_group, devops_cli.update_deploy_artifact_helm_repository_deploy_artifact_source, "update-helm-repository-artifact")
+
+
+# oci devops deploy-stage create-deploy-stage-create-oke-helm-chart-deploy-stage-details -> oci devops deploy-stage create-oke-helm-chart-stage
+cli_util.rename_command(devops_cli, devops_cli.deploy_stage_group, devops_cli.create_deploy_stage_create_oke_helm_chart_deploy_stage_details, "create-oke-helm-chart-stage")
+
+
+# oci devops deploy-stage update-deploy-stage-update-oke-helm-chart-deploy-stage-details -> oci devops deploy-stage update-oke-helm-chart-stage
+cli_util.rename_command(devops_cli, devops_cli.deploy_stage_group, devops_cli.update_deploy_stage_update_oke_helm_chart_deploy_stage_details, "update-oke-helm-chart-stage")
+
 
 # Move commands under 'oci devops deploy-artifact deploy-artifact-summary' -> 'oci devops deploy-artifact'
 devops_cli.devops_root_group.commands.pop(devops_cli.deploy_artifact_summary_group.name)
@@ -26,9 +41,11 @@ devops_cli.deploy_artifact_group.commands.pop(devops_cli.update_deploy_artifact.
 devops_cli.deploy_artifact_group.commands.pop(devops_cli.create_deploy_artifact_generic_deploy_artifact_source.name)
 devops_cli.deploy_artifact_group.commands.pop(devops_cli.create_deploy_artifact_inline_deploy_artifact_source.name)
 devops_cli.deploy_artifact_group.commands.pop(devops_cli.create_deploy_artifact_ocir_deploy_artifact_source.name)
+devops_cli.deploy_artifact_group.commands.pop(devops_cli.create_deploy_artifact_helm_repository_deploy_artifact_source.name)
 devops_cli.deploy_artifact_group.commands.pop(devops_cli.update_deploy_artifact_generic_deploy_artifact_source.name)
 devops_cli.deploy_artifact_group.commands.pop(devops_cli.update_deploy_artifact_inline_deploy_artifact_source.name)
 devops_cli.deploy_artifact_group.commands.pop(devops_cli.update_deploy_artifact_ocir_deploy_artifact_source.name)
+devops_cli.deploy_artifact_group.commands.pop(devops_cli.update_deploy_artifact_helm_repository_deploy_artifact_source.name)
 devops_cli.deploy_artifact_group.commands.pop(devops_cli.get_deploy_artifact.name)
 devops_cli.deploy_artifact_group.commands.pop(devops_cli.delete_deploy_artifact.name)
 devops_cli.deploy_environment_group.commands.pop(devops_cli.update_deploy_environment.name)
@@ -45,6 +62,7 @@ devops_cli.deploy_stage_group.commands.pop(devops_cli.update_deploy_stage.name)
 devops_cli.deploy_stage_group.commands.pop(devops_cli.create_deploy_stage_create_compute_instance_group_deploy_stage_details.name)
 devops_cli.deploy_stage_group.commands.pop(devops_cli.delete_deploy_stage.name)
 devops_cli.deploy_stage_group.commands.pop(devops_cli.create_deploy_stage_create_oke_deploy_stage_details.name)
+devops_cli.deploy_stage_group.commands.pop(devops_cli.create_deploy_stage_create_oke_helm_chart_deploy_stage_details.name)
 devops_cli.deploy_stage_group.commands.pop(devops_cli.create_deploy_stage_create_function_deploy_stage_details.name)
 devops_cli.deploy_stage_group.commands.pop(devops_cli.create_deploy_stage_create_invoke_function_deploy_stage_details.name)
 devops_cli.deploy_stage_group.commands.pop(devops_cli.create_deploy_stage_create_load_balancer_traffic_shift_deploy_stage_details.name)
@@ -57,6 +75,7 @@ devops_cli.deploy_stage_group.commands.pop(devops_cli.update_deploy_stage_update
 devops_cli.deploy_stage_group.commands.pop(devops_cli.update_deploy_stage_update_load_balancer_traffic_shift_deploy_stage_details.name)
 devops_cli.deploy_stage_group.commands.pop(devops_cli.update_deploy_stage_update_manual_approval_deploy_stage_details.name)
 devops_cli.deploy_stage_group.commands.pop(devops_cli.update_deploy_stage_update_oke_deploy_stage_details.name)
+devops_cli.deploy_stage_group.commands.pop(devops_cli.update_deploy_stage_update_oke_helm_chart_deploy_stage_details.name)
 devops_cli.deploy_stage_group.commands.pop(devops_cli.update_deploy_stage_update_wait_deploy_stage_details.name)
 devops_cli.deployment_group.commands.pop(devops_cli.create_deployment_create_deploy_pipeline_deployment_details.name)
 devops_cli.deployment_group.commands.pop(devops_cli.approve_deployment.name)
@@ -144,6 +163,31 @@ def create_deploy_artifact_ocir_deploy_artifact_source_extended(ctx, **kwargs):
     ctx.invoke(devops_cli.create_deploy_artifact_ocir_deploy_artifact_source, **kwargs)
 
 
+@cli_util.copy_params_from_generated_command(devops_cli.create_deploy_artifact_helm_repository_deploy_artifact_source, params_to_exclude=['deploy_artifact_source_chart_url', 'deploy_artifact_source_deploy_artifact_version', 'deploy_artifact_type', 'deploy_artifact_source_helm_verification_key_source'])
+@devops_cli.deploy_artifact_group.command(name=cli_util.override('devops_cli.create_deploy_artifact_helm_repository_deploy_artifact_source.name', 'create-helm-repository-artifact'), help=devops_cli.create_deploy_artifact_helm_repository_deploy_artifact_source.help)
+@cli_util.option('--artifact-type', required=True, help="""Type of the deployment artifact. [required]""")
+@cli_util.option('--artifact-version', required=True, help="""Users can set this as a placeholder value that refers to a pipeline parameter, for example, ${appVersion}. [required]""")
+@cli_util.option('--artifact-chart-url', required=True, help=u"""The URL of an OCIR repository. [required]""")
+@cli_util.option('--helm-verification-key-source', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'helm-verification-key-source': {'module': 'devops', 'class': 'VerificationKeySource'}}, output_type={'module': 'devops', 'class': 'DeployArtifact'})
+@cli_util.wrap_exceptions
+def create_deploy_artifact_helm_repository_deploy_artifact_source_extended(ctx, **kwargs):
+    if 'artifact_type' in kwargs:
+        kwargs['deploy_artifact_type'] = kwargs['artifact_type']
+        kwargs.pop('artifact_type')
+    if 'artifact_version' in kwargs:
+        kwargs['deploy_artifact_source_deploy_artifact_version'] = kwargs['artifact_version']
+        kwargs.pop('artifact_version')
+    if 'artifact_chart_url' in kwargs:
+        kwargs['deploy_artifact_source_chart_url'] = kwargs['artifact_chart_url']
+        kwargs.pop('artifact_chart_url')
+    if 'helm_verification_key_source' in kwargs:
+        kwargs['deploy_artifact_source_helm_verification_key_source'] = kwargs['helm_verification_key_source']
+        kwargs.pop('helm_verification_key_source')
+    ctx.invoke(devops_cli.create_deploy_artifact_helm_repository_deploy_artifact_source, **kwargs)
+
+
 @cli_util.copy_params_from_generated_command(devops_cli.update_deploy_artifact_generic_deploy_artifact_source, params_to_exclude=['deploy_artifact_source_repository_id', 'deploy_artifact_source_deploy_artifact_path', 'deploy_artifact_source_deploy_artifact_version', 'deploy_artifact_id', 'deploy_artifact_type'])
 @devops_cli.deploy_artifact_group.command(name=cli_util.override('deploy_artifact.update_deploy_artifact_generic_deploy_artifact_source.command_name', 'update-generic-artifact'), help=devops_cli.update_deploy_artifact_generic_deploy_artifact_source.help)
 @cli_util.option('--artifact-id', required=True, help=u"""unique Artifact identifier""")
@@ -213,6 +257,31 @@ def update_deploy_artifact_ocir_deploy_artifact_source_extended(ctx, **kwargs):
         kwargs['deploy_artifact_source_image_digest'] = kwargs['image_digest']
         kwargs.pop('image_digest')
     ctx.invoke(devops_cli.update_deploy_artifact_ocir_deploy_artifact_source, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.update_deploy_artifact_helm_repository_deploy_artifact_source, params_to_exclude=['deploy_artifact_id', 'deploy_artifact_source_chart_url', 'deploy_artifact_source_deploy_artifact_version', 'deploy_artifact_source_helm_verification_key_source'])
+@devops_cli.deploy_artifact_group.command(name=cli_util.override('deploy_artifact.update_deploy_artifact_helm_repository_deploy_artifact_source.command_name', 'update-helm-repository-artifact'), help=devops_cli.update_deploy_artifact_helm_repository_deploy_artifact_source.help)
+@cli_util.option('--artifact-version', required=True, help="""Users can set this as a placeholder value that refers to a pipeline parameter, for example, ${appVersion}. [required]""")
+@cli_util.option('--artifact-chart-url', required=True, help="""The URL of an OCIR repository. [required]""")
+@cli_util.option('--artifact-id', required=True, help=u"""Unique artifact identifier. [required]""")
+@cli_util.option('--helm-verification-key-source', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'helm-verification-key-source': {'module': 'devops', 'class': 'VerificationKeySource'}}, output_type={'module': 'devops', 'class': 'DeployArtifact'})
+@cli_util.wrap_exceptions
+def update_deploy_artifact_helm_repository_deploy_artifact_source_extended(ctx, **kwargs):
+    if 'artifact_version' in kwargs:
+        kwargs['deploy_artifact_source_deploy_artifact_version'] = kwargs['artifact_version']
+        kwargs.pop('artifact_version')
+    if 'artifact_chart_url' in kwargs:
+        kwargs['deploy_artifact_source_chart_url'] = kwargs['artifact_chart_url']
+        kwargs.pop('artifact_chart_url')
+    if 'artifact_id' in kwargs:
+        kwargs['deploy_artifact_id'] = kwargs['artifact_id']
+        kwargs.pop('artifact_id')
+    if 'helm_verification_key_source' in kwargs:
+        kwargs['deploy_artifact_source_helm_verification_key_source'] = kwargs['helm_verification_key_source']
+        kwargs.pop('helm_verification_key_source')
+    ctx.invoke(devops_cli.update_deploy_artifact_helm_repository_deploy_artifact_source, **kwargs)
 
 
 @cli_util.copy_params_from_generated_command(devops_cli.get_deploy_artifact, params_to_exclude=['deploy_artifact_id'])
@@ -537,6 +606,76 @@ def create_deploy_stage_create_function_deploy_stage_details_extended(ctx, **kwa
     ctx.invoke(devops_cli.create_deploy_stage_create_function_deploy_stage_details, **kwargs)
 
 
+@cli_util.copy_params_from_generated_command(devops_cli.create_deploy_stage_create_oke_helm_chart_deploy_stage_details, params_to_exclude=['deploy_pipeline_id', 'deploy_stage_predecessor_collection', 'helm_chart_deploy_artifact_id', 'oke_cluster_deploy_environment_id', 'are_hooks_enabled', 'is_debug_enabled', 'is_force_enabled', 'max_history', 'should_cleanup_on_fail', 'should_not_wait', 'should_reset_values', 'should_reuse_values', 'should_skip_crds', 'should_skip_render_subchart_notes'])
+@devops_cli.deploy_stage_group.command(name=cli_util.override('devops_cli.create_deploy_stage_create_oke_helm_chart_deploy_stage_details.command_name', 'create-oke-helm-chart-stage'), help=devops_cli.create_deploy_stage_create_oke_helm_chart_deploy_stage_details.help)
+@cli_util.option('--oke-cluster-environment-id', required=True, help="""Kubernetes cluster environment OCID for deployment. [required]""")
+@cli_util.option('--helm-chart-artifact-id', required=True, help="""Helm chart artifact OCID. [required]""")
+@cli_util.option('--stage-predecessor-collection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.
+ [required]""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The OCID of a pipeline. [required]""")
+@cli_util.option('--cleanup-on-fail', type=click.BOOL, help=u"""Passes the --cleanup-on-fail flag for helm upgrade. Set to false by default""")
+@cli_util.option('--debug-helm', type=click.BOOL, help=u"""Passes the --debug flag for helm upgrade. Set to false by default""")
+@cli_util.option('--force-helm', type=click.BOOL, help=u"""Passes the --force flag for helm upgrade. Set to false by default""")
+@cli_util.option('--history-max', type=click.INT, help=u"""Passes the --history-max flag for helm upgrade. Set to 10 by default""")
+@cli_util.option('--no-hooks', type=click.BOOL, help=u"""Passes the --no-hooks flag for helm upgrade. Set to true by default""")
+@cli_util.option('--render-subchart-notes', type=click.BOOL, help=u"""Passes the --render-subchart-notes flag for helm upgrade. Set to true by default""")
+@cli_util.option('--reset-values', type=click.BOOL, help=u"""Passes the --reset-values flag for helm upgrade. Set to false by default""")
+@cli_util.option('--reuse-values', type=click.BOOL, help=u"""Passes the --reuse-values flag for helm upgrade. Set to false by default""")
+@cli_util.option('--skip-crds', type=click.BOOL, help=u"""Passes the --skip-crds flag for helm upgrade. Set to false by default""")
+@cli_util.option('--wait-helm', type=click.BOOL, help=u"""Passes the --wait flag for helm upgrade. Set to true by default""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'values-artifact-ids': {'module': 'devops', 'class': 'list[string]'}, 'rollback-policy': {'module': 'devops', 'class': 'DeployStageRollbackPolicy'}, 'set-values': {'module': 'devops', 'class': 'HelmSetValueCollection'}, 'set-string': {'module': 'devops', 'class': 'HelmSetValueCollection'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def create_deploy_stage_create_oke_helm_chart_deploy_stage_details_extended(ctx, **kwargs):
+    if 'oke_cluster_environment_id' in kwargs:
+        kwargs['oke_cluster_deploy_environment_id'] = kwargs['oke_cluster_environment_id']
+        kwargs.pop('oke_cluster_environment_id')
+    if 'helm_chart_artifact_id' in kwargs:
+        kwargs['helm_chart_deploy_artifact_id'] = kwargs['helm_chart_artifact_id']
+        kwargs.pop('helm_chart_artifact_id')
+    if 'stage_predecessor_collection' in kwargs:
+        kwargs['deploy_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
+        kwargs.pop('stage_predecessor_collection')
+    if 'pipeline_id' in kwargs:
+        kwargs['deploy_pipeline_id'] = kwargs['pipeline_id']
+        kwargs.pop('pipeline_id')
+    if 'cleanup_on_fail' in kwargs:
+        kwargs['should_cleanup_on_fail'] = kwargs['cleanup_on_fail']
+        kwargs.pop('cleanup_on_fail')
+    if 'debug_helm' in kwargs:
+        kwargs['is_debug_enabled'] = kwargs['debug_helm']
+        kwargs.pop('debug_helm')
+    if 'force_helm' in kwargs:
+        kwargs['is_force_enabled'] = kwargs['force_helm']
+        kwargs.pop('force_helm')
+    if 'history_max' in kwargs:
+        kwargs['max_history'] = kwargs['history_max']
+        kwargs.pop('history_max')
+    if 'no_hooks' in kwargs:
+        kwargs['are_hooks_enabled'] = not kwargs['no_hooks']
+        kwargs.pop('no_hooks')
+    if 'render_subchart_notes' in kwargs:
+        kwargs['should_skip_render_subchart_notes'] = not kwargs['render_subchart_notes']
+        kwargs.pop('render_subchart_notes')
+    if 'reuse_values' in kwargs:
+        kwargs['should_reuse_values'] = kwargs['reuse_values']
+        kwargs.pop('reuse_values')
+    if 'reset_values' in kwargs:
+        kwargs['should_reset_values'] = kwargs['reset_values']
+        kwargs.pop('reset_values')
+    if 'skip_crds' in kwargs:
+        kwargs['should_skip_crds'] = kwargs['skip_crds']
+        kwargs.pop('skip_crds')
+    if 'wait_helm' in kwargs:
+        kwargs['should_not_wait'] = not kwargs['wait_helm']
+        kwargs.pop('wait_helm')
+    ctx.invoke(devops_cli.create_deploy_stage_create_oke_helm_chart_deploy_stage_details, **kwargs)
+
+
 @cli_util.copy_params_from_generated_command(devops_cli.create_deploy_stage_create_invoke_function_deploy_stage_details, params_to_exclude=['deploy_pipeline_id', 'deploy_stage_predecessor_collection', 'function_deploy_environment_id', 'deploy_artifact_id'])
 @devops_cli.deploy_stage_group.command(name=cli_util.override('devops_cli.create_deploy_stage_create_invoke_function_deploy_stage_details.command_name', 'create-invoke-function-stage'), help=devops_cli.create_deploy_stage_create_invoke_function_deploy_stage_details.help)
 @cli_util.option('--pipeline-id', required=True, help=u"""Pipeline Identifier""")
@@ -764,6 +903,75 @@ def update_deploy_stage_update_oke_deploy_stage_details_extended(ctx, **kwargs):
     ctx.invoke(devops_cli.update_deploy_stage_update_oke_deploy_stage_details, **kwargs)
 
 
+@cli_util.copy_params_from_generated_command(devops_cli.update_deploy_stage_update_oke_helm_chart_deploy_stage_details, params_to_exclude=['deploy_stage_id', 'deploy_stage_predecessor_collection', 'helm_chart_deploy_artifact_id', 'oke_cluster_deploy_environment_id', 'are_hooks_enabled', 'is_debug_enabled', 'is_force_enabled', 'max_history', 'should_cleanup_on_fail', 'should_not_wait', 'should_reset_values', 'should_reuse_values', 'should_skip_crds', 'should_skip_render_subchart_notes'])
+@devops_cli.deploy_stage_group.command(name=cli_util.override('devops_cli.update_deploy_stage_update_oke_helm_chart_deploy_stage_details.command_name', 'update-oke-helm-chart-stage'), help=devops_cli.update_deploy_stage_update_oke_helm_chart_deploy_stage_details.help)
+@cli_util.option('--oke-cluster-environment-id', help="""Kubernetes cluster environment OCID for deployment.""")
+@cli_util.option('--helm-chart-artifact-id', help="""Helm chart artifact OCID.""")
+@cli_util.option('--stage-predecessor-collection', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--stage-id', required=True, help=u"""Unique stage identifier. [required]""")
+@cli_util.option('--cleanup-on-fail', type=click.BOOL, help=u"""Passes the --cleanup-on-fail flag for helm upgrade. Set to false by default""")
+@cli_util.option('--debug-helm', type=click.BOOL, help=u"""Passes the --debug flag for helm upgrade. Set to false by default""")
+@cli_util.option('--force-helm', type=click.BOOL, help=u"""Passes the --force flag for helm upgrade. Set to false by default""")
+@cli_util.option('--history-max', type=click.INT, help=u"""Passes the --history-max flag for helm upgrade. Set to 10 by default""")
+@cli_util.option('--no-hooks', type=click.BOOL, help=u"""Passes the --no-hooks flag for helm upgrade. Set to true by default""")
+@cli_util.option('--render-subchart-notes', type=click.BOOL, help=u"""Passes the --render-subchart-notes flag for helm upgrade. Set to true by default""")
+@cli_util.option('--reset-values', type=click.BOOL, help=u"""Passes the --reset-values flag for helm upgrade. Set to false by default""")
+@cli_util.option('--reuse-values', type=click.BOOL, help=u"""Passes the --reuse-values flag for helm upgrade. Set to false by default""")
+@cli_util.option('--skip-crds', type=click.BOOL, help=u"""Passes the --skip-crds flag for helm upgrade. Set to false by default""")
+@cli_util.option('--wait-helm', type=click.BOOL, help=u"""Passes the --wait flag for helm upgrade. Set to true by default""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'values-artifact-ids': {'module': 'devops', 'class': 'list[string]'}, 'rollback-policy': {'module': 'devops', 'class': 'DeployStageRollbackPolicy'}, 'set-values': {'module': 'devops', 'class': 'HelmSetValueCollection'}, 'set-string': {'module': 'devops', 'class': 'HelmSetValueCollection'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@cli_util.wrap_exceptions
+def update_deploy_stage_update_oke_helm_chart_deploy_stage_details_extended(ctx, **kwargs):
+    if 'oke_cluster_environment_id' in kwargs:
+        kwargs['oke_cluster_deploy_environment_id'] = kwargs['oke_cluster_environment_id']
+        kwargs.pop('oke_cluster_environment_id')
+    if 'helm_chart_artifact_id' in kwargs:
+        kwargs['helm_chart_deploy_artifact_id'] = kwargs['helm_chart_artifact_id']
+        kwargs.pop('helm_chart_artifact_id')
+    if 'stage_predecessor_collection' in kwargs:
+        kwargs['deploy_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
+        kwargs.pop('stage_predecessor_collection')
+    if 'stage_id' in kwargs:
+        kwargs['deploy_stage_id'] = kwargs['stage_id']
+        kwargs.pop('stage_id')
+    if 'cleanup_on_fail' in kwargs:
+        kwargs['should_cleanup_on_fail'] = kwargs['cleanup_on_fail']
+        kwargs.pop('cleanup_on_fail')
+    if 'debug_helm' in kwargs:
+        kwargs['is_debug_enabled'] = kwargs['debug_helm']
+        kwargs.pop('debug_helm')
+    if 'force_helm' in kwargs:
+        kwargs['is_force_enabled'] = kwargs['force_helm']
+        kwargs.pop('force_helm')
+    if 'history_max' in kwargs:
+        kwargs['max_history'] = kwargs['history_max']
+        kwargs.pop('history_max')
+    if 'no_hooks' in kwargs:
+        kwargs['are_hooks_enabled'] = not kwargs['no_hooks']
+        kwargs.pop('no_hooks')
+    if 'render_subchart_notes' in kwargs:
+        kwargs['should_skip_render_subchart_notes'] = not kwargs['render_subchart_notes']
+        kwargs.pop('render_subchart_notes')
+    if 'reuse_values' in kwargs:
+        kwargs['should_reuse_values'] = kwargs['reuse_values']
+        kwargs.pop('reuse_values')
+    if 'reset_values' in kwargs:
+        kwargs['should_reset_values'] = kwargs['reset_values']
+        kwargs.pop('reset_values')
+    if 'skip_crds' in kwargs:
+        kwargs['should_skip_crds'] = kwargs['skip_crds']
+        kwargs.pop('skip_crds')
+    if 'wait_helm' in kwargs:
+        kwargs['should_not_wait'] = not kwargs['wait_helm']
+        kwargs.pop('wait_helm')
+    ctx.invoke(devops_cli.update_deploy_stage_update_oke_helm_chart_deploy_stage_details, **kwargs)
+
+
 @cli_util.copy_params_from_generated_command(devops_cli.update_deploy_stage_update_wait_deploy_stage_details, params_to_exclude=['deploy_stage_id', 'deploy_stage_predecessor_collection'])
 @devops_cli.deploy_stage_group.command(name=cli_util.override('devops_cli.update_deploy_stage_update_wait_deploy_stage_details.command_name', 'update-wait-stage'), help=devops_cli.update_deploy_stage_update_wait_deploy_stage_details.help)
 @cli_util.option('--stage-id', required=True, help=u"""unique Stage identifier""")
@@ -828,6 +1036,7 @@ The --generate-param-json-input option can be used to generate an example of the
 in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @cli_util.option('--pipeline-id', required=True, help=u"""Pipeline Identifier""")
 @cli_util.option('--artifact-override-arguments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--dry-run', type=click.BOOL, help=u"""Set this flag to execute a dry run deployment. Only available for helm deployments as of now""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'deployment-arguments': {'module': 'devops', 'class': 'DeploymentArgumentCollection'}, 'stage-override-arguments': {'module': 'devops', 'class': 'DeployStageOverrideArgumentCollection'}, 'artifact-override-arguments': {'module': 'devops', 'class': 'DeployArtifactOverrideArgumentCollection'}}, output_type={'module': 'devops', 'class': 'Deployment'})
 @cli_util.wrap_exceptions
@@ -842,6 +1051,22 @@ def create_deployment_create_deploy_pipeline_deployment_details_extended(ctx, **
     if 'artifact_override_arguments' in kwargs:
         kwargs['deploy_artifact_override_arguments'] = kwargs['artifact_override_arguments']
         kwargs.pop('artifact_override_arguments')
+    if kwargs['dry_run'] is not None:
+        dry_run_arg = {
+            'name': 'dry_run',
+            'value': str(kwargs['dry_run'])
+        }
+        if kwargs['deployment_arguments'] is not None:
+            deployment_args = cli_util.parse_json_parameter("deployment_arguments", kwargs['deployment_arguments'])
+            deployment_args['items'].append(dry_run_arg)
+            kwargs['deployment_arguments'] = json.dumps(deployment_args)
+        else:
+            items = [dry_run_arg]
+            deployment_arg = {
+                'items': items
+            }
+            kwargs['deployment_arguments'] = deployment_arg
+    kwargs.pop('dry_run')
     ctx.invoke(devops_cli.create_deployment_create_deploy_pipeline_deployment_details, **kwargs)
 
 
@@ -881,6 +1106,7 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.option('--pipeline-id', required=True, help=u"""Pipeline Identifier""")
 @cli_util.option('--stage-id', required=True, help=u"""The [OCID] of the stage which is marked for approval.""")
 @cli_util.option('--artifact-override-arguments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--dry-run', type=click.BOOL, help=u"""Set this flag to execute a dry run deployment. Only available for helm deployments as of now""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'deployment-arguments': {'module': 'devops', 'class': 'DeploymentArgumentCollection'}, 'stage-override-arguments': {'module': 'devops', 'class': 'DeployStageOverrideArgumentCollection'}, 'artifact-override-arguments': {'module': 'devops', 'class': 'DeployArtifactOverrideArgumentCollection'}}, output_type={'module': 'devops', 'class': 'Deployment'})
 @cli_util.wrap_exceptions
@@ -897,6 +1123,22 @@ def create_deployment_create_single_deploy_stage_deployment_details_extended(ctx
     if 'artifact_override_arguments' in kwargs:
         kwargs['deploy_artifact_override_arguments'] = kwargs['artifact_override_arguments']
         kwargs.pop('artifact_override_arguments')
+    if kwargs['dry_run'] is not None:
+        dry_run_arg = {
+            'name': 'dry_run',
+            'value': str(kwargs['dry_run'])
+        }
+        if kwargs['deployment_arguments'] is not None:
+            deployment_args = cli_util.parse_json_parameter("deployment_arguments", kwargs['deployment_arguments'])
+            deployment_args['items'].append(dry_run_arg)
+            kwargs['deployment_arguments'] = json.dumps(deployment_args)
+        else:
+            items = [dry_run_arg]
+            deployment_arg = {
+                'items': items
+            }
+            kwargs['deployment_arguments'] = deployment_arg
+    kwargs.pop('dry_run')
     ctx.invoke(devops_cli.create_deployment_create_single_deploy_stage_deployment_details, **kwargs)
 
 

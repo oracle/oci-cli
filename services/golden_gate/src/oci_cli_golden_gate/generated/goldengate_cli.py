@@ -63,6 +63,12 @@ def deployment_upgrade_group():
     pass
 
 
+@click.command(cli_util.override('goldengate.deployment_wallets_operation_summary_group.command_name', 'deployment-wallets-operation-summary'), cls=CommandGroupWithAlias, help="""Summary of the deployment wallets operations.""")
+@cli_util.help_option_group
+def deployment_wallets_operation_summary_group():
+    pass
+
+
 @click.command(cli_util.override('goldengate.deployment_type_collection_group.command_name', 'deployment-type-collection'), cls=CommandGroupWithAlias, help="""The list of DeploymentTypeDescriptor objects.""")
 @cli_util.help_option_group
 def deployment_type_collection_group():
@@ -106,6 +112,7 @@ goldengate_root_group.add_command(work_request_group)
 goldengate_root_group.add_command(message_summary_group)
 goldengate_root_group.add_command(database_registration_group)
 goldengate_root_group.add_command(deployment_upgrade_group)
+goldengate_root_group.add_command(deployment_wallets_operation_summary_group)
 goldengate_root_group.add_command(deployment_type_collection_group)
 goldengate_root_group.add_command(connection_assignment_group)
 goldengate_root_group.add_command(trail_sequence_summary_group)
@@ -2229,6 +2236,133 @@ def delete_deployment_backup(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
+@deployment_group.command(name=cli_util.override('goldengate.deployment_wallet_exists.command_name', 'deployment-wallet-exists'), help=u"""Checks if a wallet is already present in the deployment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](deploymentWalletExists)""")
+@cli_util.option('--deployment-id', required=True, help=u"""A unique Deployment identifier.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DEFAULT"]), help=u"""The type of a deployment for wallet""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'golden_gate', 'class': 'DeploymentWalletExistsResponseDetails'})
+@cli_util.wrap_exceptions
+def deployment_wallet_exists(ctx, from_json, deployment_id, type, if_match):
+
+    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+        raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.deployment_wallet_exists(
+        deployment_id=deployment_id,
+        deployment_wallet_exists_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@deployment_group.command(name=cli_util.override('goldengate.deployment_wallet_exists_default_deployment_wallet_exists_details.command_name', 'deployment-wallet-exists-default-deployment-wallet-exists-details'), help=u"""Checks if a wallet is already present in the deployment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](deploymentWalletExists)""")
+@cli_util.option('--deployment-id', required=True, help=u"""A unique Deployment identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'golden_gate', 'class': 'DeploymentWalletExistsResponseDetails'})
+@cli_util.wrap_exceptions
+def deployment_wallet_exists_default_deployment_wallet_exists_details(ctx, from_json, deployment_id, if_match):
+
+    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+        raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    _details['type'] = 'DEFAULT'
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.deployment_wallet_exists(
+        deployment_id=deployment_id,
+        deployment_wallet_exists_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@deployment_group.command(name=cli_util.override('goldengate.export_deployment_wallet.command_name', 'export-deployment-wallet'), help=u"""Export the OGG wallet from the deployment to OCI vault. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](exportDeploymentWallet)""")
+@cli_util.option('--deployment-id', required=True, help=u"""A unique Deployment identifier.""")
+@cli_util.option('--vault-id', required=True, help=u"""The [OCID] of the customer vault being referenced. If provided, this will reference a vault which the customer will be required to ensure the policies are established to permit the GoldenGate Service to manage secrets contained within this vault.""")
+@cli_util.option('--master-encryption-key-id', required=True, help=u"""The [OCID] of the customer \"Master\" key being referenced. If provided, this will reference a key which the customer will be required to ensure the policies are established to permit the GoldenGate Service to utilize this key to manage secrets.""")
+@cli_util.option('--secret-name', required=True, help=u"""Name of the secret with which secret is shown in vault""")
+@cli_util.option('--description', help=u"""Metadata about this specific object.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def export_deployment_wallet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, vault_id, master_encryption_key_id, secret_name, description, if_match):
+
+    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+        raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['vaultId'] = vault_id
+    _details['masterEncryptionKeyId'] = master_encryption_key_id
+    _details['secretName'] = secret_name
+
+    if description is not None:
+        _details['description'] = description
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.export_deployment_wallet(
+        deployment_id=deployment_id,
+        export_deployment_wallet_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @connection_group.command(name=cli_util.override('goldengate.get_connection.command_name', 'get'), help=u"""Retrieves a Connection. \n[Command Reference](getConnection)""")
 @cli_util.option('--connection-id', required=True, help=u"""The [OCID] of a Connection.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2380,6 +2514,77 @@ def get_work_request(ctx, from_json, work_request_id):
         work_request_id=work_request_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@deployment_group.command(name=cli_util.override('goldengate.import_deployment_wallet.command_name', 'import-deployment-wallet'), help=u"""Imports an OGG wallet from the OCI Vault to the Deployment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](importDeploymentWallet)""")
+@cli_util.option('--deployment-id', required=True, help=u"""A unique Deployment identifier.""")
+@cli_util.option('--vault-id', required=True, help=u"""The [OCID] of the customer vault being referenced. If provided, this will reference a vault which the customer will be required to ensure the policies are established to permit the GoldenGate Service to manage secrets contained within this vault.""")
+@cli_util.option('--new-wallet-secret-id', required=True, help=u"""The [OCID] of the customer GGS Secret being referenced. If provided, this will reference a key which the customer will be required to ensure the policies are established to permit the GoldenGate Service to utilize this Secret""")
+@cli_util.option('--wallet-backup-secret-name', help=u"""Name of the secret with which secret is shown in vault""")
+@cli_util.option('--master-encryption-key-id', help=u"""The [OCID] of the customer \"Master\" key being referenced. If provided, this will reference a key which the customer will be required to ensure the policies are established to permit the GoldenGate Service to utilize this key to manage secrets.""")
+@cli_util.option('--description', help=u"""Metadata about this specific object.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def import_deployment_wallet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, vault_id, new_wallet_secret_id, wallet_backup_secret_name, master_encryption_key_id, description, if_match):
+
+    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+        raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['vaultId'] = vault_id
+    _details['newWalletSecretId'] = new_wallet_secret_id
+
+    if wallet_backup_secret_name is not None:
+        _details['walletBackupSecretName'] = wallet_backup_secret_name
+
+    if master_encryption_key_id is not None:
+        _details['masterEncryptionKeyId'] = master_encryption_key_id
+
+    if description is not None:
+        _details['description'] = description
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.import_deployment_wallet(
+        deployment_id=deployment_id,
+        import_deployment_wallet_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -2762,6 +2967,66 @@ def list_deployment_upgrades(ctx, from_json, all_pages, page_size, compartment_i
     else:
         result = client.list_deployment_upgrades(
             compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@deployment_wallets_operation_summary_group.command(name=cli_util.override('goldengate.list_deployment_wallets_operations.command_name', 'list-deployment-wallets-operations'), help=u"""Lists the wallets export/import operations to/from a deployment. \n[Command Reference](listDeploymentWalletsOperations)""")
+@cli_util.option('--deployment-id', required=True, help=u"""A unique Deployment identifier.""")
+@cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire 'displayName' given.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeStarted"]), help=u"""The field to sort by. Only one sort order can be provided. Default order for 'timeStarted' is descending.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'golden_gate', 'class': 'DeploymentWalletsOperationCollection'})
+@cli_util.wrap_exceptions
+def list_deployment_wallets_operations(ctx, from_json, all_pages, page_size, deployment_id, display_name, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+        raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_deployment_wallets_operations,
+            deployment_id=deployment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_deployment_wallets_operations,
+            limit,
+            page_size,
+            deployment_id=deployment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_deployment_wallets_operations(
+            deployment_id=deployment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)

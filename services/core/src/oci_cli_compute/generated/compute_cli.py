@@ -155,6 +155,12 @@ def app_catalog_subscription_group():
     pass
 
 
+@click.command(cli_util.override('compute.compute_capacity_report_group.command_name', 'compute-capacity-report'), cls=CommandGroupWithAlias, help="""The availability domain for which the report was generated.""")
+@cli_util.help_option_group
+def compute_capacity_report_group():
+    pass
+
+
 @click.command(cli_util.override('compute.boot_volume_attachment_group.command_name', 'boot-volume-attachment'), cls=CommandGroupWithAlias, help="""Represents an attachment between a boot volume and an instance.
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
@@ -237,6 +243,7 @@ compute_root_group.add_command(app_catalog_listing_resource_version_group)
 compute_root_group.add_command(image_shape_compatibility_entry_group)
 compute_root_group.add_command(app_catalog_listing_group)
 compute_root_group.add_command(app_catalog_subscription_group)
+compute_root_group.add_command(compute_capacity_report_group)
 compute_root_group.add_command(boot_volume_attachment_group)
 compute_root_group.add_command(measured_boot_report_group)
 compute_root_group.add_command(compute_global_image_capability_schema_version_group)
@@ -1146,6 +1153,35 @@ def create_app_catalog_subscription(ctx, from_json, compartment_id, listing_id, 
     client = cli_util.build_client('core', 'compute', ctx)
     result = client.create_app_catalog_subscription(
         create_app_catalog_subscription_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@compute_capacity_report_group.command(name=cli_util.override('compute.create_compute_capacity_report.command_name', 'create'), help=u"""Generates a new compute capacity availability report for the availability domain. A compute capacity report lets you review capacity availability for the provided shapes. \n[Command Reference](createComputeCapacityReport)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] for the compartment. This should always be the root compartment.""")
+@cli_util.option('--availability-domain', required=True, help=u"""The availability domain of this compute capacity report.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--shape-availabilities', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The capacity configurations for the capacity report.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'shape-availabilities': {'module': 'core', 'class': 'list[CreateCapacityReportShapeAvailabilityDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'shape-availabilities': {'module': 'core', 'class': 'list[CreateCapacityReportShapeAvailabilityDetails]'}}, output_type={'module': 'core', 'class': 'ComputeCapacityReport'})
+@cli_util.wrap_exceptions
+def create_compute_capacity_report(ctx, from_json, compartment_id, availability_domain, shape_availabilities):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['availabilityDomain'] = availability_domain
+    _details['shapeAvailabilities'] = cli_util.parse_json_parameter("shape_availabilities", shape_availabilities)
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.create_compute_capacity_report(
+        create_compute_capacity_report_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
