@@ -45,6 +45,12 @@ def external_pluggable_database_group():
     pass
 
 
+@click.command(cli_util.override('db.autonomous_container_database_version_group.command_name', 'autonomous-container-database-version'), cls=CommandGroupWithAlias, help="""The supported Autonomous Database version.""")
+@cli_util.help_option_group
+def autonomous_container_database_version_group():
+    pass
+
+
 @click.command(cli_util.override('db.patch_group.command_name', 'patch'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def patch_group():
@@ -395,6 +401,7 @@ db_root_group.add_command(update_history_entry_group)
 db_root_group.add_command(backup_group)
 db_root_group.add_command(external_non_container_database_group)
 db_root_group.add_command(external_pluggable_database_group)
+db_root_group.add_command(autonomous_container_database_version_group)
 db_root_group.add_command(patch_group)
 db_root_group.add_command(flex_component_collection_group)
 db_root_group.add_command(exadata_infrastructure_group)
@@ -1365,6 +1372,69 @@ def change_database_software_image_compartment(ctx, from_json, wait_for_state, m
     cli_util.render_response(result, ctx)
 
 
+@autonomous_container_database_group.command(name=cli_util.override('db.change_dataguard_role.command_name', 'change-dataguard-role'), help=u"""Switch the Autonomous Container Database role between Standby and Snapshot Standby. For more information about changing Autonomous Container Databases Dataguard Role, see [Change Database Role to Snapshot Standby]. \n[Command Reference](changeDataguardRole)""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRIMARY", "STANDBY", "DISABLED_STANDBY", "SNAPSHOT_STANDBY"]), help=u"""The Data Guard role of the Autonomous Container Database or Autonomous Database, if Autonomous Data Guard is enabled.""")
+@cli_util.option('--autonomous-container-database-dataguard-association-id', required=True, help=u"""The Autonomous Container Database-Autonomous Data Guard association [OCID].""")
+@cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
+@cli_util.option('--connection-strings-type', type=custom_types.CliCaseInsensitiveChoice(["SNAPSHOT_SERVICES", "PRIMARY_SERVICES"]), help=u"""type of connection strings when converting database to snapshot mode""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "BACKUP_IN_PROGRESS", "RESTORING", "RESTORE_FAILED", "RESTARTING", "MAINTENANCE_IN_PROGRESS", "ROLE_CHANGE_IN_PROGRESS", "UNAVAILABLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'AutonomousContainerDatabase'})
+@cli_util.wrap_exceptions
+def change_dataguard_role(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, role, autonomous_container_database_dataguard_association_id, autonomous_container_database_id, connection_strings_type, if_match):
+
+    if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['role'] = role
+    _details['autonomousContainerDatabaseDataguardAssociationId'] = autonomous_container_database_dataguard_association_id
+
+    if connection_strings_type is not None:
+        _details['connectionStringsType'] = connection_strings_type
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.change_dataguard_role(
+        autonomous_container_database_id=autonomous_container_database_id,
+        change_dataguard_role_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_autonomous_container_database') and callable(getattr(client, 'get_autonomous_container_database')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_autonomous_container_database(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @db_system_group.command(name=cli_util.override('db.change_db_system_compartment.command_name', 'change-compartment'), help=u"""Moves the DB system and its dependent resources to the specified compartment. For more information about moving DB systems, see [Moving Database Resources to a Different Compartment]. \n[Command Reference](changeDbSystemCompartment)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the resource to.""")
 @cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
@@ -2153,9 +2223,11 @@ def convert_to_pdb_pdb_conversion_to_new_database_details(ctx, from_json, wait_f
 @cli_util.option('--db-unique-name', help=u"""**Deprecated.** The `DB_UNIQUE_NAME` value is set by Oracle Cloud Infrastructure.  Do not specify a value for this parameter. Specifying a value for this field will cause Terraform operations to fail.""")
 @cli_util.option('--service-level-agreement-type', type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "AUTONOMOUS_DATAGUARD"]), help=u"""The service level agreement type of the Autonomous Container Database. The default is STANDARD. For an autonomous dataguard Autonomous Container Database, the specified Autonomous Exadata Infrastructure must be associated with a remote Autonomous Exadata Infrastructure.""")
 @cli_util.option('--autonomous-exadata-infrastructure-id', help=u"""**No longer used.** This parameter is no longer used for Autonomous Database on dedicated Exadata infrasture. Specify a `cloudAutonomousVmClusterId` instead. Using this parameter will cause the operation to fail.""")
+@cli_util.option('--db-version', help=u"""The base version for the Autonomous Container Database.""")
 @cli_util.option('--peer-autonomous-exadata-infrastructure-id', help=u"""*No longer used.* This parameter is no longer used for Autonomous Database on dedicated Exadata infrasture. Specify a `peerCloudAutonomousVmClusterId` instead. Using this parameter will cause the operation to fail.""")
 @cli_util.option('--peer-autonomous-container-database-display-name', help=u"""The display name for the peer Autonomous Container Database.""")
 @cli_util.option('--protection-mode', type=custom_types.CliCaseInsensitiveChoice(["MAXIMUM_AVAILABILITY", "MAXIMUM_PERFORMANCE"]), help=u"""The protection mode of this Autonomous Data Guard association. For more information, see [Oracle Data Guard Protection Modes] in the Oracle Data Guard documentation.""")
+@cli_util.option('--fast-start-fail-over-lag-limit-in-seconds', type=click.INT, help=u"""The lag time for my preference based on data loss tolerance in seconds.""")
 @cli_util.option('--is-automatic-failover-enabled', type=click.BOOL, help=u"""Indicates whether Automatic Failover is enabled for Autonomous Container Database Dataguard Association""")
 @cli_util.option('--peer-cloud-autonomous-vm-cluster-id', help=u"""The [OCID] of the peer cloud Autonomous Exadata VM Cluster.""")
 @cli_util.option('--peer-autonomous-vm-cluster-id', help=u"""The [OCID] of the peer Autonomous VM cluster for Autonomous Data Guard. Required to enable Data Guard.""")
@@ -2167,6 +2239,7 @@ def convert_to_pdb_pdb_conversion_to_new_database_details(ctx, from_json, wait_f
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment containing the Autonomous Container Database.""")
 @cli_util.option('--maintenance-window-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--standby-maintenance-buffer-in-days', type=click.INT, help=u"""The scheduling detail for the quarterly maintenance window of the standby Autonomous Container Database. This value represents the number of days before scheduled maintenance of the primary database.""")
+@cli_util.option('--version-preference', type=custom_types.CliCaseInsensitiveChoice(["NEXT_RELEASE_UPDATE", "LATEST_RELEASE_UPDATE"]), help=u"""The next maintenance version preference.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2184,7 +2257,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'peer-autonomous-container-database-backup-config': {'module': 'database', 'class': 'PeerAutonomousContainerDatabaseBackupConfig'}, 'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'backup-config': {'module': 'database', 'class': 'AutonomousContainerDatabaseBackupConfig'}}, output_type={'module': 'database', 'class': 'AutonomousContainerDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, patch_model, db_unique_name, service_level_agreement_type, autonomous_exadata_infrastructure_id, peer_autonomous_exadata_infrastructure_id, peer_autonomous_container_database_display_name, protection_mode, is_automatic_failover_enabled, peer_cloud_autonomous_vm_cluster_id, peer_autonomous_vm_cluster_id, peer_autonomous_container_database_compartment_id, peer_autonomous_container_database_backup_config, peer_db_unique_name, autonomous_vm_cluster_id, cloud_autonomous_vm_cluster_id, compartment_id, maintenance_window_details, standby_maintenance_buffer_in_days, freeform_tags, defined_tags, backup_config, kms_key_id, kms_key_version_id, vault_id, key_store_id):
+def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, patch_model, db_unique_name, service_level_agreement_type, autonomous_exadata_infrastructure_id, db_version, peer_autonomous_exadata_infrastructure_id, peer_autonomous_container_database_display_name, protection_mode, fast_start_fail_over_lag_limit_in_seconds, is_automatic_failover_enabled, peer_cloud_autonomous_vm_cluster_id, peer_autonomous_vm_cluster_id, peer_autonomous_container_database_compartment_id, peer_autonomous_container_database_backup_config, peer_db_unique_name, autonomous_vm_cluster_id, cloud_autonomous_vm_cluster_id, compartment_id, maintenance_window_details, standby_maintenance_buffer_in_days, version_preference, freeform_tags, defined_tags, backup_config, kms_key_id, kms_key_version_id, vault_id, key_store_id):
 
     kwargs = {}
 
@@ -2201,6 +2274,9 @@ def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wai
     if autonomous_exadata_infrastructure_id is not None:
         _details['autonomousExadataInfrastructureId'] = autonomous_exadata_infrastructure_id
 
+    if db_version is not None:
+        _details['dbVersion'] = db_version
+
     if peer_autonomous_exadata_infrastructure_id is not None:
         _details['peerAutonomousExadataInfrastructureId'] = peer_autonomous_exadata_infrastructure_id
 
@@ -2209,6 +2285,9 @@ def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wai
 
     if protection_mode is not None:
         _details['protectionMode'] = protection_mode
+
+    if fast_start_fail_over_lag_limit_in_seconds is not None:
+        _details['fastStartFailOverLagLimitInSeconds'] = fast_start_fail_over_lag_limit_in_seconds
 
     if is_automatic_failover_enabled is not None:
         _details['isAutomaticFailoverEnabled'] = is_automatic_failover_enabled
@@ -2242,6 +2321,9 @@ def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wai
 
     if standby_maintenance_buffer_in_days is not None:
         _details['standbyMaintenanceBufferInDays'] = standby_maintenance_buffer_in_days
+
+    if version_preference is not None:
+        _details['versionPreference'] = version_preference
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -10034,7 +10116,7 @@ A failover can result in data loss, depending on the protection mode in effect a
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
 @cli_util.option('--autonomous-container-database-dataguard-association-id', required=True, help=u"""The Autonomous Container Database-Autonomous Data Guard association [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "ROLE_CHANGE_IN_PROGRESS", "TERMINATING", "TERMINATED", "FAILED", "UNAVAILABLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "ROLE_CHANGE_IN_PROGRESS", "TERMINATING", "TERMINATED", "FAILED", "UNAVAILABLE", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -12581,6 +12663,61 @@ def list_autonomous_container_database_dataguard_associations(ctx, from_json, al
     else:
         result = client.list_autonomous_container_database_dataguard_associations(
             autonomous_container_database_id=autonomous_container_database_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@autonomous_container_database_version_group.command(name=cli_util.override('db.list_autonomous_container_database_versions.command_name', 'list'), help=u"""Gets a list of supported Autonomous Container Database versions. \n[Command Reference](listAutonomousContainerDatabaseVersions)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--service-component', required=True, type=custom_types.CliCaseInsensitiveChoice(["ADBD", "EXACC"]), help=u"""The service component to use, either ADBD or EXACC.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[AutonomousContainerDatabaseVersionSummary]'})
+@cli_util.wrap_exceptions
+def list_autonomous_container_database_versions(ctx, from_json, all_pages, page_size, compartment_id, service_component, limit, page, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_autonomous_container_database_versions,
+            compartment_id=compartment_id,
+            service_component=service_component,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_autonomous_container_database_versions,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            service_component=service_component,
+            **kwargs
+        )
+    else:
+        result = client.list_autonomous_container_database_versions(
+            compartment_id=compartment_id,
+            service_component=service_component,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -16203,7 +16340,7 @@ def register_autonomous_database_data_safe(ctx, from_json, wait_for_state, max_w
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
 @cli_util.option('--autonomous-container-database-dataguard-association-id', required=True, help=u"""The Autonomous Container Database-Autonomous Data Guard association [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "ROLE_CHANGE_IN_PROGRESS", "TERMINATING", "TERMINATED", "FAILED", "UNAVAILABLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "ROLE_CHANGE_IN_PROGRESS", "TERMINATING", "TERMINATED", "FAILED", "UNAVAILABLE", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -17503,7 +17640,7 @@ A switchover incurs no data loss. \n[Command Reference](switchoverAutonomousCont
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
 @cli_util.option('--autonomous-container-database-dataguard-association-id', required=True, help=u"""The Autonomous Container Database-Autonomous Data Guard association [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "ROLE_CHANGE_IN_PROGRESS", "TERMINATING", "TERMINATED", "FAILED", "UNAVAILABLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "ROLE_CHANGE_IN_PROGRESS", "TERMINATING", "TERMINATED", "FAILED", "UNAVAILABLE", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -17837,6 +17974,7 @@ def terminate_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.option('--patch-model', type=custom_types.CliCaseInsensitiveChoice(["RELEASE_UPDATES", "RELEASE_UPDATE_REVISIONS"]), help=u"""Database Patch model preference.""")
 @cli_util.option('--maintenance-window-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--standby-maintenance-buffer-in-days', type=click.INT, help=u"""The scheduling detail for the quarterly maintenance window of the standby Autonomous Container Database. This value represents the number of days before schedlued maintenance of the primary database.""")
+@cli_util.option('--version-preference', type=custom_types.CliCaseInsensitiveChoice(["NEXT_RELEASE_UPDATE", "LATEST_RELEASE_UPDATE"]), help=u"""The next maintenance version preference.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -17852,7 +17990,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'backup-config': {'module': 'database', 'class': 'AutonomousContainerDatabaseBackupConfig'}}, output_type={'module': 'database', 'class': 'AutonomousContainerDatabase'})
 @cli_util.wrap_exceptions
-def update_autonomous_container_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, display_name, patch_model, maintenance_window_details, standby_maintenance_buffer_in_days, freeform_tags, defined_tags, backup_config, if_match):
+def update_autonomous_container_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, display_name, patch_model, maintenance_window_details, standby_maintenance_buffer_in_days, version_preference, freeform_tags, defined_tags, backup_config, if_match):
 
     if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
@@ -17878,6 +18016,9 @@ def update_autonomous_container_database(ctx, from_json, force, wait_for_state, 
 
     if standby_maintenance_buffer_in_days is not None:
         _details['standbyMaintenanceBufferInDays'] = standby_maintenance_buffer_in_days
+
+    if version_preference is not None:
+        _details['versionPreference'] = version_preference
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -17924,8 +18065,10 @@ def update_autonomous_container_database(ctx, from_json, force, wait_for_state, 
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
 @cli_util.option('--autonomous-container-database-dataguard-association-id', required=True, help=u"""The Autonomous Container Database-Autonomous Data Guard association [OCID].""")
 @cli_util.option('--is-automatic-failover-enabled', type=click.BOOL, help=u"""Indicates whether Automatic Failover is enabled for Autonomous Container Database Dataguard Association""")
+@cli_util.option('--protection-mode', type=custom_types.CliCaseInsensitiveChoice(["MAXIMUM_AVAILABILITY", "MAXIMUM_PERFORMANCE"]), help=u"""The protection mode of this Autonomous Data Guard association. For more information, see [Oracle Data Guard Protection Modes] in the Oracle Data Guard documentation.""")
+@cli_util.option('--fast-start-fail-over-lag-limit-in-seconds', type=click.INT, help=u"""The lag time for my preference based on data loss tolerance in seconds.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "ROLE_CHANGE_IN_PROGRESS", "TERMINATING", "TERMINATED", "FAILED", "UNAVAILABLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "ROLE_CHANGE_IN_PROGRESS", "TERMINATING", "TERMINATED", "FAILED", "UNAVAILABLE", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -17933,7 +18076,7 @@ def update_autonomous_container_database(ctx, from_json, force, wait_for_state, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'AutonomousContainerDatabaseDataguardAssociation'})
 @cli_util.wrap_exceptions
-def update_autonomous_container_database_dataguard_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, autonomous_container_database_dataguard_association_id, is_automatic_failover_enabled, if_match):
+def update_autonomous_container_database_dataguard_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, autonomous_container_database_dataguard_association_id, is_automatic_failover_enabled, protection_mode, fast_start_fail_over_lag_limit_in_seconds, if_match):
 
     if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
@@ -17950,6 +18093,12 @@ def update_autonomous_container_database_dataguard_association(ctx, from_json, w
 
     if is_automatic_failover_enabled is not None:
         _details['isAutomaticFailoverEnabled'] = is_automatic_failover_enabled
+
+    if protection_mode is not None:
+        _details['protectionMode'] = protection_mode
+
+    if fast_start_fail_over_lag_limit_in_seconds is not None:
+        _details['fastStartFailOverLagLimitInSeconds'] = fast_start_fail_over_lag_limit_in_seconds
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.update_autonomous_container_database_dataguard_association(
@@ -17989,7 +18138,7 @@ def update_autonomous_container_database_dataguard_association(ctx, from_json, w
 @cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of CPUs to be made available to the Autonomous Database.
 
 **Note:** This parameter cannot be used with the `ocpuCount` or `computeCount` parameter.""")
-@cli_util.option('--compute-count', type=click.FLOAT, help=u"""The compute amount available to the database. Minimum and maximum values depend on the compute model and whether the database is on Shared or Dedicated infrastructure. For an Autonomous Database on Shared infrastructure, the 'ECPU' compute model requires values in multiples of two. Required when using the `computeModel` parameter. When using `cpuCoreCount` parameter, it is an error to specify computeCount to a non-null value.""")
+@cli_util.option('--compute-count', type=click.FLOAT, help=u"""The compute amount available to the database. Minimum and maximum values depend on the compute model and whether the database is on Shared or Dedicated infrastructure. For an Autonomous Database on Shared infrastructure, the 'ECPU' compute model requires values in multiples of two. Required when using the `computeModel` parameter. When using `cpuCoreCount` parameter, it is an error to specify computeCount to a non-null value.@endif""")
 @cli_util.option('--ocpu-count', type=click.FLOAT, help=u"""The number of OCPU cores to be made available to the Autonomous Database.
 
 For databases on dedicated Exadata infrastructure, you can specify a fractional value for this parameter. Fractional values are not supported for Autonomous Database on shared Exadata infrastructure.

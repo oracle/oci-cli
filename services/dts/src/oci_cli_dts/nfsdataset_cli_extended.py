@@ -57,7 +57,7 @@ def nfs_dataset_show(ctx, from_json, name, appliance_profile):
                                                       output_type={'module': 'dts', 'class': 'NFSDataset'})
 @cli_util.wrap_exceptions
 def nfs_dataset_list(ctx, from_json, appliance_profile):
-    click.echo("Listing NFS datasets")
+    click.echo("Listing NFS datasets...")
     nfs_dataset_client = create_nfs_dataset_client(ctx, appliance_profile)
     nfs_datasets = nfs_dataset_client.list_nfs_datasets()
     cli_util.render_response(nfs_datasets, ctx)
@@ -77,13 +77,17 @@ def nfs_dataset_list(ctx, from_json, appliance_profile):
                                                       output_type={'module': 'dts', 'class': 'NFSDataset'})
 @cli_util.wrap_exceptions
 def nfs_dataset_create(ctx, from_json, rw, world, ip, subnet_mask_length, name, appliance_profile):
+    click.echo("Creating Dataset {}... ".format(name), nl=None)
     result = _create_nfs_dataset_helper(
         create_nfs_dataset_client(ctx, appliance_profile), rw, world, ip, subnet_mask_length, name)
+    click.echo("done")
     cli_util.render_response(result, ctx)
+    click.echo("Next action(s): Activating the Dataset")
+    click.echo(" 1. oci dts nfs-dataset list")
+    click.echo(" 2. oci dts nfs-dataset activate --name {}".format(name))
 
 
 def _create_nfs_dataset_helper(nfs_dataset_client, rw, world, ip, subnet_mask_length, name):
-    click.echo("Creating dataset with NFS export details {}".format(name))
     if (rw is None and world is not None) or (rw is not None and world is None):
         raise exceptions.ClientError("--rw and --world have to be passed together. You cannot set only one of them")
     export_configs = [{
@@ -116,7 +120,7 @@ def _create_nfs_dataset_helper(nfs_dataset_client, rw, world, ip, subnet_mask_le
                                                       output_type={'module': 'dts', 'class': 'NFSDataset'})
 @cli_util.wrap_exceptions
 def nfs_dataset_set_export(ctx, from_json, rw, world, ip, subnet_mask_length, name, appliance_profile):
-    click.echo("Settings NFS exports to dataset {}".format(name))
+    click.echo("Settings NFS Exports to Dataset {}... ".format(name), nl=False)
     nfs_dataset_client = create_nfs_dataset_client(ctx, appliance_profile)
     body = {
         'name': name,
@@ -133,6 +137,7 @@ def nfs_dataset_set_export(ctx, from_json, rw, world, ip, subnet_mask_length, na
         }
     }
     nfs_dataset_info = nfs_dataset_client.update_nfs_dataset(name, body)
+    click.echo("done")
     cli_util.render_response(nfs_dataset_info, ctx)
 
 
@@ -159,9 +164,11 @@ def nfs_dataset_activate(ctx, from_json, rw, world, ip, subnet_mask_length, name
         2. If it doesn't exist, create the dataset with exports followed by activating it
     """
     nfs_dataset_client = create_nfs_dataset_client(ctx, appliance_profile)
-    click.echo("Fetching all the datasets")
+    click.echo("Fetching Dataset {}... ".format(name), nl=False)
     nfs_datasets = nfs_dataset_client.list_nfs_datasets().data
     nfs_dataset = next((item for item in nfs_datasets if item['name'] == name), None)
+    click.echo("done")
+
     if nfs_dataset is not None:
         if nfs_dataset['state'] == NfsDatasetInfo.STATE_SEALED:
             click.echo("Reopening the dataset {} because it was sealed".format(name))
@@ -169,9 +176,14 @@ def nfs_dataset_activate(ctx, from_json, rw, world, ip, subnet_mask_length, name
     else:
         result = _create_nfs_dataset_helper(nfs_dataset_client, rw, world, ip, subnet_mask_length, name)
         cli_util.render_response(result, ctx)
-    click.echo("Activating dataset {}".format(name))
+    click.echo("Activating Dataset {}... ".format(name), nl=False)
     nfs_dataset_client.activate_nfs_dataset(name)
-    click.echo("Dataset {} activated".format(name))
+    click.echo("done")
+
+    click.echo("Next action(s):")
+    click.echo(" 1. - Mount the NFS share -")
+    click.echo(" 2. - Copy files to the NFS share -")
+    click.echo(" 3. oci dts nfs-dataset deactivate --name {}".format(name))
 
 
 @nfs_dataset_group.command('deactivate', help=u"""Deactivates the NFS dataset""")
@@ -185,9 +197,13 @@ def nfs_dataset_activate(ctx, from_json, rw, world, ip, subnet_mask_length, name
 @cli_util.wrap_exceptions
 def nfs_dataset_deactivate(ctx, from_json, name, appliance_profile):
     nfs_dataset_client = create_nfs_dataset_client(ctx, appliance_profile)
-    click.echo("Deactivating dataset {}".format(name))
+    click.echo("Deactivating Dataset {}... ".format(name), nl=False)
     nfs_dataset_info = nfs_dataset_client.deactivate_nfs_dataset(name)
+    click.echo("done")
+
     cli_util.render_response(nfs_dataset_info, ctx)
+    click.echo("Next action(s): Sealing the Dataset")
+    click.echo(" 1. oci dts nfs-dataset seal --name {}".format(name))
 
 
 @nfs_dataset_group.command('seal', help=u"""Seals the NFS dataset and deactivates it if it is active""")
@@ -208,8 +224,8 @@ def nfs_dataset_seal(ctx, from_json, wait, name, appliance_profile):
     """
     nfs_dataset_client = create_nfs_dataset_client(ctx, appliance_profile)
 
-    click.echo("Initiating Seal .... \n(Track progress using 'oci dts nfs-dataset seal-status' command)")
-    click.echo("Fetching all the datasets ...\n")
+    click.echo("Initiating Seal... \n(Track progress using 'oci dts nfs-dataset seal-status' command)")
+    click.echo("Fetching Dataset {}... ".format(name), nl=False)
     nfs_datasets = nfs_dataset_client.list_nfs_datasets().data
     if len(nfs_datasets) < 1:
         raise exceptions.ClientError("No datasets exist. Create a Dataset first")
@@ -218,11 +234,14 @@ def nfs_dataset_seal(ctx, from_json, wait, name, appliance_profile):
         if name != nfs_dataset['name']:
             raise exceptions.ClientError("The dataset {} does not exist".format(name))
     name = nfs_dataset['name']
-    if nfs_dataset['state'] == NfsDatasetInfo.STATE_ACTIVE:
-        click.echo("Deactivating the dataset {}".format(name))
-        nfs_dataset_client.deactivate_nfs_dataset(name)
+    click.echo("done")
 
-    click.echo("Triggering seal on dataset {}".format(name))
+    if nfs_dataset['state'] == NfsDatasetInfo.STATE_ACTIVE:
+        click.echo("Deactivating Dataset {}... ".format(name), nl=False)
+        nfs_dataset_client.deactivate_nfs_dataset(name)
+        click.echo("done")
+
+    click.echo("Triggering Seal on Dataset {}...".format(name))
     click.echo("This performs a pre-walk of the file system to check for invalid files before walking again "
                "to do the actual seal. This process can be time consuming depending on the size and number of files. "
                "Progress will be displayed once the pre-walk is done.")
@@ -235,6 +254,12 @@ def nfs_dataset_seal(ctx, from_json, wait, name, appliance_profile):
             seal_status = nfs_dataset_client.get_nfs_dataset_seal_status(name).data
             _seal_progress_display(seal_status)
         cli_util.render(seal_status, None, ctx)
+        if seal_status["success"]:
+            click.echo("Next action(s): Finalizing the Import Appliance")
+            click.echo(" 1. oci dts physical-appliance finalize --job-id <job_id> --appliance-label <appliance_label>")
+    else:
+        click.echo("Next action(s): Monitor Seal Status")
+        click.echo(" 1. oci dts nfs-dataset seal-status --name {}".format(name))
 
 
 def _seal_progress_display(seal_status):
@@ -273,6 +298,9 @@ def nfs_dataset_get_seal_status(ctx, from_json, name, appliance_profile):
     click.echo("Getting the seal status of the dataset {}".format(name))
     seal_status = nfs_dataset_client.get_nfs_dataset_seal_status(name)
     cli_util.render_response(seal_status, ctx)
+    if seal_status.data["success"]:
+        click.echo("Next action(s): Finalizing the Import Appliance")
+        click.echo(" 1. oci dts physical-appliance finalize --job-id <job_id> --appliance-label <appliance_label>")
 
 
 @nfs_dataset_group.command('get-seal-manifest', help=u"""Retrieves the NFS dataset's seal manifest""")

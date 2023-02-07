@@ -491,3 +491,19 @@ cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.exadata_i
 
 # oci opsi exadata-insights update-exadata-insight-update-pe-comanaged-exadata-insight-details -> oci opsi exadata-insights update-pe-comanaged-exadata
 cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.exadata_insights_group, operationsinsights_cli.update_exadata_insight_update_pe_comanaged_exadata_insight_details, "update-pe-comanaged-exadata")
+
+
+# oci opsi opsi-configurations create-opsi-configuration-create-opsi-ux-configuration-details -> oci opsi opsi-configurations create-opsi-ux-configuration-details
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.opsi_configurations_group, operationsinsights_cli.create_opsi_configuration_create_opsi_ux_configuration_details, "create-opsi-ux-configuration-details")
+
+
+# oci opsi opsi-configurations update-opsi-configuration-update-opsi-ux-configuration-details -> oci opsi opsi-configurations update-opsi-ux-configuration-details
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.opsi_configurations_group, operationsinsights_cli.update_opsi_configuration_update_opsi_ux_configuration_details, "update-opsi-ux-configuration-details")
+
+
+# Remove create from oci opsi opsi-configurations
+operationsinsights_cli.opsi_configurations_group.commands.pop(operationsinsights_cli.create_opsi_configuration.name)
+
+
+# Remove update from oci opsi opsi-configurations
+operationsinsights_cli.opsi_configurations_group.commands.pop(operationsinsights_cli.update_opsi_configuration.name)

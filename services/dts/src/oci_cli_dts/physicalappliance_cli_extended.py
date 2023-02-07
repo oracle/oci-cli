@@ -78,7 +78,7 @@ def pa_initialize_authentication(ctx, from_json, job_id, appliance_label, export
         if export_job_id is not None:
             raise click.UsageError('Either use --export-job-id or a combination of --job-id and --appliance-label')
 
-        click.echo("Retrieving the Appliance serial id from Oracle Cloud Infrastructure for Import job")
+        click.echo("Retrieving the Import Appliance Serial No. from OCI... ", nl=False)
         # Get the Transfer Appliance serial number from the control plane
         client = cli_util.build_client('dts', 'transfer_appliance', ctx)
         result = client.get_transfer_appliance(
@@ -87,21 +87,30 @@ def pa_initialize_authentication(ctx, from_json, job_id, appliance_label, export
             **kwargs
         )
         serial_number = result.data.serial_number
+        click.echo("done")
 
     elif export_job_id is not None:
         if job_id is not None and appliance_label is not None:
             raise click.UsageError('Either use --export-job-id or a combination of --job-id and --appliance-label')
 
-        click.echo("Retrieving the Appliance serial id from Oracle Cloud Infrastructure for Export Job")
+        click.echo("Retrieving the Export Appliance Serial No. from OCI... ", nl=False)
         client = cli_util.build_client('dts', 'appliance_export_job', ctx)
         kwargs_request = {'opc_request_id': cli_util.use_or_generate_request_id(ctx.obj['request_id'])}
         result = client.get_appliance_export_job(appliance_export_job_id=export_job_id, **kwargs_request)
         serial_number = result.data.appliance_serial_number
+        click.echo("done")
+
     else:
         raise click.UsageError('Either use --export-job-id or a combination of --job-id and --appliance-label')
 
     pa_init_auth_helper(ctx, appliance_profile, appliance_cert_fingerprint, appliance_ip, appliance_port,
                         serial_number, access_token)
+
+    if job_id is not None and appliance_label is not None:
+        click.echo("Next action(s): Configuring Import Appliance Encryption")
+        click.echo(" 1. oci dts physical-appliance show")
+        click.echo(" 2. oci dts physical-appliance configure-encryption "
+                   "--job-id {} --appliance-label {}".format(job_id, appliance_label))
 
 
 def pa_init_auth_helper(ctx, appliance_profile, appliance_cert_fingerprint, appliance_ip, appliance_port,
@@ -178,7 +187,7 @@ def pa_configure_encryption(ctx, from_json, appliance_profile, job_id, appliance
     )
     # If the appliance is not already in a preparing state, move it to a preparing state
     if result.data.lifecycle_state != TransferAppliance.LIFECYCLE_STATE_PREPARING:
-        click.echo("Moving the state of the appliance to preparing...")
+        click.echo("Updating the state of the Appliance in OCI to PREPARING... ", nl=False)
         details = {
             "lifecycleState": TransferAppliance.LIFECYCLE_STATE_PREPARING
         }
@@ -187,20 +196,28 @@ def pa_configure_encryption(ctx, from_json, appliance_profile, job_id, appliance
             transfer_appliance_label=appliance_label,
             update_transfer_appliance_details=details,
         )
+        click.echo("done")
 
-    click.echo("Passphrase being retrieved...")
+    click.echo("Retrieving the Passphrase from OCI... ", nl=False)
     passphrase = client.get_transfer_appliance_encryption_passphrase(
         id=job_id,
         transfer_appliance_label=appliance_label
     ).data.encryption_passphrase
     appliance_client = create_appliance_client(ctx, appliance_profile)
-    click.echo("Configuring encryption...")
+    click.echo("done")
 
+    click.echo("Configuring Appliance Encryption... ", nl=False)
     appliance_client.configure_encryption(passphrase_details={'passphrase': passphrase})
-    click.echo("Encryption configured. Getting physical transfer appliance info...")
+    click.echo("done")
+
+    click.echo("Getting Appliance Info... ", nl=False)
     appliance_info = appliance_client.get_physical_transfer_appliance()
+    click.echo("done")
+
     user_friendly_appliance_info = convert_to_user_friendly(appliance_info)
     cli_util.render_response(user_friendly_appliance_info, ctx)
+    click.echo("Next action(s): Unlocking the Import Appliance")
+    click.echo(" 1. oci dts physical-appliance unlock --job-id {} --appliance-label {}".format(job_id, appliance_label))
 
 
 def create_appliance_client(ctx, appliance_profile):
@@ -226,18 +243,25 @@ def pa_unlock(ctx, from_json, appliance_profile, job_id, appliance_label):
             click.echo('No input provided. Exiting...')
             sys.exit(-1)
     else:
-        click.echo("Retrieving the passphrase from Oracle Cloud Infrastructure")
+        click.echo("Retrieving the Passphrase from OCI... ", nl=False)
         client = cli_util.build_client('dts', 'transfer_appliance', ctx)
         passphrase = client.get_transfer_appliance_encryption_passphrase(
             id=job_id,
             transfer_appliance_label=appliance_label
         ).data.encryption_passphrase
+        click.echo("done")
     pa_unlock_helper(ctx, appliance_profile, passphrase)
+    click.echo("Next action(s): Creating NFS Datasets")
+    click.echo(" 1. oci dts nfs-dataset create --name <dataset_name> --rw true --world true --ip <ip_address> "
+               "--subnet-mask-length <subnet-mask>")
 
 
 def pa_unlock_helper(ctx, appliance_profile, passphrase):
+    click.echo("Unlocking Appliance... ", nl=False)
     appliance_client = create_appliance_client(ctx, appliance_profile)
     appliance_client.unlock_appliance(details={'passphrase': passphrase})
+    click.echo("done")
+
     appliance_info = appliance_client.get_physical_transfer_appliance()
     user_friendly_appliance_info = convert_to_user_friendly(appliance_info)
     cli_util.render_response(user_friendly_appliance_info, ctx)
@@ -276,7 +300,7 @@ def pa_show_helper(ctx, from_json, appliance_profile):
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
 def pa_finalize(ctx, from_json, appliance_profile, job_id, appliance_label, skip_upload_user_check):
-    click.echo("Retrieving the upload summary object name from Oracle Cloud Infrastructure")
+    click.echo("Retrieving the Upload Summary Object Name from OCI... ", nl=False)
     appliance_client = cli_util.build_client('dts', 'transfer_appliance', ctx)
     physical_appliance_client = create_appliance_client(ctx, appliance_profile)
 
@@ -284,17 +308,19 @@ def pa_finalize(ctx, from_json, appliance_profile, job_id, appliance_label, skip
         id=job_id,
         transfer_appliance_label=appliance_label
     ).data.upload_status_log_uri
+    click.echo("done")
 
-    click.echo("Retrieving the upload bucket name from Oracle Cloud Infrastructure")
+    click.echo("Retrieving the Upload Bucket Name from OCI... ", nl=False)
     client = cli_util.build_client('dts', 'transfer_job', ctx)
     upload_bucket = client.get_transfer_job(id=job_id).data.upload_bucket_name
     upload_user_config = oci_config.from_file(APPLIANCE_UPLOAD_USER_CONFIG_PATH)
+    click.echo("done")
 
     if not skip_upload_user_check:
-        click.echo("Validating the upload user credentials")
+        click.echo("Validating the Upload User Credentials...")
         validate_upload_user_credentials(ctx, upload_bucket, upload_user_config)
 
-    click.echo("Storing the upload user configuration and credentials on the transfer appliance")
+    click.echo("Storing the Upload User Configuration and Credentials on the Appliance... ", nl=False)
     upload_user_key_file = open(os.path.expanduser(upload_user_config[KEY_FILE_KEY])).read()
     upload_config = {
         'uploadBucket': upload_bucket,
@@ -305,15 +331,17 @@ def pa_finalize(ctx, from_json, appliance_profile, job_id, appliance_label, skip
         'uploadUserPrivateKeyPem': upload_user_key_file
     }
     physical_appliance_client.set_object_storage_upload_config(upload_config=upload_config)
+    click.echo("done")
 
-    click.echo("Finalizing the transfer appliance...")
+    click.echo("Finalizing the Appliance... ", nl=False)
     physical_appliance_client.finalize_appliance()
     appliance_info = physical_appliance_client.get_physical_transfer_appliance()
+    click.echo("done")
 
-    click.echo("The transfer appliance is locked after finalize. Hence the finalize status will be shown as NA. "
-               "Please unlock the transfer appliance again to see the correct finalize status")
+    click.echo("The Appliance is locked after finalize. Hence the finalize status will be shown as NA. "
+               "Please unlock the Appliance again to see the correct finalize status")
 
-    click.echo("Changing the state of the transfer appliance to FINALIZED")
+    click.echo("Updating the State of the Appliance in OCI to FINALIZED... ", nl=False)
     current_state = appliance_client.get_transfer_appliance(
         id=job_id,
         transfer_appliance_label=appliance_label
@@ -326,9 +354,13 @@ def pa_finalize(ctx, from_json, appliance_profile, job_id, appliance_label, skip
             id=job_id,
             transfer_appliance_label=appliance_label,
             update_transfer_appliance_details=details)
+    click.echo("done")
 
     user_friendly_appliance_info = convert_to_user_friendly(appliance_info)
     cli_util.render_response(user_friendly_appliance_info, ctx)
+    click.echo("Next action(s): Shipping the Import Appliance")
+    click.echo(" 1. - Shut Down the Import Appliance -")
+    click.echo(" 2. - Packing and Shipping the Import Appliance to Oracle -")
 
 
 def get_upload_user_region():

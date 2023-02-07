@@ -255,3 +255,22 @@ def update_connection_update_oci_object_storage_connection_details_extended(ctx,
 
 # oci goldengate deployment collect-deployment-diagnostic -> oci goldengate deployment collect-diagnostics
 cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_group, goldengate_cli.collect_deployment_diagnostic, "collect-diagnostics")
+
+# oci goldengate deployment deployment-wallet-exists-default-deployment-wallet-exists-details -> oci goldengate deployment wallet-exists
+cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_group, goldengate_cli.deployment_wallet_exists_default_deployment_wallet_exists_details, "wallet-exists")
+
+
+# oci goldengate deployment export-deployment-wallet -> oci goldengate deployment export-wallet
+cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_group, goldengate_cli.export_deployment_wallet, "export-wallet")
+
+
+# oci goldengate deployment import-deployment-wallet -> oci goldengate deployment import-wallet
+cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_group, goldengate_cli.import_deployment_wallet, "import-wallet")
+
+
+# oci goldengate deployment-wallets-operation-summary list-deployment-wallets-operations -> oci goldengate deployment-wallets-operation-summary list-wallet-operations
+cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_wallets_operation_summary_group, goldengate_cli.list_deployment_wallets_operations, "list-wallet-operations")
+
+
+# Remove deployment-wallet-exists from oci goldengate deployment
+goldengate_cli.deployment_group.commands.pop(goldengate_cli.deployment_wallet_exists.name)

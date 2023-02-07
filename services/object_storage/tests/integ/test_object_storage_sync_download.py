@@ -909,9 +909,9 @@ def create_new_files_local(path, no_of_files_to_create, with_content=False, exte
     new_local_file_set = set()
     for i in range(no_of_files_to_create):
         if i % 2 == 1:
-            new_file_path = os.path.join(path, 'dir', 'new_file_{}.{}'.format(i, extension))
+            new_file_path = os.path.join(path, 'dir', 'new_file_{}.{}'.format(i, extension)).replace(os.sep, '/')
         else:
-            new_file_path = os.path.join(path, 'new_file_{}.{}'.format(i, extension))
+            new_file_path = os.path.join(path, 'new_file_{}.{}'.format(i, extension)).replace(os.sep, '/')
         Path(os.path.dirname(new_file_path)).mkdir(parents=True, exist_ok=True)
         with open(new_file_path, 'w') as fh:
             if with_content:

@@ -1688,15 +1688,16 @@ def create_deploy_artifact_generic_deploy_artifact_source(ctx, from_json, wait_f
 @cli_util.option('--display-name', help=u"""Deployment artifact display name. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--deploy-artifact-source-helm-verification-key-source', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'deploy-artifact-source-helm-verification-key-source': {'module': 'devops', 'class': 'VerificationKeySource'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'DeployArtifact'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'deploy-artifact-source-helm-verification-key-source': {'module': 'devops', 'class': 'VerificationKeySource'}}, output_type={'module': 'devops', 'class': 'DeployArtifact'})
 @cli_util.wrap_exceptions
-def create_deploy_artifact_helm_repository_deploy_artifact_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_artifact_type, argument_substitution_mode, project_id, deploy_artifact_source_chart_url, deploy_artifact_source_deploy_artifact_version, description, display_name, freeform_tags, defined_tags):
+def create_deploy_artifact_helm_repository_deploy_artifact_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_artifact_type, argument_substitution_mode, project_id, deploy_artifact_source_chart_url, deploy_artifact_source_deploy_artifact_version, description, display_name, freeform_tags, defined_tags, deploy_artifact_source_helm_verification_key_source):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1720,6 +1721,9 @@ def create_deploy_artifact_helm_repository_deploy_artifact_source(ctx, from_json
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if deploy_artifact_source_helm_verification_key_source is not None:
+        _details['deployArtifactSource']['helmVerificationKeySource'] = cli_util.parse_json_parameter("deploy_artifact_source_helm_verification_key_source", deploy_artifact_source_helm_verification_key_source)
 
     _details['deployArtifactSource']['deployArtifactSourceType'] = 'HELM_CHART'
 
@@ -3418,15 +3422,27 @@ def create_deploy_stage_create_compute_instance_group_canary_approval_deploy_sta
 @cli_util.option('--namespace', help=u"""Default namespace to be used for Kubernetes deployment when not specified in the manifest.""")
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Time to wait for execution of a helm stage. Defaults to 300 seconds.""")
 @cli_util.option('--rollback-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--set-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--set-string', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--are-hooks-enabled', type=click.BOOL, help=u"""Disable pre/post upgrade hooks. Set to false by default.""")
+@cli_util.option('--should-reuse-values', type=click.BOOL, help=u"""During upgrade, reuse the values of the last release and merge overrides from the command line. Set to false by default.""")
+@cli_util.option('--should-reset-values', type=click.BOOL, help=u"""During upgrade, reset the values to the ones built into the chart. It overrides shouldReuseValues. Set to false by default.""")
+@cli_util.option('--is-force-enabled', type=click.BOOL, help=u"""Force resource update through delete; or if required, recreate. Set to false by default.""")
+@cli_util.option('--should-cleanup-on-fail', type=click.BOOL, help=u"""Allow deletion of new resources created during when an upgrade fails. Set to false by default.""")
+@cli_util.option('--max-history', type=click.INT, help=u"""Limit the maximum number of revisions saved per release. Use 0 for no limit. Set to 10 by default""")
+@cli_util.option('--should-skip-crds', type=click.BOOL, help=u"""If set, no CRDs are installed. By default, CRDs are installed only if they are not present already. Set to false by default.""")
+@cli_util.option('--should-skip-render-subchart-notes', type=click.BOOL, help=u"""If set, renders subchart notes along with the parent. Set to false by default.""")
+@cli_util.option('--should-not-wait', type=click.BOOL, help=u"""Does not wait until all the resources are in a ready state to mark the release as successful if set to true. Set to false by default.""")
+@cli_util.option('--is-debug-enabled', type=click.BOOL, help=u"""Enables helm --debug option to stream output to tf stdout. Set to false by default.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'deploy-stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'values-artifact-ids': {'module': 'devops', 'class': 'list[string]'}, 'rollback-policy': {'module': 'devops', 'class': 'DeployStageRollbackPolicy'}})
+@json_skeleton_utils.get_cli_json_input_option({'deploy-stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'values-artifact-ids': {'module': 'devops', 'class': 'list[string]'}, 'rollback-policy': {'module': 'devops', 'class': 'DeployStageRollbackPolicy'}, 'set-values': {'module': 'devops', 'class': 'HelmSetValueCollection'}, 'set-string': {'module': 'devops', 'class': 'HelmSetValueCollection'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'deploy-stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'values-artifact-ids': {'module': 'devops', 'class': 'list[string]'}, 'rollback-policy': {'module': 'devops', 'class': 'DeployStageRollbackPolicy'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'deploy-stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'values-artifact-ids': {'module': 'devops', 'class': 'list[string]'}, 'rollback-policy': {'module': 'devops', 'class': 'DeployStageRollbackPolicy'}, 'set-values': {'module': 'devops', 'class': 'HelmSetValueCollection'}, 'set-string': {'module': 'devops', 'class': 'HelmSetValueCollection'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
 @cli_util.wrap_exceptions
-def create_deploy_stage_create_oke_helm_chart_deploy_stage_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_pipeline_id, deploy_stage_predecessor_collection, oke_cluster_deploy_environment_id, helm_chart_deploy_artifact_id, release_name, description, display_name, freeform_tags, defined_tags, values_artifact_ids, namespace, timeout_in_seconds, rollback_policy):
+def create_deploy_stage_create_oke_helm_chart_deploy_stage_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_pipeline_id, deploy_stage_predecessor_collection, oke_cluster_deploy_environment_id, helm_chart_deploy_artifact_id, release_name, description, display_name, freeform_tags, defined_tags, values_artifact_ids, namespace, timeout_in_seconds, rollback_policy, set_values, set_string, are_hooks_enabled, should_reuse_values, should_reset_values, is_force_enabled, should_cleanup_on_fail, max_history, should_skip_crds, should_skip_render_subchart_notes, should_not_wait, is_debug_enabled):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3461,6 +3477,42 @@ def create_deploy_stage_create_oke_helm_chart_deploy_stage_details(ctx, from_jso
 
     if rollback_policy is not None:
         _details['rollbackPolicy'] = cli_util.parse_json_parameter("rollback_policy", rollback_policy)
+
+    if set_values is not None:
+        _details['setValues'] = cli_util.parse_json_parameter("set_values", set_values)
+
+    if set_string is not None:
+        _details['setString'] = cli_util.parse_json_parameter("set_string", set_string)
+
+    if are_hooks_enabled is not None:
+        _details['areHooksEnabled'] = are_hooks_enabled
+
+    if should_reuse_values is not None:
+        _details['shouldReuseValues'] = should_reuse_values
+
+    if should_reset_values is not None:
+        _details['shouldResetValues'] = should_reset_values
+
+    if is_force_enabled is not None:
+        _details['isForceEnabled'] = is_force_enabled
+
+    if should_cleanup_on_fail is not None:
+        _details['shouldCleanupOnFail'] = should_cleanup_on_fail
+
+    if max_history is not None:
+        _details['maxHistory'] = max_history
+
+    if should_skip_crds is not None:
+        _details['shouldSkipCrds'] = should_skip_crds
+
+    if should_skip_render_subchart_notes is not None:
+        _details['shouldSkipRenderSubchartNotes'] = should_skip_render_subchart_notes
+
+    if should_not_wait is not None:
+        _details['shouldNotWait'] = should_not_wait
+
+    if is_debug_enabled is not None:
+        _details['isDebugEnabled'] = is_debug_enabled
 
     _details['deployStageType'] = 'OKE_HELM_CHART_DEPLOYMENT'
 
@@ -9146,16 +9198,17 @@ def update_deploy_artifact_generic_deploy_artifact_source(ctx, from_json, force,
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--deploy-artifact-source-helm-verification-key-source', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'deploy-artifact-source-helm-verification-key-source': {'module': 'devops', 'class': 'VerificationKeySource'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'DeployArtifact'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'deploy-artifact-source-helm-verification-key-source': {'module': 'devops', 'class': 'VerificationKeySource'}}, output_type={'module': 'devops', 'class': 'DeployArtifact'})
 @cli_util.wrap_exceptions
-def update_deploy_artifact_helm_repository_deploy_artifact_source(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_artifact_id, deploy_artifact_source_chart_url, deploy_artifact_source_deploy_artifact_version, description, display_name, deploy_artifact_type, argument_substitution_mode, freeform_tags, defined_tags, if_match):
+def update_deploy_artifact_helm_repository_deploy_artifact_source(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_artifact_id, deploy_artifact_source_chart_url, deploy_artifact_source_deploy_artifact_version, description, display_name, deploy_artifact_type, argument_substitution_mode, freeform_tags, defined_tags, if_match, deploy_artifact_source_helm_verification_key_source):
 
     if isinstance(deploy_artifact_id, six.string_types) and len(deploy_artifact_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-artifact-id cannot be whitespace or empty string')
@@ -9191,6 +9244,9 @@ def update_deploy_artifact_helm_repository_deploy_artifact_source(ctx, from_json
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if deploy_artifact_source_helm_verification_key_source is not None:
+        _details['deployArtifactSource']['helmVerificationKeySource'] = cli_util.parse_json_parameter("deploy_artifact_source_helm_verification_key_source", deploy_artifact_source_helm_verification_key_source)
 
     _details['deployArtifactSource']['deployArtifactSourceType'] = 'HELM_CHART'
 
@@ -10084,23 +10140,35 @@ def update_deploy_stage_update_oke_canary_deploy_stage_details(ctx, from_json, f
 @cli_util.option('--namespace', help=u"""Default namespace to be used for Kubernetes deployment when not specified in the manifest.""")
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Time to wait for execution of a helm stage. Defaults to 300 seconds.""")
 @cli_util.option('--rollback-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--set-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--set-string', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--are-hooks-enabled', type=click.BOOL, help=u"""Disable pre/post upgrade hooks.""")
+@cli_util.option('--should-reuse-values', type=click.BOOL, help=u"""During upgrade, reuse the values of the last release and merge overrides from the command line. Set to false by default.""")
+@cli_util.option('--should-reset-values', type=click.BOOL, help=u"""During upgrade, reset the values to the ones built into the chart. It overrides shouldReuseValues. Set to false by default.""")
+@cli_util.option('--is-force-enabled', type=click.BOOL, help=u"""Force resource update through delete; or if required, recreate. Set to false by default.""")
+@cli_util.option('--should-cleanup-on-fail', type=click.BOOL, help=u"""Allow deletion of new resources created during when an upgrade fails. Set to false by default.""")
+@cli_util.option('--max-history', type=click.INT, help=u"""Limit the maximum number of revisions saved per release. Use 0 for no limit. Set to 10 by default""")
+@cli_util.option('--should-skip-crds', type=click.BOOL, help=u"""If set, no CRDs are installed. By default, CRDs are installed only if they are not present already. Set to false by default.""")
+@cli_util.option('--should-skip-render-subchart-notes', type=click.BOOL, help=u"""If set, renders subchart notes along with the parent. Set to false by default.""")
+@cli_util.option('--should-not-wait', type=click.BOOL, help=u"""Waits until all the resources are in a ready state to mark the release as successful. Set to false by default.""")
+@cli_util.option('--is-debug-enabled', type=click.BOOL, help=u"""Enables helm --debug option to stream output to tf stdout. Set to false by default.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'deploy-stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'values-artifact-ids': {'module': 'devops', 'class': 'list[string]'}, 'rollback-policy': {'module': 'devops', 'class': 'DeployStageRollbackPolicy'}})
+@json_skeleton_utils.get_cli_json_input_option({'deploy-stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'values-artifact-ids': {'module': 'devops', 'class': 'list[string]'}, 'rollback-policy': {'module': 'devops', 'class': 'DeployStageRollbackPolicy'}, 'set-values': {'module': 'devops', 'class': 'HelmSetValueCollection'}, 'set-string': {'module': 'devops', 'class': 'HelmSetValueCollection'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'deploy-stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'values-artifact-ids': {'module': 'devops', 'class': 'list[string]'}, 'rollback-policy': {'module': 'devops', 'class': 'DeployStageRollbackPolicy'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'deploy-stage-predecessor-collection': {'module': 'devops', 'class': 'DeployStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'values-artifact-ids': {'module': 'devops', 'class': 'list[string]'}, 'rollback-policy': {'module': 'devops', 'class': 'DeployStageRollbackPolicy'}, 'set-values': {'module': 'devops', 'class': 'HelmSetValueCollection'}, 'set-string': {'module': 'devops', 'class': 'HelmSetValueCollection'}}, output_type={'module': 'devops', 'class': 'DeployStage'})
 @cli_util.wrap_exceptions
-def update_deploy_stage_update_oke_helm_chart_deploy_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_stage_id, description, display_name, deploy_stage_predecessor_collection, freeform_tags, defined_tags, oke_cluster_deploy_environment_id, helm_chart_deploy_artifact_id, values_artifact_ids, release_name, namespace, timeout_in_seconds, rollback_policy, if_match):
+def update_deploy_stage_update_oke_helm_chart_deploy_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deploy_stage_id, description, display_name, deploy_stage_predecessor_collection, freeform_tags, defined_tags, oke_cluster_deploy_environment_id, helm_chart_deploy_artifact_id, values_artifact_ids, release_name, namespace, timeout_in_seconds, rollback_policy, set_values, set_string, are_hooks_enabled, should_reuse_values, should_reset_values, is_force_enabled, should_cleanup_on_fail, max_history, should_skip_crds, should_skip_render_subchart_notes, should_not_wait, is_debug_enabled, if_match):
 
     if isinstance(deploy_stage_id, six.string_types) and len(deploy_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --deploy-stage-id cannot be whitespace or empty string')
     if not force:
-        if deploy_stage_predecessor_collection or freeform_tags or defined_tags or values_artifact_ids or rollback_policy:
-            if not click.confirm("WARNING: Updates to deploy-stage-predecessor-collection and freeform-tags and defined-tags and values-artifact-ids and rollback-policy will replace any existing values. Are you sure you want to continue?"):
+        if deploy_stage_predecessor_collection or freeform_tags or defined_tags or values_artifact_ids or rollback_policy or set_values or set_string:
+            if not click.confirm("WARNING: Updates to deploy-stage-predecessor-collection and freeform-tags and defined-tags and values-artifact-ids and rollback-policy and set-values and set-string will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -10145,6 +10213,42 @@ def update_deploy_stage_update_oke_helm_chart_deploy_stage_details(ctx, from_jso
 
     if rollback_policy is not None:
         _details['rollbackPolicy'] = cli_util.parse_json_parameter("rollback_policy", rollback_policy)
+
+    if set_values is not None:
+        _details['setValues'] = cli_util.parse_json_parameter("set_values", set_values)
+
+    if set_string is not None:
+        _details['setString'] = cli_util.parse_json_parameter("set_string", set_string)
+
+    if are_hooks_enabled is not None:
+        _details['areHooksEnabled'] = are_hooks_enabled
+
+    if should_reuse_values is not None:
+        _details['shouldReuseValues'] = should_reuse_values
+
+    if should_reset_values is not None:
+        _details['shouldResetValues'] = should_reset_values
+
+    if is_force_enabled is not None:
+        _details['isForceEnabled'] = is_force_enabled
+
+    if should_cleanup_on_fail is not None:
+        _details['shouldCleanupOnFail'] = should_cleanup_on_fail
+
+    if max_history is not None:
+        _details['maxHistory'] = max_history
+
+    if should_skip_crds is not None:
+        _details['shouldSkipCrds'] = should_skip_crds
+
+    if should_skip_render_subchart_notes is not None:
+        _details['shouldSkipRenderSubchartNotes'] = should_skip_render_subchart_notes
+
+    if should_not_wait is not None:
+        _details['shouldNotWait'] = should_not_wait
+
+    if is_debug_enabled is not None:
+        _details['isDebugEnabled'] = is_debug_enabled
 
     _details['deployStageType'] = 'OKE_HELM_CHART_DEPLOYMENT'
 

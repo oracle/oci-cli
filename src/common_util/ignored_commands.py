@@ -147,7 +147,25 @@ IGNORED_COMMANDS = [
     ['apm-synthetics', 'aggregated-network-data-result', 'aggregate-network-data'],
     ['dashboard-service', 'dashboard', 'change-dashboard-group'],
     ['dashboard-service', 'dashboard-group', 'change-compartment'],
-    ['service-mesh', 'debug', 'report']
+    ['service-mesh', 'debug', 'report'],
+    ['compute', 'compute-capacity-report', 'create'],
+    ['db', 'autonomous-container-database', 'change-dataguard-role'],
+    ['db', 'autonomous-container-database-version', 'list'],
+    ['devops', 'deploy-artifact', 'create-helm-repository-artifact'],
+    ['devops', 'deploy-artifact', 'update-helm-repository-artifact'],
+    ['devops', 'deploy-stage', 'create-oke-helm-chart-stage'],
+    ['devops', 'deploy-stage', 'update-oke-helm-chart-stage'],
+    ['goldengate', 'deployment', 'export-wallet'],
+    ['goldengate', 'deployment', 'import-wallet'],
+    ['goldengate', 'deployment', 'wallet-exists'],
+    ['goldengate', 'deployment-wallets-operation-summary', 'list-wallet-operations'],
+    ['opsi', 'opsi-configurations', 'change'],
+    ['opsi', 'opsi-configurations', 'create-opsi-ux-configuration-details'],
+    ['opsi', 'opsi-configurations', 'delete'],
+    ['opsi', 'opsi-configurations', 'get'],
+    ['opsi', 'opsi-configurations', 'list'],
+    ['opsi', 'opsi-configurations', 'summarize-configuration-items'],
+    ['opsi', 'opsi-configurations', 'update-opsi-ux-configuration-details']
 ]
 
 IGNORED_COMMANDS_DOCS = [
