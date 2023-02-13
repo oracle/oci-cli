@@ -10,13 +10,14 @@ import os
 import pytest
 import time
 import oci_cli
-from tests import util, test_config_container
 from oci.object_storage import MultipartObjectAssembler
+
+from tests import util, test_config_container
+from services.object_storage.tests.common.constants import CASSETTE_LIBRARY_DIR
 
 CONTENT_OUTPUT_FILE = 'tests/resources/content_output_multipart.txt'
 LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES = 100
 DEFAULT_TEST_PART_SIZE = 10
-CASSETTE_LIBRARY_DIR = 'services/object_storage/tests/cassettes'
 GENERATED_ENC_KEY_FILE = 'tests/temp/generated_enc_key_multipart.txt'
 
 temp_bucket_recorded = None

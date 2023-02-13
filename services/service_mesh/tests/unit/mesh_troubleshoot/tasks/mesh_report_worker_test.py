@@ -21,7 +21,7 @@ class TestMeshReportWorker(unittest.TestCase):
         tasks, output_events = mesh_report_task.do_work(mesh_report_task_request,
                                                         kube_command_helper=kube_command_helper)
         # There should be 6 tasks, 0 output_events
-        self.assertTrue(len(tasks) == 10)
+        self.assertTrue(len(tasks) == 9)
         self.assertTrue(len(output_events) == 0)
 
         expected_task_request_types = [TaskRequestType.COMMON_PROCESSOR.value,
@@ -30,7 +30,6 @@ class TestMeshReportWorker(unittest.TestCase):
                                        TaskRequestType.COMMON_PROCESSOR.value,
                                        TaskRequestType.NAMESPACES_PROCESSOR.value,
                                        TaskRequestType.OCI_CLI_VERSION_PROCESSOR.value,
-                                       TaskRequestType.OBSERVABILITY_PROCESSOR.value,
                                        TaskRequestType.SERVICES_PROCESSOR.value,
                                        TaskRequestType.VALIDATE_CRDS_PROCESSOR.value,
                                        TaskRequestType.WEBHOOKS_PROCESSOR.value

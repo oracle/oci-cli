@@ -7,11 +7,11 @@ import os
 import os.path
 import pytest
 import oci_cli
-from tests import util
-from tests import test_config_container
 import json
 
-CASSETTE_LIBRARY_DIR = 'services/object_storage/tests/cassettes'
+from tests import util
+from tests import test_config_container
+from services.object_storage.tests.common.constants import CASSETTE_LIBRARY_DIR
 
 created_buckets = 'created_buckets'
 

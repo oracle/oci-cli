@@ -60,10 +60,11 @@ class TestObjectStorage(unittest.TestCase):
         tf = tempfile.NamedTemporaryFile(dir=td, delete=False)
         tmp_file_name = tf.name
         tf.close()
-        result = util.invoke_command(['os', 'object', 'put', '--bucket-name', 'test', '--file', tmp_file_name, '--verify-checksum', '--force'])
+        random_bucket_name = 'test-gfhygf'
+        result = util.invoke_command(['os', 'object', 'put', '--bucket-name', random_bucket_name, '--file', tmp_file_name, '--verify-checksum', '--force'])
         assert "ServiceError" in result.output
         assert "BucketNotFound" in result.output
-        result = util.invoke_command(['os', 'object', 'bulk-upload', '--bucket-name', 'test', '--src-dir', td, '--verify-checksum'])
+        result = util.invoke_command(['os', 'object', 'bulk-upload', '--bucket-name', random_bucket_name, '--src-dir', td, '--verify-checksum'])
         assert "ServiceError" in result.output
         assert "BucketNotFound" in result.output
         os.unlink(tmp_file_name)

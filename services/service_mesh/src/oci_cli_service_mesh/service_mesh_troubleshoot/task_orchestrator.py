@@ -28,7 +28,6 @@ from services.service_mesh.src.oci_cli_service_mesh.service_mesh_troubleshoot.ta
     ResourceTask
 from services.service_mesh.src.oci_cli_service_mesh.service_mesh_troubleshoot.tasks.validate_crds_worker import ValidateCrdsTask
 from services.service_mesh.src.oci_cli_service_mesh.service_mesh_troubleshoot.tasks.webhooks_worker import WebhooksTask
-from services.service_mesh.src.oci_cli_service_mesh.service_mesh_troubleshoot.tasks.observability_worker import ObservabilityTask
 from services.service_mesh.src.oci_cli_service_mesh.service_mesh_troubleshoot.tasks.services_worker import CheckServicesTask
 
 
@@ -53,7 +52,6 @@ class TaskOrchestrator():
             TaskRequestType.CSV_PROCESSOR: CsvTask(self.k8s_context),
             TaskRequestType.MESH_REPORT_PROCESSOR: MeshReportTask(self.k8s_context),
             TaskRequestType.MESH_RESOURCES_PROCESSOR: MeshResourcesTask(self.k8s_context),
-            TaskRequestType.OBSERVABILITY_PROCESSOR: ObservabilityTask(self.k8s_context)
         }
 
     def process_task(self, task):

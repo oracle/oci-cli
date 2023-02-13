@@ -2694,8 +2694,8 @@ def bucket_delete(ctx, from_json, namespace_name, bucket_name, empty, force, dry
 
     if not force and not dry_run:
         if empty:
-            confirm_prompt = 'This command will delete the bucket as well as all objects, ' \
-                             'pre-authenticated requests, uncommitted multipart uploads and replication policies ' \
+            confirm_prompt = 'This command will delete the bucket as well as all replication policies, ' \
+                             'pre-authenticated requests, objects and uncommitted multipart uploads ' \
                              'associated with it. Are you sure you wish to continue?'
         else:
             confirm_prompt = "Are you sure you want to delete this bucket?"
@@ -2739,12 +2739,37 @@ def _delete_bucket_components(ctx, client, namespace_name, bucket_name, dry_run,
                               del_pars=True, del_rep_pol=True, del_uploads=True):
 
     stacked_output = []  # this will store the output from deletion of different bucket components (e.g object, par etc)
-    output_object = BulkDeleteOperationOutput()
-    output_par = BulkDeleteOperationOutput('preauth-request')
     output_rep_policy = BulkDeleteOperationOutput('replication-policy')
+    output_par = BulkDeleteOperationOutput('preauth-request')
+    output_object = BulkDeleteOperationOutput()
     output_upload = BulkDeleteOperationOutput('multipart-upload')
 
     if dry_run:
+
+        list_params = {
+            'request_id': ctx.obj['request_id'],
+            'namespace': namespace_name,
+            'bucket_name': bucket_name,
+            'limit': OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS,
+            'retrieve_all': True
+        }
+
+        if del_rep_pol:
+            # list replication policies
+            rep_policy_list_response = retrying_list_call(client.list_replication_policies, **list_params)
+            for response in rep_policy_list_response:
+                for rep_policy_obj in response.data:
+                    output_rep_policy.add_deleted(rep_policy_obj.name)
+            stacked_output.append(output_rep_policy)
+
+        if del_pars:
+            # list pre-authenticated requests
+            par_list_response = retrying_list_call(client.list_preauthenticated_requests, **list_params)
+            for response in par_list_response:
+                for par_object in response.data:
+                    output_par.add_deleted(par_object.name)
+            stacked_output.append(output_par)
+
         if del_objects:
             # list object/ object versions
             list_obj_params = {
@@ -2784,29 +2809,6 @@ def _delete_bucket_components(ctx, client, namespace_name, bucket_name, dry_run,
                         output_object.add_deleted(obj.name + "," + obj.version_id)
             stacked_output.append(output_object)
 
-        list_params = {
-            'request_id': ctx.obj['request_id'],
-            'namespace': namespace_name,
-            'bucket_name': bucket_name,
-            'limit': OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS,
-            'retrieve_all': True
-        }
-        if del_pars:
-            # list pre-authenticated requests
-            par_list_response = retrying_list_call(client.list_preauthenticated_requests, **list_params)
-            for response in par_list_response:
-                for par_object in response.data:
-                    output_par.add_deleted(par_object.name)
-            stacked_output.append(output_par)
-
-        if del_rep_pol:
-            # list replication policies
-            rep_policy_list_response = retrying_list_call(client.list_replication_policies, **list_params)
-            for response in rep_policy_list_response:
-                for rep_policy_obj in response.data:
-                    output_rep_policy.add_deleted(rep_policy_obj.name)
-            stacked_output.append(output_rep_policy)
-
         if del_uploads:
             # list un-committed uploads
             list_uploads_response = retrying_list_call(client.list_multipart_uploads, **list_params)
@@ -2823,19 +2825,6 @@ def _delete_bucket_components(ctx, client, namespace_name, bucket_name, dry_run,
         'bucket_name': bucket_name,
         'request_id': ctx.obj['request_id']
     }
-    if del_objects:
-        if not versioned:
-            _bulk_delete_objects_using_pool(ctx, client, namespace_name, bucket_name, None, True, None, prefix,
-                                            file_filter_collection, excluded_object_set, output_object,
-                                            parallel_operations_count, lambda r: r.data.next_start_with,
-                                            lambda res: res.data.objects)
-        else:
-            # bulk-delete object versions
-            _bulk_delete_objects_using_pool(ctx, client, namespace_name, bucket_name, None, True, None, prefix,
-                                            file_filter_collection, excluded_object_set, output_object,
-                                            parallel_operations_count, lambda r: r.headers.get('opc-next-page'),
-                                            lambda res: res.data.items, is_versioned=True)
-        stacked_output.append(output_object)
 
     list_params = {
         'request_id': ctx.obj['request_id'],
@@ -2844,27 +2833,6 @@ def _delete_bucket_components(ctx, client, namespace_name, bucket_name, dry_run,
         'limit': OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS,
         'retrieve_all': False
     }
-    if del_pars:
-        # Deleting PreAuthenticated Requests
-        par_delete_kwargs = common_delete_kwargs.copy()
-        reusable_progress_bar = ProgressBar(100, 'Deleting Preauthenticated Requests')
-        while True:
-            transfer_manager = TransferManager(client,
-                                               TransferManagerConfig(
-                                                   max_object_storage_requests=parallel_operations_count))
-            par_list_response = retrying_list_call(client.list_preauthenticated_requests, **list_params)
-
-            for response in par_list_response:
-                for p_obj in response.data:
-                    par_delete_kwargs['par_id'] = p_obj.id
-                    _add_to_delete_pool(ctx, p_obj.name, output_par, reusable_progress_bar, transfer_manager,
-                                        DeletePreAuthenticatedRequestTask, par_delete_kwargs)
-
-            transfer_manager.wait_for_completion()
-            if par_list_response[-1].headers.get('opc-next-page') is None:
-                break
-        reusable_progress_bar.render_finish()
-        stacked_output.append(output_par)
 
     if del_rep_pol:
         # Deleting Replication Policies
@@ -2887,6 +2855,42 @@ def _delete_bucket_components(ctx, client, namespace_name, bucket_name, dry_run,
                 break
         reusable_progress_bar.render_finish()
         stacked_output.append(output_rep_policy)
+
+    if del_pars:
+        # Deleting PreAuthenticated Requests
+        par_delete_kwargs = common_delete_kwargs.copy()
+        reusable_progress_bar = ProgressBar(100, 'Deleting Preauthenticated Requests')
+        while True:
+            transfer_manager = TransferManager(client,
+                                               TransferManagerConfig(
+                                                   max_object_storage_requests=parallel_operations_count))
+            par_list_response = retrying_list_call(client.list_preauthenticated_requests, **list_params)
+
+            for response in par_list_response:
+                for p_obj in response.data:
+                    par_delete_kwargs['par_id'] = p_obj.id
+                    _add_to_delete_pool(ctx, p_obj.name, output_par, reusable_progress_bar, transfer_manager,
+                                        DeletePreAuthenticatedRequestTask, par_delete_kwargs)
+
+            transfer_manager.wait_for_completion()
+            if par_list_response[-1].headers.get('opc-next-page') is None:
+                break
+        reusable_progress_bar.render_finish()
+        stacked_output.append(output_par)
+
+    if del_objects:
+        if not versioned:
+            _bulk_delete_objects_using_pool(ctx, client, namespace_name, bucket_name, None, True, None, prefix,
+                                            file_filter_collection, excluded_object_set, output_object,
+                                            parallel_operations_count, lambda r: r.data.next_start_with,
+                                            lambda res: res.data.objects)
+        else:
+            # bulk-delete object versions
+            _bulk_delete_objects_using_pool(ctx, client, namespace_name, bucket_name, None, True, None, prefix,
+                                            file_filter_collection, excluded_object_set, output_object,
+                                            parallel_operations_count, lambda r: r.headers.get('opc-next-page'),
+                                            lambda res: res.data.items, is_versioned=True)
+        stacked_output.append(output_object)
 
     if del_uploads:
         # Deleting uncommitted uploads

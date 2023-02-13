@@ -31,7 +31,6 @@ OLM_VERSION = "v0.20.0"
 class IssueType(Enum):
     CSV_STATUS_NOT_SUCCEEDED = 'Status of Csv did not succeed'
     MULTIPLE_SIDECAR_VERSIONS = 'Multiple versions are used for proxy sidecar'
-    SETUP_OBSERVABILITY = 'Observability setup is not complete'
     MISSING_MESH_WEBHOOKS = 'All Mesh webhooks are not installed'
     MISSING_OPERATOR_SERVICES = 'All Operator Services are not installed'
     MISSING_MESH_CRDS = 'All Mesh Crds are not installed'
@@ -47,7 +46,6 @@ TROUBLESHOOT_DICT = {
     IssueType.MISSING_MESH_WEBHOOKS: "Refer - https://docs.oracle.com/en-us/iaas/Content/service-mesh/tbl-troubleshoot-osok.htm",
     IssueType.MISSING_MESH_CRDS: "Refer - https://docs.oracle.com/en-us/iaas/Content/service-mesh/tbl-troubleshoot-osok.htm",
     IssueType.INCOMPATIBLE_VERSIONS: "Contact Oracle Support for assistance.",
-    IssueType.SETUP_OBSERVABILITY: "Suggestions to setup Observability",
     IssueType.MULTIPLE_SIDECAR_VERSIONS: "Refer - https://docs.oracle.com/en-us/iaas/Content/service-mesh/tbl-troubleshoot-osok.htm",
     IssueType.MISSING_OPERATOR_SERVICES: "Refer - https://docs.oracle.com/en-us/iaas/Content/service-mesh/tbl-troubleshoot-osok.htm",
     IssueType.INCOMPATIBLE_OLM_VERSION: "Refer - https://docs.oracle.com/en-us/iaas/Content/service-mesh/tbl-troubleshoot-osok.htm",

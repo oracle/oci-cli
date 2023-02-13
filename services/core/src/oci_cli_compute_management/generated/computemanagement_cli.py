@@ -19,7 +19,9 @@ from services.core.src.oci_cli_core.generated import core_service_cli
 compute instances, and block storage volumes. For more information, see the console
 documentation for the [Networking],
 [Compute], and
-[Block Volume] services."""), short_help=cli_util.override('compute_management.compute_management_root_group.short_help', """Core Services API"""))
+[Block Volume] services.
+The required permissions are documented in the
+[Details for the Core Services] article."""), short_help=cli_util.override('compute_management.compute_management_root_group.short_help', """Core Services API"""))
 @cli_util.help_option_group
 def compute_management_root_group():
     pass
@@ -31,7 +33,11 @@ def instance_pool_group():
     pass
 
 
-@click.command(cli_util.override('compute_management.instance_group.command_name', 'instance'), cls=CommandGroupWithAlias, help="""A compute host. The image used to launch the instance determines its operating system and other software. The shape specified during the launch process determines the number of CPUs and memory allocated to the instance. For more information, see [Overview of the Compute Service].
+@click.command(cli_util.override('compute_management.instance_group.command_name', 'instance'), cls=CommandGroupWithAlias, help="""A compute host. The image used to launch the instance determines its operating system and other software. The shape specified during the launch process determines the number of CPUs and memory allocated to the instance.
+
+When you launch an instance, it is automatically attached to a virtual network interface card (VNIC), called the *primary VNIC*. The VNIC has a private IP address from the subnet's CIDR. You can either assign a private IP address of your choice or let Oracle automatically assign one. You can choose whether the instance has a public IP address. To retrieve the addresses, use the [ListVnicAttachments] operation to get the VNIC ID for the instance, and then call [GetVnic] with the VNIC ID.
+
+For more information, see [Overview of the Compute Service].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
 
@@ -379,9 +385,7 @@ To include block volume contents with an instance configuration, first create a 
 
 The following values are supported:
 
-* `NONE`: Creates an instance configuration using the list of settings that you specify.
-
-* `INSTANCE`: Creates an instance configuration using an existing instance as a template.""")
+* `NONE`: Creates an instance configuration using the list of settings that you specify. * `INSTANCE`: Creates an instance configuration using an existing instance as a template.""")
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
@@ -498,7 +502,7 @@ def create_instance_configuration_create_instance_configuration_from_instance_de
     cli_util.render_response(result, ctx)
 
 
-@instance_pool_group.command(name=cli_util.override('compute_management.create_instance_pool.command_name', 'create'), help=u"""Create an instance pool. \n[Command Reference](createInstancePool)""")
+@instance_pool_group.command(name=cli_util.override('compute_management.create_instance_pool.command_name', 'create'), help=u"""Creates an instance pool. \n[Command Reference](createInstancePool)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the instance pool.""")
 @cli_util.option('--instance-configuration-id', required=True, help=u"""The [OCID] of the instance configuration associated with the instance pool.""")
 @cli_util.option('--placement-configurations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The placement configurations for the instance pool. Provide one placement configuration for each availability domain.
@@ -843,9 +847,9 @@ def get_instance_pool_load_balancer_attachment(ctx, from_json, instance_pool_id,
     cli_util.render_response(result, ctx)
 
 
-@instance_group.command(name=cli_util.override('compute_management.launch_instance_configuration.command_name', 'launch-instance-configuration'), help=u"""Launches an instance from an instance configuration.
+@instance_group.command(name=cli_util.override('compute_management.launch_instance_configuration.command_name', 'launch-instance-configuration'), help=u"""Creates an instance from an instance configuration.
 
-If the instance configuration does not include all of the parameters that are required to launch an instance, such as the availability domain and subnet ID, you must provide these parameters when you launch an instance from the instance configuration. For more information, see the [InstanceConfiguration] resource. \n[Command Reference](launchInstanceConfiguration)""")
+If the instance configuration does not include all of the parameters that are required to create an instance, such as the availability domain and subnet ID, you must provide these parameters when you create an instance from the instance configuration. For more information, see the [InstanceConfiguration] resource. \n[Command Reference](launchInstanceConfiguration)""")
 @cli_util.option('--instance-configuration-id', required=True, help=u"""The OCID of the instance configuration.""")
 @cli_util.option('--instance-type', required=True, help=u"""The type of instance details. Supported instanceType is compute""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -872,15 +876,15 @@ def launch_instance_configuration(ctx, from_json, instance_configuration_id, ins
     cli_util.render_response(result, ctx)
 
 
-@instance_group.command(name=cli_util.override('compute_management.launch_instance_configuration_compute_instance_details.command_name', 'launch-instance-configuration-compute-instance-details'), help=u"""Launches an instance from an instance configuration.
+@instance_group.command(name=cli_util.override('compute_management.launch_instance_configuration_compute_instance_details.command_name', 'launch-instance-configuration-compute-instance-details'), help=u"""Creates an instance from an instance configuration.
 
-If the instance configuration does not include all of the parameters that are required to launch an instance, such as the availability domain and subnet ID, you must provide these parameters when you launch an instance from the instance configuration. For more information, see the [InstanceConfiguration] resource. \n[Command Reference](launchInstanceConfiguration)""")
+If the instance configuration does not include all of the parameters that are required to create an instance, such as the availability domain and subnet ID, you must provide these parameters when you create an instance from the instance configuration. For more information, see the [InstanceConfiguration] resource. \n[Command Reference](launchInstanceConfiguration)""")
 @cli_util.option('--instance-configuration-id', required=True, help=u"""The OCID of the instance configuration.""")
-@cli_util.option('--block-volumes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
+@cli_util.option('--block-volumes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Block volume parameters.
 
 This option is a JSON list with items of type InstanceConfigurationBlockVolumeDetails.  For documentation on InstanceConfigurationBlockVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/InstanceConfigurationBlockVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--launch-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--secondary-vnics', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
+@cli_util.option('--secondary-vnics', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Secondary VNIC parameters.
 
 This option is a JSON list with items of type InstanceConfigurationAttachVnicDetails.  For documentation on InstanceConfigurationAttachVnicDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/InstanceConfigurationAttachVnicDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'block-volumes': {'module': 'core', 'class': 'list[InstanceConfigurationBlockVolumeDetails]'}, 'launch-details': {'module': 'core', 'class': 'InstanceConfigurationLaunchInstanceDetails'}, 'secondary-vnics': {'module': 'core', 'class': 'list[InstanceConfigurationAttachVnicDetails]'}})

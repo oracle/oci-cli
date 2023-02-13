@@ -1,0 +1,118 @@
+interactions:
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="ASnnMr4yT2DiKcYkJzYFovX5aZJ7LIMDj5EbUA/k1eYBSxjLYg56WwbJpmPMWEMMx2VKMwz7Ua/REMByJ6wLhT0FyMEUfZKEIAoLxowPgSevnVW9noXyF67KKrYul60Vds7nftMu5xjd6hO8UFxwuYw03tguPowoXww5EQXMqw/kzRLIB6/WGWyQ7jOYUEkvppCSmjjy0jmdG5a8o9xrkRgfsqQvJXtZ8k+7BPjzc1cul6XxLCOxKi19lCUqRxnaDuLli/Jczjs1eYZ9n4xFK/QYuCJx7ndvMrfUbPbwQCpB2oy39gfwSZyzkvTJmlNRV+hufiKGmGoPHk8AR8EpYQ==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:57:03 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 145B6CBE49674ED3BAEE892C2BAFC3A1
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 5FD69B56C55044FBB2212D9039F9210F
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/invalid_bucket/o?limit=1000&fields=name%2Csize%2CtimeModified%2CarchivalState
+  response:
+    body:
+      string: '{"code":"BucketNotFound","message":"Either the bucket named ''invalid_bucket''
+        does not exist in the namespace ''axzbp3kgiaim'' or you are not authorized
+        to access it"}'
+    headers:
+      Content-Length:
+      - '164'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:57:05 GMT
+      opc-client-request-id:
+      - 145B6CBE49674ED3BAEE892C2BAFC3A1
+      opc-request-id:
+      - iad-1:2_gFiybcYayuOkO3FCNsHNQSxH3ZBYKhIR65I3u9oGKxFTRzVkFfnTFp26A3RiZ2
+      x-api-id:
+      - native
+    status:
+      code: 404
+      message: Not Found
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="GPjvZ1nAh9CzUnaXOA1ZDLzm7Iv/JFUBduiE6vw6o6IIGkR703Z6hW3zAWqDM6p6pzdCZmY2O4IWaycu/2/q5LlUQ9H3ucqqD9iKVgFgm9O/+yIgXEfg6okuJrhX5SOysMxVREYPzvX0vn9C1ebwbsNWZGMmm2sxwMRPXo1V2UnRG9GkrGs4d3O6ADAQWwyDkD6w5u2NhdMhO3xIHB/YAOPgvseHokBHeU/2ggUn13btLAOimQOdD78NCcqA8UtQlr3hRfWK8jNGAU8GReB1VMAxYOuqF0HpfhQjdXW7J5HiHqfgqMa47up9ZzCX6zXlvmAgfuV9XZswuGtISgQHnA==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:57:04 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - C62CEE47182A482C838E3E2F361E1EE0
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - F13E9E304BC34DA9A809853487D2F75C
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/invalid_bucket/o?limit=1000&fields=name%2Csize%2CtimeModified%2CarchivalState
+  response:
+    body:
+      string: '{"code":"BucketNotFound","message":"Either the bucket named ''invalid_bucket''
+        does not exist in the namespace ''axzbp3kgiaim'' or you are not authorized
+        to access it"}'
+    headers:
+      Content-Length:
+      - '164'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:57:06 GMT
+      opc-client-request-id:
+      - C62CEE47182A482C838E3E2F361E1EE0
+      opc-request-id:
+      - iad-1:ActjAeLJjmV0MLFHryjgefsGp32LeAWcp08rk7_rtf6iZE36_0JkRJgL6W6w2BCc
+      x-api-id:
+      - native
+    status:
+      code: 404
+      message: Not Found
+version: 1

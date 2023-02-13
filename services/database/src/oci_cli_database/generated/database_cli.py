@@ -397,6 +397,12 @@ def vm_cluster_update_group():
     pass
 
 
+@click.command(cli_util.override('db.autonomous_virtual_machine_group.command_name', 'autonomous-virtual-machine'), cls=CommandGroupWithAlias, help="""Autonomous Virtual Machine details.""")
+@cli_util.help_option_group
+def autonomous_virtual_machine_group():
+    pass
+
+
 db_root_group.add_command(update_history_entry_group)
 db_root_group.add_command(backup_group)
 db_root_group.add_command(external_non_container_database_group)
@@ -456,6 +462,7 @@ db_root_group.add_command(key_store_summary_group)
 db_root_group.add_command(autonomous_db_preview_version_group)
 db_root_group.add_command(vm_cluster_group)
 db_root_group.add_command(vm_cluster_update_group)
+db_root_group.add_command(autonomous_virtual_machine_group)
 
 
 @exadata_infrastructure_group.command(name=cli_util.override('db.activate_exadata_infrastructure.command_name', 'activate'), help=u"""Activates the specified Exadata infrastructure resource. Applies to Exadata Cloud@Customer instances only. \n[Command Reference](activateExadataInfrastructure)""")
@@ -4317,6 +4324,7 @@ def create_autonomous_database_backup(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.option('--memory-per-oracle-compute-unit-in-gbs', type=click.INT, help=u"""The amount of memory (in GBs) to be enabled per each OCPU core.""")
 @cli_util.option('--autonomous-data-storage-size-in-tbs', help=u"""The data disk group size to be allocated for Autonomous Databases, in TBs.""")
 @cli_util.option('--maintenance-window-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--db-servers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of [OCIDs] of the Db servers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4327,12 +4335,12 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'db-servers': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousVmCluster'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'db-servers': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousVmCluster'})
 @cli_util.wrap_exceptions
-def create_autonomous_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, exadata_infrastructure_id, vm_cluster_network_id, time_zone, is_local_backup_enabled, license_model, total_container_databases, cpu_core_count_per_node, compute_model, memory_per_oracle_compute_unit_in_gbs, autonomous_data_storage_size_in_tbs, maintenance_window_details, freeform_tags, defined_tags, scan_listener_port_tls, scan_listener_port_non_tls, is_mtls_enabled):
+def create_autonomous_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, exadata_infrastructure_id, vm_cluster_network_id, time_zone, is_local_backup_enabled, license_model, total_container_databases, cpu_core_count_per_node, compute_model, memory_per_oracle_compute_unit_in_gbs, autonomous_data_storage_size_in_tbs, maintenance_window_details, db_servers, freeform_tags, defined_tags, scan_listener_port_tls, scan_listener_port_non_tls, is_mtls_enabled):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -4369,6 +4377,9 @@ def create_autonomous_vm_cluster(ctx, from_json, wait_for_state, max_wait_second
 
     if maintenance_window_details is not None:
         _details['maintenanceWindowDetails'] = cli_util.parse_json_parameter("maintenance_window_details", maintenance_window_details)
+
+    if db_servers is not None:
+        _details['dbServers'] = cli_util.parse_json_parameter("db_servers", db_servers)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -10550,6 +10561,28 @@ def get_autonomous_patch(ctx, from_json, autonomous_patch_id):
     cli_util.render_response(result, ctx)
 
 
+@autonomous_virtual_machine_group.command(name=cli_util.override('db.get_autonomous_virtual_machine.command_name', 'get'), help=u"""Gets the details of specific Autonomous Virtual Machine. \n[Command Reference](getAutonomousVirtualMachine)""")
+@cli_util.option('--autonomous-virtual-machine-id', required=True, help=u"""The Autonomous Virtual machine [OCID].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'AutonomousVirtualMachine'})
+@cli_util.wrap_exceptions
+def get_autonomous_virtual_machine(ctx, from_json, autonomous_virtual_machine_id):
+
+    if isinstance(autonomous_virtual_machine_id, six.string_types) and len(autonomous_virtual_machine_id.strip()) == 0:
+        raise click.UsageError('Parameter --autonomous-virtual-machine-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.get_autonomous_virtual_machine(
+        autonomous_virtual_machine_id=autonomous_virtual_machine_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @autonomous_vm_cluster_group.command(name=cli_util.override('db.get_autonomous_vm_cluster.command_name', 'get'), help=u"""Gets information about the specified Autonomous VM cluster for an Exadata Cloud@Customer system. To get information about an Autonomous VM Cluster in the Oracle cloud, see [GetCloudAutonomousVmCluster]. \n[Command Reference](getAutonomousVmCluster)""")
 @cli_util.option('--autonomous-vm-cluster-id', required=True, help=u"""The autonomous VM cluster [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -13371,6 +13404,61 @@ def list_autonomous_exadata_infrastructures(ctx, from_json, all_pages, page_size
     else:
         result = client.list_autonomous_exadata_infrastructures(
             compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@autonomous_virtual_machine_group.command(name=cli_util.override('db.list_autonomous_virtual_machines.command_name', 'list'), help=u"""Lists the Autonomous Virtual Machines in the specified Autonomous VM Cluster and Compartment. \n[Command Reference](listAutonomousVirtualMachines)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--autonomous-vm-cluster-id', required=True, help=u"""The Autonomous Virtual machine [OCID].""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[AutonomousVirtualMachineSummary]'})
+@cli_util.wrap_exceptions
+def list_autonomous_virtual_machines(ctx, from_json, all_pages, page_size, compartment_id, autonomous_vm_cluster_id, limit, page, lifecycle_state):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_autonomous_virtual_machines,
+            compartment_id=compartment_id,
+            autonomous_vm_cluster_id=autonomous_vm_cluster_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_autonomous_virtual_machines,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            autonomous_vm_cluster_id=autonomous_vm_cluster_id,
+            **kwargs
+        )
+    else:
+        result = client.list_autonomous_virtual_machines(
+            compartment_id=compartment_id,
+            autonomous_vm_cluster_id=autonomous_vm_cluster_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)

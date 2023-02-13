@@ -9,9 +9,7 @@ from services.service_mesh.src.oci_cli_service_mesh.service_mesh_troubleshoot.ta
 from services.service_mesh.src.oci_cli_service_mesh.service_mesh_troubleshoot.task_request import TaskRequestType, \
     TaskConfiguration, MeshReportTaskRequest, ResourceTaskRequest, PodTaskRequest, TaskRequest, VdbTaskRequest, \
     IgdTaskRequest, NamespacesTaskRequest, FileTaskRequest, MeshResourcesTaskRequest, CommonTaskRequest, CsvTaskRequest, \
-    ObservabilityTaskRequest, ValidateCrdsTaskRequest, WebhooksTaskRequest
-from services.service_mesh.src.oci_cli_service_mesh.service_mesh_troubleshoot.tasks.observability_worker import \
-    ObservabilityTask
+    ValidateCrdsTaskRequest, WebhooksTaskRequest
 from services.service_mesh.src.oci_cli_service_mesh.service_mesh_troubleshoot.tasks.webhooks_worker import WebhooksTask
 from services.service_mesh.src.oci_cli_service_mesh.service_mesh_troubleshoot.utils.kubectl_command_helper import \
     KubeCommandHelper
@@ -70,8 +68,6 @@ __all__ = ["AggregationOrchestrator",
            "CsvTaskRequest",
            "MeshResourcesTaskRequest",
            "CommonTaskRequest",
-           "ObservabilityTask",
-           "ObservabilityTaskRequest",
            "WebhooksTask",
            "WebhooksTaskRequest",
            "ValidateCrdsTask",

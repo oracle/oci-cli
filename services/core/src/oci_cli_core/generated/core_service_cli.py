@@ -11,7 +11,9 @@ from oci_cli.aliasing import CommandGroupWithAlias
 compute instances, and block storage volumes. For more information, see the console
 documentation for the [Networking],
 [Compute], and
-[Block Volume] services."""), short_help=cli_util.override('virtual_network.core_service_group.short_help', """Core Services API"""))
+[Block Volume] services.
+The required permissions are documented in the
+[Details for the Core Services] article."""), short_help=cli_util.override('virtual_network.core_service_group.short_help', """Core Services API"""))
 @cli_util.help_option_group
 def core_service_group():
     pass

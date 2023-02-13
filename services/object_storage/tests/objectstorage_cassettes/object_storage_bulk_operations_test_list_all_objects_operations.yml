@@ -1,0 +1,1010 @@
+interactions:
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="1eYQtfcw8PvUV6LElH0b590/iD6RWaOLDkQ2E3WBXVb8Xc0qKerh2mlVZRCSqOXF2CcIj1FDJvef6R20I4xkLfjvHk8f3XBEy+G+UL3IcJACgPailBoqply+PJYx1M2tYMRqpqokuE9YIA1I+H2pfIa0wXuZ8TjJW0Ygo5DaZ2h/izz/6vvmeqjk7IljjBHPmrFOdoqt7Oo8ypLLe9uqizAHTv7oTjKMRHAkzUSrvsG++YNMVZ9hGi8V+GBrWkWalr6I9jzZEhAx4JHS0fq4AvE+cRsvDZTp40XqvA8/On94IVNrZTq88dQ8cuoocXHYA/8ojkyxr1e6L/5VTuRUHA==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:44:14 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 83010E32533A4E7E8865ECA4AB9D6625
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 79C9A620A3A34E4182728DA3DF7AE1FD
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/ObjectStorageBulkGetTest_1000000/o?limit=100&fields=name%2Csize%2Cetag%2Cmd5%2CtimeCreated%2CtimeModified%2CstorageTier%2CarchivalState
+  response:
+    body:
+      string: '{"objects":[{"name":"/a/Object_1","size":5000,"timeCreated":"2023-01-25T14:42:47.603Z","timeModified":"2023-01-25T14:42:47.603Z","etag":"e47fe0f8-97c2-4b1c-899d-74d4f8a703d1","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_11","size":5000,"timeCreated":"2023-01-25T14:42:53.563Z","timeModified":"2023-01-25T14:42:53.563Z","etag":"3c15d5c9-accc-42e5-a7da-53dd0e0fc823","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_16","size":5000,"timeCreated":"2023-01-25T14:42:56.473Z","timeModified":"2023-01-25T14:42:56.473Z","etag":"acb6240b-2e7b-4b25-b1aa-6f905f7089aa","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_21","size":5000,"timeCreated":"2023-01-25T14:42:59.664Z","timeModified":"2023-01-25T14:42:59.664Z","etag":"542954dc-b165-4982-b553-417f92a8e434","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_26","size":5000,"timeCreated":"2023-01-25T14:43:02.283Z","timeModified":"2023-01-25T14:43:02.283Z","etag":"495ed7aa-3e28-4016-878f-91081cb38346","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_31","size":5000,"timeCreated":"2023-01-25T14:43:05.089Z","timeModified":"2023-01-25T14:43:05.089Z","etag":"feab43ff-9601-4391-8ad4-e94201797676","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_36","size":5000,"timeCreated":"2023-01-25T14:43:08.436Z","timeModified":"2023-01-25T14:43:08.436Z","etag":"95deac81-52c6-43ab-b58e-3ea7753dab2e","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_41","size":5000,"timeCreated":"2023-01-25T14:43:11.826Z","timeModified":"2023-01-25T14:43:11.826Z","etag":"f3c160b2-c1e3-4467-97de-461005c95d0b","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_46","size":5000,"timeCreated":"2023-01-25T14:43:15.182Z","timeModified":"2023-01-25T14:43:15.182Z","etag":"842557d8-c6ac-4b8b-9e4e-b9902cc5ae08","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_51","size":5000,"timeCreated":"2023-01-25T14:43:18.562Z","timeModified":"2023-01-25T14:43:18.562Z","etag":"bcee672c-9260-4456-9fda-cbc1213d5590","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_56","size":5000,"timeCreated":"2023-01-25T14:43:21.618Z","timeModified":"2023-01-25T14:43:21.618Z","etag":"d0f9e8c4-d7c7-4033-8581-b70074c84cc9","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_6","size":5000,"timeCreated":"2023-01-25T14:42:50.177Z","timeModified":"2023-01-25T14:42:50.177Z","etag":"43afe35d-c876-4bc3-9536-f10195e50494","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_61","size":5000,"timeCreated":"2023-01-25T14:43:24.546Z","timeModified":"2023-01-25T14:43:24.546Z","etag":"938aa388-d34c-499d-accd-61e0d2087792","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_66","size":5000,"timeCreated":"2023-01-25T14:43:27.793Z","timeModified":"2023-01-25T14:43:27.793Z","etag":"5149242f-4c35-44c7-b977-fed490b83902","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_71","size":5000,"timeCreated":"2023-01-25T14:43:30.709Z","timeModified":"2023-01-25T14:43:30.709Z","etag":"a76e60e4-5491-4cf8-935e-873af79b37e1","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_76","size":5000,"timeCreated":"2023-01-25T14:43:33.552Z","timeModified":"2023-01-25T14:43:33.552Z","etag":"0e62faac-c7b0-4866-8b86-38edc3dd50a9","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_81","size":5000,"timeCreated":"2023-01-25T14:43:36.346Z","timeModified":"2023-01-25T14:43:36.346Z","etag":"39f91bfb-0a92-4410-b4ec-c03d7a2cda9c","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_86","size":5000,"timeCreated":"2023-01-25T14:43:39.480Z","timeModified":"2023-01-25T14:43:39.480Z","etag":"8a31dea4-923d-4550-afc6-8ec8c31e4653","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_91","size":5000,"timeCreated":"2023-01-25T14:43:41.466Z","timeModified":"2023-01-25T14:43:41.466Z","etag":"c8f6e5b7-10e6-4cc1-8d63-baa2360a806f","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_96","size":5000,"timeCreated":"2023-01-25T14:43:44.521Z","timeModified":"2023-01-25T14:43:44.521Z","etag":"4eb4df7a-f857-4d63-a3f7-28b779b6a438","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_0","size":5000,"timeCreated":"2023-01-25T14:42:46.944Z","timeModified":"2023-01-25T14:42:46.944Z","etag":"46d32ce1-564f-45ff-8345-589b2d8251ed","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_10","size":5000,"timeCreated":"2023-01-25T14:42:52.886Z","timeModified":"2023-01-25T14:42:52.886Z","etag":"3a029eec-eb61-416e-8c7f-af50ca73952c","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_15","size":5000,"timeCreated":"2023-01-25T14:42:55.698Z","timeModified":"2023-01-25T14:42:55.698Z","etag":"9644fb80-5fdc-4b63-ae19-41f3d428b4f7","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_20","size":5000,"timeCreated":"2023-01-25T14:42:58.982Z","timeModified":"2023-01-25T14:42:58.982Z","etag":"a9ad6d2f-83be-49f3-b371-ecdca9a00791","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_25","size":5000,"timeCreated":"2023-01-25T14:43:01.894Z","timeModified":"2023-01-25T14:43:01.894Z","etag":"e064a868-a224-434f-bf52-393b621bbcf0","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_30","size":5000,"timeCreated":"2023-01-25T14:43:04.703Z","timeModified":"2023-01-25T14:43:04.703Z","etag":"8908083b-0e75-4f02-aa66-3118d0569904","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_35","size":5000,"timeCreated":"2023-01-25T14:43:08.041Z","timeModified":"2023-01-25T14:43:08.041Z","etag":"8d733b81-2f3f-4760-b0d9-0f5ee54e4857","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_40","size":5000,"timeCreated":"2023-01-25T14:43:11.173Z","timeModified":"2023-01-25T14:43:11.173Z","etag":"cb8b1765-0b02-4eb7-92a7-c20432545b3a","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_45","size":5000,"timeCreated":"2023-01-25T14:43:14.522Z","timeModified":"2023-01-25T14:43:14.522Z","etag":"9fe0d962-758f-4350-a62d-10fed5bae09a","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_5","size":5000,"timeCreated":"2023-01-25T14:42:49.710Z","timeModified":"2023-01-25T14:42:49.710Z","etag":"dc9a8d87-4f97-4c5c-bdde-ebf0290de70a","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_50","size":5000,"timeCreated":"2023-01-25T14:43:17.816Z","timeModified":"2023-01-25T14:43:17.816Z","etag":"22878a07-70e3-4aa6-bf0e-1505ae2e2e61","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_55","size":5000,"timeCreated":"2023-01-25T14:43:20.954Z","timeModified":"2023-01-25T14:43:20.954Z","etag":"c2493b18-3e53-468d-b54c-12f6efcbe6c7","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_60","size":5000,"timeCreated":"2023-01-25T14:43:24.153Z","timeModified":"2023-01-25T14:43:24.153Z","etag":"139b7b3d-a0fd-4f1f-ad73-6fed8c5fccec","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_65","size":5000,"timeCreated":"2023-01-25T14:43:27.055Z","timeModified":"2023-01-25T14:43:27.055Z","etag":"a14e27fc-6d3c-4646-8947-23bea4022da5","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_70","size":5000,"timeCreated":"2023-01-25T14:43:30.045Z","timeModified":"2023-01-25T14:43:30.045Z","etag":"777b0e24-6f36-4473-99d0-cd6e3d96f799","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_75","size":5000,"timeCreated":"2023-01-25T14:43:33.119Z","timeModified":"2023-01-25T14:43:33.119Z","etag":"c39a1633-880f-4f8b-82b5-bcb06394d361","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_80","size":5000,"timeCreated":"2023-01-25T14:43:35.666Z","timeModified":"2023-01-25T14:43:35.666Z","etag":"be71440f-9ece-4692-a839-daa8135ef732","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_85","size":5000,"timeCreated":"2023-01-25T14:43:39.085Z","timeModified":"2023-01-25T14:43:39.085Z","etag":"c34ca3d6-3cba-4be8-b9f7-41a967aa67a8","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_90","size":5000,"timeCreated":"2023-01-25T14:43:41.079Z","timeModified":"2023-01-25T14:43:41.079Z","etag":"6520f19c-b107-41a2-8348-f265a59ace16","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_95","size":5000,"timeCreated":"2023-01-25T14:43:44.115Z","timeModified":"2023-01-25T14:43:44.115Z","etag":"79239077-a322-43e1-b82a-153a2c8eca0a","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_12","size":5000,"timeCreated":"2023-01-25T14:42:53.985Z","timeModified":"2023-01-25T14:42:53.985Z","etag":"508bca60-0b1a-4d26-8a32-16d69489cd21","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_17","size":5000,"timeCreated":"2023-01-25T14:42:57.196Z","timeModified":"2023-01-25T14:42:57.196Z","etag":"b7b19c0e-2e4e-4879-8b64-78f2bcdb942d","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_2","size":5000,"timeCreated":"2023-01-25T14:42:48.000Z","timeModified":"2023-01-25T14:42:48.000Z","etag":"39cf2db1-c899-4807-983d-12d0caa69231","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_22","size":5000,"timeCreated":"2023-01-25T14:43:00.326Z","timeModified":"2023-01-25T14:43:00.326Z","etag":"a2a4321f-70ad-458a-9f69-a39c706dc4b6","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_27","size":5000,"timeCreated":"2023-01-25T14:43:02.941Z","timeModified":"2023-01-25T14:43:02.941Z","etag":"3a00e068-90f2-4182-a73e-6da177abb166","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_32","size":5000,"timeCreated":"2023-01-25T14:43:05.560Z","timeModified":"2023-01-25T14:43:05.560Z","etag":"49f9808e-eff9-4361-8937-4e52494b7ad1","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_37","size":5000,"timeCreated":"2023-01-25T14:43:09.103Z","timeModified":"2023-01-25T14:43:09.103Z","etag":"37be5c7c-c205-45b9-8fdc-7bc8e8515688","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_42","size":5000,"timeCreated":"2023-01-25T14:43:12.224Z","timeModified":"2023-01-25T14:43:12.224Z","etag":"e3fb9c96-5942-41b0-9a5a-ee4cf12d94b1","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_47","size":5000,"timeCreated":"2023-01-25T14:43:16.011Z","timeModified":"2023-01-25T14:43:16.011Z","etag":"ef656109-7ac1-40a9-86a9-071bd91812f1","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_52","size":5000,"timeCreated":"2023-01-25T14:43:19.239Z","timeModified":"2023-01-25T14:43:19.239Z","etag":"e4d5e6a0-765b-4f86-b48b-3b08bff35b2d","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_57","size":5000,"timeCreated":"2023-01-25T14:43:22.284Z","timeModified":"2023-01-25T14:43:22.284Z","etag":"fc3ef927-b911-4b51-8a16-82d5926d53b9","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_62","size":5000,"timeCreated":"2023-01-25T14:43:25.195Z","timeModified":"2023-01-25T14:43:25.195Z","etag":"8f7f0b78-ed05-4318-8ee6-32409ea9c37c","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_67","size":5000,"timeCreated":"2023-01-25T14:43:28.292Z","timeModified":"2023-01-25T14:43:28.292Z","etag":"38415ccb-ce17-4ff6-a716-5435e327c837","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_7","size":5000,"timeCreated":"2023-01-25T14:42:50.862Z","timeModified":"2023-01-25T14:42:50.862Z","etag":"b26705f4-3701-4c04-a9de-cfd71a60dc13","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_72","size":5000,"timeCreated":"2023-01-25T14:43:31.369Z","timeModified":"2023-01-25T14:43:31.369Z","etag":"2ca6ec13-f2e4-48bc-a358-76c4aecd40e8","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_77","size":5000,"timeCreated":"2023-01-25T14:43:34.211Z","timeModified":"2023-01-25T14:43:34.211Z","etag":"4ef8ba54-b3d8-4225-8bf8-973460ad7097","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_82","size":5000,"timeCreated":"2023-01-25T14:43:37.011Z","timeModified":"2023-01-25T14:43:37.011Z","etag":"39731fd5-5459-4e18-a1d3-d22867f3ecfa","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_87","size":5000,"timeCreated":"2023-01-25T14:43:39.892Z","timeModified":"2023-01-25T14:43:39.892Z","etag":"0c1f0981-c410-458b-a454-a331b1e586db","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_92","size":5000,"timeCreated":"2023-01-25T14:43:42.129Z","timeModified":"2023-01-25T14:43:42.129Z","etag":"78addb37-362e-4c70-97fe-4531cec1b176","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_97","size":5000,"timeCreated":"2023-01-25T14:43:45.193Z","timeModified":"2023-01-25T14:43:45.193Z","etag":"da5abe86-e51b-4952-8e47-2343da19de0a","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_13","size":5000,"timeCreated":"2023-01-25T14:42:54.387Z","timeModified":"2023-01-25T14:42:54.387Z","etag":"04764463-55c6-44b2-b843-c184732489c8","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_18","size":5000,"timeCreated":"2023-01-25T14:42:57.596Z","timeModified":"2023-01-25T14:42:57.596Z","etag":"867f1287-d5aa-41cb-9e07-0a1b009ccab4","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_23","size":5000,"timeCreated":"2023-01-25T14:43:00.791Z","timeModified":"2023-01-25T14:43:00.791Z","etag":"9fbec2f2-59c8-4981-91d7-57b23df73417","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_28","size":5000,"timeCreated":"2023-01-25T14:43:03.371Z","timeModified":"2023-01-25T14:43:03.371Z","etag":"753216c7-77b3-4247-b90d-4608cadefb9e","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_3","size":5000,"timeCreated":"2023-01-25T14:42:48.657Z","timeModified":"2023-01-25T14:42:48.657Z","etag":"3a4fcebf-4188-4dc6-b712-36d4083ded92","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_33","size":5000,"timeCreated":"2023-01-25T14:43:06.222Z","timeModified":"2023-01-25T14:43:06.222Z","etag":"48b74bf2-542c-4036-be94-ad15a1a354a8","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_38","size":5000,"timeCreated":"2023-01-25T14:43:09.759Z","timeModified":"2023-01-25T14:43:09.759Z","etag":"19e51b7e-32e0-415f-ab7c-8c454934d55a","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_43","size":5000,"timeCreated":"2023-01-25T14:43:13.150Z","timeModified":"2023-01-25T14:43:13.150Z","etag":"7d9722da-114d-488e-8707-56d5a268d858","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_48","size":5000,"timeCreated":"2023-01-25T14:43:16.666Z","timeModified":"2023-01-25T14:43:16.666Z","etag":"648bd431-08d9-47d5-901f-933758373b1d","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_53","size":5000,"timeCreated":"2023-01-25T14:43:19.897Z","timeModified":"2023-01-25T14:43:19.897Z","etag":"b5647614-2976-4057-ae61-8e0a5d59581d","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_58","size":5000,"timeCreated":"2023-01-25T14:43:22.809Z","timeModified":"2023-01-25T14:43:22.809Z","etag":"cb51d574-36bc-42fb-a17e-cc136d4b05b5","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_63","size":5000,"timeCreated":"2023-01-25T14:43:25.878Z","timeModified":"2023-01-25T14:43:25.878Z","etag":"fa5b3f12-5a8d-40c1-93b8-4d40ac1ba212","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_68","size":5000,"timeCreated":"2023-01-25T14:43:28.729Z","timeModified":"2023-01-25T14:43:28.729Z","etag":"57dd8e22-1998-46ae-b4d8-7578c5e3ce30","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_73","size":5000,"timeCreated":"2023-01-25T14:43:32.036Z","timeModified":"2023-01-25T14:43:32.036Z","etag":"41b5f4a5-f4d0-4016-8bfa-333a97c979b4","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_78","size":5000,"timeCreated":"2023-01-25T14:43:34.865Z","timeModified":"2023-01-25T14:43:34.865Z","etag":"88907aef-fe80-4265-bc7c-09f6543157d1","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_8","size":5000,"timeCreated":"2023-01-25T14:42:51.554Z","timeModified":"2023-01-25T14:42:51.554Z","etag":"8c304e8c-39ab-42d4-86ce-78210834c1a9","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_83","size":5000,"timeCreated":"2023-01-25T14:43:37.669Z","timeModified":"2023-01-25T14:43:37.669Z","etag":"81f94214-63c5-4265-93c9-842e5a53fecb","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_88","size":5000,"timeCreated":"2023-01-25T14:43:40.287Z","timeModified":"2023-01-25T14:43:40.287Z","etag":"ee511abd-11a5-4e9b-8ced-4cd67215fa63","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_93","size":5000,"timeCreated":"2023-01-25T14:43:42.790Z","timeModified":"2023-01-25T14:43:42.790Z","etag":"6debb2d5-b6f1-412e-9b66-bea8c11285e3","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_98","size":5000,"timeCreated":"2023-01-25T14:43:45.590Z","timeModified":"2023-01-25T14:43:45.590Z","etag":"eb01f957-ab98-48b3-b874-d15a35b584e1","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_14","size":5000,"timeCreated":"2023-01-25T14:42:55.045Z","timeModified":"2023-01-25T14:42:55.045Z","etag":"3fcce7d5-806a-473c-b415-d2bf1f5b4962","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_19","size":5000,"timeCreated":"2023-01-25T14:42:58.282Z","timeModified":"2023-01-25T14:42:58.282Z","etag":"3cccc428-f443-4fa9-908f-f4399303de31","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_24","size":5000,"timeCreated":"2023-01-25T14:43:01.179Z","timeModified":"2023-01-25T14:43:01.179Z","etag":"e5c6adf2-3f3d-4f75-a87e-07ec4f511a20","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_29","size":5000,"timeCreated":"2023-01-25T14:43:04.042Z","timeModified":"2023-01-25T14:43:04.042Z","etag":"be35d785-dbfb-439d-b415-bf43a35c4dff","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_34","size":5000,"timeCreated":"2023-01-25T14:43:06.613Z","timeModified":"2023-01-25T14:43:06.613Z","etag":"5e065e81-1b2f-4f42-9cbb-701b40381c84","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_39","size":5000,"timeCreated":"2023-01-25T14:43:10.446Z","timeModified":"2023-01-25T14:43:10.446Z","etag":"53410e17-c4d7-4b3a-b90f-3714806f52d4","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_4","size":5000,"timeCreated":"2023-01-25T14:42:49.318Z","timeModified":"2023-01-25T14:42:49.318Z","etag":"ecc3ac19-ea49-4665-8a42-2f4d5334d5ed","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_44","size":5000,"timeCreated":"2023-01-25T14:43:13.861Z","timeModified":"2023-01-25T14:43:13.861Z","etag":"bc22c25e-9e2d-4ae2-936e-d071ac50d774","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_49","size":5000,"timeCreated":"2023-01-25T14:43:17.059Z","timeModified":"2023-01-25T14:43:17.059Z","etag":"1e3da6f3-ced2-4f21-8f3a-df1f869abffa","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_54","size":5000,"timeCreated":"2023-01-25T14:43:20.570Z","timeModified":"2023-01-25T14:43:20.570Z","etag":"b71c0dfd-67e4-47a3-9a50-2d17d5a9c0b7","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_59","size":5000,"timeCreated":"2023-01-25T14:43:23.481Z","timeModified":"2023-01-25T14:43:23.481Z","etag":"40658004-8f70-4313-9f9d-1f49b8539604","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_64","size":5000,"timeCreated":"2023-01-25T14:43:26.671Z","timeModified":"2023-01-25T14:43:26.671Z","etag":"d2543a38-c53b-456a-8062-c49cec3df438","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_69","size":5000,"timeCreated":"2023-01-25T14:43:29.385Z","timeModified":"2023-01-25T14:43:29.385Z","etag":"f04cc7eb-924b-4c17-a7a1-8d900852f8af","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_74","size":5000,"timeCreated":"2023-01-25T14:43:32.429Z","timeModified":"2023-01-25T14:43:32.429Z","etag":"5ac90f3c-798d-4027-94c4-7b4a045fed0a","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_79","size":5000,"timeCreated":"2023-01-25T14:43:35.266Z","timeModified":"2023-01-25T14:43:35.266Z","etag":"b164f5e1-d00d-40e4-ae01-cc77e2cd4b53","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_84","size":5000,"timeCreated":"2023-01-25T14:43:38.325Z","timeModified":"2023-01-25T14:43:38.325Z","etag":"d21f08e8-ee1c-49b3-bfba-f66c09f945ef","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_89","size":5000,"timeCreated":"2023-01-25T14:43:40.701Z","timeModified":"2023-01-25T14:43:40.701Z","etag":"d12aa7dc-bac6-46d7-9223-cbe2283d61ee","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_9","size":5000,"timeCreated":"2023-01-25T14:42:52.209Z","timeModified":"2023-01-25T14:42:52.209Z","etag":"23c5caec-d874-4d6d-b733-294c3428f4a5","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_94","size":5000,"timeCreated":"2023-01-25T14:43:43.453Z","timeModified":"2023-01-25T14:43:43.453Z","etag":"17b7249d-e056-4cb2-a7bc-0d1bf5ee13a6","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_99","size":5000,"timeCreated":"2023-01-25T14:43:46.258Z","timeModified":"2023-01-25T14:43:46.258Z","etag":"225de551-3cfe-41e0-9c89-e2e229d80926","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="}]}'
+    headers:
+      Content-Length:
+      - '22423'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:44:16 GMT
+      opc-client-request-id:
+      - 83010E32533A4E7E8865ECA4AB9D6625
+      opc-request-id:
+      - iad-1:d7WNXIxi_F2RBuPvnZv_vw_R1SyXbPamgwcXYnk9F_1G9-_QzEdzFUmi7ZxIn0K3
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="wn2OnP5u0OYTQ46EDF0ZSA+eJhPY+9nogMaXS5zSn0VIo5dP1hsJP6lfmcxkk323d8qQh0M+iy97sNfnPWVbDZ+CXoms8oMGHKrRjAv0Z0Lv6JS2ddHC/sV6OL/k4TDfOTKcSjiVwt/bNBTB+nflbfrfZ1JmxGb1vSEoX4Oqqju+aA+gALmp6X1S8m6pSuqlpdaW9hdF9euKPKk0RJtUmZFshCX4QPJcpKt/7IZUDbsbU1rkj2/KLJLGfJuy/quAZHk6ajhGF9efLTNAKL2x+xwxLI3NidIS/M1C6667juTYUBsEa8qsR7823xEkAUs8/WyfKXZBXFSt1cng0Wwtqg==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:44:16 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 6861FAE4569A4DA4BE6DF4F5CD6BBA8E
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 6F0F23178B6C4DA59E477604D6C1FAF5
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/ObjectStorageBulkGetTest_1000000/o?limit=20&fields=name%2Csize%2Cetag%2Cmd5%2CtimeCreated%2CtimeModified%2CstorageTier%2CarchivalState
+  response:
+    body:
+      string: '{"nextStartWith":"Object_0","objects":[{"name":"/a/Object_1","size":5000,"timeCreated":"2023-01-25T14:42:47.603Z","timeModified":"2023-01-25T14:42:47.603Z","etag":"e47fe0f8-97c2-4b1c-899d-74d4f8a703d1","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_11","size":5000,"timeCreated":"2023-01-25T14:42:53.563Z","timeModified":"2023-01-25T14:42:53.563Z","etag":"3c15d5c9-accc-42e5-a7da-53dd0e0fc823","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_16","size":5000,"timeCreated":"2023-01-25T14:42:56.473Z","timeModified":"2023-01-25T14:42:56.473Z","etag":"acb6240b-2e7b-4b25-b1aa-6f905f7089aa","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_21","size":5000,"timeCreated":"2023-01-25T14:42:59.664Z","timeModified":"2023-01-25T14:42:59.664Z","etag":"542954dc-b165-4982-b553-417f92a8e434","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_26","size":5000,"timeCreated":"2023-01-25T14:43:02.283Z","timeModified":"2023-01-25T14:43:02.283Z","etag":"495ed7aa-3e28-4016-878f-91081cb38346","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_31","size":5000,"timeCreated":"2023-01-25T14:43:05.089Z","timeModified":"2023-01-25T14:43:05.089Z","etag":"feab43ff-9601-4391-8ad4-e94201797676","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_36","size":5000,"timeCreated":"2023-01-25T14:43:08.436Z","timeModified":"2023-01-25T14:43:08.436Z","etag":"95deac81-52c6-43ab-b58e-3ea7753dab2e","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_41","size":5000,"timeCreated":"2023-01-25T14:43:11.826Z","timeModified":"2023-01-25T14:43:11.826Z","etag":"f3c160b2-c1e3-4467-97de-461005c95d0b","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_46","size":5000,"timeCreated":"2023-01-25T14:43:15.182Z","timeModified":"2023-01-25T14:43:15.182Z","etag":"842557d8-c6ac-4b8b-9e4e-b9902cc5ae08","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_51","size":5000,"timeCreated":"2023-01-25T14:43:18.562Z","timeModified":"2023-01-25T14:43:18.562Z","etag":"bcee672c-9260-4456-9fda-cbc1213d5590","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_56","size":5000,"timeCreated":"2023-01-25T14:43:21.618Z","timeModified":"2023-01-25T14:43:21.618Z","etag":"d0f9e8c4-d7c7-4033-8581-b70074c84cc9","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_6","size":5000,"timeCreated":"2023-01-25T14:42:50.177Z","timeModified":"2023-01-25T14:42:50.177Z","etag":"43afe35d-c876-4bc3-9536-f10195e50494","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_61","size":5000,"timeCreated":"2023-01-25T14:43:24.546Z","timeModified":"2023-01-25T14:43:24.546Z","etag":"938aa388-d34c-499d-accd-61e0d2087792","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_66","size":5000,"timeCreated":"2023-01-25T14:43:27.793Z","timeModified":"2023-01-25T14:43:27.793Z","etag":"5149242f-4c35-44c7-b977-fed490b83902","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_71","size":5000,"timeCreated":"2023-01-25T14:43:30.709Z","timeModified":"2023-01-25T14:43:30.709Z","etag":"a76e60e4-5491-4cf8-935e-873af79b37e1","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_76","size":5000,"timeCreated":"2023-01-25T14:43:33.552Z","timeModified":"2023-01-25T14:43:33.552Z","etag":"0e62faac-c7b0-4866-8b86-38edc3dd50a9","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_81","size":5000,"timeCreated":"2023-01-25T14:43:36.346Z","timeModified":"2023-01-25T14:43:36.346Z","etag":"39f91bfb-0a92-4410-b4ec-c03d7a2cda9c","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_86","size":5000,"timeCreated":"2023-01-25T14:43:39.480Z","timeModified":"2023-01-25T14:43:39.480Z","etag":"8a31dea4-923d-4550-afc6-8ec8c31e4653","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_91","size":5000,"timeCreated":"2023-01-25T14:43:41.466Z","timeModified":"2023-01-25T14:43:41.466Z","etag":"c8f6e5b7-10e6-4cc1-8d63-baa2360a806f","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_96","size":5000,"timeCreated":"2023-01-25T14:43:44.521Z","timeModified":"2023-01-25T14:43:44.521Z","etag":"4eb4df7a-f857-4d63-a3f7-28b779b6a438","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="}]}'
+    headers:
+      Content-Length:
+      - '4498'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:44:18 GMT
+      opc-client-request-id:
+      - 6861FAE4569A4DA4BE6DF4F5CD6BBA8E
+      opc-request-id:
+      - iad-1:GM-Fmu1KByUkntH76fKnS_gDkFGgayfomf2K6cxN5VZhJ6W2DURTUF1SDBL9eIHo
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="fb4OHRKyhzXyQkz7ZDVo3knhIwwdFiCU4BzisDFvr5/demlZLelhSBWN5mdHtIIFkALFqbukMn5hdehKXBgKl+4One9eLlpUI7IAAHQUAgJL/EqCwBGq759mWZ55MNC92e7K0rqT/7fm3YDBuTApxj6xL+2VugFbtUih6nRbxlt8jNKlT1HsXHz48KoYpcfe2dtHLYc721aksIiMJA7io3RIhnoZM0MqrrApcQ3pJ2xhHvhI/YsOZ9O+CuxDXPAvdVQmtHtcR51HPVL3+H65/6fVu9u1gmhyW6UJUJypIDEwLSnzEfoGjSdY6KMZMvu/reLN5hSlE2hnu9C7cgpBvg==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:44:18 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 6861FAE4569A4DA4BE6DF4F5CD6BBA8E
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - C237960003FC4A5EBFEFAD7B548DC143
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/ObjectStorageBulkGetTest_1000000/o?start=Object_0&limit=20&fields=name%2Csize%2Cetag%2Cmd5%2CtimeCreated%2CtimeModified%2CstorageTier%2CarchivalState
+  response:
+    body:
+      string: '{"nextStartWith":"a/b/Object_12","objects":[{"name":"Object_0","size":5000,"timeCreated":"2023-01-25T14:42:46.944Z","timeModified":"2023-01-25T14:42:46.944Z","etag":"46d32ce1-564f-45ff-8345-589b2d8251ed","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_10","size":5000,"timeCreated":"2023-01-25T14:42:52.886Z","timeModified":"2023-01-25T14:42:52.886Z","etag":"3a029eec-eb61-416e-8c7f-af50ca73952c","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_15","size":5000,"timeCreated":"2023-01-25T14:42:55.698Z","timeModified":"2023-01-25T14:42:55.698Z","etag":"9644fb80-5fdc-4b63-ae19-41f3d428b4f7","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_20","size":5000,"timeCreated":"2023-01-25T14:42:58.982Z","timeModified":"2023-01-25T14:42:58.982Z","etag":"a9ad6d2f-83be-49f3-b371-ecdca9a00791","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_25","size":5000,"timeCreated":"2023-01-25T14:43:01.894Z","timeModified":"2023-01-25T14:43:01.894Z","etag":"e064a868-a224-434f-bf52-393b621bbcf0","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_30","size":5000,"timeCreated":"2023-01-25T14:43:04.703Z","timeModified":"2023-01-25T14:43:04.703Z","etag":"8908083b-0e75-4f02-aa66-3118d0569904","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_35","size":5000,"timeCreated":"2023-01-25T14:43:08.041Z","timeModified":"2023-01-25T14:43:08.041Z","etag":"8d733b81-2f3f-4760-b0d9-0f5ee54e4857","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_40","size":5000,"timeCreated":"2023-01-25T14:43:11.173Z","timeModified":"2023-01-25T14:43:11.173Z","etag":"cb8b1765-0b02-4eb7-92a7-c20432545b3a","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_45","size":5000,"timeCreated":"2023-01-25T14:43:14.522Z","timeModified":"2023-01-25T14:43:14.522Z","etag":"9fe0d962-758f-4350-a62d-10fed5bae09a","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_5","size":5000,"timeCreated":"2023-01-25T14:42:49.710Z","timeModified":"2023-01-25T14:42:49.710Z","etag":"dc9a8d87-4f97-4c5c-bdde-ebf0290de70a","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_50","size":5000,"timeCreated":"2023-01-25T14:43:17.816Z","timeModified":"2023-01-25T14:43:17.816Z","etag":"22878a07-70e3-4aa6-bf0e-1505ae2e2e61","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_55","size":5000,"timeCreated":"2023-01-25T14:43:20.954Z","timeModified":"2023-01-25T14:43:20.954Z","etag":"c2493b18-3e53-468d-b54c-12f6efcbe6c7","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_60","size":5000,"timeCreated":"2023-01-25T14:43:24.153Z","timeModified":"2023-01-25T14:43:24.153Z","etag":"139b7b3d-a0fd-4f1f-ad73-6fed8c5fccec","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_65","size":5000,"timeCreated":"2023-01-25T14:43:27.055Z","timeModified":"2023-01-25T14:43:27.055Z","etag":"a14e27fc-6d3c-4646-8947-23bea4022da5","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_70","size":5000,"timeCreated":"2023-01-25T14:43:30.045Z","timeModified":"2023-01-25T14:43:30.045Z","etag":"777b0e24-6f36-4473-99d0-cd6e3d96f799","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_75","size":5000,"timeCreated":"2023-01-25T14:43:33.119Z","timeModified":"2023-01-25T14:43:33.119Z","etag":"c39a1633-880f-4f8b-82b5-bcb06394d361","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_80","size":5000,"timeCreated":"2023-01-25T14:43:35.666Z","timeModified":"2023-01-25T14:43:35.666Z","etag":"be71440f-9ece-4692-a839-daa8135ef732","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_85","size":5000,"timeCreated":"2023-01-25T14:43:39.085Z","timeModified":"2023-01-25T14:43:39.085Z","etag":"c34ca3d6-3cba-4be8-b9f7-41a967aa67a8","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_90","size":5000,"timeCreated":"2023-01-25T14:43:41.079Z","timeModified":"2023-01-25T14:43:41.079Z","etag":"6520f19c-b107-41a2-8348-f265a59ace16","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_95","size":5000,"timeCreated":"2023-01-25T14:43:44.115Z","timeModified":"2023-01-25T14:43:44.115Z","etag":"79239077-a322-43e1-b82a-153a2c8eca0a","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="}]}'
+    headers:
+      Content-Length:
+      - '4443'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:44:19 GMT
+      opc-client-request-id:
+      - 6861FAE4569A4DA4BE6DF4F5CD6BBA8E
+      opc-request-id:
+      - iad-1:YlJaRxi15vtupwBVPE7SpBkviKQXExpefaBv5u4qyqG9bihXHPGHneVnMLtQTJqh
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="xB8FsqPHg780huPEtSo1zUh5csiYrTfLrH701KeEbfl35lGprKftNS1Z7rRSDiMM8QaaEGDXU/IGp1W5mcU70+pOq++d9SKSj3kBRsMo6GQYYYchgC4E275N8JahU4gATiVDI3nDnpG6QN02L1HJZFGdVwk4PfhwyL3v2tIp2oOsW6xKiAUh8CQgt66B3dAnIr/0v+42vCLD7el/5r5a458RCIsiABF6FpiTrryOvch7mKzIFc/c84DvWgEUm+53Q/UJwUi8er/kmVRSEFzVLH2BH1AHEGoK3Dpvb++120SNWom65GLhpe+vQuNCpPuX+7Z30+eM6P2e3SZDVZFzEQ==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:44:18 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 6861FAE4569A4DA4BE6DF4F5CD6BBA8E
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 6399D54FD6324B37B56C9A86B35A147E
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/ObjectStorageBulkGetTest_1000000/o?start=a%2Fb%2FObject_12&limit=20&fields=name%2Csize%2Cetag%2Cmd5%2CtimeCreated%2CtimeModified%2CstorageTier%2CarchivalState
+  response:
+    body:
+      string: '{"nextStartWith":"a/b/c/Object_13","objects":[{"name":"a/b/Object_12","size":5000,"timeCreated":"2023-01-25T14:42:53.985Z","timeModified":"2023-01-25T14:42:53.985Z","etag":"508bca60-0b1a-4d26-8a32-16d69489cd21","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_17","size":5000,"timeCreated":"2023-01-25T14:42:57.196Z","timeModified":"2023-01-25T14:42:57.196Z","etag":"b7b19c0e-2e4e-4879-8b64-78f2bcdb942d","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_2","size":5000,"timeCreated":"2023-01-25T14:42:48.000Z","timeModified":"2023-01-25T14:42:48.000Z","etag":"39cf2db1-c899-4807-983d-12d0caa69231","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_22","size":5000,"timeCreated":"2023-01-25T14:43:00.326Z","timeModified":"2023-01-25T14:43:00.326Z","etag":"a2a4321f-70ad-458a-9f69-a39c706dc4b6","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_27","size":5000,"timeCreated":"2023-01-25T14:43:02.941Z","timeModified":"2023-01-25T14:43:02.941Z","etag":"3a00e068-90f2-4182-a73e-6da177abb166","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_32","size":5000,"timeCreated":"2023-01-25T14:43:05.560Z","timeModified":"2023-01-25T14:43:05.560Z","etag":"49f9808e-eff9-4361-8937-4e52494b7ad1","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_37","size":5000,"timeCreated":"2023-01-25T14:43:09.103Z","timeModified":"2023-01-25T14:43:09.103Z","etag":"37be5c7c-c205-45b9-8fdc-7bc8e8515688","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_42","size":5000,"timeCreated":"2023-01-25T14:43:12.224Z","timeModified":"2023-01-25T14:43:12.224Z","etag":"e3fb9c96-5942-41b0-9a5a-ee4cf12d94b1","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_47","size":5000,"timeCreated":"2023-01-25T14:43:16.011Z","timeModified":"2023-01-25T14:43:16.011Z","etag":"ef656109-7ac1-40a9-86a9-071bd91812f1","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_52","size":5000,"timeCreated":"2023-01-25T14:43:19.239Z","timeModified":"2023-01-25T14:43:19.239Z","etag":"e4d5e6a0-765b-4f86-b48b-3b08bff35b2d","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_57","size":5000,"timeCreated":"2023-01-25T14:43:22.284Z","timeModified":"2023-01-25T14:43:22.284Z","etag":"fc3ef927-b911-4b51-8a16-82d5926d53b9","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_62","size":5000,"timeCreated":"2023-01-25T14:43:25.195Z","timeModified":"2023-01-25T14:43:25.195Z","etag":"8f7f0b78-ed05-4318-8ee6-32409ea9c37c","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_67","size":5000,"timeCreated":"2023-01-25T14:43:28.292Z","timeModified":"2023-01-25T14:43:28.292Z","etag":"38415ccb-ce17-4ff6-a716-5435e327c837","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_7","size":5000,"timeCreated":"2023-01-25T14:42:50.862Z","timeModified":"2023-01-25T14:42:50.862Z","etag":"b26705f4-3701-4c04-a9de-cfd71a60dc13","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_72","size":5000,"timeCreated":"2023-01-25T14:43:31.369Z","timeModified":"2023-01-25T14:43:31.369Z","etag":"2ca6ec13-f2e4-48bc-a358-76c4aecd40e8","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_77","size":5000,"timeCreated":"2023-01-25T14:43:34.211Z","timeModified":"2023-01-25T14:43:34.211Z","etag":"4ef8ba54-b3d8-4225-8bf8-973460ad7097","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_82","size":5000,"timeCreated":"2023-01-25T14:43:37.011Z","timeModified":"2023-01-25T14:43:37.011Z","etag":"39731fd5-5459-4e18-a1d3-d22867f3ecfa","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_87","size":5000,"timeCreated":"2023-01-25T14:43:39.892Z","timeModified":"2023-01-25T14:43:39.892Z","etag":"0c1f0981-c410-458b-a454-a331b1e586db","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_92","size":5000,"timeCreated":"2023-01-25T14:43:42.129Z","timeModified":"2023-01-25T14:43:42.129Z","etag":"78addb37-362e-4c70-97fe-4531cec1b176","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_97","size":5000,"timeCreated":"2023-01-25T14:43:45.193Z","timeModified":"2023-01-25T14:43:45.193Z","etag":"da5abe86-e51b-4952-8e47-2343da19de0a","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="}]}'
+    headers:
+      Content-Length:
+      - '4525'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:44:19 GMT
+      opc-client-request-id:
+      - 6861FAE4569A4DA4BE6DF4F5CD6BBA8E
+      opc-request-id:
+      - iad-1:cnfwYON5niNDM6FX7AO7RxkviKQXExpefaBv5u4qyqG7QKChRL_FBCvIExKff3d5
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="04sL3Vn8MQHtFHZEGKzt2Q7hDbBjrXCI0UbkJZbgkaG7VL8jtkAWlPJawiXSfpwyDlwHUNbyYdnvYcy8MYAFTk9oKQLENjkVa/1awXuBlL/m7b0ka/ARn2Vl0OKPhc8sUQb0Vl1Hz+K8uAwfOCEMkZI4h9vnYzPYitDBThX3Ty7k/PNYZZZE7eKa4Euqb4u7NIksAUlC4jwO0iEwWGpD+xOAMuK6BqSu6WAj6QfMUg3tdihK/rDUI0knuYsmj43he/KoJRcNd1Cpj0KtfBuI1ZGpcqEJQKS0QWD1iAtZmbQYxGRzFk/J2B6/YbK5Dk57iltTvWgRDkn8A7okr9jE9Q==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:44:19 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 6861FAE4569A4DA4BE6DF4F5CD6BBA8E
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 4CF96514EB424CF485820671156C1B31
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/ObjectStorageBulkGetTest_1000000/o?start=a%2Fb%2Fc%2FObject_13&limit=20&fields=name%2Csize%2Cetag%2Cmd5%2CtimeCreated%2CtimeModified%2CstorageTier%2CarchivalState
+  response:
+    body:
+      string: '{"nextStartWith":"a/b/c/d/Object_14","objects":[{"name":"a/b/c/Object_13","size":5000,"timeCreated":"2023-01-25T14:42:54.387Z","timeModified":"2023-01-25T14:42:54.387Z","etag":"04764463-55c6-44b2-b843-c184732489c8","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_18","size":5000,"timeCreated":"2023-01-25T14:42:57.596Z","timeModified":"2023-01-25T14:42:57.596Z","etag":"867f1287-d5aa-41cb-9e07-0a1b009ccab4","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_23","size":5000,"timeCreated":"2023-01-25T14:43:00.791Z","timeModified":"2023-01-25T14:43:00.791Z","etag":"9fbec2f2-59c8-4981-91d7-57b23df73417","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_28","size":5000,"timeCreated":"2023-01-25T14:43:03.371Z","timeModified":"2023-01-25T14:43:03.371Z","etag":"753216c7-77b3-4247-b90d-4608cadefb9e","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_3","size":5000,"timeCreated":"2023-01-25T14:42:48.657Z","timeModified":"2023-01-25T14:42:48.657Z","etag":"3a4fcebf-4188-4dc6-b712-36d4083ded92","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_33","size":5000,"timeCreated":"2023-01-25T14:43:06.222Z","timeModified":"2023-01-25T14:43:06.222Z","etag":"48b74bf2-542c-4036-be94-ad15a1a354a8","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_38","size":5000,"timeCreated":"2023-01-25T14:43:09.759Z","timeModified":"2023-01-25T14:43:09.759Z","etag":"19e51b7e-32e0-415f-ab7c-8c454934d55a","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_43","size":5000,"timeCreated":"2023-01-25T14:43:13.150Z","timeModified":"2023-01-25T14:43:13.150Z","etag":"7d9722da-114d-488e-8707-56d5a268d858","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_48","size":5000,"timeCreated":"2023-01-25T14:43:16.666Z","timeModified":"2023-01-25T14:43:16.666Z","etag":"648bd431-08d9-47d5-901f-933758373b1d","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_53","size":5000,"timeCreated":"2023-01-25T14:43:19.897Z","timeModified":"2023-01-25T14:43:19.897Z","etag":"b5647614-2976-4057-ae61-8e0a5d59581d","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_58","size":5000,"timeCreated":"2023-01-25T14:43:22.809Z","timeModified":"2023-01-25T14:43:22.809Z","etag":"cb51d574-36bc-42fb-a17e-cc136d4b05b5","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_63","size":5000,"timeCreated":"2023-01-25T14:43:25.878Z","timeModified":"2023-01-25T14:43:25.878Z","etag":"fa5b3f12-5a8d-40c1-93b8-4d40ac1ba212","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_68","size":5000,"timeCreated":"2023-01-25T14:43:28.729Z","timeModified":"2023-01-25T14:43:28.729Z","etag":"57dd8e22-1998-46ae-b4d8-7578c5e3ce30","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_73","size":5000,"timeCreated":"2023-01-25T14:43:32.036Z","timeModified":"2023-01-25T14:43:32.036Z","etag":"41b5f4a5-f4d0-4016-8bfa-333a97c979b4","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_78","size":5000,"timeCreated":"2023-01-25T14:43:34.865Z","timeModified":"2023-01-25T14:43:34.865Z","etag":"88907aef-fe80-4265-bc7c-09f6543157d1","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_8","size":5000,"timeCreated":"2023-01-25T14:42:51.554Z","timeModified":"2023-01-25T14:42:51.554Z","etag":"8c304e8c-39ab-42d4-86ce-78210834c1a9","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_83","size":5000,"timeCreated":"2023-01-25T14:43:37.669Z","timeModified":"2023-01-25T14:43:37.669Z","etag":"81f94214-63c5-4265-93c9-842e5a53fecb","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_88","size":5000,"timeCreated":"2023-01-25T14:43:40.287Z","timeModified":"2023-01-25T14:43:40.287Z","etag":"ee511abd-11a5-4e9b-8ced-4cd67215fa63","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_93","size":5000,"timeCreated":"2023-01-25T14:43:42.790Z","timeModified":"2023-01-25T14:43:42.790Z","etag":"6debb2d5-b6f1-412e-9b66-bea8c11285e3","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/Object_98","size":5000,"timeCreated":"2023-01-25T14:43:45.590Z","timeModified":"2023-01-25T14:43:45.590Z","etag":"eb01f957-ab98-48b3-b874-d15a35b584e1","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="}]}'
+    headers:
+      Content-Length:
+      - '4567'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:44:19 GMT
+      opc-client-request-id:
+      - 6861FAE4569A4DA4BE6DF4F5CD6BBA8E
+      opc-request-id:
+      - iad-1:SKgF0Y43KVWp_Xa5OjU4f-vJhRLUOvHAp9d03tXGbTAforEU0q34wDuNc_Oktw_m
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="qZydVnGakKT6rXOTPzBaG5fVTpiVfs+JVeGWXR84yPbnEJfsiFul0L3gwdYv3YXkIpHJgZbhQg10nES1fknPx+bOaOg6evlfGTrW2yWAj1fhfKF8M+9iGaPP/uK8IyVoNtUxD73pqE9SFcI/OiK7JGVIq9KTX7IAbBl7baB3i0fymTgsy9ky7pW6YZs5EsT0MpzWGEWnDr4sObSQ4y39js8qrWf3IghiSfUFv/g2rlncvMyU6E2mx+FDiWmAsYcb8HTzFj6ZVpQmf7L/hhJDKuV+qPx43YQz+pWd8KmZ4r/roY6TCYtT/mDs1RadMOHvEwtyA9UONP754EcaUIYHBg==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:44:19 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 6861FAE4569A4DA4BE6DF4F5CD6BBA8E
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 7064D91AC8504060B89C716CC50D4906
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/ObjectStorageBulkGetTest_1000000/o?start=a%2Fb%2Fc%2Fd%2FObject_14&limit=20&fields=name%2Csize%2Cetag%2Cmd5%2CtimeCreated%2CtimeModified%2CstorageTier%2CarchivalState
+  response:
+    body:
+      string: '{"objects":[{"name":"a/b/c/d/Object_14","size":5000,"timeCreated":"2023-01-25T14:42:55.045Z","timeModified":"2023-01-25T14:42:55.045Z","etag":"3fcce7d5-806a-473c-b415-d2bf1f5b4962","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_19","size":5000,"timeCreated":"2023-01-25T14:42:58.282Z","timeModified":"2023-01-25T14:42:58.282Z","etag":"3cccc428-f443-4fa9-908f-f4399303de31","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_24","size":5000,"timeCreated":"2023-01-25T14:43:01.179Z","timeModified":"2023-01-25T14:43:01.179Z","etag":"e5c6adf2-3f3d-4f75-a87e-07ec4f511a20","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_29","size":5000,"timeCreated":"2023-01-25T14:43:04.042Z","timeModified":"2023-01-25T14:43:04.042Z","etag":"be35d785-dbfb-439d-b415-bf43a35c4dff","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_34","size":5000,"timeCreated":"2023-01-25T14:43:06.613Z","timeModified":"2023-01-25T14:43:06.613Z","etag":"5e065e81-1b2f-4f42-9cbb-701b40381c84","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_39","size":5000,"timeCreated":"2023-01-25T14:43:10.446Z","timeModified":"2023-01-25T14:43:10.446Z","etag":"53410e17-c4d7-4b3a-b90f-3714806f52d4","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_4","size":5000,"timeCreated":"2023-01-25T14:42:49.318Z","timeModified":"2023-01-25T14:42:49.318Z","etag":"ecc3ac19-ea49-4665-8a42-2f4d5334d5ed","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_44","size":5000,"timeCreated":"2023-01-25T14:43:13.861Z","timeModified":"2023-01-25T14:43:13.861Z","etag":"bc22c25e-9e2d-4ae2-936e-d071ac50d774","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_49","size":5000,"timeCreated":"2023-01-25T14:43:17.059Z","timeModified":"2023-01-25T14:43:17.059Z","etag":"1e3da6f3-ced2-4f21-8f3a-df1f869abffa","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_54","size":5000,"timeCreated":"2023-01-25T14:43:20.570Z","timeModified":"2023-01-25T14:43:20.570Z","etag":"b71c0dfd-67e4-47a3-9a50-2d17d5a9c0b7","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_59","size":5000,"timeCreated":"2023-01-25T14:43:23.481Z","timeModified":"2023-01-25T14:43:23.481Z","etag":"40658004-8f70-4313-9f9d-1f49b8539604","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_64","size":5000,"timeCreated":"2023-01-25T14:43:26.671Z","timeModified":"2023-01-25T14:43:26.671Z","etag":"d2543a38-c53b-456a-8062-c49cec3df438","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_69","size":5000,"timeCreated":"2023-01-25T14:43:29.385Z","timeModified":"2023-01-25T14:43:29.385Z","etag":"f04cc7eb-924b-4c17-a7a1-8d900852f8af","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_74","size":5000,"timeCreated":"2023-01-25T14:43:32.429Z","timeModified":"2023-01-25T14:43:32.429Z","etag":"5ac90f3c-798d-4027-94c4-7b4a045fed0a","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_79","size":5000,"timeCreated":"2023-01-25T14:43:35.266Z","timeModified":"2023-01-25T14:43:35.266Z","etag":"b164f5e1-d00d-40e4-ae01-cc77e2cd4b53","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_84","size":5000,"timeCreated":"2023-01-25T14:43:38.325Z","timeModified":"2023-01-25T14:43:38.325Z","etag":"d21f08e8-ee1c-49b3-bfba-f66c09f945ef","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_89","size":5000,"timeCreated":"2023-01-25T14:43:40.701Z","timeModified":"2023-01-25T14:43:40.701Z","etag":"d12aa7dc-bac6-46d7-9223-cbe2283d61ee","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_9","size":5000,"timeCreated":"2023-01-25T14:42:52.209Z","timeModified":"2023-01-25T14:42:52.209Z","etag":"23c5caec-d874-4d6d-b733-294c3428f4a5","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_94","size":5000,"timeCreated":"2023-01-25T14:43:43.453Z","timeModified":"2023-01-25T14:43:43.453Z","etag":"17b7249d-e056-4cb2-a7bc-0d1bf5ee13a6","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/c/d/Object_99","size":5000,"timeCreated":"2023-01-25T14:43:46.258Z","timeModified":"2023-01-25T14:43:46.258Z","etag":"225de551-3cfe-41e0-9c89-e2e229d80926","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="}]}'
+    headers:
+      Content-Length:
+      - '4571'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:44:20 GMT
+      opc-client-request-id:
+      - 6861FAE4569A4DA4BE6DF4F5CD6BBA8E
+      opc-request-id:
+      - iad-1:yqAoYM4kU9tIWYXJH5MENIpL12IskZ1_V_t2WWEUb2it7LY1Vv27ZqFSEONtA0JN
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="gTFEgj5DDC2QSyMaM9TmtwGY4ttDYtfu9ZAIkIiJumMXgmoU548cOrF2Rqy01HkU/t+nod7g2tFiqnNmPLW4wbXyXB9l97i0VCW11lg45Pf3kJVnR/oMhxczInTdpP8RfaZIFPdvEvKT/KL2194I0XVP+QveNrW+H6wTdlGWa1RaMXn/bukRW++yfRZTUk7oc2W7Q5LJXChDMQ6pylmNyv4nGdXkCdPt7apfJ1fmo5So3GJh4TpqvMHTKMMhmTPj/r4LmIhjPQTZraMyrraA6Zjve6YGx3FWUyxsvqIw77QXgWftKr84+mWQHI+IP/KonnpZBSWFFMIxnW1IXiXzrg==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:44:20 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 456ECCD3BD5D4D56828FB602535FF855
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - B171160A3009410499EF7EB45D4B5AB5
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/ObjectStorageBulkGetTest_1000000/o?limit=47&fields=name%2Csize%2Cetag%2Cmd5%2CtimeCreated%2CtimeModified%2CstorageTier%2CarchivalState
+  response:
+    body:
+      string: '{"nextStartWith":"a/b/Object_42","objects":[{"name":"/a/Object_1","size":5000,"timeCreated":"2023-01-25T14:42:47.603Z","timeModified":"2023-01-25T14:42:47.603Z","etag":"e47fe0f8-97c2-4b1c-899d-74d4f8a703d1","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_11","size":5000,"timeCreated":"2023-01-25T14:42:53.563Z","timeModified":"2023-01-25T14:42:53.563Z","etag":"3c15d5c9-accc-42e5-a7da-53dd0e0fc823","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_16","size":5000,"timeCreated":"2023-01-25T14:42:56.473Z","timeModified":"2023-01-25T14:42:56.473Z","etag":"acb6240b-2e7b-4b25-b1aa-6f905f7089aa","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_21","size":5000,"timeCreated":"2023-01-25T14:42:59.664Z","timeModified":"2023-01-25T14:42:59.664Z","etag":"542954dc-b165-4982-b553-417f92a8e434","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_26","size":5000,"timeCreated":"2023-01-25T14:43:02.283Z","timeModified":"2023-01-25T14:43:02.283Z","etag":"495ed7aa-3e28-4016-878f-91081cb38346","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_31","size":5000,"timeCreated":"2023-01-25T14:43:05.089Z","timeModified":"2023-01-25T14:43:05.089Z","etag":"feab43ff-9601-4391-8ad4-e94201797676","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_36","size":5000,"timeCreated":"2023-01-25T14:43:08.436Z","timeModified":"2023-01-25T14:43:08.436Z","etag":"95deac81-52c6-43ab-b58e-3ea7753dab2e","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_41","size":5000,"timeCreated":"2023-01-25T14:43:11.826Z","timeModified":"2023-01-25T14:43:11.826Z","etag":"f3c160b2-c1e3-4467-97de-461005c95d0b","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_46","size":5000,"timeCreated":"2023-01-25T14:43:15.182Z","timeModified":"2023-01-25T14:43:15.182Z","etag":"842557d8-c6ac-4b8b-9e4e-b9902cc5ae08","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_51","size":5000,"timeCreated":"2023-01-25T14:43:18.562Z","timeModified":"2023-01-25T14:43:18.562Z","etag":"bcee672c-9260-4456-9fda-cbc1213d5590","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_56","size":5000,"timeCreated":"2023-01-25T14:43:21.618Z","timeModified":"2023-01-25T14:43:21.618Z","etag":"d0f9e8c4-d7c7-4033-8581-b70074c84cc9","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_6","size":5000,"timeCreated":"2023-01-25T14:42:50.177Z","timeModified":"2023-01-25T14:42:50.177Z","etag":"43afe35d-c876-4bc3-9536-f10195e50494","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_61","size":5000,"timeCreated":"2023-01-25T14:43:24.546Z","timeModified":"2023-01-25T14:43:24.546Z","etag":"938aa388-d34c-499d-accd-61e0d2087792","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_66","size":5000,"timeCreated":"2023-01-25T14:43:27.793Z","timeModified":"2023-01-25T14:43:27.793Z","etag":"5149242f-4c35-44c7-b977-fed490b83902","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_71","size":5000,"timeCreated":"2023-01-25T14:43:30.709Z","timeModified":"2023-01-25T14:43:30.709Z","etag":"a76e60e4-5491-4cf8-935e-873af79b37e1","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_76","size":5000,"timeCreated":"2023-01-25T14:43:33.552Z","timeModified":"2023-01-25T14:43:33.552Z","etag":"0e62faac-c7b0-4866-8b86-38edc3dd50a9","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_81","size":5000,"timeCreated":"2023-01-25T14:43:36.346Z","timeModified":"2023-01-25T14:43:36.346Z","etag":"39f91bfb-0a92-4410-b4ec-c03d7a2cda9c","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_86","size":5000,"timeCreated":"2023-01-25T14:43:39.480Z","timeModified":"2023-01-25T14:43:39.480Z","etag":"8a31dea4-923d-4550-afc6-8ec8c31e4653","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_91","size":5000,"timeCreated":"2023-01-25T14:43:41.466Z","timeModified":"2023-01-25T14:43:41.466Z","etag":"c8f6e5b7-10e6-4cc1-8d63-baa2360a806f","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_96","size":5000,"timeCreated":"2023-01-25T14:43:44.521Z","timeModified":"2023-01-25T14:43:44.521Z","etag":"4eb4df7a-f857-4d63-a3f7-28b779b6a438","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_0","size":5000,"timeCreated":"2023-01-25T14:42:46.944Z","timeModified":"2023-01-25T14:42:46.944Z","etag":"46d32ce1-564f-45ff-8345-589b2d8251ed","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_10","size":5000,"timeCreated":"2023-01-25T14:42:52.886Z","timeModified":"2023-01-25T14:42:52.886Z","etag":"3a029eec-eb61-416e-8c7f-af50ca73952c","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_15","size":5000,"timeCreated":"2023-01-25T14:42:55.698Z","timeModified":"2023-01-25T14:42:55.698Z","etag":"9644fb80-5fdc-4b63-ae19-41f3d428b4f7","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_20","size":5000,"timeCreated":"2023-01-25T14:42:58.982Z","timeModified":"2023-01-25T14:42:58.982Z","etag":"a9ad6d2f-83be-49f3-b371-ecdca9a00791","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_25","size":5000,"timeCreated":"2023-01-25T14:43:01.894Z","timeModified":"2023-01-25T14:43:01.894Z","etag":"e064a868-a224-434f-bf52-393b621bbcf0","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_30","size":5000,"timeCreated":"2023-01-25T14:43:04.703Z","timeModified":"2023-01-25T14:43:04.703Z","etag":"8908083b-0e75-4f02-aa66-3118d0569904","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_35","size":5000,"timeCreated":"2023-01-25T14:43:08.041Z","timeModified":"2023-01-25T14:43:08.041Z","etag":"8d733b81-2f3f-4760-b0d9-0f5ee54e4857","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_40","size":5000,"timeCreated":"2023-01-25T14:43:11.173Z","timeModified":"2023-01-25T14:43:11.173Z","etag":"cb8b1765-0b02-4eb7-92a7-c20432545b3a","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_45","size":5000,"timeCreated":"2023-01-25T14:43:14.522Z","timeModified":"2023-01-25T14:43:14.522Z","etag":"9fe0d962-758f-4350-a62d-10fed5bae09a","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_5","size":5000,"timeCreated":"2023-01-25T14:42:49.710Z","timeModified":"2023-01-25T14:42:49.710Z","etag":"dc9a8d87-4f97-4c5c-bdde-ebf0290de70a","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_50","size":5000,"timeCreated":"2023-01-25T14:43:17.816Z","timeModified":"2023-01-25T14:43:17.816Z","etag":"22878a07-70e3-4aa6-bf0e-1505ae2e2e61","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_55","size":5000,"timeCreated":"2023-01-25T14:43:20.954Z","timeModified":"2023-01-25T14:43:20.954Z","etag":"c2493b18-3e53-468d-b54c-12f6efcbe6c7","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_60","size":5000,"timeCreated":"2023-01-25T14:43:24.153Z","timeModified":"2023-01-25T14:43:24.153Z","etag":"139b7b3d-a0fd-4f1f-ad73-6fed8c5fccec","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_65","size":5000,"timeCreated":"2023-01-25T14:43:27.055Z","timeModified":"2023-01-25T14:43:27.055Z","etag":"a14e27fc-6d3c-4646-8947-23bea4022da5","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_70","size":5000,"timeCreated":"2023-01-25T14:43:30.045Z","timeModified":"2023-01-25T14:43:30.045Z","etag":"777b0e24-6f36-4473-99d0-cd6e3d96f799","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_75","size":5000,"timeCreated":"2023-01-25T14:43:33.119Z","timeModified":"2023-01-25T14:43:33.119Z","etag":"c39a1633-880f-4f8b-82b5-bcb06394d361","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_80","size":5000,"timeCreated":"2023-01-25T14:43:35.666Z","timeModified":"2023-01-25T14:43:35.666Z","etag":"be71440f-9ece-4692-a839-daa8135ef732","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_85","size":5000,"timeCreated":"2023-01-25T14:43:39.085Z","timeModified":"2023-01-25T14:43:39.085Z","etag":"c34ca3d6-3cba-4be8-b9f7-41a967aa67a8","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_90","size":5000,"timeCreated":"2023-01-25T14:43:41.079Z","timeModified":"2023-01-25T14:43:41.079Z","etag":"6520f19c-b107-41a2-8348-f265a59ace16","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_95","size":5000,"timeCreated":"2023-01-25T14:43:44.115Z","timeModified":"2023-01-25T14:43:44.115Z","etag":"79239077-a322-43e1-b82a-153a2c8eca0a","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_12","size":5000,"timeCreated":"2023-01-25T14:42:53.985Z","timeModified":"2023-01-25T14:42:53.985Z","etag":"508bca60-0b1a-4d26-8a32-16d69489cd21","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_17","size":5000,"timeCreated":"2023-01-25T14:42:57.196Z","timeModified":"2023-01-25T14:42:57.196Z","etag":"b7b19c0e-2e4e-4879-8b64-78f2bcdb942d","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_2","size":5000,"timeCreated":"2023-01-25T14:42:48.000Z","timeModified":"2023-01-25T14:42:48.000Z","etag":"39cf2db1-c899-4807-983d-12d0caa69231","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_22","size":5000,"timeCreated":"2023-01-25T14:43:00.326Z","timeModified":"2023-01-25T14:43:00.326Z","etag":"a2a4321f-70ad-458a-9f69-a39c706dc4b6","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_27","size":5000,"timeCreated":"2023-01-25T14:43:02.941Z","timeModified":"2023-01-25T14:43:02.941Z","etag":"3a00e068-90f2-4182-a73e-6da177abb166","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_32","size":5000,"timeCreated":"2023-01-25T14:43:05.560Z","timeModified":"2023-01-25T14:43:05.560Z","etag":"49f9808e-eff9-4361-8937-4e52494b7ad1","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"a/b/Object_37","size":5000,"timeCreated":"2023-01-25T14:43:09.103Z","timeModified":"2023-01-25T14:43:09.103Z","etag":"37be5c7c-c205-45b9-8fdc-7bc8e8515688","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="}]}'
+    headers:
+      Content-Length:
+      - '10468'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:44:22 GMT
+      opc-client-request-id:
+      - 456ECCD3BD5D4D56828FB602535FF855
+      opc-request-id:
+      - iad-1:oUxMKyShk1XQb7sP7b__gOlOutznyWmVdoRk0yzulCn00CUyUBGIkDGNJhnVRYzk
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="e5lS4qWiwE+wa0QEOr5Nn+hnFYu7oKQohcqhi7r7UoTJi0Q/HYfO/ZqNaVFCLah95YuiYo6QDIu7ZnUwWuewJhG2dBS0ZJHeMPOAHpCYxKwUweatO3Umt7r/bsL6w3kCZzb/ttDxebKl4rxBuCkYoCPm2CL58rlXLXQYnsmKOv5esqX54U9p+SLaCS8e16EVjE5+NR/k5Qw8KqeQcfQ9UgjQQP8agMdLuEJ7x8Nlo3r/dxZTwFjIMUgsBIwNXs9ldr4AGbqmV0U72Hjjfbrr/bVo+sOUHEfYt8QlvvoZ7t32SNtRSX6mliGbfDdvflNm5QtW/KQUfhyEdXy9D7YrAw==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:44:22 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 64D1CDC328904FC9B149186647785252
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 79F84EA37CA94C7FADBDF425D07391E1
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/ObjectStorageBulkGetTest_1000000/o?limit=3&fields=name%2Csize%2Cetag%2Cmd5%2CtimeCreated%2CtimeModified%2CstorageTier%2CarchivalState
+  response:
+    body:
+      string: '{"nextStartWith":"/a/Object_21","objects":[{"name":"/a/Object_1","size":5000,"timeCreated":"2023-01-25T14:42:47.603Z","timeModified":"2023-01-25T14:42:47.603Z","etag":"e47fe0f8-97c2-4b1c-899d-74d4f8a703d1","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_11","size":5000,"timeCreated":"2023-01-25T14:42:53.563Z","timeModified":"2023-01-25T14:42:53.563Z","etag":"3c15d5c9-accc-42e5-a7da-53dd0e0fc823","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_16","size":5000,"timeCreated":"2023-01-25T14:42:56.473Z","timeModified":"2023-01-25T14:42:56.473Z","etag":"acb6240b-2e7b-4b25-b1aa-6f905f7089aa","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="}]}'
+    headers:
+      Content-Length:
+      - '712'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:44:23 GMT
+      opc-client-request-id:
+      - 64D1CDC328904FC9B149186647785252
+      opc-request-id:
+      - iad-1:Jb2aO_2iyYuLzt3L0mvpqq5KNBQOgwvBQGdRRVoeeWeY5HMKBc-jKxzeu2DO-jLj
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="4RZrLtbZtYD6aLfEuMCkEVkrcb3rRQecENs02iyAdghkviXWyBIhWITnmTNevu5FV/zE8hVGdV+vxJ5VibMJCM6S5CIrF4mIwbUQJ/CFMm0GCUMyW5OF0KD3Y79yh2ey+Tpye15iAThwY/zwqNRfhI9cEhoVQlo4PmTOedv6Sem81sFDrJ4zgrCojj8pApMSAmzCpOfKvl0GjWbsbnoeQqcsai2/XEPVi41I8TmuSn7ELBgX14QzuJlRPtGf5avIXfSDxtWhpLctIus97BuHvJCpYB5UkH27U45jFsBKOAIzYLq5AqB+xJ1L0KVBByVXglXZjUZgEBbvoNQUKvCO1A==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:44:23 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 64D1CDC328904FC9B149186647785252
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - EA2371C3B7AD4492A52CFE9A7E2B683F
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/ObjectStorageBulkGetTest_1000000/o?start=%2Fa%2FObject_21&limit=3&fields=name%2Csize%2Cetag%2Cmd5%2CtimeCreated%2CtimeModified%2CstorageTier%2CarchivalState
+  response:
+    body:
+      string: '{"nextStartWith":"/a/Object_36","objects":[{"name":"/a/Object_21","size":5000,"timeCreated":"2023-01-25T14:42:59.664Z","timeModified":"2023-01-25T14:42:59.664Z","etag":"542954dc-b165-4982-b553-417f92a8e434","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_26","size":5000,"timeCreated":"2023-01-25T14:43:02.283Z","timeModified":"2023-01-25T14:43:02.283Z","etag":"495ed7aa-3e28-4016-878f-91081cb38346","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_31","size":5000,"timeCreated":"2023-01-25T14:43:05.089Z","timeModified":"2023-01-25T14:43:05.089Z","etag":"feab43ff-9601-4391-8ad4-e94201797676","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="}]}'
+    headers:
+      Content-Length:
+      - '713'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:44:24 GMT
+      opc-client-request-id:
+      - 64D1CDC328904FC9B149186647785252
+      opc-request-id:
+      - iad-1:5Cu60pXsI0wtH_gOVd4ed9bsXnc5YwqJfuB6_hb2YHFWXHjC8GOwUGV6FtLwtZum
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="JrF5bVNTRDAlT5myq4mwFkdMXcNC86nSvUhl1Fjut2yuvz1fUmPTp0403U9+XFmnLmXyQ/t0B/zS814nnymRwdbFR3mJ4Jt3tVKm2Szc88CH+tZDrXBijKRbDzcj7iCRKTJDYEpPRlzFad9ARmZ13H3dT2ynYhShdpexMFf7ukbKQgUdDOljZ+kbiYCa+sBPMQo3zQR9E4pnGpj4LpiOS8d8uRoWEkxa1HYTCEjrV4RdJYAMmuj4JIUCLByNCzogewmnY8jVkETPyUc1x+P18GWaDxshDbIQrF2ZIUcM720cnJ6+eu/aMvkD5lVmdZIS3Mp3vleWKqv4k7eGM+G//Q==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:44:23 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 64D1CDC328904FC9B149186647785252
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 5A41882BCF764BFE91A22E2B85A403CE
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/ObjectStorageBulkGetTest_1000000/o?start=%2Fa%2FObject_36&limit=3&fields=name%2Csize%2Cetag%2Cmd5%2CtimeCreated%2CtimeModified%2CstorageTier%2CarchivalState
+  response:
+    body:
+      string: '{"nextStartWith":"/a/Object_51","objects":[{"name":"/a/Object_36","size":5000,"timeCreated":"2023-01-25T14:43:08.436Z","timeModified":"2023-01-25T14:43:08.436Z","etag":"95deac81-52c6-43ab-b58e-3ea7753dab2e","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_41","size":5000,"timeCreated":"2023-01-25T14:43:11.826Z","timeModified":"2023-01-25T14:43:11.826Z","etag":"f3c160b2-c1e3-4467-97de-461005c95d0b","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_46","size":5000,"timeCreated":"2023-01-25T14:43:15.182Z","timeModified":"2023-01-25T14:43:15.182Z","etag":"842557d8-c6ac-4b8b-9e4e-b9902cc5ae08","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="}]}'
+    headers:
+      Content-Length:
+      - '713'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:44:24 GMT
+      opc-client-request-id:
+      - 64D1CDC328904FC9B149186647785252
+      opc-request-id:
+      - iad-1:r7wU-ArEb6JiwI9UVMMXjVn8mvOrK3DMnHw-3TRfOuqPISqDmFp2PsDIAwNaCA3O
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="vtL+99f/fEi9KC1JlSYfnB+BqpD6Uk9AMNrDXBv34p3Tcca003MrqzIMrBwRgaPkQUh0voOF+naqTnRh2/WAdmMYtPdAxvVhtWulTgu8U3e2rADkJ1liA97EcLqLj7TIEMHbID3FE/euWso1aRr7cdTsqIqvOhmOwixxrhBz7V9F+bvrtl7zsu1UKJulMy9Oai1R05QgaaGDrNWVefWRCQ+s2EnvvH8xRiP9D006FelA4YFAcgVBqvZUt6Gio19VLeEA4f4ckRyQivXV4WeoOFjeFcUGiDZZqfEgaBBuXs6WDA8orsWjyUiWA8iCzjq0TsTND97GVSrgo0S5rfb3jA==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:44:24 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 64D1CDC328904FC9B149186647785252
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 9A38A58AB166476FBD7D26C669C3D9F7
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/ObjectStorageBulkGetTest_1000000/o?start=%2Fa%2FObject_51&limit=3&fields=name%2Csize%2Cetag%2Cmd5%2CtimeCreated%2CtimeModified%2CstorageTier%2CarchivalState
+  response:
+    body:
+      string: '{"nextStartWith":"/a/Object_61","objects":[{"name":"/a/Object_51","size":5000,"timeCreated":"2023-01-25T14:43:18.562Z","timeModified":"2023-01-25T14:43:18.562Z","etag":"bcee672c-9260-4456-9fda-cbc1213d5590","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_56","size":5000,"timeCreated":"2023-01-25T14:43:21.618Z","timeModified":"2023-01-25T14:43:21.618Z","etag":"d0f9e8c4-d7c7-4033-8581-b70074c84cc9","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_6","size":5000,"timeCreated":"2023-01-25T14:42:50.177Z","timeModified":"2023-01-25T14:42:50.177Z","etag":"43afe35d-c876-4bc3-9536-f10195e50494","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="}]}'
+    headers:
+      Content-Length:
+      - '712'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:44:25 GMT
+      opc-client-request-id:
+      - 64D1CDC328904FC9B149186647785252
+      opc-request-id:
+      - iad-1:Xx4L000C18V79TQPN4ySQQQgZnNAOt7CpfMLqD85m8VdmmqOC-sTnPqzR-d9_wjY
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="Owpf6UEzdgrN3udDGIghHePXexb7aODZLw4xV6J0b8+BaMN5n36nCnmQY/gC+tiShCDPoAmQkZn9MxsSm+kW3h4CksZZkZrk+47eISSYOyZbrQbVxDGbFso94SO2lrOhk+hZDCOW8AW1sw94uDsXRuNdkYgaYnvyXNa7Aq6Cm1dHJFrVjc4XCBGwTh9JujeAGFcc9ZFSPEYvN0XTHrkO3/5MhGMIrGfVLQNrFqYaegDPcbZPMiBeb4n25dZm05ks2RbBXQpRufMlRtpGueBTvCSrEKFV6a8WG1doomW2wnlA4cRrtnl3RHeURu5kGKaJmLqP95l9+cu1N82D7YbbVg==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:44:24 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 64D1CDC328904FC9B149186647785252
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 843AA27690324049A27B167019D9B219
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/ObjectStorageBulkGetTest_1000000/o?start=%2Fa%2FObject_61&limit=3&fields=name%2Csize%2Cetag%2Cmd5%2CtimeCreated%2CtimeModified%2CstorageTier%2CarchivalState
+  response:
+    body:
+      string: '{"nextStartWith":"/a/Object_76","objects":[{"name":"/a/Object_61","size":5000,"timeCreated":"2023-01-25T14:43:24.546Z","timeModified":"2023-01-25T14:43:24.546Z","etag":"938aa388-d34c-499d-accd-61e0d2087792","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_66","size":5000,"timeCreated":"2023-01-25T14:43:27.793Z","timeModified":"2023-01-25T14:43:27.793Z","etag":"5149242f-4c35-44c7-b977-fed490b83902","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_71","size":5000,"timeCreated":"2023-01-25T14:43:30.709Z","timeModified":"2023-01-25T14:43:30.709Z","etag":"a76e60e4-5491-4cf8-935e-873af79b37e1","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="}]}'
+    headers:
+      Content-Length:
+      - '713'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:44:25 GMT
+      opc-client-request-id:
+      - 64D1CDC328904FC9B149186647785252
+      opc-request-id:
+      - iad-1:SErv2BKw1ShuUX_Kj98tA1AJp3GLPIF5I0dwf1sh96CNk9m70IOlz5NVjbeiMyPC
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="l+Ltcb1Kq/L3G1b9JGwy2hMmUD6lB7ZPIUhiX2y2FPzRLdIQIhN7qYRdrfQ7La3Ym7gXIE7QmGZz+2f8aQaV9XvGxelvK+AsBECcGm9wf5xlWsZOIFfaat5mYoqUBxwgOV64Ob6ZuhKjArKdjtr77YW2vzgedMQy15RokR9GTA4QnCkdHWZatTs+nJQdEjjKbY7PzOZjjaqDsS9DXKHrZRHmRboKubIkQXFNuuIwWUTNYdaFlUGWheDKgG55yTPyN0w4iN+1uGQQFRsipHorw0CjgB7E3QmM+qDLHoGT5QDPIXQhEgoa0w9P1E0+/7dp5v1ZYj2xEzD/zDML22JPEA==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:44:25 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 64D1CDC328904FC9B149186647785252
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 7C7F36C96720412198223A8B1E979F93
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/ObjectStorageBulkGetTest_1000000/o?start=%2Fa%2FObject_76&limit=3&fields=name%2Csize%2Cetag%2Cmd5%2CtimeCreated%2CtimeModified%2CstorageTier%2CarchivalState
+  response:
+    body:
+      string: '{"nextStartWith":"/a/Object_91","objects":[{"name":"/a/Object_76","size":5000,"timeCreated":"2023-01-25T14:43:33.552Z","timeModified":"2023-01-25T14:43:33.552Z","etag":"0e62faac-c7b0-4866-8b86-38edc3dd50a9","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_81","size":5000,"timeCreated":"2023-01-25T14:43:36.346Z","timeModified":"2023-01-25T14:43:36.346Z","etag":"39f91bfb-0a92-4410-b4ec-c03d7a2cda9c","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_86","size":5000,"timeCreated":"2023-01-25T14:43:39.480Z","timeModified":"2023-01-25T14:43:39.480Z","etag":"8a31dea4-923d-4550-afc6-8ec8c31e4653","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="}]}'
+    headers:
+      Content-Length:
+      - '713'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:44:26 GMT
+      opc-client-request-id:
+      - 64D1CDC328904FC9B149186647785252
+      opc-request-id:
+      - iad-1:X02X6oDco1nyLtSyoT1By8pb0xuJGBqOSbhz_gB8y0W3RjGgkgqrUd__GG1Ev_49
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="ua+bWxfBq14n7Vt0zkLjMxH/z+JCqu/gMJYG37ChNWmT1euFeusrbZ8qOIkB7W+hDitckX8N3HTyd1pxuyBewPHr1FP2lqy220oAg6vH0TGqWLNlOexJMulrdUxtKxSV/WXx5WVfctHmmJag0MrknDRo+ikAeALBVygX0lPHvNs7SvMiKXMeHeBoXYOau9BX4eCs8YBqIkTZfLdE8WyQF4vUqubrScW+lyl1nMGj52YvKDJBvZ+6IeCi1PfqNAzsfx3grC/EqtGW1Dtzx/1aoVjghVkBmvG9IYWdvB4ZwHc+yFEK1EJHV+Sqxerw2hlXgxphtLOiOBr8GrA57Ic2gQ==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:44:25 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 64D1CDC328904FC9B149186647785252
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - CEA37EC42D8146659A5EC329E4499EAC
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/ObjectStorageBulkGetTest_1000000/o?start=%2Fa%2FObject_91&limit=3&fields=name%2Csize%2Cetag%2Cmd5%2CtimeCreated%2CtimeModified%2CstorageTier%2CarchivalState
+  response:
+    body:
+      string: '{"nextStartWith":"Object_10","objects":[{"name":"/a/Object_91","size":5000,"timeCreated":"2023-01-25T14:43:41.466Z","timeModified":"2023-01-25T14:43:41.466Z","etag":"c8f6e5b7-10e6-4cc1-8d63-baa2360a806f","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"/a/Object_96","size":5000,"timeCreated":"2023-01-25T14:43:44.521Z","timeModified":"2023-01-25T14:43:44.521Z","etag":"4eb4df7a-f857-4d63-a3f7-28b779b6a438","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_0","size":5000,"timeCreated":"2023-01-25T14:42:46.944Z","timeModified":"2023-01-25T14:42:46.944Z","etag":"46d32ce1-564f-45ff-8345-589b2d8251ed","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="}]}'
+    headers:
+      Content-Length:
+      - '706'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:44:26 GMT
+      opc-client-request-id:
+      - 64D1CDC328904FC9B149186647785252
+      opc-request-id:
+      - iad-1:4b8X8Zx1fbfUJwKX-KHNaMpb0xuJGBqOSbhz_gB8y0WZA1MmsCGOoxJVN07usdU6
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="moOMkLwndaZ+3C7qjdNrqPlCtEKO4Yp9I9vbrA41csbe6cI0xaP0Tenkg85GbUlCbD85e/nYNnw0WclZCmXRWSOXoGKOTXS0zO4dwwi0E8RSoUdOPAS0AIPv9SAu2csr87I/b8vqqGJ1VMgFGBoPoMSx5uCTtCPjtAnwThJBgRRO0eU1ElPF0v1dOEzsyb1OcyEpMK3ZymHqm5JjGlWUVi2qEw98/hjNJFvHfL5An8ZHBOpJ/4dyOvhFLeRyChuQNfVqUcV0j4y/sZpoN4Nf1VA0sLA3Rqw2YPoePBrqLRHJLkx6zYFT+jXQM6/3XhDBW7KDbzu6Gg148BwVII1HKQ==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:44:26 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 64D1CDC328904FC9B149186647785252
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 1D5C8A975009488597613427637A1407
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/ObjectStorageBulkGetTest_1000000/o?start=Object_10&limit=3&fields=name%2Csize%2Cetag%2Cmd5%2CtimeCreated%2CtimeModified%2CstorageTier%2CarchivalState
+  response:
+    body:
+      string: '{"nextStartWith":"Object_25","objects":[{"name":"Object_10","size":5000,"timeCreated":"2023-01-25T14:42:52.886Z","timeModified":"2023-01-25T14:42:52.886Z","etag":"3a029eec-eb61-416e-8c7f-af50ca73952c","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_15","size":5000,"timeCreated":"2023-01-25T14:42:55.698Z","timeModified":"2023-01-25T14:42:55.698Z","etag":"9644fb80-5fdc-4b63-ae19-41f3d428b4f7","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_20","size":5000,"timeCreated":"2023-01-25T14:42:58.982Z","timeModified":"2023-01-25T14:42:58.982Z","etag":"a9ad6d2f-83be-49f3-b371-ecdca9a00791","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="}]}'
+    headers:
+      Content-Length:
+      - '701'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:44:26 GMT
+      opc-client-request-id:
+      - 64D1CDC328904FC9B149186647785252
+      opc-request-id:
+      - iad-1:ah0adZNdBzedkGXOjfGy_vlKHr778m02A_0N6ufog1mNM-SWbI4NzhRdYPblb85g
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="V1nCvfijgdsU4CzAzRmPIqpZ6vOWd9xQnEfVA6QOANZitp5nNiCppSFFdEfemU44ohwrRTndOflcMiTXuT2KxjucdC6HnlItJmpNrmDqTnDcGeY4KNgVUbj89dYGTkKQH7aV9WrE6R9e/9Aed0uraaB43zoofOHRXFd0l37/nA7Wl4Y/9gjxLwgxLMS1TRFtZKTojBdsu742hJe3+AledZP3ib3MF3JQQX1k8tZcvtTS95HR6hkwZkfabahWZ3kU/p9X2fL1OO3vGgnhcgYMtb8GP0y0O9za59f3aj/5Ux9VRRmyPKeXSJV3Ta5C6cMsn4nJbXnBkPyQQLyj9x2x5A==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:44:26 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 64D1CDC328904FC9B149186647785252
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 643CF537878C4EDDB3B32488743AB1B1
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/ObjectStorageBulkGetTest_1000000/o?start=Object_25&limit=3&fields=name%2Csize%2Cetag%2Cmd5%2CtimeCreated%2CtimeModified%2CstorageTier%2CarchivalState
+  response:
+    body:
+      string: '{"nextStartWith":"Object_40","objects":[{"name":"Object_25","size":5000,"timeCreated":"2023-01-25T14:43:01.894Z","timeModified":"2023-01-25T14:43:01.894Z","etag":"e064a868-a224-434f-bf52-393b621bbcf0","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_30","size":5000,"timeCreated":"2023-01-25T14:43:04.703Z","timeModified":"2023-01-25T14:43:04.703Z","etag":"8908083b-0e75-4f02-aa66-3118d0569904","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_35","size":5000,"timeCreated":"2023-01-25T14:43:08.041Z","timeModified":"2023-01-25T14:43:08.041Z","etag":"8d733b81-2f3f-4760-b0d9-0f5ee54e4857","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="}]}'
+    headers:
+      Content-Length:
+      - '701'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:44:27 GMT
+      opc-client-request-id:
+      - 64D1CDC328904FC9B149186647785252
+      opc-request-id:
+      - iad-1:mAPfx_pdvmeDKmSGkZSYuPl6QaN32r9XKDUzGrvl8I8a52RVk6KiNL6IUeiSyuce
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="466WpjWWnU4r+aOqScilgXfDQtC6zqZOUVOQyDos9Aqn+RiyLnc8hBq7gHpUE+1FCTpirTiA2M6CNkfl3GCUTFmRx1YphLO8p8wEvwtefoimUsqu7uL6fFnvj/o15vA4NDDbaenTgznQobpr5TacF2ub7w8PosVllmnmxnCgrShqE135MsuI1Z3E7DfAQLmwjK0dAug7uM7NldzlBi9KuqxDqa7y9V5ozlSc3/yHIl1GKswdBENbvG6Dy0kaaf1ilmRC5+wPKbog+BnlLlzSwnH0R7DFO5w5+S9hqThpWW18gXxHpIfgItBzicE9ZaYuCWiw2dvRAvBVo7P/yy1blA==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:44:27 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 64D1CDC328904FC9B149186647785252
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 96E12323641647FD9D078F04D999B0C8
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/ObjectStorageBulkGetTest_1000000/o?start=Object_40&limit=3&fields=name%2Csize%2Cetag%2Cmd5%2CtimeCreated%2CtimeModified%2CstorageTier%2CarchivalState
+  response:
+    body:
+      string: '{"nextStartWith":"Object_50","objects":[{"name":"Object_40","size":5000,"timeCreated":"2023-01-25T14:43:11.173Z","timeModified":"2023-01-25T14:43:11.173Z","etag":"cb8b1765-0b02-4eb7-92a7-c20432545b3a","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_45","size":5000,"timeCreated":"2023-01-25T14:43:14.522Z","timeModified":"2023-01-25T14:43:14.522Z","etag":"9fe0d962-758f-4350-a62d-10fed5bae09a","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_5","size":5000,"timeCreated":"2023-01-25T14:42:49.710Z","timeModified":"2023-01-25T14:42:49.710Z","etag":"dc9a8d87-4f97-4c5c-bdde-ebf0290de70a","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="}]}'
+    headers:
+      Content-Length:
+      - '700'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:44:27 GMT
+      opc-client-request-id:
+      - 64D1CDC328904FC9B149186647785252
+      opc-request-id:
+      - iad-1:Dhnzlgdlcv_N_MqsWbbdqDx03lMeqW0B8VOvQcbjosFQzeR--XRlLc8WPr-343Xy
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="AJ5MN/Z4zVJroK+xuSk7GH9BeyUORkEXyNwNBxUx4rkPt4SqMiSTw+YdZ+mrGZ9xBslIcV4927PzA5D2VKXZrwXhfXrC1O9LcKrEDSrukq9S6vCwXq/LIl/nVLP415ItygFoBOXqf8vibg8Kd2mmAshPRTnWOBlxZ8xKkipjmK0o3T1cvD9C2ojC6Z8pzyaFjbCtIUqNmp4aQzDdyr1swPnn1/2l/j39ed+F/F1G/xk5spXp221RcZ56E5pLTbfRkOOTsA6Px9CsEj2LXvYT8tWHKIFJcT4AqFYr6oJhqk6rFvJedL+Phbc10kjTgJ3EvAB8dMCDuZuQf5D5ojxXwA==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:44:27 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 64D1CDC328904FC9B149186647785252
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 611FF4B99F134071AEB9CF996744829D
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/ObjectStorageBulkGetTest_1000000/o?start=Object_50&limit=3&fields=name%2Csize%2Cetag%2Cmd5%2CtimeCreated%2CtimeModified%2CstorageTier%2CarchivalState
+  response:
+    body:
+      string: '{"nextStartWith":"Object_65","objects":[{"name":"Object_50","size":5000,"timeCreated":"2023-01-25T14:43:17.816Z","timeModified":"2023-01-25T14:43:17.816Z","etag":"22878a07-70e3-4aa6-bf0e-1505ae2e2e61","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_55","size":5000,"timeCreated":"2023-01-25T14:43:20.954Z","timeModified":"2023-01-25T14:43:20.954Z","etag":"c2493b18-3e53-468d-b54c-12f6efcbe6c7","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="},{"name":"Object_60","size":5000,"timeCreated":"2023-01-25T14:43:24.153Z","timeModified":"2023-01-25T14:43:24.153Z","etag":"139b7b3d-a0fd-4f1f-ad73-6fed8c5fccec","storageTier":"Standard","md5":"eqp97HCfpPqC83Rqv9gL2w=="}]}'
+    headers:
+      Content-Length:
+      - '701'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:44:28 GMT
+      opc-client-request-id:
+      - 64D1CDC328904FC9B149186647785252
+      opc-request-id:
+      - iad-1:fAy7RGaOcXrRyPxUs6Tm3-78sb1gPxrAkoLzuYc85NmFsm-_FFmABAAs0igwJlwt
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+version: 1

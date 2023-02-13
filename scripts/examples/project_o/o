@@ -20,8 +20,8 @@ import os
 import fcntl
 import errno
 import datetime
-VERSION = "1.4"
-UPDATED = "2023-01-20"
+VERSION = "1.5"
+UPDATED = "2023-02-07"
 
 # ==============================================================================
 # Global variables
@@ -863,7 +863,9 @@ def get_matching_ocid(option, value):
             opt_type = 'credential'
         elif opt_type == 'zonenameor':
             opt_type = 'dns-zone'
-        # print('HERE opt_type', opt_type)
+        elif opt_type == 'identityprovider':
+            opt_type = 'saml2idp'
+        # Add new idtypes to the above when the --whatever-id does not match ocid1.whatevs...
 
     matches = [item for k, item in ocid.items() if
                type_match(opt_type, item['type'])
@@ -1012,11 +1014,11 @@ def get_fields_from(spec, keynames):
     if not keynames:
         return fields, sep   # show all fields
 
-    specs = spec.split(sep if sep != ' ' else None)
+    specs = spec.split(sep)
 
     if sep == r'#':
         sep = '|'
-    if not specs[-1]:
+    if specs and not specs[-1]:
         specs.pop(-1)  # remove empty spec
 
     for sf in specs:
@@ -1038,8 +1040,8 @@ def get_fields_from(spec, keynames):
             # Search for partial keyname matches
             sf = s.split('.')
             for k in sorted(keynames):
-                if (user_out_spec == default_out_spec and (
-                        k == 'quota-names'
+                if (len(user_out_spec) >= len(default_out_spec) and (
+                        s == 'name' and k == 'quota-names'
                         or s == 'size' and 'resize' in k
                         or s == 'id' and 'bandwidth' in k
                         or s == 'id' and 'identity' in k)):
@@ -1126,17 +1128,18 @@ def show_column_headers(out_fields, sep):
 # ==============================================================================
 
 
-def jdump_item(item):
+def jdump_item(item, indent=2):
     """Remove json decorations, empty lines from json.dumps output"""
 
     return (re.sub(r'(?m)"\s*$|( *)"', r'\1',         # remove outer double-quotes
-            # remove closing braces and trailing newline
+            re.sub(r'^\["', '"',                      # remove braces
+            # noqa: E128 remove closing braces and trailing newline
             re.sub(r'(?m)[\[\]{},]+$', '',            # noqa: E128
             # noqa: E128 remove braces at beginning of lines, empty lines
             re.sub(r'(?m)^[\s{}[\],]+\n', '',         # noqa: E128
             # noqa: E128 change  key: [ value ] ->  key: value
             re.sub(r': \[\s+("[^"]*")\s+]', r': \1',  # noqa: E128
-            json.dumps(item, indent=2))))))           # noqa: E128
+            json.dumps(item, indent=indent)))))))     # noqa: E128
 
 # ==============================================================================
 
@@ -1188,7 +1191,6 @@ def show_item(item, fields, sep):
             if k == 'access-uri':
                 print(column['keyfmt'].format(k) + '  ' + value)
             elif '\n' in value:
-                # value = re.sub(r'(,){0,1}\n ', '\n' + ' ' * (maxkeylen + 3), value)
                 value = re.sub(r'\n ', '\n' + ' ' * (maxkeylen + 3), value)
                 value = re.sub(r'$\n', '', value)
                 value = re.sub(r'^  ', '', re.sub('\n  ', '\n', value))
@@ -1237,12 +1239,22 @@ def get_key_list(items, prefix=''):
 
 
 def output(jsonOut):
+    """Send formatted output from oci command to stdout.
+
+    jsonOut is the json returned by oci.
+    Possible JSON 'data' returns:
+       get:   {'data': {'compartment-id': 'ocid1.compartment.oc1..aaa...
+       list:  {'data': [{'compartment-id': 'ocid1.compartment.oc1..aaid7...
+       ns get:  { "data": "mytenancyname" }
+       service-connector list:  {'data': { 'items': [ ]}}
+    The useful payload usually is in "data", but could be a string, dict,
+    list of dicts, etc.
+
+    Format payload according to the "-o spec" and print to stdout.
+    Show any additional non-"data" key-values, unless quiet.
+    """
+
     if type(jsonOut) is dict and 'data' in jsonOut:
-        # Possible JSON 'data' returns:
-        #   get:   {'data': {'compartment-id': 'ocid1.compartment.oc1..aaa...
-        #   list:  {'data': [{'compartment-id': 'ocid1.compartment.oc1..aaid7...
-        #   ns get:  { "data": "mytenancyname" }
-        #   service-connector list:  {'data': { 'items': [ ]}}
         # copy the returned 'data' into results list
         if type(jsonOut['data']) is list:
             results = jsonOut['data']
@@ -1259,7 +1271,7 @@ def output(jsonOut):
             except (KeyError, IndexError):
                 results = [jsonOut]
         else:
-            results = [jsonOut]  # sloppy
+            results = [jsonOut]
 
     elif type(jsonOut) is list and type(jsonOut[0]) is dict:
         # Other JSON outputs:
@@ -1272,6 +1284,11 @@ def output(jsonOut):
     else:
         # It's JSON, but I don't understand its format.
         return 1
+
+    # ==========================================================================
+    # Above we filled results[] with data.
+    # Below we format and display the data.
+    # ==========================================================================
 
     if not user_out_spec:
         print(json.dumps(jsonOut, indent=4))
@@ -1292,14 +1309,29 @@ def output(jsonOut):
         show_column_headers(out_fields, out_sep)
         for item in results:
             show_item(item, out_fields, out_sep)
-    if type(jsonOut) is dict and 'opc-next-page' in jsonOut:
-        if not quiet:
-            print(bold("\nFor next page:  --page next"), file=sys.stderr)
-        # Append opc-next-page to results
-        results.append({"type": "",
-                        "alias": "opc-next-page",
-                        "name": "opc-next-page",
-                        "id": jsonOut['opc-next-page']})
+
+    # Any extra non-'data' key-values?  Send to stdout
+    if type(jsonOut) is dict and jsonOut.keys() != ['data']:
+        kmax = str(max([len(str(k)) for k in jsonOut]))
+        kfmt = '{:>' + kmax + '.' + kmax + '}'
+        nondata = '\n'
+        for k in jsonOut:
+            if k == 'opc-next-page':
+                # Save opc-next-page to ocids file
+                results.append({"type": "",
+                                "alias": "opc-next-page",
+                                "name": "opc-next-page",
+                                "id": jsonOut['opc-next-page']})
+                nondata += 'For next page:  --page next\n'
+            elif not quiet and k != 'data' and jsonOut[k]:
+                nondata += kfmt.format(k) + '  '
+                if type(jsonOut[k]) is str:
+                    nondata += jsonOut[k] + '\n'
+                else:
+                    nondata += jdump_item(jsonOut[k], None) + '\n'
+        if not quiet and nondata > '\n':
+            print(bold(nondata), file=sys.stdout)
+
     return results
 
 # ==============================================================================
@@ -1668,7 +1700,8 @@ def get_oci_commands(argv):
 
     # o oci_commands - no service name; get commands for all services
     if len(sys.argv) == 2:
-        sp = subprocess.run(['oci', '--help'], capture_output=True)
+        sp = subprocess.run(['oci', '--help'], stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE)
         out = sp.stdout.decode('utf-8')
         part1 = re.sub(r'.*Options:\n|Commands:\n.*', '', out, flags=re.S)
         globals = sorted(list(dict.fromkeys(re.findall(r'--[A-Za-z-]*', part1))))
@@ -1692,7 +1725,8 @@ def get_oci_commands(argv):
         exit(0)
 
     # o oci_commands <service>
-    sp = subprocess.run(['oci'] + sys.argv[2:] + ['--help'], capture_output=True)
+    sp = subprocess.run(['oci'] + sys.argv[2:] + ['--help'],
+                        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out = sp.stdout.decode('utf-8')
 
     if out.startswith('Usage'):
@@ -1822,10 +1856,29 @@ if '-i' in opts:
     user_in_spec = [v for o, v in optvals if o == '-i'][0]
 if '-o' in opts:
     user_out_spec = [v for o, v in optvals if o == '-o'][0]
-    if user_out_spec in ['json', 'JSON']:
+    if user_out_spec.lower() in ['json', 'j']:
         user_out_spec = ''
-    elif user_out_spec in ['text', 'raw']:
+    elif user_out_spec.lower() in ['text', 'raw']:
         user_out_spec = '/'
+    elif user_out_spec[0] in '+/,#\t ':
+        # if user spec starts with + or separator, append spec to defaults
+        # if user spec is bare separator, show all fields
+        # if spec contains a separator, use separator and user spec
+        sep = '#'
+        spec = user_out_spec
+        if spec[0] == '+':
+            spec = user_out_spec[1:]
+        if spec[0] in '/,#\t ':
+            sep = spec[0]
+            spec = spec[1:]
+        elif '/' in spec:
+            sep = '/'
+        elif ',' in spec:
+            sep = ','
+        if user_out_spec[0] != '+' and spec == '':
+            user_out_spec = sep
+        else:
+            user_out_spec = re.sub(r'#', sep, default_out_spec) + sep + spec
 else:
     user_out_spec = default_out_spec
 
@@ -1998,7 +2051,8 @@ oci_command_list = ['oci'] + c['action'].split(' ') + options_out
 try:
     # oci ... --file -  needs read(), not readline()
     if '--file' in options_out and '-' in options_out:
-        cli = subprocess.run(oci_command_list, capture_output=True)
+        cli = subprocess.run(oci_command_list, stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE)
         if cli.stdout != b'':
             sys.stdout.buffer.write(cli.stdout)
         if cli.stderr is not None and cli.stderr:

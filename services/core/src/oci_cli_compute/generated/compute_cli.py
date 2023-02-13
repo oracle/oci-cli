@@ -19,13 +19,19 @@ from services.core.src.oci_cli_core.generated import core_service_cli
 compute instances, and block storage volumes. For more information, see the console
 documentation for the [Networking],
 [Compute], and
-[Block Volume] services."""), short_help=cli_util.override('compute.compute_root_group.short_help', """Core Services API"""))
+[Block Volume] services.
+The required permissions are documented in the
+[Details for the Core Services] article."""), short_help=cli_util.override('compute.compute_root_group.short_help', """Core Services API"""))
 @cli_util.help_option_group
 def compute_root_group():
     pass
 
 
-@click.command(cli_util.override('compute.instance_group.command_name', 'instance'), cls=CommandGroupWithAlias, help="""A compute host. The image used to launch the instance determines its operating system and other software. The shape specified during the launch process determines the number of CPUs and memory allocated to the instance. For more information, see [Overview of the Compute Service].
+@click.command(cli_util.override('compute.instance_group.command_name', 'instance'), cls=CommandGroupWithAlias, help="""A compute host. The image used to launch the instance determines its operating system and other software. The shape specified during the launch process determines the number of CPUs and memory allocated to the instance.
+
+When you launch an instance, it is automatically attached to a virtual network interface card (VNIC), called the *primary VNIC*. The VNIC has a private IP address from the subnet's CIDR. You can either assign a private IP address of your choice or let Oracle automatically assign one. You can choose whether the instance has a public IP address. To retrieve the addresses, use the [ListVnicAttachments] operation to get the VNIC ID for the instance, and then call [GetVnic] with the VNIC ID.
+
+For more information, see [Overview of the Compute Service].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
 
@@ -155,12 +161,6 @@ def app_catalog_subscription_group():
     pass
 
 
-@click.command(cli_util.override('compute.compute_capacity_report_group.command_name', 'compute-capacity-report'), cls=CommandGroupWithAlias, help="""The availability domain for which the report was generated.""")
-@cli_util.help_option_group
-def compute_capacity_report_group():
-    pass
-
-
 @click.command(cli_util.override('compute.boot_volume_attachment_group.command_name', 'boot-volume-attachment'), cls=CommandGroupWithAlias, help="""Represents an attachment between a boot volume and an instance.
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
@@ -243,7 +243,6 @@ compute_root_group.add_command(app_catalog_listing_resource_version_group)
 compute_root_group.add_command(image_shape_compatibility_entry_group)
 compute_root_group.add_command(app_catalog_listing_group)
 compute_root_group.add_command(app_catalog_subscription_group)
-compute_root_group.add_command(compute_capacity_report_group)
 compute_root_group.add_command(boot_volume_attachment_group)
 compute_root_group.add_command(measured_boot_report_group)
 compute_root_group.add_command(compute_global_image_capability_schema_version_group)
@@ -1153,35 +1152,6 @@ def create_app_catalog_subscription(ctx, from_json, compartment_id, listing_id, 
     client = cli_util.build_client('core', 'compute', ctx)
     result = client.create_app_catalog_subscription(
         create_app_catalog_subscription_details=_details,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
-@compute_capacity_report_group.command(name=cli_util.override('compute.create_compute_capacity_report.command_name', 'create'), help=u"""Generates a new compute capacity availability report for the availability domain. A compute capacity report lets you review capacity availability for the provided shapes. \n[Command Reference](createComputeCapacityReport)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] for the compartment. This should always be the root compartment.""")
-@cli_util.option('--availability-domain', required=True, help=u"""The availability domain of this compute capacity report.
-
-Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--shape-availabilities', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The capacity configurations for the capacity report.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'shape-availabilities': {'module': 'core', 'class': 'list[CreateCapacityReportShapeAvailabilityDetails]'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'shape-availabilities': {'module': 'core', 'class': 'list[CreateCapacityReportShapeAvailabilityDetails]'}}, output_type={'module': 'core', 'class': 'ComputeCapacityReport'})
-@cli_util.wrap_exceptions
-def create_compute_capacity_report(ctx, from_json, compartment_id, availability_domain, shape_availabilities):
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['compartmentId'] = compartment_id
-    _details['availabilityDomain'] = availability_domain
-    _details['shapeAvailabilities'] = cli_util.parse_json_parameter("shape_availabilities", shape_availabilities)
-
-    client = cli_util.build_client('core', 'compute', ctx)
-    result = client.create_compute_capacity_report(
-        create_compute_capacity_report_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2822,7 +2792,9 @@ def get_image_shape_compatibility_entry(ctx, from_json, image_id, shape_name):
     cli_util.render_response(result, ctx)
 
 
-@instance_group.command(name=cli_util.override('compute.get_instance.command_name', 'get'), help=u"""Gets information about the specified instance. \n[Command Reference](getInstance)""")
+@instance_group.command(name=cli_util.override('compute.get_instance.command_name', 'get'), help=u"""Gets information about the specified instance.
+
+**Note:** To retrieve public and private IP addresses for an instance, use the [ListVnicAttachments] operation to get the VNIC ID for the instance, and then call [GetVnic] with the VNIC ID. \n[Command Reference](getInstance)""")
 @cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2864,7 +2836,7 @@ def get_instance_console_connection(ctx, from_json, instance_console_connection_
     cli_util.render_response(result, ctx)
 
 
-@instance_maintenance_reboot_group.command(name=cli_util.override('compute.get_instance_maintenance_reboot.command_name', 'get'), help=u"""Gets the maximum possible date that a maintenance reboot can be extended. \n[Command Reference](getInstanceMaintenanceReboot)""")
+@instance_maintenance_reboot_group.command(name=cli_util.override('compute.get_instance_maintenance_reboot.command_name', 'get'), help=u"""Gets the maximum possible date that a maintenance reboot can be extended. For more information, see [Infrastructure Maintenance]. \n[Command Reference](getInstanceMaintenanceReboot)""")
 @cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2989,7 +2961,7 @@ def get_windows_instance_initial_credentials(ctx, from_json, instance_id):
 
 - **DIAGNOSTICREBOOT** - Powers off the instance, rebuilds it, and then powers it back on. Before you send a diagnostic reboot, restart the instance's OS, confirm that the instance and networking settings are configured correctly, and try other [troubleshooting steps]. Use diagnostic reboot as a final attempt to troubleshoot an unreachable instance. For virtual machine (VM) instances only. For more information, see [Performing a Diagnostic Reboot].
 
- - **REBOOTMIGRATE** - Powers off the instance, moves it to new hardware, and then powers it back on.
+ - **REBOOTMIGRATE** - Powers off the instance, moves it to new hardware, and then powers it back on. For more information, see [Infrastructure Maintenance].
 
  For more information about managing instance lifecycle states, see [Stopping and Starting an Instance]. \n[Command Reference](instanceAction)""")
 @cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
@@ -3067,7 +3039,7 @@ def instance_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 - **DIAGNOSTICREBOOT** - Powers off the instance, rebuilds it, and then powers it back on. Before you send a diagnostic reboot, restart the instance's OS, confirm that the instance and networking settings are configured correctly, and try other [troubleshooting steps]. Use diagnostic reboot as a final attempt to troubleshoot an unreachable instance. For virtual machine (VM) instances only. For more information, see [Performing a Diagnostic Reboot].
 
- - **REBOOTMIGRATE** - Powers off the instance, moves it to new hardware, and then powers it back on.
+ - **REBOOTMIGRATE** - Powers off the instance, moves it to new hardware, and then powers it back on. For more information, see [Infrastructure Maintenance].
 
  For more information about managing instance lifecycle states, see [Stopping and Starting an Instance]. \n[Command Reference](instanceAction)""")
 @cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
@@ -3155,14 +3127,16 @@ def instance_action_reset_action_details(ctx, from_json, wait_for_state, max_wai
 
 - **DIAGNOSTICREBOOT** - Powers off the instance, rebuilds it, and then powers it back on. Before you send a diagnostic reboot, restart the instance's OS, confirm that the instance and networking settings are configured correctly, and try other [troubleshooting steps]. Use diagnostic reboot as a final attempt to troubleshoot an unreachable instance. For virtual machine (VM) instances only. For more information, see [Performing a Diagnostic Reboot].
 
- - **REBOOTMIGRATE** - Powers off the instance, moves it to new hardware, and then powers it back on.
+ - **REBOOTMIGRATE** - Powers off the instance, moves it to new hardware, and then powers it back on. For more information, see [Infrastructure Maintenance].
 
  For more information about managing instance lifecycle states, see [Stopping and Starting an Instance]. \n[Command Reference](instanceAction)""")
 @cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
 @cli_util.option('--action', required=True, help=u"""The action to perform on the instance. Allowed values are: STOP, START, SOFTRESET, RESET, SOFTSTOP, SENDDIAGNOSTICINTERRUPT, DIAGNOSTICREBOOT, REBOOTMIGRATE""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--delete-local-storage', type=click.BOOL, help=u"""For bare metal instances that have local storage, this must be set to true to verify that the local storage will be deleted during the migration.  For instances without, this parameter has no effect.""")
-@cli_util.option('--time-scheduled', type=custom_types.CLI_DATETIME, help=u"""If present, this parameter will set (or re-set) the scheduled time that the instance will be reboot migrated in the format defined by [RFC3339].  This will also change the timeRebootMigrationDue field on the instance. If not present, the reboot migration will be triggered immediately.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-scheduled', type=custom_types.CLI_DATETIME, help=u"""If present, this parameter will set (or reset) the scheduled time that the instance will be reboot migrated in the format defined by [RFC3339].  This will also change the `timeMaintenanceRebootDue` field on the instance.
+
+If not present, the reboot migration will be triggered immediately.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -3241,7 +3215,7 @@ def instance_action_reboot_migrate_action_details(ctx, from_json, wait_for_state
 
 - **DIAGNOSTICREBOOT** - Powers off the instance, rebuilds it, and then powers it back on. Before you send a diagnostic reboot, restart the instance's OS, confirm that the instance and networking settings are configured correctly, and try other [troubleshooting steps]. Use diagnostic reboot as a final attempt to troubleshoot an unreachable instance. For virtual machine (VM) instances only. For more information, see [Performing a Diagnostic Reboot].
 
- - **REBOOTMIGRATE** - Powers off the instance, moves it to new hardware, and then powers it back on.
+ - **REBOOTMIGRATE** - Powers off the instance, moves it to new hardware, and then powers it back on. For more information, see [Infrastructure Maintenance].
 
  For more information about managing instance lifecycle states, see [Stopping and Starting an Instance]. \n[Command Reference](instanceAction)""")
 @cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
@@ -3335,7 +3309,7 @@ Example: `Uocm:PHX-AD-1`""")
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated VM host.""")
+@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3546,7 +3520,7 @@ You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--source-details-image-id', required=True, help=u"""The OCID of the image used to boot the instance.""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated VM host.""")
+@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3775,7 +3749,7 @@ You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--source-details-boot-volume-id', required=True, help=u"""The OCID of the boot volume used to boot the instance.""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated VM host.""")
+@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3985,7 +3959,7 @@ Example: `Uocm:PHX-AD-1`""")
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated VM host.""")
+@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4232,7 +4206,7 @@ Example: `Uocm:PHX-AD-1`""")
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated VM host.""")
+@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4485,7 +4459,7 @@ Example: `Uocm:PHX-AD-1`""")
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated VM host.""")
+@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4730,7 +4704,7 @@ Example: `Uocm:PHX-AD-1`""")
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated VM host.""")
+@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4955,7 +4929,7 @@ Example: `Uocm:PHX-AD-1`""")
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated VM host.""")
+@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5180,7 +5154,7 @@ Example: `Uocm:PHX-AD-1`""")
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated VM host.""")
+@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5405,7 +5379,7 @@ Example: `Uocm:PHX-AD-1`""")
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated VM host.""")
+@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6656,7 +6630,7 @@ def list_image_shape_compatibility_entries(ctx, from_json, all_pages, page_size,
     cli_util.render_response(result, ctx)
 
 
-@image_group.command(name=cli_util.override('compute.list_images.command_name', 'list'), help=u"""Lists a subset of images available in the specified compartment, including [platform images] and [custom images]. The list of platform images includes the three most recently published versions of each major distribution.
+@image_group.command(name=cli_util.override('compute.list_images.command_name', 'list'), help=u"""Lists a subset of images available in the specified compartment, including [platform images] and [custom images]. The list of platform images includes the three most recently published versions of each major distribution. The list does not support filtering based on image tags.
 
 The list of images returned is ordered to first show the recent platform images, then all of the custom images.
 
@@ -6857,7 +6831,9 @@ def list_instance_devices(ctx, from_json, all_pages, page_size, instance_id, is_
     cli_util.render_response(result, ctx)
 
 
-@instance_group.command(name=cli_util.override('compute.list_instances.command_name', 'list'), help=u"""Lists the instances in the specified compartment and the specified availability domain. You can filter the results by specifying an instance name (the list will include all the identically-named instances in the compartment). \n[Command Reference](listInstances)""")
+@instance_group.command(name=cli_util.override('compute.list_instances.command_name', 'list'), help=u"""Lists the instances in the specified compartment and the specified availability domain. You can filter the results by specifying an instance name (the list will include all the identically-named instances in the compartment).
+
+**Note:** To retrieve public and private IP addresses for an instance, use the [ListVnicAttachments] operation to get the VNIC ID for the instance, and then call [GetVnic] with the VNIC ID. \n[Command Reference](listInstances)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
@@ -7136,11 +7112,11 @@ def remove_image_shape_compatibility_entry(ctx, from_json, image_id, shape_name)
     cli_util.render_response(result, ctx)
 
 
-@instance_group.command(name=cli_util.override('compute.terminate_instance.command_name', 'terminate'), help=u"""Terminates the specified instance. Any attached VNICs and volumes are automatically detached when the instance terminates.
+@instance_group.command(name=cli_util.override('compute.terminate_instance.command_name', 'terminate'), help=u"""Terminates (deletes) the specified instance. Any attached VNICs and volumes are automatically detached when the instance terminates.
 
 To preserve the boot volume associated with the instance, specify `true` for `PreserveBootVolumeQueryParam`. To delete the boot volume when the instance is deleted, specify `false` or do not specify a value for `PreserveBootVolumeQueryParam`.
 
-This is an asynchronous operation. The instance's `lifecycleState` will change to TERMINATING temporarily until the instance is completely removed. \n[Command Reference](terminateInstance)""")
+This is an asynchronous operation. The instance's `lifecycleState` changes to TERMINATING temporarily until the instance is completely deleted. After the instance is deleted, the record remains visible in the list of instances with the state TERMINATED for at least 12 hours, but no further action is needed. \n[Command Reference](terminateInstance)""")
 @cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--preserve-boot-volume', type=click.BOOL, help=u"""Specifies whether to delete or preserve the boot volume when terminating an instance. When set to `true`, the boot volume is preserved. The default value is `false`.""")
@@ -7640,7 +7616,15 @@ To get a list of fault domains, use the [ListFaultDomains] operation in the Iden
 Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--launch-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--availability-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--time-maintenance-reboot-due', type=custom_types.CLI_DATETIME, help=u"""The date and time the instance is expected to be stopped and restarted, in the format defined by [RFC3339]. If the instance hasn't been rebooted after this date, Oracle reboots the instance within 24 hours of the time and date that maintenance is due. Regardless of how the instance is stopped, this flag is reset to empty as soon as the instance reaches Stopped state.
+@cli_util.option('--time-maintenance-reboot-due', type=custom_types.CLI_DATETIME, help=u"""For a VM instance, resets the scheduled time that the instance will be reboot migrated for infrastructure maintenance, in the format defined by [RFC3339]. If the instance hasn't been rebooted after this date, Oracle reboots the instance within 24 hours of the time and date that maintenance is due.
+
+To get the maximum possible date that a maintenance reboot can be extended, use [GetInstanceMaintenanceReboot].
+
+Regardless of how the instance is stopped, this flag is reset to empty as soon as the instance reaches the Stopped state.
+
+To reboot migrate a bare metal instance, use the [InstanceAction] operation.
+
+For more information, see [Infrastructure Maintenance].
 
 Example: `2018-05-25T21:10:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")

@@ -34,7 +34,7 @@ servicemesh_cli.service_mesh_root_group.add_command(debug_group)
 @cli_util.option('--resource-id', required=False, help=u"""The [OCID] of the service-mesh resource.""")
 @cli_util.option('--kubeconfig', required=False, help=u"""The filepath of the config file containing the kubernetes config of the Kubernetes Cluster. If not specified default config file will be applied.""")
 @cli_util.option('--context', required=False, help=u"""Context to be used in the kube config file. If not specified, the current-context is used by default.""")
-@cli_util.option('--thread-pool-size', required=False, help=u"""The Size of thread pool to execute the command""")
+@cli_util.option('--thread-pool-size', required=False, type=click.IntRange(1, 50), help=u"""The Size of thread pool to execute the command""")
 @cli_util.help_option
 @click.pass_context
 @cli_util.wrap_exceptions

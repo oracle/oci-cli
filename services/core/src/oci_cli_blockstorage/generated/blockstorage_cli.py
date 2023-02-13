@@ -19,13 +19,15 @@ from services.core.src.oci_cli_core.generated import core_service_cli
 compute instances, and block storage volumes. For more information, see the console
 documentation for the [Networking],
 [Compute], and
-[Block Volume] services."""), short_help=cli_util.override('blockstorage.blockstorage_root_group.short_help', """Core Services API"""))
+[Block Volume] services.
+The required permissions are documented in the
+[Details for the Core Services] article."""), short_help=cli_util.override('blockstorage.blockstorage_root_group.short_help', """Core Services API"""))
 @cli_util.help_option_group
 def blockstorage_root_group():
     pass
 
 
-@click.command(cli_util.override('blockstorage.boot_volume_kms_key_group.command_name', 'boot-volume-kms-key'), cls=CommandGroupWithAlias, help="""The Key Management master encryption key associated with this volume.""")
+@click.command(cli_util.override('blockstorage.boot_volume_kms_key_group.command_name', 'boot-volume-kms-key'), cls=CommandGroupWithAlias, help="""The Vault service master encryption key associated with this volume.""")
 @cli_util.help_option_group
 def boot_volume_kms_key_group():
     pass
@@ -129,7 +131,7 @@ def volume_group_group():
     pass
 
 
-@click.command(cli_util.override('blockstorage.volume_kms_key_group.command_name', 'volume-kms-key'), cls=CommandGroupWithAlias, help="""The Key Management master encryption key associated with this volume.""")
+@click.command(cli_util.override('blockstorage.volume_kms_key_group.command_name', 'volume-kms-key'), cls=CommandGroupWithAlias, help="""The Vault service master encryption key associated with this volume.""")
 @cli_util.help_option_group
 def volume_kms_key_group():
     pass
@@ -325,9 +327,9 @@ def change_volume_group_compartment(ctx, from_json, volume_group_id, compartment
 
 Example: `us-ashburn-1`""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key in the destination region which will be the master encryption key for the copied boot volume backup. If you do not specify this attribute the boot volume backup will be encrypted with the Oracle-provided encryption key when it is copied to the destination region.
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Vault service key in the destination region which will be the master encryption key for the copied boot volume backup. If you do not specify this attribute the boot volume backup will be encrypted with the Oracle-provided encryption key when it is copied to the destination region.
 
- For more information about the Key Management service and encryption keys, see [Overview of Key Management] and [Using Keys].""")
+ For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "REQUEST_RECEIVED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -391,9 +393,9 @@ def copy_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 Example: `us-ashburn-1`""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key in the destination region which will be the master encryption key for the copied volume backup. If you do not specify this attribute the volume backup will be encrypted with the Oracle-provided encryption key when it is copied to the destination region.
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Vault service key in the destination region which will be the master encryption key for the copied volume backup. If you do not specify this attribute the volume backup will be encrypted with the Oracle-provided encryption key when it is copied to the destination region.
 
- For more information about the Key Management service and encryption keys, see [Overview of Key Management] and [Using Keys].""")
+ For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "REQUEST_RECEIVED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -457,9 +459,9 @@ def copy_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 Example: `us-ashburn-1`""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key in the destination region which will be the master encryption key for the copied volume group backup. If you do not specify this attribute the volume group backup will be encrypted with the Oracle-provided encryption key when it is copied to the destination region.
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Vault service key in the destination region which will be the master encryption key for the copied volume group backup. If you do not specify this attribute the volume group backup will be encrypted with the Oracle-provided encryption key when it is copied to the destination region.
 
- For more information about the Key Management service and encryption keys, see [Overview of Key Management] and [Using Keys].""")
+ For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "COMMITTED", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "REQUEST_RECEIVED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -531,7 +533,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key to assign as the master encryption key for the boot volume.""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Vault service key to assign as the master encryption key for the boot volume.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
 @cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Performance Levels] for more information.
 
@@ -645,7 +647,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key to assign as the master encryption key for the boot volume.""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Vault service key to assign as the master encryption key for the boot volume.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
 @cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Performance Levels] for more information.
 
@@ -762,7 +764,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key to assign as the master encryption key for the boot volume.""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Vault service key to assign as the master encryption key for the boot volume.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
 @cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Performance Levels] for more information.
 
@@ -879,7 +881,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key to assign as the master encryption key for the boot volume.""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Vault service key to assign as the master encryption key for the boot volume.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
 @cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Performance Levels] for more information.
 
@@ -1069,7 +1071,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key to assign as the master encryption key for the volume.""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Vault service key to assign as the master encryption key for the volume.""")
 @cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Performance Levels] for more information.
 
 Allowed values:
@@ -1200,7 +1202,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key to assign as the master encryption key for the volume.""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Vault service key to assign as the master encryption key for the volume.""")
 @cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Performance Levels] for more information.
 
 Allowed values:
@@ -1331,7 +1333,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key to assign as the master encryption key for the volume.""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Vault service key to assign as the master encryption key for the volume.""")
 @cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Performance Levels] for more information.
 
 Allowed values:
@@ -1462,7 +1464,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key to assign as the master encryption key for the volume.""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Vault service key to assign as the master encryption key for the volume.""")
 @cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Performance Levels] for more information.
 
 Allowed values:
@@ -2330,7 +2332,7 @@ def delete_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_kms_key_group.command(name=cli_util.override('blockstorage.delete_boot_volume_kms_key.command_name', 'delete'), help=u"""Removes the specified boot volume's assigned Key Management encryption key. \n[Command Reference](deleteBootVolumeKmsKey)""")
+@boot_volume_kms_key_group.command(name=cli_util.override('blockstorage.delete_boot_volume_kms_key.command_name', 'delete'), help=u"""Removes the specified boot volume's assigned Vault Service encryption key. \n[Command Reference](deleteBootVolumeKmsKey)""")
 @cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -2660,7 +2662,7 @@ def delete_volume_group_backup(ctx, from_json, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
-@volume_kms_key_group.command(name=cli_util.override('blockstorage.delete_volume_kms_key.command_name', 'delete'), help=u"""Removes the specified volume's assigned Key Management encryption key. \n[Command Reference](deleteVolumeKmsKey)""")
+@volume_kms_key_group.command(name=cli_util.override('blockstorage.delete_volume_kms_key.command_name', 'delete'), help=u"""Removes the specified volume's assigned Vault service encryption key. \n[Command Reference](deleteVolumeKmsKey)""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -2748,7 +2750,7 @@ def get_boot_volume_backup(ctx, from_json, boot_volume_backup_id):
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_kms_key_group.command(name=cli_util.override('blockstorage.get_boot_volume_kms_key.command_name', 'get'), help=u"""Gets the Key Management encryption key assigned to the specified boot volume. \n[Command Reference](getBootVolumeKmsKey)""")
+@boot_volume_kms_key_group.command(name=cli_util.override('blockstorage.get_boot_volume_kms_key.command_name', 'get'), help=u"""Gets the Vault service encryption key assigned to the specified boot volume. \n[Command Reference](getBootVolumeKmsKey)""")
 @cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2966,7 +2968,7 @@ def get_volume_group_replica(ctx, from_json, volume_group_replica_id):
     cli_util.render_response(result, ctx)
 
 
-@volume_kms_key_group.command(name=cli_util.override('blockstorage.get_volume_kms_key.command_name', 'get'), help=u"""Gets the Key Management encryption key assigned to the specified volume. \n[Command Reference](getVolumeKmsKey)""")
+@volume_kms_key_group.command(name=cli_util.override('blockstorage.get_volume_kms_key.command_name', 'get'), help=u"""Gets the Vault service encryption key assigned to the specified volume. \n[Command Reference](getVolumeKmsKey)""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3838,9 +3840,9 @@ def update_boot_volume_backup(ctx, from_json, force, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_kms_key_group.command(name=cli_util.override('blockstorage.update_boot_volume_kms_key.command_name', 'update'), help=u"""Updates the specified volume with a new Key Management master encryption key. \n[Command Reference](updateBootVolumeKmsKey)""")
+@boot_volume_kms_key_group.command(name=cli_util.override('blockstorage.update_boot_volume_kms_key.command_name', 'update'), help=u"""Updates the specified volume with a new Vault service master encryption key. \n[Command Reference](updateBootVolumeKmsKey)""")
 @cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume.""")
-@cli_util.option('--kms-key-id', help=u"""The OCID of the new Key Management key to assign to protect the specified volume. This key has to be a valid Key Management key, and policies must exist to allow the user and the Block Volume service to access this key. If you specify the same OCID as the previous key's OCID, the Block Volume service will use it to regenerate a volume encryption key.""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the new Vault service key to assign to protect the specified volume. This key has to be a valid Vault service key, and policies must exist to allow the user and the Block Volume service to access this key. If you specify the same OCID as the previous key's OCID, the Block Volume service will use it to regenerate a volume encryption key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -4285,7 +4287,7 @@ def update_volume_group_backup(ctx, from_json, force, wait_for_state, max_wait_s
 
 @volume_kms_key_group.command(name=cli_util.override('blockstorage.update_volume_kms_key.command_name', 'update'), help=u"""Updates the specified volume with a new Key Management master encryption key. \n[Command Reference](updateVolumeKmsKey)""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
-@cli_util.option('--kms-key-id', help=u"""The OCID of the new Key Management key to assign to protect the specified volume. This key has to be a valid Key Management key, and policies must exist to allow the user and the Block Volume service to access this key. If you specify the same OCID as the previous key's OCID, the Block Volume service will use it to regenerate a volume encryption key.""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the new Vault service key to assign to protect the specified volume. This key has to be a valid Vault service key, and policies must exist to allow the user and the Block Volume service to access this key. If you specify the same OCID as the previous key's OCID, the Block Volume service will use it to regenerate a volume encryption key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option

@@ -30,7 +30,6 @@ class TaskRequestType(Enum):
     SUBSCRIPTION_PROCESSOR = 'SUBSCRIPTION_PROCESSOR'
     VALIDATE_CRDS_PROCESSOR = 'VALIDATE_CRDS_PROCESSOR'
     WEBHOOKS_PROCESSOR = 'WEBHOOKS_PROCESSOR'
-    OBSERVABILITY_PROCESSOR = 'OBSERVABILITY_PROCESSOR'
     SERVICES_PROCESSOR = 'SERVICES_PROCESSOR'
 
 
@@ -138,18 +137,6 @@ class OciCliVersionTaskRequest(TaskRequest):
                  configurations: List[TaskConfiguration],
                  mesh_id: str):
         super(OciCliVersionTaskRequest, self).__init__(task_request_type, configurations)
-        self.mesh_id = mesh_id
-
-    def get_task_data(self):
-        return {'mesh_id': self.mesh_id}
-
-
-class ObservabilityTaskRequest(TaskRequest):
-    def __init__(self,
-                 task_request_type: TaskRequestType,
-                 configurations: List[TaskConfiguration],
-                 mesh_id: str):
-        super(ObservabilityTaskRequest, self).__init__(task_request_type, configurations)
         self.mesh_id = mesh_id
 
     def get_task_data(self):

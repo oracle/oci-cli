@@ -1,0 +1,182 @@
+interactions:
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="PAw0F7TRDPWP+cb84BDE4hOxTGsm5Cx/3tuTVFoH/JQT7aFCMjLB8pdpgO9sj/DRL7FaUqwrp1WvJ7Q7OlCSFPIcq6Lu1zkO87t594/0M9GqNM8RvvxK/cWIvrWZbLYKaonUxruhrlTlx3Gz1N4n2lX8RWLtRkVZhjE+F/ZlhHfuZLt4ohGmgFuGRx9XVBEKkfYAISsLu/j/Q/gohtuVgXngxkPfA9hAE8r3mi8qOUqvkY7FpkK8SvovwBEdLuQoq9ZvG/Ya3YvUZR8tTJF6/lnaeH7gwz4xBzZcaKA1n+LvzLRjUyQyaM9MdlDhEikv7haArQIg/nJFnid3XuoMVQ==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:55:56 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 9A92AC90C4EC40E79521502184FA92A9
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - E2133402F6F141F992098C59D3513D9C
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/ObjectStorageSyncDownloadTest_1000000/o?limit=1000&fields=name%2Csize%2CtimeModified%2CarchivalState
+  response:
+    body:
+      string: '{"objects":[{"name":"Object_0","size":5000,"timeModified":"2023-01-25T14:55:39.662Z"},{"name":"Object_12","size":5000,"timeModified":"2023-01-25T14:55:48.419Z"},{"name":"Object_16","size":5000,"timeModified":"2023-01-25T14:55:50.793Z"},{"name":"Object_4","size":5000,"timeModified":"2023-01-25T14:55:42.323Z"},{"name":"Object_8","size":5000,"timeModified":"2023-01-25T14:55:45.007Z"},{"name":"a/Object_1","size":5000,"timeModified":"2023-01-25T14:55:40.337Z"},{"name":"a/Object_13","size":5000,"timeModified":"2023-01-25T14:55:48.803Z"},{"name":"a/Object_17","size":5000,"timeModified":"2023-01-25T14:55:51.463Z"},{"name":"a/Object_5","size":5000,"timeModified":"2023-01-25T14:55:42.982Z"},{"name":"a/Object_9","size":5000,"timeModified":"2023-01-25T14:55:45.445Z"},{"name":"a/b/Object_10","size":5000,"timeModified":"2023-01-25T14:55:45.873Z"},{"name":"a/b/Object_14","size":5000,"timeModified":"2023-01-25T14:55:49.457Z"},{"name":"a/b/Object_18","size":5000,"timeModified":"2023-01-25T14:55:51.978Z"},{"name":"a/b/Object_2","size":5000,"timeModified":"2023-01-25T14:55:41.002Z"},{"name":"a/b/Object_6","size":5000,"timeModified":"2023-01-25T14:55:43.637Z"},{"name":"a/b/c/Object_11","size":5000,"timeModified":"2023-01-25T14:55:46.874Z"},{"name":"a/b/c/Object_15","size":5000,"timeModified":"2023-01-25T14:55:50.394Z"},{"name":"a/b/c/Object_19","size":5000,"timeModified":"2023-01-25T14:55:52.641Z"},{"name":"a/b/c/Object_3","size":5000,"timeModified":"2023-01-25T14:55:41.659Z"},{"name":"a/b/c/Object_7","size":5000,"timeModified":"2023-01-25T14:55:44.297Z"}]}'
+    headers:
+      Content-Length:
+      - '1563'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:55:57 GMT
+      opc-client-request-id:
+      - 9A92AC90C4EC40E79521502184FA92A9
+      opc-request-id:
+      - iad-1:o3vHq-dJK-n3Ny4m9UPmnpe2dkiuPXVyUsl0LZUJp4Vuw7Dj56AaaQaAY3TcJdLr
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="2EmnplB5SJMjXgToUD6ARpIqeGSnpPsZ/+wahBjCJuq5Tm0hYoD75tLS9utH8l3oxvYxh/7/1ST/pv117VGjet4oSW0qnXU5bElt3RNw7It7ZnQ3K3d+UmBnaEqn8uvD0kFKx6MEp9SGHlRXnN4pUi3LENxtQDBMT4x8vQ1/oMSjYL7gj2sj+xvmH96bfS8UQtJqYCq2r3UfwBU6yBG70LBdZ2I9Q/GwS/KIq++WXqT8KabMiXIlJxFijMDzKaPcVZeVNXzre1uy0dDhKD9T2WwGxTco6Kwkuw6eBJpeO79Mkrivs9VA7yT24FKorvxkwXDWZyNH+100RS4QsBlG/w==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:55:57 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 9A92AC90C4EC40E79521502184FA92A9
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - A61B9C06D8AF443CAD110D1E28C0CF2B
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/ObjectStorageSyncDownloadTest_1000000/o/Object_0
+  response:
+    body:
+      string: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    headers:
+      Content-Length:
+      - '5000'
+      Content-Type:
+      - application/json
+      accept-ranges:
+      - bytes
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - accept-ranges,access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-md5,content-type,date,etag,last-modified,opc-client-info,opc-client-request-id,opc-request-id,storage-tier,version-id,x-api-id
+      content-md5:
+      - eqp97HCfpPqC83Rqv9gL2w==
+      date:
+      - Wed, 25 Jan 2023 14:55:58 GMT
+      etag:
+      - 98487ab2-5abb-4c48-aa2b-b256d641ab1a
+      last-modified:
+      - Wed, 25 Jan 2023 14:55:39 GMT
+      opc-client-request-id:
+      - 9A92AC90C4EC40E79521502184FA92A9
+      opc-request-id:
+      - iad-1:YGX4acTHibJ-YjhMTdKB-nu0NJjg0lRP5G-gjSXAJSCdY0IPzPnDDG8ynUL9m2xo
+      storage-tier:
+      - Standard
+      version-id:
+      - 753ff767-e559-420d-84a5-2ce613c76dac
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="VJGXL0Engf87fQ+5JR326bVEWwHHFM8u9pxAGKjm6ylGiVesTBD1Ft+Sc//jEHIjwdEMNjMENJ/eYUq3zOLKeFB10lCwD7LcoVTAdp8M7LNUD+OtHJ137lg0tXBIHFx/8/SZqUw9BtZsuPV/TP6KHfknQ56SNgaZfXGMuFNfANe64EsPBHCQTpHxW73Fq6tvo/M8nCUwBl/LfG9Sa2R0Nvn4KihBQZZQjXA8rhTuLw8YMzwlh+v41vGhM6mEIwciDSjuWXbu6Y7KKCS0mrrhzdWIotq5EmUMMpd6Whr/lSM8bHFZ6rfvdhmi0gDR4C6GwLvM6j4+NJdvkC3cBouDcw==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:55:58 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 6584FB6818484E548416958C8E60FC49
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - E58C2C48EA7A4D669035C5E094A94E4C
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/ObjectStorageSyncDownloadTest_1000000/o?limit=1000&fields=name%2Csize%2CtimeModified%2CarchivalState
+  response:
+    body:
+      string: '{"objects":[{"name":"Object_0","size":5000,"timeModified":"2023-01-25T14:55:39.662Z"},{"name":"Object_12","size":5000,"timeModified":"2023-01-25T14:55:48.419Z"},{"name":"Object_16","size":5000,"timeModified":"2023-01-25T14:55:50.793Z"},{"name":"Object_4","size":5000,"timeModified":"2023-01-25T14:55:42.323Z"},{"name":"Object_8","size":5000,"timeModified":"2023-01-25T14:55:45.007Z"},{"name":"a/Object_1","size":5000,"timeModified":"2023-01-25T14:55:40.337Z"},{"name":"a/Object_13","size":5000,"timeModified":"2023-01-25T14:55:48.803Z"},{"name":"a/Object_17","size":5000,"timeModified":"2023-01-25T14:55:51.463Z"},{"name":"a/Object_5","size":5000,"timeModified":"2023-01-25T14:55:42.982Z"},{"name":"a/Object_9","size":5000,"timeModified":"2023-01-25T14:55:45.445Z"},{"name":"a/b/Object_10","size":5000,"timeModified":"2023-01-25T14:55:45.873Z"},{"name":"a/b/Object_14","size":5000,"timeModified":"2023-01-25T14:55:49.457Z"},{"name":"a/b/Object_18","size":5000,"timeModified":"2023-01-25T14:55:51.978Z"},{"name":"a/b/Object_2","size":5000,"timeModified":"2023-01-25T14:55:41.002Z"},{"name":"a/b/Object_6","size":5000,"timeModified":"2023-01-25T14:55:43.637Z"},{"name":"a/b/c/Object_11","size":5000,"timeModified":"2023-01-25T14:55:46.874Z"},{"name":"a/b/c/Object_15","size":5000,"timeModified":"2023-01-25T14:55:50.394Z"},{"name":"a/b/c/Object_19","size":5000,"timeModified":"2023-01-25T14:55:52.641Z"},{"name":"a/b/c/Object_3","size":5000,"timeModified":"2023-01-25T14:55:41.659Z"},{"name":"a/b/c/Object_7","size":5000,"timeModified":"2023-01-25T14:55:44.297Z"}]}'
+    headers:
+      Content-Length:
+      - '1563'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:56:00 GMT
+      opc-client-request-id:
+      - 6584FB6818484E548416958C8E60FC49
+      opc-request-id:
+      - iad-1:-LHZIYqAHKVQN_BplGYm01BjsdLX1NNhM5PUvBUEHeKu7hmHzkD9LFtUs-pvD7f-
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+version: 1

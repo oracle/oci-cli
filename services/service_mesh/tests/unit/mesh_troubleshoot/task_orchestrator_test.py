@@ -11,7 +11,7 @@ from services.service_mesh.src.oci_cli_service_mesh.service_mesh_troubleshoot im
     MeshData, PodSummary
 from services.service_mesh.src.oci_cli_service_mesh.service_mesh_troubleshoot.task_request import ResourceTaskRequest, \
     TaskRequestType, TaskConfiguration, CsvTaskRequest, CommonTaskRequest, FileTaskRequest, PodTaskRequest, VdbTaskRequest, \
-    IgdTaskRequest, ServicesTaskRequest, WebhooksTaskRequest, ValidateCrdsTaskRequest, ObservabilityTaskRequest, \
+    IgdTaskRequest, ServicesTaskRequest, WebhooksTaskRequest, ValidateCrdsTaskRequest, \
     OciCliVersionTaskRequest, NamespacesTaskRequest, MeshReportTaskRequest
 
 MESH_ID = 'ocid1.mesh.oc1.iad.valid'
@@ -149,12 +149,6 @@ class TestTaskOrchestrator(unittest.TestCase):
                 "task-request": ValidateCrdsTaskRequest(TaskRequestType.VALIDATE_CRDS_PROCESSOR,
                                                         [TaskConfiguration.CHILD_RESOURCES],
                                                         "ocid1.mesh.oc1.iad.valid"),
-            },
-            {
-                "name": "Observability Task",
-                "task-request": ObservabilityTaskRequest(TaskRequestType.OBSERVABILITY_PROCESSOR,
-                                                         [TaskConfiguration.CHILD_RESOURCES],
-                                                         "ocid1.mesh.oc1.iad.valid"),
             },
             {
                 "name": "Oci Cli version Task",
