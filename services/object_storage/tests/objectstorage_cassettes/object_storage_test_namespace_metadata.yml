@@ -1,0 +1,58 @@
+interactions:
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="MpDLev+HYMkf+ax51bagQHjXfgJsznns+I+x3fVhXwWQ9fVGbuOhvMcI6YWhujyVYvWb6PSPcy3Y1u/S/xqvEEcpHr/k8l9v922YVzq4T8wuAuaCklRi7LqX1y1qAylv9VZ66vXqz1QRykby24tDnXyX35yTIO1HEoginIpVFYhwd6AuNBQC8B/0DNHoPx45QEVY+RftvMUyXMvWYi4pgv4rAcQaPm4Jpn9HuZcpSMmPXRIHRUZBM6oirtakd94O08V7a4Bsx3NucWGwUzft7sR1ee1vvXT9c8t1adf0XWeLp/CIyen9G+RH+4RFsC2sEwkP8WQGDPD5Qdlrrq/kuA==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:37:01 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 966D573F18094028BFF2FC43469C0CFB
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 363092843C374BBEBBCBEE6A461D6436
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim
+  response:
+    body:
+      string: '{"defaultS3CompartmentId":"ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq","defaultSwiftCompartmentId":"ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq","namespace":"axzbp3kgiaim"}'
+    headers:
+      Content-Length:
+      - '245'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:37:02 GMT
+      opc-client-request-id:
+      - 966D573F18094028BFF2FC43469C0CFB
+      opc-request-id:
+      - iad-1:mgGhPPWTgWlV0j2sZo6GSH4N4WQa5elWx-VzG_yS0yc4Rpiu0fd1rBzAvKD7Okne
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+version: 1

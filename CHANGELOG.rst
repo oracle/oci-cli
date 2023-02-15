@@ -6,6 +6,33 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.23.0 - 2023-02-14
+--------------------
+Added
+~~~~~
+* Support for the Autonomous Recovery Service
+
+  * ``oci recovery``
+
+* Support for the Visual Builder Studio service
+
+  * ``oci vbstudio``
+
+* Added support for selecting DBServers while creating Autonomous VM Cluster in Database service
+
+  * ``oci db autonomous-virtual-machine get --autonomous-virtual-machine-id``
+  * ``oci db autonomous-virtual-machine list --autonomous-vm-cluster-id, --compartment-id``
+
+Changed
+~~~~~~~
+* [BREAKING] Support for a new Capacity Availability API in the Compute service
+
+  * ``oci compute computecapacityreport update``
+
+* Modified existing commands in Database service
+
+  * ``oci db autonomous-vm-cluster create --db-servers``
+
 3.22.5 - 2023-02-07
 --------------------
 Added

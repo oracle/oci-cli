@@ -47,6 +47,18 @@ Public Subnet VLKn:US-ASHBURN-AD-1 AVAILABLE 10.0.0.0/24 sales
 ```
 **``o``** default output is a table of commonly useful fields, but **``o``** makes it easy to pick just what you want (as seen in the above example).
 
+## Installation
+
+**``o``** is a single file. To install, download **``o``**, place it in your PATH (probably in the same place as ``oci``), and make it executable.
+  **``o``** works in Linux, Mac, WSL and CloudShell.
+
+Use these commands to get ``o`` from github and install it next to ``oci``.
+```
+o_src=https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/examples/project_o/o
+where=$(which oci) && to=${where%ci} && wget -q $o_src -O $to && chmod a+x $to
+```
+When you first run `o` it will tell you how to create the commands file *$HOME/.oci/oci_commands*, and then `o` helps you to initialize your *$HOME/.oci/ocids* file.
+
 ## Things you can do with ``o``
 
  - find the desired `oci` command from thousands of possible commands
@@ -106,18 +118,12 @@ Public Subnet VLKn:US-ASHBURN-AD-1 AVAILABLE 10.0.0.0/24 sales
    - `o -o id:-.10#name:6#create:.10 comp inst list`
      - table output with right-most 10 characters of `id`, `display-name` in 6 (or more) characters, and first 10 characters of `time-created`
 
-
-## Installation
-
-**``o``** is a single file. To install, download **``o``**, place it in your PATH (probably in the same place as ``oci``), and make it executable.
-  **``o``** works in Linux, Mac, WSL and CloudShell.
-
-Use these commands to get ``o`` from github and install it next to ``oci``.
-```
-o_src=https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/examples/project_o/o
-where=$(which oci) && to=${where%ci} && wget -q $o_src -O $to && chmod a+x $to
-```
-When you first run `o` it will tell you how to create the commands file *$HOME/.oci/oci_commands*, and then `o` helps you to initialize your *$HOME/.oci/ocids* file.
+#### New in version 1.5 (2023-02-07)
+ - show additional output fields (not in "data") like object storage "prefixes"
+ - Keep default output fields and       
+   - change format style with separator: `-o +/`
+   - append additional fields:  `-o +new#fields`
+   - change format and append: `-o +new/fields`
 
 ## How **``o``** works  
  - **``o``** compares your input with thousands of ``oci`` commands, and uses an fuzzy matching to find the command you want.

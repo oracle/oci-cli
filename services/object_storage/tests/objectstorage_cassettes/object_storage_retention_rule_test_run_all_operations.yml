@@ -1,0 +1,1138 @@
+interactions:
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="VfUSbUgYX1kLTTLvZMisLUwbBgLn8bdnrgxuSI66WwxYuf3sPslnfOvqY3vc/hF/aaXQ2viBtMmP+a8c1BB8hDMuMESWp+UUeW+AJGY39bzJhnFhDbGClud/F7kCvlsXPC6A+5l1gS0yVJ8//L5UUkZj8A4ml72TjoaMI0en8HK2jtgX9WdnuCB0WXvZvO98eMqyQyrzseAEJE471lPlF98TIiHfLWP6QlUO9PgycDy2KxzNzccJA5ocqghW5gvl92MFfLLNHwGuVWpXr5hl4zIhP/Ze8FkfsiKVqYpnuoMknsgtXxZkzPdumA4PcwRVUAr23lL9zuL9bwec47io/A==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:54:47 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 87CFF3DBE3FE42C099A230EB9923DE49
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 7C38910C64EA40448C8F7AA5C19BEFDF
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n
+  response:
+    body:
+      string: '"axzbp3kgiaim"'
+    headers:
+      Content-Length:
+      - '14'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:54:49 GMT
+      opc-client-request-id:
+      - 87CFF3DBE3FE42C099A230EB9923DE49
+      opc-request-id:
+      - iad-1:Nk0ggIS7PitvdbqKaNpyrU42aB4xAfRYu_DCL_l0WIYnvViV65qv2pAQ2lJHOG1K
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"name": "cli_retentionrule_temp_bucket_1000000_no_debug", "compartmentId":
+      "ocid1.compartment.oc1..aaaaaaaady4gskrmc6eiihnxfxpfkvzlfjm23vykxdwegsszo4go6547yjda"}'
+    headers:
+      Content-Length:
+      - '162'
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host content-length
+        content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="3prA5TSXR8VNL9mFOa5Ii181I8gzlTucpIl2AK0Eazgci9YjsN+y+Xr2PQ3uNGMnP3owpgvcQf44Z3KWQp/1U7gvLAl/ILxMZX5lKGrf89BDPouHUa3OKJH6ClYD5zhJ1fAhwCQEaT951p+meDixExvcA+CG+KVBf9brsFTodq75s+tZd+wB+3Fpis/zIxCZFKks9GZR+iLx/OrjcOB14vZHsneDVc94Lvh6JXXXKefEQkQ/bXMFTH7WbaggscSMuMuLw+mVYvyYUZi73N1+pKmgar/We9UpCykrCDI9ebMcE6d3bt3RI0l3MWID6g9HORW11xnjjnpceRaaGRdHdQ==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:54:48 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 73506192038F4272AE590CDAB292F79F
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - A875845B16DF4570A7150AF5E9AF3913
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+      x-content-sha256:
+      - jzjGJD4PBpRzEzBdBXKWtHWQTwsDOyk7M4o2YU3qkmY=
+    method: POST
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b
+  response:
+    body:
+      string: '{"namespace":"axzbp3kgiaim","name":"cli_retentionrule_temp_bucket_1000000_no_debug","id":"ocid1.bucket.oc1.iad.aaaaaaaa4jhlwqzwoptdc3e5amruh3gsuj2wefojzr5csqt2h6hehuocwtdq","compartmentId":"ocid1.compartment.oc1..aaaaaaaady4gskrmc6eiihnxfxpfkvzlfjm23vykxdwegsszo4go6547yjda","createdBy":"ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda","timeCreated":"2023-01-25T14:54:50.582Z","metadata":{},"etag":"56f0558e-d552-4cd4-a77d-5d380b0afb89","publicAccessType":"NoPublicAccess","storageTier":"Standard","meterFlagSet":{"empty":true},"objectLevelAuditMode":"Disabled","freeformTags":{},"definedTags":{},"kmsKeyId":null,"approximateCount":null,"approximateSize":null,"approximateSizeMultipartUploads":null,"objectEventsEnabled":false,"replicationEnabled":false,"isReadOnly":false,"versioning":"Disabled","autoTiering":null}'
+    headers:
+      Content-Length:
+      - '846'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,etag,location,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:54:50 GMT
+      etag:
+      - 56f0558e-d552-4cd4-a77d-5d380b0afb89
+      location:
+      - https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/cli_retentionrule_temp_bucket_1000000_no_debug
+      opc-client-request-id:
+      - 73506192038F4272AE590CDAB292F79F
+      opc-request-id:
+      - iad-1:NMotPjD3Wy5cxkzjGyfBQQO7-rccfamTk5afX20vmO4cb1RTmeeg4moBNyX3FbcZ
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"duration": {"timeAmount": 1, "timeUnit": "DAYS"}}'
+    headers:
+      Content-Length:
+      - '51'
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host content-length
+        content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="pVZeSnU/J2jxHzUQ1ZCkpZP3uL1Zu6jKXl2A0u/Ev8qVwBw64KYH9nRecgkWA4a2o6t2n1nRk/ZNkLA2Fi7andI1KmLqZR6YK6RQnN0casFZrZsGjqQZD8XyYHhPWJ65O5cOkxd1DyehqWjdh9RB9+F2oVM/miuWlm9wk7iYpjpl338ws2X0YpntgCHvr5qfneWdF1bDmKU8ZNLpYF8AiwACKj3itZxEZjKH77H6x3KLDNOxyh+aLBLCQUp/no6CnPy6YGbHrxfz48oBKtPWG1WXiQRJ9ilCHVVvC2DVV8wDnSlSVANuHNMmmPSQfac6r0GrS7FP08xTWa8aflTrhw==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:54:50 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - B6FB8777B4F74F1DA9B02D613A42EA52
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - DEA7BE3CCC544BB3BED52E3D4DB68D9C
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+      x-content-sha256:
+      - rkPrIMiApZ335oyYI/JDFEWXF7XSQLxbrQH/yoUHkS4=
+    method: POST
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/cli_retentionrule_temp_bucket_1000000_no_debug/retentionRules
+  response:
+    body:
+      string: '{"id":"8fe8ca40-cf30-473e-89d9-5208ae3d2939","displayName":"RetentionRule20230125145452","duration":{"timeAmount":1,"timeUnit":"DAYS"},"etag":"3baad365-a628-4c37-8d56-07611701201d","timeRuleLocked":null,"timeCreated":"2023-01-25T14:54:52.240Z","timeModified":"2023-01-25T14:54:52.240Z"}'
+    headers:
+      Content-Length:
+      - '286'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,etag,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:54:54 GMT
+      etag:
+      - 3baad365-a628-4c37-8d56-07611701201d
+      opc-client-request-id:
+      - B6FB8777B4F74F1DA9B02D613A42EA52
+      opc-request-id:
+      - iad-1:2awPjMlRcbax9TeOvXtZuWm63iPnHObTLsLa-6mhEntOFhiFyPl70FAmckRsfwIY
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="qKYwAhwsPoinVyDvmhQCYYgnRk6WNK+jXmbrDtGZuNBmikZxOjbfPeaymfM07CuIRYM49Xj65so6jQZO0NZN2uhhuT5vOH5GVJHQnlGLKeN+rsIDWUxRbFnJlTVsrAWYEi1I2DTbNsyJyIWP77IIWTLUgahZWTcweQcgsrNo7AICnLrLLBctGzFqftRlgkNqHh+keqorwnpHHCHF9irNkvmq1TngpMW+JveYeE1cDh6Hd7tazprWuVjPiJG3KN0X0t1iN61r6JQcJqC5W+SyEY4tr3Hm/77IqVGafVH3EirKofPyKg/R9xKeAzqLzyGEPJ/qfipvr1XPp46L5llqMA==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:54:54 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - C25D519834F64DA2B636E2B38367A146
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - B82B5450672043E39FDC3BDA1AD5CCE1
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/cli_retentionrule_temp_bucket_1000000_no_debug/retentionRules/8fe8ca40-cf30-473e-89d9-5208ae3d2939
+  response:
+    body:
+      string: '{"id":"8fe8ca40-cf30-473e-89d9-5208ae3d2939","displayName":"RetentionRule20230125145452","duration":{"timeAmount":1,"timeUnit":"DAYS"},"etag":"3baad365-a628-4c37-8d56-07611701201d","timeRuleLocked":null,"timeCreated":"2023-01-25T14:54:52.240Z","timeModified":"2023-01-25T14:54:52.240Z"}'
+    headers:
+      Content-Length:
+      - '286'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,etag,last-modified,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:54:56 GMT
+      etag:
+      - 3baad365-a628-4c37-8d56-07611701201d
+      last-modified:
+      - Wed, 25 Jan 2023 14:54:52 GMT
+      opc-client-request-id:
+      - C25D519834F64DA2B636E2B38367A146
+      opc-request-id:
+      - iad-1:aV8TxfARRnyugkTPKnOz46su2z4YcgRnzrUyG6iX8HvRVdXZ0iZU42XUQxGVfsG9
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Content-Length:
+      - '2'
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host content-length
+        content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="JkO1VbAQnZDtMfxTxZTJOrsSrsow6vs96BIHI7AuYPxG8q/4Sqrtr+FyCP5zdhM7Awk1uhyX97baOiJon77WhebCsiMGDoemZ0FNgvfOLs4jOvU3rPDsKGzaBBSO6lMbuPwqT69yt7OBfhwm31EGSKc7AE60Nr2U/RC49QYEEpZhSZ2EnCtuauhMITedzBB64cYW7bAJG2674gvQ2WzvoVO7LIYSXBdDlS67q2tP4ma2L7AJDeyieh/FTooBEKPdqzzPVBKY/TV8VWc2UevcfBLTAe9CzIvBoYa8suU8g9jkXJAOSgT+wV0lohrjf2pGuqjuM8QNnwF3/1q1i0bd2Q==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:54:55 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - BE4C400397974C0DAEDF774285A5878D
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 77C3A1024F1D47F48E381083A29F2F2F
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+      x-content-sha256:
+      - RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=
+    method: POST
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/cli_retentionrule_temp_bucket_1000000_no_debug/retentionRules
+  response:
+    body:
+      string: '{"id":"417088b7-b302-46a5-acce-a394a22916d0","displayName":"RetentionRule20230125145458","duration":null,"etag":"343ccb0c-cd00-48ee-aa45-705ece9adb04","timeRuleLocked":null,"timeCreated":"2023-01-25T14:54:58.151Z","timeModified":"2023-01-25T14:54:58.151Z"}'
+    headers:
+      Content-Length:
+      - '256'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,etag,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:55:00 GMT
+      etag:
+      - 343ccb0c-cd00-48ee-aa45-705ece9adb04
+      opc-client-request-id:
+      - BE4C400397974C0DAEDF774285A5878D
+      opc-request-id:
+      - iad-1:4Rj-15cFKbF0CXDSBmZCcr3nppfwVQLmChrE5XevQ1zOsz919DK3Kgc_QARrfoLE
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="cXdyeBGWAdWB7kcPADl+qiNMVQSqhFJPL85ko0rCvmonA/cLzZan1Uryr5ThizA17d6aPBtJo6Qa3sDNMW+l5d/wsKQImr5wFVz4YVjJCCJvoWx+jKIkWyigbLNnWyr9VlLTW/c2+9AzcBo2lr9g5avgqJK81kgeAouJYx2qxabpobzD0/Fm6OWDhQL3vFcgnJMTWR52UPvUfI9K59hdzr3AO6U1R39mb/HxFYiGGMKtVZiIBJs6JzWeCxz7k5dxPoiz9Pivy1B9HH5Q2BnFxP6TF7dsQsPcstpvmD2/iS3/p1JntriGzOnXcUbOlueLKf6O5WY9FBoYihJJZpttxg==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:54:59 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 24342DA2D0564F2397DA8BDB1D71F482
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/cli_retentionrule_temp_bucket_1000000_no_debug/retentionRules
+  response:
+    body:
+      string: '{"items":[{"id":"417088b7-b302-46a5-acce-a394a22916d0","displayName":"RetentionRule20230125145458","duration":null,"etag":"343ccb0c-cd00-48ee-aa45-705ece9adb04","timeRuleLocked":null,"timeCreated":"2023-01-25T14:54:58.151Z","timeModified":"2023-01-25T14:54:58.151Z"},{"id":"8fe8ca40-cf30-473e-89d9-5208ae3d2939","displayName":"RetentionRule20230125145452","duration":{"timeAmount":1,"timeUnit":"DAYS"},"etag":"3baad365-a628-4c37-8d56-07611701201d","timeRuleLocked":null,"timeCreated":"2023-01-25T14:54:52.240Z","timeModified":"2023-01-25T14:54:52.240Z"}]}'
+    headers:
+      Content-Length:
+      - '555'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:55:01 GMT
+      opc-request-id:
+      - iad-1:-SvkdEIvZIEynXM32bYwtMEza2P5dpvxX_87Z5cfHSMt68GQy6Z6w8j2KfreIZ-o
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"duration": {"timeAmount": 2, "timeUnit": "DAYS"}}'
+    headers:
+      Content-Length:
+      - '51'
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host content-length
+        content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="mGb0Xd5uo8V7VcIH2cV14KJ8KektFWg3ndXewzlae2zWig2mMKXGbgN5KqkZtXmq7Jyb1e9q10KEBw9/5VloRjBeZBPU+ukYXhM4qlZ9Lnqk6vth7boPAozaqR/6xwH/kdvkAt+2sbLJBJ+D9eZSoH8spcYYvpVc1F0NNNNsmjfI2UfJ35OsTV6fwZkVEO9/tPsKMEi9YDLiQISzBBsWuXnYmBmcy6w+08fUwk8IYF1HKS2h6SWfDUiR0ImLzL+UIAgeeYABw14iJ6xLxQzD2sOy0n/PLAbi4BSBbNthFdMIDqV5u0/ySRhzS/jJ7e+wOO071bKQaVJj4gwM6aJvWA==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:55:01 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - BA39E95D353C45E8AF1496D14D0B69DC
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 4CC6E94A86614D76B635AF4A2FC88F6D
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+      x-content-sha256:
+      - gA2Hdi39DgP78RjSQYCAezl6B1VqaAtUfgZuF9UkIqw=
+    method: PUT
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/cli_retentionrule_temp_bucket_1000000_no_debug/retentionRules/8fe8ca40-cf30-473e-89d9-5208ae3d2939
+  response:
+    body:
+      string: '{"id":"8fe8ca40-cf30-473e-89d9-5208ae3d2939","displayName":"RetentionRule20230125145452","duration":{"timeAmount":2,"timeUnit":"DAYS"},"etag":"65caaccd-59df-49a6-aed8-d186bc7d7a38","timeRuleLocked":null,"timeCreated":"2023-01-25T14:54:52.240Z","timeModified":"2023-01-25T14:55:03.577Z"}'
+    headers:
+      Content-Length:
+      - '286'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,etag,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:55:05 GMT
+      etag:
+      - 65caaccd-59df-49a6-aed8-d186bc7d7a38
+      opc-client-request-id:
+      - BA39E95D353C45E8AF1496D14D0B69DC
+      opc-request-id:
+      - iad-1:jAWwDSCdQj8Ue45J2R63RrbCNQfQ1VLU30CKBF3MyWCqbOvDsHmVHLi4gDCj0XlE
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="LAXP1np48IGSJxNojFDAOA32PZTCj3lFnjTamPFsI4Dl9IAL0nvQF0JeOrgXNIRVnJgLgyUkLiHRCY2UeDLAG3SqSBXvRJKgF/5eueE+oy9yT1DSOwEj5UA/a8nOgLWp12l8fPTcTJa1T0hRjKeFQ0WOqefgfanNPkin+EMlma8jUhJ78bToaWCEZ6Ubn2X58UYp4B3HuwZzE2Jfv9kypndJNaZBJXBvAoUa2NBt1GtEof8dHgg2m+mpfLdA/tx+KI3qbS4C+EWjp7w0At0Dp9XUW0TJs/aaaZNvxvfF9Ao/fT4asZ0GCiWE3PggqfJaK1737T4z2w9Jhij9BxCTiw==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:55:05 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - A8E777F8C5D84D078C28D64D56E40292
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 4742704FA946432DB0D79A52493170EF
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/cli_retentionrule_temp_bucket_1000000_no_debug/retentionRules/8fe8ca40-cf30-473e-89d9-5208ae3d2939
+  response:
+    body:
+      string: '{"id":"8fe8ca40-cf30-473e-89d9-5208ae3d2939","displayName":"RetentionRule20230125145452","duration":{"timeAmount":2,"timeUnit":"DAYS"},"etag":"65caaccd-59df-49a6-aed8-d186bc7d7a38","timeRuleLocked":null,"timeCreated":"2023-01-25T14:54:52.240Z","timeModified":"2023-01-25T14:55:03.577Z"}'
+    headers:
+      Content-Length:
+      - '286'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,etag,last-modified,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:55:07 GMT
+      etag:
+      - 65caaccd-59df-49a6-aed8-d186bc7d7a38
+      last-modified:
+      - Wed, 25 Jan 2023 14:55:03 GMT
+      opc-client-request-id:
+      - A8E777F8C5D84D078C28D64D56E40292
+      opc-request-id:
+      - iad-1:pTJWPcd7NDvCjsxQ1xSqf0eyXoTI_RZ85e4ronCHfU_dQJmxrtRr_pD7LICPqpjt
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"duration": null}'
+    headers:
+      Content-Length:
+      - '18'
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host content-length
+        content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="IYz1tuuE6zP5IwDkzjtjk8b/IuhIuF5AdAfrnYsd+eDQ4BJ555civlys601+AmA3D/xVs4soUa/Z7sopDbchCv72Lx9IsWQIP0cltl3Mzx8Y9NfOBhJf0hnkd98ZO2BE7CDIraAsCRByI1vIZT+cmZLxPLiEn/usWCbYxt6vpCkXj5AM3KVheT5xqz7237jXkOkkihaGFgnC18FKQIzFsNMCh3Tkonp4ODXDheltOQjtSkpW63AyeiqIwY7hQ3ko+ocv+gxP64yDEvl1SYfiy9COTv1IQWb1LEmdMzWUEaTTo75Xvw8vb8qoruvs3lPeYdKy+HaMF3oHdSJXflYwdg==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:55:07 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 60E88C57D4BC4A9D9DC460786CD4E2FE
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 8AA351308C2548828FE26E197ECB385E
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+      x-content-sha256:
+      - IofY/y13LKt6md5KaPT7p7uHKryrPivWQj68OozqVSI=
+    method: PUT
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/cli_retentionrule_temp_bucket_1000000_no_debug/retentionRules/8fe8ca40-cf30-473e-89d9-5208ae3d2939
+  response:
+    body:
+      string: '{"id":"8fe8ca40-cf30-473e-89d9-5208ae3d2939","displayName":"RetentionRule20230125145452","duration":null,"etag":"837413d4-6965-4839-be5b-955be2bd21d8","timeRuleLocked":null,"timeCreated":"2023-01-25T14:54:52.240Z","timeModified":"2023-01-25T14:55:08.954Z"}'
+    headers:
+      Content-Length:
+      - '256'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,etag,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:55:11 GMT
+      etag:
+      - 837413d4-6965-4839-be5b-955be2bd21d8
+      opc-client-request-id:
+      - 60E88C57D4BC4A9D9DC460786CD4E2FE
+      opc-request-id:
+      - iad-1:81eRjwfNjAGV0bUE91myP3aj9qlvM7XFygM12_un7T3vaF6jNietyZ1x1oP3eNwm
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="DvOzPZCxj8RC+gOUDYVU++BD5v6jpKftXbCoTOVzEEmaR5W1hOFIdy6HTnSv9j/jjNbTS/yX5x6Lg6R+avwjGSZWqzuOBv0Q6/rPdqC50eda3OPEaZ4yZolrZdEPC9/AshRrgXNOne29FRDYMXp22de/9xQ72SniEIZtfIfklcoEmMgr2MiHx0n3rPxUoqsrPsW9BS2tU83sR6ZABb0XFdg6iROeGWk/eSrulXUPP1+l4C5BhMLNyECqTOURcdKH6KHR8kaGWurNEDDnLkW97tBuUwuFKEIXKgWBX06Rw1PTgOKLXpY9r7tkw0NbMufWKTcZ3O68BWyp9ttMfCA6gQ==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:55:10 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - E7E6DCD395A5494FB1035885A7649D6F
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 72CB3AEB2AC8434394C422C6621A1147
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/cli_retentionrule_temp_bucket_1000000_no_debug/retentionRules/8fe8ca40-cf30-473e-89d9-5208ae3d2939
+  response:
+    body:
+      string: '{"id":"8fe8ca40-cf30-473e-89d9-5208ae3d2939","displayName":"RetentionRule20230125145452","duration":null,"etag":"837413d4-6965-4839-be5b-955be2bd21d8","timeRuleLocked":null,"timeCreated":"2023-01-25T14:54:52.240Z","timeModified":"2023-01-25T14:55:08.954Z"}'
+    headers:
+      Content-Length:
+      - '256'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,etag,last-modified,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:55:12 GMT
+      etag:
+      - 837413d4-6965-4839-be5b-955be2bd21d8
+      last-modified:
+      - Wed, 25 Jan 2023 14:55:08 GMT
+      opc-client-request-id:
+      - E7E6DCD395A5494FB1035885A7649D6F
+      opc-request-id:
+      - iad-1:gL_JTPTwxeUlAlx0rWo6nbyQzB6dSMYOYJxPk13TX6uBV7cxs8c8UCC8Zb6eS2xC
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"timeRuleLocked": "1970-01-01T00:20:34.000000Z"}'
+    headers:
+      Content-Length:
+      - '49'
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host content-length
+        content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="xLaqUKhPqZG/rLsQFf39g7GzPbESbb6E/0T8B4EllN9O8+0Wtgkm374O4VC9G1oVJtWx6I7bOBM8YW2o+BA3vVyot+0V4ot6oTDjD86vIbB8OBb63Tk2RnRCdF2CrNp+MvRDhCb9zIyNhyqc9E98KAY4SD5cMeHw/m5DgnVLmC5Z/TWoJtQKxLspSZBWOohHDEJ1Kv72GL5PUj10izpfX/f6ZuFgA1j1REqiIhOVlfBUAwU/cb/GJwI/aDp4DMqDGjwvOTSXkquL2d56KB/d1YC3iioybwuRqupjcMgYgCGyuE9T6TSjBWUKKPnAiGOXws9HUizL9qSRW1h3aGL/ww==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:55:12 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 59AB1F256E19415AB7E711D8ADB5FC01
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 488C6B4F81784952A4D5F61F354FC989
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+      x-content-sha256:
+      - bsyDQORvmIpUuaHlPd8KS9lZNNvJV7yXzecbfITnmCk=
+    method: PUT
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/cli_retentionrule_temp_bucket_1000000_no_debug/retentionRules/417088b7-b302-46a5-acce-a394a22916d0
+  response:
+    body:
+      string: '{"code":"InvalidRetentionRuleDetails","message":"timeRuleLocked must
+        be atleast 14 days ahead of the current time."}'
+    headers:
+      Content-Length:
+      - '116'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:55:14 GMT
+      opc-client-request-id:
+      - 59AB1F256E19415AB7E711D8ADB5FC01
+      opc-request-id:
+      - iad-1:LG-VE9gxOs0ROnGLwxYrk4bbDst1Vc3ZkkdGAC7cQu7BZC9wDqNMNfbjOHDGze1x
+      x-api-id:
+      - native
+    status:
+      code: 400
+      message: Bad Request
+- request:
+    body: '{"duration": {"timeAmount": 2, "timeUnit": "DAYS"}, "timeRuleLocked": "5882-03-11T00:30:00.000000Z"}'
+    headers:
+      Content-Length:
+      - '100'
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host content-length
+        content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="3jL1J0vY6KrHe0ZKSVDyGIU5si61gCG2F8P9dUZs55cRvzD/H8c5aNUL+gjtV5l4xXRsa22Uxpaft99pJ3Z5mEi+cNSsyR548ZNyvx8B8nL6qmq1qvu68dCrwAJgDNDtc4ntvcg3BO3kQRPvxW1lWokh0BZ0bj8cc8xnluDtft4qWl+5Ry+64TUAQBwb6W5bS8hp0Ki/kuePLdSdX6maoDVA1z6ii5Nt5/FobwXk/60+ICgg1ecnpAgzfamwacbdK4kjq9g3k9MSCfOBScGLzDOsC/bo/ZNCQNUiMuvuhBeVu3sBy6AzQ6lzlJZAGtewENICcLocaCy5FE3pLg5Vbg==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:55:14 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 0F1CD085FBBD4F6A890FD034BE11D819
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 6452F9B29BE148C888E694A90E1FF139
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+      x-content-sha256:
+      - KstgoB7VigiDiVzN4si+m5G0ZbtkBu7UwT8q8AublKc=
+    method: PUT
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/cli_retentionrule_temp_bucket_1000000_no_debug/retentionRules/417088b7-b302-46a5-acce-a394a22916d0
+  response:
+    body:
+      string: '{"id":"417088b7-b302-46a5-acce-a394a22916d0","displayName":"RetentionRule20230125145458","duration":{"timeAmount":2,"timeUnit":"DAYS"},"etag":"1e4701b9-039b-4f18-9835-435cc345ac64","timeRuleLocked":"5882-03-11T00:30:00.000000Z","timeCreated":"2023-01-25T14:54:58.151Z","timeModified":"2023-01-25T14:55:16.500Z"}'
+    headers:
+      Content-Length:
+      - '311'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,etag,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:55:18 GMT
+      etag:
+      - 1e4701b9-039b-4f18-9835-435cc345ac64
+      opc-client-request-id:
+      - 0F1CD085FBBD4F6A890FD034BE11D819
+      opc-request-id:
+      - iad-1:oPT0iWfOrWjZaN2LibRQGuNlf52HOyPGHqguTwQrDciPz-Q5VNdttsN5lnfDcjHU
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="5rxDPFeT07MEkkpeuNQI03vVCrZmtK+yfYoQ7Au7QHBM8JqmWImB2e0GtOfYWt9MOR0mJs/QUwBSqg0lvz6sBGFcTIR0VBaBPK/WxxfChQvr0qN9wdNVM4sYJoPYPuIEvaSvYm+ijWELBNyMp7bc0rimC9drthcSn04vald3hYht1Yk2Kf6bW5Q/IuA9DRZnbF0tpUT6Iq5gM+nQlxDNA1hn7AOglPlK7qgu/olF4EKlyReihpxeKmfAzc2i4HdVL39PHV438t6BTPtH9D31+AzE3wJuqogT2fxUSF7fB6/ZT1bZIswKFVEucFavV7nMds1KiFXkeSNFJi4T6QITfg==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:55:18 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - D654911DD9104C8CBEA4B258D4D3D144
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 889D212AC8D94B9DBB454C281E8A4336
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/cli_retentionrule_temp_bucket_1000000_no_debug/retentionRules/417088b7-b302-46a5-acce-a394a22916d0
+  response:
+    body:
+      string: '{"id":"417088b7-b302-46a5-acce-a394a22916d0","displayName":"RetentionRule20230125145458","duration":{"timeAmount":2,"timeUnit":"DAYS"},"etag":"1e4701b9-039b-4f18-9835-435cc345ac64","timeRuleLocked":"5882-03-11T00:30:00.000000Z","timeCreated":"2023-01-25T14:54:58.151Z","timeModified":"2023-01-25T14:55:16.500Z"}'
+    headers:
+      Content-Length:
+      - '311'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,etag,last-modified,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:55:20 GMT
+      etag:
+      - 1e4701b9-039b-4f18-9835-435cc345ac64
+      last-modified:
+      - Wed, 25 Jan 2023 14:55:16 GMT
+      opc-client-request-id:
+      - D654911DD9104C8CBEA4B258D4D3D144
+      opc-request-id:
+      - iad-1:z_svth-Ft59Y2e7G1PkT14G3aN_ifMoOeU5YM4h0Oq1OgCiEtI8-kSWkWGkFC2yr
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"duration": null}'
+    headers:
+      Content-Length:
+      - '18'
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host content-length
+        content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="f4lhvped6n2j6nk5x01Y+O+FrAWbh7LJOwmdrxSMaO3wd/LXjzsQLcTWCMBiiMRL/EtyZryivfTwb5dIpbb99uGisOMMBn7SD8ufhvJnOI6ZBV8sqeMCEBX/vAxKuY9z+xmWzddSjXe3oyNcIqdzXMGQloSufR15JQJD65f12YwfZvGziWS3e++ns7K/e1oKntMqAKioXhuyGiQNDhfRc6oYoQGaYqL40XTEd0tR1DetM+t1qU0mvcyQrnuFm6kGWj97uMDtEWRycXn0lKhEfbwLSF8eniHajXQ3o519f24JPUdn7sTd3SG8lBCaavyIUbaAi4WmV0T/grCze7bkBg==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:55:19 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - A331BEB3E4A0412593D46B7897D07925
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 8F52C099C3124A78A2A14B6731F00A8C
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+      x-content-sha256:
+      - IofY/y13LKt6md5KaPT7p7uHKryrPivWQj68OozqVSI=
+    method: PUT
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/cli_retentionrule_temp_bucket_1000000_no_debug/retentionRules/417088b7-b302-46a5-acce-a394a22916d0
+  response:
+    body:
+      string: '{"code":"InvalidRetentionRuleDetails","message":"The retention rule
+        cannot have timeRuleLocked unless a duration is present."}'
+    headers:
+      Content-Length:
+      - '126'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:55:21 GMT
+      opc-client-request-id:
+      - A331BEB3E4A0412593D46B7897D07925
+      opc-request-id:
+      - iad-1:xRcD12THZE3FA5Pfh8bUl6f3Rn5P1TzzmzysjbW9KavQGeP_UWwIGfknVVYd-ezJ
+      x-api-id:
+      - native
+    status:
+      code: 400
+      message: Bad Request
+- request:
+    body: '{"duration": {"timeAmount": 1, "timeUnit": "DAYS"}, "timeRuleLocked": null}'
+    headers:
+      Content-Length:
+      - '75'
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host content-length
+        content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="cJDNMf0FfGye8lKuNRjDEXiVk+j/GwMvqeNOuhuxJb3MaJm0njELZmKm093tgQwe0uAVAGfHtoCVnZq8LIIjjNUHEpCs6mT2CjEmWu0SoiE3zFkQUdrWxvJBI/j9MLa7Ekc1vJTQMmRZrZh5MUM6Caknd6t6k1UGimglQVMJpesCkNd3ZpVIP7h4lD1p8/I50sU6oARiBAAukpXTzyMTSHURQf52oW4zm1UAL8EzTFisoWghIo+BdSYOVtuHtzNdmfkcpLr179Kr55rLEsONgJo72SfOyAZYhPJKOVRcP6w5ejyxXPXmU3CITDL0f8kjq5qqaTVa/VltP4jlLj8AIw==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:55:21 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 10B4C8207FC342CDADF26E210B825532
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 2F9FFAD66BB94760BE246E61E6388DAF
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+      x-content-sha256:
+      - 1t4x55PzZjiqvlr9P0qRcWpjn+6gIy+FzMY+g5WosOE=
+    method: PUT
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/cli_retentionrule_temp_bucket_1000000_no_debug/retentionRules/417088b7-b302-46a5-acce-a394a22916d0
+  response:
+    body:
+      string: '{"id":"417088b7-b302-46a5-acce-a394a22916d0","displayName":"RetentionRule20230125145458","duration":{"timeAmount":1,"timeUnit":"DAYS"},"etag":"8af765e6-50e2-4bb2-a087-9bcc34b54914","timeRuleLocked":null,"timeCreated":"2023-01-25T14:54:58.151Z","timeModified":"2023-01-25T14:55:23.677Z"}'
+    headers:
+      Content-Length:
+      - '286'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,etag,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:55:25 GMT
+      etag:
+      - 8af765e6-50e2-4bb2-a087-9bcc34b54914
+      opc-client-request-id:
+      - 10B4C8207FC342CDADF26E210B825532
+      opc-request-id:
+      - iad-1:xc59CkdaSLh0weFRo8dVvNrUdhNYTJAaSnCfxyDT28fLgUBoBCy-dOWiWAmlHufJ
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="Jwx6wjbU4Wdvo9bV5l4juBdEGzWKBAn+f8HWB8EHx/VOAXsvhh2qkLQ7zn1Sn4QZzRkgK6eonOxaq6dvXhr1jVSyxnU0EaNFZ54O6IV+rf3LOYzES2zwvnp5oTNwUQIyMCouPC+ged1wwxadIdXcwv4+1fLvC/LRhauIeRZSPzkOvXbVTC3Ns2X5pjSCeqovDmtUVeP301F7bJfvyefx9ZeaPompdOLMhN0ckBJnAdrOqeYcpjBtiYQpj4V80ooWg076SlPIQETnWLLHfgYwZ4EIPlYO9yElooDzDBquWXI725B3an5pxI35n8MZnYgUmfSiz15imQGVZu8LNbpNuw==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:55:25 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 9B9B7A6E32CA47F4AD42B83CB8C4C82A
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 036D47A97E7B453687D6EF7E970AE9C6
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/cli_retentionrule_temp_bucket_1000000_no_debug/retentionRules/417088b7-b302-46a5-acce-a394a22916d0
+  response:
+    body:
+      string: '{"id":"417088b7-b302-46a5-acce-a394a22916d0","displayName":"RetentionRule20230125145458","duration":{"timeAmount":1,"timeUnit":"DAYS"},"etag":"8af765e6-50e2-4bb2-a087-9bcc34b54914","timeRuleLocked":null,"timeCreated":"2023-01-25T14:54:58.151Z","timeModified":"2023-01-25T14:55:23.677Z"}'
+    headers:
+      Content-Length:
+      - '286'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,etag,last-modified,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:55:27 GMT
+      etag:
+      - 8af765e6-50e2-4bb2-a087-9bcc34b54914
+      last-modified:
+      - Wed, 25 Jan 2023 14:55:23 GMT
+      opc-client-request-id:
+      - 9B9B7A6E32CA47F4AD42B83CB8C4C82A
+      opc-request-id:
+      - iad-1:ZJOyvP78ENNMcm_MWLe5NJCChJ4_2d9JCuXnyvKVJXswqAqBgPKV-lEt7SE7ZF3R
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="qjG6eZVX1KckO2Mtrl+t0to3yvHWBc2SQ2klrLztVwCeE8Jk9aS4kyXU6HmK3g9kbDdOtrDd8ch1Xbn4Wp9b20vlRBzcgDtrAmxb+QhvatondOUNzrQDwYAITHfO8XymKJ2GM+nRXoDWBMepN+DVnTXncHwS1dZY1x32nO2aUYkv8NCiprHG0ldX12AK6WAIHxCyXpqWJjqln6cX9b0PquGo3zl9lZskKfrYZfrfaNKRRzvIBHzDxoW4TpeUbNloQVQNWCnr3DB4S1ovr3qyitFVK6tKWyuCs0BlwJ2izugNvzd7jv1M4HF03d29kqqiYJ/VGlB46Za3wngQm4k1uw==",version="1"
+      connection:
+      - keep-alive
+      content-length:
+      - '0'
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:55:27 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - ED96F9FD0E9E4990993DE62DBA25B44B
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - ECA72527815D46F98A27D8884156E333
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: DELETE
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/cli_retentionrule_temp_bucket_1000000_no_debug/retentionRules/417088b7-b302-46a5-acce-a394a22916d0
+  response:
+    body:
+      string: ''
+    headers:
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:55:31 GMT
+      opc-client-request-id:
+      - ED96F9FD0E9E4990993DE62DBA25B44B
+      opc-request-id:
+      - iad-1:-LYU07X42o9to5ZbXO1Q0_21w9IYpfk6gAsM6cLFi281cdrGGdCbrfESsE9mYgXd
+      x-api-id:
+      - native
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="rbsu9NUVxH7Mf2GxJY+r18MB8xiNbCIF2OSA4wfyGCS6oWUhjKn5KoDfIEwEkQlfvVcyjr2vMQsjmlP/Crfg/htEEaB40pD/CnS/PJeIR3jF0CEl9jP4XFgtyQZWE/HPkStXAP1q7aT36jVBy0OJQUugrOSpXF2t3w8xnBzcjCzCn1IJIYXa6WAgciqaQkqdtekDFr3onkwNKKnOtMskc78nPTExpIbAAwq7jGIrKAxJUe/lOK4/kKeXsb2dNTzkZrLc3nIzuu7KvqFGGABI9wqqDPw2YsvPabfSJLSLr6dgbHLZbSOX/w2JH43msOY30ZeOCOUNN/YAdGaVfj7LrQ==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:55:30 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 714B328FF84545B1B41448B3309BC2F3
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/cli_retentionrule_temp_bucket_1000000_no_debug/retentionRules
+  response:
+    body:
+      string: '{"items":[{"id":"8fe8ca40-cf30-473e-89d9-5208ae3d2939","displayName":"RetentionRule20230125145452","duration":null,"etag":"837413d4-6965-4839-be5b-955be2bd21d8","timeRuleLocked":null,"timeCreated":"2023-01-25T14:54:52.240Z","timeModified":"2023-01-25T14:55:08.954Z"}]}'
+    headers:
+      Content-Length:
+      - '268'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:55:32 GMT
+      opc-request-id:
+      - iad-1:LiSIGe0GJTbkY3mzFlULTi4N2yC7nb1fuEEYKfX2eXNbwp1Cl9RSWlxwmbXclJW-
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="PEpgPRkGgX81aqcmkkLlwOxITXda+umXwv2wka2S3XwDh7u62IkMnKXGuAmtodpEey3Gav9Je+RJyRrhUHamCinGlErvwr8Lv+fcX9532V8R463F6E/lKuYGimRUYeZI6DVOmq8rpVXJmCjzmGZVgHYV9AkbBtr7wDd85e3SQpJdZ2Ut24XvPi/K8OYeqtY8puJ8QR9bgSlwnC29YqGHOctSq/UmMSysmDZPwLCpsztffdytYNdO51/GnPp+35wVMsqrDUDgfO0sbZWbrO8p/pA1vyAHz5TgtcvP66+Eqt5J4sIK3f2jfwqK6pncc0kv6S2Y6x2xmp2d1WlAmjD8VA==",version="1"
+      connection:
+      - keep-alive
+      content-length:
+      - '0'
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:55:32 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 016E534F535D4F5386CAFAAFCB460E9D
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 5FD65B08E89A41F6B89A8D7A45C5A288
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: DELETE
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/cli_retentionrule_temp_bucket_1000000_no_debug
+  response:
+    body:
+      string: ''
+    headers:
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:55:36 GMT
+      opc-client-request-id:
+      - 016E534F535D4F5386CAFAAFCB460E9D
+      opc-request-id:
+      - iad-1:fwvecfXs45kmXbX2LK6wvz3GjUWEuG9LbDasTj63s-yz6HrPMaHmerjomCWtD6PK
+      x-api-id:
+      - native
+    status:
+      code: 204
+      message: No Content
+version: 1

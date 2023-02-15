@@ -23,6 +23,7 @@ import services.object_storage.src.oci_cli_object_storage as oci_cli_object_stor
 from tests import test_config_container
 from tests import util
 import services.object_storage.tests.common.util as object_storage_util
+from services.object_storage.tests.common.constants import CASSETTE_LIBRARY_DIR
 
 OBJECTS_TO_CREATE_IN_BUCKET_FOR_BULK_GET = 100
 OBJECTS_TO_CREATE_IN_FOLDER_FOR_BULK_PUT = 20
@@ -63,7 +64,7 @@ def is_python2():
 
 @pytest.fixture
 def vcr_fixture(request):
-    with test_config_container.create_vcr(cassette_library_dir='services/object_storage/tests/cassettes').use_cassette('object_storage_bulk_operations_{name}.yml'.format(name=request.function.__name__)):
+    with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('object_storage_bulk_operations_{name}.yml'.format(name=request.function.__name__)):
         yield
 
 

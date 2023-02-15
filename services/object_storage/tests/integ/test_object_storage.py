@@ -12,12 +12,13 @@ import os.path
 import pytest
 import re
 import oci_cli
+import random
+from mimetypes import guess_type
+
 from tests import util
 from tests import test_config_container
-from mimetypes import guess_type
-import random
+from services.object_storage.tests.common.constants import CASSETTE_LIBRARY_DIR
 
-CASSETTE_LIBRARY_DIR = 'services/object_storage/tests/cassettes'
 CONTENT_INPUT_FILE = 'tests/resources/content_input.txt'
 GENERATED_CONTENT_INPUT_FILE = 'tests/temp/generated_content_input.txt'
 CONTENT_OUTPUT_FILE = 'tests/resources/content_output.txt'

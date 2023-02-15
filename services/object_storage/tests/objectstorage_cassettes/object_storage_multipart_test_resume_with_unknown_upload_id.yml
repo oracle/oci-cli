@@ -1,0 +1,54 @@
+interactions:
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="wC2XidO6u+ULoyUdCmIfMgzLxjJcnnvvIXpaalWOuMb7cc4Ie4QxjbOvcucl5bxjWXgW911+7gNO/byDGoLnEwRjGmeZV5FbOOwqoWjEzak7SnmBagxlncgWVvb3/D1ewKe8FLfFt/S6ktQfhpdpZ1S37MKFmXXqGQLsSJ5EFKnF8hb5+usXvwusaaT0ykbERWka0ozfhUAstZP4q1f3IhHjfoJDK57IEAnOYZgUdvzmPfjJO+YrugsX6831xVWvjEMYWrxuHK4kyFl+rIyLVwTjHP9IRxHr5XShKxdDeomkeEU7QxEm4bxEXHf5W1AT1nK4QRfAwCfFoGyRAK/Xpg==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:52:26 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 07D936AB0DF545AD98C61FF18179F4DD
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/cli_temp_multipart_bucket_1000000/u/a?uploadId=UNKNOWN_UPLOAD_ID
+  response:
+    body:
+      string: '{"code":"UploadNotFound","message":"No such upload"}'
+    headers:
+      Content-Length:
+      - '52'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:52:28 GMT
+      opc-request-id:
+      - iad-1:19rX7xqwiPWYs_ox_OlyT5M3QFPVTHCInUNLEmnxACYKkKFIjAyIiwUDhxiea3Ho
+      x-api-id:
+      - native
+    status:
+      code: 404
+      message: Not Found
+version: 1

@@ -1,0 +1,218 @@
+interactions:
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="YWvJuDGU9QlB0WYLeBdZOR8oEFGuifMdjLxMlmWh3T5HxQXPMvlg5+HUppk9GY9g/9ThjcgZZWSeumEukngVGQv2Xm1L+bo4bio1RTET9aAOPVr4gJpZzQTxx7g/5Mr54QVPFI8ZD9w8v2xMTO5qcQa3eEfsFuIPfihhdwXNx5tP+fODaLgy2juQH3xS+l6uvqGoVyt4TieimI7aHboRyU1+yBMS7khT1WTYsj/U4seJJSGt6wkXzhSsoF/sSXTWHMrjjVdGP6gHZPkM/QLbY3FfGzzYkoqsxzkYkMP1XB3MqBet34mrT8uVHt4xNayOxNuIVavrjm3Xt95bekaQHw==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:52:44 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 962C59E8FA7F46A39C9D32A53E55FF1D
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n
+  response:
+    body:
+      string: '"axzbp3kgiaim"'
+    headers:
+      Content-Length:
+      - '14'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:52:45 GMT
+      opc-request-id:
+      - iad-1:XueXi47WA2CI7hPPxwxAAnP1UQOisyiM_2QI64y2MVqO3dcrbjg8Dir0lnzaW49_
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="C+uPy11KI5Oks9dLcQ4/+3bs+RzfaZDHxcl4YVLTDS9JeY5ivshPFwXtOX+aPwidXvwx07ie2MgFIt848DHU7weaO8ciCk0jMLbZDFZ9w+1uYNFkfRFrU9odRmYGKkJ1fIu1o0tqwpgut7F9mTRaltWG4392bjwVmhHGNfkaF/bBW6dAYVVP5ax4kDy3S3PHwSTCCxEOGtcrMcOaru62105LxIn/5h/rNVR4hbraNqkK1zFWy2zhloPT6+otpkvz/AyGybkTgPXt6CtqzhUQONMYSupA0z6jz9XrV+E+xrlKAd3oSwg6Tin2eZeHqf73WRj8KXWEh6MZDVMfX7pQYg==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:52:45 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - 3E5DC81F11BD4E2796BF5AB3CF9E5623
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 7BECE9849E784D7699BA804EDA49AB13
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/ObjectListBucket1000000/o?limit=100&fields=name%2Csize%2Cetag%2Cmd5%2CtimeCreated%2CtimeModified%2CstorageTier%2CarchivalState
+  response:
+    body:
+      string: '{"objects":[{"name":"object1","size":7,"timeCreated":"2023-01-25T14:52:43.995Z","timeModified":"2023-01-25T14:52:43.995Z","etag":"1b680792-d2c6-49bb-8aae-89bc1ab37bbb","storageTier":"Standard","md5":"W3j5aJuaqx68Dzwd+Rbdlw=="},{"name":"object2","size":7,"timeCreated":"2023-01-25T14:52:44.401Z","timeModified":"2023-01-25T14:52:44.401Z","etag":"5cae2c82-0e32-4cdb-88f4-9d1d9b75b83c","storageTier":"Standard","md5":"6rM1Fo7DQ0ppVAomUH6qRA=="}]}'
+    headers:
+      Content-Length:
+      - '443'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:52:47 GMT
+      opc-client-request-id:
+      - 3E5DC81F11BD4E2796BF5AB3CF9E5623
+      opc-request-id:
+      - iad-1:R24IB566E_Qs39K7b3C7C_yZxGBAXam9TJRcSVq_xq-c6DV1Mh5Ag6NoqC0h4uR6
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="CoNGMy+b4D9GgnfoK6+/oPlhlqlFXv4Cg+/sgEqO30AArFUoughBSbdmPwe7YXMd0AuSziS39fworJ0lgmhA7pzLzGwZM6nDuisPq30nW4HJzg8JsS2g9j9CgRSyLeFYJ/RRNloJ+HATlRfL3ynN8Vy7V/wfYocOyc9TOayKPLi5gl1JDXuVvtwW8soas8HCMsHWTKYG1Bfe2vA80y+gGRt0kw+ftlcLphgBhYe2BtKqyUymo7i8pfMe5+P+MHuRI8WZGR4GbpZdKPnv+ZNQeV/zsnonWZVkOjVTq12wrPGBwCtxuGWj+QdzDMVarnYcXaVKGn0qyzIuSykwVQSS9Q==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:52:47 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - 3DD1EBA81C674991BA8504D654B3093E
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n
+  response:
+    body:
+      string: '"axzbp3kgiaim"'
+    headers:
+      Content-Length:
+      - '14'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:52:49 GMT
+      opc-request-id:
+      - iad-1:KmrCr40GCMtdby4Yvm0qzDfmHWHcFUuA1WZrvl-9wZumbcrCqlJkB-849tc5ZaDm
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Signature algorithm="rsa-sha256",headers="date (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaadh6eqqikripotkuhiaohcotaazgqibidhbeso5yxymctbolxffuq/ocid1.user.oc1..aaaaaaaarbxpiy5bu5g6cuqdfvwibbltec24d7ddqkznliuazjosdl27nyda/e6:77:a3:e2:c3:2e:94:20:78:a4:33:30:58:86:51:d5",signature="qTAfDdk1PlNfLK//gDakeYcIaIayvsUEctiM6N0h+BkO1r2u1OtEc23ygBkqubmlZTOCHS4v/fb91jcPaWFu0urK1GE46XMtBuiC2GwuZ4mPQSQKABYeyC/sY67TrL90VSalzztcsCvB0NkLXvX5kL5kBRsiORihgihvKt4WPLl8AOPas46qv9JWoQMuVF6lyq2iDAdVRutRcRju+aZGIjxrmTi6i0pUzGauFYIsK4+EU068bilfK1mIt95Y5SiWk+pLAQSUgzP2Ok7jE+eiOlXrXZqzhyo1C0nag82yPMRBgTu3LeVGsf+O0xY8hag9rEfAMZdObETaM3RHbpt9WA==",version="1"
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      date:
+      - Wed, 25 Jan 2023 14:52:48 GMT
+      host:
+      - objectstorage.us-ashburn-1.oraclecloud.com
+      opc-client-info:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536
+      opc-client-request-id:
+      - A8DD8209A72A4C34A509E3D708664C87
+      opc-client-retries:
+      - 'true'
+      opc-request-id:
+      - F0FE6236EC7D487D8E75BA056FC21E06
+      user-agent:
+      - Oracle-PythonSDK/2.90.3+preview.1.1536 (python 3.7.5; x86_64-Darwin) Oracle-PythonCLI/3.22.4+preview.1
+    method: GET
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/axzbp3kgiaim/b/ObjectListBucket1000000/o?limit=100&fields=name%2Csize%2Cetag%2Cmd5%2CtimeCreated%2CtimeModified%2CstorageTier%2CarchivalState
+  response:
+    body:
+      string: '{"objects":[{"name":"object1","size":7,"timeCreated":"2023-01-25T14:52:43.995Z","timeModified":"2023-01-25T14:52:43.995Z","etag":"1b680792-d2c6-49bb-8aae-89bc1ab37bbb","storageTier":"Standard","md5":"W3j5aJuaqx68Dzwd+Rbdlw=="},{"name":"object2","size":7,"timeCreated":"2023-01-25T14:52:44.401Z","timeModified":"2023-01-25T14:52:44.401Z","etag":"5cae2c82-0e32-4cdb-88f4-9d1d9b75b83c","storageTier":"Standard","md5":"6rM1Fo7DQ0ppVAomUH6qRA=="}]}'
+    headers:
+      Content-Length:
+      - '443'
+      Content-Type:
+      - application/json
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - POST,PUT,GET,HEAD,DELETE,OPTIONS
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,content-length,content-type,date,opc-client-info,opc-client-request-id,opc-request-id,x-api-id
+      date:
+      - Wed, 25 Jan 2023 14:52:50 GMT
+      opc-client-request-id:
+      - A8DD8209A72A4C34A509E3D708664C87
+      opc-request-id:
+      - iad-1:qSM0Mar3-leabkAVrKMpjrTeGWx6xeDcQVJlYjx_ngNxODoORCscrjDErTQFRdg5
+      x-api-id:
+      - native
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -5,9 +5,10 @@
 import json
 import oci_cli
 import pytest
-from tests import util, test_config_container
 
-CASSETTE_LIBRARY_DIR = 'services/object_storage/tests/cassettes'
+from tests import util, test_config_container
+from services.object_storage.tests.common.constants import CASSETTE_LIBRARY_DIR
+
 BUCKET_NAME = None
 
 

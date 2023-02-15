@@ -399,6 +399,10 @@ service_mapping = {
         "queue",
         "Queue"
     ],
+    "recovery": [
+        "recovery",
+        "Oracle Database Autonomous Recovery Service"
+    ],
     "resource-manager": [
         "resource_manager",
         "Resource Manager"
@@ -462,6 +466,10 @@ service_mapping = {
     "vault": [
         "vault",
         "Vault Secret Management"
+    ],
+    "vbstudio": [
+        "vbs_inst",
+        "VB Studio Controlplane Instance API"
     ],
     "visual-builder": [
         "visual_builder",

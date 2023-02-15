@@ -5,7 +5,7 @@ import click
 
 from services.service_mesh.src.oci_cli_service_mesh.service_mesh_troubleshoot.task_request import TaskRequest, \
     TaskRequestType, TaskConfiguration, NamespacesTaskRequest, CommonTaskRequest, OciCliVersionTaskRequest, \
-    ValidateCrdsTaskRequest, WebhooksTaskRequest, ObservabilityTaskRequest, ServicesTaskRequest
+    ValidateCrdsTaskRequest, WebhooksTaskRequest, ServicesTaskRequest
 from services.service_mesh.src.oci_cli_service_mesh.service_mesh_troubleshoot.tasks.task_worker import MeshTask
 
 
@@ -45,10 +45,6 @@ class MeshReportTask(MeshTask):
             # webhooks
             webhooks_task_request = WebhooksTaskRequest(TaskRequestType.WEBHOOKS_PROCESSOR, [], mesh_id)
             tasks.append(webhooks_task_request)
-
-            # search prometheus and grafana
-            observability_task_request = ObservabilityTaskRequest(TaskRequestType.OBSERVABILITY_PROCESSOR, [], mesh_id)
-            tasks.append(observability_task_request)
 
             # check services
             services_task_request = ServicesTaskRequest(TaskRequestType.SERVICES_PROCESSOR, [], mesh_id)

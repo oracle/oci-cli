@@ -240,50 +240,6 @@ class KubeCommandHelper:
 
         return webhooks_list + mutating_webhooks_list
 
-    # check for prometheus version
-    def get_observability(self):
-        get_observability_args = ['kubectl', 'get', 'pods', '--all-namespaces', '--template',
-                                  '{{range .items}}{{.metadata.name}}{{" "}}{{.metadata.namespace}}{{"\\n"}}{{end}}']
-        observability = ["prometheus", "grafana"]
-        try:
-            kubectl_command_summary = self.run_command_as_subprocess(get_observability_args)
-            if kubectl_command_summary.return_code == 0:
-                pods_list = kubectl_command_summary.stdout.split('\n')
-                version_dict = {}
-                observability_pod = []
-                version = None
-                for pod in pods_list:
-                    if re.search(observability[0], pod):
-                        observability_pod.append(pod)
-                    elif re.search(observability[1], pod):
-                        observability_pod.append(pod)
-
-                for pod in observability_pod:
-                    pod = pod.strip("\'")
-                    pod_tokens = pod.split(" ")
-                    name, namespace = pod_tokens[0].strip(), pod_tokens[1].strip()
-                    get_pod_args = ['kubectl', 'get', 'pod', name, '-n', namespace, '-o', 'json']
-                    kubectl_command_summary = self.run_command_as_subprocess(get_pod_args)
-                    if kubectl_command_summary.return_code == 0:
-                        pod_json = json.loads(kubectl_command_summary.stdout)
-
-                        if pod_json is not None:
-                            if SPEC in pod_json and CONTAINERS in pod_json[SPEC] and len(
-                                    pod_json[SPEC][CONTAINERS]) > 0:
-                                container = pod_json[SPEC][CONTAINERS][0]
-                                if IMAGE in container:
-                                    version = container[IMAGE].split(":")[1]
-
-                    if re.search("prometheus", name):
-                        version_dict["prometheus-version"] = version
-                    elif re.search("grafana", name):
-                        version_dict["grafana-version"] = version
-                return version_dict
-        except Exception as error:
-            click.echo(Messages.some_exception.format('fetching prometheus version ', error), file=sys.stderr)
-
-        return None
-
     def get_operator_services(self):
         get_services_args = ['kubectl', 'get', 'services', '--all-namespaces']
         kubectl_command_summary = self.run_command_as_subprocess(get_services_args)
@@ -323,7 +279,7 @@ class KubeCommandHelper:
         else:
             config_dump_args = ['kubectl', 'exec', name, '-n', namespace, '-c', OCI_SM_PROXY,
                                 '--', 'curl', '-s', 'localhost:9901/config_dump']
-        kubectl_command_summary = self.run_command_as_subprocess(config_dump_args)
+        kubectl_command_summary = self.run_command_as_subprocess(args=config_dump_args, append_context_to_args=False)
         config_dump = None
         if kubectl_command_summary.return_code == 0:
             config_dump = json.loads(kubectl_command_summary.stdout)
@@ -337,7 +293,7 @@ class KubeCommandHelper:
         else:
             proxy_stats_args = ['kubectl', 'exec', name, '-n', namespace, '-c', OCI_SM_PROXY,
                                 '--', 'curl', '-s', 'localhost:9901/stats?format=json']
-        kubectl_command_summary = self.run_command_as_subprocess(proxy_stats_args)
+        kubectl_command_summary = self.run_command_as_subprocess(args=proxy_stats_args, append_context_to_args=False)
         proxy_stats = None
         if kubectl_command_summary.return_code == 0:
             proxy_stats = json.loads(kubectl_command_summary.stdout)

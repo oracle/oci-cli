@@ -19,7 +19,9 @@ from services.core.src.oci_cli_core.generated import core_service_cli
 compute instances, and block storage volumes. For more information, see the console
 documentation for the [Networking],
 [Compute], and
-[Block Volume] services."""), short_help=cli_util.override('virtual_network.virtual_network_root_group.short_help', """Core Services API"""))
+[Block Volume] services.
+The required permissions are documented in the
+[Details for the Core Services] article."""), short_help=cli_util.override('virtual_network.virtual_network_root_group.short_help', """Core Services API"""))
 @cli_util.help_option_group
 def virtual_network_root_group():
     pass
@@ -479,9 +481,9 @@ A route distribution is a list of statements. Each statement consists of a set o
 
 You can assign a route distribution as a route table's import distribution. The statements in an import route distribution specify how how incoming route advertisements through a referenced attachment or all attachments of a certain type are inserted into the route table.
 
-You can assign a route distribution as a DRG attachment's export distribution. Export route distribution statements specify how routes in a DRG attachment's assigned table are advertised out through the attachment. When a DRG attachment is created, a route distribution is created with a single ACCEPT statement with match criteria MATCH_ALL. Exporting routes through VCN attachments is unsupported, so no VCN attachments are assigned an export distribution.
+You can assign a route distribution as a DRG attachment's export distribution unless the attachment has the type VCN. Exporting routes through a VCN attachment is unsupported. Export route distribution statements specify how routes in a DRG attachment's assigned table are advertised out through the attachment. When a DRG is created, a route distribution is created with a single ACCEPT statement with match criteria MATCH_ALL. By default, all DRG attachments (except for those of type VCN), are assigned this distribution.
 
-The two auto-generated DRG route tables (one as the default for VCN attachments, and the other for all other types of attachments) are each assigned an auto generated import route distribution. The default VCN table's import distribution has a single statement with match criteria MATCH_ALL to import routes from each DRG attachment type. The other table's import distribution has a statement to import routes from attachments with the VCN type.
+ The two auto-generated DRG route tables (one as the default for VCN attachments, and the other for all other types of attachments) are each assigned an auto generated import route distribution. The default VCN table's import distribution has a single statement with match criteria MATCH_ALL to import routes from each DRG attachment type. The other table's import distribution has a statement to import routes from attachments with the VCN type.
 
 The route distribution is always in the same compartment as the DRG.""")
 @cli_util.help_option_group
@@ -3357,11 +3359,11 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--hostname-label', help=u"""The hostname for the private IP. Used for DNS. The value is the hostname portion of the private IP's fully qualified domain name (FQDN) (for example, `bminstance-1` in FQDN `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952] and [RFC 1123].
+@cli_util.option('--hostname-label', help=u"""The hostname for the private IP. Used for DNS. The value is the hostname portion of the private IP's fully qualified domain name (FQDN) (for example, `bminstance1` in FQDN `bminstance1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952] and [RFC 1123].
 
 For more information, see [DNS in Your Virtual Cloud Network].
 
-Example: `bminstance-1`""")
+Example: `bminstance1`""")
 @cli_util.option('--ip-address', help=u"""A private IP address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value, Oracle automatically assigns a private IP address from the subnet.
 
 Example: `10.0.3.3`""")
@@ -3886,7 +3888,7 @@ Example: `Uocm:PHX-AD-1`""")
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dhcp-options-id', help=u"""The [OCID] of the set of DHCP options the subnet will use. If you don't provide a value, the subnet uses the VCN's default set of DHCP options.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--dns-label', help=u"""A DNS label for the subnet, used in conjunction with the VNIC's hostname and VCN's DNS label to form a fully qualified domain name (FQDN) for each VNIC within this subnet (for example, `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must be an alphanumeric string that begins with a letter and is unique within the VCN. The value cannot be changed.
+@cli_util.option('--dns-label', help=u"""A DNS label for the subnet, used in conjunction with the VNIC's hostname and VCN's DNS label to form a fully qualified domain name (FQDN) for each VNIC within this subnet (for example, `bminstance1.subnet123.vcn1.oraclevcn.com`). Must be an alphanumeric string that begins with a letter and is unique within the VCN. The value cannot be changed.
 
 This value must be set if you want to use the Internet and VCN Resolver to resolve the hostnames of instances in the subnet. It can only be set if the VCN itself was created with a DNS label.
 
@@ -4033,7 +4035,7 @@ This option is a JSON list with items of type Byoipv6CidrDetails.  For documenta
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--dns-label', help=u"""A DNS label for the VCN, used in conjunction with the VNIC's hostname and subnet's DNS label to form a fully qualified domain name (FQDN) for each VNIC within this subnet (for example, `bminstance-1.subnet123.vcn1.oraclevcn.com`). Not required to be unique, but it's a best practice to set unique DNS labels for VCNs in your tenancy. Must be an alphanumeric string that begins with a letter. The value cannot be changed.
+@cli_util.option('--dns-label', help=u"""A DNS label for the VCN, used in conjunction with the VNIC's hostname and subnet's DNS label to form a fully qualified domain name (FQDN) for each VNIC within this subnet (for example, `bminstance1.subnet123.vcn1.oraclevcn.com`). Not required to be unique, but it's a best practice to set unique DNS labels for VCNs in your tenancy. Must be an alphanumeric string that begins with a letter. The value cannot be changed.
 
 You must set this value if you want instances to be able to use hostnames to resolve other instances in the VCN. Otherwise the Internet and VCN Resolver will not work.
 
@@ -5937,7 +5939,9 @@ def delete_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@vcn_group.command(name=cli_util.override('virtual_network.delete_vcn.command_name', 'delete'), help=u"""Deletes the specified VCN. The VCN must be empty and have no attached gateways. This is an asynchronous operation. The VCN's `lifecycleState` will change to TERMINATING temporarily until the VCN is completely removed. \n[Command Reference](deleteVcn)""")
+@vcn_group.command(name=cli_util.override('virtual_network.delete_vcn.command_name', 'delete'), help=u"""Deletes the specified VCN. The VCN must be completely empty and have no attached gateways. This is an asynchronous operation.
+
+A deleted VCN's `lifecycleState` changes to TERMINATING and then TERMINATED temporarily until the VCN is completely removed. A completely removed VCN does not appear in the results of a `ListVcns` operation and can't be used in a `GetVcn` operation. \n[Command Reference](deleteVcn)""")
 @cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -12450,11 +12454,11 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--hostname-label', help=u"""The hostname for the private IP. Used for DNS. The value is the hostname portion of the private IP's fully qualified domain name (FQDN) (for example, `bminstance-1` in FQDN `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952] and [RFC 1123].
+@cli_util.option('--hostname-label', help=u"""The hostname for the private IP. Used for DNS. The value is the hostname portion of the private IP's fully qualified domain name (FQDN) (for example, `bminstance1` in FQDN `bminstance1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952] and [RFC 1123].
 
 For more information, see [DNS in Your Virtual Cloud Network].
 
-Example: `bminstance-1`""")
+Example: `bminstance1`""")
 @cli_util.option('--vnic-id', help=u"""The [OCID] of the VNIC to reassign the private IP to. The VNIC must be in the same subnet as the current VNIC.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -13486,7 +13490,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--hostname-label', help=u"""The hostname for the VNIC's primary private IP. Used for DNS. The value is the hostname portion of the primary private IP's fully qualified domain name (FQDN) (for example, `bminstance-1` in FQDN `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952] and [RFC 1123]. The value appears in the [Vnic] object and also the [PrivateIp] object returned by [ListPrivateIps] and [GetPrivateIp].
+@cli_util.option('--hostname-label', help=u"""The hostname for the VNIC's primary private IP. Used for DNS. The value is the hostname portion of the primary private IP's fully qualified domain name (FQDN) (for example, `bminstance1` in FQDN `bminstance1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952] and [RFC 1123]. The value appears in the [Vnic] object and also the [PrivateIp] object returned by [ListPrivateIps] and [GetPrivateIp].
 
 For more information, see [DNS in Your Virtual Cloud Network].""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the OCIDs of the network security groups (NSGs) to add the VNIC to. Setting this as an empty array removes the VNIC from all network security groups.

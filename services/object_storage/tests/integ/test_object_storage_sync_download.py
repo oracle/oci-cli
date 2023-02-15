@@ -11,8 +11,8 @@ import pytest
 
 import test_object_storage_bulk_operations as bulk_operation
 from tests import util, test_config_container
+from services.object_storage.tests.common.constants import CASSETTE_LIBRARY_DIR
 
-CASSETTE_LIBRARY_DIR = 'services/object_storage/tests/cassettes'
 OBJECTS_TO_CREATE_IN_REMOTE_FOR_SYNC = 20
 
 sync_remote_object_content = {}
