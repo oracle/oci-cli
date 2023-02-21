@@ -29,27 +29,21 @@ def addm_tasks_collection_group():
     pass
 
 
-@click.command(cli_util.override('db_management.snapshot_details_group.command_name', 'snapshot-details'), cls=CommandGroupWithAlias, help="""The details of the newly generated AWR snapshot.""")
+@click.command(cli_util.override('db_management.external_cluster_instance_group.command_name', 'external-cluster-instance'), cls=CommandGroupWithAlias, help="""The details of an external cluster instance.""")
 @cli_util.help_option_group
-def snapshot_details_group():
+def external_cluster_instance_group():
     pass
 
 
-@click.command(cli_util.override('db_management.historic_addm_result_group.command_name', 'historic-addm-result'), cls=CommandGroupWithAlias, help="""The details of the historic ADDM task.""")
+@click.command(cli_util.override('db_management.external_db_home_group.command_name', 'external-db-home'), cls=CommandGroupWithAlias, help="""The details of an external database home.""")
 @cli_util.help_option_group
-def historic_addm_result_group():
+def external_db_home_group():
     pass
 
 
-@click.command(cli_util.override('db_management.cluster_cache_metric_group.command_name', 'cluster-cache-metric'), cls=CommandGroupWithAlias, help="""The response containing the cluster cache metrics for the Oracle Real Application Clusters (Oracle RAC) database.""")
+@click.command(cli_util.override('db_management.external_db_system_connector_group.command_name', 'external-db-system-connector'), cls=CommandGroupWithAlias, help="""The details of an external DB system connector.""")
 @cli_util.help_option_group
-def cluster_cache_metric_group():
-    pass
-
-
-@click.command(cli_util.override('db_management.work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""A log message from the execution of a work request.""")
-@cli_util.help_option_group
-def work_request_log_entry_group():
+def external_db_system_connector_group():
     pass
 
 
@@ -77,9 +71,9 @@ def database_home_metrics_group():
     pass
 
 
-@click.command(cli_util.override('db_management.database_fleet_health_metrics_group.command_name', 'database-fleet-health-metrics'), cls=CommandGroupWithAlias, help="""The details of the fleet health metrics.""")
+@click.command(cli_util.override('db_management.external_database_collection_group.command_name', 'external-database-collection'), cls=CommandGroupWithAlias, help="""A collection of external databases.""")
 @cli_util.help_option_group
-def database_fleet_health_metrics_group():
+def external_database_collection_group():
     pass
 
 
@@ -101,18 +95,6 @@ def db_management_private_endpoint_group():
     pass
 
 
-@click.command(cli_util.override('db_management.job_executions_status_summary_collection_group.command_name', 'job-executions-status-summary-collection'), cls=CommandGroupWithAlias, help="""A collection of job execution status summary objects.""")
-@cli_util.help_option_group
-def job_executions_status_summary_collection_group():
-    pass
-
-
-@click.command(cli_util.override('db_management.managed_database_group.command_name', 'managed-database'), cls=CommandGroupWithAlias, help="""The details of a Managed Database.""")
-@cli_util.help_option_group
-def managed_database_group():
-    pass
-
-
 @click.command(cli_util.override('db_management.job_run_group.command_name', 'job-run'), cls=CommandGroupWithAlias, help="""The details of a specific job run.""")
 @cli_util.help_option_group
 def job_run_group():
@@ -122,6 +104,84 @@ def job_run_group():
 @click.command(cli_util.override('db_management.job_execution_group.command_name', 'job-execution'), cls=CommandGroupWithAlias, help="""The details of a job execution.""")
 @cli_util.help_option_group
 def job_execution_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.external_db_system_discovery_group.command_name', 'external-db-system-discovery'), cls=CommandGroupWithAlias, help="""The details of an external DB system discovery.""")
+@cli_util.help_option_group
+def external_db_system_discovery_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.snapshot_details_group.command_name', 'snapshot-details'), cls=CommandGroupWithAlias, help="""The details of the newly generated AWR snapshot.""")
+@cli_util.help_option_group
+def snapshot_details_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.external_asm_instance_group.command_name', 'external-asm-instance'), cls=CommandGroupWithAlias, help="""The details of an external ASM instance.""")
+@cli_util.help_option_group
+def external_asm_instance_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.historic_addm_result_group.command_name', 'historic-addm-result'), cls=CommandGroupWithAlias, help="""The details of the historic ADDM task.""")
+@cli_util.help_option_group
+def historic_addm_result_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.cluster_cache_metric_group.command_name', 'cluster-cache-metric'), cls=CommandGroupWithAlias, help="""The response containing the cluster cache metrics for the Oracle Real Application Clusters (Oracle RAC) database.""")
+@cli_util.help_option_group
+def cluster_cache_metric_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""A log message from the execution of a work request.""")
+@cli_util.help_option_group
+def work_request_log_entry_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.external_listener_group.command_name', 'external-listener'), cls=CommandGroupWithAlias, help="""The details of an external listener.""")
+@cli_util.help_option_group
+def external_listener_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.external_asm_group.command_name', 'external-asm'), cls=CommandGroupWithAlias, help="""The details of an external ASM.""")
+@cli_util.help_option_group
+def external_asm_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.database_fleet_health_metrics_group.command_name', 'database-fleet-health-metrics'), cls=CommandGroupWithAlias, help="""The details of the fleet health metrics.""")
+@cli_util.help_option_group
+def database_fleet_health_metrics_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.external_cluster_group.command_name', 'external-cluster'), cls=CommandGroupWithAlias, help="""The details of an external cluster.""")
+@cli_util.help_option_group
+def external_cluster_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.external_db_system_group.command_name', 'external-db-system'), cls=CommandGroupWithAlias, help="""The details of an external DB system.""")
+@cli_util.help_option_group
+def external_db_system_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.job_executions_status_summary_collection_group.command_name', 'job-executions-status-summary-collection'), cls=CommandGroupWithAlias, help="""A collection of job execution status summary objects.""")
+@cli_util.help_option_group
+def job_executions_status_summary_collection_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.managed_database_group.command_name', 'managed-database'), cls=CommandGroupWithAlias, help="""The details of a Managed Database.""")
+@cli_util.help_option_group
+def managed_database_group():
     pass
 
 
@@ -137,6 +197,12 @@ def job_group():
     pass
 
 
+@click.command(cli_util.override('db_management.external_db_node_group.command_name', 'external-db-node'), cls=CommandGroupWithAlias, help="""The details of an external database node.""")
+@cli_util.help_option_group
+def external_db_node_group():
+    pass
+
+
 @click.command(cli_util.override('db_management.preferred_credential_group.command_name', 'preferred-credential'), cls=CommandGroupWithAlias, help="""The details of the preferred credential.""")
 @cli_util.help_option_group
 def preferred_credential_group():
@@ -145,24 +211,35 @@ def preferred_credential_group():
 
 database_management_service_cli.database_management_service_group.add_command(db_management_root_group)
 db_management_root_group.add_command(addm_tasks_collection_group)
-db_management_root_group.add_command(snapshot_details_group)
-db_management_root_group.add_command(historic_addm_result_group)
-db_management_root_group.add_command(cluster_cache_metric_group)
-db_management_root_group.add_command(work_request_log_entry_group)
+db_management_root_group.add_command(external_cluster_instance_group)
+db_management_root_group.add_command(external_db_home_group)
+db_management_root_group.add_command(external_db_system_connector_group)
 db_management_root_group.add_command(managed_database_group_group)
 db_management_root_group.add_command(pdb_metrics_group)
 db_management_root_group.add_command(work_request_group)
 db_management_root_group.add_command(database_home_metrics_group)
-db_management_root_group.add_command(database_fleet_health_metrics_group)
+db_management_root_group.add_command(external_database_collection_group)
 db_management_root_group.add_command(tablespace_group)
 db_management_root_group.add_command(work_request_error_group)
 db_management_root_group.add_command(db_management_private_endpoint_group)
-db_management_root_group.add_command(job_executions_status_summary_collection_group)
-db_management_root_group.add_command(managed_database_group)
 db_management_root_group.add_command(job_run_group)
 db_management_root_group.add_command(job_execution_group)
+db_management_root_group.add_command(external_db_system_discovery_group)
+db_management_root_group.add_command(snapshot_details_group)
+db_management_root_group.add_command(external_asm_instance_group)
+db_management_root_group.add_command(historic_addm_result_group)
+db_management_root_group.add_command(cluster_cache_metric_group)
+db_management_root_group.add_command(work_request_log_entry_group)
+db_management_root_group.add_command(external_listener_group)
+db_management_root_group.add_command(external_asm_group)
+db_management_root_group.add_command(database_fleet_health_metrics_group)
+db_management_root_group.add_command(external_cluster_group)
+db_management_root_group.add_command(external_db_system_group)
+db_management_root_group.add_command(job_executions_status_summary_collection_group)
+db_management_root_group.add_command(managed_database_group)
 db_management_root_group.add_command(associated_database_summary_group)
 db_management_root_group.add_command(job_group)
+db_management_root_group.add_command(external_db_node_group)
 db_management_root_group.add_command(preferred_credential_group)
 
 
@@ -370,6 +447,63 @@ def change_db_management_private_endpoint_compartment(ctx, from_json, db_managem
     cli_util.render_response(result, ctx)
 
 
+@external_db_system_group.command(name=cli_util.override('db_management.change_external_db_system_compartment.command_name', 'change-compartment'), help=u"""Moves the external DB system and its related resources (excluding databases) to the specified compartment. \n[Command Reference](changeExternalDbSystemCompartment)""")
+@cli_util.option('--external-db-system-id', required=True, help=u"""The [OCID] of the external DB system.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the external DB system to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_external_db_system_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_id, compartment_id, if_match):
+
+    if isinstance(external_db_system_id, six.string_types) and len(external_db_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-db-system-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.change_external_db_system_compartment(
+        external_db_system_id=external_db_system_id,
+        change_external_db_system_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @job_group.command(name=cli_util.override('db_management.change_job_compartment.command_name', 'change-compartment'), help=u"""Moves a job. \n[Command Reference](changeJobCompartment)""")
 @cli_util.option('--job-id', required=True, help=u"""The identifier of the job.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to which the job should be moved.""")
@@ -432,6 +566,57 @@ def change_managed_database_group_compartment(ctx, from_json, managed_database_g
     cli_util.render_response(result, ctx)
 
 
+@external_db_system_connector_group.command(name=cli_util.override('db_management.check_external_db_system_connector_connection_status.command_name', 'check-external-db-system-connector-connection-status'), help=u"""Checks the status of the external DB system component connection specified in this connector. This operation will refresh the connectionStatus and timeConnectionStatusLastUpdated fields. \n[Command Reference](checkExternalDbSystemConnectorConnectionStatus)""")
+@cli_util.option('--external-db-system-connector-id', required=True, help=u"""The [OCID] of the external connector.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "NOT_CONNECTED", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalDbSystemConnector'})
+@cli_util.wrap_exceptions
+def check_external_db_system_connector_connection_status(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_connector_id, if_match):
+
+    if isinstance(external_db_system_connector_id, six.string_types) and len(external_db_system_connector_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-db-system-connector-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.check_external_db_system_connector_connection_status(
+        external_db_system_connector_id=external_db_system_connector_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_external_db_system_connector') and callable(getattr(client, 'get_external_db_system_connector')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_external_db_system_connector(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @db_management_private_endpoint_group.command(name=cli_util.override('db_management.create_db_management_private_endpoint.command_name', 'create'), help=u"""Creates a new Database Management private endpoint. \n[Command Reference](createDbManagementPrivateEndpoint)""")
 @cli_util.option('--name', required=True, help=u"""The display name of the Database Management private endpoint.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
@@ -469,6 +654,236 @@ def create_db_management_private_endpoint(ctx, from_json, wait_for_state, max_wa
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.create_db_management_private_endpoint(
         create_db_management_private_endpoint_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@external_db_system_group.command(name=cli_util.override('db_management.create_external_db_system.command_name', 'create'), help=u"""Creates an external DB system and its related resources. \n[Command Reference](createExternalDbSystem)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the external DB system resides.""")
+@cli_util.option('--db-system-discovery-id', required=True, help=u"""The [OCID] of the DB system discovery.""")
+@cli_util.option('--display-name', help=u"""The user-friendly name for the DB system. The name does not have to be unique.""")
+@cli_util.option('--database-management-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'database-management-config': {'module': 'database_management', 'class': 'ExternalDbSystemDatabaseManagementConfigDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-management-config': {'module': 'database_management', 'class': 'ExternalDbSystemDatabaseManagementConfigDetails'}}, output_type={'module': 'database_management', 'class': 'ExternalDbSystem'})
+@cli_util.wrap_exceptions
+def create_external_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_system_discovery_id, display_name, database_management_config):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['dbSystemDiscoveryId'] = db_system_discovery_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if database_management_config is not None:
+        _details['databaseManagementConfig'] = cli_util.parse_json_parameter("database_management_config", database_management_config)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.create_external_db_system(
+        create_external_db_system_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@external_db_system_connector_group.command(name=cli_util.override('db_management.create_external_db_system_connector.command_name', 'create'), help=u"""Creates a new external connector. \n[Command Reference](createExternalDbSystemConnector)""")
+@cli_util.option('--connector-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["MACS"]), help=u"""The type of connector.""")
+@cli_util.option('--external-db-system-id', required=True, help=u"""The [OCID] of the external DB system.""")
+@cli_util.option('--display-name', help=u"""The user-friendly name for the external connector. The name does not have to be unique.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "NOT_CONNECTED", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalDbSystemConnector'})
+@cli_util.wrap_exceptions
+def create_external_db_system_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connector_type, external_db_system_id, display_name):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['connectorType'] = connector_type
+    _details['externalDbSystemId'] = external_db_system_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.create_external_db_system_connector(
+        create_external_db_system_connector_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_external_db_system_connector') and callable(getattr(client, 'get_external_db_system_connector')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_external_db_system_connector(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@external_db_system_connector_group.command(name=cli_util.override('db_management.create_external_db_system_connector_create_external_db_system_macs_connector_details.command_name', 'create-external-db-system-connector-create-external-db-system-macs-connector-details'), help=u"""Creates a new external connector. \n[Command Reference](createExternalDbSystemConnector)""")
+@cli_util.option('--external-db-system-id', required=True, help=u"""The [OCID] of the external DB system.""")
+@cli_util.option('--agent-id', required=True, help=u"""The [OCID] of the management agent used for the external DB system connector.""")
+@cli_util.option('--display-name', help=u"""The user-friendly name for the external connector. The name does not have to be unique.""")
+@cli_util.option('--connection-info', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "NOT_CONNECTED", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'connection-info': {'module': 'database_management', 'class': 'ExternalDbSystemConnectionInfo'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-info': {'module': 'database_management', 'class': 'ExternalDbSystemConnectionInfo'}}, output_type={'module': 'database_management', 'class': 'ExternalDbSystemConnector'})
+@cli_util.wrap_exceptions
+def create_external_db_system_connector_create_external_db_system_macs_connector_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_id, agent_id, display_name, connection_info):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['externalDbSystemId'] = external_db_system_id
+    _details['agentId'] = agent_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if connection_info is not None:
+        _details['connectionInfo'] = cli_util.parse_json_parameter("connection_info", connection_info)
+
+    _details['connectorType'] = 'MACS'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.create_external_db_system_connector(
+        create_external_db_system_connector_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_external_db_system_connector') and callable(getattr(client, 'get_external_db_system_connector')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_external_db_system_connector(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@external_db_system_discovery_group.command(name=cli_util.override('db_management.create_external_db_system_discovery.command_name', 'create'), help=u"""Creates an external DB system discovery resource and initiates the discovery process. \n[Command Reference](createExternalDbSystemDiscovery)""")
+@cli_util.option('--agent-id', required=True, help=u"""The [OCID] of the management agent used for the external DB system discovery.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the external DB system resides.""")
+@cli_util.option('--display-name', help=u"""The user-friendly name for the DB system. The name does not have to be unique.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalDbSystemDiscovery'})
+@cli_util.wrap_exceptions
+def create_external_db_system_discovery(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, agent_id, compartment_id, display_name):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['agentId'] = agent_id
+    _details['compartmentId'] = compartment_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.create_external_db_system_discovery(
+        create_external_db_system_discovery_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -990,6 +1405,186 @@ def delete_db_management_private_endpoint(ctx, from_json, wait_for_state, max_wa
     cli_util.render_response(result, ctx)
 
 
+@external_db_system_group.command(name=cli_util.override('db_management.delete_external_db_system.command_name', 'delete'), help=u"""Deletes the external DB system specified by `externalDbSystemId`. \n[Command Reference](deleteExternalDbSystem)""")
+@cli_util.option('--external-db-system-id', required=True, help=u"""The [OCID] of the external DB system.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_external_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_id, if_match):
+
+    if isinstance(external_db_system_id, six.string_types) and len(external_db_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-db-system-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.delete_external_db_system(
+        external_db_system_id=external_db_system_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@external_db_system_connector_group.command(name=cli_util.override('db_management.delete_external_db_system_connector.command_name', 'delete'), help=u"""Deletes the external connector specified by `externalDbSystemConnectorId`. \n[Command Reference](deleteExternalDbSystemConnector)""")
+@cli_util.option('--external-db-system-connector-id', required=True, help=u"""The [OCID] of the external connector.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "NOT_CONNECTED", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_external_db_system_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_connector_id, if_match):
+
+    if isinstance(external_db_system_connector_id, six.string_types) and len(external_db_system_connector_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-db-system-connector-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.delete_external_db_system_connector(
+        external_db_system_connector_id=external_db_system_connector_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_external_db_system_connector') and callable(getattr(client, 'get_external_db_system_connector')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_external_db_system_connector(external_db_system_connector_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@external_db_system_discovery_group.command(name=cli_util.override('db_management.delete_external_db_system_discovery.command_name', 'delete'), help=u"""Deletes the external DB system discovery resource specified by `externalDbSystemDiscoveryId`. \n[Command Reference](deleteExternalDbSystemDiscovery)""")
+@cli_util.option('--external-db-system-discovery-id', required=True, help=u"""The [OCID] of the external DB system discovery.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_external_db_system_discovery(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_discovery_id, if_match):
+
+    if isinstance(external_db_system_discovery_id, six.string_types) and len(external_db_system_discovery_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-db-system-discovery-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.delete_external_db_system_discovery(
+        external_db_system_discovery_id=external_db_system_discovery_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_external_db_system_discovery') and callable(getattr(client, 'get_external_db_system_discovery')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_external_db_system_discovery(external_db_system_discovery_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @job_group.command(name=cli_util.override('db_management.delete_job.command_name', 'delete'), help=u"""Deletes the job specified by jobId. \n[Command Reference](deleteJob)""")
 @cli_util.option('--job-id', required=True, help=u"""The identifier of the job.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1146,6 +1741,57 @@ def delete_preferred_credential(ctx, from_json, managed_database_id, credential_
     cli_util.render_response(result, ctx)
 
 
+@external_db_system_group.command(name=cli_util.override('db_management.disable_external_db_system_database_management.command_name', 'disable-external-db-system-database-management'), help=u"""Disables Database Management service for all the components of the specified external DB system (except databases). \n[Command Reference](disableExternalDbSystemDatabaseManagement)""")
+@cli_util.option('--external-db-system-id', required=True, help=u"""The [OCID] of the external DB system.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def disable_external_db_system_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_id, if_match):
+
+    if isinstance(external_db_system_id, six.string_types) and len(external_db_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-db-system-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.disable_external_db_system_database_management(
+        external_db_system_id=external_db_system_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @tablespace_group.command(name=cli_util.override('db_management.drop_tablespace.command_name', 'drop'), help=u"""Drops the tablespace specified by tablespaceName within the Managed Database specified by managedDatabaseId. \n[Command Reference](dropTablespace)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--tablespace-name', required=True, help=u"""The name of the tablespace.""")
@@ -1292,6 +1938,63 @@ def drop_tablespace_tablespace_admin_secret_credential_details(ctx, from_json, m
         drop_tablespace_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@external_db_system_group.command(name=cli_util.override('db_management.enable_external_db_system_database_management.command_name', 'enable-external-db-system-database-management'), help=u"""Enables Database Management service for all the components of the specified external DB system (except databases). \n[Command Reference](enableExternalDbSystemDatabaseManagement)""")
+@cli_util.option('--external-db-system-id', required=True, help=u"""The [OCID] of the external DB system.""")
+@cli_util.option('--license-model', required=True, type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the external database.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def enable_external_db_system_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_id, license_model, if_match):
+
+    if isinstance(external_db_system_id, six.string_types) and len(external_db_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-db-system-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['licenseModel'] = license_model
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.enable_external_db_system_database_management(
+        external_db_system_id=external_db_system_id,
+        enable_external_db_system_database_management_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -1529,6 +2232,248 @@ def get_db_management_private_endpoint(ctx, from_json, db_management_private_end
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.get_db_management_private_endpoint(
         db_management_private_endpoint_id=db_management_private_endpoint_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@external_asm_group.command(name=cli_util.override('db_management.get_external_asm.command_name', 'get'), help=u"""Gets the details for the external ASM specified by `externalAsmId`. \n[Command Reference](getExternalAsm)""")
+@cli_util.option('--external-asm-id', required=True, help=u"""The [OCID] of the external ASM.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalAsm'})
+@cli_util.wrap_exceptions
+def get_external_asm(ctx, from_json, external_asm_id):
+
+    if isinstance(external_asm_id, six.string_types) and len(external_asm_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-asm-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_external_asm(
+        external_asm_id=external_asm_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@external_asm_group.command(name=cli_util.override('db_management.get_external_asm_configuration.command_name', 'get-external-asm-configuration'), help=u"""Gets configuration details including disk groups for the external ASM specified by `externalAsmId`. \n[Command Reference](getExternalAsmConfiguration)""")
+@cli_util.option('--external-asm-id', required=True, help=u"""The [OCID] of the external ASM.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalAsmConfiguration'})
+@cli_util.wrap_exceptions
+def get_external_asm_configuration(ctx, from_json, external_asm_id):
+
+    if isinstance(external_asm_id, six.string_types) and len(external_asm_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-asm-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_external_asm_configuration(
+        external_asm_id=external_asm_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@external_asm_instance_group.command(name=cli_util.override('db_management.get_external_asm_instance.command_name', 'get'), help=u"""Gets the details for the external ASM instance specified by `externalAsmInstanceId`. \n[Command Reference](getExternalAsmInstance)""")
+@cli_util.option('--external-asm-instance-id', required=True, help=u"""The [OCID] of the external ASM instance.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalAsmInstance'})
+@cli_util.wrap_exceptions
+def get_external_asm_instance(ctx, from_json, external_asm_instance_id):
+
+    if isinstance(external_asm_instance_id, six.string_types) and len(external_asm_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-asm-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_external_asm_instance(
+        external_asm_instance_id=external_asm_instance_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@external_cluster_group.command(name=cli_util.override('db_management.get_external_cluster.command_name', 'get'), help=u"""Gets the details for the external cluster specified by `externalClusterId`. \n[Command Reference](getExternalCluster)""")
+@cli_util.option('--external-cluster-id', required=True, help=u"""The [OCID] of the external cluster.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalCluster'})
+@cli_util.wrap_exceptions
+def get_external_cluster(ctx, from_json, external_cluster_id):
+
+    if isinstance(external_cluster_id, six.string_types) and len(external_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_external_cluster(
+        external_cluster_id=external_cluster_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@external_cluster_instance_group.command(name=cli_util.override('db_management.get_external_cluster_instance.command_name', 'get'), help=u"""Gets the details for the external cluster instance specified by `externalClusterInstanceId`. \n[Command Reference](getExternalClusterInstance)""")
+@cli_util.option('--external-cluster-instance-id', required=True, help=u"""The [OCID] of the external cluster instance.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalClusterInstance'})
+@cli_util.wrap_exceptions
+def get_external_cluster_instance(ctx, from_json, external_cluster_instance_id):
+
+    if isinstance(external_cluster_instance_id, six.string_types) and len(external_cluster_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-cluster-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_external_cluster_instance(
+        external_cluster_instance_id=external_cluster_instance_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@external_db_home_group.command(name=cli_util.override('db_management.get_external_db_home.command_name', 'get'), help=u"""Gets the details for the external DB home specified by `externalDbHomeId`. \n[Command Reference](getExternalDbHome)""")
+@cli_util.option('--external-db-home-id', required=True, help=u"""The [OCID] of the external database home.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalDbHome'})
+@cli_util.wrap_exceptions
+def get_external_db_home(ctx, from_json, external_db_home_id):
+
+    if isinstance(external_db_home_id, six.string_types) and len(external_db_home_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-db-home-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_external_db_home(
+        external_db_home_id=external_db_home_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@external_db_node_group.command(name=cli_util.override('db_management.get_external_db_node.command_name', 'get'), help=u"""Gets the details for the external DB node specified by `externalDbNodeId`. \n[Command Reference](getExternalDbNode)""")
+@cli_util.option('--external-db-node-id', required=True, help=u"""The [OCID] of the external database node.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalDbNode'})
+@cli_util.wrap_exceptions
+def get_external_db_node(ctx, from_json, external_db_node_id):
+
+    if isinstance(external_db_node_id, six.string_types) and len(external_db_node_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-db-node-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_external_db_node(
+        external_db_node_id=external_db_node_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@external_db_system_group.command(name=cli_util.override('db_management.get_external_db_system.command_name', 'get'), help=u"""Gets the details for the external DB system specified by `externalDbSystemId`. \n[Command Reference](getExternalDbSystem)""")
+@cli_util.option('--external-db-system-id', required=True, help=u"""The [OCID] of the external DB system.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalDbSystem'})
+@cli_util.wrap_exceptions
+def get_external_db_system(ctx, from_json, external_db_system_id):
+
+    if isinstance(external_db_system_id, six.string_types) and len(external_db_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-db-system-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_external_db_system(
+        external_db_system_id=external_db_system_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@external_db_system_connector_group.command(name=cli_util.override('db_management.get_external_db_system_connector.command_name', 'get'), help=u"""Gets the details for the external connector specified by `externalDbSystemConnectorId`. \n[Command Reference](getExternalDbSystemConnector)""")
+@cli_util.option('--external-db-system-connector-id', required=True, help=u"""The [OCID] of the external connector.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalDbSystemConnector'})
+@cli_util.wrap_exceptions
+def get_external_db_system_connector(ctx, from_json, external_db_system_connector_id):
+
+    if isinstance(external_db_system_connector_id, six.string_types) and len(external_db_system_connector_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-db-system-connector-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_external_db_system_connector(
+        external_db_system_connector_id=external_db_system_connector_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@external_db_system_discovery_group.command(name=cli_util.override('db_management.get_external_db_system_discovery.command_name', 'get'), help=u"""Gets the details for the external DB system discovery resource specified by `externalDbSystemDiscoveryId`. \n[Command Reference](getExternalDbSystemDiscovery)""")
+@cli_util.option('--external-db-system-discovery-id', required=True, help=u"""The [OCID] of the external DB system discovery.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalDbSystemDiscovery'})
+@cli_util.wrap_exceptions
+def get_external_db_system_discovery(ctx, from_json, external_db_system_discovery_id):
+
+    if isinstance(external_db_system_discovery_id, six.string_types) and len(external_db_system_discovery_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-db-system-discovery-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_external_db_system_discovery(
+        external_db_system_discovery_id=external_db_system_discovery_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@external_listener_group.command(name=cli_util.override('db_management.get_external_listener.command_name', 'get'), help=u"""Gets the details for the external listener specified by `externalListenerId`. \n[Command Reference](getExternalListener)""")
+@cli_util.option('--external-listener-id', required=True, help=u"""The [OCID] of the external listener.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalListener'})
+@cli_util.wrap_exceptions
+def get_external_listener(ctx, from_json, external_listener_id):
+
+    if isinstance(external_listener_id, six.string_types) and len(external_listener_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-listener-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_external_listener(
+        external_listener_id=external_listener_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2404,6 +3349,826 @@ def list_db_management_private_endpoints(ctx, from_json, all_pages, page_size, c
     else:
         result = client.list_db_management_private_endpoints(
             compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@external_asm_group.command(name=cli_util.override('db_management.list_external_asm_disk_groups.command_name', 'list-external-asm-disk-groups'), help=u"""Lists ASM disk groups for the external ASM specified by `externalAsmId`. \n[Command Reference](listExternalAsmDiskGroups)""")
+@cli_util.option('--external-asm-id', required=True, help=u"""The [OCID] of the external ASM.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `NAME` is ascending and it is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalAsmDiskGroupCollection'})
+@cli_util.wrap_exceptions
+def list_external_asm_disk_groups(ctx, from_json, all_pages, page_size, external_asm_id, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(external_asm_id, six.string_types) and len(external_asm_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-asm-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_external_asm_disk_groups,
+            external_asm_id=external_asm_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_external_asm_disk_groups,
+            limit,
+            page_size,
+            external_asm_id=external_asm_id,
+            **kwargs
+        )
+    else:
+        result = client.list_external_asm_disk_groups(
+            external_asm_id=external_asm_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@external_asm_instance_group.command(name=cli_util.override('db_management.list_external_asm_instances.command_name', 'list'), help=u"""Lists the ASM instances in the specified external ASM. \n[Command Reference](listExternalAsmInstances)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--external-asm-id', help=u"""The [OCID] of the external ASM.""")
+@cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `TIMECREATED` is descending and the default sort order for `DISPLAYNAME` is ascending. The `DISPLAYNAME` sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalAsmInstanceCollection'})
+@cli_util.wrap_exceptions
+def list_external_asm_instances(ctx, from_json, all_pages, page_size, compartment_id, external_asm_id, display_name, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if external_asm_id is not None:
+        kwargs['external_asm_id'] = external_asm_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_external_asm_instances,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_external_asm_instances,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_external_asm_instances(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@external_asm_group.command(name=cli_util.override('db_management.list_external_asm_users.command_name', 'list-external-asm-users'), help=u"""Lists ASM users for the external ASM specified by `externalAsmId`. \n[Command Reference](listExternalAsmUsers)""")
+@cli_util.option('--external-asm-id', required=True, help=u"""The [OCID] of the external ASM.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `NAME` is ascending and it is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalAsmUserCollection'})
+@cli_util.wrap_exceptions
+def list_external_asm_users(ctx, from_json, all_pages, page_size, external_asm_id, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(external_asm_id, six.string_types) and len(external_asm_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-asm-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_external_asm_users,
+            external_asm_id=external_asm_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_external_asm_users,
+            limit,
+            page_size,
+            external_asm_id=external_asm_id,
+            **kwargs
+        )
+    else:
+        result = client.list_external_asm_users(
+            external_asm_id=external_asm_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@external_asm_group.command(name=cli_util.override('db_management.list_external_asms.command_name', 'list'), help=u"""Lists the ASMs in the specified external DB system. \n[Command Reference](listExternalAsms)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--external-db-system-id', help=u"""The [OCID] of the external DB system.""")
+@cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `TIMECREATED` is descending and the default sort order for `DISPLAYNAME` is ascending. The `DISPLAYNAME` sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalAsmCollection'})
+@cli_util.wrap_exceptions
+def list_external_asms(ctx, from_json, all_pages, page_size, compartment_id, external_db_system_id, display_name, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if external_db_system_id is not None:
+        kwargs['external_db_system_id'] = external_db_system_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_external_asms,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_external_asms,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_external_asms(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@external_cluster_instance_group.command(name=cli_util.override('db_management.list_external_cluster_instances.command_name', 'list'), help=u"""Lists the cluster instances in the specified external cluster. \n[Command Reference](listExternalClusterInstances)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--external-cluster-id', help=u"""The [OCID] of the external cluster.""")
+@cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `TIMECREATED` is descending and the default sort order for `DISPLAYNAME` is ascending. The `DISPLAYNAME` sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalClusterInstanceCollection'})
+@cli_util.wrap_exceptions
+def list_external_cluster_instances(ctx, from_json, all_pages, page_size, compartment_id, external_cluster_id, display_name, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if external_cluster_id is not None:
+        kwargs['external_cluster_id'] = external_cluster_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_external_cluster_instances,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_external_cluster_instances,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_external_cluster_instances(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@external_cluster_group.command(name=cli_util.override('db_management.list_external_clusters.command_name', 'list'), help=u"""Lists the clusters in the specified external DB system. \n[Command Reference](listExternalClusters)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--external-db-system-id', help=u"""The [OCID] of the external DB system.""")
+@cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `TIMECREATED` is descending and the default sort order for `DISPLAYNAME` is ascending. The `DISPLAYNAME` sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalClusterCollection'})
+@cli_util.wrap_exceptions
+def list_external_clusters(ctx, from_json, all_pages, page_size, compartment_id, external_db_system_id, display_name, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if external_db_system_id is not None:
+        kwargs['external_db_system_id'] = external_db_system_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_external_clusters,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_external_clusters,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_external_clusters(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@external_database_collection_group.command(name=cli_util.override('db_management.list_external_databases.command_name', 'list-external-databases'), help=u"""Lists the external databases in the specified compartment or in the specified DB system. \n[Command Reference](listExternalDatabases)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--external-db-system-id', help=u"""The [OCID] of the external DB system.""")
+@cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `TIMECREATED` is descending and the default sort order for `DISPLAYNAME` is ascending. The `DISPLAYNAME` sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalDatabaseCollection'})
+@cli_util.wrap_exceptions
+def list_external_databases(ctx, from_json, all_pages, page_size, compartment_id, external_db_system_id, display_name, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if external_db_system_id is not None:
+        kwargs['external_db_system_id'] = external_db_system_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_external_databases,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_external_databases,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_external_databases(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@external_db_home_group.command(name=cli_util.override('db_management.list_external_db_homes.command_name', 'list'), help=u"""Lists the DB homes in the specified external DB system. \n[Command Reference](listExternalDbHomes)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--external-db-system-id', help=u"""The [OCID] of the external DB system.""")
+@cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `TIMECREATED` is descending and the default sort order for `DISPLAYNAME` is ascending. The `DISPLAYNAME` sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalDbHomeCollection'})
+@cli_util.wrap_exceptions
+def list_external_db_homes(ctx, from_json, all_pages, page_size, compartment_id, external_db_system_id, display_name, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if external_db_system_id is not None:
+        kwargs['external_db_system_id'] = external_db_system_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_external_db_homes,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_external_db_homes,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_external_db_homes(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@external_db_node_group.command(name=cli_util.override('db_management.list_external_db_nodes.command_name', 'list'), help=u"""Lists the external DB nodes in the specified external DB system. \n[Command Reference](listExternalDbNodes)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--external-db-system-id', help=u"""The [OCID] of the external DB system.""")
+@cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `TIMECREATED` is descending and the default sort order for `DISPLAYNAME` is ascending. The `DISPLAYNAME` sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalDbNodeCollection'})
+@cli_util.wrap_exceptions
+def list_external_db_nodes(ctx, from_json, all_pages, page_size, compartment_id, external_db_system_id, display_name, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if external_db_system_id is not None:
+        kwargs['external_db_system_id'] = external_db_system_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_external_db_nodes,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_external_db_nodes,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_external_db_nodes(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@external_db_system_connector_group.command(name=cli_util.override('db_management.list_external_db_system_connectors.command_name', 'list'), help=u"""Lists the external connectors in the specified external DB system. \n[Command Reference](listExternalDbSystemConnectors)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--external-db-system-id', help=u"""The [OCID] of the external DB system.""")
+@cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `TIMECREATED` is descending and the default sort order for `DISPLAYNAME` is ascending. The `DISPLAYNAME` sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalDbSystemConnectorCollection'})
+@cli_util.wrap_exceptions
+def list_external_db_system_connectors(ctx, from_json, all_pages, page_size, compartment_id, external_db_system_id, display_name, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if external_db_system_id is not None:
+        kwargs['external_db_system_id'] = external_db_system_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_external_db_system_connectors,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_external_db_system_connectors,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_external_db_system_connectors(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@external_db_system_discovery_group.command(name=cli_util.override('db_management.list_external_db_system_discoveries.command_name', 'list'), help=u"""Lists the external DB system discovery resources in the specified compartment. \n[Command Reference](listExternalDbSystemDiscoveries)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `TIMECREATED` is descending and the default sort order for `DISPLAYNAME` is ascending. The `DISPLAYNAME` sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalDbSystemDiscoveryCollection'})
+@cli_util.wrap_exceptions
+def list_external_db_system_discoveries(ctx, from_json, all_pages, page_size, compartment_id, display_name, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_external_db_system_discoveries,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_external_db_system_discoveries,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_external_db_system_discoveries(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@external_db_system_group.command(name=cli_util.override('db_management.list_external_db_systems.command_name', 'list'), help=u"""Lists the external DB systems in the specified compartment. \n[Command Reference](listExternalDbSystems)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `TIMECREATED` is descending and the default sort order for `DISPLAYNAME` is ascending. The `DISPLAYNAME` sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalDbSystemCollection'})
+@cli_util.wrap_exceptions
+def list_external_db_systems(ctx, from_json, all_pages, page_size, compartment_id, display_name, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_external_db_systems,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_external_db_systems,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_external_db_systems(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@external_listener_group.command(name=cli_util.override('db_management.list_external_listener_services.command_name', 'list-external-listener-services'), help=u"""Lists the database services registered with the specified external listener for the specified Managed Database. \n[Command Reference](listExternalListenerServices)""")
+@cli_util.option('--external-listener-id', required=True, help=u"""The [OCID] of the external listener.""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `NAME` is ascending and it is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalListenerServiceCollection'})
+@cli_util.wrap_exceptions
+def list_external_listener_services(ctx, from_json, all_pages, page_size, external_listener_id, managed_database_id, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(external_listener_id, six.string_types) and len(external_listener_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-listener-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_external_listener_services,
+            external_listener_id=external_listener_id,
+            managed_database_id=managed_database_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_external_listener_services,
+            limit,
+            page_size,
+            external_listener_id=external_listener_id,
+            managed_database_id=managed_database_id,
+            **kwargs
+        )
+    else:
+        result = client.list_external_listener_services(
+            external_listener_id=external_listener_id,
+            managed_database_id=managed_database_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@external_listener_group.command(name=cli_util.override('db_management.list_external_listeners.command_name', 'list'), help=u"""Lists the listeners in the specified external DB system. \n[Command Reference](listExternalListeners)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--external-db-system-id', help=u"""The [OCID] of the external DB system.""")
+@cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `TIMECREATED` is descending and the default sort order for `DISPLAYNAME` is ascending. The `DISPLAYNAME` sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalListenerCollection'})
+@cli_util.wrap_exceptions
+def list_external_listeners(ctx, from_json, all_pages, page_size, compartment_id, external_db_system_id, display_name, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if external_db_system_id is not None:
+        kwargs['external_db_system_id'] = external_db_system_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_external_listeners,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_external_listeners,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_external_listeners(
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -3594,6 +5359,41 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
     cli_util.render_response(result, ctx)
 
 
+@external_db_system_discovery_group.command(name=cli_util.override('db_management.patch_external_db_system_discovery.command_name', 'patch'), help=u"""Patches the external DB system discovery specified by `externalDbSystemDiscoveryId`. \n[Command Reference](patchExternalDbSystemDiscovery)""")
+@cli_util.option('--external-db-system-discovery-id', required=True, help=u"""The [OCID] of the external DB system discovery.""")
+@cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A sequence of instructions to apply to the resource.
+
+This option is a JSON list with items of type PatchInstruction.  For documentation on PatchInstruction please see our API reference: https://docs.cloud.oracle.com/api/#/en/dbmanagement/20201101/datatypes/PatchInstruction.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'database_management', 'class': 'list[PatchInstruction]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'database_management', 'class': 'list[PatchInstruction]'}}, output_type={'module': 'database_management', 'class': 'ExternalDbSystemDiscovery'})
+@cli_util.wrap_exceptions
+def patch_external_db_system_discovery(ctx, from_json, external_db_system_discovery_id, items, if_match):
+
+    if isinstance(external_db_system_discovery_id, six.string_types) and len(external_db_system_discovery_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-db-system-discovery-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if items is not None:
+        _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.patch_external_db_system_discovery(
+        external_db_system_discovery_id=external_db_system_discovery_id,
+        patch_external_db_system_discovery_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @tablespace_group.command(name=cli_util.override('db_management.remove_data_file.command_name', 'remove'), help=u"""Removes a data file or temp file from the tablespace. \n[Command Reference](removeDataFile)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--tablespace-name', required=True, help=u"""The name of the tablespace.""")
@@ -4412,6 +6212,181 @@ def summarize_awr_db_wait_events(ctx, from_json, managed_database_id, awr_db_id,
     cli_util.render_response(result, ctx)
 
 
+@external_asm_group.command(name=cli_util.override('db_management.summarize_external_asm_metrics.command_name', 'summarize-external-asm-metrics'), help=u"""Gets metrics for the external ASM specified by `externalAsmId`. \n[Command Reference](summarizeExternalAsmMetrics)""")
+@cli_util.option('--external-asm-id', required=True, help=u"""The [OCID] of the external ASM.""")
+@cli_util.option('--start-time', required=True, help=u"""The beginning of the time range set to retrieve metric data for the DB system and its members. Expressed in UTC in ISO-8601 format, which is `yyyy-MM-dd'T'hh:mm:ss.sss'Z'`.""")
+@cli_util.option('--end-time', required=True, help=u"""The end of the time range set to retrieve metric data for the DB system and its members. Expressed in UTC in ISO-8601 format, which is `yyyy-MM-dd'T'hh:mm:ss.sss'Z'`.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--filter-by-metric-names', help=u"""The filter used to retrieve a specific set of metrics by passing the desired metric names with a comma separator. Note that, by default, the service returns all supported metrics.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'MetricsAggregationRangeCollection'})
+@cli_util.wrap_exceptions
+def summarize_external_asm_metrics(ctx, from_json, external_asm_id, start_time, end_time, page, limit, filter_by_metric_names):
+
+    if isinstance(external_asm_id, six.string_types) and len(external_asm_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-asm-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if filter_by_metric_names is not None:
+        kwargs['filter_by_metric_names'] = filter_by_metric_names
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.summarize_external_asm_metrics(
+        external_asm_id=external_asm_id,
+        start_time=start_time,
+        end_time=end_time,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@external_cluster_group.command(name=cli_util.override('db_management.summarize_external_cluster_metrics.command_name', 'summarize-external-cluster-metrics'), help=u"""Gets metrics for the external cluster specified by `externalClusterId`. \n[Command Reference](summarizeExternalClusterMetrics)""")
+@cli_util.option('--external-cluster-id', required=True, help=u"""The [OCID] of the external cluster.""")
+@cli_util.option('--start-time', required=True, help=u"""The beginning of the time range set to retrieve metric data for the DB system and its members. Expressed in UTC in ISO-8601 format, which is `yyyy-MM-dd'T'hh:mm:ss.sss'Z'`.""")
+@cli_util.option('--end-time', required=True, help=u"""The end of the time range set to retrieve metric data for the DB system and its members. Expressed in UTC in ISO-8601 format, which is `yyyy-MM-dd'T'hh:mm:ss.sss'Z'`.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--filter-by-metric-names', help=u"""The filter used to retrieve a specific set of metrics by passing the desired metric names with a comma separator. Note that, by default, the service returns all supported metrics.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'MetricsAggregationRangeCollection'})
+@cli_util.wrap_exceptions
+def summarize_external_cluster_metrics(ctx, from_json, external_cluster_id, start_time, end_time, page, limit, filter_by_metric_names):
+
+    if isinstance(external_cluster_id, six.string_types) and len(external_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if filter_by_metric_names is not None:
+        kwargs['filter_by_metric_names'] = filter_by_metric_names
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.summarize_external_cluster_metrics(
+        external_cluster_id=external_cluster_id,
+        start_time=start_time,
+        end_time=end_time,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@external_db_node_group.command(name=cli_util.override('db_management.summarize_external_db_node_metrics.command_name', 'summarize-external-db-node-metrics'), help=u"""Gets metrics for the external DB node specified by `externalDbNodeId`. \n[Command Reference](summarizeExternalDbNodeMetrics)""")
+@cli_util.option('--external-db-node-id', required=True, help=u"""The [OCID] of the external database node.""")
+@cli_util.option('--start-time', required=True, help=u"""The beginning of the time range set to retrieve metric data for the DB system and its members. Expressed in UTC in ISO-8601 format, which is `yyyy-MM-dd'T'hh:mm:ss.sss'Z'`.""")
+@cli_util.option('--end-time', required=True, help=u"""The end of the time range set to retrieve metric data for the DB system and its members. Expressed in UTC in ISO-8601 format, which is `yyyy-MM-dd'T'hh:mm:ss.sss'Z'`.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--filter-by-metric-names', help=u"""The filter used to retrieve a specific set of metrics by passing the desired metric names with a comma separator. Note that, by default, the service returns all supported metrics.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'MetricsAggregationRangeCollection'})
+@cli_util.wrap_exceptions
+def summarize_external_db_node_metrics(ctx, from_json, external_db_node_id, start_time, end_time, page, limit, filter_by_metric_names):
+
+    if isinstance(external_db_node_id, six.string_types) and len(external_db_node_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-db-node-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if filter_by_metric_names is not None:
+        kwargs['filter_by_metric_names'] = filter_by_metric_names
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.summarize_external_db_node_metrics(
+        external_db_node_id=external_db_node_id,
+        start_time=start_time,
+        end_time=end_time,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@external_db_system_group.command(name=cli_util.override('db_management.summarize_external_db_system_availability_metrics.command_name', 'summarize-external-db-system-availability-metrics'), help=u"""Gets availability metrics for the components present in the external DB system specified by `externalDbSystemId`. \n[Command Reference](summarizeExternalDbSystemAvailabilityMetrics)""")
+@cli_util.option('--external-db-system-id', required=True, help=u"""The [OCID] of the external DB system.""")
+@cli_util.option('--start-time', required=True, help=u"""The beginning of the time range set to retrieve metric data for the DB system and its members. Expressed in UTC in ISO-8601 format, which is `yyyy-MM-dd'T'hh:mm:ss.sss'Z'`.""")
+@cli_util.option('--end-time', required=True, help=u"""The end of the time range set to retrieve metric data for the DB system and its members. Expressed in UTC in ISO-8601 format, which is `yyyy-MM-dd'T'hh:mm:ss.sss'Z'`.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--filter-by-component-types', help=u"""The filter used to retrieve metrics for a specific set of component types by passing the desired component types separated by a comma. Note that, by default, the service returns metrics for all DB system component types.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'MetricsAggregationRangeCollection'})
+@cli_util.wrap_exceptions
+def summarize_external_db_system_availability_metrics(ctx, from_json, external_db_system_id, start_time, end_time, page, limit, filter_by_component_types):
+
+    if isinstance(external_db_system_id, six.string_types) and len(external_db_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-db-system-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if filter_by_component_types is not None:
+        kwargs['filter_by_component_types'] = filter_by_component_types
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.summarize_external_db_system_availability_metrics(
+        external_db_system_id=external_db_system_id,
+        start_time=start_time,
+        end_time=end_time,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@external_listener_group.command(name=cli_util.override('db_management.summarize_external_listener_metrics.command_name', 'summarize-external-listener-metrics'), help=u"""Gets metrics for the external listener specified by `externalListenerId`. \n[Command Reference](summarizeExternalListenerMetrics)""")
+@cli_util.option('--external-listener-id', required=True, help=u"""The [OCID] of the external listener.""")
+@cli_util.option('--start-time', required=True, help=u"""The beginning of the time range set to retrieve metric data for the DB system and its members. Expressed in UTC in ISO-8601 format, which is `yyyy-MM-dd'T'hh:mm:ss.sss'Z'`.""")
+@cli_util.option('--end-time', required=True, help=u"""The end of the time range set to retrieve metric data for the DB system and its members. Expressed in UTC in ISO-8601 format, which is `yyyy-MM-dd'T'hh:mm:ss.sss'Z'`.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--filter-by-metric-names', help=u"""The filter used to retrieve a specific set of metrics by passing the desired metric names with a comma separator. Note that, by default, the service returns all supported metrics.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'MetricsAggregationRangeCollection'})
+@cli_util.wrap_exceptions
+def summarize_external_listener_metrics(ctx, from_json, external_listener_id, start_time, end_time, page, limit, filter_by_metric_names):
+
+    if isinstance(external_listener_id, six.string_types) and len(external_listener_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-listener-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if filter_by_metric_names is not None:
+        kwargs['filter_by_metric_names'] = filter_by_metric_names
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.summarize_external_listener_metrics(
+        external_listener_id=external_listener_id,
+        start_time=start_time,
+        end_time=end_time,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @job_executions_status_summary_collection_group.command(name=cli_util.override('db_management.summarize_job_executions_statuses.command_name', 'summarize-job-executions-statuses'), help=u"""Gets the number of job executions grouped by status for a job, Managed Database, or Database Group in a specific compartment. Only one of the parameters, jobId, managedDatabaseId, or managedDatabaseGroupId should be provided. \n[Command Reference](summarizeJobExecutionsStatuses)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--start-time', required=True, help=u"""The start time of the time range to retrieve the status summary of job executions in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
@@ -4446,6 +6421,38 @@ def summarize_job_executions_statuses(ctx, from_json, compartment_id, start_time
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.summarize_job_executions_statuses(
         compartment_id=compartment_id,
+        start_time=start_time,
+        end_time=end_time,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.summarize_managed_database_availability_metrics.command_name', 'summarize-managed-database-availability-metrics'), help=u"""Gets the availability metrics related to managed database for the Oracle database specified by managedDatabaseId. \n[Command Reference](summarizeManagedDatabaseAvailabilityMetrics)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--start-time', required=True, help=u"""The start time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
+@cli_util.option('--end-time', required=True, help=u"""The end time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'MetricsAggregationRangeCollection'})
+@cli_util.wrap_exceptions
+def summarize_managed_database_availability_metrics(ctx, from_json, managed_database_id, start_time, end_time, page, limit):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.summarize_managed_database_availability_metrics(
+        managed_database_id=managed_database_id,
         start_time=start_time,
         end_time=end_time,
         **kwargs
@@ -4600,6 +6607,540 @@ def update_db_management_private_endpoint(ctx, from_json, force, wait_for_state,
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@external_asm_group.command(name=cli_util.override('db_management.update_external_asm.command_name', 'update'), help=u"""Updates the external ASM specified by `externalAsmId`. \n[Command Reference](updateExternalAsm)""")
+@cli_util.option('--external-asm-id', required=True, help=u"""The [OCID] of the external ASM.""")
+@cli_util.option('--external-connector-id', help=u"""The [OCID] of the external connector.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_external_asm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_asm_id, external_connector_id, if_match):
+
+    if isinstance(external_asm_id, six.string_types) and len(external_asm_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-asm-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if external_connector_id is not None:
+        _details['externalConnectorId'] = external_connector_id
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_external_asm(
+        external_asm_id=external_asm_id,
+        update_external_asm_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@external_cluster_group.command(name=cli_util.override('db_management.update_external_cluster.command_name', 'update'), help=u"""Updates the external cluster specified by `externalClusterId`. \n[Command Reference](updateExternalCluster)""")
+@cli_util.option('--external-cluster-id', required=True, help=u"""The [OCID] of the external cluster.""")
+@cli_util.option('--external-connector-id', help=u"""The [OCID] of the external connector.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_external_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_cluster_id, external_connector_id, if_match):
+
+    if isinstance(external_cluster_id, six.string_types) and len(external_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if external_connector_id is not None:
+        _details['externalConnectorId'] = external_connector_id
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_external_cluster(
+        external_cluster_id=external_cluster_id,
+        update_external_cluster_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@external_cluster_instance_group.command(name=cli_util.override('db_management.update_external_cluster_instance.command_name', 'update'), help=u"""Updates the external cluster instance specified by `externalClusterInstanceId`. \n[Command Reference](updateExternalClusterInstance)""")
+@cli_util.option('--external-cluster-instance-id', required=True, help=u"""The [OCID] of the external cluster instance.""")
+@cli_util.option('--external-connector-id', help=u"""The [OCID] of the external connector.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_external_cluster_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_cluster_instance_id, external_connector_id, if_match):
+
+    if isinstance(external_cluster_instance_id, six.string_types) and len(external_cluster_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-cluster-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if external_connector_id is not None:
+        _details['externalConnectorId'] = external_connector_id
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_external_cluster_instance(
+        external_cluster_instance_id=external_cluster_instance_id,
+        update_external_cluster_instance_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@external_db_node_group.command(name=cli_util.override('db_management.update_external_db_node.command_name', 'update'), help=u"""Updates the external DB node specified by `externalDbNodeId`. \n[Command Reference](updateExternalDbNode)""")
+@cli_util.option('--external-db-node-id', required=True, help=u"""The [OCID] of the external database node.""")
+@cli_util.option('--external-connector-id', help=u"""The [OCID] of the external connector.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_external_db_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_node_id, external_connector_id, if_match):
+
+    if isinstance(external_db_node_id, six.string_types) and len(external_db_node_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-db-node-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if external_connector_id is not None:
+        _details['externalConnectorId'] = external_connector_id
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_external_db_node(
+        external_db_node_id=external_db_node_id,
+        update_external_db_node_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@external_db_system_group.command(name=cli_util.override('db_management.update_external_db_system.command_name', 'update'), help=u"""Updates the external DB system specified by `externalDbSystemId`. \n[Command Reference](updateExternalDbSystem)""")
+@cli_util.option('--external-db-system-id', required=True, help=u"""The [OCID] of the external DB system.""")
+@cli_util.option('--display-name', help=u"""The user-friendly name for the DB system. The name does not have to be unique.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalDbSystem'})
+@cli_util.wrap_exceptions
+def update_external_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_id, display_name, if_match):
+
+    if isinstance(external_db_system_id, six.string_types) and len(external_db_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-db-system-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_external_db_system(
+        external_db_system_id=external_db_system_id,
+        update_external_db_system_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_external_db_system') and callable(getattr(client, 'get_external_db_system')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_external_db_system(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@external_db_system_connector_group.command(name=cli_util.override('db_management.update_external_db_system_connector.command_name', 'update'), help=u"""Updates the external connector specified by `externalDbSystemConnectorId`. \n[Command Reference](updateExternalDbSystemConnector)""")
+@cli_util.option('--external-db-system-connector-id', required=True, help=u"""The [OCID] of the external connector.""")
+@cli_util.option('--connector-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["MACS"]), help=u"""The type of connector.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_external_db_system_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_connector_id, connector_type, if_match):
+
+    if isinstance(external_db_system_connector_id, six.string_types) and len(external_db_system_connector_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-db-system-connector-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['connectorType'] = connector_type
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_external_db_system_connector(
+        external_db_system_connector_id=external_db_system_connector_id,
+        update_external_db_system_connector_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@external_db_system_connector_group.command(name=cli_util.override('db_management.update_external_db_system_connector_update_external_db_system_macs_connector_details.command_name', 'update-external-db-system-connector-update-external-db-system-macs-connector-details'), help=u"""Updates the external connector specified by `externalDbSystemConnectorId`. \n[Command Reference](updateExternalDbSystemConnector)""")
+@cli_util.option('--external-db-system-connector-id', required=True, help=u"""The [OCID] of the external connector.""")
+@cli_util.option('--connection-info', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'connection-info': {'module': 'database_management', 'class': 'ExternalDbSystemConnectionInfo'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-info': {'module': 'database_management', 'class': 'ExternalDbSystemConnectionInfo'}})
+@cli_util.wrap_exceptions
+def update_external_db_system_connector_update_external_db_system_macs_connector_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_connector_id, connection_info, if_match):
+
+    if isinstance(external_db_system_connector_id, six.string_types) and len(external_db_system_connector_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-db-system-connector-id cannot be whitespace or empty string')
+    if not force:
+        if connection_info:
+            if not click.confirm("WARNING: Updates to connection-info will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['connectionInfo'] = cli_util.parse_json_parameter("connection_info", connection_info)
+
+    _details['connectorType'] = 'MACS'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_external_db_system_connector(
+        external_db_system_connector_id=external_db_system_connector_id,
+        update_external_db_system_connector_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@external_db_system_discovery_group.command(name=cli_util.override('db_management.update_external_db_system_discovery.command_name', 'update'), help=u"""Updates the external DB system discovery specified by `externalDbSystemDiscoveryId`. \n[Command Reference](updateExternalDbSystemDiscovery)""")
+@cli_util.option('--external-db-system-discovery-id', required=True, help=u"""The [OCID] of the external DB system discovery.""")
+@cli_util.option('--display-name', help=u"""The user-friendly name for the DB system. The name does not have to be unique.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalDbSystemDiscovery'})
+@cli_util.wrap_exceptions
+def update_external_db_system_discovery(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_discovery_id, display_name, if_match):
+
+    if isinstance(external_db_system_discovery_id, six.string_types) and len(external_db_system_discovery_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-db-system-discovery-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_external_db_system_discovery(
+        external_db_system_discovery_id=external_db_system_discovery_id,
+        update_external_db_system_discovery_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_external_db_system_discovery') and callable(getattr(client, 'get_external_db_system_discovery')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_external_db_system_discovery(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@external_listener_group.command(name=cli_util.override('db_management.update_external_listener.command_name', 'update'), help=u"""Updates the external listener specified by `externalListenerId`. \n[Command Reference](updateExternalListener)""")
+@cli_util.option('--external-listener-id', required=True, help=u"""The [OCID] of the external listener.""")
+@cli_util.option('--external-connector-id', help=u"""The [OCID] of the external connector.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_external_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_listener_id, external_connector_id, if_match):
+
+    if isinstance(external_listener_id, six.string_types) and len(external_listener_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-listener-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if external_connector_id is not None:
+        _details['externalConnectorId'] = external_connector_id
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_external_listener(
+        external_listener_id=external_listener_id,
+        update_external_listener_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

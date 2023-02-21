@@ -29,7 +29,7 @@ service_mapping = {
     ],
     "anomaly-detection": [
         "ai_anomaly_detection",
-        "Oracle Cloud AI Services"
+        "Anomaly Detection"
     ],
     "api-gateway": [
         "apigateway",
