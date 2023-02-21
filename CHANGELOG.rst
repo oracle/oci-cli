@@ -6,6 +6,50 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.23.1 - 2023-02-21
+--------------------
+Added
+~~~~~
+* Database Management service
+
+  * Support for external Oracle database systems
+
+    * ``oci database-management external-db-system-discovery``
+    * ``oci database-management external-db-system``
+    * ``oci database-management external-cluster``
+    * ``oci database-management external-cluster-instance``
+    * ``oci database-management external-asm``
+    * ``oci database-management external-asm-instance``
+    * ``oci database-management external-listener``
+    * ``oci database-management external-db-node``
+    * ``oci database-management external-db-home``
+    * ``oci database-management external-db-system-connector``
+    * ``oci database-management external-database-collection``
+
+  * Support for summarize managed database availability metrics
+
+    * ``oci database-management managed-database summarize-managed-database-availability-metrics``
+
+* Anomaly Detection service
+
+  * Support for detect-anomaly-job and detect-anomaly-job-collection
+
+    * ``oci ai-anomaly-detection detect-anomaly-job create``
+    * ``oci ai-anomaly-detection detect-anomaly-job delete``
+    * ``oci ai-anomaly-detection detect-anomaly-job get``
+    * ``oci ai-anomaly-detection detect-anomaly-job update``
+    * ``oci ai-anomaly-detection detect-anomaly-job change-compartment``
+    * ``oci ai-anomaly-detection detect-anomaly-job create-detect-anomaly-job-embedded-input-details``
+    * ``oci ai-anomaly-detection detect-anomaly-job create-detect-anomaly-job-inline-input-details``
+    * ``oci ai-anomaly-detection detect-anomaly-job create-detect-anomaly-job-object-list-input-details``
+    * ``oci ai-anomaly-detection detect-anomaly-job-collection list-detect-anomaly-jobs``
+
+  * Supprt for the new optional parameter --sensitivity in the below commands
+
+    * ``oci anomaly-detection model detect-anomalies``
+    * ``oci anomaly-detection model detect-anomalies-embedded``
+    * ``oci anomaly-detection model detect-anomalies-inline``
+
 3.23.0 - 2023-02-14
 --------------------
 Added

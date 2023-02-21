@@ -17,7 +17,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 
 @cli.command(cli_util.override('anomaly_detection.anomaly_detection_root_group.command_name', 'anomaly-detection'), cls=CommandGroupWithAlias, help=cli_util.override('anomaly_detection.anomaly_detection_root_group.help', """OCI AI Service solutions can help Enterprise customers integrate AI into their products immediately by using our proven,
 pre-trained/custom models or containers, and without a need to set up in house team of AI and ML experts.
-This allows enterprises to focus on business drivers and development work rather than AI/ML operations, shortening the time to market."""), short_help=cli_util.override('anomaly_detection.anomaly_detection_root_group.short_help', """Oracle Cloud AI Services API"""))
+This allows enterprises to focus on business drivers and development work rather than AI/ML operations, shortening the time to market."""), short_help=cli_util.override('anomaly_detection.anomaly_detection_root_group.short_help', """Anomaly Detection API"""))
 @cli_util.help_option_group
 def anomaly_detection_root_group():
     pass
@@ -71,9 +71,21 @@ def work_request_group():
     pass
 
 
+@click.command(cli_util.override('anomaly_detection.detect_anomaly_job_collection_group.command_name', 'detect-anomaly-job-collection'), cls=CommandGroupWithAlias, help="""A collection of anomaly jobs. Each item is a DetectAnomalyJob summary object.""")
+@cli_util.help_option_group
+def detect_anomaly_job_collection_group():
+    pass
+
+
 @click.command(cli_util.override('anomaly_detection.ai_private_endpoint_group.command_name', 'ai-private-endpoint'), cls=CommandGroupWithAlias, help="""A private network reverse connection creates a connection from service to customer subnet over a private network.""")
 @cli_util.help_option_group
 def ai_private_endpoint_group():
+    pass
+
+
+@click.command(cli_util.override('anomaly_detection.detect_anomaly_job_group.command_name', 'detect-anomaly-job'), cls=CommandGroupWithAlias, help="""Anomaly Job contains information for asynchronous detection of anomalies.""")
+@cli_util.help_option_group
+def detect_anomaly_job_group():
     pass
 
 
@@ -85,7 +97,9 @@ anomaly_detection_root_group.add_command(project_group)
 anomaly_detection_root_group.add_command(model_group)
 anomaly_detection_root_group.add_command(work_request_log_entry_group)
 anomaly_detection_root_group.add_command(work_request_group)
+anomaly_detection_root_group.add_command(detect_anomaly_job_collection_group)
 anomaly_detection_root_group.add_command(ai_private_endpoint_group)
+anomaly_detection_root_group.add_command(detect_anomaly_job_group)
 
 
 @work_request_group.command(name=cli_util.override('anomaly_detection.cancel_work_request.command_name', 'cancel'), help=u"""Cancel work request with the given ID. \n[Command Reference](cancelWorkRequest)""")
@@ -225,6 +239,37 @@ def change_data_asset_compartment(ctx, from_json, wait_for_state, max_wait_secon
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@detect_anomaly_job_group.command(name=cli_util.override('anomaly_detection.change_detect_anomaly_job_compartment.command_name', 'change-compartment'), help=u"""Moves a asynchronous anomaly detect job resource from one compartment to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeDetectAnomalyJobCompartment)""")
+@cli_util.option('--detect-anomaly-job-id', required=True, help=u"""Unique asynchronous job identifier.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment the resource should be moved to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_detect_anomaly_job_compartment(ctx, from_json, detect_anomaly_job_id, compartment_id, if_match):
+
+    if isinstance(detect_anomaly_job_id, six.string_types) and len(detect_anomaly_job_id.strip()) == 0:
+        raise click.UsageError('Parameter --detect-anomaly-job-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('ai_anomaly_detection', 'anomaly_detection', ctx)
+    result = client.change_detect_anomaly_job_compartment(
+        detect_anomaly_job_id=detect_anomaly_job_id,
+        change_detect_anomaly_job_compartment_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -716,6 +761,383 @@ def create_data_asset_data_source_details_atp(ctx, from_json, wait_for_state, ma
     cli_util.render_response(result, ctx)
 
 
+@detect_anomaly_job_group.command(name=cli_util.override('anomaly_detection.create_detect_anomaly_job.command_name', 'create'), help=u"""Creates a job to perform anomaly detection. \n[Command Reference](createDetectAnomalyJob)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that starts the job.""")
+@cli_util.option('--model-id', required=True, help=u"""The OCID of the trained model.""")
+@cli_util.option('--input-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--output-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""A short description of the detect anomaly job.""")
+@cli_util.option('--display-name', help=u"""Detect anomaly job display name.""")
+@cli_util.option('--sensitivity', type=click.FLOAT, help=u"""The value that customer can adjust to control the sensitivity of anomaly detection""")
+@cli_util.option('--are-all-estimates-required', type=click.BOOL, help=u"""Flag to enable the service to return estimates for all data points rather than just the anomalous data points.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["SUCCEEDED", "PARTIALLY_SUCCEEDED", "FAILED", "ACCEPTED", "CANCELED", "IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'input-details': {'module': 'ai_anomaly_detection', 'class': 'InputDetails'}, 'output-details': {'module': 'ai_anomaly_detection', 'class': 'OutputDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'input-details': {'module': 'ai_anomaly_detection', 'class': 'InputDetails'}, 'output-details': {'module': 'ai_anomaly_detection', 'class': 'OutputDetails'}}, output_type={'module': 'ai_anomaly_detection', 'class': 'DetectAnomalyJob'})
+@cli_util.wrap_exceptions
+def create_detect_anomaly_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, model_id, input_details, output_details, description, display_name, sensitivity, are_all_estimates_required):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['modelId'] = model_id
+    _details['inputDetails'] = cli_util.parse_json_parameter("input_details", input_details)
+    _details['outputDetails'] = cli_util.parse_json_parameter("output_details", output_details)
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if sensitivity is not None:
+        _details['sensitivity'] = sensitivity
+
+    if are_all_estimates_required is not None:
+        _details['areAllEstimatesRequired'] = are_all_estimates_required
+
+    client = cli_util.build_client('ai_anomaly_detection', 'anomaly_detection', ctx)
+    result = client.create_detect_anomaly_job(
+        create_detect_anomaly_job_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_detect_anomaly_job') and callable(getattr(client, 'get_detect_anomaly_job')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_detect_anomaly_job(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@detect_anomaly_job_group.command(name=cli_util.override('anomaly_detection.create_detect_anomaly_job_embedded_input_details.command_name', 'create-detect-anomaly-job-embedded-input-details'), help=u"""Creates a job to perform anomaly detection. \n[Command Reference](createDetectAnomalyJob)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that starts the job.""")
+@cli_util.option('--model-id', required=True, help=u"""The OCID of the trained model.""")
+@cli_util.option('--output-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--input-details-content-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["CSV", "JSON"]), help=u"""""")
+@cli_util.option('--input-details-content', required=True, help=u"""""")
+@cli_util.option('--description', help=u"""A short description of the detect anomaly job.""")
+@cli_util.option('--display-name', help=u"""Detect anomaly job display name.""")
+@cli_util.option('--sensitivity', type=click.FLOAT, help=u"""The value that customer can adjust to control the sensitivity of anomaly detection""")
+@cli_util.option('--are-all-estimates-required', type=click.BOOL, help=u"""Flag to enable the service to return estimates for all data points rather than just the anomalous data points.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["SUCCEEDED", "PARTIALLY_SUCCEEDED", "FAILED", "ACCEPTED", "CANCELED", "IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'output-details': {'module': 'ai_anomaly_detection', 'class': 'OutputDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'output-details': {'module': 'ai_anomaly_detection', 'class': 'OutputDetails'}}, output_type={'module': 'ai_anomaly_detection', 'class': 'DetectAnomalyJob'})
+@cli_util.wrap_exceptions
+def create_detect_anomaly_job_embedded_input_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, model_id, output_details, input_details_content_type, input_details_content, description, display_name, sensitivity, are_all_estimates_required):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['inputDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['modelId'] = model_id
+    _details['outputDetails'] = cli_util.parse_json_parameter("output_details", output_details)
+    _details['inputDetails']['contentType'] = input_details_content_type
+    _details['inputDetails']['content'] = input_details_content
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if sensitivity is not None:
+        _details['sensitivity'] = sensitivity
+
+    if are_all_estimates_required is not None:
+        _details['areAllEstimatesRequired'] = are_all_estimates_required
+
+    _details['inputDetails']['inputType'] = 'BASE64_ENCODED'
+
+    client = cli_util.build_client('ai_anomaly_detection', 'anomaly_detection', ctx)
+    result = client.create_detect_anomaly_job(
+        create_detect_anomaly_job_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_detect_anomaly_job') and callable(getattr(client, 'get_detect_anomaly_job')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_detect_anomaly_job(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@detect_anomaly_job_group.command(name=cli_util.override('anomaly_detection.create_detect_anomaly_job_object_list_input_details.command_name', 'create-detect-anomaly-job-object-list-input-details'), help=u"""Creates a job to perform anomaly detection. \n[Command Reference](createDetectAnomalyJob)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that starts the job.""")
+@cli_util.option('--model-id', required=True, help=u"""The OCID of the trained model.""")
+@cli_util.option('--output-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--input-details-object-locations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of ObjectLocations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""A short description of the detect anomaly job.""")
+@cli_util.option('--display-name', help=u"""Detect anomaly job display name.""")
+@cli_util.option('--sensitivity', type=click.FLOAT, help=u"""The value that customer can adjust to control the sensitivity of anomaly detection""")
+@cli_util.option('--are-all-estimates-required', type=click.BOOL, help=u"""Flag to enable the service to return estimates for all data points rather than just the anomalous data points.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["SUCCEEDED", "PARTIALLY_SUCCEEDED", "FAILED", "ACCEPTED", "CANCELED", "IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'output-details': {'module': 'ai_anomaly_detection', 'class': 'OutputDetails'}, 'input-details-object-locations': {'module': 'ai_anomaly_detection', 'class': 'list[ObjectLocation]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'output-details': {'module': 'ai_anomaly_detection', 'class': 'OutputDetails'}, 'input-details-object-locations': {'module': 'ai_anomaly_detection', 'class': 'list[ObjectLocation]'}}, output_type={'module': 'ai_anomaly_detection', 'class': 'DetectAnomalyJob'})
+@cli_util.wrap_exceptions
+def create_detect_anomaly_job_object_list_input_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, model_id, output_details, input_details_object_locations, description, display_name, sensitivity, are_all_estimates_required):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['inputDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['modelId'] = model_id
+    _details['outputDetails'] = cli_util.parse_json_parameter("output_details", output_details)
+    _details['inputDetails']['objectLocations'] = cli_util.parse_json_parameter("input_details_object_locations", input_details_object_locations)
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if sensitivity is not None:
+        _details['sensitivity'] = sensitivity
+
+    if are_all_estimates_required is not None:
+        _details['areAllEstimatesRequired'] = are_all_estimates_required
+
+    _details['inputDetails']['inputType'] = 'OBJECT_LIST'
+
+    client = cli_util.build_client('ai_anomaly_detection', 'anomaly_detection', ctx)
+    result = client.create_detect_anomaly_job(
+        create_detect_anomaly_job_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_detect_anomaly_job') and callable(getattr(client, 'get_detect_anomaly_job')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_detect_anomaly_job(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@detect_anomaly_job_group.command(name=cli_util.override('anomaly_detection.create_detect_anomaly_job_inline_input_details.command_name', 'create-detect-anomaly-job-inline-input-details'), help=u"""Creates a job to perform anomaly detection. \n[Command Reference](createDetectAnomalyJob)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that starts the job.""")
+@cli_util.option('--model-id', required=True, help=u"""The OCID of the trained model.""")
+@cli_util.option('--output-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--input-details-signal-names', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of signal names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--input-details-data', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array containing data.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""A short description of the detect anomaly job.""")
+@cli_util.option('--display-name', help=u"""Detect anomaly job display name.""")
+@cli_util.option('--sensitivity', type=click.FLOAT, help=u"""The value that customer can adjust to control the sensitivity of anomaly detection""")
+@cli_util.option('--are-all-estimates-required', type=click.BOOL, help=u"""Flag to enable the service to return estimates for all data points rather than just the anomalous data points.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["SUCCEEDED", "PARTIALLY_SUCCEEDED", "FAILED", "ACCEPTED", "CANCELED", "IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'output-details': {'module': 'ai_anomaly_detection', 'class': 'OutputDetails'}, 'input-details-signal-names': {'module': 'ai_anomaly_detection', 'class': 'list[string]'}, 'input-details-data': {'module': 'ai_anomaly_detection', 'class': 'list[DataItem]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'output-details': {'module': 'ai_anomaly_detection', 'class': 'OutputDetails'}, 'input-details-signal-names': {'module': 'ai_anomaly_detection', 'class': 'list[string]'}, 'input-details-data': {'module': 'ai_anomaly_detection', 'class': 'list[DataItem]'}}, output_type={'module': 'ai_anomaly_detection', 'class': 'DetectAnomalyJob'})
+@cli_util.wrap_exceptions
+def create_detect_anomaly_job_inline_input_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, model_id, output_details, input_details_signal_names, input_details_data, description, display_name, sensitivity, are_all_estimates_required):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['inputDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['modelId'] = model_id
+    _details['outputDetails'] = cli_util.parse_json_parameter("output_details", output_details)
+    _details['inputDetails']['signalNames'] = cli_util.parse_json_parameter("input_details_signal_names", input_details_signal_names)
+    _details['inputDetails']['data'] = cli_util.parse_json_parameter("input_details_data", input_details_data)
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if sensitivity is not None:
+        _details['sensitivity'] = sensitivity
+
+    if are_all_estimates_required is not None:
+        _details['areAllEstimatesRequired'] = are_all_estimates_required
+
+    _details['inputDetails']['inputType'] = 'INLINE'
+
+    client = cli_util.build_client('ai_anomaly_detection', 'anomaly_detection', ctx)
+    result = client.create_detect_anomaly_job(
+        create_detect_anomaly_job_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_detect_anomaly_job') and callable(getattr(client, 'get_detect_anomaly_job')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_detect_anomaly_job(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@detect_anomaly_job_group.command(name=cli_util.override('anomaly_detection.create_detect_anomaly_job_object_store_output_details.command_name', 'create-detect-anomaly-job-object-store-output-details'), help=u"""Creates a job to perform anomaly detection. \n[Command Reference](createDetectAnomalyJob)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that starts the job.""")
+@cli_util.option('--model-id', required=True, help=u"""The OCID of the trained model.""")
+@cli_util.option('--input-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--output-details-namespace-name', required=True, help=u"""Object Storage namespace.""")
+@cli_util.option('--output-details-bucket-name', required=True, help=u"""Object Storage bucket name.""")
+@cli_util.option('--description', help=u"""A short description of the detect anomaly job.""")
+@cli_util.option('--display-name', help=u"""Detect anomaly job display name.""")
+@cli_util.option('--sensitivity', type=click.FLOAT, help=u"""The value that customer can adjust to control the sensitivity of anomaly detection""")
+@cli_util.option('--are-all-estimates-required', type=click.BOOL, help=u"""Flag to enable the service to return estimates for all data points rather than just the anomalous data points.""")
+@cli_util.option('--output-details-prefix', help=u"""Object Storage folder name.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["SUCCEEDED", "PARTIALLY_SUCCEEDED", "FAILED", "ACCEPTED", "CANCELED", "IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'input-details': {'module': 'ai_anomaly_detection', 'class': 'InputDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'input-details': {'module': 'ai_anomaly_detection', 'class': 'InputDetails'}}, output_type={'module': 'ai_anomaly_detection', 'class': 'DetectAnomalyJob'})
+@cli_util.wrap_exceptions
+def create_detect_anomaly_job_object_store_output_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, model_id, input_details, output_details_namespace_name, output_details_bucket_name, description, display_name, sensitivity, are_all_estimates_required, output_details_prefix):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['outputDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['modelId'] = model_id
+    _details['inputDetails'] = cli_util.parse_json_parameter("input_details", input_details)
+    _details['outputDetails']['namespaceName'] = output_details_namespace_name
+    _details['outputDetails']['bucketName'] = output_details_bucket_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if sensitivity is not None:
+        _details['sensitivity'] = sensitivity
+
+    if are_all_estimates_required is not None:
+        _details['areAllEstimatesRequired'] = are_all_estimates_required
+
+    if output_details_prefix is not None:
+        _details['outputDetails']['prefix'] = output_details_prefix
+
+    _details['outputDetails']['outputType'] = 'OBJECT_STORAGE'
+
+    client = cli_util.build_client('ai_anomaly_detection', 'anomaly_detection', ctx)
+    result = client.create_detect_anomaly_job(
+        create_detect_anomaly_job_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_detect_anomaly_job') and callable(getattr(client, 'get_detect_anomaly_job')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_detect_anomaly_job(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @model_group.command(name=cli_util.override('anomaly_detection.create_model.command_name', 'create'), help=u"""Creates a new Model. \n[Command Reference](createModel)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID for the ai model's compartment.""")
 @cli_util.option('--model-training-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -966,6 +1388,70 @@ def delete_data_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
+@detect_anomaly_job_group.command(name=cli_util.override('anomaly_detection.delete_detect_anomaly_job.command_name', 'delete'), help=u"""Deletes an accepted, but not started detect anomaly asynchronous job. \n[Command Reference](deleteDetectAnomalyJob)""")
+@cli_util.option('--detect-anomaly-job-id', required=True, help=u"""Unique asynchronous job identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["SUCCEEDED", "PARTIALLY_SUCCEEDED", "FAILED", "ACCEPTED", "CANCELED", "IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_detect_anomaly_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, detect_anomaly_job_id, if_match):
+
+    if isinstance(detect_anomaly_job_id, six.string_types) and len(detect_anomaly_job_id.strip()) == 0:
+        raise click.UsageError('Parameter --detect-anomaly-job-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ai_anomaly_detection', 'anomaly_detection', ctx)
+    result = client.delete_detect_anomaly_job(
+        detect_anomaly_job_id=detect_anomaly_job_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_detect_anomaly_job') and callable(getattr(client, 'get_detect_anomaly_job')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_detect_anomaly_job(detect_anomaly_job_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @model_group.command(name=cli_util.override('anomaly_detection.delete_model.command_name', 'delete'), help=u"""Deletes an ai model resource by identifier. This operation fails with a 409 error unless all associated resources are in a DELETED state. You must delete all associated resources before deleting a project. \n[Command Reference](deleteModel)""")
 @cli_util.option('--model-id', required=True, help=u"""The OCID of the Model.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1071,15 +1557,16 @@ def delete_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
 
 @model_group.command(name=cli_util.override('anomaly_detection.detect_anomalies.command_name', 'detect-anomalies'), help=u"""Make a detect call with an anomaly model and detection data \n[Command Reference](detectAnomalies)""")
-@cli_util.option('--model-id', required=True, help=u"""The OCID of the trained model\u3002""")
-@cli_util.option('--request-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["INLINE", "BASE64_ENCODED"]), help=u"""Type of request. This parameter will be filled autmatically by classes generated by the SDK. For raw curl request, user will have to provide this field.""")
+@cli_util.option('--model-id', required=True, help=u"""The OCID of the trained model.""")
+@cli_util.option('--request-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["INLINE", "BASE64_ENCODED"]), help=u"""Type of request. This parameter is automatically populated by classes generated by the SDK. For raw curl requests, you must provide this field.""")
+@cli_util.option('--sensitivity', type=click.FLOAT, help=u"""Sensitivity of the algorithm to detect anomalies - higher the value, more anomalies get flagged. The value estimated during training is used by default. You can choose to provide a custom value.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ai_anomaly_detection', 'class': 'AnomalyDetectResult'})
 @cli_util.wrap_exceptions
-def detect_anomalies(ctx, from_json, model_id, request_type, if_match):
+def detect_anomalies(ctx, from_json, model_id, request_type, sensitivity, if_match):
 
     kwargs = {}
     if if_match is not None:
@@ -1090,6 +1577,9 @@ def detect_anomalies(ctx, from_json, model_id, request_type, if_match):
     _details['modelId'] = model_id
     _details['requestType'] = request_type
 
+    if sensitivity is not None:
+        _details['sensitivity'] = sensitivity
+
     client = cli_util.build_client('ai_anomaly_detection', 'anomaly_detection', ctx)
     result = client.detect_anomalies(
         detect_anomalies_details=_details,
@@ -1099,16 +1589,17 @@ def detect_anomalies(ctx, from_json, model_id, request_type, if_match):
 
 
 @model_group.command(name=cli_util.override('anomaly_detection.detect_anomalies_inline_detect_anomalies_request.command_name', 'detect-anomalies-inline-detect-anomalies-request'), help=u"""Make a detect call with an anomaly model and detection data \n[Command Reference](detectAnomalies)""")
-@cli_util.option('--model-id', required=True, help=u"""The OCID of the trained model\u3002""")
+@cli_util.option('--model-id', required=True, help=u"""The OCID of the trained model.""")
 @cli_util.option('--signal-names', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of signal names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array containing data.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--sensitivity', type=click.FLOAT, help=u"""Sensitivity of the algorithm to detect anomalies - higher the value, more anomalies get flagged. The value estimated during training is used by default. You can choose to provide a custom value.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({'signal-names': {'module': 'ai_anomaly_detection', 'class': 'list[string]'}, 'data': {'module': 'ai_anomaly_detection', 'class': 'list[DataItem]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'signal-names': {'module': 'ai_anomaly_detection', 'class': 'list[string]'}, 'data': {'module': 'ai_anomaly_detection', 'class': 'list[DataItem]'}}, output_type={'module': 'ai_anomaly_detection', 'class': 'AnomalyDetectResult'})
 @cli_util.wrap_exceptions
-def detect_anomalies_inline_detect_anomalies_request(ctx, from_json, model_id, signal_names, data, if_match):
+def detect_anomalies_inline_detect_anomalies_request(ctx, from_json, model_id, signal_names, data, sensitivity, if_match):
 
     kwargs = {}
     if if_match is not None:
@@ -1119,6 +1610,9 @@ def detect_anomalies_inline_detect_anomalies_request(ctx, from_json, model_id, s
     _details['modelId'] = model_id
     _details['signalNames'] = cli_util.parse_json_parameter("signal_names", signal_names)
     _details['data'] = cli_util.parse_json_parameter("data", data)
+
+    if sensitivity is not None:
+        _details['sensitivity'] = sensitivity
 
     _details['requestType'] = 'INLINE'
 
@@ -1131,8 +1625,9 @@ def detect_anomalies_inline_detect_anomalies_request(ctx, from_json, model_id, s
 
 
 @model_group.command(name=cli_util.override('anomaly_detection.detect_anomalies_embedded_detect_anomalies_request.command_name', 'detect-anomalies-embedded-detect-anomalies-request'), help=u"""Make a detect call with an anomaly model and detection data \n[Command Reference](detectAnomalies)""")
-@cli_util.option('--model-id', required=True, help=u"""The OCID of the trained model\u3002""")
+@cli_util.option('--model-id', required=True, help=u"""The OCID of the trained model.""")
 @cli_util.option('--content', required=True, help=u"""""")
+@cli_util.option('--sensitivity', type=click.FLOAT, help=u"""Sensitivity of the algorithm to detect anomalies - higher the value, more anomalies get flagged. The value estimated during training is used by default. You can choose to provide a custom value.""")
 @cli_util.option('--content-type', type=custom_types.CliCaseInsensitiveChoice(["CSV", "JSON"]), help=u"""""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1140,7 +1635,7 @@ def detect_anomalies_inline_detect_anomalies_request(ctx, from_json, model_id, s
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ai_anomaly_detection', 'class': 'AnomalyDetectResult'})
 @cli_util.wrap_exceptions
-def detect_anomalies_embedded_detect_anomalies_request(ctx, from_json, model_id, content, content_type, if_match):
+def detect_anomalies_embedded_detect_anomalies_request(ctx, from_json, model_id, content, sensitivity, content_type, if_match):
 
     kwargs = {}
     if if_match is not None:
@@ -1150,6 +1645,9 @@ def detect_anomalies_embedded_detect_anomalies_request(ctx, from_json, model_id,
     _details = {}
     _details['modelId'] = model_id
     _details['content'] = content
+
+    if sensitivity is not None:
+        _details['sensitivity'] = sensitivity
 
     if content_type is not None:
         _details['contentType'] = content_type
@@ -1203,6 +1701,28 @@ def get_data_asset(ctx, from_json, data_asset_id):
     client = cli_util.build_client('ai_anomaly_detection', 'anomaly_detection', ctx)
     result = client.get_data_asset(
         data_asset_id=data_asset_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@detect_anomaly_job_group.command(name=cli_util.override('anomaly_detection.get_detect_anomaly_job.command_name', 'get'), help=u"""Gets a detect anomaly asynchronous job by identifier. \n[Command Reference](getDetectAnomalyJob)""")
+@cli_util.option('--detect-anomaly-job-id', required=True, help=u"""Unique asynchronous job identifier.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ai_anomaly_detection', 'class': 'DetectAnomalyJob'})
+@cli_util.wrap_exceptions
+def get_detect_anomaly_job(ctx, from_json, detect_anomaly_job_id):
+
+    if isinstance(detect_anomaly_job_id, six.string_types) and len(detect_anomaly_job_id.strip()) == 0:
+        raise click.UsageError('Parameter --detect-anomaly-job-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ai_anomaly_detection', 'anomaly_detection', ctx)
+    result = client.get_detect_anomaly_job(
+        detect_anomaly_job_id=detect_anomaly_job_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1394,6 +1914,75 @@ def list_data_assets(ctx, from_json, all_pages, page_size, compartment_id, proje
         )
     else:
         result = client.list_data_assets(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@detect_anomaly_job_collection_group.command(name=cli_util.override('anomaly_detection.list_detect_anomaly_jobs.command_name', 'list-detect-anomaly-jobs'), help=u"""Returns a list of all the Anomaly Detection jobs in the specified compartment. \n[Command Reference](listDetectAnomalyJobs)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--model-id', help=u"""The ID of the trained model for which to list the resources.""")
+@cli_util.option('--project-id', help=u"""The ID of the project for which to list the objects.""")
+@cli_util.option('--detect-anomaly-job-id', help=u"""Unique Async Job identifier""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["SUCCEEDED", "PARTIALLY_SUCCEEDED", "FAILED", "ACCEPTED", "CANCELED", "IN_PROGRESS"]), help=u"""<b>Filter</b> results by the specified lifecycle state. Must be a valid state for the resource type.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ai_anomaly_detection', 'class': 'DetectAnomalyJobCollection'})
+@cli_util.wrap_exceptions
+def list_detect_anomaly_jobs(ctx, from_json, all_pages, page_size, compartment_id, model_id, project_id, detect_anomaly_job_id, lifecycle_state, display_name, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if model_id is not None:
+        kwargs['model_id'] = model_id
+    if project_id is not None:
+        kwargs['project_id'] = project_id
+    if detect_anomaly_job_id is not None:
+        kwargs['detect_anomaly_job_id'] = detect_anomaly_job_id
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ai_anomaly_detection', 'anomaly_detection', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_detect_anomaly_jobs,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_detect_anomaly_jobs,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_detect_anomaly_jobs(
             compartment_id=compartment_id,
             **kwargs
         )
@@ -1814,6 +2403,69 @@ def update_data_asset(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_data_asset(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@detect_anomaly_job_group.command(name=cli_util.override('anomaly_detection.update_detect_anomaly_job.command_name', 'update'), help=u"""Updates the detect anomaly asynchronous job by identifier. \n[Command Reference](updateDetectAnomalyJob)""")
+@cli_util.option('--detect-anomaly-job-id', required=True, help=u"""Unique asynchronous job identifier.""")
+@cli_util.option('--description', help=u"""A short description of the detect anomaly job.""")
+@cli_util.option('--display-name', help=u"""Detect anomaly job display name.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["SUCCEEDED", "PARTIALLY_SUCCEEDED", "FAILED", "ACCEPTED", "CANCELED", "IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ai_anomaly_detection', 'class': 'DetectAnomalyJob'})
+@cli_util.wrap_exceptions
+def update_detect_anomaly_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, detect_anomaly_job_id, description, display_name, if_match):
+
+    if isinstance(detect_anomaly_job_id, six.string_types) and len(detect_anomaly_job_id.strip()) == 0:
+        raise click.UsageError('Parameter --detect-anomaly-job-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    client = cli_util.build_client('ai_anomaly_detection', 'anomaly_detection', ctx)
+    result = client.update_detect_anomaly_job(
+        detect_anomaly_job_id=detect_anomaly_job_id,
+        update_detect_anomaly_job_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_detect_anomaly_job') and callable(getattr(client, 'get_detect_anomaly_job')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_detect_anomaly_job(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
