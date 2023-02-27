@@ -6,6 +6,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.23.2 - 2023-02-28
+--------------------
+Added
+~~~~~
+* Support for new command allowing on-demand bootstrap script execution in the Big Data service
+
+  * ``oci bds instance execute-bootstrap-script``
+
+* Support for calling Oracle Cloud Infrastructure services in the eu-dcc-rating-1, eu-dcc-rating-2, eu-dcc-dublin-1, eu-dcc-dublin-2, and eu-dcc-milan-2 regions
+
 3.23.1 - 2023-02-21
 --------------------
 Added
