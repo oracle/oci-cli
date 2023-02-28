@@ -2972,9 +2972,9 @@ def modify_pluggable_database_management_extended(ctx, **kwargs):
 
 
 # renaming db-system-storage-performance command group to storage-performance
-cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.db_system_storage_performance_group, "storage-performance")
+# cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.db_system_storage_performance_group, "storage-performance")
 # renaming db-system-compute-performance command group to compute-performance
-cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.db_system_compute_performance_group, "compute-performance")
+# cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.db_system_compute_performance_group, "compute-performance")
 
 
 # CLI-341

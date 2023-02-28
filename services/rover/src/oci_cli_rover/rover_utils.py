@@ -106,6 +106,12 @@ def get_object_storage_helper(ctx):
                 object_cli = cli_util.build_client('object_storage', 'object_storage', ctx)
                 ctx.obj['region'] = region
                 return object_cli
+    if 'default_values_from_file' in ctx.obj and 'os.endpoint' in ctx.obj['default_values_from_file']:
+        endpoint = ctx.obj['endpoint']
+        ctx.obj['endpoint'] = ctx.obj['default_values_from_file']['os.endpoint']
+        object_cli = cli_util.build_client('object_storage', 'object_storage', ctx)
+        ctx.obj['endpoint'] = endpoint
+        return object_cli
     return cli_util.build_client('object_storage', 'object_storage', ctx)
 
 
