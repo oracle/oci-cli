@@ -193,6 +193,7 @@ default_param_aliases = """
 """
 
 
+NO_PASSPHRASE = 'N/A'
 PUBLIC_KEY_FILENAME_SUFFIX = '_public.pem'
 PRIVATE_KEY_FILENAME_SUFFIX = '.pem'
 
@@ -231,9 +232,9 @@ def generate_key_pair(key_name, output_dir, passphrase, passphrase_file, overwri
         if not passphrase or passphrase.isspace():
             raise click.UsageError("passphrase-file must specify a password in the first line of the file")
 
-    # if no passphrase arguments are specified, then prompt for one (can still be left empty explicitly by user)
+    # if no passphrase arguments are specified, then prompt for one (can still request not to have one by user)
     if not passphrase:
-        passphrase = click.prompt(text='Enter a passphrase for your private key (empty for no passphrase)', default='', hide_input=True, show_default=False, confirmation_prompt=True)
+        passphrase = prompt_for_passphrase()
 
     output_dir = os.path.expanduser(output_dir)
     if not os.path.exists(output_dir):
@@ -278,7 +279,7 @@ def generate_oci_config():
             click.echo(config_generation_canceled_message)
             return
 
-        key_passphrase = click.prompt(text='Enter a passphrase for your private key (empty for no passphrase)', default='', hide_input=True, show_default=False, confirmation_prompt=True)
+        key_passphrase = prompt_for_passphrase()
         private_key_file = os.path.join(key_location, key_name + PRIVATE_KEY_FILENAME_SUFFIX)
         if not write_private_key_to_file(private_key_file, private_key, key_passphrase):
             click.echo(config_generation_canceled_message)
@@ -877,6 +878,14 @@ def prompt_for_region():
         region = click.prompt(text='Enter a region by index or name(e.g.\n{})'.format(region_list), value_proc=validate_region)
 
     return sorted_region_list[int(region) - 1] if is_valid_region_index(region) else region
+
+
+def prompt_for_passphrase():
+    passphrase = click.prompt(
+        text='Enter a passphrase for your private key ("{}" for no passphrase)'.format(NO_PASSPHRASE),
+        default=None, hide_input=True, show_default=False, confirmation_prompt=True
+    )
+    return None if passphrase == NO_PASSPHRASE else passphrase
 
 
 def remove_profile_from_config(config_file, profile_name_to_terminate):

@@ -7,9 +7,12 @@ import oci_cli
 import pytest
 from tests import util
 from tests import test_config_container
+from conftest import runner
 
 CASSETTE_LIBRARY_DIR = 'services/resource_manager/tests/cassettes'
 RESOURCE_JOB_ID = 'ocid1.ormjob.oc1.phx.aaaaaaaapgn6mmbr2u2ecppspei5go4m6zacv7vbilfpim7qxegr2w3mgyaa'
+
+runner = runner()
 
 
 @pytest.fixture(autouse=True, scope='function')
@@ -18,7 +21,7 @@ def vcr_fixture(request):
         yield
 
 
-def test_get_job_logs(runner, config_file, config_profile):
+def test_get_job_logs(config_file, config_profile):
     result = invoke(runner, config_file, config_profile, [
         'resource-manager', 'job', 'get-job-logs',
         '--job-id', RESOURCE_JOB_ID,

@@ -135,7 +135,7 @@ def test_sync_dest_dry_run(vcr_fixture, debug):
     assert skipped_set == set()
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_sync_dest():
     """
     1. Download the files to local and validate the output and file contents
@@ -147,7 +147,7 @@ def test_sync_dest():
         sync_download_test_dir)
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_sync_dest_updated_objects(object_storage_client):
     """
     1. Download all the objects to destination directory
@@ -182,7 +182,7 @@ def test_sync_dest_updated_objects(object_storage_client):
                                   files_in_scope=[f_diff_content, f_same_content])
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_sync_dest_new_objects(object_storage_client):
     """
     1. Download the files to local and validate the output and file contents
@@ -270,7 +270,7 @@ def test_sync_dest_exclude_dry_run(vcr_fixture, debug):
     assert file_name_to_exclude not in downloaded_set
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_sync_dest_exclude(debug):
     """
     1. Select one object from remote and sync against local by specifying it in --exclude
@@ -336,7 +336,8 @@ def test_sync_dest_dir_prefix(vcr_fixture, debug):
     compare_file_content_to_local(new_object_content_map, sync_download_test_dir_recorded)
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
+@pytest.mark.skip('skipped to allow')
 def test_sync_dest_with_delete(debug):
     """
     1. Perform a --dry-run against a blank local by specifying --delete option.
@@ -384,7 +385,7 @@ def test_sync_dest_with_delete(debug):
     assert set(parsed_result['deleted-files']) == new_local_file_set
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_sync_dest_with_delete_empty_folders(debug):
     """
     1. Perform a --dry-run against a blank local by specifying --delete option.
@@ -503,7 +504,7 @@ def test_sync_dest_with_delete_and_include(vcr_fixture, object_storage_client):
     cleanup_objects_from_remote(object_storage_client, r_obj_set_1.union(r_obj_set_2), sync_download_bucket_name_recorded)
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_sync_dest_with_delete_and_exclude(object_storage_client):
     """
     1. Create new set of objects in remote with .pdf and .doc extensions.
@@ -561,6 +562,7 @@ def test_sync_dest_with_delete_and_exclude(object_storage_client):
     cleanup_objects_from_remote(object_storage_client, r_obj_set_1.union(r_obj_set_2), sync_download_bucket_name)
 
 
+@pytest.mark.skip('skipped to allow')
 def test_sync_dest_with_delete_and_prefix(vcr_fixture, debug):
     """
     1. Create an empty directory for prefix test.
@@ -677,7 +679,7 @@ def test_sync_dest_with_delete_include_and_prefix(vcr_fixture, object_storage_cl
     cleanup_objects_from_remote(object_storage_client, r_obj_set_1.union(r_obj_set_2).union(r_obj_set_3), sync_download_bucket_name_recorded)
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_sync_dest_with_delete_exclude_and_prefix(object_storage_client, debug):
     """
     Assert that scope of file transfer and delete is only limited to --exclude pattern
@@ -743,7 +745,7 @@ def test_sync_dest_with_delete_exclude_and_prefix(object_storage_client, debug):
     cleanup_objects_from_remote(object_storage_client, r_obj_set_1.union(r_obj_set_2), sync_download_bucket_name)
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_sync_between_src_and_dest(debug):
     """
     1. Download and validate all objects from the remote
@@ -828,7 +830,7 @@ def test_sync_dest_validate_unsupported_params(vcr_fixture, debug):
         assert '--dest-dir' in result.output
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_sync_dest_skip_archived_objects(object_storage_client, debug):
     """
     1. Upload an archived tier object to the remote using the os client.

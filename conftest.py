@@ -158,7 +158,6 @@ def config(config_file, config_profile):
     return config
 
 
-@pytest.fixture(scope="session")
 def runner():
     # click does not distinguish between stdout and stderr in Result.output so we are wrapping invoke to strip out common stderr warnings
     # this allows the output to be json parseable which many tests expect
@@ -174,7 +173,7 @@ def runner():
             except TypeError:
                 new_output_bytes = cleaned_output
             finally:
-                result = click.testing.Result(result.runner, new_output_bytes, result.exit_code, result.exception, result.exc_info)
+                result = click.testing.Result(result.runner, new_output_bytes, result.stderr_bytes, result, result.exit_code, result.exception, result.exc_info)
 
         return result
 

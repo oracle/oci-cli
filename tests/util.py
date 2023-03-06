@@ -110,17 +110,23 @@ for service_dir in os.listdir(python_cli_root_dir + '/' + ALL_SERVICES_DIR):
                     pass
 
 # This global can be changed to influence what configuration data this module vends.
-target_region = PROFILE_TO_REGION[pytest.config.getoption("--config-profile")]
+# target_region = PROFILE_TO_REGION[pytest.config.getoption("--config-profile")]
+
+target_region = None
+
+
+# new approach
+@pytest.fixture
+def target_profile_region(request):
+    global target_region
+    target_region = PROFILE_TO_REGION[request.config.getoption("--config-profile")]
+
 
 # Primary and secondary availability domains used as part of the tests
 first_ad = None
 second_ad = None
 
-# Tests marked with @slow will only be skipped if '--fast' is specified for the test run.
-slow = pytest.mark.skipif(
-    pytest.config.getoption("--fast"),
-    reason="Slow tests are skipped when using the --fast option."
-)
+# Tests marked with @slow will only be skipped if -m "not slow" is specified in test run.
 
 
 def availability_domain():
@@ -162,42 +168,65 @@ def retrieve_availability_domains():
     return first_availability_domain, second_availability_domain
 
 
-# long running tests are marked with @util.long_running
-# using --enable-long-running will run all of the tests *including* long_running ones
+# long running tests are marked with @pytest.mark.long_running
 # using -m long_running will *only* run long running tests
+
+'''
 def long_running(func):
     def internal(function):
         return pytest.mark.skipif(
-            not pytest.config.getoption("--enable-long-running"),
+            not info_enable_long,
             reason="Long running tests are only run when specifically asked for"
         )(function)
 
-    if pytest.config.getoption('-m') == 'long_running':
+    if info_get_m == 'long_running':
         return pytest.mark.long_running(func)
     else:
         return pytest.mark.long_running(internal(func))
+'''
+
+# Along with long running tests, tests which are marked with @pytest.mark.skip_while_rerecording
+# will not be executed when using -m "not skip_while_rerecording"
+# info_run_recordable = None
+
+'''
+@pytest.fixture
+def target_run_recordable(request):
+    global info_run_recordable
+    info_run_recordable = request.config.getoption("--run-recordable-tests-only")
 
 
-# Along with long running tests, tests which are marked with @util.skip_while_rerecording
-# will not be executed when using --run-recordable-tests-only.
+@pytest.mark.usefixtures("target_run_recordable")
 def skip_while_rerecording(func):
     def internal(function):
         return pytest.mark.skipif(
-            pytest.config.getoption("--run-recordable-tests-only"),
+            info_run_recordable,
             reason="These tests are not run when with the run-recordable-tests-only option."
         )(function)
 
     return pytest.mark.skip_while_rerecording(internal(func))
 
 
+info_instance_principals = None
+
+
+@pytest.fixture
+def target_instance_principals(request):
+    global info_instance_principals
+    info_instance_principals = request.config.getoption("--instance-principals")
+
+
+@pytest.mark.usefixtures("target_instance_principals")
 def instance_principals(func):
     def internal(function):
         return pytest.mark.skipif(
-            not pytest.config.getoption("--instance-principals"),
+            not info_instance_principals,
             reason="These tests are only run with the instance-principals option."
         )(function)
 
     return pytest.mark.instance_principals(internal(func))
+'''
+# These tests are only run with the instance-principals option(default = -m "not instance-principals")
 
 
 def random_name(prefix, insert_underscore=True):
@@ -241,7 +270,7 @@ def remove_outer_quotes(text):
         return text
 
 
-def validate_response(result, extra_validation=None, includes_debug_data=False, json_response_expected=True, expect_etag=False):
+def validate_response(result, extra_validation=None, includes_debug_data=False, json_response_expected=True, expect_etag=False, progress_bar_expected=False):
     try:
         assert result.exit_code == 0 or result.exit_code is None
 
@@ -252,7 +281,10 @@ def validate_response(result, extra_validation=None, includes_debug_data=False, 
             assert 'user-agent' in result.output
             assert '200' in result.output or '204' in result.output
         elif json_response_expected:
-            validate_json_response(result.output)
+            if progress_bar_expected:
+                validate_json_response(result.output[result.output.find('{'):])
+            else:
+                validate_json_response(result.output)
 
         if expect_etag:
             assert "etag" in result.output
@@ -311,11 +343,21 @@ def invoke_command_as_admin(command, ** args):
     return command_output
 
 
+target_config_profile = None
+
+
+@pytest.fixture
+def target_config(request):
+    global target_config_profile
+    target_config_profile = request.config.getoption("--config-profile")
+
+
 def invoke_command(command, ** args):
+
     num_tries = 0
 
     while num_tries < NUM_INVOKE_COMMAND_RETRIES:
-        command_output = runner().invoke(oci_cli.cli, ['--config-file', os.environ['OCI_CLI_CONFIG_FILE'], '--profile', pytest.config.getoption("--config-profile")] + command, ** args)
+        command_output = runner().invoke(oci_cli.cli, ['--config-file', os.environ['OCI_CLI_CONFIG_FILE'], '--profile', target_config_profile] + command, ** args)
 
         if command_output.exception:
             output_to_test = str(command_output.exception)

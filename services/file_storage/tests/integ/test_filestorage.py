@@ -9,8 +9,10 @@ import pytest
 import time
 from tests import util
 from tests import test_config_container
+from conftest import runner
 
 CASSETTE_LIBRARY_DIR = 'services/file_storage/tests/cassettes'
+runner = runner()
 
 
 @pytest.fixture(autouse=True, scope='function')
@@ -20,7 +22,7 @@ def vcr_fixture(request):
 
 
 @pytest.fixture(scope='module')
-def vcn_and_subnet(runner, config_file, config_profile, network_client):
+def vcn_and_subnet(config_file, config_profile, network_client):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('filestorage_vcn_and_subnet_fixture.yml'):
         # create VCN
         vcn_name = util.random_name('cli_db_test_vcn')
@@ -89,7 +91,7 @@ def vcn_and_subnet(runner, config_file, config_profile, network_client):
 
 
 @pytest.fixture(scope='module')
-def file_system(filestorage_client, runner, config_file, config_profile):
+def file_system(filestorage_client, config_file, config_profile):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('filestorage_file_system_fixture.yml'):
         params = [
             'file-system', 'create',
@@ -118,7 +120,7 @@ def file_system(filestorage_client, runner, config_file, config_profile):
 
 
 @pytest.fixture(scope='module')
-def mount_target(filestorage_client, vcn_and_subnet, runner, config_file, config_profile):
+def mount_target(filestorage_client, vcn_and_subnet, config_file, config_profile):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('filestorage_mount_target_fixture.yml'):
         vcn_id = vcn_and_subnet[0]
         subnet_id = vcn_and_subnet[1]
@@ -169,7 +171,7 @@ def mount_target(filestorage_client, vcn_and_subnet, runner, config_file, config
         util.wait_until(['fs', 'mount-target', 'get', '--mount-target-id', mount_target_id], 'DELETED', max_wait_seconds=300)
 
 
-def test_list_file_systems(file_system, runner, config_file, config_profile):
+def test_list_file_systems(file_system, config_file, config_profile):
     params = [
         'file-system', 'list',
         '--compartment-id', util.COMPARTMENT_ID,
@@ -180,7 +182,7 @@ def test_list_file_systems(file_system, runner, config_file, config_profile):
     util.validate_response(result)
 
 
-def test_list_and_update_mount_targets(mount_target, runner, config_file, config_profile):
+def test_list_and_update_mount_targets(mount_target, config_file, config_profile):
     params = [
         'mount-target', 'list',
         '--compartment-id', util.COMPARTMENT_ID,
@@ -203,7 +205,7 @@ def test_list_and_update_mount_targets(mount_target, runner, config_file, config
     assert json.loads(result.output)['data']['display-name'] == new_display_name
 
 
-def test_crud_export_set(mount_target, runner, config_file, config_profile):
+def test_crud_export_set(mount_target, config_file, config_profile):
     params = [
         'export-set', 'list',
         '--compartment-id', util.COMPARTMENT_ID,
@@ -243,7 +245,7 @@ def test_crud_export_set(mount_target, runner, config_file, config_profile):
     util.validate_response(result)
 
 
-def test_crud_export(file_system, mount_target, runner, config_file, config_profile):
+def test_crud_export(file_system, mount_target, config_file, config_profile):
     params = [
         'export', 'create',
         '--export-set-id', mount_target['export-set-id'],
@@ -281,7 +283,7 @@ def test_crud_export(file_system, mount_target, runner, config_file, config_prof
     util.validate_response(result)
 
 
-def test_crud_snapshot(file_system, runner, config_file, config_profile):
+def test_crud_snapshot(file_system, config_file, config_profile):
     params = [
         'snapshot', 'list',
         '--file-system-id', file_system

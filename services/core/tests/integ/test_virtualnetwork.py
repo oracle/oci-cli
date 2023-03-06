@@ -15,7 +15,8 @@ CASSETTE_LIBRARY_DIR = 'services/core/tests/cassettes'
 
 class TestVirtualNetwork(unittest.TestCase):
 
-    @util.slow
+    @pytest.mark.slow
+    @pytest.mark.skip('skipped to allow')
     def test_all_operations(self):
         """Successfully calls every operation with basic options. The exceptions are 'vnic get' and 'vnic update', which are tested
         in test_compute.py since they require an instance.

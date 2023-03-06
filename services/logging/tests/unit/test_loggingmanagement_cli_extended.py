@@ -30,7 +30,7 @@ class TestLoggingManagementCliExtend(unittest.TestCase):
 
     def test_log_group_list(self):
         result = util.invoke_command(['logging', 'log-group', 'list', '--is-compartment-id-in-subtree', 'false'])
-        assert 'no such option: --is-compartment-id-in-subtree' in result.output
+        assert 'No such option: --is-compartment-id-in-subtree' in result.output
 
         result = util.invoke_command(['logging', 'log-group', 'list', '--compartmentidinsubtree'])
         assert 'requires an argument' in result.output
@@ -42,7 +42,7 @@ class TestLoggingManagementCliExtend(unittest.TestCase):
 
     def test_log_saved_search_create(self):
         result = util.invoke_command(['logging', 'log-saved-search', 'create', '--query-parameterconflict', 'sampleQuery'])
-        assert 'no such option: --query-parameterconflict' in result.output
+        assert 'No such option: --query-parameterconflict' in result.output
 
         result = util.invoke_command(['logging', 'log-saved-search', 'create', '--log-query'])
         assert 'requires an argument' in result.output
@@ -54,7 +54,7 @@ class TestLoggingManagementCliExtend(unittest.TestCase):
 
     def test_log_saved_search_update(self):
         result = util.invoke_command(['logging', 'log-saved-search', 'update', '--query-parameterconflict', 'sampleQuery'])
-        assert 'no such option: --query-parameterconflict' in result.output
+        assert 'No such option: --query-parameterconflict' in result.output
 
         result = util.invoke_command(['logging', 'log-saved-search', 'update', '--log-query'])
         assert 'requires an argument' in result.output
@@ -66,7 +66,7 @@ class TestLoggingManagementCliExtend(unittest.TestCase):
 
     def test_unified_agent_configuration_change_compartment(self):
         result = util.invoke_command(['logging', 'agent-configuration', 'change-compartment', '--unified-agent-configuration-id', 'sampleId'])
-        assert 'no such option: --unified-agent-configuration-id' in result.output
+        assert 'No such option: --unified-agent-configuration-id' in result.output
 
         result = util.invoke_command(['logging', 'agent-configuration', 'change-compartment', '--config-id'])
         assert 'requires an argument' in result.output
@@ -118,7 +118,7 @@ class TestLoggingManagementCliExtend(unittest.TestCase):
 
     def test_agent_configuration_delete(self):
         result = util.invoke_command(['logging', 'agent-configuration', 'delete', '--unified-agent-configuration-id', 'sampleId'])
-        assert 'no such option: --unified-agent-configuration-id' in result.output
+        assert 'No such option: --unified-agent-configuration-id' in result.output
 
         result = util.invoke_command(['logging', 'agent-configuration', 'delete', '--config-id'])
         assert 'requires an argument' in result.output
@@ -130,7 +130,7 @@ class TestLoggingManagementCliExtend(unittest.TestCase):
 
     def test_agent_configuration_get(self):
         result = util.invoke_command(['logging', 'agent-configuration', 'get', '--cunified-agent-configuration-id', 'sampleId'])
-        assert 'no such option: --cunified-agent-configuration-id' in result.output
+        assert 'No such option: --cunified-agent-configuration-id' in result.output
 
         result = util.invoke_command(['logging', 'agent-configuration', 'get', '--config-id'])
         assert 'requires an argument' in result.output
@@ -142,7 +142,7 @@ class TestLoggingManagementCliExtend(unittest.TestCase):
 
     def test_agent_configuration_update(self):
         result = util.invoke_command(['logging', 'agent-configuration', 'update', '--unified-agent-configuration-id', 'sampleId'])
-        assert 'no such option: --unified-agent-configuration-id' in result.output
+        assert 'No such option: --unified-agent-configuration-id' in result.output
 
         result = util.invoke_command(['logging', 'agent-configuration', 'update', '--config-id'])
         assert 'requires an argument' in result.output
@@ -154,7 +154,7 @@ class TestLoggingManagementCliExtend(unittest.TestCase):
 
     def test_agent_configuration_list(self):
         result = util.invoke_command(['logging', 'agent-configuration', 'list', '--is-compartment-id-in-subtree', 'false'])
-        assert 'no such option: --is-compartment-id-in-subtree' in result.output
+        assert 'No such option: --is-compartment-id-in-subtree' in result.output
 
         result = util.invoke_command(['logging', 'agent-configuration', 'list', '--compartmentidinsubtree'])
         assert 'requires an argument' in result.output

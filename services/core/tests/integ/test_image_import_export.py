@@ -3,16 +3,19 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 import json
+import pytest
 from tests import util
 import oci
 from tests import test_config_container
+from tests.util import target_profile_region   # noqa: F401
 
 CASSETTE_LIBRARY_DIR = 'services/core/tests/cassettes'
 
 
+@pytest.mark.usefixtures("target_profile_region")
 class TestImageImportExport(object):
 
-    @util.long_running
+    @pytest.mark.long_running
     def test_image_import_export(self, config):
         the_vcr = test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR)
         with the_vcr.use_cassette('compute_test_image_import_export.yml'):

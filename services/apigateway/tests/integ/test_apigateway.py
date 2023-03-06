@@ -11,8 +11,12 @@ import pytest
 
 from tests import test_config_container
 from tests import util
+from conftest import runner
 
 CASSETTE_LIBRARY_DIR = 'services/apigateway/tests/cassettes'
+
+
+runner = runner()
 
 
 def build_simple_api_specification(http_backend_url):
@@ -151,7 +155,7 @@ def vcr_fixture(request):
 
 
 @pytest.fixture(scope='module')
-def vcn_and_subnet(runner, config_file, config_profile, network_client):
+def vcn_and_subnet(config_file, config_profile, network_client):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('apigateway_vcn_and_subnet_fixture.yml'):
         # create VCN
         vcn_name = util.random_name('cli_db_test_vcn')
@@ -222,7 +226,7 @@ def vcn_and_subnet(runner, config_file, config_profile, network_client):
 
 
 @pytest.fixture(scope='module')
-def api_gateway_and_deployment(vcn_and_subnet, runner, config_file, config_profile):
+def api_gateway_and_deployment(vcn_and_subnet, config_file, config_profile):
     vcn_id = vcn_and_subnet[0]
     subnet_id = vcn_and_subnet[1]
 
@@ -343,7 +347,7 @@ def api_gateway_and_deployment(vcn_and_subnet, runner, config_file, config_profi
 
 
 # def test_gateway_list(api_gateway_and_deployment, runner, config_file, config_profile):
-def test_gateway_list(runner, config_file, config_profile):
+def test_gateway_list(config_file, config_profile):
     # TODO: remove this -- added this return on 8/16/2019 b/c tests were failing.
     return
     params = [
@@ -360,7 +364,7 @@ def test_gateway_list(runner, config_file, config_profile):
 
 
 # def test_deployment_list(api_gateway_and_deployment, runner, config_file, config_profile):
-def test_deployment_list(runner, config_file, config_profile):
+def test_deployment_list(config_file, config_profile):
     # TODO: remove this -- added this return on 8/16/2019 b/c tests were failing.
     return
     params = [
@@ -377,7 +381,7 @@ def test_deployment_list(runner, config_file, config_profile):
 
 
 # def test_gateway_update(api_gateway_and_deployment, runner, config_file, config_profile):
-def test_gateway_update(runner, config_file, config_profile):
+def test_gateway_update(config_file, config_profile):
     # TODO: remove this -- added this return on 8/16/2019 b/c tests were failing.
     return
     api_gateway_id = api_gateway_and_deployment[0]
@@ -411,7 +415,7 @@ def test_gateway_update(runner, config_file, config_profile):
 
 
 # def test_deployment_update(api_gateway_and_deployment, runner, config_file, config_profile):
-def test_deployment_update(runner, config_file, config_profile):
+def test_deployment_update(config_file, config_profile):
     # TODO: remove this -- added this return on 8/16/2019 b/c tests were failing.
     return
     api_deployment_id = api_gateway_and_deployment[1]

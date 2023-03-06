@@ -4,6 +4,7 @@
 
 from . import util
 from . import test_config_container
+from tests.util import target_config   # noqa: F401
 
 import json
 import os
@@ -25,6 +26,7 @@ def default_file_with_canned_queries():
     os.remove(default_file_path)
 
 
+@pytest.mark.usefixtures("target_config")
 def test_query_when_listing_and_getting_instances(default_file_with_canned_queries):
     with test_config_container.create_vcr().use_cassette('test_canned_queries_listing_getting_instances.yml'):
         result = invoke(['compute', 'instance', 'list', '-c', util.COMPARTMENT_ID, '--query', 'query://get_id_and_display_name_from_list', '--defaults-file', default_file_with_canned_queries])
@@ -89,6 +91,7 @@ def test_query_when_listing_and_getting_instances(default_file_with_canned_queri
             assert 'Query returned empty result, no output to show' in result.output
 
 
+@pytest.mark.usefixtures("target_config")
 def test_query_does_not_exist(default_file_with_canned_queries):
     result = invoke(['compute', 'instance', 'list', '-c', util.COMPARTMENT_ID, '--query', 'query://purple_monkey_dishwasher', '--defaults-file', default_file_with_canned_queries])
     assert 'Query {} is not defined in your OCI CLI configuration file: {}'.format('purple_monkey_dishwasher', default_file_with_canned_queries) in result.output

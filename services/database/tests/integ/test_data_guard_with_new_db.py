@@ -9,6 +9,9 @@ from tests import util
 from tests import test_config_container
 from common_test_database import invoke, networking_cleanup, networking, get_database, vm_db_system, vm_db_system_cleanup, match_on
 from common_test_database import CASSETTE_LIBRARY_DIR, ADMIN_PASSWORD, DB_SYSTEM_PROVISIONING_TIME_SEC, DATA_GUARD_ASSOCIATION_OPERATION_TIME
+from conftest import runner
+
+runner = runner()
 
 
 @pytest.fixture(autouse=True, scope='module')
@@ -18,26 +21,26 @@ def vcr_fixture(request):
 
 
 @pytest.fixture(scope='module')
-def networking_test_data_guard_with_new_db(runner, config_file, config_profile, network_client, request):
+def networking_test_data_guard_with_new_db(config_file, config_profile, network_client, request):
     subnet_ocid_1, subnet_ocid_2, default_route_table_ocid, ig_ocid, vcn_ocid, networking_dict = networking(network_client, "_data_guard_with_new_db")
     yield networking_dict
     networking_cleanup(runner, config_file, config_profile, network_client, subnet_ocid_1, subnet_ocid_2, default_route_table_ocid, ig_ocid, vcn_ocid)
 
 
 @pytest.fixture(scope='module')
-def vm_db_system_test_data_guard_with_new_db(runner, config_file, config_profile, networking_test_data_guard_with_new_db, network_client, request):
+def vm_db_system_test_data_guard_with_new_db(config_file, config_profile, networking_test_data_guard_with_new_db, network_client, request):
     db_system_id_1 = vm_db_system(runner, config_file, config_profile, networking_test_data_guard_with_new_db, network_client, request)
     yield [db_system_id_1, ]
     vm_db_system_cleanup(runner, config_file, config_profile, db_system_id_1)
 
 
 @pytest.fixture(scope='module')
-def vm_database_test_data_guard_with_new_db(runner, config_file, config_profile, vm_db_system_test_data_guard_with_new_db):
+def vm_database_test_data_guard_with_new_db(config_file, config_profile, vm_db_system_test_data_guard_with_new_db):
     return get_database(runner, config_file, config_profile, vm_db_system_test_data_guard_with_new_db)
 
 
-@util.long_running
-def test_data_guard_with_new_db(runner, config_file, config_profile, vm_database_test_data_guard_with_new_db, vm_db_system_test_data_guard_with_new_db):
+@pytest.mark.long_running
+def test_data_guard_with_new_db(config_file, config_profile, vm_database_test_data_guard_with_new_db, vm_db_system_test_data_guard_with_new_db):
     # Get the subnet of the existing database
     params = ['system', 'get', '--db-system-id', vm_db_system_test_data_guard_with_new_db[0]]
     result = invoke(runner, config_file, config_profile, params)

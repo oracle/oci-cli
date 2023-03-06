@@ -10,8 +10,11 @@ import pytest
 
 from tests import test_config_container
 from tests import util
+from conftest import runner
 
 CASSETTE_LIBRARY_DIR = 'services/devops/tests/cassettes'
+
+runner = runner()
 
 
 @pytest.fixture(autouse=True, scope='function')
@@ -21,7 +24,7 @@ def vcr_fixture(request):
 
 
 @pytest.fixture(scope='module')
-def project_and_pipeline(runner, config_file, config_profile):
+def project_and_pipeline(config_file, config_profile):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('devops_build_project_and_pipeline_fixture.yml'):
         # create project
         notification_topic_id = 'ocid1.onstopic.oc1.iad.aaaaaaaatklfw3733kbwc2dzus633rb553dt52fdewujfea5tunntmqykmoq'
@@ -65,7 +68,7 @@ def project_and_pipeline(runner, config_file, config_profile):
         util.validate_response(result)
 
 
-def test_build_pipeline_get(project_and_pipeline, runner, config_file, config_profile):
+def test_build_pipeline_get(project_and_pipeline, config_file, config_profile):
     build_pipeline_id = project_and_pipeline[1]
     params = ['devops', 'build-pipeline', 'get', '--build-pipeline-id', build_pipeline_id]
     result = invoke(runner, config_file, config_profile, params)
@@ -74,7 +77,7 @@ def test_build_pipeline_get(project_and_pipeline, runner, config_file, config_pr
         "Get API should return correct build pipeline id"
 
 
-def test_build_pipeline_list(project_and_pipeline, runner, config_file, config_profile):
+def test_build_pipeline_list(project_and_pipeline, config_file, config_profile):
     params = ['devops', 'build-pipeline', 'list', '--compartment-id', util.COMPARTMENT_ID]
     result = invoke(runner, config_file, config_profile, params)
     util.validate_response(result)
@@ -82,7 +85,7 @@ def test_build_pipeline_list(project_and_pipeline, runner, config_file, config_p
     assert len(build_pipelines) > 0, "List API should return at least one build pipeline"
 
 
-def test_build_pipeline_update(project_and_pipeline, runner, config_file, config_profile):
+def test_build_pipeline_update(project_and_pipeline, config_file, config_profile):
     build_pipeline_id = project_and_pipeline[1]
     build_pipeline_description = 'Build Pipeline Description'
     params = [
@@ -98,7 +101,7 @@ def test_build_pipeline_update(project_and_pipeline, runner, config_file, config
 
 
 @pytest.fixture(scope='module')
-def wait_stage(project_and_pipeline, runner, config_file, config_profile):
+def wait_stage(project_and_pipeline, config_file, config_profile):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette(
             'devops_build_wait_stage_fixture.yml'):
         # create wait stage
@@ -136,7 +139,7 @@ def wait_stage(project_and_pipeline, runner, config_file, config_profile):
         util.validate_response(result)
 
 
-def test_wait_stage_get(project_and_pipeline, wait_stage, runner, config_file, config_profile):
+def test_wait_stage_get(project_and_pipeline, wait_stage, config_file, config_profile):
     wait_stage_id = wait_stage
     params = ['devops', 'build-pipeline-stage', 'get', '--stage-id', wait_stage_id]
     result = invoke(runner, config_file, config_profile, params)
@@ -145,7 +148,7 @@ def test_wait_stage_get(project_and_pipeline, wait_stage, runner, config_file, c
         "Get API should return correct build pipeline stage id"
 
 
-def test_wait_stage_list(project_and_pipeline, wait_stage, runner, config_file, config_profile):
+def test_wait_stage_list(project_and_pipeline, wait_stage, config_file, config_profile):
     params = ['devops', 'build-pipeline-stage', 'list', '--compartment-id', util.COMPARTMENT_ID]
     result = invoke(runner, config_file, config_profile, params)
     util.validate_response(result)
@@ -153,7 +156,7 @@ def test_wait_stage_list(project_and_pipeline, wait_stage, runner, config_file, 
     assert len(build_stages) > 0, "List API should return at least one build pipeline stage"
 
 
-def test_wait_stage_update(project_and_pipeline, wait_stage, runner, config_file, config_profile):
+def test_wait_stage_update(project_and_pipeline, wait_stage, config_file, config_profile):
     build_pipeline_id = project_and_pipeline[1]
     wait_stage_id = wait_stage
     wait_stage_description = 'Wait Stage Description'
@@ -184,7 +187,7 @@ def test_wait_stage_update(project_and_pipeline, wait_stage, runner, config_file
 
 
 @pytest.fixture(scope='module')
-def build_stage(project_and_pipeline, github_connection, runner, config_file, config_profile):
+def build_stage(project_and_pipeline, github_connection, config_file, config_profile):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette(
             'devops_build_build_stage_fixture.yml'):
         # create build stage
@@ -235,7 +238,7 @@ def build_stage(project_and_pipeline, github_connection, runner, config_file, co
         util.validate_response(result)
 
 
-def test_build_stage_get(project_and_pipeline, build_stage, github_connection, runner, config_file, config_profile):
+def test_build_stage_get(project_and_pipeline, build_stage, github_connection, config_file, config_profile):
     build_stage_id = build_stage
     params = ['devops', 'build-pipeline-stage', 'get', '--stage-id', build_stage_id]
     result = invoke(runner, config_file, config_profile, params)
@@ -244,7 +247,7 @@ def test_build_stage_get(project_and_pipeline, build_stage, github_connection, r
         "Get API should return correct build pipeline stage id"
 
 
-def test_build_stage_list(project_and_pipeline, build_stage, runner, config_file, config_profile):
+def test_build_stage_list(project_and_pipeline, build_stage, config_file, config_profile):
     params = ['devops', 'build-pipeline-stage', 'list', '--compartment-id', util.COMPARTMENT_ID]
     result = invoke(runner, config_file, config_profile, params)
     util.validate_response(result)
@@ -252,7 +255,7 @@ def test_build_stage_list(project_and_pipeline, build_stage, runner, config_file
     assert len(build_stages) > 0, "List API should return at least one build pipeline stage"
 
 
-def test_build_stage_update(project_and_pipeline, build_stage, github_connection, runner, config_file, config_profile):
+def test_build_stage_update(project_and_pipeline, build_stage, github_connection, config_file, config_profile):
     build_pipeline_id = project_and_pipeline[1]
     build_stage_id = build_stage
     github_connection_id = github_connection
@@ -295,7 +298,7 @@ def test_build_stage_update(project_and_pipeline, build_stage, github_connection
 
 
 @pytest.fixture(scope='module')
-def deliver_artifact_stage(project_and_pipeline, build_stage, runner, config_file, config_profile):
+def deliver_artifact_stage(project_and_pipeline, build_stage, config_file, config_profile):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette(
             'devops_build_deliver_artifact_stage_fixture.yml'):
         # create deliver artifact stage
@@ -339,7 +342,7 @@ def deliver_artifact_stage(project_and_pipeline, build_stage, runner, config_fil
         util.validate_response(result)
 
 
-def test_deliver_artifact_stage_get(project_and_pipeline, deliver_artifact_stage, runner, config_file, config_profile):
+def test_deliver_artifact_stage_get(project_and_pipeline, deliver_artifact_stage, config_file, config_profile):
     deliver_artifact_stage_id = deliver_artifact_stage
     params = ['devops', 'build-pipeline-stage', 'get', '--stage-id', deliver_artifact_stage_id]
     result = invoke(runner, config_file, config_profile, params)
@@ -348,7 +351,7 @@ def test_deliver_artifact_stage_get(project_and_pipeline, deliver_artifact_stage
         "Get API should return correct build pipeline stage id"
 
 
-def test_deliver_artifact_stage_list(project_and_pipeline, deliver_artifact_stage, runner, config_file, config_profile):
+def test_deliver_artifact_stage_list(project_and_pipeline, deliver_artifact_stage, config_file, config_profile):
     params = ['devops', 'build-pipeline-stage', 'list', '--compartment-id', util.COMPARTMENT_ID]
     result = invoke(runner, config_file, config_profile, params)
     util.validate_response(result)
@@ -357,7 +360,7 @@ def test_deliver_artifact_stage_list(project_and_pipeline, deliver_artifact_stag
 
 
 def test_deliver_artifact_stage_update(
-        project_and_pipeline, build_stage, deliver_artifact_stage, runner, config_file, config_profile):
+        project_and_pipeline, build_stage, deliver_artifact_stage, config_file, config_profile):
     build_stage_id = build_stage
     deliver_artifact_stage_id = deliver_artifact_stage
     deliver_artifact_stage_description = 'Deliver Artifact Stage Description'
@@ -392,7 +395,7 @@ def test_deliver_artifact_stage_update(
 
 
 @pytest.fixture(scope='module')
-def trigger_deployment_stage(project_and_pipeline, build_stage, runner, config_file, config_profile):
+def trigger_deployment_stage(project_and_pipeline, build_stage, config_file, config_profile):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette(
             'devops_build_trigger_deployment_stage_fixture.yml'):
         project_id = project_and_pipeline[0]
@@ -447,7 +450,7 @@ def trigger_deployment_stage(project_and_pipeline, build_stage, runner, config_f
 
 
 def test_trigger_deployment_stage_get(
-        project_and_pipeline, trigger_deployment_stage, runner, config_file, config_profile):
+        project_and_pipeline, trigger_deployment_stage, config_file, config_profile):
     trigger_deployment_stage_id = trigger_deployment_stage
     params = ['devops', 'build-pipeline-stage', 'get', '--stage-id', trigger_deployment_stage_id]
     result = invoke(runner, config_file, config_profile, params)
@@ -457,7 +460,7 @@ def test_trigger_deployment_stage_get(
 
 
 def test_trigger_deployment_stage_list(
-        project_and_pipeline, trigger_deployment_stage, runner, config_file, config_profile):
+        project_and_pipeline, trigger_deployment_stage, config_file, config_profile):
     params = ['devops', 'build-pipeline-stage', 'list', '--compartment-id', util.COMPARTMENT_ID]
     result = invoke(runner, config_file, config_profile, params)
     util.validate_response(result)
@@ -466,7 +469,7 @@ def test_trigger_deployment_stage_list(
 
 
 def test_trigger_deployment_stage_update(
-        project_and_pipeline, build_stage, trigger_deployment_stage, runner, config_file, config_profile):
+        project_and_pipeline, build_stage, trigger_deployment_stage, config_file, config_profile):
     build_stage_id = build_stage
     trigger_deployment_stage_id = trigger_deployment_stage
     trigger_deployment_stage_description = 'Trigger Deployment Stage Description'
@@ -493,7 +496,7 @@ def test_trigger_deployment_stage_update(
 
 
 @pytest.fixture(scope='module')
-def build_run(project_and_pipeline, wait_stage, build_stage, github_connection, runner, config_file, config_profile):
+def build_run(project_and_pipeline, wait_stage, build_stage, github_connection, config_file, config_profile):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette(
             'devops_build_build_run_fixture.yml'):
         # start build run
@@ -529,7 +532,7 @@ def build_run(project_and_pipeline, wait_stage, build_stage, github_connection, 
     yield build_run_id
 
 
-def test_build_run_get(project_and_pipeline, build_run, wait_stage, build_stage, runner, config_file, config_profile):
+def test_build_run_get(project_and_pipeline, build_run, wait_stage, build_stage, config_file, config_profile):
     build_run_id = build_run
     build_stage_id = build_stage
     wait_stage_id = wait_stage
@@ -544,7 +547,7 @@ def test_build_run_get(project_and_pipeline, build_run, wait_stage, build_stage,
     assert stages_run_progress[build_stage_id] is not None
 
 
-def test_build_run_list(project_and_pipeline, build_run, runner, config_file, config_profile):
+def test_build_run_list(project_and_pipeline, build_run, config_file, config_profile):
     params = ['devops', 'build-run', 'list', '--compartment-id', util.COMPARTMENT_ID]
     result = invoke(runner, config_file, config_profile, params)
     util.validate_response(result)
@@ -553,7 +556,7 @@ def test_build_run_list(project_and_pipeline, build_run, runner, config_file, co
 
 
 @pytest.fixture(scope='module')
-def github_connection(project_and_pipeline, runner, config_file, config_profile):
+def github_connection(project_and_pipeline, config_file, config_profile):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette(
             'devops_build_github_connection_fixture.yml'):
         # create connection
@@ -580,7 +583,7 @@ def github_connection(project_and_pipeline, runner, config_file, config_profile)
         util.validate_response(result)
 
 
-def test_github_connection_get(project_and_pipeline, github_connection, runner, config_file, config_profile):
+def test_github_connection_get(project_and_pipeline, github_connection, config_file, config_profile):
     connection_id = github_connection
     params = ['devops', 'connection', 'get', '--connection-id', connection_id]
     result = invoke(runner, config_file, config_profile, params)
@@ -589,7 +592,7 @@ def test_github_connection_get(project_and_pipeline, github_connection, runner, 
         "Get API should return correct connection id"
 
 
-def test_github_connection_list(project_and_pipeline, github_connection, runner, config_file, config_profile):
+def test_github_connection_list(project_and_pipeline, github_connection, config_file, config_profile):
     params = ['devops', 'connection', 'list', '--compartment-id', util.COMPARTMENT_ID]
     result = invoke(runner, config_file, config_profile, params)
     util.validate_response(result)
@@ -597,7 +600,7 @@ def test_github_connection_list(project_and_pipeline, github_connection, runner,
     assert len(connections) > 0, "List API should return at least one connection"
 
 
-def test_github_connection_update(project_and_pipeline, github_connection, runner, config_file, config_profile):
+def test_github_connection_update(project_and_pipeline, github_connection, config_file, config_profile):
     connection_id = github_connection
     connection_description = 'Connection Description'
     params = [
@@ -613,7 +616,7 @@ def test_github_connection_update(project_and_pipeline, github_connection, runne
 
 
 @pytest.fixture(scope='module')
-def gitlab_connection(project_and_pipeline, runner, config_file, config_profile):
+def gitlab_connection(project_and_pipeline, config_file, config_profile):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette(
             'devops_build_gitlab_connection_fixture.yml'):
         # create connection
@@ -639,7 +642,7 @@ def gitlab_connection(project_and_pipeline, runner, config_file, config_profile)
         util.validate_response(result)
 
 
-def test_gitlab_connection_get(project_and_pipeline, gitlab_connection, runner, config_file, config_profile):
+def test_gitlab_connection_get(project_and_pipeline, gitlab_connection, config_file, config_profile):
     connection_id = gitlab_connection
     params = ['devops', 'connection', 'get', '--connection-id', connection_id]
     result = invoke(runner, config_file, config_profile, params)
@@ -648,7 +651,7 @@ def test_gitlab_connection_get(project_and_pipeline, gitlab_connection, runner, 
         "Get API should return correct connection id"
 
 
-def test_gitlab_connection_list(project_and_pipeline, gitlab_connection, runner, config_file, config_profile):
+def test_gitlab_connection_list(project_and_pipeline, gitlab_connection, config_file, config_profile):
     params = ['devops', 'connection', 'list', '--compartment-id', util.COMPARTMENT_ID]
     result = invoke(runner, config_file, config_profile, params)
     util.validate_response(result)
@@ -656,7 +659,7 @@ def test_gitlab_connection_list(project_and_pipeline, gitlab_connection, runner,
     assert len(connections) > 0, "List API should return at least one connection"
 
 
-def test_gitlab_connection_update(project_and_pipeline, gitlab_connection, runner, config_file, config_profile):
+def test_gitlab_connection_update(project_and_pipeline, gitlab_connection, config_file, config_profile):
     connection_id = gitlab_connection
     connection_description = 'Connection Description'
     params = [
@@ -672,7 +675,7 @@ def test_gitlab_connection_update(project_and_pipeline, gitlab_connection, runne
 
 
 @pytest.fixture(scope='module')
-def github_trigger(project_and_pipeline, runner, config_file, config_profile):
+def github_trigger(project_and_pipeline, config_file, config_profile):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette(
             'devops_build_github_trigger_fixture.yml'):
         # create trigger
@@ -719,7 +722,7 @@ def github_trigger(project_and_pipeline, runner, config_file, config_profile):
         util.validate_response(result)
 
 
-def test_github_trigger_get(project_and_pipeline, github_trigger, runner, config_file, config_profile):
+def test_github_trigger_get(project_and_pipeline, github_trigger, config_file, config_profile):
     trigger_id = github_trigger
     params = ['devops', 'trigger', 'get', '--trigger-id', trigger_id]
     result = invoke(runner, config_file, config_profile, params)
@@ -728,7 +731,7 @@ def test_github_trigger_get(project_and_pipeline, github_trigger, runner, config
         "Get API should return correct trigger id"
 
 
-def test_github_trigger_list(project_and_pipeline, github_trigger, runner, config_file, config_profile):
+def test_github_trigger_list(project_and_pipeline, github_trigger, config_file, config_profile):
     params = ['devops', 'trigger', 'list', '--compartment-id', util.COMPARTMENT_ID]
     result = invoke(runner, config_file, config_profile, params)
     util.validate_response(result)
@@ -736,7 +739,7 @@ def test_github_trigger_list(project_and_pipeline, github_trigger, runner, confi
     assert len(triggers) > 0, "List API should return at least one trigger"
 
 
-def test_github_trigger_update(project_and_pipeline, github_trigger, runner, config_file, config_profile):
+def test_github_trigger_update(project_and_pipeline, github_trigger, config_file, config_profile):
     trigger_id = github_trigger
     trigger_description = 'Trigger Description'
     params = [
@@ -752,7 +755,7 @@ def test_github_trigger_update(project_and_pipeline, github_trigger, runner, con
 
 
 @pytest.fixture(scope='module')
-def gitlab_trigger(project_and_pipeline, runner, config_file, config_profile):
+def gitlab_trigger(project_and_pipeline, config_file, config_profile):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette(
             'devops_build_gitlab_trigger_fixture.yml'):
         # create trigger
@@ -798,7 +801,7 @@ def gitlab_trigger(project_and_pipeline, runner, config_file, config_profile):
         util.validate_response(result)
 
 
-def test_gitlab_trigger_get(project_and_pipeline, gitlab_trigger, runner, config_file, config_profile):
+def test_gitlab_trigger_get(project_and_pipeline, gitlab_trigger, config_file, config_profile):
     trigger_id = gitlab_trigger
     params = ['devops', 'trigger', 'get', '--trigger-id', trigger_id]
     result = invoke(runner, config_file, config_profile, params)
@@ -807,7 +810,7 @@ def test_gitlab_trigger_get(project_and_pipeline, gitlab_trigger, runner, config
         "Get API should return correct trigger id"
 
 
-def test_gitlab_trigger_list(project_and_pipeline, gitlab_trigger, runner, config_file, config_profile):
+def test_gitlab_trigger_list(project_and_pipeline, gitlab_trigger, config_file, config_profile):
     params = ['devops', 'trigger', 'list', '--compartment-id', util.COMPARTMENT_ID]
     result = invoke(runner, config_file, config_profile, params)
     util.validate_response(result)
@@ -815,7 +818,7 @@ def test_gitlab_trigger_list(project_and_pipeline, gitlab_trigger, runner, confi
     assert len(triggers) > 0, "List API should return at least one trigger"
 
 
-def test_gitlab_trigger_update(project_and_pipeline, gitlab_trigger, runner, config_file, config_profile):
+def test_gitlab_trigger_update(project_and_pipeline, gitlab_trigger, config_file, config_profile):
     trigger_id = gitlab_trigger
     trigger_description = 'Trigger Description'
     params = [

@@ -7,8 +7,11 @@ import oci_cli
 import pytest
 from tests import util
 from tests import test_config_container
+from conftest import runner
 
 CASSETTE_LIBRARY_DIR = 'services/resource_search/tests/cassettes'
+
+runner = runner()
 
 
 @pytest.fixture(autouse=True, scope='function')
@@ -17,7 +20,7 @@ def vcr_fixture(request):
         yield
 
 
-def test_list_resource_type(runner, config_file, config_profile):
+def test_list_resource_type(config_file, config_profile):
     params = [
         'search', 'resource-type', 'list'
     ]
@@ -27,7 +30,7 @@ def test_list_resource_type(runner, config_file, config_profile):
     assert len(json.loads(result.output)['data']) > 1
 
 
-def test_get_resource_type(runner, config_file, config_profile):
+def test_get_resource_type(config_file, config_profile):
     params = [
         'search', 'resource-type', 'get',
         '--name', 'Group'
@@ -39,7 +42,7 @@ def test_get_resource_type(runner, config_file, config_profile):
     assert json.loads(result.output)["data"]["name"] == "Group"
 
 
-def test_freetext_search(runner, config_file, config_profile, identity_client):
+def test_freetext_search(config_file, config_profile, identity_client):
     user_name = identity_client.get_user(util.USER_ID).data.name
     params = [
         'search', 'resource', 'free-text-search',
@@ -51,7 +54,7 @@ def test_freetext_search(runner, config_file, config_profile, identity_client):
     assert len(json.loads(result.output)['data']) >= 0
 
 
-def test_structured_query_search(runner, config_file, config_profile):
+def test_structured_query_search(config_file, config_profile):
     params = [
         'search', 'resource', 'structured-search',
         '--query-text', 'query all resources'

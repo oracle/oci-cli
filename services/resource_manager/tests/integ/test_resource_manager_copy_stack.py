@@ -8,6 +8,7 @@ import oci_cli
 import pytest
 from tests import test_config_container
 import oci  # noqa: F401
+from conftest import runner
 
 CASSETTE_LIBRARY_DIR = 'services/resource_manager/tests/cassettes'
 ZIP_SOURCE_STACK_ID = 'ocid1.ormstack.oc1.phx.aaaaaaaashhh6un2cidqtpkbwnzwdtibob34sasifjr4gg4qazdvsn5x7xdq'
@@ -17,6 +18,8 @@ OBJECT_STORAGE_CONFIG_SOURCE_STACK_ID = 'ocid1.ormstack.oc1.phx.aaaaaaaaa6i7p5wy
 CHANGE_COMPARTMENT_OCID = "ocid1.compartment.oc1..aaaaaaaaqrsxf2pnsnfswitk6t3tkph6mjdwu6ldipmwxj4ijddca7w2obca"
 GITHUB_ACCESS_TOKEN = "b72337dd1fc9a6f1d1bc19869842f9707fe42db6"
 DESTINATION_REGION = 'ap-tokyo-1'
+
+runner = runner()
 
 
 @pytest.fixture(autouse=True, scope='module')
@@ -28,7 +31,7 @@ def vcr_fixture(request):
 #################################################
 # IN-REGION TESTS
 #################################################
-def test_in_region_copy_stack_zip(runner, config_file, config_profile):
+def test_in_region_copy_stack_zip(config_file, config_profile):
     get_result = invoke(runner, config_file, config_profile, [
         'resource-manager', 'stack', 'get',
         '--stack-id', ZIP_SOURCE_STACK_ID
@@ -53,7 +56,7 @@ def test_in_region_copy_stack_zip(runner, config_file, config_profile):
     compare_stack_TF_config(runner, config_file, config_profile, source_stack["id"], copied_stack["id"])
 
 
-def test_in_region_copy_stack_git_config_source(runner, config_file, config_profile):
+def test_in_region_copy_stack_git_config_source(config_file, config_profile):
     get_result = invoke(runner, config_file, config_profile, [
         'resource-manager', 'stack', 'get',
         '--stack-id', GIT_CONFIG_SOURCE_STACK_ID
@@ -76,7 +79,7 @@ def test_in_region_copy_stack_git_config_source(runner, config_file, config_prof
     compare_git_config_source_metadata(source_stack, copied_stack)
 
 
-def test_in_region_copy_stack_resource_discovery(runner, config_file, config_profile):
+def test_in_region_copy_stack_resource_discovery(config_file, config_profile):
     get_result = invoke(runner, config_file, config_profile, [
         'resource-manager', 'stack', 'get',
         '--stack-id', RESOURCE_DISCOVERY_STACK_ID
@@ -104,7 +107,7 @@ def test_in_region_copy_stack_resource_discovery(runner, config_file, config_pro
 #################################################
 # CROSS-REGION TESTS
 #################################################
-def test_cross_region_copy_stack_zip(runner, config_file, config_profile):
+def test_cross_region_copy_stack_zip(config_file, config_profile):
     get_result = invoke(runner, config_file, config_profile, [
         'resource-manager', 'stack', 'get',
         '--stack-id', ZIP_SOURCE_STACK_ID
@@ -127,7 +130,7 @@ def test_cross_region_copy_stack_zip(runner, config_file, config_profile):
     compare_zip_config_metadata(source_stack, copied_stack)
 
 
-def test_cross_region_copy_stack_git_config_source(runner, config_file, config_profile):
+def test_cross_region_copy_stack_git_config_source(config_file, config_profile):
     get_result = invoke(runner, config_file, config_profile, [
         'resource-manager', 'stack', 'get',
         '--stack-id', GIT_CONFIG_SOURCE_STACK_ID
@@ -156,7 +159,7 @@ def test_cross_region_copy_stack_git_config_source(runner, config_file, config_p
     compare_git_config_source_metadata(source_stack, copied_stack, in_region=False)
 
 
-def test_cross_region_copy_stack_resource_discovery(runner, config_file, config_profile):
+def test_cross_region_copy_stack_resource_discovery(config_file, config_profile):
     get_result = invoke(runner, config_file, config_profile, [
         'resource-manager', 'stack', 'get',
         '--stack-id', RESOURCE_DISCOVERY_STACK_ID
@@ -182,7 +185,7 @@ def test_cross_region_copy_stack_resource_discovery(runner, config_file, config_
 #################################################
 # METADATA TESTS
 #################################################
-def test_change_compartment_in_region(runner, config_file, config_profile):
+def test_change_compartment_in_region(config_file, config_profile):
     get_result = invoke(runner, config_file, config_profile, [
         'resource-manager', 'stack', 'get',
         '--stack-id', ZIP_SOURCE_STACK_ID
@@ -208,7 +211,7 @@ def test_change_compartment_in_region(runner, config_file, config_profile):
     compare_zip_config_metadata(source_stack, copied_stack)
 
 
-def test_change_compartment_cross_region(runner, config_file, config_profile):
+def test_change_compartment_cross_region(config_file, config_profile):
     get_result = invoke(runner, config_file, config_profile, [
         'resource-manager', 'stack', 'get',
         '--stack-id', ZIP_SOURCE_STACK_ID
@@ -234,7 +237,7 @@ def test_change_compartment_cross_region(runner, config_file, config_profile):
     compare_zip_config_metadata(source_stack, copied_stack)
 
 
-def test_destination_region_equals_source_region(runner, config_file, config_profile):
+def test_destination_region_equals_source_region(config_file, config_profile):
     get_result = invoke(runner, config_file, config_profile, [
         'resource-manager', 'stack', 'get',
         '--stack-id', GIT_CONFIG_SOURCE_STACK_ID
@@ -259,7 +262,7 @@ def test_destination_region_equals_source_region(runner, config_file, config_pro
     compare_git_config_source_metadata(source_stack, copied_stack)
 
 
-def test_copy_stack_invalid_config_source_type(runner, config_file, config_profile):
+def test_copy_stack_invalid_config_source_type(config_file, config_profile):
     copy_result = invoke(runner, config_file, config_profile, [
         'resource-manager', 'stack', 'copy',
         '--stack-id', OBJECT_STORAGE_CONFIG_SOURCE_STACK_ID,
@@ -270,7 +273,7 @@ def test_copy_stack_invalid_config_source_type(runner, config_file, config_profi
     assert "Only zip-upload config, git-configuration-source and create-from-compartment stacks are supported for copy stack" in copy_result.output
 
 
-def test_copy_stack_change_tags(runner, config_file, config_profile):
+def test_copy_stack_change_tags(config_file, config_profile):
 
     get_result = invoke(runner, config_file, config_profile, [
         'resource-manager', 'stack', 'get',
@@ -298,7 +301,7 @@ def test_copy_stack_change_tags(runner, config_file, config_profile):
     compare_zip_config_metadata(source_stack, copied_stack)
 
 
-def test_copy_stack_invalid_stack_id(runner, config_file, config_profile):
+def test_copy_stack_invalid_stack_id(config_file, config_profile):
     result = None
     try:
         result = invoke(runner, config_file, config_profile, [
@@ -319,7 +322,7 @@ def test_copy_stack_invalid_stack_id(runner, config_file, config_profile):
         assert 'stack-id' in result.output
 
 
-def test_copy_stack_invalid_destination_region(runner, config_file, config_profile):
+def test_copy_stack_invalid_destination_region(config_file, config_profile):
     result = None
     try:
         result = invoke(runner, config_file, config_profile, [
@@ -339,7 +342,7 @@ def test_copy_stack_invalid_destination_region(runner, config_file, config_profi
         assert 'Invalid region. Destination region must be in the same realm' in result.output
 
 
-def test_copy_stack_cross_region_git_config_source_invalid_access_token(runner, config_file, config_profile):
+def test_copy_stack_cross_region_git_config_source_invalid_access_token(config_file, config_profile):
     result = None
     try:
         result = invoke(runner, config_file, config_profile, [
@@ -363,7 +366,7 @@ def test_copy_stack_cross_region_git_config_source_invalid_access_token(runner, 
         assert '--access-token' in result.output
 
 
-def test_copy_stack_invalid_compartment_id(runner, config_file, config_profile):
+def test_copy_stack_invalid_compartment_id(config_file, config_profile):
 
     get_result = invoke(runner, config_file, config_profile, [
         'resource-manager', 'stack', 'get',

@@ -7,12 +7,15 @@ import oci_cli
 import pytest
 from tests import util
 from tests import test_config_container
+from conftest import runner
 
 CASSETTE_LIBRARY_DIR = 'services/core/tests/cassettes'
 
+runner = runner()
+
 
 @pytest.fixture(scope='module')
-def cross_connect_group(runner, config_file, config_profile):
+def cross_connect_group(config_file, config_profile):
     # Set-up of cross-connect group
     ccg_id = None
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_fastconnect_fixture_crossconnectgroup.yml'):
@@ -71,7 +74,7 @@ def cross_connect_group(runner, config_file, config_profile):
 
 
 @pytest.fixture(scope='module')
-def cross_connect(runner, config_file, config_profile, cross_connect_group):
+def cross_connect(config_file, config_profile, cross_connect_group):
     # Set-up of cross-connect resource
     cc_id = None
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_fastconnect_fixture_crossconnect.yml'):
@@ -165,8 +168,8 @@ def cross_connect(runner, config_file, config_profile, cross_connect_group):
 
 # Virtual circuit creation depends on cross-connect and cross-connect group creation. The fixtures passed as arguments
 # below allow for this dependency injection.
-@util.slow
-def test_virtual_circuit_crud_operations(runner, config_file, config_profile, cross_connect_group, cross_connect):
+@pytest.mark.slow
+def test_virtual_circuit_crud_operations(config_file, config_profile, cross_connect_group, cross_connect):
     # Set up of virtual circuit
     vc_id = None
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_fastconnect_fixture_virtualcircuit.yml'):

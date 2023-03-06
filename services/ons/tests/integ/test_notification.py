@@ -9,10 +9,12 @@ import pytest
 
 from tests import util
 from tests import test_config_container
+from conftest import runner
 
 CASSETTE_LIBRARY_DIR = 'services/ons/tests/cassettes'
 COMPARTMENT_ID_CHANGE_TO = os.getenv('OCI_CLI_CHANGE_TO_COMPARTMENT_ID')
 util.set_admin_pass_phrase()
+runner = runner()
 
 
 @pytest.fixture(autouse=True, scope='function')
@@ -21,7 +23,7 @@ def vcr_fixture(request):
         yield
 
 
-def test_topic_crud(runner, config_file, config_profile):
+def test_topic_crud(config_file, config_profile):
     topic_id = None
     try:
         # Create Topic
@@ -81,7 +83,7 @@ def test_topic_crud(runner, config_file, config_profile):
 #    Comment to record new tests.
 #    Later on fix running in 2.7
 @pytest.mark.skip('Test failing only in non-Python3 environment')
-def test_subscription_crud(runner, config_file, config_profile):
+def test_subscription_crud(config_file, config_profile):
     topic_id = None
     try:
         # Create Topic

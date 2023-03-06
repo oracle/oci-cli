@@ -7,8 +7,11 @@ from . import test_config_container
 import json
 import os
 import os.path
+import pytest
+from tests.util import target_config   # noqa: F401
 
 
+@pytest.mark.usefixtures("target_config")
 def test_command_global_alias_collision():
     with test_config_container.create_vcr().use_cassette('aliasing_commands_and_params_test_command_global_alias_collision.yml'):
         result = invoke(['os', 'bucket', 'create', '--cli-rc-file', os.path.join('tests', 'resources', 'aliasing', 'global_command_alias_with_collision'), '-?'])
@@ -21,6 +24,7 @@ def test_command_global_alias_collision():
         assert '--namespace' in result.output
 
 
+@pytest.mark.usefixtures("target_config")
 def test_command_sequence_alias_collision():
     with test_config_container.create_vcr().use_cassette('aliasing_commands_and_params_test_command_sequence_alias_collision.yml'):
         result = invoke(['os', 'bucket', 'create', '--cli-rc-file', os.path.join('tests', 'resources', 'aliasing', 'command_sequence_alias_with_collision'), '-?'])
@@ -33,6 +37,7 @@ def test_command_sequence_alias_collision():
         assert '--bucket-name' in result.output
 
 
+@pytest.mark.usefixtures("target_config")
 def test_invoke_using_global_command_alias():
     with test_config_container.create_vcr().use_cassette('aliasing_commands_and_params_test_invoke_using_global_command_alias.yml'):
 
@@ -58,6 +63,7 @@ def test_invoke_using_global_command_alias():
                 assert d['id']
 
 
+@pytest.mark.usefixtures("target_config")
 def test_invoke_using_command_sequence_alias():
     with test_config_container.create_vcr().use_cassette('aliasing_commands_and_params_test_invoke_using_command_sequence_alias.yml'):
         # Grab the Object Storage namespace
@@ -74,12 +80,14 @@ def test_invoke_using_command_sequence_alias():
             assert d['name']
 
 
+@pytest.mark.usefixtures("target_config")
 def test_param_alias_with_collision():
     with test_config_container.create_vcr().use_cassette('aliasing_commands_and_params_test_param_alias_with_collision.yml'):
         result = invoke(['compute', 'instance', 'list', '-?', '--cli-rc-file', os.path.join('tests', 'resources', 'aliasing', 'param_alias_with_collision')])
         assert 'Could not add alias --compartment-id to param --display-name as it conflicts with existing options for parameter --compartment-id' in result.output
 
 
+@pytest.mark.usefixtures("target_config")
 def test_param_alias_no_collision():
     with test_config_container.create_vcr().use_cassette('aliasing_commands_and_params_test_param_alias_no_collision.yml'):
         result = invoke(['network', 'security-list', 'create', '-?', '--cli-rc-file', os.path.join('tests', 'resources', 'aliasing', 'param_alias_with_no_collision')])
@@ -93,12 +101,14 @@ def test_param_alias_no_collision():
         assert '--ingress' in result.output
 
 
+@pytest.mark.usefixtures("target_config")
 def test_param_alias_with_bad_name():
     with test_config_container.create_vcr().use_cassette('aliasing_commands_and_params_test_param_alias_with_bad_name.yml'):
         result = invoke(['network', 'security-list', 'create', '-?', '--cli-rc-file', os.path.join('tests', 'resources', 'aliasing', 'param_alias_with_bad_name')])
         assert "Could not create an alias for -foo as aliases need to be prefixed with '--' or be a single dash followed by a single letter. For example: --alias, -a" in result.output
 
 
+@pytest.mark.usefixtures("target_config")
 def test_invoke_using_param_aliases():
     with test_config_container.create_vcr().use_cassette('aliasing_commands_and_params_test_invoke_using_param_aliases.yml'):
         result = invoke(['compute', 'instance', 'list', '--compy', util.COMPARTMENT_ID, '--ad', util.availability_domain(), '--cli-rc-file', os.path.join('tests', 'resources', 'aliasing', 'param_alias_with_no_collision')])
@@ -122,6 +132,7 @@ def test_invoke_using_param_aliases():
                 assert util.availability_domain() == d['availability-domain']
 
 
+@pytest.mark.usefixtures("target_config")
 def test_using_defaults_and_aliases():
     with test_config_container.create_vcr().use_cassette('aliasing_commands_and_params_test_using_defaults_and_aliases.yml'):
         file_with_aliases_and_defaults = """

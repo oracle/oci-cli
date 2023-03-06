@@ -3,19 +3,22 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 import json
+import pytest
 import unittest
 from tests import test_config_container
 from tests import util
 import services.core.src.oci_cli_compute as oci_cli_compute
+from tests.util import target_profile_region   # noqa: F401
 
 CASSETTE_LIBRARY_DIR = 'services/core/tests/cassettes'
 IPXE_SCRIPT_FILE = 'tests/resources/ipxe_script_example.txt'
 USER_DATA_FILE = 'tests/resources/user_data.sh'
 
 
+@pytest.mark.usefixtures("target_profile_region")
 class TestLaunchInstanceOptions(unittest.TestCase):
 
-    @util.slow
+    @pytest.mark.slow
     @test_config_container.RecordReplayWithNoClickContext('launch_instance_options', cassette_library_dir=CASSETTE_LIBRARY_DIR)
     def test_main(self):
         self.instance_ocids = []

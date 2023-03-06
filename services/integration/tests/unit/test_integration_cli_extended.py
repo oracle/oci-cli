@@ -47,12 +47,12 @@ class TestIntegration(unittest.TestCase):
         assert '--id' in result.output
         result = util.invoke_command(
             ['integration', 'integration-instance', 'update', '--type'])
-        assert 'Error: --type option requires an argument' in result.output
+        assert 'Error: Option \'--type\' requires an argument' in result.output
 
     def test_integration_instance_create(self):
         result = util.invoke_command(
             ['integration', 'integration-instance', 'create', '--type'])
-        assert 'Error: --type option requires an argument' in result.output
+        assert 'Error: Option \'--type\' requires an argument' in result.output
 
     def test_work_request_list(self):
         result = util.invoke_command(

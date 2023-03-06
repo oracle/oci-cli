@@ -4,8 +4,11 @@
 
 import unittest
 from tests import util
+import pytest
+from tests.util import target_config   # noqa: F401
 
 
+@pytest.mark.usefixtures("target_config")
 class TestBds(unittest.TestCase):
     def setUp(self):
         pass

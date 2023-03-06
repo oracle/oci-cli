@@ -22,19 +22,19 @@ class TestWorkRequestApi(unittest.TestCase):
         assert 'Error: Missing option(s)' in result.output
         assert '--work-request-id' in result.output
         result = util.invoke_command(['bastion', 'work-request', 'get', '--work-request-id'])
-        assert 'Error: --work-request-id option requires an argument' in result.output
+        assert 'Error: Option \'--work-request-id\' requires an argument' in result.output
 
     def test_work_request_list(self):
         result = util.invoke_command(['bastion', 'work-request', 'list'])
         assert 'Error: Missing option(s)' in result.output
         assert '--compartment-id' in result.output
         result = util.invoke_command(['bastion', 'work-request', 'list', '--compartment-id'])
-        assert 'Error: --compartment-id option requires an argument' in result.output
+        assert 'Error: Option \'--compartment-id\' requires an argument' in result.output
         result = util.invoke_command(['bastion', 'work-request', 'list', '--limit'])
-        assert 'Error: --limit option requires an argument' in result.output
+        assert 'Error: Option \'--limit\' requires an argument' in result.output
         result = util.invoke_command(['bastion', 'work-request', 'list', '--page'])
-        assert 'Error: --page option requires an argument' in result.output
+        assert 'Error: Option \'--page\' requires an argument' in result.output
         result = util.invoke_command(['bastion', 'work-request', 'list', '--page-size'])
-        assert 'Error: --page-size option requires an argument' in result.output
+        assert 'Error: Option \'--page-size\' requires an argument' in result.output
         result = util.invoke_command(['bastion', 'work-request', 'list', '--all'])
         result = util.invoke_command(['bastion', 'work-request', 'list', '--all_pages'])

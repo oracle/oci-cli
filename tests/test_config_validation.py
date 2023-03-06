@@ -3,12 +3,15 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from oci import identity, Response
+from oci_cli.cli_setup import NO_PASSPHRASE
+
 import oci_cli
 import os
 import tempfile
 import shutil
 import unittest.mock as mock
 import click
+from conftest import runner
 
 REGION = 'us-phoenix-1'
 TEST_JWT_TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPQ0kgVGVzdCBKV1QgVG9rZW4iLCJpYXQiOjE1MzkxMTAzOTAsImV4cCI6MTc2MDAzNTE5MCwiYXVkIjoid3d3Lm9yYWNsZWNsb3VkLmNvbSIsInN1YiI6Im9jaWQxLnVzZXIub2MxLi5hYWFhYWFhYTR2eGZvdnd5Z3R5amxxY3ptbjZqdTNrb3JrdGlkemxrNmF1dzZjNHRnc3h4eHh4eHh4eHgiLCJ0ZW5hbnQiOiJ0ZXN0X3RlbmFuY3kifQ.i9PP_5up4UAgFx7usppp_okaFDRpmzF0YECDsfN-gjU'
@@ -17,44 +20,46 @@ LIST_REGION_SUBSCRIPTIONS_RESPONSE = Response(status=None, headers=None, data=[
     identity.models.RegionSubscription(region_name=REGION, is_home_region=True)
 ], request=None)
 
+runner = runner()
 
-def test_missing_user(runner, malformed_config_file):
+
+def test_missing_user(malformed_config_file):
     result = invoke_example_operation(runner, malformed_config_file, 'MISSING_USER')
     validate_missing_param_error(result, 'user', 'log into the console')
 
 
-def test_missing_fingerprint(runner, malformed_config_file):
+def test_missing_fingerprint(malformed_config_file):
     result = invoke_example_operation(runner, malformed_config_file, 'MISSING_FINGERPRINT')
     validate_missing_param_error(result, 'fingerprint', 'openssl rsa')
 
 
-def test_missing_key(runner, malformed_config_file):
+def test_missing_key(malformed_config_file):
     result = invoke_example_operation(runner, malformed_config_file, 'MISSING_KEY')
     validate_missing_param_error(result, 'key', 'PEM key file')
 
 
-def test_missing_tenancy(runner, malformed_config_file):
+def test_missing_tenancy(malformed_config_file):
     result = invoke_example_operation(runner, malformed_config_file, 'MISSING_TENANCY')
     validate_missing_param_error(result, 'tenancy', 'OCID')
 
 
-def test_missing_region(runner, malformed_config_file):
+def test_missing_region(malformed_config_file):
     result = invoke_example_operation(runner, malformed_config_file, 'MISSING_REGION')
     validate_missing_param_error(result, 'region', 'us-phoenix-1')
 
 
-def test_region_parameter(runner, malformed_config_file):
+def test_region_parameter(malformed_config_file):
     result = invoke_example_operation(runner, malformed_config_file, 'MISSING_REGION', ['--region', 'us-phoenix-1'])
     assert 0 == result.exit_code
 
 
-def test_no_validation_when_using_help(runner, malformed_config_file):
+def test_no_validation_when_using_help(malformed_config_file):
     # Do not validate the config when asking for help.
     result = invoke_example_operation(runner, malformed_config_file, 'MISSING_KEY', command_args=['--cli-rc-file', os.path.join('tests', 'resources', 'default_files', 'use_click_help'), '-?'])
     assert 0 == result.exit_code
 
 
-def test_auth_security_token_with_no_config(runner):
+def test_auth_security_token_with_no_config():
     try:
         # create a temporary config file path that will be treated as the default config that does not exist
         temp_dir = tempfile.mkdtemp()
@@ -107,7 +112,7 @@ def test_auth_security_token_with_no_config(runner):
         os.environ['OCI_CLI_CONFIG_FILE'] = 'internal_resources/config'
 
 
-def test_auth_security_token_with_expired_session(runner):
+def test_auth_security_token_with_expired_session():
     try:
         # create a temporary config file path that will be treated as the default config containing an expired session profile
         temp_dir = tempfile.mkdtemp()
@@ -213,7 +218,7 @@ def test_auth_security_token_with_expired_session(runner):
         os.environ['OCI_CLI_CONFIG_FILE'] = 'internal_resources/config'
 
 
-def test_command_with_no_config(runner):
+def test_command_with_no_config():
     try:
         # create a temporary config file path that will be treated as the default config that does not exist
         temp_dir = tempfile.mkdtemp()
@@ -247,7 +252,8 @@ def test_command_with_no_config(runner):
             'Y',  # generate new key pair
             temp_dir,  # directory for the keys
             oci_cli.cli_setup.DEFAULT_KEY_NAME,
-            '',  # no private key passphrase
+            NO_PASSPHRASE,  # no private key passphrase
+            NO_PASSPHRASE,  # no private key passphrase
         ]
 
         # test CLI command with no config file, and choose to create new config file with browserless setup
@@ -294,7 +300,8 @@ def test_command_with_no_config(runner):
                         'Y',  # choose to create new config file
                         'Y',  # choose to use browser login (setup bootstrap)
                         REGION,
-                        '',  # no private key passphrase
+                        NO_PASSPHRASE,  # no private key passphrase
+                        NO_PASSPHRASE,  # no private key passphrase
                     ]
 
                     # test CLI command with no config file, and choose to create new config file with browser-based setup

@@ -11,15 +11,16 @@ from tests import tag_data_container
 from tests import test_config_container
 from tests import util
 import services.core.src.oci_cli_compute as oci_cli_compute
+from tests.util import target_profile_region   # noqa: F401
 
 CASSETTE_LIBRARY_DIR = 'services/core/tests/cassettes'
 CONSOLE_HISTORY_FILENAME = 'tests/output/console_history_output.txt'
 
 
-@pytest.mark.usefixtures("tag_namespace_and_tags")
+@pytest.mark.usefixtures("tag_namespace_and_tags", "target_profile_region")
 class TestCompute(unittest.TestCase):
 
-    @util.slow
+    @pytest.mark.slow
     @test_config_container.RecordReplay('compute', cassette_library_dir=CASSETTE_LIBRARY_DIR)
     def test_all_operations(self):
         """Successfully calls every operation with basic options.  The exceptions are the image import and export

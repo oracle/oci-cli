@@ -12,6 +12,8 @@ import vcr
 import os
 import pytest
 from common_util import ignored_commands
+from tests.util import target_config   # noqa: F401
+from conftest import runner
 
 # Commands which we skip evaluation of because they don't have the JSON input
 
@@ -19,6 +21,9 @@ from common_util import ignored_commands
 IGNORE_COMMANDS_LOCATION = 'tests/resources/json_ignore_command_list.txt'
 
 ALLOW_JSON_TEST_FAILURES_ENV_VAR = 'ALLOW_JSON_TEST_FAILURES'
+
+
+runner = runner()
 
 
 @pytest.fixture(autouse=True, scope='function')
@@ -53,6 +58,7 @@ def commands_list(service):
     return commands_list
 
 
+@pytest.mark.usefixtures("target_config")
 def test_all_commands_generate_skeleton(commands_list):
     failed_to_parse_commands = []
     commands_with_bad_json = []  # We don't expect any commands that emit an empty dict
@@ -79,8 +85,9 @@ none_mode_vcr = vcr.VCR(record_mode='none')
 # Test which invokes all the command using the request formed by invoking --generate-full-command-json-input option.
 # The main aim of this test is to verify if all the generated CLI code is function and CLI <-> PythonSDK interaction.
 # In this test, we use VCR with record mode none as to stop any out-going http request.
+@pytest.mark.usefixtures("target_config")
 @none_mode_vcr.use_cassette('invalid-file-path')
-def test_run_all_commands(runner, config_file, config_profile, tmpdir, ignored_extended_commands, commands_list):
+def test_run_all_commands(config_file, config_profile, tmpdir, ignored_extended_commands, commands_list):
     failed_commands = []
     for cmd in commands_list:
         if cmd not in ignored_extended_commands:
@@ -189,6 +196,7 @@ def _traverse_oci_cli(command, path, failed_commands, ignored_extended_commands)
                         failed_commands.append(path)
 
 
+@pytest.mark.usefixtures("target_config")
 def test_generate_param_json_input_for_all_complex_types(ignored_extended_commands):
     failed_commands = []
     _traverse_oci_cli(oci_cli.cli, [], failed_commands, ignored_extended_commands)

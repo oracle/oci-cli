@@ -7,6 +7,7 @@ import oci_cli
 import os
 import time
 import random
+import pytest
 from tests import tag_data_container
 from tests import test_config_container
 from tests import util
@@ -14,7 +15,7 @@ from tests import util
 CASSETTE_LIBRARY_DIR = 'services/identity/tests/cassettes'
 
 
-@util.slow
+@pytest.mark.slow
 def test_update_retire_reactivate_namespace_and_tag(identity_client, tag_namespace_and_tags):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('tag_management.yml'):
         if os.environ.get('OCI_CLI_TAG_MGMT_USE_EXISTING_TAG_AND_NAMESPACE'):

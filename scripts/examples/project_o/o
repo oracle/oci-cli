@@ -21,7 +21,7 @@ import fcntl
 import errno
 import datetime
 VERSION = "1.5"
-UPDATED = "2023-02-07"
+UPDATED = "2023-02-28"
 
 # ==============================================================================
 # Global variables
@@ -74,10 +74,10 @@ def usage(s=''):
     print("""
     o - a friendly helper for Oracle Cloud Infrastructure CLI
 
-    usage: o [<o options>] <oci-command> [<oci-options>] [go]
+    usage: o [<o options>] <oci-command> [<oci-options>] [.]
 
       <o options>
-         -o name#life#time{:.16}  Table output
+         -o name#life#time:.16  Table output
                             Show fields that match "name", "life" or "time"
                             Truncate "time" at 16 characters
          -o name,life,time  CSV output
@@ -85,25 +85,36 @@ def usage(s=''):
          -o /               Show all fields in text
          -o json            JSON format - unfiltered oci output
          -O                 Show OCIDs (not names) in output
-         -i <infile>        Take input from <infile>;  -i - for stdin""")
-    if s == "help":
-        print("""
-         -q            quiet mode - suppress headers, expanded oci command
-                       Useful when sending results to pipe or redirect
+         -i <infile>        Take JSON input from <infile>;  "o -i -" for stdin
 
-         ocids "name"  Show saved OCIDs for resources matching "name"
-
-         prune "name"  Remove saved OCIDs for resources matching "name",
-                       or everything under compartment "name"
-
-         help          This help.  Use "--help go" for oci help""")
-    print("""
       <oci-command>    The oci "service resource action" specification
       <oci-options>    Options and parameters for <oci-command>
                        These will be expanded into a more correct oci command
 
-      go               Run the oci command if the line ends with "go" (or ".")
+      . or go          Run the oci command if the line ends with "." (or "go")
 
+      o help           More "o" options.  Use "--help ." to get oci help""")
+
+    if s == "help":
+        print("""
+    More "o" options:
+         -q            Suppress headers, non-"data" results from output
+                       Useful when piping results other commands
+         -Q            Suppress display of "oci" command line
+
+      o oci_commands   Build (or rebuild) the $HOME/.oci/oci_commands file
+
+      o <tenancy-ocid> Set up $HOME/.oci/ocids file with compartment-ocids
+                       from a tenancy.  Use this for first-time setup, or to add
+                       additional tenancies.  Remember to set OCI_CLI_PROFILE
+                       (or use --profile) for different tenancies.
+
+      o ocids "name"   Show saved OCIDs for resources matching "name"
+
+      o prune "name"   Remove OCIDs for resources matching "name" from
+                       $HOME/.oci/ocids.  If "name" is a compartment, remove
+                       all OCIDS under compartment "name".""")
+    print("""
     o Version {} - {}
     """.format(VERSION, UPDATED))
     if s not in ('', 'help'):
@@ -416,12 +427,12 @@ def get_new_ocids_from_returned_items(items):
             if 'identifier' in i and 'id' not in i:
                 i['id'] = i['identifier']
 
-    if not items or 'id' not in items[0]:
-        return {}
+    #if not items or 'id' not in items[0]:
+    #    return {}
 
     collected = {}
     try:
-        for item in items:
+        for item in [ i for i in items if 'id' in i]:
             type = item['id'].split('.')[1] if '.' in item['id'] else ''
             # Special case: save AD-name:n because commands use name, not ocid
             ID = item['id']
@@ -434,8 +445,7 @@ def get_new_ocids_from_returned_items(items):
                 type = 'retentionrule'
 
             # Still need to validate with many OCID types:
-            #    cpe, cross-connect, fast-connect, ip-sec, local-peering, nsg,
-            #    virtual-circuit, par
+            #    cpe, cross-connect, fast-connect, ip-sec, virtual-circuit
             if type == 'availabilitydomain':
                 alias = item['name'][-1:]
             elif 'object-name' in item:
@@ -865,6 +875,10 @@ def get_matching_ocid(option, value):
             opt_type = 'dns-zone'
         elif opt_type == 'identityprovider':
             opt_type = 'saml2idp'
+        elif opt_type == 'peer' and 'local' in oci_command_line:
+            opt_type = 'localpeeringgateway'
+        elif opt_type == 'peer' and 'remote' in oci_command_line:
+            opt_type = 'remotepeeringconnection'
         # Add new idtypes to the above when the --whatever-id does not match ocid1.whatevs...
 
     matches = [item for k, item in ocid.items() if
@@ -927,7 +941,7 @@ def value_parameter(option, value):
         return match
 
     # Provide opc-next-page if --page next
-    if option == '--page' and 'next' in value:
+    if option in ('--page', '--start') and 'next' in value:
         for k, item in ocid.items():
             if item['alias'] == 'opc-next-page':
                 return item['id']
@@ -961,7 +975,7 @@ def value_parameter(option, value):
 
     # Special help with structured-search --search-query "where compartmentId = ocid"
     if option == '--query-text':
-        match = re.findall(r"(c\w*) *= *('*\w+'*)", value, flags=re.IGNORECASE)
+        match = re.findall(r"(\bc\w*) *= *('*\w+'*)", value, flags=re.IGNORECASE)
         for (m, spec) in match:
             if m.lower() == 'compartmentid'[:len(m)]:
                 if m.lower() != 'compartmentid':
@@ -1061,7 +1075,7 @@ def get_fields_from(spec, keynames):
         if user_out_spec != default_out_spec:
             print(bold("no matching output fields: " + spec), file=sys.stderr)
         return get_fields_from("/", keynames)
-    if debug: print("COLUMN:", column)     # noqa: E701
+    # if debug: print("COLUMN:", column)     # noqa: E701
     return fields, sep
 
 # ==============================================================================
@@ -1316,13 +1330,14 @@ def output(jsonOut):
         kfmt = '{:>' + kmax + '.' + kmax + '}'
         nondata = '\n'
         for k in jsonOut:
-            if k == 'opc-next-page':
+            if k in ('opc-next-page', 'next-start-with'):
                 # Save opc-next-page to ocids file
                 results.append({"type": "",
                                 "alias": "opc-next-page",
                                 "name": "opc-next-page",
-                                "id": jsonOut['opc-next-page']})
-                nondata += 'For next page:  --page next\n'
+                                "id": jsonOut[k]})
+                s = '--page' if k == 'opc-next-page' else '--start';
+                nondata += 'For next page:  ' + s + ' next\n'
             elif not quiet and k != 'data' and jsonOut[k]:
                 nondata += kfmt.format(k) + '  '
                 if type(jsonOut[k]) is str:
@@ -1992,7 +2007,7 @@ for i in range(len(CLI_params)):
         oci_command_line += ' --region ' + CLI_params[i + 1]
         break
     if option_parameter(a) == '--profile':
-        oci_command_line += '--profile ' + CLI_params[i + 1]
+        oci_command_line += ' --profile ' + CLI_params[i + 1]
 region_code, region = get_region()
 
 # Interpret remaining command line arguments based on command:

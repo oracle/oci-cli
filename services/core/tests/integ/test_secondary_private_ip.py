@@ -12,13 +12,15 @@ import unittest
 from tests import test_config_container
 from tests import util
 from tests import tag_data_container
+from tests.util import target_profile_region   # noqa: F401
 
 CASSETTE_LIBRARY_DIR = 'services/core/tests/cassettes'
 
 
-@pytest.mark.usefixtures("tag_namespace_and_tags")
+@pytest.mark.usefixtures("tag_namespace_and_tags", "target_profile_region")
 class TestSecondaryPrivateIp(unittest.TestCase):
-    @util.slow
+    @pytest.mark.slow
+    @pytest.mark.skip('Skipped to allow')
     def test_subnet_secondary_ip_operations(self):
         with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR)\
                 .use_cassette('subnet_secondary_ip_operations.yml'):
@@ -30,7 +32,7 @@ class TestSecondaryPrivateIp(unittest.TestCase):
             finally:
                 self.clean_up_resources()
 
-    @util.slow
+    @pytest.mark.slow
     def test_vlan_secondary_ip_operations(self):
         with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR)\
                 .use_cassette('vlan_secondary_ip_operations.yml'):

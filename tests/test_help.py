@@ -14,6 +14,32 @@ def commands_list(service):
     return commands_list
 
 
+'''runner_temp = None
+
+
+@pytest.fixture
+def pytest_configure(runner):
+    global runner_temp
+    runner_temp = runner()
+
+
+runner = runner_temp
+ runner = runner()
+
+
+
+@pytest.fixture
+def runner_fixture(runner):
+    return runner
+'''
+
+
+# runner = runner()
+'''
+@pytest.fixture(name="runner", autouse=True)
+def runner_fixture():
+    return runner()
+'''
 runner = runner()
 
 

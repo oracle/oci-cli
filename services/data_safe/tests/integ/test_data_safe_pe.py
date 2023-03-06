@@ -11,6 +11,7 @@ import data_safe_util
 
 from tests import util
 from tests import test_config_container
+from conftest import runner
 
 
 # These exist in CLITestCompartment in adscorp_tenant01
@@ -25,6 +26,8 @@ FAILED_STATE = 'FAILED'
 COMPARTMENT_ID = 'ocid1.compartment.oc1..aaaaaaaaoqv2smvc4kii7uudwyuqgh6mkocmbe5nvtn2yd2krfwwmh3c5mza'
 CHANGE_COMPARTMENT_ID = 'ocid1.compartment.oc1..aaaaaaaanlj6vtiefseqgwsabbuvebxo7nojc25i46uahifmdpqaddsj7rmq'
 
+runner = runner()
+
 
 @pytest.fixture(autouse=True, scope='function')
 def vcr_fixture(request):
@@ -33,7 +36,7 @@ def vcr_fixture(request):
 
 
 @pytest.mark.skip("DEXREQ-1712")
-def test_crud(runner, config_file, config_profile):
+def test_crud(config_file, config_profile):
     pe_id = _create_pe(config_file, config_profile, runner)
 
     _get_pe(config_file, config_profile, pe_id, runner)
@@ -45,7 +48,7 @@ def test_crud(runner, config_file, config_profile):
     _delete_pe(config_file, config_profile, pe_id, runner)
 
 
-def test_crud_sync(runner, config_file, config_profile):
+def test_crud_sync(config_file, config_profile):
     pe_id = _create_pe(config_file, config_profile, runner, is_async=False)
 
     _get_pe(config_file, config_profile, pe_id, runner)
@@ -58,12 +61,12 @@ def test_crud_sync(runner, config_file, config_profile):
 
 
 @pytest.mark.skip("DEXREQ-1712")
-def test_create_error(runner, config_file, config_profile):
+def test_create_error(config_file, config_profile):
     _create_pe(config_file, config_profile, runner, completion_state=FAILED_STATE, private_ip="1.1.1.1.1", display_name="CLITest_Failed_PE")
 
 
 @pytest.mark.skip(reason='DS-5401: CLI: PE "change-compartment" returns 404')
-def test_change_compartment(runner, config_file, config_profile):
+def test_change_compartment(config_file, config_profile):
     pe_id = _create_pe(config_file, config_profile, runner)
 
     change_comp_params = [

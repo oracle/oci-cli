@@ -8,12 +8,15 @@ import os.path
 import pytest
 import oci_cli
 import json
+from conftest import runner
 
 from tests import util
 from tests import test_config_container
 from services.object_storage.tests.common.constants import CASSETTE_LIBRARY_DIR
 
 created_buckets = 'created_buckets'
+
+runner = runner()
 
 
 @pytest.fixture
@@ -52,7 +55,7 @@ def invoke_new(commands, debug=False, ** args):
     return util.invoke_command(commands, ** args)
 
 
-def test_run_all_operations(vcr_fixture, runner, config_file, config_profile, debug, test_id_recorded, delete_pending_buckets):
+def test_run_all_operations(vcr_fixture, config_file, config_profile, debug, test_id_recorded, delete_pending_buckets):
     """Successfully calls every operation with required arguments only."""
     bucket_name = 'cli_retentionrule_temp_bucket_' + test_id_recorded + ('_debug' if debug else '_no_debug')
 

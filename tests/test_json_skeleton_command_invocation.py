@@ -10,6 +10,8 @@ import random
 import shutil
 from . import test_config_container
 from . import util
+from tests.util import target_profile_region   # noqa: F401
+from tests.util import target_config   # noqa: F401
 
 
 def json_template_list_buckets(namespace):
@@ -136,6 +138,7 @@ def network_resources():
         util.wait_until(['network', 'vcn', 'get', '--vcn-id', vcn_ocid], 'TERMINATED', max_wait_seconds=600, succeed_if_not_found=True)
 
 
+@pytest.mark.usefixtures("target_config")
 @test_config_container.RecordReplayWithNoClickContext('json_skeleton_command_invoke')
 def test_list_buckets():
     result = invoke(['os', 'bucket', 'list', '--from-json', 'file://{}'.format(os.path.join(INPUT_FILE_FOLDER, 'list_buckets.json'))])
@@ -143,6 +146,7 @@ def test_list_buckets():
     assert len(parsed_result['data']) >= 0
 
 
+@pytest.mark.usefixtures("target_config")
 @test_config_container.RecordReplayWithNoClickContext('json_skeleton_command_invoke')
 def test_list_buckets_with_override():
     # This will use the "testing-fake-namespace" as it was directly provided
@@ -151,6 +155,7 @@ def test_list_buckets_with_override():
 
 
 # This test cannot be mocked because VCR doesn't play nicely with the FileReadCallbackStream implementation in the Python SDK
+@pytest.mark.usefixtures("target_config")
 def test_create_update_bucket_and_put_object():
     base_path = os.path.join('tests', 'resources', 'json_input')
     bucket_name = 'json_skeleton_bucket_{}'.format(random.randint(0, 10000))
@@ -190,6 +195,7 @@ def test_create_update_bucket_and_put_object():
     invoke(['os', 'bucket', 'delete', '--namespace', util.NAMESPACE, '--name', bucket_name, '--force'])
 
 
+@pytest.mark.usefixtures("target_config")
 def test_create_with_complex_param_in_json(network_resources):
     with test_config_container.create_vcr().use_cassette('json_skeleton_command_invoke_create_with_complex_param_in_json.yml'):
         input_file_path = os.path.join(INPUT_FILE_FOLDER, 'create-security-list.json')
@@ -256,7 +262,8 @@ def test_create_with_complex_param_in_json(network_resources):
                 raise AssertionError("test_create_with_complex_param_in_json data assertions failed.")
 
 
-@util.slow
+@pytest.mark.slow
+@pytest.mark.usefixtures('target_profile_region', 'target_config')
 def test_launch_instance(network_resources):
     with test_config_container.create_vcr().use_cassette('json_skeleton_command_invoke_launch_instance.yml'):
         launch_instance_json = 'file://{}'.format(os.path.join('tests', 'resources', 'json_input', 'launch_instance.json'))
@@ -324,6 +331,7 @@ def test_launch_instance(network_resources):
         util.wait_until(['compute', 'instance', 'get', '--instance-id', instance_ocid], 'TERMINATED', max_wait_seconds=1200, succeed_if_not_found=True)
 
 
+@pytest.mark.usefixtures("target_config")
 def test_generate_example_metadata_on_object_put():
     result = invoke(['os', 'object', 'put', '--generate-param-json-input', 'metadata'])
     parsed_result = json.loads(result.output)
@@ -335,6 +343,7 @@ def test_generate_example_metadata_on_object_put():
     assert expected_json == parsed_result
 
 
+@pytest.mark.usefixtures("target_config")
 def test_generate_example_metadata_on_bucket_create_update():
     create_result = invoke(['os', 'bucket', 'create', '--generate-param-json-input', 'metadata'])
     update_result = invoke(['os', 'bucket', 'update', '--generate-param-json-input', 'metadata'])
@@ -347,6 +356,7 @@ def test_generate_example_metadata_on_bucket_create_update():
     assert expected_json == json.loads(update_result.output)
 
 
+@pytest.mark.usefixtures("target_config")
 def test_generate_example_extended_metadata_on_instance_launch():
     result = invoke(['compute', 'instance', 'launch', '--generate-param-json-input', 'extended-metadata'])
     parsed_result = json.loads(result.output)
@@ -364,6 +374,7 @@ def test_generate_example_extended_metadata_on_instance_launch():
     assert expected_json == parsed_result
 
 
+@pytest.mark.usefixtures("target_config")
 def test_generate_example_json_create_update_policy():
     create_result = invoke(['iam', 'policy', 'create', '--generate-param-json-input', 'statements'])
     update_result = invoke(['iam', 'policy', 'update', '--generate-param-json-input', 'statements'])
@@ -374,6 +385,7 @@ def test_generate_example_json_create_update_policy():
     assert expected_json == json.loads(update_result.output)
 
 
+@pytest.mark.usefixtures("target_config")
 def test_generate_full_command_json_rc_alias():
     availability_domain_result = invoke(['db', 'system', 'launch', '--generate-full-command-json-input'])
 

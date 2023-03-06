@@ -6,8 +6,11 @@ import oci_cli
 import pytest
 from tests import util
 from tests import test_config_container
+from conftest import runner
 
 CASSETTE_LIBRARY_DIR = 'services/data_science/tests/cassettes'
+
+runner = runner()
 
 
 @pytest.fixture(autouse=True, scope='function')
@@ -16,7 +19,7 @@ def vcr_fixture(request):
         yield
 
 
-def test_head_model_artifact(runner, config_file, config_profile):
+def test_head_model_artifact(config_file, config_profile):
     model_id = "ocid1.datasciencemodel.oc1.iad.amaaaaaav66vvniayzhtlhlj4pws4hqogmbphhag5mp2umdguzucfoc5ouhq"
     params = [
         'data-science', 'model', 'head-model-artifact',

@@ -8,10 +8,8 @@ import oci
 import services.object_storage.src.oci_cli_object_storage as oci_cli_object_storage
 import pytest
 
-from tests import util
 
-
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_list_objects_does_not_retry_on_client_error():
     side_effect = [oci.exceptions.ServiceError(400, "blah", {}, "blah")]
 
@@ -36,7 +34,7 @@ def test_list_objects_does_not_retry_on_client_error():
     assert exception.value.status == 400
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_list_objects_does_not_retry_on_random_exception():
     side_effect = [Exception()]
 

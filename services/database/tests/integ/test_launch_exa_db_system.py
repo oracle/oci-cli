@@ -10,6 +10,9 @@ from tests import test_config_container
 from common_test_database import invoke, networking_cleanup, networking, match_on
 from common_test_database import CASSETTE_LIBRARY_DIR, ADMIN_PASSWORD, DB_SYSTEM_PROVISIONING_TIME_SEC, DB_VERSION
 from common_test_database import DB_SYSTEM_CPU_CORE_COUNT, DB_SYSTEM_DB_EXTREME_EDITION, SKIP_CLEAN_UP_RESOURCES
+from conftest import runner
+
+runner = runner()
 
 
 @pytest.fixture(autouse=True, scope='module')
@@ -19,7 +22,7 @@ def vcr_fixture(request):
 
 
 @pytest.fixture(scope='module')
-def networking_test_launch_exa_db_system(runner, config_file, config_profile, network_client, request):
+def networking_test_launch_exa_db_system(config_file, config_profile, network_client, request):
     subnet_ocid_1, subnet_ocid_2, default_route_table_ocid, ig_ocid, vcn_ocid, networking_dict = networking(network_client, "_exa_db_system")
     subnet_response = network_client.get_subnet(subnet_ocid_1)
     networking_dict['availability_domain'] = subnet_response.data.availability_domain
@@ -27,7 +30,7 @@ def networking_test_launch_exa_db_system(runner, config_file, config_profile, ne
     networking_cleanup(runner, config_file, config_profile, network_client, subnet_ocid_1, subnet_ocid_2, default_route_table_ocid, ig_ocid, vcn_ocid)
 
 
-def test_launch_exa_db_system(runner, config_file, config_profile, networking_test_launch_exa_db_system):
+def test_launch_exa_db_system(config_file, config_profile, networking_test_launch_exa_db_system):
     DB_SYSTEM_SHAPE = 'Exadata.Quarter2.92'
 
     # provision DB systems

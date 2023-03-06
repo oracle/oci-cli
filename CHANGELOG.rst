@@ -6,6 +6,72 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.23.3 - 2023-03-07
+--------------------
+Added
+~~~~~
+* Database service
+
+  * Support for autonomous database long-term backup schedule
+
+    * ``oci db autonomous-database update --long-term-backup-schedule``
+    * ``oci db autonomous-database update --long-term-backup-schedule``
+
+  * Support for autonomous database long-term backup
+
+    * ``oci db autonomous-database-backup create --retention-period-in-days --is-long-term-backup``
+    * ``oci db autonomous-database-backup update``
+    * ``oci db autonomous-database-backup delete``
+
+* Support for Model Deployment resource to use a customized container image containing runtime dependencies of ML Model and custom web server to handle inference requests in the Data Science service
+
+  * ``oci data-science model-deployment create``
+  * ``oci data-science model-deployment update``
+  * ``oci data-science model-deployment activate``
+  * ``oci data-science model-deployment get``
+  * ``oci data-science model-deployment list``
+
+* Support for Disaster Recovery in the Oracle Content Management service
+
+  * ``oci oce oce-instance create --dr-region``
+  * ``oci oce oce-instance update --dr-region --lifecycle-details``
+
+* Operations Insights service
+
+  * Support for Full Features for Autonomous Databases
+
+    * ``oci opsi database-insights enable-autonomous-database-insight-advanced-features``
+    * ``oci opsi database-insights disable-autonomous-database-insight-advanced-features``
+    * ``oci opsi database-insights change-autonomous-database-insight-advanced-features``
+
+  * Support for new optional parameters
+
+    * ``oci opsi database-insights summarize-database-insight-resource-capacity-trend --high-utilization-threshold --low-utilization-threshold``
+    * ``oci opsi database-insights summarize-database-insight-resource-forecast-trend --high-utilization-threshold --low-utilization-threshold``
+    * ``oci opsi database-insights summarize-database-insight-resource-statistics --high-utilization-threshold --low-utilization-threshold``
+    * ``oci opsi database-insights summarize-database-insight-resource-usage --cdb-name``
+    * ``oci opsi database-insights summarize-database-insight-resource-usage-trend --cdb-name``
+    * ``oci opsi database-insights summarize-database-insight-resource-utilization-insight --cdb-name --high-utilization-threshold --low-utilization-threshold``
+    * ``oci opsi database-insights summarize-sql-insights --vmcluster-name``
+
+* Support for new optional flag in instance update API of Compute Service
+
+  * ``oci compute instance update --update-operation-constraint``
+
+* Support for new parameters in Management Agent's service
+
+  * ``oci management-agent agent summarize-agent-counts --compartment-id-in-subtree``
+  * ``oci management-agent agent summarize-plugin-counts --compartment-id-in-subtree``
+  * ``oci management-agent agent list --gateway-id``
+
+Changed
+~~~~~~~
+* Documentation change for Language codes supported as Text Translation now supports Hebrew and Greek as well and addition of support for auto-detection in AI Language text analyze with pretrained models
+
+* Changed no passphrase indication for RSA keys from empty to "N/A"
+  * ``oci setup config``
+  * ``oci setup keys``
+
 3.23.2 - 2023-02-28
 --------------------
 Added

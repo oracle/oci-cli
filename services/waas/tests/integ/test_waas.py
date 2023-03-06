@@ -7,9 +7,11 @@ import oci_cli
 import pytest
 from tests import util
 from tests import test_config_container
+from conftest import runner
 
 CASSETTE_LIBRARY_DIR = 'services/waas/tests/cassettes'
 util.set_admin_pass_phrase()
+runner = runner()
 
 
 @pytest.fixture(autouse=True, scope='function')
@@ -18,7 +20,7 @@ def vcr_fixture(request):
         yield
 
 
-def test_policy_crud(runner, config_file, config_profile):
+def test_policy_crud(config_file, config_profile):
     domain = util.random_name('cli-domain', insert_underscore=False) + '.oci.example.com'
     origin = util.random_name('cli-domain', insert_underscore=False) + '.origin.oci.example.com'
 

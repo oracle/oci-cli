@@ -7608,6 +7608,7 @@ If the instance is running when you change the shape, the instance is rebooted.
 
 Example: `VM.Standard2.1`""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--update-operation-constraint', type=custom_types.CliCaseInsensitiveChoice(["ALLOW_DOWNTIME", "AVOID_DOWNTIME"]), help=u"""The parameter acts as a fail-safe to prevent unwanted downtime when updating a running instance. The default is ALLOW_DOWNTIME. * `ALLOW_DOWNTIME` - Compute might reboot the instance while updating the instance if a reboot is required. * `AVOID_DOWNTIME` - If the instance is in running state, Compute tries to update the instance without rebooting                   it. If the instance requires a reboot to be updated, an error is returned and the instance                   is not updated. If the instance is stopped, it is updated and remains in the stopped state.""")
 @cli_util.option('--instance-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--fault-domain', help=u"""A fault domain is a grouping of hardware and infrastructure within an availability domain. Each availability domain contains three fault domains. Fault domains let you distribute your instances so that they are not on the same physical hardware within a single availability domain. A hardware failure or Compute hardware maintenance that affects one fault domain does not affect instances in other fault domains.
 
@@ -7637,7 +7638,7 @@ Example: `2018-05-25T21:10:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIM
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'UpdateInstanceAgentConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'shape-config': {'module': 'core', 'class': 'UpdateInstanceShapeConfigDetails'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'launch-options': {'module': 'core', 'class': 'UpdateLaunchOptions'}, 'availability-config': {'module': 'core', 'class': 'UpdateInstanceAvailabilityConfigDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, capacity_reservation_id, defined_tags, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, shape_config, instance_options, fault_domain, launch_options, availability_config, time_maintenance_reboot_due, if_match):
+def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, capacity_reservation_id, defined_tags, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, shape_config, update_operation_constraint, instance_options, fault_domain, launch_options, availability_config, time_maintenance_reboot_due, if_match):
 
     if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
@@ -7678,6 +7679,9 @@ def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
     if shape_config is not None:
         _details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
+
+    if update_operation_constraint is not None:
+        _details['updateOperationConstraint'] = update_operation_constraint
 
     if instance_options is not None:
         _details['instanceOptions'] = cli_util.parse_json_parameter("instance_options", instance_options)

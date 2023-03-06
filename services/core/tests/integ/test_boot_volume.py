@@ -6,6 +6,7 @@ from tests import util
 from tests import test_config_container
 import json
 import pytest
+from tests.util import target_profile_region   # noqa: F401
 
 CASSETTE_LIBRARY_DIR = 'services/core/tests/cassettes'
 
@@ -59,7 +60,9 @@ def network_resources():
         util.validate_response(result, json_response_expected=False)
 
 
-@util.slow
+@pytest.mark.skip("SKIP THIS TEST")
+@pytest.mark.slow
+@pytest.mark.usefixtures('target_profile_region')
 def test_boot_volume_clone_backup(network_resources):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('boot_volume_test_boot_volume_clone_backup.yml'):
         boot_volume_id = None

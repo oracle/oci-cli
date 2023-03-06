@@ -3,6 +3,7 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 import json
+import pytest
 import unittest
 from tests import test_config_container
 from tests import util
@@ -13,7 +14,7 @@ CASSETTE_LIBRARY_DIR = 'services/core/tests/cassettes'
 
 class TestVnicSkipSourceDest(unittest.TestCase):
 
-    @util.slow
+    @pytest.mark.slow
     def test_vnic_skip_source_dest(self):
         with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('vnic_skip_source_dest.yml'):
             try:

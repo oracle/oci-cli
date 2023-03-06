@@ -114,7 +114,7 @@ operationsinsights_cli.host_insights_group.commands.pop(operationsinsights_cli.e
 @operationsinsights_cli.database_insights_group.command(name=operationsinsights_cli.list_database_configurations.name, help=operationsinsights_cli.list_database_configurations.help)
 @cli_util.option('--em-bridge-id', help=u"""OPSI Enterprise Manager Bridge OCID""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}, 'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'exadata-insight-id': {'module': 'opsi', 'class': 'list[string]'}, 'cdb-name': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'operationsinsights', 'class': 'DatabaseConfigurationCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}, 'database-id': {'module': 'opsi', 'class': 'list[string]'}, 'exadata-insight-id': {'module': 'opsi', 'class': 'list[string]'}, 'cdb-name': {'module': 'opsi', 'class': 'list[string]'}, 'host-name': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'vmcluster-name': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'DatabaseConfigurationCollection'})
 @cli_util.wrap_exceptions
 def list_database_configurations_extended(ctx, **kwargs):
     if 'em_bridge_id' in kwargs:
@@ -358,7 +358,7 @@ cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.operation
 @operationsinsights_cli.host_insights_group.command(name=operationsinsights_cli.list_host_configurations.name, help=operationsinsights_cli.list_host_configurations.help)
 @cli_util.option('--em-bridge-id', help=u"""Unique Enterprise Manager bridge identifier""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}, 'exadata-insight-id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'host-type': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'operationsinsights', 'class': 'HostConfigurationCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}, 'exadata-insight-id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'host-type': {'module': 'opsi', 'class': 'list[string]'}, 'vmcluster-name': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'HostConfigurationCollection'})
 @cli_util.wrap_exceptions
 def list_host_configurations_extended(ctx, **kwargs):
     if 'em_bridge_id' in kwargs:
@@ -507,3 +507,77 @@ operationsinsights_cli.opsi_configurations_group.commands.pop(operationsinsights
 
 # Remove update from oci opsi opsi-configurations
 operationsinsights_cli.opsi_configurations_group.commands.pop(operationsinsights_cli.update_opsi_configuration.name)
+
+
+# Remove change-autonomous-database-insight-advanced-features from oci opsi database-insights
+operationsinsights_cli.database_insights_group.commands.pop(operationsinsights_cli.change_autonomous_database_insight_advanced_features.name)
+
+
+# Remove change-autonomous-database-insight-advanced-features-credentials-by-source from oci opsi database-insights
+operationsinsights_cli.database_insights_group.commands.pop(operationsinsights_cli.change_autonomous_database_insight_advanced_features_credentials_by_source.name)
+
+
+# Remove enable-autonomous-database-insight-advanced-features from oci opsi database-insights
+operationsinsights_cli.database_insights_group.commands.pop(operationsinsights_cli.enable_autonomous_database_insight_advanced_features.name)
+
+
+# Remove enable-autonomous-database-insight-advanced-features-credentials-by-source from oci opsi database-insights
+operationsinsights_cli.database_insights_group.commands.pop(operationsinsights_cli.enable_autonomous_database_insight_advanced_features_credentials_by_source.name)
+
+
+@cli_util.copy_params_from_generated_command(operationsinsights_cli.change_autonomous_database_insight_advanced_features_credential_by_vault, params_to_exclude=['credential_details_credential_source_name', 'credential_details_password_secret_id', 'credential_details_role', 'credential_details_user_name'])
+@operationsinsights_cli.database_insights_group.command(name=operationsinsights_cli.change_autonomous_database_insight_advanced_features_credential_by_vault.name, help=operationsinsights_cli.change_autonomous_database_insight_advanced_features_credential_by_vault.help)
+@cli_util.option('--credential-source-name', required=True, help=u"""Credential source name that had been added in Management Agent wallet. This is supplied in the External Database Service. [required]""")
+@cli_util.option('--password-secret-id', help=u"""The secret [OCID] mapping to the database credentials.""")
+@cli_util.option('--role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL"]), help=u"""database user role.""")
+@cli_util.option('--user-name', help=u"""database user name.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'operationsinsights', 'class': 'ConnectionDetails'}})
+@cli_util.wrap_exceptions
+def change_autonomous_database_insight_advanced_features_credential_by_vault_extended(ctx, **kwargs):
+    if 'credential_source_name' in kwargs:
+        kwargs['credential_details_credential_source_name'] = kwargs['credential_source_name']
+        kwargs.pop('credential_source_name')
+
+    if 'password_secret_id' in kwargs:
+        kwargs['credential_details_password_secret_id'] = kwargs['password_secret_id']
+        kwargs.pop('password_secret_id')
+
+    if 'role' in kwargs:
+        kwargs['credential_details_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'user_name' in kwargs:
+        kwargs['credential_details_user_name'] = kwargs['user_name']
+        kwargs.pop('user_name')
+
+    ctx.invoke(operationsinsights_cli.change_autonomous_database_insight_advanced_features_credential_by_vault, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(operationsinsights_cli.enable_autonomous_database_insight_advanced_features_credential_by_vault, params_to_exclude=['credential_details_credential_source_name', 'credential_details_password_secret_id', 'credential_details_role', 'credential_details_user_name'])
+@operationsinsights_cli.database_insights_group.command(name=operationsinsights_cli.enable_autonomous_database_insight_advanced_features_credential_by_vault.name, help=operationsinsights_cli.enable_autonomous_database_insight_advanced_features_credential_by_vault.help)
+@cli_util.option('--credential-source-name', required=True, help=u"""Credential source name that had been added in Management Agent wallet. This is supplied in the External Database Service. [required]""")
+@cli_util.option('--password-secret-id', help=u"""The secret [OCID] mapping to the database credentials.""")
+@cli_util.option('--role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL"]), help=u"""database user role.""")
+@cli_util.option('--user-name', help=u"""database user name.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'operationsinsights', 'class': 'ConnectionDetails'}})
+@cli_util.wrap_exceptions
+def enable_autonomous_database_insight_advanced_features_credential_by_vault_extended(ctx, **kwargs):
+    if 'credential_source_name' in kwargs:
+        kwargs['credential_details_credential_source_name'] = kwargs['credential_source_name']
+        kwargs.pop('credential_source_name')
+
+    if 'password_secret_id' in kwargs:
+        kwargs['credential_details_password_secret_id'] = kwargs['password_secret_id']
+        kwargs.pop('password_secret_id')
+
+    if 'role' in kwargs:
+        kwargs['credential_details_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'user_name' in kwargs:
+        kwargs['credential_details_user_name'] = kwargs['user_name']
+        kwargs.pop('user_name')
+
+    ctx.invoke(operationsinsights_cli.enable_autonomous_database_insight_advanced_features_credential_by_vault, **kwargs)

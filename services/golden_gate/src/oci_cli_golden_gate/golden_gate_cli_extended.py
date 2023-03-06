@@ -91,7 +91,7 @@ def create_deployment_extended(ctx, **kwargs):
                                                                            .format(', --'.join(_missing_params)))
 
         if kwargs.get('admin_password') is None:
-            _ogg_details['adminPassword'] = click.prompt(text='Enter admin password', default='',
+            _ogg_details['adminPassword'] = click.prompt(text='Enter admin password', default=None,
                                                          hide_input=True, show_default=False, confirmation_prompt=True)
             if not _ogg_details['adminPassword']:
                 raise click.UsageError('Password cannot be whitespace or empty string')
@@ -140,7 +140,7 @@ def update_deployment_extended(ctx, **kwargs):
         if kwargs.get('admin_username') is not None:
             _ogg_details['adminUsername'] = kwargs.get('admin_username')
             if kwargs.get('admin_password') is None:
-                _ogg_details['adminPassword'] = click.prompt(text='Enter admin password', default='',
+                _ogg_details['adminPassword'] = click.prompt(text='Enter admin password', default=None,
                                                              hide_input=True, show_default=False,
                                                              confirmation_prompt=True)
                 if not _ogg_details['adminPassword']:
