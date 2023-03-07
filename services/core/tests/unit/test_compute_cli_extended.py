@@ -113,20 +113,20 @@ class TestCompute(unittest.TestCase):
 
     def test_image_import(self):
         result = util.invoke_command(['compute', 'image', 'import', 'from-object', '--operating-system'])
-        assert 'Error: --operating-system option' in result.output
+        assert 'Error: Option \'--operating-system\' requires' in result.output
 
         result = util.invoke_command(['compute', 'image', 'import', 'from-object', '--operating-system-version'])
-        assert 'Error: --operating-system-version option' in result.output
+        assert 'Error: Option \'--operating-system-version\' requires' in result.output
 
         result = util.invoke_command(['compute', 'image', 'import', 'from-object-uri', '--operating-system'])
-        assert 'Error: --operating-system option' in result.output
+        assert 'Error: Option \'--operating-system\' requires' in result.output
 
         result = util.invoke_command(['compute', 'image', 'import', 'from-object-uri', '--operating-system-version'])
-        assert 'Error: --operating-system-version option' in result.output
+        assert 'Error: Option \'--operating-system-version\' requires' in result.output
 
     def test_image_export(self):
         result = util.invoke_command(['compute', 'image', 'export', 'to-object', '--export-format'])
-        assert 'Error: --export-format option' in result.output
+        assert 'Error: Option \'--export-format\' requires' in result.output
 
         result = util.invoke_command(['compute', 'image', 'export', 'to-object-uri', '--export-format'])
-        assert 'Error: --export-format option' in result.output
+        assert 'Error: Option \'--export-format\' requires' in result.output

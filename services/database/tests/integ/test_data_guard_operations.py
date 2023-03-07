@@ -9,6 +9,9 @@ from tests import util
 from tests import test_config_container
 from common_test_database import invoke, networking_cleanup, networking, db_systems, db_systems_cleanup, get_database, match_on
 from common_test_database import CASSETTE_LIBRARY_DIR, ADMIN_PASSWORD, DATA_GUARD_ASSOCIATION_OPERATION_TIME
+from conftest import runner
+
+runner = runner()
 
 
 @pytest.fixture(autouse=True, scope='module')
@@ -18,26 +21,26 @@ def vcr_fixture(request):
 
 
 @pytest.fixture(scope='module')
-def networking_test_data_guard_operations(runner, config_file, config_profile, network_client, request):
+def networking_test_data_guard_operations(config_file, config_profile, network_client, request):
     subnet_ocid_1, subnet_ocid_2, default_route_table_ocid, ig_ocid, vcn_ocid, networking_dict = networking(network_client, "_test_data_guard_operations")
     yield networking_dict
     networking_cleanup(runner, config_file, config_profile, network_client, subnet_ocid_1, subnet_ocid_2, default_route_table_ocid, ig_ocid, vcn_ocid)
 
 
 @pytest.fixture(scope='module')
-def db_systems_test_data_guard_operations(runner, config_file, config_profile, networking_test_data_guard_operations, network_client, request):
+def db_systems_test_data_guard_operations(config_file, config_profile, networking_test_data_guard_operations, network_client, request):
     db_system_id_1, db_system_id_2 = db_systems(runner, config_file, config_profile, networking_test_data_guard_operations, network_client, request)
     yield [db_system_id_1, db_system_id_2]
     db_systems_cleanup(runner, config_file, config_profile, db_system_id_1, db_system_id_2)
 
 
 @pytest.fixture(scope='module')
-def database_test_data_guard_operations(runner, config_file, config_profile, db_systems_test_data_guard_operations):
+def database_test_data_guard_operations(config_file, config_profile, db_systems_test_data_guard_operations):
     return get_database(runner, config_file, config_profile, db_systems_test_data_guard_operations)
 
 
-@util.long_running
-def test_data_guard_operations(runner, config_file, config_profile, database_test_data_guard_operations, db_systems_test_data_guard_operations):
+@pytest.mark.long_running
+def test_data_guard_operations(config_file, config_profile, database_test_data_guard_operations, db_systems_test_data_guard_operations):
     # verify db system 1 is available
     params = [
         'system', 'get',

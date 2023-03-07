@@ -43,3 +43,4 @@ adm, vulnerability-audit, list-application-dependency-vulnerabilities
 resource-manager, job, create-plan-rollback-job
 devops, deploy-stage, create-shell-stage
 devops, deploy-stage, update-shell-stage
+management-agent, agent, list

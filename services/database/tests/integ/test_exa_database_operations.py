@@ -10,6 +10,10 @@ from tests import test_config_container
 from common_test_database import invoke, networking_cleanup, networking, exa_db_system, exa_db_system_cleanup, match_on
 from common_test_database import CASSETTE_LIBRARY_DIR, ADMIN_PASSWORD, DB_VERSION, DB_RECOVERY_WINDOW
 from common_test_database import DB_PROVISIONING_TIME_SEC, DB_TERMINATING_TIME_SEC
+from conftest import runner
+
+
+runner = runner()
 
 
 @pytest.fixture(autouse=True, scope='module')
@@ -19,21 +23,21 @@ def vcr_fixture(request):
 
 
 @pytest.fixture(scope='module')
-def networking_test_database_operations(runner, config_file, config_profile, network_client, request):
+def networking_test_database_operations(config_file, config_profile, network_client, request):
     subnet_ocid_1, subnet_ocid_2, default_route_table_ocid, ig_ocid, vcn_ocid, networking_dict = networking(network_client, "_exa_database_operations")
     yield networking_dict
     networking_cleanup(runner, config_file, config_profile, network_client, subnet_ocid_1, subnet_ocid_2, default_route_table_ocid, ig_ocid, vcn_ocid)
 
 
 @pytest.fixture(scope='module')
-def exa_db_systems_test_database_operations(runner, config_file, config_profile, networking_test_database_operations, network_client, request):
+def exa_db_systems_test_database_operations(config_file, config_profile, networking_test_database_operations, network_client, request):
     db_system_id_1 = exa_db_system(runner, config_file, config_profile, networking_test_database_operations, network_client, request)
     yield [db_system_id_1]
     exa_db_system_cleanup(runner, config_file, config_profile, db_system_id_1)
 
 
-@util.long_running
-def test_exa_database_operations(runner, config_file, config_profile, exa_db_systems_test_database_operations):
+@pytest.mark.long_running
+def test_exa_database_operations(config_file, config_profile, exa_db_systems_test_database_operations):
 
     # create database
     params = [

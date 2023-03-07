@@ -63,7 +63,7 @@ class TestChannelsCliExtend(unittest.TestCase):
                                       '--source-ssl-mode', 'dummy',
                                       '--target-db-system-id', 'dummy',
                                       '--target', 'dummy'])
-        assert 'Error: no such option: --target  (Possible options:' in result.output
+        assert 'Error: No such option: --target' in result.output
 
         # test all flattened target parameters
         result = util.invoke_command(['mysql', 'channel', 'create-from-mysql',
@@ -89,7 +89,7 @@ class TestChannelsCliExtend(unittest.TestCase):
 
         # test --target-db-system-id is not allowed
         result = util.invoke_command(['mysql', 'channel', 'update-from-mysql', '--target-db-system-id', 'dummy'])
-        assert 'Error: no such option: --target-db-system-id' in result.output
+        assert 'Error: No such option: --target-db-system-id' in result.output
 
         # test flattened target parameters
         result = util.invoke_command(['mysql', 'channel', 'update-from-mysql',

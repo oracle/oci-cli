@@ -366,7 +366,7 @@ def batch_detect_language_text_classification(ctx, from_json, documents, compart
 @batch_language_translation_group.command(name=cli_util.override('ai.batch_language_translation.command_name', 'batch-language-translation'), help=u"""Translate text to other language over pre-deployed model. Use state of the art neural machine translation to translate text between more than 15 languages. Limitations:   - A batch may have up to 100 records.   - A record may be up to 5000 characters long.   - The total of characters to process in a request can be up to 20,000 characters. \n[Command Reference](batchLanguageTranslation)""")
 @cli_util.option('--documents', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of documents for translation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that calls the API, inference will be served from pre trained model""")
-@cli_util.option('--target-language-code', help=u"""Language code per the [ISO 639-1] standard.""")
+@cli_util.option('--target-language-code', help=u"""Language code supported Automatically detect language - auto Arabic - ar Brazilian Portuguese -  pt-BR Czech - cs Danish - da Dutch - nl English - en Finnish - fi French - fr Canadian French - fr-CA German - de Italian - it Japanese - ja Korean - ko Norwegian - no Polish - pl Romanian - ro Simplified Chinese - zh-CN Spanish - es Swedish - sv Traditional Chinese - zh-TW Turkish - tr Greek - el Hebrew - he""")
 @json_skeleton_utils.get_cli_json_input_option({'documents': {'module': 'ai_language', 'class': 'list[TextDocument]'}})
 @cli_util.help_option
 @click.pass_context
@@ -1254,11 +1254,9 @@ def delete_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@detect_dominant_language_group.command(name=cli_util.override('ai.detect_dominant_language.command_name', 'detect-dominant-language'), help=u"""**Deprecated**: This API will be retired Tuesday, 10 Oct 2023 00:00:00 GMT. We recommend you replace this API with the batch API, [BatchDetectDominantLanguage].
+@detect_dominant_language_group.command(name=cli_util.override('ai.detect_dominant_language.command_name', 'detect-dominant-language'), help=u"""This API will be retired on Monday, 10 Oct 2023 00:00:00 GMT The API returns the detected language and a related confidence score (between 0 and 1).
 
-The DetectDominantLanguage API returns the detected language and a related confidence score (between 0 and 1).
-
-[List of supported languages]
+[List of supported languages.]
 
 Limitations: - A record may be up to 1000 characters long. \n[Command Reference](detectDominantLanguage)""")
 @cli_util.option('--text', required=True, help=u"""Document text for detect language.""")
@@ -1283,9 +1281,7 @@ def detect_dominant_language(ctx, from_json, text):
     cli_util.render_response(result, ctx)
 
 
-@detect_language_entities_group.command(name=cli_util.override('ai.detect_language_entities.command_name', 'detect-language-entities'), help=u"""**Deprecated**: This API will be retired Tuesday, 10 Oct 2023 00:00:00 GMT. We recommend you replace this API with the batch API, [BatchDetectLanguageEntities].
-
-The DetectLanguageEntities API extracts entities in text records. For each entity, its type and confidence score (between 0 and 1) is returned.
+@detect_language_entities_group.command(name=cli_util.override('ai.detect_language_entities.command_name', 'detect-language-entities'), help=u"""This API will be retired on Monday, 10 Oct 2023 00:00:00 GMT The API extracts entities in text records. For each entity, its type and confidence score (between 0 and 1) is returned.
 
 Limitations: - A text may be up to 1000 characters long. \n[Command Reference](detectLanguageEntities)""")
 @cli_util.option('--text', required=True, help=u"""Document text for detect entities.""")
@@ -1316,9 +1312,7 @@ def detect_language_entities(ctx, from_json, text, model_version, is_pii):
     cli_util.render_response(result, ctx)
 
 
-@detect_language_key_phrases_group.command(name=cli_util.override('ai.detect_language_key_phrases.command_name', 'detect-language-key-phrases'), help=u"""**Deprecated**: This API will be retired Tuesday, 10 Oct 2023 00:00:00 GMT. We recommend you replace this API with the batch API, [BatchDetectLanguageKeyPhrases].
-
-The DetectLanguageKeyPhrases API extracts key-phrases in text records. For each key-phrase, a score (between 0 and 1) is returned that highlights the importance of the key-phrase in the context of the text.
+@detect_language_key_phrases_group.command(name=cli_util.override('ai.detect_language_key_phrases.command_name', 'detect-language-key-phrases'), help=u"""This API will be retired on Monday, 10 Oct 2023 00:00:00 GMT The API extracts key-phrases in text records. For each key-phrase, a score (between 0 and 1) is returned that highlights the importance of the key-phrase in the context of the text.
 
 Limitations: - A record may be up to 1000 characters long. \n[Command Reference](detectLanguageKeyPhrases)""")
 @cli_util.option('--text', required=True, help=u"""Document text for detect keyPhrases.""")
@@ -1343,9 +1337,7 @@ def detect_language_key_phrases(ctx, from_json, text):
     cli_util.render_response(result, ctx)
 
 
-@detect_language_sentiments_group.command(name=cli_util.override('ai.detect_language_sentiments.command_name', 'detect-language-sentiments'), help=u"""**Deprecated**: This API will be retired Tuesday, 10 Oct 2023 00:00:00 GMT. We recommend you replace this API with the batch API, [BatchDetectLanguageSentiments].
-
-The DetectLanguageSentiments API extracts aspect-based in text records.
+@detect_language_sentiments_group.command(name=cli_util.override('ai.detect_language_sentiments.command_name', 'detect-language-sentiments'), help=u"""This API will be retired on Monday, 10 Oct 2023 00:00:00 GMT The API extracts aspect-based in text records.
 
 For aspect-based sentiment analysis, a set of aspects and their respective sentiment is returned.
 
@@ -1376,9 +1368,7 @@ def detect_language_sentiments(ctx, from_json, text):
     cli_util.render_response(result, ctx)
 
 
-@detect_language_text_classification_group.command(name=cli_util.override('ai.detect_language_text_classification.command_name', 'detect-language-text-classification'), help=u"""**Deprecated**: This API will be retired Tuesday, 10 Oct 2023 00:00:00 GMT. We recommend you replace this API with the batch API, [BatchDetectLanguageTextClassification].
-
-The DetectLanguageTextClassification API automatically classifies text into a set of pre-determined classes and sub-classes. A single class/subclass is returned for each record classified.
+@detect_language_text_classification_group.command(name=cli_util.override('ai.detect_language_text_classification.command_name', 'detect-language-text-classification'), help=u"""This API will be retired on Monday, 10 Oct 2023 00:00:00 GMT The API automatically classifies text into a set of pre-determined classes and sub-classes. A single class/subclass is returned for each record classified.
 
 Learn more about text classification [here].
 

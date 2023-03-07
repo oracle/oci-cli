@@ -11,6 +11,7 @@ import pytest
 import time
 import oci_cli
 from oci.object_storage import MultipartObjectAssembler
+from conftest import runner
 
 from tests import util, test_config_container
 from services.object_storage.tests.common.constants import CASSETTE_LIBRARY_DIR
@@ -21,6 +22,7 @@ DEFAULT_TEST_PART_SIZE = 10
 GENERATED_ENC_KEY_FILE = 'tests/temp/generated_enc_key_multipart.txt'
 
 temp_bucket_recorded = None
+runner = runner()
 
 
 def remove_file_at_loction(filename):
@@ -70,7 +72,7 @@ def content_output_file(test_id):
 
 
 @pytest.fixture(scope='module', autouse=True)
-def temp_bucket(runner, config_file, config_profile, object_storage_client, test_id):
+def temp_bucket(config_file, config_profile, object_storage_client, test_id):
     bucket_name = 'cli_temp_multipart_bucket_' + test_id
     print("Bucket Name: ", bucket_name)
 
@@ -125,8 +127,8 @@ def customer_key(request):
     return request.param
 
 
-@util.skip_while_rerecording
-def test_multipart_put_object(runner, config_file, config_profile, temp_bucket, content_input_file, customer_key, content_output_file):
+@pytest.mark.skip_while_rerecording
+def test_multipart_put_object(config_file, config_profile, temp_bucket, content_input_file, customer_key, content_output_file):
     object_name = 'a'
     ssec_params = []
     if customer_key:
@@ -172,8 +174,8 @@ def test_multipart_put_object(runner, config_file, config_profile, temp_bucket, 
     validate_response(result, json_response_expected=False)
 
 
-@util.skip_while_rerecording
-def test_multipart_put_ia_object(runner, config_file, config_profile, temp_bucket, content_input_file, customer_key, content_output_file):
+@pytest.mark.skip_while_rerecording
+def test_multipart_put_ia_object(config_file, config_profile, temp_bucket, content_input_file, customer_key, content_output_file):
     object_name = 'a-ia'
 
     ssec_params = []
@@ -220,8 +222,8 @@ def test_multipart_put_ia_object(runner, config_file, config_profile, temp_bucke
     validate_response(result, json_response_expected=False)
 
 
-@util.skip_while_rerecording
-def test_resume_multipart_upload(runner, config_file, config_profile, content_input_file, temp_bucket, object_storage_client, content_output_file):
+@pytest.mark.skip_while_rerecording
+def test_resume_multipart_upload(config_file, config_profile, content_input_file, temp_bucket, object_storage_client, content_output_file):
     object_name = 'a'
 
     upload_id = setup_resume_abort_multipart_upload(content_input_file, object_storage_client, util.NAMESPACE, temp_bucket, object_name)
@@ -263,8 +265,8 @@ def setup_resume_abort_multipart_upload(content_input_file, object_storage_clien
     return upload_id
 
 
-@util.skip_while_rerecording
-def test_abort_multipart_upload(runner, config_file, config_profile, temp_bucket, content_input_file, object_storage_client):
+@pytest.mark.skip_while_rerecording
+def test_abort_multipart_upload(config_file, config_profile, temp_bucket, content_input_file, object_storage_client):
     object_name = 'a_abort'
 
     upload_id = setup_resume_abort_multipart_upload(content_input_file, object_storage_client, util.NAMESPACE, temp_bucket, object_name)
@@ -279,8 +281,8 @@ def test_abort_multipart_upload(runner, config_file, config_profile, temp_bucket
     assert result.output == ''
 
 
-@util.skip_while_rerecording
-def test_multipart_upload_with_metadata(runner, config_file, config_profile, temp_bucket, content_input_file, customer_key, content_output_file):
+@pytest.mark.skip_while_rerecording
+def test_multipart_upload_with_metadata(config_file, config_profile, temp_bucket, content_input_file, customer_key, content_output_file):
     object_name = 'a_metadata'
 
     ssec_params = []
@@ -323,7 +325,7 @@ def test_multipart_upload_with_metadata(runner, config_file, config_profile, tem
     validate_response(result, json_response_expected=False)
 
 
-def test_resume_with_unknown_upload_id(vcr_fixture, runner, config_file, config_profile, content_input_file_recorded):
+def test_resume_with_unknown_upload_id(vcr_fixture, config_file, config_profile, content_input_file_recorded):
     object_name = 'a'
     upload_id = 'UNKNOWN_UPLOAD_ID'
     # resume the multipart upload
@@ -331,8 +333,8 @@ def test_resume_with_unknown_upload_id(vcr_fixture, runner, config_file, config_
     util.validate_service_error(result, error_message='No such upload')
 
 
-@util.skip_while_rerecording
-def test_put_object_multipart_and_parallel_options(runner, config_file, config_profile, content_input_file):
+@pytest.mark.skip_while_rerecording
+def test_put_object_multipart_and_parallel_options(config_file, config_profile, content_input_file):
     object_name = 'a'
 
     # validate error is returned if --parallel-upload-count and --disable-parallel-uploads are used

@@ -3,6 +3,7 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 import json
+import pytest
 import unittest
 from tests import test_config_container
 from tests import util
@@ -12,7 +13,7 @@ CASSETTE_LIBRARY_DIR = 'services/core/tests/cassettes'
 
 class TestBlockStorage(unittest.TestCase):
 
-    @util.slow
+    @pytest.mark.slow
     @test_config_container.RecordReplay('blockstorage', cassette_library_dir=CASSETTE_LIBRARY_DIR)
     def test_all_operations(self):
         """Successfully calls every operation with basic options."""

@@ -7,9 +7,12 @@ import oci_cli
 import pytest
 from tests import util
 from tests import test_config_container
+from conftest import runner
 
 CASSETTE_LIBRARY_DIR = 'services/announcements_service/tests/cassettes'
 TENANCY_ID = "ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq"
+
+runner = runner()
 
 
 @pytest.fixture(autouse=True, scope='function')
@@ -18,7 +21,7 @@ def vcr_fixture(request):
         yield
 
 
-def test_announcements_announce_list(runner, config_file, config_profile):
+def test_announcements_announce_list(config_file, config_profile):
     params = [
         'announce', 'announcements', 'list',
         '-c', TENANCY_ID

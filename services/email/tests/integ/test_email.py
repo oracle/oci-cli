@@ -7,10 +7,12 @@ import oci_cli
 import pytest
 from tests import util
 from tests import test_config_container
+from conftest import runner
 
 CASSETTE_LIBRARY_DIR = 'services/email/tests/cassettes'
 
 util.set_admin_pass_phrase()
+runner = runner()
 
 
 @pytest.fixture(autouse=True, scope='function')
@@ -20,7 +22,7 @@ def vcr_fixture(request):
 
 
 @pytest.mark.skip("Failing due to matcher update")
-def test_sender_crud(runner, config_file, config_profile):
+def test_sender_crud(config_file, config_profile):
     sender_id = None
     try:
         params = [
@@ -56,7 +58,7 @@ def test_sender_crud(runner, config_file, config_profile):
 
 
 @pytest.mark.skip("Failing due to matcher update")
-def test_suppression_crud(runner, config_file):
+def test_suppression_crud(config_file):
     config_profile = 'ADMIN'
     suppression_id = None
     try:
@@ -98,7 +100,7 @@ def test_suppression_crud(runner, config_file):
             util.validate_response(result)
 
 
-def test_smtp_credential(runner, config_file, config_profile):
+def test_smtp_credential(config_file, config_profile):
     smtp_credential_id = None
     try:
         params = [

@@ -6,7 +6,7 @@ appdirs==1.4.3
 arrow>=1.0.0
 certifi
 cffi>=1.9.1
-click==7.1.2
+click==8.0.4
 coverage==4.5.2
 cryptography>=3.2.1,<39.0.0
 httpsig-cffi==15.0.0
@@ -14,7 +14,7 @@ Jinja2==3.0.3
 jmespath==0.10.0
 ndg-httpsclient==0.4.2
 mock==2.0.0
-oci==2.93.1
+oci==2.94.0
 packaging==20.2
 pluggy==0.13.0
 py==1.10.0
@@ -22,7 +22,8 @@ pyasn1==0.2.3
 pyOpenSSL>=17.5.0,<=22.1.0
 pycparser==2.20
 pyparsing==2.2.0
-pytest==3.2.3
+pytest==4.6.10; python_version <= '3.9'
+pytest==7.1.2; python_version >= '3.10'
 pytest-cov==2.5.1
 python-dateutil>=2.5.3,<3.0.0
 pytz>=2016.10
@@ -32,7 +33,8 @@ sphinx==3.3.0
 sphinx-rtd-theme==0.4.3
 terminaltables==3.1.0
 tox==3.23.0
-vcrpy==1.13.0
+vcrpy==1.13.0; python_version <= '3.9'
+vcrpy==4.2.1; python_version >= '3.10'
 virtualenv==20.13.0
 pytest-xdist==1.22.2
 pytest-forked==1.0.2

@@ -10,6 +10,8 @@ import json
 import os.path
 import pytest
 import time
+from tests.util import target_profile_region   # noqa: F401
+from tests.util import target_config   # noqa: F401
 
 
 @pytest.fixture(scope='module')
@@ -56,7 +58,8 @@ def network_resources():
         util.validate_response(result, json_response_expected=False)
 
 
-@util.slow
+@pytest.mark.slow
+@pytest.mark.usefixtures("target_profile_region", "target_config")
 def test_launch_update_instance_with_tags(tag_namespace_and_tags, network_resources):
     with test_config_container.create_vcr().use_cassette('test_tagging_instance.yml'):
         tag_data_container.ensure_namespace_and_tags_active(invoke)
@@ -181,7 +184,8 @@ def test_launch_update_instance_with_tags(tag_namespace_and_tags, network_resour
                 util.validate_response(result, json_response_expected=False)
 
 
-@util.slow
+@pytest.mark.slow
+@pytest.mark.usefixtures('target_config')
 def test_create_update_volume_with_tags(tag_namespace_and_tags):
     with test_config_container.create_vcr().use_cassette('test_tagging_volume.yml'):
         tag_data_container.ensure_namespace_and_tags_active(invoke)

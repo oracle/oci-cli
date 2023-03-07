@@ -7,10 +7,14 @@ import pytest
 import unittest
 from . import test_config_container
 from . import util
+from tests.util import target_profile_region   # noqa: F401
+from tests.util import target_config   # noqa: F401
+
 
 IPXE_SCRIPT_FILE = 'tests/resources/ipxe_script_example.txt'
 
 
+@pytest.mark.usefixtures("target_config")
 class TestDefaultFilesCommandInvocation(unittest.TestCase):
 
     def test_invoke_with_default_file_global(self):
@@ -42,7 +46,8 @@ class TestDefaultFilesCommandInvocation(unittest.TestCase):
             assert result.exit_code == 0
             assert result.output == ''  # The namespace shouldn't exist so we get back a blank result
 
-    @util.slow
+    @pytest.mark.slow
+    @pytest.mark.usefixtures("target_profile_region")
     def test_invoke_with_file_paths_and_json_in_default_file(self):
         with test_config_container.create_vcr().use_cassette('default_files_command_invoke_with_file_paths.yml'):
             self.create_network_resources()

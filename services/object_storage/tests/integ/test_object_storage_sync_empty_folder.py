@@ -89,7 +89,7 @@ def check_all_src_files_are_synced(parsed_result, local_path, parent_path=None, 
     assert all_upload_set == local_files_set - set(files_to_skip)
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_sync_empty_folder_syncs_all_files(test_id):
     bucket_name = sync_upload_bucket_name
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
@@ -147,7 +147,7 @@ def test_sync_empty_folder_which_has_content_later(test_id):
     assert filled_empty_folder_files_set == uploaded_set
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_sync_empty_folder_sync_dry_run_all_files(test_id):
     bucket_name = sync_upload_bucket_name
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
@@ -158,7 +158,7 @@ def test_sync_empty_folder_sync_dry_run_all_files(test_id):
     assert local_files_set == all_upload_set
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_sync_empty_folder_uploaded_should_be_in_downloaded(test_id):
     bucket_name = sync_upload_bucket_name
     result = bulk_operation.invoke(['os', 'object', 'sync', '--namespace', util.NAMESPACE, '--bucket-name',
@@ -177,7 +177,7 @@ def test_sync_empty_folder_uploaded_should_be_in_downloaded(test_id):
     assert all_downloaded_files_set == local_files_set
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_sync_empty_folder_inside_empty_folder(test_id):
     bucket_name = sync_upload_bucket_name
     empty_folder_path = os.path.join(sync_upload_test_dir, 'empty_folder')

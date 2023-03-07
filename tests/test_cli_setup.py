@@ -7,6 +7,7 @@ import unittest
 from . import util
 from oci.regions import REGIONS
 from oci_cli import config
+from tests.util import target_config   # noqa: F401
 
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.backends import default_backend
@@ -22,6 +23,7 @@ import tempfile
 import platform
 import vcr
 import json
+import pytest
 
 TEMP_DIR = os.path.join('tests', 'temp')
 
@@ -42,6 +44,7 @@ TEST_DYNAMIC_GROUP_OCID = os.environ['OCI_CLI_TEST_DYNAMIC_GROUP_OCID']
 TEST_POLICY_OCID = os.environ['OCI_CLI_TEST_POLICY_OCID']
 
 
+@pytest.mark.usefixtures("target_config")
 class TestSetup(unittest.TestCase):
 
     @util.log_test

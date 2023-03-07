@@ -3,9 +3,11 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 import json
+import pytest
 import unittest
 from tests import util
 from tests import test_config_container
+
 
 CASSETTE_LIBRARY_DIR = 'services/core/tests/cassettes'
 
@@ -15,7 +17,7 @@ class TestImageImportExportOs(unittest.TestCase):
     # To re-record this test, you must first create a bucket and then export a image
     # into that bucket before running this test.
     # The variables must also be updated to the image you are recording for.
-    @util.slow
+    @pytest.mark.slow
     def test_import_from_object(self):
         with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_image_import_export_os.yml'):
             bucket_name = 'CliImageImportExport_vcr'

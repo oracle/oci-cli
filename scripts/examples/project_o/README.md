@@ -49,15 +49,35 @@ Public Subnet VLKn:US-ASHBURN-AD-1 AVAILABLE 10.0.0.0/24 sales
 
 ## Installation
 
-**``o``** is a single file. To install, download **``o``**, place it in your PATH (probably in the same place as ``oci``), and make it executable.
-  **``o``** works in Linux, Mac, WSL and CloudShell.
+**Pre-reqs:** **``o``** works in Linux, Mac, WSL and CloudShell. `oci` must installed and configured. `o` does not replace `oci`, but it *uses* `oci`.  See [Requirements](#requirements) below for more details.
 
-Use these commands to get ``o`` from github and install it next to ``oci``.
+**``o``** is a single file. To install, get **``o``** from github, place it in your PATH (probably in the same place as ``oci``), and make it executable.  Use these commands to download ``o`` and install it next to ``oci``.
+<a name="install"></a>
 ```
 o_src=https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/examples/project_o/o
 where=$(which oci) && to=${where%ci} && wget -q $o_src -O $to && chmod a+x $to
 ```
-When you first run `o` it will tell you how to create the commands file *$HOME/.oci/oci_commands*, and then `o` helps you to initialize your *$HOME/.oci/ocids* file.
+#### Setup
+
+When you first run `o` it will tell you run `o oci_commands` to create the commands file *$HOME/.oci/oci_commands*.  This collects a list of all possible `oci` commands with usage details.
+
+Then `o` asks you to run `o <tenancy_ocid>` to initialize your *$HOME/.oci/ocids*.  This seeds your *ocids* file with OCIDs of the compartments in your tenancy.
+
+#### Updates and maintenance
+
+Check this page for updates...  See [New in version](#newinversion) sections below, and compare the latest with the version shown in `o help`.
+
+To install an `o` update, just re-run the two-line [installation command](#install) above.
+
+Update `oci` every few months (or more frequently to keep up with the latest service additions).  See [Upgrading the CLI](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliupgrading.htm).
+
+Run `o oci_commands` every couple of months to update *$HOME/.oci/oci_commands* with commands for the latest services added to OCI.
+
+Keep using your existing *$HOME/.oci/ocids* file.  If, however, it becomes unusable (with old data) or you want a fresh start, simply remove it and create a new one:
+ - `rm $HOME/.oci/ocids`
+ - `o <tenancy_ocid>`
+
+This will get a fresh list of all compartments in the tenancy, which is a great starting point.
 
 ## Things you can do with ``o``
 
@@ -102,28 +122,35 @@ When you first run `o` it will tell you how to create the commands file *$HOME/.
     - `o ocid  sales/bastion` *instantly* shows the full OCIDs for the specified compartment
 
 #### New in version 1.3 (2022-12-15)
- - get next page of results with `o <repeat-last-command> -page next`
- - select child fields from complex output with `-o key.subkey`
-   - first use `o -o / <command> .` to see all available data fields
-   - then rerun with desired `-o key#key.subkey` list.
- - save `oci` output (or `o -o json` output) to a file, then format with `o` - useful for getting the format just right
-   - `o -o json list compute instances > data.json`
-   - `o -i data.json -o name#id#date`
+ - Get next page of results with `o <repeat-last-command> -page next`
+ - Select child fields from complex output with `-o key.subkey`
+   - first use `o -o / <command> .` to see all available keys, then rerun with desired output list
+   - Example:  `o -o +shape-conf.ocpus#shape-conf.memory` list compute inst -c sales .`
+ - Take JSON input from file. Useful for getting the format just right
+   - First save `oci` output (or output from `o -o json`) to a file
+     - `o -o json list compute instances > list.json`
+   - Then use that as input to `o`
+     - `o -i list.json -o name:20#id:-.10#created:.10`
 
 #### New in version 1.4 (2023-01-20)
- - replace compartment names with OCIDs in:
-   - `oci search resource structured-search --query-text <text>`
-   - `oci logging-search search-logs --search-query <text>`
- - easier output formatting.  Braces are optional, allow ":-" instead of ":>" for right-justify
-   - `o -o id:-.10#name:6#create:.10 comp inst list`
-     - table output with right-most 10 characters of `id`, `display-name` in 6 (or more) characters, and first 10 characters of `time-created`
+ - Assist with compartment names with OCIDs in some searches:
+   - `o structured-search --query-text 'query instance resources where compart=sales'`
+   - `o logging-search -sq 'search sales' -ts yesterday -te today`
+ - Easier custom output formatting:
+  - braces are optional
+  - allow ":-" instead of ":>" for right-justify (so quotes aren't needed around the ">")
+   - Example:  For table output with right-most 8 characters of `id`, 10 (or more) characters of `display-name`, and first 10 characters (no more than 10) of `time-created`
+    - `o -o id:-.8#name:10#create:.10 comp inst list`
 
-#### New in version 1.5 (2023-02-07)
- - show additional output fields (not in "data") like object storage "prefixes"
- - Keep default output fields and       
-   - change format style with separator: `-o +/`
-   - append additional fields:  `-o +new#fields`
-   - change format and append: `-o +new/fields`
+<a name="newinversion"></a>
+#### New in version 1.5 (2023-02-28)
+ - If you like the default output but want to add another field use `-o +field`:
+   - Example: `o -o +subnet list-vnics -c sales`
+ - If you like the default output fields, but want to change the format style, just add the separator:
+      - change to "text" output: `o -o +/ <command>`
+      - change to CSV output: `o -o +, <command>`
+      - change to "text" and add fields: `-o +/subnet list-vnics ...`
+ - Show additional output fields (not in "data") to stderr, such as "etag" or os "prefixes".  Use `o -q` to hide this non-data.
 
 ## How **``o``** works  
  - **``o``** compares your input with thousands of ``oci`` commands, and uses an fuzzy matching to find the command you want.
@@ -140,12 +167,12 @@ When you first run `o` it will tell you how to create the commands file *$HOME/.
 
  - **``o``** scans the JSON results from ``oci`` for key names that match or partially match any of your <nobr>``-o key/word/list``</nobr>.  The key words determine *what* presented, while the **``/``** separator character determines *how* they are presented.
 
-##  Requirements
+##  <a name="requirements"></a> Requirements
 
 You will need:
 
 - MacOS, Linux or WSL.
-- Python 3.6+.  If ``oci`` is installed, you have Python.
+- Python 3.6+.  If ``oci`` is installed, you have Python.  (`oci` works better with python 3.7+)
 - ``oci`` - The Oracle Cloud Infrastructure command line interface must be *installed and configured*.
   - Try running ``oci os ns get`` to verify that it's working.
   - See https://docs.cloud.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm

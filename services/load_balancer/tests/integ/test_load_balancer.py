@@ -9,6 +9,7 @@ import pytest
 from tests import tag_data_container
 from tests import test_config_container
 from tests import util
+from conftest import runner
 
 LB_PROVISIONING_TIME_SEC = 300  # 5 minutes
 LB_PRIVATE_KEY_PASSPHRASE = 'secret!'
@@ -16,10 +17,11 @@ LB_PRIVATE_KEY_PASSPHRASE = 'secret!'
 DEFAULT_WAIT_TIME = 120  # 1 minute
 CASSETTE_LIBRARY_DIR = 'services/load_balancer/tests/cassettes'
 TEMP_DIR = os.path.join('tests', 'temp')
+runner = runner()
 
 
 @pytest.fixture(scope='module')
-def load_balancer(runner, config_file, config_profile, vcn_and_subnets):
+def load_balancer(config_file, config_profile, vcn_and_subnets):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_load_balancer_fixture_lb.yml'):
         subnet_ocid_1 = vcn_and_subnets[1]
         subnet_ocid_2 = vcn_and_subnets[2]
@@ -60,7 +62,7 @@ def load_balancer(runner, config_file, config_profile, vcn_and_subnets):
 
 
 @pytest.fixture(scope='module')
-def backend_set(runner, config_file, config_profile, load_balancer):
+def backend_set(config_file, config_profile, load_balancer):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_load_balancer_fixture_backend_set.yml'):
         backend_set_name = util.random_name('cli_lb_backend_set')
 
@@ -108,7 +110,7 @@ def backend_set(runner, config_file, config_profile, load_balancer):
 
 
 @pytest.fixture(scope='module')
-def backend(runner, config_file, config_profile, load_balancer, backend_set):
+def backend(config_file, config_profile, load_balancer, backend_set):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_load_balancer_fixture_backend.yml'):
         ip_address = '10.0.0.10'
         port = '80'
@@ -156,7 +158,7 @@ def backend(runner, config_file, config_profile, load_balancer, backend_set):
 
 
 @pytest.fixture(scope='module')
-def certificate(runner, config_file, config_profile, load_balancer, key_pair_files):
+def certificate(config_file, config_profile, load_balancer, key_pair_files):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_load_balancer_fixture_certificate.yml'):
         private_key_filename = key_pair_files[1]
         certificate_filename = key_pair_files[2]
@@ -204,8 +206,8 @@ def certificate(runner, config_file, config_profile, load_balancer, key_pair_fil
         util.validate_response(get_work_request_result)
 
 
-@util.slow
-def test_load_balancer_operations(runner, config_file, config_profile, load_balancer):
+@pytest.mark.slow
+def test_load_balancer_operations(config_file, config_profile, load_balancer):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_load_balancer_lb_operations.yml'):
         # list
         params = [
@@ -254,8 +256,8 @@ def test_load_balancer_operations(runner, config_file, config_profile, load_bala
         # assert 'cli_lb_updated' in json.loads(result.output)['data']['display-name']
 
 
-@util.slow
-def test_certificate_operations(runner, config_file, config_profile, load_balancer, certificate):
+@pytest.mark.slow
+def test_certificate_operations(config_file, config_profile, load_balancer, certificate):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_load_balancer_cert_operations.yml'):
         params = [
             'certificate', 'list',
@@ -274,8 +276,8 @@ def test_certificate_operations(runner, config_file, config_profile, load_balanc
         assert found_cert
 
 
-@util.slow
-def test_backend_set_operations(runner, config_file, config_profile, load_balancer, backend_set):
+@pytest.mark.slow
+def test_backend_set_operations(config_file, config_profile, load_balancer, backend_set):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_load_balancer_backend_set_operations.yml'):
         # fixture handles create / delete
         params = [
@@ -317,8 +319,8 @@ def test_backend_set_operations(runner, config_file, config_profile, load_balanc
         util.validate_response(get_work_request_result)
 
 
-@util.slow
-def test_backend_operations(runner, config_file, config_profile, load_balancer, backend_set, backend):
+@pytest.mark.slow
+def test_backend_operations(config_file, config_profile, load_balancer, backend_set, backend):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_load_balancer_backend_operations.yml'):
         # fixture handles create / delete
         params = [
@@ -352,8 +354,8 @@ def test_backend_operations(runner, config_file, config_profile, load_balancer, 
         util.validate_response(get_work_request_result)
 
 
-@util.slow
-def test_listener_operations(runner, config_file, config_profile, load_balancer, backend_set, certificate):
+@pytest.mark.slow
+def test_listener_operations(config_file, config_profile, load_balancer, backend_set, certificate):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_load_balancer_listener_operations.yml'):
         # create listener
         listener_name = util.random_name('cli_listener')
@@ -418,8 +420,8 @@ def test_listener_operations(runner, config_file, config_profile, load_balancer,
         util.validate_response(get_work_request_result)
 
 
-@util.slow
-def test_listener_with_connection_timeout_operations(runner, config_file, config_profile, load_balancer, backend_set):
+@pytest.mark.slow
+def test_listener_with_connection_timeout_operations(config_file, config_profile, load_balancer, backend_set):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_load_balancer_listener_with_connection_timeout_operations.yml'):
         listener_name = util.random_name('cli_listener_ct')
         params = [
@@ -468,8 +470,8 @@ def test_listener_with_connection_timeout_operations(runner, config_file, config
         _validate_work_request_result(result, load_balancer)
 
 
-@util.slow
-def test_load_balancer_health_operations(runner, config_file, config_profile, load_balancer):
+@pytest.mark.slow
+def test_load_balancer_health_operations(config_file, config_profile, load_balancer):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_load_balancer_lb_health_operations.yml'):
         params = [
             'load-balancer-health', 'get',
@@ -488,8 +490,8 @@ def test_load_balancer_health_operations(runner, config_file, config_profile, lo
         util.validate_response(result)
 
 
-@util.slow
-def test_backend_set_health_operations(runner, config_file, config_profile, load_balancer, backend_set):
+@pytest.mark.slow
+def test_backend_set_health_operations(config_file, config_profile, load_balancer, backend_set):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_load_balancer_backend_set_health_operations.yml'):
         params = [
             'backend-set-health', 'get',
@@ -501,8 +503,8 @@ def test_backend_set_health_operations(runner, config_file, config_profile, load
         util.validate_response(result)
 
 
-@util.slow
-def test_backend_health_operations(runner, config_file, config_profile, load_balancer, backend_set, backend):
+@pytest.mark.slow
+def test_backend_health_operations(config_file, config_profile, load_balancer, backend_set, backend):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_load_balancer_backend_health_operations.yml'):
         params = [
             'backend-health', 'get',
@@ -515,8 +517,8 @@ def test_backend_health_operations(runner, config_file, config_profile, load_bal
         util.validate_response(result)
 
 
-@util.slow
-def test_health_checker_operations(runner, config_file, config_profile, load_balancer, backend_set):
+@pytest.mark.slow
+def test_health_checker_operations(config_file, config_profile, load_balancer, backend_set):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_load_balancer_health_checker_operations.yml'):
         params = [
             'health-checker', 'update',
@@ -554,7 +556,7 @@ def test_health_checker_operations(runner, config_file, config_profile, load_bal
         assert 15000 == json.loads(result.output)['data']['interval-in-millis']
 
 
-def test_list_lb_shapes(runner, config_file, config_profile):
+def test_list_lb_shapes(config_file, config_profile):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_load_balancer_lb_shapes.yml'):
         params = [
             'shape', 'list',
@@ -565,7 +567,7 @@ def test_list_lb_shapes(runner, config_file, config_profile):
         util.validate_response(result)
 
 
-def test_list_lb_protocols(runner, config_file, config_profile):
+def test_list_lb_protocols(config_file, config_profile):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_load_balancer_lb_protocols.yml'):
         params = [
             'protocol', 'list',
@@ -576,7 +578,7 @@ def test_list_lb_protocols(runner, config_file, config_profile):
         util.validate_response(result)
 
 
-def test_list_lb_policy(runner, config_file, config_profile):
+def test_list_lb_policy(config_file, config_profile):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_load_balancer_lb_policy.yml'):
         params = [
             'policy', 'list',
@@ -587,7 +589,7 @@ def test_list_lb_policy(runner, config_file, config_profile):
         util.validate_response(result)
 
 
-def test_load_balancer_operations_with_waiters(runner, config_file, config_profile, vcn_and_subnets, key_pair_files):
+def test_load_balancer_operations_with_waiters(config_file, config_profile, vcn_and_subnets, key_pair_files):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_load_balancer_ops_with_waiters.yml'):
         subnet_ocid_1 = vcn_and_subnets[1]
         subnet_ocid_2 = vcn_and_subnets[2]
@@ -626,7 +628,7 @@ def test_load_balancer_operations_with_waiters(runner, config_file, config_profi
 
 
 @pytest.mark.usefixtures("tag_namespace_and_tags")
-def test_load_balancer_tagging(runner, config_file, config_profile, vcn_and_subnets, key_pair_files):
+def test_load_balancer_tagging(config_file, config_profile, vcn_and_subnets, key_pair_files):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_load_balancer_tagging.yml'):
         subnet_ocid_1 = vcn_and_subnets[1]
         subnet_ocid_2 = vcn_and_subnets[2]

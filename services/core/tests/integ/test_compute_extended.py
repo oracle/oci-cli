@@ -27,7 +27,7 @@ def invoke_command(command, response_expected=True, **kwargs):
 
 class TestComputeCliExtended(unittest.TestCase):
 
-    @util.slow
+    @pytest.mark.slow
     @util.log_test
     def test_launch_instance(self):
         try:
@@ -35,7 +35,7 @@ class TestComputeCliExtended(unittest.TestCase):
         finally:
             self.terminate_instance()
 
-    @util.slow
+    @pytest.mark.slow
     @util.log_test
     def test_launch_instance_in_network_security_group(self):
         network_security_group_ids = [self.network_security_group['id']]

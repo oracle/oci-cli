@@ -21,4 +21,4 @@ class TestApiGatewaySdkLanguageType(unittest.TestCase):
         assert 'Error: Missing option(s)' in result.output
         assert '--compartment-id' in result.output
         result = util.invoke_command(['api-gateway', 'sdk-language-type', 'list', '--display-name'])
-        assert 'Error: --display-name option requires an argument' in result.output
+        assert 'Error: Option \'--display-name\' requires an argument' in result.output

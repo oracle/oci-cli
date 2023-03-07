@@ -37,7 +37,7 @@ def database_test_backup_operations(runner, config_file, config_profile, db_syst
     return get_database(runner, config_file, config_profile, db_systems_test_backup_operations)
 
 
-@util.long_running
+@pytest.mark.long_running
 @pytest.mark.skip("DEXREQ-698")
 def test_backup_operations(runner, config_file, config_profile, db_systems_test_backup_operations, database_test_backup_operations):
     # create backup

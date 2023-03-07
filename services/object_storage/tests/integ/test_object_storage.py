@@ -13,11 +13,14 @@ import pytest
 import re
 import oci_cli
 import random
-from mimetypes import guess_type
 
+from mimetypes import guess_type
 from tests import util
 from tests import test_config_container
 from services.object_storage.tests.common.constants import CASSETTE_LIBRARY_DIR
+from conftest import runner
+from tests.util import target_profile_region   # noqa: F401
+
 
 CONTENT_INPUT_FILE = 'tests/resources/content_input.txt'
 GENERATED_CONTENT_INPUT_FILE = 'tests/temp/generated_content_input.txt'
@@ -27,6 +30,7 @@ DEFAULT_TEST_PART_SIZE = 2
 MOVE_BUCKET_TO_COMPARTMENT_ID = os.environ.get('OCI_CLI_MOVE_BUCKET_TO_COMPARTMENT_ID')
 
 created_buckets = 'created_buckets'
+runner = runner()
 
 
 @pytest.fixture
@@ -52,8 +56,8 @@ def debug(request):
     return request.param
 
 
-@pytest.fixture(scope='module', autouse=True)
-def test_data(object_storage_client, test_id):
+@pytest.fixture(autouse=True)
+def test_data(object_storage_client, test_id, target_profile_region):   # noqa: F811
     # Setup the test data
     util.ensure_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, util.bucket_regional_prefix() + 'Cli' + test_id)
     yield
@@ -103,8 +107,8 @@ def teardown_module():
         os.remove(GENERATED_CONTENT_INPUT_FILE)
 
 
-@util.skip_while_rerecording
-def test_run_all_operations(runner, config_file, config_profile, debug, delete_pending_buckets):
+@pytest.mark.skip_while_rerecording
+def test_run_all_operations(config_file, config_profile, debug, delete_pending_buckets):
     """Successfully calls every operation with required arguments only."""
     bucket_name = 'cli_temp_bucket_' + str(random.randint(0, 1000000)) + ('_debug' if debug else '_no_debug')
     object_name = 'a'
@@ -203,8 +207,8 @@ def test_run_all_operations(runner, config_file, config_profile, debug, delete_p
     delete_pending_buckets[created_buckets].remove(bucket_name)
 
 
-@util.skip_while_rerecording
-def test_run_all_ia_operations(runner, config_file, config_profile, debug, delete_pending_buckets):
+@pytest.mark.skip_while_rerecording
+def test_run_all_ia_operations(config_file, config_profile, debug, delete_pending_buckets):
     """Successfully calls every operation with required arguments only."""
     bucket_name = 'cli_temp_bucket_ia_' + str(random.randint(0, 1000000)) + ('_debug' if debug else '_no_debug')
     object_name = 'a'
@@ -331,8 +335,8 @@ def test_run_all_ia_operations(runner, config_file, config_profile, debug, delet
         delete_pending_buckets[created_buckets].remove(copy_bucket_name)
 
 
-@util.skip_while_rerecording
-def test_archive_bucket(runner, config_file, config_profile, delete_pending_buckets):
+@pytest.mark.skip_while_rerecording
+def test_archive_bucket(config_file, config_profile, delete_pending_buckets):
     bucket_name = 'cli_temp_archive_bucket_' + str(random.randint(0, 1000000)) + '_no_debug'
     object_name = 'a'
 
@@ -398,7 +402,7 @@ def test_archive_bucket(runner, config_file, config_profile, delete_pending_buck
     delete_pending_buckets[created_buckets].remove(bucket_name)
 
 
-def test_move_bucket_to_another_compartment(vcr_fixture, object_storage_client, runner, config_file, config_profile, test_id_recorded, delete_pending_buckets):
+def test_move_bucket_to_another_compartment(vcr_fixture, object_storage_client, config_file, config_profile, test_id_recorded, delete_pending_buckets):
     if not MOVE_BUCKET_TO_COMPARTMENT_ID:
         pytest.skip('Skipping as no value was provided for the environment variable OCI_CLI_MOVE_BUCKET_TO_COMPARTMENT_ID')
 
@@ -448,7 +452,7 @@ def test_move_bucket_to_another_compartment(vcr_fixture, object_storage_client, 
     delete_pending_buckets[created_buckets].remove(bucket_name)
 
 
-def test_namespace_metadata(vcr_fixture, runner, config_file, config_profile):
+def test_namespace_metadata(vcr_fixture, config_file, config_profile):
     util.set_admin_pass_phrase()
     result = util.invoke_command_as_admin(['os', 'ns', 'get-metadata', '-ns', util.NAMESPACE])
     util.unset_admin_pass_phrase()
@@ -458,15 +462,15 @@ def test_namespace_metadata(vcr_fixture, runner, config_file, config_profile):
     assert response["data"]["default-swift-compartment-id"] is not None
 
 
-@util.skip_while_rerecording
-def test_set_client_request_id(runner, config_file, config_profile):
+@pytest.mark.skip_while_rerecording
+def test_set_client_request_id(config_file, config_profile):
     input_id = 'examplerequestid'
     result = invoke(runner, config_file, config_profile, ['ns', 'get'], root_params=['--request-id', input_id], debug=True)
     validate_response(result, includes_debug_data=True)
     assert input_id in result.output
 
 
-def test_bucket_options(vcr_fixture, runner, config_file, config_profile, test_id_recorded, delete_pending_buckets):
+def test_bucket_options(vcr_fixture, config_file, config_profile, test_id_recorded, delete_pending_buckets):
     bucket = 'cli_test_bucket_options_' + test_id_recorded
 
     # bucket create
@@ -498,8 +502,8 @@ def test_bucket_options(vcr_fixture, runner, config_file, config_profile, test_i
 
 
 # removing cassette as duplicate call being made, changes replication id
-@util.skip_while_rerecording
-def test_create_replication_policy(runner, config_file, config_profile, test_id, delete_pending_buckets):
+@pytest.mark.skip_while_rerecording
+def test_create_replication_policy(config_file, config_profile, test_id, delete_pending_buckets):
     source_bucket = 'cli_test_create_replication_policy_source_' + test_id
     dest_bucket = 'cli_test_create_replication_policy_dest_' + test_id
 
@@ -531,8 +535,9 @@ def test_create_replication_policy(runner, config_file, config_profile, test_id,
     delete_pending_buckets[created_buckets].remove(dest_bucket)
 
 
-@util.skip_while_rerecording
-def test_object_put_confirmation_prompt(runner, config_file, config_profile, content_input_file, test_id, multipart):
+@pytest.mark.skip_while_rerecording
+@pytest.mark.usefixtures("target_profile_region")
+def test_object_put_confirmation_prompt(config_file, config_profile, content_input_file, test_id, multipart):
     bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket7'
     object_name = 'cli_test_object_put_confirmation_prompt_' + test_id
     put_required_args = ['object', 'put', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name, '--file', content_input_file]
@@ -641,8 +646,9 @@ def test_object_put_confirmation_prompt(runner, config_file, config_profile, con
     validate_response(result)
 
 
-@util.skip_while_rerecording
-def test_object_options(runner, config_file, config_profile, test_id, content_input_file, multipart):
+@pytest.mark.skip_while_rerecording
+@pytest.mark.usefixtures("target_profile_region")
+def test_object_options(config_file, config_profile, test_id, content_input_file, multipart):
     bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket7'
     object_name = 'cli_test_object_put_options_' + test_id
     required_args = ['object', 'put', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name, '--file', content_input_file, '--force']
@@ -780,8 +786,9 @@ def subtest_object_list_versions_preserves_prefixes_order(runner, config_file, c
     assertListEqual(prefixes, ["a/", "b/", "f/", "s/"])
 
 
-@util.skip_while_rerecording
-def test_object_put_default_name(runner, config_file, config_profile, test_id):
+@pytest.mark.skip_while_rerecording
+@pytest.mark.usefixtures("target_profile_region")
+def test_object_put_default_name(config_file, config_profile, test_id):
     bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket7'
     object_name = "TestObject_" + test_id
     filename = os.path.join("tests/temp", object_name)
@@ -807,8 +814,9 @@ def test_object_put_default_name(runner, config_file, config_profile, test_id):
     os.remove(filename)
 
 
-@util.skip_while_rerecording
-def test_object_put_from_stdin(runner, config_file, config_profile, test_id):
+@pytest.mark.skip_while_rerecording
+@pytest.mark.usefixtures("target_profile_region")
+def test_object_put_from_stdin(config_file, config_profile, test_id):
     bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket7'
     object_name = "TestObject_" + test_id
     filename = os.path.join("tests/temp", object_name)
@@ -837,8 +845,9 @@ def test_object_put_from_stdin(runner, config_file, config_profile, test_id):
     os.remove(filename)
 
 
-@util.skip_while_rerecording
-def test_object_put_empty_file(runner, config_file, config_profile, test_id):
+@pytest.mark.skip_while_rerecording
+@pytest.mark.usefixtures("target_profile_region")
+def test_object_put_empty_file(config_file, config_profile, test_id):
     bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket7'
     object_name = "TestEmptyObject_" + test_id
     filename = os.path.join("tests/temp", object_name)
@@ -876,8 +885,9 @@ def test_object_put_empty_file(runner, config_file, config_profile, test_id):
     os.remove(filename)
 
 
-@util.skip_while_rerecording
-def test_object_put_from_stdin_with_auto_content_type(runner, config_file, config_profile, test_id):
+@pytest.mark.skip_while_rerecording
+@pytest.mark.usefixtures("target_profile_region")
+def test_object_put_from_stdin_with_auto_content_type(config_file, config_profile, test_id):
     bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket7'
     object_name = "TestObject_" + test_id + ".txt"
     filename = os.path.join("tests/temp", object_name)
@@ -909,8 +919,9 @@ def test_object_put_from_stdin_with_auto_content_type(runner, config_file, confi
 
 
 # Tests for guess_type returns None for object_name.
-@util.skip_while_rerecording
-def test_object_put_from_stdin_with_invalid_object_name_extension_one(runner, config_file, config_profile, test_id):
+@pytest.mark.skip_while_rerecording
+@pytest.mark.usefixtures("target_profile_region")
+def test_object_put_from_stdin_with_invalid_object_name_extension_one(config_file, config_profile, test_id):
     bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket7'
     object_name = "TestObject_" + test_id + ".zzzzz"
     filename = os.path.join("tests/temp", object_name)
@@ -942,8 +953,9 @@ def test_object_put_from_stdin_with_invalid_object_name_extension_one(runner, co
 
 
 # Object Name extension mismatches with the input contents.
-@util.skip_while_rerecording
-def test_object_put_from_stdin_with_invalid_object_name_extension_two(runner, config_file, config_profile, test_id):
+@pytest.mark.skip_while_rerecording
+@pytest.mark.usefixtures("target_profile_region")
+def test_object_put_from_stdin_with_invalid_object_name_extension_two(config_file, config_profile, test_id):
     bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket7'
     object_name = "TestObject_" + test_id + ".txt"
     filename = os.path.join("tests/temp", object_name)
@@ -974,8 +986,9 @@ def test_object_put_from_stdin_with_invalid_object_name_extension_two(runner, co
     os.remove(filename)
 
 
-@util.skip_while_rerecording
-def test_object_put_from_stdin_requires_object_name(runner, config_file, config_profile, test_id):
+@pytest.mark.skip_while_rerecording
+@pytest.mark.usefixtures("target_profile_region")
+def test_object_put_from_stdin_requires_object_name(config_file, config_profile, test_id):
     bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket7'
     put_required_args = ['object', 'put', '-ns', util.NAMESPACE, '-bn', bucket_name, '--file', '-', '--force']
     put_result = invoke(runner, config_file, config_profile, put_required_args)
@@ -984,8 +997,9 @@ def test_object_put_from_stdin_requires_object_name(runner, config_file, config_
 
 
 @pytest.mark.parametrize('content_type,content_language,content_encoding', [{'image/gif', 'en', 'gzip'}, {'notarealtype', 'notareallanguage', 'notarealencoding'}, {'text/html; charset=ISO-8859-4', 'mi, en', 'compress'}])
-@util.skip_while_rerecording
-def test_object_content_headers(runner, config_file, config_profile, content_type, content_language, content_encoding, content_input_file, test_id, multipart):
+@pytest.mark.skip_while_rerecording
+@pytest.mark.usefixtures("target_profile_region")
+def test_object_content_headers(config_file, config_profile, content_type, content_language, content_encoding, content_input_file, test_id, multipart):
     bucket_name = util.bucket_regional_prefix() + f'Cli{test_id}ReadOnlyTestBucket7'
     object_name = 'cli_test_object_put_options_' + test_id
     put_required_args = ['object', 'put', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name, '--file',
@@ -1018,7 +1032,7 @@ def test_object_content_headers(runner, config_file, config_profile, content_typ
     validate_response(result)
 
 
-def test_list_options(vcr_fixture, runner, config_file, config_profile, object_storage_client, test_id_recorded):
+def test_list_options(vcr_fixture, config_file, config_profile, object_storage_client, test_id_recorded):
     subtest_bucket_list(runner, config_file, config_profile)
     subtest_object_list(runner, config_file, config_profile, test_id_recorded)
     subtest_object_list_preserves_prefixes_order(runner, config_file, config_profile, test_id_recorded)
@@ -1028,7 +1042,7 @@ def test_list_options(vcr_fixture, runner, config_file, config_profile, object_s
     subtest_object_list_versions_paging(runner, config_file, config_profile, test_id_recorded)
 
 
-def test_bucket_list_with_tags(vcr_fixture, runner, config_file, config_profile):
+def test_bucket_list_with_tags(vcr_fixture, config_file, config_profile):
     result_tags_not_requested = invoke(runner, config_file, config_profile, ['bucket', 'list', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID])
     parsed_data = json.loads(result_tags_not_requested.output)
 
@@ -1044,8 +1058,8 @@ def test_bucket_list_with_tags(vcr_fixture, runner, config_file, config_profile)
         assert bucket_summary['freeform-tags'] is not None
 
 
-@util.skip_while_rerecording
-def test_copy_object(runner, config_file, config_profile, test_id):
+@pytest.mark.skip_while_rerecording
+def test_copy_object(config_file, config_profile, test_id):
     result = invoke(runner, config_file, config_profile, ['object', 'copy'])
     assert "Error: Missing option" in result.output
     assert "bucket-name" in result.output
@@ -1305,7 +1319,8 @@ def subtest_object_list_versions_paging(runner, config_file, config_profile, tes
     assert (pages == math.ceil(float(list_size) / page_size))
 
 
-def test_preauthenticated_requests(vcr_fixture, runner, config_file, config_profile, test_id_recorded):
+@pytest.mark.usefixtures("target_profile_region")
+def test_preauthenticated_requests(vcr_fixture, config_file, config_profile, test_id_recorded):
     preauthenticated_request_name_1 = util.random_name('cli_preauth_request_1')
     preauthenticated_request_name_2 = util.random_name('cli_preauth_request_2')
     bucket_name = util.bucket_regional_prefix() + f'Cli{test_id_recorded}ReadOnlyTestBucket6'
@@ -1377,7 +1392,8 @@ def invoke(runner, config_file, config_profile, params, debug=False, root_params
         except TypeError:
             new_output_bytes = cleaned_output
         finally:
-            result = click.testing.Result(result.runner, new_output_bytes, result.exit_code, result.exception, result.exc_info)
+            result = click.testing.Result(result.runner, new_output_bytes, result.stderr_bytes, result, result.exit_code,
+                                          result.exception, result.exc_info)
 
     # multipart uploads print out an upload ID and information when each part is uploaded successfully
     # for doing validation we need to strip this out
@@ -1388,13 +1404,14 @@ def invoke(runner, config_file, config_profile, params, debug=False, root_params
         except TypeError:
             new_output_bytes = cleaned_output
         finally:
-            result = click.testing.Result(result.runner, new_output_bytes, result.exit_code, result.exception, result.exc_info)
+            result = click.testing.Result(result.runner, new_output_bytes, result.stderr_bytes, result, result.exit_code,
+                                          result.exception, result.exc_info)
 
     return result
 
 
-@util.skip_while_rerecording
-def test_get_object_multipart_download(runner, config_file, config_profile, test_id, object_storage_client, delete_pending_buckets):
+@pytest.mark.skip_while_rerecording
+def test_get_object_multipart_download(config_file, config_profile, test_id, object_storage_client, delete_pending_buckets):
     test_file_path = os.path.join('tests', 'temp', 'for_multipart_download_{}.bin'.format(test_id))
     util.create_large_file(test_file_path, 400)
 

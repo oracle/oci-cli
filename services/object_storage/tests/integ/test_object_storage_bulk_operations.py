@@ -214,7 +214,7 @@ def customer_key(request):
     return request.param
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_normalize_object_name_path():
     assert '/this/is/a/path' == oci_cli_object_storage.objectstorage_cli_extended.normalize_file_path_for_object_storage('/this/is/a/path')
     assert '/this/is/a/path' == oci_cli_object_storage.objectstorage_cli_extended.normalize_file_path_for_object_storage('/this/is/a/path', '/')
@@ -301,7 +301,7 @@ def test_get_directory_no_subdirectory(vcr_fixture):
     shutil.rmtree(download_folder)
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_get_files_skipped():
     download_folder = 'tests/temp/skip_and_replace_{}'.format(bulk_get_bucket_name)
     invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--download-dir', download_folder])
@@ -338,7 +338,7 @@ def test_get_no_objects(vcr_fixture):
     shutil.rmtree(download_folder)
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_get_multipart(object_storage_client, test_id, delete_pending_buckets):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
     create_bucket_request.name = 'ObjectStorageBulkGetMultipartsTest_{}'.format(test_id)
@@ -419,7 +419,7 @@ def test_list_all_objects_operations(vcr_fixture):
 
 
 # Bulk puts objects, uses multipart where appropriate (when we breach the default of 128MiB)
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_bulk_put_default_options(customer_key):
     pytest.skip('To fix Team City Object storage failure')
     ssec_params = []
@@ -495,7 +495,7 @@ def test_bulk_put_default_options(customer_key):
 
 
 # Bulk puts objects with --content-type as auto
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_bulk_put_auto_content_type():
     result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name, '--src-dir', root_bulk_put_folder, '--content-type', 'auto', '--overwrite'])
 
@@ -543,7 +543,7 @@ def test_bulk_put_auto_content_type():
 #
 #   - Try to upload with a part size of 10MiB (this will force the large and mid-sized files to be multipart uploaded)
 #   - Try to upload with multipart disabled
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_bulk_put_with_multipart_params(object_storage_client, test_id, delete_pending_buckets):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
     create_bucket_request.name = 'ObjectStorageBulkPutMultipartsTest_{}'.format(test_id)
@@ -614,7 +614,7 @@ def test_bulk_put_with_multipart_params(object_storage_client, test_id, delete_p
     delete_pending_buckets[created_buckets].remove(create_bucket_request.name)
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_bulk_upload_twice_with_input_no(object_storage_client, test_id, delete_pending_buckets, monkeypatch, cleanup_new_content_set):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
     create_bucket_request.name = 'ObjectStorageBulkUploadTwiceTestN_{}'.format(test_id)
@@ -658,7 +658,7 @@ def test_bulk_upload_twice_with_input_no(object_storage_client, test_id, delete_
     delete_pending_buckets[created_buckets].remove(create_bucket_request.name)
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_bulk_upload_twice_with_input_yes(object_storage_client, test_id, delete_pending_buckets, monkeypatch, cleanup_new_content_set):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
     create_bucket_request.name = 'ObjectStorageBulkUploadTwiceTestY_{}'.format(test_id)
@@ -702,7 +702,7 @@ def test_bulk_upload_twice_with_input_yes(object_storage_client, test_id, delete
     delete_pending_buckets[created_buckets].remove(create_bucket_request.name)
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_content_type_with_no_multipart(object_storage_client, test_id, delete_pending_buckets):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
     create_bucket_request.name = 'ObjectStorageBulkPutMultipartsTest_{}'.format(test_id)
@@ -733,7 +733,7 @@ def test_content_type_with_no_multipart(object_storage_client, test_id, delete_p
     delete_pending_buckets[created_buckets].remove(create_bucket_request.name)
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_bulk_put_with_prefix():
     result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name, '--src-dir', root_bulk_put_folder, '--object-prefix', 'bulk_put_prefix_test/'])
 
@@ -775,7 +775,7 @@ def test_bulk_put_with_prefix():
     shutil.rmtree(download_folder)
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_bulk_put_with_non_existent_folder():
     fake_directory = 'tests/folder/not/exist'
     result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name, '--src-dir', fake_directory])
@@ -784,7 +784,7 @@ def test_bulk_put_with_non_existent_folder():
     assert 'The specified --src-dir {} (expanded to: {}) does not exist'.format(fake_directory, fake_directory) in result.output
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_bulk_put_get_delete_with_inclusions(object_storage_client):
     inclusion_test_folder = os.path.join('tests', 'temp', 'os_bulk_upload_inclusion_test')
     if not os.path.exists(inclusion_test_folder):
@@ -930,7 +930,7 @@ def test_bulk_put_get_delete_with_inclusions(object_storage_client):
     shutil.rmtree(inclusion_test_folder)
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_bulk_put_get_delete_with_exclusions(object_storage_client):
     exclusion_test_folder = os.path.join('tests', 'temp', 'os_bulk_upload_exclusion_test')
     if not os.path.exists(exclusion_test_folder):
@@ -1092,7 +1092,7 @@ def test_bulk_get_when_bucket_name_is_invalid(vcr_fixture, debug):
     assert parsed_result['code'] == 'BucketNotFound'
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_bulk_put_when_bucket_name_is_invalid(debug):
     """
     Run the bulk-upload command using an invalid bucket name and validate that it throws a ServiceError
@@ -1145,7 +1145,7 @@ def test_delete_dry_run(vcr_fixture):
     assert set(parsed_result['deleted-objects']) == set(bulk_get_prefix_to_object['a/b'])
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_delete(object_storage_client, test_id, delete_pending_buckets):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
     create_bucket_request.name = 'ObjectStorageBulkDelete_{}'.format(test_id)
@@ -1178,7 +1178,7 @@ def test_delete(object_storage_client, test_id, delete_pending_buckets):
     delete_pending_buckets[created_buckets].remove(create_bucket_request.name)
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_bulk_operation_table_output_query(object_storage_client, test_id, delete_pending_buckets):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
     create_bucket_request.name = 'ObjectStorageTableOutput_{}'.format(test_id)
@@ -1385,7 +1385,7 @@ def test_basic_bulk_delete_versions_object_name(vcr_fixture, object_storage_clie
 # [CASPER-13879] Test bulk-delete-versions (test for pagination)
 # Try to delete with random object-name not present in bucket such that it hits pagination and loop terminates successfully
 # Delete objects placed in different pages, object versions ranging over multiple pages
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_bulk_delete_versions_pagination(object_storage_client, debug, test_id):
     bucket_name = 'ObjectStorageBulkDeleteVersionsPagination_{}'.format(test_id)
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
@@ -1564,7 +1564,7 @@ def test_bulk_delete_versions_pagination(object_storage_client, debug, test_id):
 
 # [CASPER-13879] Test bulk-delete-versions (test for pagination)
 # Delete objects placed in different pages with include/exclude options, Also object versions ranging over multiple pages
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_bulk_delete_versions_pagination_include_exclude(object_storage_client, debug, test_id):
     bucket_name = 'ObjectStorageBulkDeleteVersionsPaginationIncludeExclude{}'.format(test_id)
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
@@ -1630,7 +1630,7 @@ def test_bulk_delete_versions_pagination_include_exclude(object_storage_client, 
 
 # [CASPER-13879] Test bulk-delete with prefi/include/exclude option ~ multiple object names(test for pagination)
 # Creating multiple objects with different extensions and names such that objects to be deleted exist in multiple pages
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_bulk_delete_pagination(object_storage_client, debug, test_id):
     bucket_name = 'ObjectStorageBulkDeletePagination_{}'.format(test_id)
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
@@ -1711,13 +1711,13 @@ def test_bulk_delete_pagination(object_storage_client, debug, test_id):
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_delete_bucket_empty_dry_run(object_storage_client, debug, test_id, on_error_fixture):
     bucket_name = 'ObjectStorageBucketDelete_{}'.format(test_id)
     bucket_delete_test_helper(object_storage_client, bucket_name, debug, test_id, on_error_fixture)
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_delete_bucket_empty_dry_run_versioned(object_storage_client, debug, test_id, on_error_fixture):
     bucket_name = 'ObjectStorageBucketDelete_Versioned_{}'.format(test_id)
     bucket_delete_test_helper(object_storage_client, bucket_name, debug, test_id, on_error_fixture, is_versioned=True)
@@ -1770,7 +1770,7 @@ def bucket_delete_test_helper(object_storage_client, source_bucket_name, debug, 
     on_error_fixture[test_success] = True
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_delete_bucket_without_objects(object_storage_client, debug, test_id):
     bucket_name = 'ObjectStorageBucketDelete_WithoutObjects_{}'.format(test_id)
     clear_and_create_new_bucket(object_storage_client, bucket_name, debug)
@@ -1784,7 +1784,7 @@ def test_delete_bucket_without_objects(object_storage_client, debug, test_id):
     assert_that_bucket_is_deleted(bucket_name, debug)
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_delete_bucket_with_par_rep_policy_uploads_but_no_objects(object_storage_client, debug, test_id, on_error_fixture):
     bucket_name = 'ObjectStorageBucketDelete_WithoutObject_WithParUploadRepPolicy_{}'.format(test_id)
 
@@ -1809,7 +1809,7 @@ def test_delete_bucket_with_par_rep_policy_uploads_but_no_objects(object_storage
     on_error_fixture[test_success] = True
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_delete_bucket_with_objects_paging(object_storage_client, debug, test_id):
     bucket_name = 'ObjectStorageBucketDelete_Paging_{}'.format(test_id)
     clear_and_create_new_bucket(object_storage_client, bucket_name, debug)
@@ -1834,7 +1834,7 @@ def test_delete_bucket_with_objects_paging(object_storage_client, debug, test_id
     assert_that_bucket_is_deleted(bucket_name, debug)
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_delete_bucket_with_object_versions_paging(object_storage_client, debug, test_id):
     bucket_name = 'ObjectStorageBucketDelete_Versioned_Paging_{}'.format(test_id)
     clear_and_create_new_bucket(object_storage_client, bucket_name, debug, is_versioned=True)
@@ -1859,7 +1859,7 @@ def test_delete_bucket_with_object_versions_paging(object_storage_client, debug,
     assert_that_bucket_is_deleted(bucket_name, debug)
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_clear_test_data_util_with_same_prefix(object_storage_client, debug, test_id):
     bucket_prefix = f'ObjectStorageClearTest{test_id}'
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_prefix)
@@ -1887,7 +1887,7 @@ def test_clear_test_data_util_with_same_prefix(object_storage_client, debug, tes
     assert_that_bucket_is_deleted(bucket_2, debug)
 
 
-@util.skip_while_rerecording
+@pytest.mark.skip_while_rerecording
 def test_clear_test_data_util_with_different_prefix(object_storage_client, debug, test_id):
     common_prefix = f'ObjectStorageClearTest{test_id}'
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, common_prefix)

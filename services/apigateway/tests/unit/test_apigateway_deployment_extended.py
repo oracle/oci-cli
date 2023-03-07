@@ -30,9 +30,9 @@ class TestApiGatewayDeployment(unittest.TestCase):
         assert 'Error: Missing option(s)' in result.output
         assert '--deployment-id' in result.output
         result = util.invoke_command(['api-gateway', 'deployment', 'update', '--display-name'])
-        assert 'Error: --display-name option requires an argument' in result.output
+        assert 'Error: Option \'--display-name\' requires an argument' in result.output
         result = util.invoke_command(['api-gateway', 'deployment', 'update', '--specification'])
-        assert 'Error: --specification option requires an argument' in result.output
+        assert 'Error: Option \'--specification\' requires an argument' in result.output
 
     def test_delete_deployment(self):
         result = util.invoke_command(['api-gateway', 'deployment', 'delete'])
@@ -44,9 +44,9 @@ class TestApiGatewayDeployment(unittest.TestCase):
         assert 'Error: Missing option(s)' in result.output
         assert '--compartment-id' in result.output
         result = util.invoke_command(['api-gateway', 'deployment', 'list', '--display-name'])
-        assert 'Error: --display-name option requires an argument' in result.output
+        assert 'Error: Option \'--display-name\' requires an argument' in result.output
         result = util.invoke_command(['api-gateway', 'deployment', 'list', '--gateway-id'])
-        assert 'Error: --gateway-id option requires an argument' in result.output
+        assert 'Error: Option \'--gateway-id\' requires an argument' in result.output
 
     def test_change_compartment(self):
         result = util.invoke_command(['api-gateway', 'deployment', 'change-compartment'])

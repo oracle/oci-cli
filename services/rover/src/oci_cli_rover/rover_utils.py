@@ -83,7 +83,7 @@ def export_compute_image_status_helper(ctx, work_request_id):
 
 
 def prompt_for_secrets(secret_type):
-    return click.prompt(text='Enter {0} (minimum 8 characters)'.format(secret_type), default='',
+    return click.prompt(text='Enter {0} (minimum 8 characters)'.format(secret_type), default=None,
                         hide_input=True, show_default=False, confirmation_prompt=True)
 
 

@@ -29,40 +29,40 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
     # query flattened params
     def test_query_flattened_params(self):
         result = util.invoke_command(['log-analytics', 'query', 'search', '--time-filter'])
-        assert 'Error: no such option: --time-filter' in result.output
+        assert 'Error: No such option: --time-filter' in result.output
 
         result = util.invoke_command(['log-analytics', 'query', 'export', '--time-filter'])
-        assert 'Error: no such option: --time-filter' in result.output
+        assert 'Error: No such option: --time-filter' in result.output
 
         result = util.invoke_command(['log-analytics', 'query', 'search', '--saved-search-id'])
-        assert 'Error: no such option: --saved-search-id' in result.output
+        assert 'Error: No such option: --saved-search-id' in result.output
 
         result = util.invoke_command(['log-analytics', 'query', 'search', '--time-start'])
-        assert 'Error: --time-start option requires an argument' in result.output
+        assert 'Error: Option \'--time-start\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'query', 'search', '--time-end'])
-        assert 'Error: --time-end option requires an argument' in result.output
+        assert 'Error: Option \'--time-end\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'query', 'search', '--timezone'])
-        assert 'Error: --timezone option requires an argument' in result.output
+        assert 'Error: Option \'--timezone\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'query', 'export', '--time-start'])
-        assert 'Error: --time-start option requires an argument' in result.output
+        assert 'Error: Option \'--time-start\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'query', 'export', '--time-end'])
-        assert 'Error: --time-end option requires an argument' in result.output
+        assert 'Error: Option \'--time-end\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'query', 'export', '--timezone'])
-        assert 'Error: --timezone option requires an argument' in result.output
+        assert 'Error: Option \'--timezone\' requires an argument' in result.output
 
     # query namespace aliases
     def test_query_namespace_aliases(self):
         result = util.invoke_command(['log-analytics', 'query', 'compare-content', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'query', 'compare-content', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'query', 'compare-content', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
     # query-work-request renamed command
     def test_query_work_request_renamed_command(self):
@@ -92,11 +92,11 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
     # ScheduledTask namespace aliases
     def test_scheduled_task_namespace_aliases(self):
         result = util.invoke_command(['log-analytics', 'scheduled-task', 'verify', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'scheduled-task', 'verify', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'scheduled-task', 'verify', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
     # object-collection-rule renamed commands
     def test_object_collection_rule_renamed_commands(self):
@@ -109,28 +109,28 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
     # object-collection-rule flattened params
     def test_object_collection_rule_flattened_params(self):
         result = util.invoke_command(['log-analytics', 'object-collection-rule', 'get', '--log-analytics-object-collection-rule-id'])
-        assert 'Error: no such option: --log-analytics-object-collection-rule-id' in result.output
+        assert 'Error: No such option: --log-analytics-object-collection-rule-id' in result.output
 
         result = util.invoke_command(['log-analytics', 'object-collection-rule', 'delete', '--log-analytics-object-collection-rule-id'])
-        assert 'Error: no such option: --log-analytics-object-collection-rule-id' in result.output
+        assert 'Error: No such option: --log-analytics-object-collection-rule-id' in result.output
 
         result = util.invoke_command(['log-analytics', 'object-collection-rule', 'update', '--log-analytics-object-collection-rule-id'])
-        assert 'Error: no such option: --log-analytics-object-collection-rule-id' in result.output
+        assert 'Error: No such option: --log-analytics-object-collection-rule-id' in result.output
 
         result = util.invoke_command(['log-analytics', 'object-collection-rule', 'change-compartment', '--log-analytics-object-collection-rule-id'])
-        assert 'Error: no such option: --log-analytics-object-collection-rule-id' in result.output
+        assert 'Error: No such option: --log-analytics-object-collection-rule-id' in result.output
 
         result = util.invoke_command(['log-analytics', 'object-collection-rule', 'get', '--object-collection-rule-id'])
-        assert 'Error: --object-collection-rule-id option requires an argument' in result.output
+        assert 'Error: Option \'--object-collection-rule-id\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'object-collection-rule', 'delete', '--object-collection-rule-id'])
-        assert 'Error: --object-collection-rule-id option requires an argument' in result.output
+        assert 'Error: Option \'--object-collection-rule-id\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'object-collection-rule', 'update', '--object-collection-rule-id'])
-        assert 'Error: --object-collection-rule-id option requires an argument' in result.output
+        assert 'Error: Option \'--object-collection-rule-id\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'object-collection-rule', 'change-compartment', '--object-collection-rule-id'])
-        assert 'Error: --object-collection-rule-id option requires an argument' in result.output
+        assert 'Error: Option \'--object-collection-rule-id\' requires an argument' in result.output
 
     # list-supported-char-encodings renamed command
     def test_list_supported_char_encodings_flattened_params(self):
@@ -143,18 +143,18 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
     # upload-log-file flattened params
     def test_upload_log_file_flattened_params(self):
         result = util.invoke_command(['log-analytics', 'upload', 'upload-log-file', '--upload-log-file-body'])
-        assert 'Error: no such option: --upload-log-file-body' in result.output
+        assert 'Error: No such option: --upload-log-file-body' in result.output
 
         result = util.invoke_command(['log-analytics', 'upload', 'upload-log-file', '--file'])
-        assert 'Error: --file option requires an argument' in result.output
+        assert 'Error: Option \'--file\' requires an argument' in result.output
 
     # upload-log-events-file flattened params
     def test_upload_log_events_file_flattened_params(self):
         result = util.invoke_command(['log-analytics', 'upload', 'upload-log-events-file', '--upload-log-events-file-details'])
-        assert 'Error: no such option: --upload-log-events-file-details' in result.output
+        assert 'Error: No such option: --upload-log-events-file-details' in result.output
 
         result = util.invoke_command(['log-analytics', 'upload', 'upload-log-events-file', '--file'])
-        assert 'Error: --file option requires an argument' in result.output
+        assert 'Error: Option \'--file\' requires an argument' in result.output
 
     # get-unprocessed-bucket renamed command
     def test_get_unprocessed_bucket_renamed_command(self):
@@ -175,151 +175,151 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
     # upload namespace aliases
     def test_upload_namespace_aliases(self):
         result = util.invoke_command(['log-analytics', 'upload', 'upload-log-file', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'upload', 'upload-log-file', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'upload', 'upload-log-file', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'upload', 'list', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'upload', 'list', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'upload', 'list', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'upload', 'get', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'upload', 'get', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'upload', 'get', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'upload', 'delete', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'upload', 'delete', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'upload', 'delete', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'upload', 'list-upload-files', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'upload', 'list-upload-files', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'upload', 'list-upload-files', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'upload', 'delete-upload-file', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'upload', 'delete-upload-file', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'upload', 'delete-upload-file', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'upload', 'list-upload-warnings', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'upload', 'list-upload-warnings', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'upload', 'list-upload-warnings', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'upload', 'delete-upload-warning', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'upload', 'delete-upload-warning', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'upload', 'delete-upload-warning', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'upload', 'validate-source-mapping', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'upload', 'validate-source-mapping', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'upload', 'validate-source-mapping', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'upload', 'validate-file', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'upload', 'validate-file', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'upload', 'validate-file', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'char-encoding-collection', 'list-supported-encodings', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'char-encoding-collection', 'list-supported-encodings', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'char-encoding-collection', 'list-supported-encodings', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'timezone-collection', 'list-supported-timezones', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'timezone-collection', 'list-supported-timezones', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'timezone-collection', 'list-supported-timezones', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'object-collection-rule', 'create', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'object-collection-rule', 'create', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'object-collection-rule', 'create', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'object-collection-rule', 'list', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'object-collection-rule', 'list', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'object-collection-rule', 'list', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'object-collection-rule', 'get', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'object-collection-rule', 'get', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'object-collection-rule', 'get', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'object-collection-rule', 'update', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'object-collection-rule', 'update', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'object-collection-rule', 'update', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'object-collection-rule', 'delete', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'object-collection-rule', 'delete', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'object-collection-rule', 'delete', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'object-collection-rule', 'change-compartment', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'object-collection-rule', 'change-compartment', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'object-collection-rule', 'change-compartment', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'upload', 'upload-log-events-file', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'upload', 'upload-log-events-file', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'upload', 'upload-log-events-file', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'upload', 'get-unprocessed-bucket', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'upload', 'get-unprocessed-bucket', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'upload', 'get-unprocessed-bucket', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'upload', 'set-unprocessed-bucket', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'upload', 'set-unprocessed-bucket', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'upload', 'set-unprocessed-bucket', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
     # log analytics entity type renamed root group command
     def test_entity_type_renamed_commands(self):
@@ -331,13 +331,13 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
 
     def test_entity_type_flattened_params(self):
         result = util.invoke_command(['log-analytics', 'entity-type', 'get', '--entity-type-name'])
-        assert 'Error: no such option: --entity-type-name' in result.output
+        assert 'Error: No such option: --entity-type-name' in result.output
 
         result = util.invoke_command(['log-analytics', 'entity-type', 'delete', '--entity-type-name'])
-        assert 'Error: no such option: --entity-type-name' in result.output
+        assert 'Error: No such option: --entity-type-name' in result.output
 
         result = util.invoke_command(['log-analytics', 'entity-type', 'update', '--entity-type-name'])
-        assert 'Error: no such option: --entity-type-name' in result.output
+        assert 'Error: No such option: --entity-type-name' in result.output
 
     # log analytics entity renamed root group command and entity commands
     def test_entity_renamed_commands(self):
@@ -373,37 +373,37 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
 
     def test_entity_flattened_params(self):
         result = util.invoke_command(['log-analytics', 'entity', 'change-compartment', '--log-analytics-entity-id'])
-        assert 'Error: no such option: --log-analytics-entity-id' in result.output
+        assert 'Error: No such option: --log-analytics-entity-id' in result.output
 
         result = util.invoke_command(['log-analytics', 'entity', 'create', '--log-analytics-entity-id'])
-        assert 'Error: no such option: --log-analytics-entity-id' in result.output
+        assert 'Error: No such option: --log-analytics-entity-id' in result.output
 
         result = util.invoke_command(['log-analytics', 'entity', 'delete', '--log-analytics-entity-id'])
-        assert 'Error: no such option: --log-analytics-entity-id' in result.output
+        assert 'Error: No such option: --log-analytics-entity-id' in result.output
 
         result = util.invoke_command(['log-analytics', 'entity', 'get', '--log-analytics-entity-id'])
-        assert 'Error: no such option: --log-analytics-entity-id' in result.output
+        assert 'Error: No such option: --log-analytics-entity-id' in result.output
 
         result = util.invoke_command(['log-analytics', 'entity', 'list', '--is_management_agent_id_null'])
-        assert 'Error: no such option: --is_management_agent_id_null' in result.output
+        assert 'Error: No such option: --is_management_agent_id_null' in result.output
 
         result = util.invoke_command(['log-analytics', 'entity', 'update', '--management_agent_id'])
-        assert 'Error: no such option: --management_agent_id' in result.output
+        assert 'Error: No such option: --management_agent_id' in result.output
 
         result = util.invoke_command(['log-analytics', 'entity', 'update', '--log-analytics-entity-id'])
-        assert 'Error: no such option: --log-analytics-entity-id' in result.output
+        assert 'Error: No such option: --log-analytics-entity-id' in result.output
 
         result = util.invoke_command(['log-analytics', 'entity', 'add-associations', '--log-analytics-entity-id'])
-        assert 'Error: no such option: --log-analytics-entity-id' in result.output
+        assert 'Error: No such option: --log-analytics-entity-id' in result.output
 
         result = util.invoke_command(['log-analytics', 'entity', 'list-associations', '--direct_or_all_associations'])
-        assert 'Error: no such option: --direct_or_all_associations' in result.output
+        assert 'Error: No such option: --direct_or_all_associations' in result.output
 
         result = util.invoke_command(['log-analytics', 'entity', 'list-associations', '--log-analytics-entity-id'])
-        assert 'Error: no such option: --log-analytics-entity-id' in result.output
+        assert 'Error: No such option: --log-analytics-entity-id' in result.output
 
         result = util.invoke_command(['log-analytics', 'entity', 'remove-associations', '--log-analytics-entity-id'])
-        assert 'Error: no such option: --log-analytics-entity-id' in result.output
+        assert 'Error: No such option: --log-analytics-entity-id' in result.output
 
     # log analytics em-bridge renamed root group command and em-bridge commands
     def test_em_bridge_renamed_commands(self):
@@ -421,70 +421,70 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
 
     def test_em_bridge_flattened_params(self):
         result = util.invoke_command(['log-analytics', 'em-bridge', 'change-compartment', '--log-analytics-em-bridge-id'])
-        assert 'Error: no such option: --log-analytics-em-bridge-id' in result.output
+        assert 'Error: No such option: --log-analytics-em-bridge-id' in result.output
 
         result = util.invoke_command(['log-analytics', 'em-bridge', 'create', '--log-analytics-em-bridge-id'])
-        assert 'Error: no such option: --log-analytics-em-bridge-id' in result.output
+        assert 'Error: No such option: --log-analytics-em-bridge-id' in result.output
 
         result = util.invoke_command(['log-analytics', 'em-bridge', 'delete', '--log-analytics-em-bridge-id'])
-        assert 'Error: no such option: --log-analytics-em-bridge-id' in result.output
+        assert 'Error: No such option: --log-analytics-em-bridge-id' in result.output
 
         result = util.invoke_command(['log-analytics', 'em-bridge', 'get', '--log-analytics-em-bridge-id'])
-        assert 'Error: no such option: --log-analytics-em-bridge-id' in result.output
+        assert 'Error: No such option: --log-analytics-em-bridge-id' in result.output
 
         result = util.invoke_command(['log-analytics', 'em-bridge', 'update', '--log-analytics-em-bridge-id'])
-        assert 'Error: no such option: --log-analytics-em-bridge-id' in result.output
+        assert 'Error: No such option: --log-analytics-em-bridge-id' in result.output
 
     # namespace aliases
     def test_em_bridge_namespace_aliases(self):
         result = util.invoke_command(['log-analytics', 'em-bridge', 'change-compartment', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'em-bridge', 'change-compartment', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'em-bridge', 'change-compartment', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'em-bridge', 'create', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'em-bridge', 'create', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'em-bridge', 'create', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'em-bridge', 'delete', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'em-bridge', 'delete', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'em-bridge', 'delete', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'em-bridge', 'get', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'em-bridge', 'get', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'em-bridge', 'get', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'em-bridge', 'list', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'em-bridge', 'list', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'em-bridge', 'list', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'em-bridge', 'summary', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'em-bridge', 'summary', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'em-bridge', 'summary', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
         result = util.invoke_command(['log-analytics', 'em-bridge', 'update', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'em-bridge', 'update', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'em-bridge', 'update', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
     # log analytics entity-topology renamed commands
     def test_entity_topology_changed_command(self):
@@ -496,16 +496,16 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
 
     def test_entity_topology_flattened_params(self):
         result = util.invoke_command(['log-analytics', 'entity-topology', 'list', '--log-analytics-entity-id'])
-        assert 'Error: no such option: --log-analytics-entity-id' in result.output
+        assert 'Error: No such option: --log-analytics-entity-id' in result.output
 
     # log analytics entity-topology namespace aliases
     def test_entity_topology_namespace_aliases(self):
         result = util.invoke_command(['log-analytics', 'entity-topology', 'list', '--namespace-name'])
-        assert 'Error: --namespace-name option requires an argument' in result.output
+        assert 'Error: Option \'--namespace-name\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'entity-topology', 'list', '--namespace'])
-        assert 'Error: --namespace option requires an argument' in result.output
+        assert 'Error: Option \'--namespace\' requires an argument' in result.output
         result = util.invoke_command(['log-analytics', 'entity-topology', 'list', '-ns'])
-        assert 'Error: -ns option requires an argument' in result.output
+        assert 'Error: Option \'-ns\' requires an argument' in result.output
 
     def test_validate_source_efds_changed_command(self):
         result = util.invoke_command(['log-analytics', 'log-analytics-source', 'validate-source-extended-field-details'])
@@ -782,107 +782,107 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
 
     def test_get_log_group_removed_id_param(self):
         result = util.invoke_command(['log-analytics', 'log-group', 'get', '--log-analytics-log-group-id'])
-        assert 'Error: no such option: --log-analytics-log-group-id' in result.output
+        assert 'Error: No such option: --log-analytics-log-group-id' in result.output
 
     def test_update_log_group_removed_id_param(self):
         result = util.invoke_command(['log-analytics', 'log-group', 'update', '--log-analytics-log-group-id'])
-        assert 'Error: no such option: --log-analytics-log-group-id' in result.output
+        assert 'Error: No such option: --log-analytics-log-group-id' in result.output
 
     def test_change_log_group_compartment_removed_id_param(self):
         result = util.invoke_command(['log-analytics', 'log-group', 'change-compartment', '--log-analytics-log-group-id'])
-        assert 'Error: no such option: --log-analytics-log-group-id' in result.output
+        assert 'Error: No such option: --log-analytics-log-group-id' in result.output
 
     def test_delete_log_group_removed_id_param(self):
         result = util.invoke_command(['log-analytics', 'log-group', 'delete', '--log-analytics-log-group-id'])
-        assert 'Error: no such option: --log-analytics-log-group-id' in result.output
+        assert 'Error: No such option: --log-analytics-log-group-id' in result.output
 
     def test_list_associated_entities_removed_dname_param(self):
         result = util.invoke_command(['log-analytics', 'assoc', 'list-associated-entities', '--entity-type-display-name'])
-        assert 'Error: no such option: --entity-type-display-name' in result.output
+        assert 'Error: No such option: --entity-type-display-name' in result.output
 
     def test_list_entity_source_assocs_removed_dname_param(self):
         result = util.invoke_command(['log-analytics', 'assoc', 'list-entity-source-assocs', '--entity-type-display-name'])
-        assert 'Error: no such option: --entity-type-display-name' in result.output
+        assert 'Error: No such option: --entity-type-display-name' in result.output
 
     def test_import_custom_content_removed_params(self):
         result = util.invoke_command(['log-analytics', 'content-import', 'import-custom-content', '--import-custom-content-file-body'])
-        assert 'Error: no such option: --import-custom-content-file-body' in result.output
+        assert 'Error: No such option: --import-custom-content-file-body' in result.output
 
         result = util.invoke_command(['log-analytics', 'content-import', 'import-custom-content', '--file'])
-        assert 'Error: --file option requires an argument' in result.output
+        assert 'Error: Option \'--file\' requires an argument' in result.output
 
     def test_register_lookup_removed_params(self):
         result = util.invoke_command(['log-analytics', 'lookup', 'register-lookup', '--register-lookup-content-file-body'])
-        assert 'Error: no such option: --register-lookup-content-file-body' in result.output
+        assert 'Error: No such option: --register-lookup-content-file-body' in result.output
 
         result = util.invoke_command(['log-analytics', 'lookup', 'register-lookup', '--file'])
-        assert 'Error: --file option requires an argument' in result.output
+        assert 'Error: Option \'--file\' requires an argument' in result.output
 
     def test_append_lookup_removed_params(self):
         result = util.invoke_command(['log-analytics', 'lookup', 'append-data', '--append-lookup-file-body'])
-        assert 'Error: no such option: --append-lookup-file-body' in result.output
+        assert 'Error: No such option: --append-lookup-file-body' in result.output
 
         result = util.invoke_command(['log-analytics', 'lookup', 'append-data', '--file'])
-        assert 'Error: --file option requires an argument' in result.output
+        assert 'Error: Option \'--file\' requires an argument' in result.output
 
     def test_update_lookup_removed_params(self):
         result = util.invoke_command(['log-analytics', 'lookup', 'update-data', '--update-lookup-file-body'])
-        assert 'Error: no such option: --update-lookup-file-body' in result.output
+        assert 'Error: No such option: --update-lookup-file-body' in result.output
 
         result = util.invoke_command(['log-analytics', 'lookup', 'update-data', '--file'])
-        assert 'Error: --file option requires an argument' in result.output
+        assert 'Error: Option \'--file\' requires an argument' in result.output
 
     def test_extract_field_paths_removed_params(self):
         result = util.invoke_command(['log-analytics', 'parser', 'extract-structured-log-field-paths', '--parser-ignoreline-characters'])
-        assert 'Error: no such option: --parser-ignoreline-characters' in result.output
+        assert 'Error: No such option: --parser-ignoreline-characters' in result.output
 
         result = util.invoke_command(['log-analytics', 'parser', 'extract-structured-log-field-paths', '--should-tokenize-original-text'])
-        assert 'Error: no such option: --should-tokenize-original-text' in result.output
+        assert 'Error: No such option: --should-tokenize-original-text' in result.output
 
     def test_extract_header_paths_removed_params(self):
         result = util.invoke_command(['log-analytics', 'parser', 'extract-structured-log-header-paths', '--parser-ignoreline-characters'])
-        assert 'Error: no such option: --parser-ignoreline-characters' in result.output
+        assert 'Error: No such option: --parser-ignoreline-characters' in result.output
 
         result = util.invoke_command(['log-analytics', 'parser', 'extract-structured-log-header-paths', '--should-tokenize-original-text'])
-        assert 'Error: no such option: --should-tokenize-original-text' in result.output
+        assert 'Error: No such option: --should-tokenize-original-text' in result.output
 
     def test_test_parser_removed_params(self):
         result = util.invoke_command(['log-analytics', 'parser', 'test-parser', '--parser-ignoreline-characters'])
-        assert 'Error: no such option: --parser-ignoreline-characters' in result.output
+        assert 'Error: No such option: --parser-ignoreline-characters' in result.output
 
         result = util.invoke_command(['log-analytics', 'parser', 'test-parser', '--should-tokenize-original-text'])
-        assert 'Error: no such option: --should-tokenize-original-text' in result.output
+        assert 'Error: No such option: --should-tokenize-original-text' in result.output
 
     def test_upsert_parser_removed_params(self):
         result = util.invoke_command(['log-analytics', 'parser', 'upsert-parser', '--parser-ignoreline-characters'])
-        assert 'Error: no such option: --parser-ignoreline-characters' in result.output
+        assert 'Error: No such option: --parser-ignoreline-characters' in result.output
 
         result = util.invoke_command(['log-analytics', 'parser', 'upsert-parser', '--should-tokenize-original-text'])
-        assert 'Error: no such option: --should-tokenize-original-text' in result.output
+        assert 'Error: No such option: --should-tokenize-original-text' in result.output
 
     def test_upsert_source_removed_efdns_param(self):
         result = util.invoke_command(['log-analytics', 'source', 'upsert-source', '--extended-field-definitions'])
-        assert 'Error: no such option: --extended-field-definitions' in result.output
+        assert 'Error: No such option: --extended-field-definitions' in result.output
 
     def test_validate_source_removed_efdns_param(self):
         result = util.invoke_command(['log-analytics', 'source', 'validate-source', '--extended-field-definitions'])
-        assert 'Error: no such option: --extended-field-definitions' in result.output
+        assert 'Error: No such option: --extended-field-definitions' in result.output
 
     def test_validate_source_efds_removed_params(self):
         result = util.invoke_command(['log-analytics', 'source', 'validate-source-extfield-details', '--association-count'])
-        assert 'Error: no such option: --association-count' in result.output
+        assert 'Error: No such option: --association-count' in result.output
 
         result = util.invoke_command(['log-analytics', 'source', 'validate-source-extfield-details', '--association-entity'])
-        assert 'Error: no such option: --association-entity' in result.output
+        assert 'Error: No such option: --association-entity' in result.output
 
         result = util.invoke_command(['log-analytics', 'source', 'validate-source-extfield-details', '--extended-field-definitions'])
-        assert 'Error: no such option: --extended-field-definitions' in result.output
+        assert 'Error: No such option: --extended-field-definitions' in result.output
 
         result = util.invoke_command(['log-analytics', 'source', 'validate-source-extfield-details', '--is-auto-association-enabled'])
-        assert 'Error: no such option: --is-auto-association-enabled' in result.output
+        assert 'Error: No such option: --is-auto-association-enabled' in result.output
 
         result = util.invoke_command(['log-analytics', 'source', 'validate-source-extfield-details', '--is-auto-association-override'])
-        assert 'Error: no such option: --is-auto-association-override' in result.output
+        assert 'Error: No such option: --is-auto-association-override' in result.output
 
     # Ingest time Rule test removed create command
     def test_ingest_time_rule_removed_create_command(self):
@@ -899,7 +899,7 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
     # Recall archived data test renamed param
     def test_recall_archived_data_renamed_params(self):
         result = util.invoke_command(['log-analytics', 'storage', 'recall-archived-data', '--query-parameterconflict'])
-        assert 'Error: no such option: --query-parameterconflict' in result.output
+        assert 'Error: No such option: --query-parameterconflict' in result.output
 
         result = util.invoke_command(['log-analytics', 'storage', 'recall-archived-data', '--query-string'])
-        assert 'Error: --query-string option requires an argument' in result.output
+        assert 'Error: Option \'--query-string\' requires an argument' in result.output

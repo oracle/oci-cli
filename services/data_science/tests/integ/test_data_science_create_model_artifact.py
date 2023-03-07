@@ -6,10 +6,13 @@ import oci_cli
 import pytest
 from tests import test_config_container
 import json
+from conftest import runner
 
 CASSETTE_LIBRARY_DIR = 'services/data_science/tests/cassettes'
 COMPARTMENT_ID = "ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca"
 large_file_path = "services/data_science/tests/integ/data_science_large_file.txt"
+
+runner = runner()
 
 
 @pytest.fixture(autouse=True, scope='function')
@@ -18,7 +21,7 @@ def vcr_fixture(request):
         yield
 
 
-def test_data_science_model_create_model_artifact(runner, config_file, config_profile):
+def test_data_science_model_create_model_artifact(config_file, config_profile):
     params = [
         'data-science',
         'project',

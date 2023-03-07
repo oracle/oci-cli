@@ -5,6 +5,7 @@
 from __future__ import print_function
 import traceback
 import arrow
+import ast
 import click
 import datetime
 import dateutil.parser
@@ -948,12 +949,20 @@ def parse_json_parameter(parameter_name, parameter_value, default=None, camelize
         json_to_parse = parameter_value
 
     try:
-        if camelize_keys:
-            return make_dict_keys_camel_case(json.loads(json_to_parse), parameter_name)
-        else:
-            return json.loads(json_to_parse)
+        obj = json.loads(json_to_parse)
     except ValueError:
-        sys.exit('Parameter {!r} must be in JSON format.\nFor help with formatting JSON input see our documentation here: https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/cliusing.htm#ManagingCLIInputandOutput'.format(parameter_name))
+        try:
+            obj = ast.literal_eval(json_to_parse)
+
+            if type(obj) not in [list, dict]:
+                raise ValueError()
+
+        except (ValueError, SyntaxError):
+            sys.exit('Parameter {!r} must be in JSON format.\nFor help with formatting JSON input see our documentation here: https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/cliusing.htm#ManagingCLIInputandOutput'.format(parameter_name))
+
+    if camelize_keys:
+        return make_dict_keys_camel_case(obj, parameter_name)
+    return obj
 
 
 # Takes a dictionary representing a JSON object and converts keys into their camelized form. This will do a deep conversion - for example if a value in the dictionary is a dictionary itself

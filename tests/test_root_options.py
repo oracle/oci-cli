@@ -9,88 +9,92 @@ import six.moves
 import traceback
 from mock import patch
 from oci_cli.cli_constants import OCI_CONFIG_REQUIRED_VARS as config_required_vars
+from conftest import runner
 
 
-def test_control_case(runner, config_file):
+runner = runner()
+
+
+def test_control_case(config_file):
     # Use the correct R2 endpoint, should succeed.
     result = invoke_example_operation(runner, [], config_file)
     assert 0 == result.exit_code
 
 
-def test_endpoint_option_sucess(runner, config_file):
+def test_endpoint_option_sucess(config_file):
     # Use the correct R2 endpoint, should succeed.
     result = invoke_example_operation(runner, ['--endpoint', "https://objectstorage.us-phoenix-1.oraclecloud.com"], config_file)
     assert 0 == result.exit_code
 
 
-def test_endpoint_option_bad_endpoint(runner, config_file):
+def test_endpoint_option_bad_endpoint(config_file):
     result = invoke_example_operation(runner, ['--endpoint', 'https://notaservice.us-phoenix-1.oraclecloud.com'], config_file)
     assert 0 != result.exit_code
 
 
-def test_endpoint_and_region_option(runner, config_file):
+def test_endpoint_and_region_option(config_file):
     # Should use the endpoint, not the region.
     result = invoke_example_operation(runner, ['--endpoint', "https://objectstorage.us-phoenix-1.oraclecloud.com", '--region', 'badregion'], config_file)
     assert 0 == result.exit_code
 
 
-def test_endpoint_option_without_region_in_config(runner, malformed_config_file):
+def test_endpoint_option_without_region_in_config(malformed_config_file):
     # Config file does not have region, but endpoint option is given.
     result = invoke_example_operation(runner, ['--endpoint', "https://objectstorage.us-phoenix-1.oraclecloud.com", '--profile', 'MISSING_REGION'], config_file=malformed_config_file)
     assert 0 == result.exit_code
 
 
-def test_endpoint_in_config_not_used(runner):
+def test_endpoint_in_config_not_used():
     # Config file specifies an invalid endpoint and a valid region. Endpoint is not a valid
     # key in the config, so verify that it is not used.
     result = invoke_example_operation(runner, ['--profile', 'SPECIFY_BAD_ENDPOINT'], config_file='tests/resources/malformed_config')
     assert 0 == result.exit_code
 
 
-def test_region_option_without_region_in_config(runner):
+def test_region_option_without_region_in_config():
     # Config file does not have region, but region option is given.
     result = invoke_example_operation(runner, ['--region', "us-phoenix-1", '--profile', 'MISSING_REGION'], config_file='tests/resources/malformed_config')
     assert 0 == result.exit_code
 
 
-def test_cert_bundle_option(runner, config_file):
+def test_cert_bundle_option(config_file):
     result = invoke_example_operation(runner, ['--cert-bundle', 'tests/resources/doesnotexist'], config_file)
     assert 'BadParameter: Cannot find cert_bundle file' in result.output
     assert 0 != result.exit_code
 
 
-def test_connection_timeout_read_timeout_option_success(runner, config_file):
+def test_connection_timeout_read_timeout_option_success(config_file):
     # Should take the given timeout
     result = invoke_example_operation(runner, ['--connection-timeout', "20", "--read-timeout", "20"], config_file)
     assert 0 == result.exit_code
 
 
-def test_connection_timeout_option_success(runner, config_file):
+def test_connection_timeout_option_success(config_file):
     # Should take the given timeout
     result = invoke_example_operation(runner, ['--connection-timeout', "30"], config_file)
     assert 0 == result.exit_code
 
 
-def test_profile_option_overrides_default_setting(runner, config_file):
+def test_profile_option_overrides_default_setting(config_file):
     result = invoke_example_operation(runner, ['--profile', 'DEFAULT', '--cli-rc-file', 'tests/resources/default_files/settings_with_invalid_default_profile'], config_file)
     assert 0 == result.exit_code
 
 
-def test_profile_option_overrides_environment_variable(runner, config_file):
+def test_profile_option_overrides_environment_variable(config_file):
     os.environ[oci_cli.cli_constants.OCI_CLI_PROFILE_ENV_VAR] = 'INVALID_PROFILE'
     result = invoke_example_operation(runner, ['--profile', 'DEFAULT'], config_file)
     del os.environ[oci_cli.cli_constants.OCI_CLI_PROFILE_ENV_VAR]
     assert 0 == result.exit_code
 
 
-def test_profile_env_var_overrides_default_setting(runner, config_file):
+def test_profile_env_var_overrides_default_setting(config_file):
     os.environ[oci_cli.cli_constants.OCI_CLI_PROFILE_ENV_VAR] = 'DEFAULT'
     result = invoke_example_operation(runner, ['--cli-rc-file', 'tests/resources/default_files/settings_with_invalid_default_profile'], config_file)
     del os.environ[oci_cli.cli_constants.OCI_CLI_PROFILE_ENV_VAR]
     assert 0 == result.exit_code
 
 
-def test_default_profile_setting_from_cli_rc_file(runner, config_file):
+def test_default_profile_setting_from_cli_rc_file(config_file):
     env_vars = copy_config_required_vars()
     result = invoke_example_operation(runner, ['--cli-rc-file', 'tests/resources/default_files/settings_with_invalid_default_profile'], config_file)
     assert "ERROR: Profile 'INAVLID_PROFILE' not found in config file" in result.output
@@ -98,7 +102,7 @@ def test_default_profile_setting_from_cli_rc_file(runner, config_file):
     os.environ.update(env_vars)
 
 
-def test_rc_file_location_environment_variable(runner, config_file):
+def test_rc_file_location_environment_variable(config_file):
     env_vars = copy_config_required_vars()
     os.environ[oci_cli.cli_constants.OCI_CLI_RC_FILE_ENV_VAR] = 'tests/resources/default_files/settings_with_invalid_default_profile'
     result = invoke_example_operation(runner, [], config_file)
@@ -108,7 +112,7 @@ def test_rc_file_location_environment_variable(runner, config_file):
     os.environ.update(env_vars)
 
 
-def test_config_file_location_environment_variable(runner, config_file):
+def test_config_file_location_environment_variable(config_file):
     original_value = os.environ[oci_cli.cli_constants.OCI_CLI_CONFIG_FILE_ENV_VAR]
     os.environ[oci_cli.cli_constants.OCI_CLI_CONFIG_FILE_ENV_VAR] = 'tests/invalid_config'
     result = invoke_example_operation(runner, [], None, command_input='n')
@@ -120,7 +124,7 @@ def test_config_file_location_environment_variable(runner, config_file):
     os.environ[oci_cli.cli_constants.OCI_CLI_CONFIG_FILE_ENV_VAR] = original_value
 
 
-def test_config_values_from_environment_variable_mock_config(runner, config_file):
+def test_config_values_from_environment_variable_mock_config(config_file):
     result = invoke_example_operation(runner, [], None)
     assert 0 == result.exit_code
 
@@ -137,7 +141,7 @@ def test_config_values_from_environment_variable_mock_config(runner, config_file
     os.environ[oci_cli.cli_constants.OCI_CLI_CONFIG_FILE_ENV_VAR] = original_value
 
 
-def test_config_values_from_environment_variable_overrides_default_settings(runner, config_file):
+def test_config_values_from_environment_variable_overrides_default_settings(config_file):
     values_to_test = list(oci_cli.cli_constants.OCI_CONFIG_ENV_VARS)
     values_to_test.extend([
         oci_cli.cli_constants.OCI_CLI_CERT_BUNDLE_ENV_VAR,
@@ -154,7 +158,7 @@ def test_config_values_from_environment_variable_overrides_default_settings(runn
             assert 0 != result.exit_code
 
 
-def test_root_level_options_overrides_environment_variable(runner, config_file):
+def test_root_level_options_overrides_environment_variable(config_file):
     original_value = os.environ[oci_cli.cli_constants.OCI_CLI_CONFIG_FILE_ENV_VAR]
     values_to_test = [
         oci_cli.cli_constants.OCI_CLI_ENDPOINT_ENV_VAR,
@@ -181,13 +185,13 @@ def test_root_level_options_overrides_environment_variable(runner, config_file):
     os.environ[oci_cli.cli_constants.OCI_CLI_CONFIG_FILE_ENV_VAR] = original_value
 
 
-def test_auth_instance_principal_param(runner, config_file):
+def test_auth_instance_principal_param(config_file):
     with patch.object(oci.auth.signers.InstancePrincipalsSecurityTokenSigner, '__init__', return_value=None) as mock_init:
         result = invoke_example_operation(runner, ['--auth', 'instance_principal'], 'non-existent-config')
     assert mock_init.called
 
 
-def test_auth_instance_principal_env_var(runner, config_file):
+def test_auth_instance_principal_env_var(config_file):
     os.environ[oci_cli.cli_constants.OCI_CLI_AUTH_ENV_VAR] = 'instance_principal'
     with patch.object(oci.auth.signers.InstancePrincipalsSecurityTokenSigner, '__init__', return_value=None) as mock_init:
         result = invoke_example_operation(runner, [], 'non-existent-config')
@@ -195,7 +199,7 @@ def test_auth_instance_principal_env_var(runner, config_file):
     assert mock_init.called
 
 
-def test_auth_instance_principal_env_var_invalid(runner, config_file):
+def test_auth_instance_principal_env_var_invalid(config_file):
     os.environ[oci_cli.cli_constants.OCI_CLI_AUTH_ENV_VAR] = 'instance_pri'
     with patch.object(oci.auth.signers.InstancePrincipalsSecurityTokenSigner, '__init__', return_value=None) as mock_init:
         result = invoke_example_operation(runner, [], 'non-existent-config')
@@ -205,7 +209,7 @@ def test_auth_instance_principal_env_var_invalid(runner, config_file):
     assert 'Invalid value for OCI_CLI_AUTH' in result.output
 
 
-def test_operation_retries_if_no_retry_not_supplied(runner, config_file):
+def test_operation_retries_if_no_retry_not_supplied(config_file):
     fake_endpoint = 'https://fakenamenotexist.netcom'
     result = invoke_example_operation(runner, ['--debug', '--endpoint', fake_endpoint], config_file)
     stack_trace = traceback.format_tb(result.exc_info[2])

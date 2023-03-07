@@ -7,6 +7,7 @@ from oci_cli import cli_setup
 from oci_cli import cli_util
 
 from oci_cli.cli_setup import DEFAULT_KEY_NAME, PUBLIC_KEY_FILENAME_SUFFIX, PRIVATE_KEY_FILENAME_SUFFIX
+from oci_cli.cli_setup import prompt_for_passphrase
 
 import base64
 import click
@@ -221,10 +222,9 @@ def persist_user_session(user_session, profile_name=None, config=None, use_passp
         click.echo(BOOTSTRAP_PROCESS_CANCELED_MESSAGE)
         sys.exit(0)
 
-    key_passphrase = ''
+    key_passphrase = None
     if bootstrap or (session_auth and use_passphrase):
-        key_passphrase = click.prompt(text='Enter a passphrase for your private key (empty for no passphrase)',
-                                      default='', hide_input=True, show_default=False, confirmation_prompt=True)
+        key_passphrase = prompt_for_passphrase()
 
     if not cli_setup.write_private_key_to_file(private_key_file_path, user_session.private_key, key_passphrase, True, True):
         click.echo(BOOTSTRAP_PROCESS_CANCELED_MESSAGE)

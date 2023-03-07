@@ -165,7 +165,10 @@ IGNORED_COMMANDS = [
     ['opsi', 'opsi-configurations', 'get'],
     ['opsi', 'opsi-configurations', 'list'],
     ['opsi', 'opsi-configurations', 'summarize-configuration-items'],
-    ['opsi', 'opsi-configurations', 'update-opsi-ux-configuration-details']
+    ['opsi', 'opsi-configurations', 'update-opsi-ux-configuration-details'],
+    ['db', 'autonomous-database', 'update'],
+    ['opsi', 'database-insights', 'change-autonomous-database-insight-advanced-features-credential-by-vault'],
+    ['opsi', 'database-insights', 'enable-autonomous-database-insight-advanced-features-credential-by-vault']
 ]
 
 IGNORED_COMMANDS_DOCS = [

@@ -7,6 +7,9 @@ import data_safe_util
 
 from tests import util
 from tests import test_config_container
+from conftest import runner
+
+runner = runner()
 
 
 @pytest.fixture(autouse=True, scope='function')
@@ -16,7 +19,7 @@ def vcr_fixture(request):
 
 
 @pytest.mark.skip("DEXREQ-1731")
-def test_get(runner, config_file, config_profile):
+def test_get(config_file, config_profile):
     params = [
         'data-safe', 'configuration', 'get',
         '--compartment-id', util.COMPARTMENT_ID
@@ -30,7 +33,7 @@ def test_get(runner, config_file, config_profile):
 
 
 @pytest.mark.skip(reason="Data Safe is Enabled by Default in Test Environment")
-def test_enable(runner, config_file, config_profile):
+def test_enable(config_file, config_profile):
     params = [
         'data-safe', 'service', 'enable',
         '--compartment-id', util.COMPARTMENT_ID
