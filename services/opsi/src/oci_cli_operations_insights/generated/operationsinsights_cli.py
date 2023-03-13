@@ -7952,9 +7952,51 @@ def summarize_exadata_members(ctx, from_json, exadata_insight_id, exadata_type, 
     cli_util.render_response(result, ctx)
 
 
+@host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_network_usage_trend.command_name', 'summarize-host-insight-network-usage-trend'), help=u"""Returns response with usage time series data with breakdown by network interface for the time period specified. \n[Command Reference](summarizeHostInsightNetworkUsageTrend)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--id', required=True, help=u"""Required [OCID] of the host insight resource.""")
+@cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
+@cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--host-id', help=u"""Optional [OCID] of the host (Compute Id)""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--statistic', type=custom_types.CliCaseInsensitiveChoice(["AVG", "MAX"]), help=u"""Choose the type of statistic metric data to be used for forecasting.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'SummarizeHostInsightNetworkUsageTrendAggregationCollection'})
+@cli_util.wrap_exceptions
+def summarize_host_insight_network_usage_trend(ctx, from_json, compartment_id, id, analysis_time_interval, time_interval_start, time_interval_end, host_id, page, limit, statistic):
+
+    kwargs = {}
+    if analysis_time_interval is not None:
+        kwargs['analysis_time_interval'] = analysis_time_interval
+    if time_interval_start is not None:
+        kwargs['time_interval_start'] = time_interval_start
+    if time_interval_end is not None:
+        kwargs['time_interval_end'] = time_interval_end
+    if host_id is not None:
+        kwargs['host_id'] = host_id
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if statistic is not None:
+        kwargs['statistic'] = statistic
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.summarize_host_insight_network_usage_trend(
+        compartment_id=compartment_id,
+        id=id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_resource_capacity_trend.command_name', 'summarize-host-insight-resource-capacity-trend'), help=u"""Returns response with time series data (endTimestamp, capacity) for the time period specified. The maximum time range for analysis is 2 years, hence this is intentionally not paginated. If compartmentIdInSubtree is specified, aggregates resources in a compartment and in all sub-compartments. \n[Command Reference](summarizeHostInsightResourceCapacityTrend)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric.""")
+@cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric. Supported values are CPU, MEMORY, LOGICAL_MEMORY, STORAGE and NETWORK.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -8029,7 +8071,7 @@ def summarize_host_insight_resource_capacity_trend(ctx, from_json, compartment_i
 
 @host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_resource_forecast_trend.command_name', 'summarize-host-insight-resource-forecast-trend'), help=u"""Get Forecast predictions for CPU or memory resources since a time in the past. If compartmentIdInSubtree is specified, aggregates resources in a compartment and in all sub-compartments. \n[Command Reference](summarizeHostInsightResourceForecastTrend)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric.""")
+@cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric. Supported values are CPU, MEMORY, LOGICAL_MEMORY, STORAGE and NETWORK.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -8110,7 +8152,7 @@ def summarize_host_insight_resource_forecast_trend(ctx, from_json, compartment_i
 
 @host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_resource_statistics.command_name', 'summarize-host-insight-resource-statistics'), help=u"""Lists the resource statistics (usage, capacity, usage change percent, utilization percent, load) for each host filtered by utilization level in a compartment and in all sub-compartments if specified. \n[Command Reference](summarizeHostInsightResourceStatistics)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric.""")
+@cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric. Supported values are CPU, MEMORY, LOGICAL_MEMORY, STORAGE and NETWORK.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -8194,7 +8236,7 @@ def summarize_host_insight_resource_statistics(ctx, from_json, compartment_id, r
 
 @host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_resource_usage.command_name', 'summarize-host-insight-resource-usage'), help=u"""A cumulative distribution function is used to rank the usage data points per host within the specified time period. For each host, the minimum data point with a ranking > the percentile value is included in the summation. Linear regression functions are used to calculate the usage change percentage. If compartmentIdInSubtree is specified, aggregates resources in a compartment and in all sub-compartments. \n[Command Reference](summarizeHostInsightResourceUsage)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric.""")
+@cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric. Supported values are CPU, MEMORY, LOGICAL_MEMORY, STORAGE and NETWORK.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -8263,7 +8305,7 @@ def summarize_host_insight_resource_usage(ctx, from_json, compartment_id, resour
 
 @host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_resource_usage_trend.command_name', 'summarize-host-insight-resource-usage-trend'), help=u"""Returns response with time series data (endTimestamp, usage, capacity) for the time period specified. The maximum time range for analysis is 2 years, hence this is intentionally not paginated. If compartmentIdInSubtree is specified, aggregates resources in a compartment and in all sub-compartments. \n[Command Reference](summarizeHostInsightResourceUsageTrend)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric.""")
+@cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric. Supported values are CPU, MEMORY, LOGICAL_MEMORY, STORAGE and NETWORK.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -8335,7 +8377,7 @@ def summarize_host_insight_resource_usage_trend(ctx, from_json, compartment_id, 
 
 @host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_resource_utilization_insight.command_name', 'summarize-host-insight-resource-utilization-insight'), help=u"""Gets resources with current utilization (high and low) and projected utilization (high and low) for a resource type over specified time period. If compartmentIdInSubtree is specified, aggregates resources in a compartment and in all sub-compartments. \n[Command Reference](summarizeHostInsightResourceUtilizationInsight)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric.""")
+@cli_util.option('--resource-metric', required=True, help=u"""Filter by host resource metric. Supported values are CPU, MEMORY, LOGICAL_MEMORY, STORAGE and NETWORK.""")
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -8402,6 +8444,48 @@ def summarize_host_insight_resource_utilization_insight(ctx, from_json, compartm
     cli_util.render_response(result, ctx)
 
 
+@host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_storage_usage_trend.command_name', 'summarize-host-insight-storage-usage-trend'), help=u"""Returns response with usage time series data with breakdown by filesystem for the time period specified. \n[Command Reference](summarizeHostInsightStorageUsageTrend)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--id', required=True, help=u"""Required [OCID] of the host insight resource.""")
+@cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
+@cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--host-id', help=u"""Optional [OCID] of the host (Compute Id)""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--statistic', type=custom_types.CliCaseInsensitiveChoice(["AVG", "MAX"]), help=u"""Choose the type of statistic metric data to be used for forecasting.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'SummarizeHostInsightStorageUsageTrendAggregationCollection'})
+@cli_util.wrap_exceptions
+def summarize_host_insight_storage_usage_trend(ctx, from_json, compartment_id, id, analysis_time_interval, time_interval_start, time_interval_end, host_id, page, limit, statistic):
+
+    kwargs = {}
+    if analysis_time_interval is not None:
+        kwargs['analysis_time_interval'] = analysis_time_interval
+    if time_interval_start is not None:
+        kwargs['time_interval_start'] = time_interval_start
+    if time_interval_end is not None:
+        kwargs['time_interval_end'] = time_interval_end
+    if host_id is not None:
+        kwargs['host_id'] = host_id
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if statistic is not None:
+        kwargs['statistic'] = statistic
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.summarize_host_insight_storage_usage_trend(
+        compartment_id=compartment_id,
+        id=id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_top_processes_usage_trend.command_name', 'summarize-host-insight-top-processes-usage-trend'), help=u"""Returns response with aggregated time series data (timeIntervalstart, timeIntervalEnd, commandArgs, usageData) for top processes. Data is aggregated for the time period specified and proceses are sorted descendent by the proces metric specified (CPU, MEMORY, VIRTUAL_MEMORY). HostInsight Id and Process metric must be specified \n[Command Reference](summarizeHostInsightTopProcessesUsageTrend)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--id', required=True, help=u"""Required [OCID] of the host insight resource.""")
@@ -8413,12 +8497,13 @@ def summarize_host_insight_resource_utilization_insight(ctx, from_json, compartm
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
 @cli_util.option('--host-type', multiple=True, help=u"""Filter by one or more host types. Possible values are CLOUD-HOST, EXTERNAL-HOST, COMANAGED-VM-HOST, COMANAGED-BM-HOST, COMANAGED-EXACS-HOST""")
 @cli_util.option('--host-id', help=u"""Optional [OCID] of the host (Compute Id)""")
+@cli_util.option('--statistic', type=custom_types.CliCaseInsensitiveChoice(["AVG", "MAX"]), help=u"""Choose the type of statistic metric data to be used for forecasting.""")
 @json_skeleton_utils.get_cli_json_input_option({'host-type': {'module': 'opsi', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'host-type': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeHostInsightsTopProcessesUsageTrendCollection'})
 @cli_util.wrap_exceptions
-def summarize_host_insight_top_processes_usage_trend(ctx, from_json, compartment_id, id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, page, limit, host_type, host_id):
+def summarize_host_insight_top_processes_usage_trend(ctx, from_json, compartment_id, id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, page, limit, host_type, host_id, statistic):
 
     kwargs = {}
     if analysis_time_interval is not None:
@@ -8435,6 +8520,8 @@ def summarize_host_insight_top_processes_usage_trend(ctx, from_json, compartment
         kwargs['host_type'] = host_type
     if host_id is not None:
         kwargs['host_id'] = host_id
+    if statistic is not None:
+        kwargs['statistic'] = statistic
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.summarize_host_insight_top_processes_usage_trend(

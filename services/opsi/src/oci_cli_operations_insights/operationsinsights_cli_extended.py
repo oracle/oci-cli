@@ -509,6 +509,13 @@ operationsinsights_cli.opsi_configurations_group.commands.pop(operationsinsights
 operationsinsights_cli.opsi_configurations_group.commands.pop(operationsinsights_cli.update_opsi_configuration.name)
 
 
+# oci opsi host-insights summarize-host-insight-network-usage-trend -> oci opsi host-insights summarize-network-usage-trend
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.host_insights_group, operationsinsights_cli.summarize_host_insight_network_usage_trend, "summarize-network-usage-trend")
+
+
+# oci opsi host-insights summarize-host-insight-storage-usage-trend -> oci opsi host-insights summarize-storage-usage-trend
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.host_insights_group, operationsinsights_cli.summarize_host_insight_storage_usage_trend, "summarize-storage-usage-trend")
+
 # Remove change-autonomous-database-insight-advanced-features from oci opsi database-insights
 operationsinsights_cli.database_insights_group.commands.pop(operationsinsights_cli.change_autonomous_database_insight_advanced_features.name)
 
