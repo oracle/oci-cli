@@ -27,6 +27,12 @@ def schema_group():
     pass
 
 
+@click.command(cli_util.override('data_integration.template_group.command_name', 'template'), cls=CommandGroupWithAlias, help="""Template application.""")
+@cli_util.help_option_group
+def template_group():
+    pass
+
+
 @click.command(cli_util.override('data_integration.workspace_group.command_name', 'workspace'), cls=CommandGroupWithAlias, help="""A workspace is an organizational construct to keep multiple data integration solutions and their resources (data assets, data flows, tasks, and so on) separate from each other, helping you to stay organized. For example, you could have separate workspaces for development, testing, and production.""")
 @cli_util.help_option_group
 def workspace_group():
@@ -93,6 +99,12 @@ def runtime_pipeline_summary_collection_group():
     pass
 
 
+@click.command(cli_util.override('data_integration.copy_object_request_summary_collection_group.command_name', 'copy-object-request-summary-collection'), cls=CommandGroupWithAlias, help="""This is the collection of copy object requests.""")
+@cli_util.help_option_group
+def copy_object_request_summary_collection_group():
+    pass
+
+
 @click.command(cli_util.override('data_integration.task_run_lineage_summary_collection_group.command_name', 'task-run-lineage-summary-collection'), cls=CommandGroupWithAlias, help="""List of lineage flows""")
 @cli_util.help_option_group
 def task_run_lineage_summary_collection_group():
@@ -144,6 +156,18 @@ def task_validation_group():
 @click.command(cli_util.override('data_integration.runtime_operator_summary_collection_group.command_name', 'runtime-operator-summary-collection'), cls=CommandGroupWithAlias, help="""List of runtimeOperator summaries""")
 @cli_util.help_option_group
 def runtime_operator_summary_collection_group():
+    pass
+
+
+@click.command(cli_util.override('data_integration.copy_object_request_group.command_name', 'copy-object-request'), cls=CommandGroupWithAlias, help="""Copy metadata object request.""")
+@cli_util.help_option_group
+def copy_object_request_group():
+    pass
+
+
+@click.command(cli_util.override('data_integration.detailed_description_group.command_name', 'detailed-description'), cls=CommandGroupWithAlias, help="""The detailed description of an object.""")
+@cli_util.help_option_group
+def detailed_description_group():
     pass
 
 
@@ -214,6 +238,7 @@ def runtime_pipeline_group():
 
 
 data_integration_root_group.add_command(schema_group)
+data_integration_root_group.add_command(template_group)
 data_integration_root_group.add_command(workspace_group)
 data_integration_root_group.add_command(task_run_group)
 data_integration_root_group.add_command(external_publication_validation_group)
@@ -225,6 +250,7 @@ data_integration_root_group.add_command(project_group)
 data_integration_root_group.add_command(work_request_group)
 data_integration_root_group.add_command(reference_group)
 data_integration_root_group.add_command(runtime_pipeline_summary_collection_group)
+data_integration_root_group.add_command(copy_object_request_summary_collection_group)
 data_integration_root_group.add_command(task_run_lineage_summary_collection_group)
 data_integration_root_group.add_command(data_entity_group)
 data_integration_root_group.add_command(data_flow_validation_group)
@@ -234,6 +260,8 @@ data_integration_root_group.add_command(connection_group)
 data_integration_root_group.add_command(task_run_log_group)
 data_integration_root_group.add_command(task_validation_group)
 data_integration_root_group.add_command(runtime_operator_summary_collection_group)
+data_integration_root_group.add_command(copy_object_request_group)
+data_integration_root_group.add_command(detailed_description_group)
 data_integration_root_group.add_command(pipeline_group)
 data_integration_root_group.add_command(schedule_group)
 data_integration_root_group.add_command(data_flow_group)
@@ -463,6 +491,45 @@ def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@detailed_description_group.command(name=cli_util.override('data_integration.create_application_detailed_description.command_name', 'create-application'), help=u"""Creates detailed description for an application. \n[Command Reference](createApplicationDetailedDescription)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--application-key', required=True, help=u"""The application key.""")
+@cli_util.option('--logo', help=u"""Base64 encoded image to represent logo of the object.""")
+@cli_util.option('--detailed-description', help=u"""Base64 encoded rich text description of the object.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_integration', 'class': 'DetailedDescription'})
+@cli_util.wrap_exceptions
+def create_application_detailed_description(ctx, from_json, workspace_id, application_key, logo, detailed_description):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+        raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if logo is not None:
+        _details['logo'] = logo
+
+    if detailed_description is not None:
+        _details['detailedDescription'] = detailed_description
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_application_detailed_description(
+        workspace_id=workspace_id,
+        application_key=application_key,
+        create_application_detailed_description_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -3348,6 +3415,64 @@ def create_connection_validation_create_connection_from_object_storage(ctx, from
     cli_util.render_response(result, ctx)
 
 
+@copy_object_request_group.command(name=cli_util.override('data_integration.create_copy_object_request.command_name', 'create'), help=u"""Copy Metadata Object. \n[Command Reference](createCopyObjectRequest)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--source-workspace-id', required=True, help=u"""The workspace id of the source from where we need to copy object.""")
+@cli_util.option('--object-keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of the objects to be copied.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--copy-conflict-resolution', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'object-keys': {'module': 'data_integration', 'class': 'list[string]'}, 'copy-conflict-resolution': {'module': 'data_integration', 'class': 'CopyConflictResolution'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'object-keys': {'module': 'data_integration', 'class': 'list[string]'}, 'copy-conflict-resolution': {'module': 'data_integration', 'class': 'CopyConflictResolution'}}, output_type={'module': 'data_integration', 'class': 'CopyObjectRequest'})
+@cli_util.wrap_exceptions
+def create_copy_object_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, workspace_id, source_workspace_id, object_keys, copy_conflict_resolution):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['sourceWorkspaceId'] = source_workspace_id
+    _details['objectKeys'] = cli_util.parse_json_parameter("object_keys", object_keys)
+    _details['copyConflictResolution'] = cli_util.parse_json_parameter("copy_conflict_resolution", copy_conflict_resolution)
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_copy_object_request(
+        workspace_id=workspace_id,
+        create_copy_object_request_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @data_asset_group.command(name=cli_util.override('data_integration.create_data_asset.command_name', 'create'), help=u"""Creates a data asset with default connection. \n[Command Reference](createDataAsset)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--model-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_DATA_ASSET", "ORACLE_OBJECT_STORAGE_DATA_ASSET", "ORACLE_ATP_DATA_ASSET", "ORACLE_ADWC_DATA_ASSET", "MYSQL_DATA_ASSET", "GENERIC_JDBC_DATA_ASSET", "FUSION_APP_DATA_ASSET", "AMAZON_S3_DATA_ASSET", "LAKE_HOUSE_DATA_ASSET", "REST_DATA_ASSET"]), help=u"""The type of the data asset.""")
@@ -4513,6 +4638,45 @@ def create_dis_application(ctx, from_json, wait_for_state, max_wait_seconds, wai
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@detailed_description_group.command(name=cli_util.override('data_integration.create_dis_application_detailed_description.command_name', 'create-dis-application'), help=u"""Creates detailed description for an application. \n[Command Reference](createDisApplicationDetailedDescription)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--application-key', required=True, help=u"""The application key.""")
+@cli_util.option('--logo', help=u"""Base64 encoded image to represent logo of the object.""")
+@cli_util.option('--detailed-description', help=u"""Base64 encoded rich text description of the object.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_integration', 'class': 'DetailedDescription'})
+@cli_util.wrap_exceptions
+def create_dis_application_detailed_description(ctx, from_json, workspace_id, application_key, logo, detailed_description):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+        raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if logo is not None:
+        _details['logo'] = logo
+
+    if detailed_description is not None:
+        _details['detailedDescription'] = detailed_description
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_dis_application_detailed_description(
+        workspace_id=workspace_id,
+        application_key=application_key,
+        create_dis_application_detailed_description_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -7333,6 +7497,37 @@ def delete_application(ctx, from_json, workspace_id, application_key, if_match):
     cli_util.render_response(result, ctx)
 
 
+@detailed_description_group.command(name=cli_util.override('data_integration.delete_application_detailed_description.command_name', 'delete-application'), help=u"""Deletes detailed description of an Application. \n[Command Reference](deleteApplicationDetailedDescription)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--application-key', required=True, help=u"""The application key.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_application_detailed_description(ctx, from_json, workspace_id, application_key, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+        raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.delete_application_detailed_description(
+        workspace_id=workspace_id,
+        application_key=application_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @connection_group.command(name=cli_util.override('data_integration.delete_connection.command_name', 'delete'), help=u"""Removes a connection using the specified identifier. \n[Command Reference](deleteConnection)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
@@ -7390,6 +7585,37 @@ def delete_connection_validation(ctx, from_json, workspace_id, connection_valida
     result = client.delete_connection_validation(
         workspace_id=workspace_id,
         connection_validation_key=connection_validation_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@workspace_group.command(name=cli_util.override('data_integration.delete_copy_object_request.command_name', 'delete-copy-object-request'), help=u"""Delete copy object request using the specified identifier. \n[Command Reference](deleteCopyObjectRequest)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--copy-object-request-key', required=True, help=u"""The key of the object to be copied, for example this could be the key of a project.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_copy_object_request(ctx, from_json, workspace_id, copy_object_request_key, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(copy_object_request_key, six.string_types) and len(copy_object_request_key.strip()) == 0:
+        raise click.UsageError('Parameter --copy-object-request-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.delete_copy_object_request(
+        workspace_id=workspace_id,
+        copy_object_request_key=copy_object_request_key,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -7514,6 +7740,37 @@ def delete_dis_application(ctx, from_json, workspace_id, dis_application_id, if_
     result = client.delete_dis_application(
         workspace_id=workspace_id,
         dis_application_id=dis_application_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@detailed_description_group.command(name=cli_util.override('data_integration.delete_dis_application_detailed_description.command_name', 'delete-dis-application'), help=u"""Deletes detailed description of an Application. \n[Command Reference](deleteDisApplicationDetailedDescription)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--application-key', required=True, help=u"""The application key.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_dis_application_detailed_description(ctx, from_json, workspace_id, application_key, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+        raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.delete_dis_application_detailed_description(
+        workspace_id=workspace_id,
+        application_key=application_key,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -8099,6 +8356,33 @@ def get_application(ctx, from_json, workspace_id, application_key):
     cli_util.render_response(result, ctx)
 
 
+@detailed_description_group.command(name=cli_util.override('data_integration.get_application_detailed_description.command_name', 'get-application'), help=u"""Retrieves detailed description of an Application \n[Command Reference](getApplicationDetailedDescription)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--application-key', required=True, help=u"""The application key.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_integration', 'class': 'DetailedDescription'})
+@cli_util.wrap_exceptions
+def get_application_detailed_description(ctx, from_json, workspace_id, application_key):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+        raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.get_application_detailed_description(
+        workspace_id=workspace_id,
+        application_key=application_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @connection_group.command(name=cli_util.override('data_integration.get_connection.command_name', 'get'), help=u"""Retrieves the connection details using the specified identifier. \n[Command Reference](getConnection)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
@@ -8148,6 +8432,33 @@ def get_connection_validation(ctx, from_json, workspace_id, connection_validatio
     result = client.get_connection_validation(
         workspace_id=workspace_id,
         connection_validation_key=connection_validation_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@copy_object_request_group.command(name=cli_util.override('data_integration.get_copy_object_request.command_name', 'get'), help=u"""This endpoint can be used to get the summary/details of object being copied. \n[Command Reference](getCopyObjectRequest)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--copy-object-request-key', required=True, help=u"""The key of the object to be copied, for example this could be the key of a project.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_integration', 'class': 'CopyObjectRequest'})
+@cli_util.wrap_exceptions
+def get_copy_object_request(ctx, from_json, workspace_id, copy_object_request_key):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(copy_object_request_key, six.string_types) and len(copy_object_request_key.strip()) == 0:
+        raise click.UsageError('Parameter --copy-object-request-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.get_copy_object_request(
+        workspace_id=workspace_id,
+        copy_object_request_key=copy_object_request_key,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -8355,6 +8666,33 @@ def get_dis_application(ctx, from_json, workspace_id, dis_application_id):
     result = client.get_dis_application(
         workspace_id=workspace_id,
         dis_application_id=dis_application_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@detailed_description_group.command(name=cli_util.override('data_integration.get_dis_application_detailed_description.command_name', 'get-dis-application'), help=u"""Retrieves detailed description of an Application. \n[Command Reference](getDisApplicationDetailedDescription)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--application-key', required=True, help=u"""The application key.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_integration', 'class': 'DetailedDescription'})
+@cli_util.wrap_exceptions
+def get_dis_application_detailed_description(ctx, from_json, workspace_id, application_key):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+        raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.get_dis_application_detailed_description(
+        workspace_id=workspace_id,
+        application_key=application_key,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -8927,6 +9265,33 @@ def get_task_validation(ctx, from_json, workspace_id, task_validation_key):
     cli_util.render_response(result, ctx)
 
 
+@template_group.command(name=cli_util.override('data_integration.get_template.command_name', 'get'), help=u"""This endpoint can be used to get an application template using a key. \n[Command Reference](getTemplate)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--template-id', required=True, help=u"""The OCID of the template.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_integration', 'class': 'Template'})
+@cli_util.wrap_exceptions
+def get_template(ctx, from_json, workspace_id, template_id):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(template_id, six.string_types) and len(template_id.strip()) == 0:
+        raise click.UsageError('Parameter --template-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.get_template(
+        workspace_id=workspace_id,
+        template_id=template_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @user_defined_function_group.command(name=cli_util.override('data_integration.get_user_defined_function.command_name', 'get'), help=u"""Retrieves a UserDefinedFunction using the specified identifier. \n[Command Reference](getUserDefinedFunction)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--user-defined-function-key', required=True, help=u"""The user defined function key.""")
@@ -9228,6 +9593,78 @@ def list_connections(ctx, from_json, all_pages, page_size, workspace_id, data_as
         result = client.list_connections(
             workspace_id=workspace_id,
             data_asset_key=data_asset_key,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@copy_object_request_summary_collection_group.command(name=cli_util.override('data_integration.list_copy_object_requests.command_name', 'list-copy-object-requests'), help=u"""This endpoint can be used to get the list of copy object requests. \n[Command Reference](listCopyObjectRequests)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--limit', type=click.INT, help=u"""Sets the maximum number of results per page, or items to return in a paginated `List` call. See [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value for this parameter is the `opc-next-page` or the `opc-prev-page` response header from the previous `List` call. See [List Pagination].""")
+@cli_util.option('--name', help=u"""Used to filter by the name of the object.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_CREATED", "DISPLAY_NAME", "TIME_UPDATED"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order is by relevance score in descending order).""")
+@cli_util.option('--copy-status', type=custom_types.CliCaseInsensitiveChoice(["IN_PROGRESS", "SUCCESSFUL", "QUEUED", "TERMINATING", "TERMINATED", "FAILED", "ALL"]), help=u"""Specifies copy status to use, either -  ALL, SUCCESSFUL, IN_PROGRESS, QUEUED, FAILED .""")
+@cli_util.option('--projection', type=custom_types.CliCaseInsensitiveChoice(["SUMMARY", "DETAILS"]), help=u"""This parameter allows users to specify which view of the copy object response to return. SUMMARY - Summary of the copy object response will be returned. This is the default option when no value is specified. DETAILS - Details of copy object response will be returned. This will include details of all the objects to be copied.""")
+@cli_util.option('--time-started-in-millis', type=click.INT, help=u"""Specifies start time of a copy object request.""")
+@cli_util.option('--time-ended-in-millis', type=click.INT, help=u"""Specifies end time of a copy object request.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_integration', 'class': 'CopyObjectRequestSummaryCollection'})
+@cli_util.wrap_exceptions
+def list_copy_object_requests(ctx, from_json, all_pages, page_size, workspace_id, limit, page, name, sort_order, sort_by, copy_status, projection, time_started_in_millis, time_ended_in_millis):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if name is not None:
+        kwargs['name'] = name
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if copy_status is not None:
+        kwargs['copy_status'] = copy_status
+    if projection is not None:
+        kwargs['projection'] = projection
+    if time_started_in_millis is not None:
+        kwargs['time_started_in_millis'] = time_started_in_millis
+    if time_ended_in_millis is not None:
+        kwargs['time_ended_in_millis'] = time_ended_in_millis
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_copy_object_requests,
+            workspace_id=workspace_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_copy_object_requests,
+            limit,
+            page_size,
+            workspace_id=workspace_id,
+            **kwargs
+        )
+    else:
+        result = client.list_copy_object_requests(
+            workspace_id=workspace_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -11046,6 +11483,7 @@ def list_task_run_logs(ctx, from_json, all_pages, page_size, workspace_id, appli
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_CREATED", "DISPLAY_NAME", "TIME_UPDATED"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order is by relevance score in descending order).""")
 @cli_util.option('--filter', multiple=True, help=u"""This filter parameter can be used to filter by model specific queryable fields of the object <br><br><B>Examples:-</B><br> <ul> <li><B>?filter=status eq Failed</B> returns all objects that have a status field with value Failed</li> </ul>""")
 @cli_util.option('--name-starts-with', help=u"""This parameter can be used to filter objects by the names starting with the given value.""")
+@cli_util.option('--name-contains', help=u"""This parameter can be used to filter objects by the names that match partially or fully with the given value.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({'key': {'module': 'data_integration', 'class': 'list[string]'}, 'fields': {'module': 'data_integration', 'class': 'list[string]'}, 'identifier': {'module': 'data_integration', 'class': 'list[string]'}, 'filter': {'module': 'data_integration', 'class': 'list[string]'}})
@@ -11053,7 +11491,7 @@ def list_task_run_logs(ctx, from_json, all_pages, page_size, workspace_id, appli
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'key': {'module': 'data_integration', 'class': 'list[string]'}, 'fields': {'module': 'data_integration', 'class': 'list[string]'}, 'identifier': {'module': 'data_integration', 'class': 'list[string]'}, 'filter': {'module': 'data_integration', 'class': 'list[string]'}}, output_type={'module': 'data_integration', 'class': 'TaskRunSummaryCollection'})
 @cli_util.wrap_exceptions
-def list_task_runs(ctx, from_json, all_pages, page_size, workspace_id, application_key, key, aggregator_key, fields, name, identifier, page, limit, sort_order, sort_by, filter, name_starts_with):
+def list_task_runs(ctx, from_json, all_pages, page_size, workspace_id, application_key, key, aggregator_key, fields, name, identifier, page, limit, sort_order, sort_by, filter, name_starts_with, name_contains):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -11087,6 +11525,8 @@ def list_task_runs(ctx, from_json, all_pages, page_size, workspace_id, applicati
         kwargs['filter'] = filter
     if name_starts_with is not None:
         kwargs['name_starts_with'] = name_starts_with
+    if name_contains is not None:
+        kwargs['name_contains'] = name_contains
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     if all_pages:
@@ -11334,6 +11774,72 @@ def list_tasks(ctx, from_json, all_pages, page_size, workspace_id, folder_id, fi
         )
     else:
         result = client.list_tasks(
+            workspace_id=workspace_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@template_group.command(name=cli_util.override('data_integration.list_templates.command_name', 'list'), help=u"""This endpoint can be used to list application templates with filtering options. \n[Command Reference](listTemplates)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--name', help=u"""Used to filter by the name of the object.""")
+@cli_util.option('--identifier', multiple=True, help=u"""Used to filter by the identifier of the published object.""")
+@cli_util.option('--fields', multiple=True, help=u"""Specifies the fields to get for an object.""")
+@cli_util.option('--limit', type=click.INT, help=u"""Sets the maximum number of results per page, or items to return in a paginated `List` call. See [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value for this parameter is the `opc-next-page` or the `opc-prev-page` response header from the previous `List` call. See [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_CREATED", "DISPLAY_NAME", "TIME_UPDATED"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order is by relevance score in descending order).""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'identifier': {'module': 'data_integration', 'class': 'list[string]'}, 'fields': {'module': 'data_integration', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'identifier': {'module': 'data_integration', 'class': 'list[string]'}, 'fields': {'module': 'data_integration', 'class': 'list[string]'}}, output_type={'module': 'data_integration', 'class': 'TemplateSummaryCollection'})
+@cli_util.wrap_exceptions
+def list_templates(ctx, from_json, all_pages, page_size, workspace_id, name, identifier, fields, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if name is not None:
+        kwargs['name'] = name
+    if identifier is not None and len(identifier) > 0:
+        kwargs['identifier'] = identifier
+    if fields is not None and len(fields) > 0:
+        kwargs['fields'] = fields
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_templates,
+            workspace_id=workspace_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_templates,
+            limit,
+            page_size,
+            workspace_id=workspace_id,
+            **kwargs
+        )
+    else:
+        result = client.list_templates(
             workspace_id=workspace_id,
             **kwargs
         )
@@ -11936,6 +12442,48 @@ def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, 
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@detailed_description_group.command(name=cli_util.override('data_integration.update_application_detailed_description.command_name', 'update-application'), help=u"""Updates the detailed description of an Application. \n[Command Reference](updateApplicationDetailedDescription)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--application-key', required=True, help=u"""The application key.""")
+@cli_util.option('--logo', help=u"""Base64 encoded image to represent logo of the object.""")
+@cli_util.option('--detailed-description', help=u"""Base64 encoded rich text description of the object.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_integration', 'class': 'DetailedDescription'})
+@cli_util.wrap_exceptions
+def update_application_detailed_description(ctx, from_json, workspace_id, application_key, logo, detailed_description, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+        raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if logo is not None:
+        _details['logo'] = logo
+
+    if detailed_description is not None:
+        _details['detailedDescription'] = detailed_description
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_application_detailed_description(
+        workspace_id=workspace_id,
+        application_key=application_key,
+        update_application_detailed_description_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -13089,6 +13637,44 @@ def update_connection_update_connection_from_my_sql(ctx, from_json, force, works
         workspace_id=workspace_id,
         connection_key=connection_key,
         update_connection_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@workspace_group.command(name=cli_util.override('data_integration.update_copy_object_request.command_name', 'update-copy-object-request'), help=u"""Updates the status of a copy object request. \n[Command Reference](updateCopyObjectRequest)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--copy-object-request-key', required=True, help=u"""The key of the object to be copied, for example this could be the key of a project.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["TERMINATING"]), help=u"""The status of the object.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_integration', 'class': 'CopyObjectRequest'})
+@cli_util.wrap_exceptions
+def update_copy_object_request(ctx, from_json, workspace_id, copy_object_request_key, status, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(copy_object_request_key, six.string_types) and len(copy_object_request_key.strip()) == 0:
+        raise click.UsageError('Parameter --copy-object-request-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if status is not None:
+        _details['status'] = status
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_copy_object_request(
+        workspace_id=workspace_id,
+        copy_object_request_key=copy_object_request_key,
+        update_copy_object_request_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -14340,6 +14926,48 @@ def update_dis_application(ctx, from_json, force, wait_for_state, max_wait_secon
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@detailed_description_group.command(name=cli_util.override('data_integration.update_dis_application_detailed_description.command_name', 'update-dis-application'), help=u"""Updates the detailed description of an Application. \n[Command Reference](updateDisApplicationDetailedDescription)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--application-key', required=True, help=u"""The application key.""")
+@cli_util.option('--logo', help=u"""Base64 encoded image to represent logo of the object.""")
+@cli_util.option('--detailed-description', help=u"""Base64 encoded rich text description of the object.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_integration', 'class': 'DetailedDescription'})
+@cli_util.wrap_exceptions
+def update_dis_application_detailed_description(ctx, from_json, workspace_id, application_key, logo, detailed_description, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+        raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if logo is not None:
+        _details['logo'] = logo
+
+    if detailed_description is not None:
+        _details['detailedDescription'] = detailed_description
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_dis_application_detailed_description(
+        workspace_id=workspace_id,
+        application_key=application_key,
+        update_dis_application_detailed_description_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 

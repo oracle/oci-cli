@@ -52,7 +52,7 @@ cli_util.rename_command(goldengate_cli,
 
 
 @cli_util.copy_params_from_generated_command(goldengate_cli.create_deployment,
-                                             params_to_exclude=['deployment_type', 'ogg_data'],
+                                             params_to_exclude=['deployment_type', 'ogg_data', 'maintenance_window'],
                                              copy_from_json=False)
 @goldengate_cli.deployment_group.command(name='create', help=goldengate_cli.create_deployment.help)
 @cli_util.option('--deployment-name', help=u"""The name given to the GoldenGate service deployment.
@@ -63,13 +63,16 @@ The password must be 8 to 30 characters long and must contain at least 1 upperca
 and 1 special character. Special characters such as ‘$’, ‘^’, or ‘?’ are not allowed.""")
 @cli_util.option('--certificate-file', type=click.File('r'), help=u"""The SSL certificate for this deployment in PEM format.""")
 @cli_util.option('--private-key-file', type=click.File('r'), help=u"""The private key for your certificate in PEM format.""")
+@cli_util.option('--ogg-version', help=u"""Version of OGG.""")
+@cli_util.option('--maintenance-window-day', type=custom_types.CliCaseInsensitiveChoice(["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]), help=u"""Day of week for the maintenance.""")
+@cli_util.option('--maintenance-window-start-hour', help=u"""Start hour for maintenance period. Hour is in UTC.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Deployment'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'maintenance-window': {'module': 'golden_gate', 'class': 'CreateMaintenanceWindowDetails'}}, output_type={'module': 'golden_gate', 'class': 'Deployment'})
 @cli_util.wrap_exceptions
 def create_deployment_extended(ctx, **kwargs):
     if kwargs.get('deployment_type') is None:
-        kwargs['deployment_type'] = "OGG"
+        kwargs['deployment_type'] = "DATABASE_ORACLE"
 
     if kwargs.get('ogg_data') is None:
         _ogg_details = {}
@@ -107,7 +110,25 @@ def create_deployment_extended(ctx, **kwargs):
             _ogg_details['key'] = kwargs.get('private_key_file').read()
         del kwargs['private_key_file']
 
+        if kwargs.get('ogg_version') is not None:
+            _ogg_details['oggVersion'] = kwargs.get('ogg_version')
+        del kwargs['ogg_version']
+
         kwargs['ogg_data'] = json.dumps(_ogg_details)
+
+    if kwargs.get('maintenance_window') is None:
+        _maintenance_window = {}
+
+        if kwargs.get('maintenance_window_day') is not None:
+            _maintenance_window['day'] = kwargs.get('maintenance_window_day')
+        del kwargs['maintenance_window_day']
+
+        if kwargs.get('maintenance_window_start_hour') is not None:
+            _maintenance_window['startHour'] = kwargs.get('maintenance_window_start_hour')
+        del kwargs['maintenance_window_start_hour']
+
+        if "day" in _maintenance_window or "startHour" in _maintenance_window:
+            kwargs['maintenance_window'] = json.dumps(_maintenance_window)
 
     ctx.invoke(goldengate_cli.create_deployment, **kwargs)
 
@@ -120,7 +141,7 @@ def create_deployment_extended(ctx, **kwargs):
 #                 --private-key-file <file>
 
 @cli_util.copy_params_from_generated_command(goldengate_cli.update_deployment,
-                                             params_to_exclude=['ogg_data'],
+                                             params_to_exclude=['ogg_data', 'maintenance_window'],
                                              copy_from_json=False)
 @goldengate_cli.deployment_group.command(name='update', help=goldengate_cli.update_deployment.help)
 @cli_util.option('--admin-username', help=u"""The GoldenGate deployment console username.""")
@@ -129,9 +150,11 @@ The password must be 8 to 30 characters long and must contain at least 1 upperca
 and 1 special character. Special characters such as ‘$’, ‘^’, or ‘?’ are not allowed.""")
 @cli_util.option('--certificate-file', type=click.File('r'), help=u"""The SSL certificate for this deployment in PEM format.""")
 @cli_util.option('--private-key-file', type=click.File('r'), help=u"""The private key for your certificate in PEM format.""")
+@cli_util.option('--maintenance-window-day', help=u"""Day of week for the maintenance.""")
+@cli_util.option('--maintenance-window-start-hour', help=u"""Start hour for maintenance period. Hour is in UTC.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'maintenance-window': {'module': 'golden_gate', 'class': 'UpdateMaintenanceWindowDetails'}})
 @cli_util.wrap_exceptions
 def update_deployment_extended(ctx, **kwargs):
     if kwargs.get('ogg_data') is None:
@@ -164,6 +187,20 @@ def update_deployment_extended(ctx, **kwargs):
         del kwargs['private_key_file']
 
         kwargs['ogg_data'] = json.dumps(_ogg_details)
+
+    if kwargs.get('maintenance_window') is None:
+        _maintenance_window = {}
+
+        if kwargs.get('maintenance_window_day') is not None:
+            _maintenance_window['day'] = kwargs.get('maintenance_window_day')
+        del kwargs['maintenance_window_day']
+
+        if kwargs.get('maintenance_window_start_hour') is not None:
+            _maintenance_window['startHour'] = kwargs.get('maintenance_window_start_hour')
+        del kwargs['maintenance_window_start_hour']
+
+        if "day" in _maintenance_window or "startHour" in _maintenance_window:
+            kwargs['maintenance_window'] = json.dumps(_maintenance_window)
 
     ctx.invoke(goldengate_cli.update_deployment, **kwargs)
 
@@ -274,3 +311,31 @@ cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_wallets_operat
 
 # Remove deployment-wallet-exists from oci goldengate deployment
 goldengate_cli.deployment_group.commands.pop(goldengate_cli.deployment_wallet_exists.name)
+
+
+# oci goldengate deployment upgrade-deployment-upgrade-deployment-specific-release-details -> oci goldengate deployment upgrade-to
+cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_group, goldengate_cli.upgrade_deployment_upgrade_deployment_specific_release_details, "upgrade-to")
+
+
+# oci goldengate deployment-upgrade snooze-deployment-upgrade-default-snooze-deployment-upgrade-details -> oci goldengate deployment-upgrade snooze
+cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_upgrade_group, goldengate_cli.snooze_deployment_upgrade_default_snooze_deployment_upgrade_details, "snooze")
+
+
+# oci goldengate deployment-upgrade cancel-snooze-deployment-upgrade-default-cancel-snooze-deployment-upgrade-details -> oci goldengate deployment-upgrade cancel-snooze
+cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_upgrade_group, goldengate_cli.cancel_snooze_deployment_upgrade_default_cancel_snooze_deployment_upgrade_details, "cancel-snooze")
+
+
+# oci goldengate deployment-upgrade rollback-deployment-upgrade-default-rollback-deployment-upgrade-details -> oci goldengate deployment-upgrade rollback
+cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_upgrade_group, goldengate_cli.rollback_deployment_upgrade_default_rollback_deployment_upgrade_details, "rollback")
+
+
+# oci goldengate deployment-upgrade upgrade-deployment-upgrade-default-upgrade-deployment-upgrade-details -> oci goldengate deployment-upgrade upgrade
+cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_upgrade_group, goldengate_cli.upgrade_deployment_upgrade_default_upgrade_deployment_upgrade_details, "upgrade")
+
+
+# oci goldengate deployment-version-collection list-deployment-versions -> oci goldengate deployment-version-collection list
+cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_version_collection_group, goldengate_cli.list_deployment_versions, "list")
+
+
+# oci goldengate deployment-version-collection -> oci goldengate deployment-version
+cli_util.rename_command(goldengate_cli, goldengate_cli.goldengate_root_group, goldengate_cli.deployment_version_collection_group, "deployment-version")

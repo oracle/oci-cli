@@ -141,3 +141,6 @@ compute_cli.instance_group.commands.pop(compute_cli.instance_action_soft_reset_a
 
 # Remove instance-action-reboot-migrate-action-details from oci compute instance
 compute_cli.instance_group.commands.pop(compute_cli.instance_action_reboot_migrate_action_details.name)
+
+# Remove launch-instance-amd-milan-bm-gpu-launch-instance-platform-config from oci compute instance
+compute_cli.instance_group.commands.pop(compute_cli.launch_instance_amd_milan_bm_gpu_launch_instance_platform_config.name)

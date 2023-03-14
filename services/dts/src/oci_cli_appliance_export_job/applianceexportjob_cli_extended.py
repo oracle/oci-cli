@@ -67,7 +67,7 @@ def setup_notifications_extended(ctx):
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dts', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dts', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dts', 'class': 'ApplianceExportJob'})
 @cli_util.wrap_exceptions
 def create_appliance_export_job_extended(ctx, **kwargs):
-
+    ctx_endpoint_dts = ctx.obj['endpoint']
     ctx.endpoint = None
     ctx.obj['endpoint'] = None
     os_client = create_os_client(ctx)
@@ -95,6 +95,7 @@ def create_appliance_export_job_extended(ctx, **kwargs):
     elif kwargs['setup_notifications']:
         setup_export_notifications(ctx)
     kwargs.pop('setup_notifications')
+    ctx.obj['endpoint'] = ctx_endpoint_dts
     ctx.invoke(applianceexportjob_cli.create_appliance_export_job, **kwargs)
 
 
@@ -208,8 +209,6 @@ def get_passphrase_export_job_extended(ctx, **kwargs):
     kwargs_request = {
         'opc_request_id': cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     }
-    ctx.endpoint = None
-    ctx.obj['endpoint'] = None
     client = cli_util.build_client('dts', 'appliance_export_job', ctx)
     result = client.get_appliance_export_job(
         appliance_export_job_id=kwargs['job_id'],

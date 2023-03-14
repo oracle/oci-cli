@@ -235,6 +235,10 @@ service_mapping = {
         "identity",
         "Identity and Access Management Service"
     ],
+    "identity-domains": [
+        "identity_domains",
+        "Identity Domains"
+    ],
     "instance-agent": [
         "compute_instance_agent",
         "Compute Instance Agent Service"

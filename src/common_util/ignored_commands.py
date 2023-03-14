@@ -168,7 +168,18 @@ IGNORED_COMMANDS = [
     ['opsi', 'opsi-configurations', 'update-opsi-ux-configuration-details'],
     ['db', 'autonomous-database', 'update'],
     ['opsi', 'database-insights', 'change-autonomous-database-insight-advanced-features-credential-by-vault'],
-    ['opsi', 'database-insights', 'enable-autonomous-database-insight-advanced-features-credential-by-vault']
+    ['opsi', 'database-insights', 'enable-autonomous-database-insight-advanced-features-credential-by-vault'],
+    ['identity-domains', 'dynamic-resource-group', 'create'],
+    ['identity-domains', 'dynamic-resource-group', 'put'],
+    ['identity-domains', 'me', 'create'],
+    ['identity-domains', 'me', 'put'],
+    ['identity-domains', 'group', 'create'],
+    ['identity-domains', 'group', 'put'],
+    ['identity-domains', 'authentication-factor-setting', 'put'],
+    ['identity-domains', 'identity-provider', 'create'],
+    ['identity-domains', 'identity-provider', 'put'],
+    ['identity-domains', 'user', 'create'],
+    ['identity-domains', 'user', 'put']
 ]
 
 IGNORED_COMMANDS_DOCS = [

@@ -4262,15 +4262,16 @@ def create_autonomous_database_create_autonomous_database_details(ctx, from_json
 @cli_util.option('--display-name', help=u"""The user-friendly name for the backup. The name does not have to be unique.""")
 @cli_util.option('--retention-period-in-days', type=click.INT, help=u"""Retention period, in days, for long-term backups""")
 @cli_util.option('--is-long-term-backup', type=click.BOOL, help=u"""Indicates whether the backup is long-term""")
+@cli_util.option('--backup-destination-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'backup-destination-details': {'module': 'database', 'class': 'BackupDestinationDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'AutonomousDatabaseBackup'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-destination-details': {'module': 'database', 'class': 'BackupDestinationDetails'}}, output_type={'module': 'database', 'class': 'AutonomousDatabaseBackup'})
 @cli_util.wrap_exceptions
-def create_autonomous_database_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, display_name, retention_period_in_days, is_long_term_backup):
+def create_autonomous_database_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, display_name, retention_period_in_days, is_long_term_backup, backup_destination_details):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -4286,6 +4287,9 @@ def create_autonomous_database_backup(ctx, from_json, wait_for_state, max_wait_s
 
     if is_long_term_backup is not None:
         _details['isLongTermBackup'] = is_long_term_backup
+
+    if backup_destination_details is not None:
+        _details['backupDestinationDetails'] = cli_util.parse_json_parameter("backup_destination_details", backup_destination_details)
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.create_autonomous_database_backup(
@@ -12909,6 +12913,7 @@ def list_autonomous_container_databases(ctx, from_json, all_pages, page_size, co
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "UPDATING"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--type', help=u"""A filter to return only backups that matches with the given type of Backup.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -12916,7 +12921,7 @@ def list_autonomous_container_databases(ctx, from_json, all_pages, page_size, co
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[AutonomousDatabaseBackupSummary]'})
 @cli_util.wrap_exceptions
-def list_autonomous_database_backups(ctx, from_json, all_pages, page_size, autonomous_database_id, compartment_id, limit, page, sort_by, sort_order, lifecycle_state, display_name):
+def list_autonomous_database_backups(ctx, from_json, all_pages, page_size, autonomous_database_id, compartment_id, limit, page, sort_by, sort_order, lifecycle_state, display_name, type):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -12938,6 +12943,8 @@ def list_autonomous_database_backups(ctx, from_json, all_pages, page_size, auton
         kwargs['lifecycle_state'] = lifecycle_state
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if type is not None:
+        kwargs['type'] = type
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database', 'database', ctx)
     if all_pages:

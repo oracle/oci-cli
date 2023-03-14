@@ -6,6 +6,95 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+
+3.23.4 - 2023-03-14
+--------------------
+* Support for Identity Domains service
+
+    * ``oci identity-domains``
+
+* Database Service
+
+  * Support for Long Term Backup for Autonomous Databases on Exadata Cloud at Customer
+
+    * ``oci db autonomous-database-backup create --backup-destination-details``
+    * ``oci db autonomous-database-backup list --type``
+
+* Container Engine for Kubernetes service
+
+  * Support for enhanced cluster
+
+    * ``oci ce cluster create --type``
+    * ``oci ce cluster update --type``
+
+  * Support for Cluster AddOns
+
+    * ``oci ce addon``
+
+  * Support for Serverless
+
+    * ``oci ce virtual-node-pool``
+
+* Data integration service
+
+  * Support for copy objects and template retrieval
+
+    * ``oci data-integration workspace copy-object-request create``
+    * ``oci data-integration workspace copy-object-request get``
+    * ``oci data-integration workspace delete-copy-object-request``
+    * ``oci data-integration workspace update-copy-object-request``
+    * ``oci data-integration workspace copy-object-request-summary-collection list-copy-object-requests``
+    * ``oci data-integration template get``
+    * ``oci data-integration template list``
+
+* Goldengate service
+
+  * Support for managing available deployment version in the system
+
+    * ``oci goldengate deployment-version``
+
+  * Support for listing deployment versions
+
+    * ``oci goldengate deployment-version list``
+
+  * Support new commands for deployment upgrade entity
+
+    * ``oci goldengate deployment-upgrade upgrade``
+    * ``oci goldengate deployment-upgrade rollback``
+    * ``oci goldengate deployment-upgrade snooze``
+    * ``oci goldengate deployment-upgrade cancel-snooze``
+
+  * Support for specifying oggVersion when upgrading a deployment
+
+    * ``oci goldengate deployment upgrade-to``
+
+  * Support for specifying maintenance-window and ogg version in case of create deployment
+
+    * ``oci goldengate deployment create --maintenance-window-day --maintenance-window-start-hour --ogg-version``
+
+  * Support for specifying maintenance-window in case of update deployment
+
+    * ``oci goldengate deployment create --maintenance-window-day --maintenance-window-start-hour``
+
+  * Support for specifying deployment type and ogg versions when listing deployment types
+
+    * ``oci goldengate deployment-type-collection list-deployment-types --deployment-type --ogg-version``
+
+* Operations Insights
+
+  * Support in OPSI Host Capacity planning for Host network metrics
+
+    * ``oci opsi host-insights summarize-network-usage-trend --compartment-id --id --analysis-time-interval``
+
+  * Support in OPSI Host Capacity planning for Host storage metrics
+
+    * ``oci opsi host-insights summarize-storage-usage-trend --compartment-id --id --analysis-time-interval``
+
+Fixed
+~~~~~
+
+* Upgraded the cryptography version to (>=3.2.1,<40.0.0) and pyOpenSSL version to (>=17.5.0,<24.0.0') to fix CVE-2023-0286 and CVE-2023-23931
+
 3.23.3 - 2023-03-07
 --------------------
 Added
