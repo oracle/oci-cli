@@ -6,6 +6,65 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.24.0 - 2023-03-21
+--------------------
+
+Added
+~~~~~
+* Database Service
+
+  * Support for changing Disaster Recovery configuration of a remote Autonomous Database in remote region of its Disaster Recovery Association
+
+    * ``oci db autonomous-database change-disaster-recovery-configuration``
+
+  * Support for creating a remote Disaster Recovery Association clone of an Autonomous Database
+
+    * ``oci db autonomous-database create-autonomous-database-create-cross-region-disaster-recovery-details``
+
+* Support for OCI DevOps Managed Build stage to use custom shape build runner in the DevOps service
+
+  * ``oci devops build-pipeline-stage create-build-stage --build-runner-config``
+  * ``oci devops build-pipeline-stage update-build-stage ---build-runner-config``
+
+* Support for listing Pre-Built Functions and creating Functions from Pre-Built Functions in the Functions service
+
+  * ``oci fn function create --source-details``
+  * ``oci fn pbf-listing get``
+  * ``oci fn pbf-listing list``
+  * ``oci fn pbf-listing-version get``
+  * ``oci fn pbf-listing-version list``
+  * ``oci fn trigger list``
+
+* Support for creating/updating new connection types in the Golden Gate service
+
+  * ``oci goldengate connection create-amazon-s3-connection``
+  * ``oci goldengate connection update-amazon-s3-connection``
+  * ``oci goldengate connection create-hdfs-connection``
+  * ``oci goldengate connection update-hdfs-connection``
+  * ``oci goldengate connection create-microsoft-sqlserver-connection``
+  * ``oci goldengate connection update-microsoft-sqlserver-connection``
+  * ``oci goldengate connection create-jms-connection``
+  * ``oci goldengate connection update-jms-connection``
+  * ``oci goldengate connection create-mongo-db-connection``
+  * ``oci goldengate connection update-mongo-db-connection``
+  * ``oci goldengate connection create-oracle-nosql-connection``
+  * ``oci goldengate connection update-oracle-nosql-connection``
+  * ``oci goldengate connection create-snowflake-connection``
+  * ``oci goldengate connection update-snowflake-connection``
+
+Changed
+~~~~~~~
+
+* [BREAKING] The below commands have been changed as follow in the Golden Gate service
+
+  * ``oci goldengate connection create-connection-create-azure-data-lake-storage-connection-details -> create-azure-data-lake-storage-connection``
+  * ``oci goldengate connection update-connection-update-azure-data-lake-storage-connection-details -> update-azure-data-lake-storage-connection``
+  * ``oci goldengate connection create-connection-create-azure-synapse-connection-details -> create-azure-synapse-connection``
+  * ``oci goldengate connection update-connection-update-azure-synapse-connection-details -> update-azure-synapse-connection``
+  * ``oci goldengate connection create-connection-create-kafka-schema-registry-connection-details -> create-kafka-schema-registry-connection``
+  * ``oci goldengate connection update-connection-update-kafka-schema-registry-connection-details -> update-kafka-schema-registry-connection``
+  * ``oci goldengate connection create-connection-create-postgresql-connection-details -> create-postgresql-connection``
+  * ``oci goldengate connection update-connection-update-postgresql-connection-details -> update-postgresql-connection``
 
 3.23.4 - 2023-03-14
 --------------------

@@ -6,9 +6,9 @@ from __future__ import print_function
 
 import click
 import configparser
-from enum import Enum
 import os
 import sys
+from enum import Enum
 
 from oci import exceptions
 from oci import config as oci_config
@@ -57,7 +57,7 @@ dts_service_cli.dts_service_group.add_command(physical_appliance_group)
 @cli_util.option('--export-job-id', required=False, help=u"""Export job ocid.""")
 @cli_util.option('--appliance-cert-fingerprint', required=True,
                  help=u"""The transfer appliance X.509/SSL certificate fingerprint.""")
-@cli_util.option('--appliance-ip', required=True, help=u"""AThe IP address of the transfer appliance.""")
+@cli_util.option('--appliance-ip', required=True, help=u"""The IP address of the transfer appliance.""")
 @cli_util.option('--appliance-port', required=False, type=click.INT, default=443, help=u"""Appliance label.""")
 @cli_util.option('--profile', required=False, default="DEFAULT", help=u"""profile""")
 @cli_util.option('--appliance-profile', required=False, default="DEFAULT", help=u"""Appliance profile""")
@@ -472,14 +472,14 @@ def validate_upload_user_credentials(ctx, upload_bucket, upload_user_config=None
                 try:
                     try:
                         object_storage_admin_client.head_object(namespace, upload_bucket, TEST_OBJECT)
-                        click.echo("Found test object in bucket. Deleting  it...")
+                        click.echo("Found test object in bucket. Deleting it...")
                         object_storage_admin_client.delete_object(namespace, upload_bucket, TEST_OBJECT)
                     except exceptions.ServiceError as se:
                         if se.status != 404:
                             raise se
-                except Exception as e:
-                    raise exceptions.RequestException(
-                        "Admin user {} failed to delete the test object {}: {}".format(admin_user, TEST_OBJECT, str(e)))
+                except exceptions.ServiceError:
+                    click.echo("Admin user {} failed to delete the test object {}".format(admin_user, TEST_OBJECT))
+                    raise
 
                 test_object_content = "Bulk Data Transfer Test"
 
@@ -502,16 +502,18 @@ def validate_upload_user_credentials(ctx, upload_bucket, upload_user_config=None
                     operation = "Read bucket metadata {} using upload user".format(upload_bucket)
                     metadata = object_storage_upload_client.get_bucket(namespace, upload_bucket).data.metadata
                     click.echo(operation)
-                except exceptions.ServiceError as se:
-                    raise exceptions.RequestException(
-                        "Failed to {} in tenancy {} as upload user: {}".format(operation, namespace, se.message))
+                except exceptions.ServiceError:
+                    click.echo("Failed to {} in tenancy {} as upload user".format(operation, namespace))
+                    raise
                 finally:
                     if test_object_exists:
                         try:
+                            operation = "Delete object {} in bucket {} using admin user".format(TEST_OBJECT, upload_bucket)
                             object_storage_admin_client.delete_object(namespace, upload_bucket, TEST_OBJECT)
-                        except exceptions.ServiceError as se:
-                            raise exceptions.ServiceError(
-                                "Failed to delete test object {} as admin user {}: {}".format(TEST_OBJECT, admin_user, se.message))
+                            click.echo(operation)
+                        except exceptions.ServiceError:
+                            click.echo("Failed to delete test object {} as admin user {}".format(TEST_OBJECT, admin_user))
+                            raise
             else:
                 error_message_wrapper('Unable to parse the upload user config file. Region not found in %s' %
                                       APPLIANCE_UPLOAD_USER_CONFIG_PATH)

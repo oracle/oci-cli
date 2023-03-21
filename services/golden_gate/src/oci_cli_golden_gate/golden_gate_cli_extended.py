@@ -339,3 +339,150 @@ cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_version_collec
 
 # oci goldengate deployment-version-collection -> oci goldengate deployment-version
 cli_util.rename_command(goldengate_cli, goldengate_cli.goldengate_root_group, goldengate_cli.deployment_version_collection_group, "deployment-version")
+
+# oci goldengate connection create-connection-create-azure-data-lake-storage-connection-details -> oci goldengate connection create-azure-data-lake-storage-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_azure_data_lake_storage_connection_details, "create-azure-data-lake-storage-connection")
+
+
+# oci goldengate connection create-connection-create-azure-synapse-connection-details -> oci goldengate connection create-azure-synapse-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_azure_synapse_connection_details, "create-azure-synapse-connection")
+
+
+# oci goldengate connection create-connection-create-kafka-schema-registry-connection-details -> oci goldengate connection create-kafka-schema-registry-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_kafka_schema_registry_connection_details, "create-kafka-schema-registry-connection")
+
+
+# oci goldengate connection create-connection-create-postgresql-connection-details -> oci goldengate connection create-postgresql-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_postgresql_connection_details, "create-postgresql-connection")
+
+
+# oci goldengate connection update-connection-update-azure-data-lake-storage-connection-details -> oci goldengate connection update-azure-data-lake-storage-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_azure_data_lake_storage_connection_details, "update-azure-data-lake-storage-connection")
+
+
+# oci goldengate connection update-connection-update-azure-synapse-connection-details -> oci goldengate connection update-azure-synapse-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_azure_synapse_connection_details, "update-azure-synapse-connection")
+
+
+# oci goldengate connection update-connection-update-kafka-schema-registry-connection-details -> oci goldengate connection update-kafka-schema-registry-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_kafka_schema_registry_connection_details, "update-kafka-schema-registry-connection")
+
+
+# oci goldengate connection update-connection-update-postgresql-connection-details -> oci goldengate connection update-postgresql-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_postgresql_connection_details, "update-postgresql-connection")
+
+
+# oci goldengate connection create-connection-create-amazon-s3-connection-details -> oci goldengate connection create-amazon-s3-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_amazon_s3_connection_details, "create-amazon-s3-connection")
+
+
+# oci goldengate connection create-connection-create-hdfs-connection-details -> oci goldengate connection create-hdfs-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_hdfs_connection_details, "create-hdfs-connection")
+
+
+# oci goldengate connection create-connection-create-microsoft-sqlserver-connection-details -> oci goldengate connection create-microsoft-sqlserver-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_microsoft_sqlserver_connection_details, "create-microsoft-sqlserver-connection")
+
+
+# oci goldengate connection create-connection-create-mongo-db-connection-details -> oci goldengate connection create-mongo-db-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_mongo_db_connection_details, "create-mongo-db-connection")
+
+
+# oci goldengate connection create-connection-create-oracle-nosql-connection-details -> oci goldengate connection create-oracle-nosql-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_oracle_nosql_connection_details, "create-oracle-nosql-connection")
+
+
+# oci goldengate connection create-connection-create-snowflake-connection-details -> oci goldengate connection create-snowflake-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_snowflake_connection_details, "create-snowflake-connection")
+
+
+# oci goldengate connection update-connection-update-amazon-s3-connection-details -> oci goldengate connection update-amazon-s3-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_amazon_s3_connection_details, "update-amazon-s3-connection")
+
+
+# oci goldengate connection update-connection-update-hdfs-connection-details -> oci goldengate connection update-hdfs-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_hdfs_connection_details, "update-hdfs-connection")
+
+
+# oci goldengate connection update-connection-update-microsoft-sqlserver-connection-details -> oci goldengate connection update-microsoft-sqlserver-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_microsoft_sqlserver_connection_details, "update-microsoft-sqlserver-connection")
+
+
+# oci goldengate connection update-connection-update-mongo-db-connection-details -> oci goldengate connection update-mongo-db-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_mongo_db_connection_details, "update-mongo-db-connection")
+
+
+# oci goldengate connection update-connection-update-oracle-nosql-connection-details -> oci goldengate connection update-oracle-nosql-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_oracle_nosql_connection_details, "update-oracle-nosql-connection")
+
+
+# oci goldengate connection update-connection-update-snowflake-connection-details -> oci goldengate connection update-snowflake-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_snowflake_connection_details, "update-snowflake-connection")
+
+
+@cli_util.copy_params_from_generated_command(goldengate_cli.create_connection_create_azure_data_lake_storage_connection_details, params_to_exclude=['endpoint_parameterconflict'])
+@goldengate_cli.connection_group.command(name=goldengate_cli.create_connection_create_azure_data_lake_storage_connection_details.name, help=goldengate_cli.create_connection_create_azure_data_lake_storage_connection_details.help)
+@cli_util.option('--connection-endpoint', help=u"""Azure Storage service endpoint. e.g: https://test.blob.core.windows.net""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def create_connection_create_azure_data_lake_storage_connection_details_extended(ctx, **kwargs):
+
+    if 'connection_endpoint' in kwargs:
+        kwargs['endpoint_parameterconflict'] = kwargs['connection_endpoint']
+        kwargs.pop('connection_endpoint')
+
+    ctx.invoke(goldengate_cli.create_connection_create_azure_data_lake_storage_connection_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(goldengate_cli.update_connection_update_azure_data_lake_storage_connection_details, params_to_exclude=['endpoint_parameterconflict'])
+@goldengate_cli.connection_group.command(name=goldengate_cli.update_connection_update_azure_data_lake_storage_connection_details.name, help=goldengate_cli.update_connection_update_azure_data_lake_storage_connection_details.help)
+@cli_util.option('--connection-endpoint', help=u"""Azure Storage service endpoint. e.g: https://test.blob.core.windows.net""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def update_connection_update_azure_data_lake_storage_connection_details_extended(ctx, **kwargs):
+
+    if 'connection_endpoint' in kwargs:
+        kwargs['endpoint_parameterconflict'] = kwargs['connection_endpoint']
+        kwargs.pop('connection_endpoint')
+
+    ctx.invoke(goldengate_cli.update_connection_update_azure_data_lake_storage_connection_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(goldengate_cli.create_connection_create_oracle_nosql_connection_details, params_to_exclude=['region_parameterconflict'])
+@goldengate_cli.connection_group.command(name=goldengate_cli.create_connection_create_oracle_nosql_connection_details.name, help=goldengate_cli.create_connection_create_oracle_nosql_connection_details.help)
+@cli_util.option('--connection-region', help=u"""The name of the region. e.g.: us-ashburn-1""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def create_connection_create_oracle_nosql_connection_details_extended(ctx, **kwargs):
+
+    if 'connection_region' in kwargs:
+        kwargs['region_parameterconflict'] = kwargs['connection_region']
+        kwargs.pop('connection_region')
+
+    ctx.invoke(goldengate_cli.create_connection_create_oracle_nosql_connection_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(goldengate_cli.update_connection_update_oracle_nosql_connection_details, params_to_exclude=['region_parameterconflict'])
+@goldengate_cli.connection_group.command(name=goldengate_cli.update_connection_update_oracle_nosql_connection_details.name, help=goldengate_cli.update_connection_update_oracle_nosql_connection_details.help)
+@cli_util.option('--connection-region', help=u"""The name of the region. e.g.: us-ashburn-1""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def update_connection_update_oracle_nosql_connection_details_extended(ctx, **kwargs):
+
+    if 'connection_region' in kwargs:
+        kwargs['region_parameterconflict'] = kwargs['connection_region']
+        kwargs.pop('connection_region')
+
+    ctx.invoke(goldengate_cli.update_connection_update_oracle_nosql_connection_details, **kwargs)
+
+
+# oci goldengate connection create-connection-create-java-message-service-connection-details -> oci goldengate connection create-jms-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_java_message_service_connection_details, "create-jms-connection")
+
+
+# oci goldengate connection update-connection-update-java-message-service-connection-details -> oci goldengate connection update-jms-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_java_message_service_connection_details, "update-jms-connection")

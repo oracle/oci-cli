@@ -21,6 +21,12 @@ def functions_management_root_group():
     pass
 
 
+@click.command(cli_util.override('functions_management.pbf_listing_group.command_name', 'pbf-listing'), cls=CommandGroupWithAlias, help="""PbfListing resources provide details about the available PBFs for consumption by the user. This resource contains details about PBF's functionality, policies required, configuration parameters expected etc.""")
+@cli_util.help_option_group
+def pbf_listing_group():
+    pass
+
+
 @click.command(cli_util.override('functions_management.application_group.command_name', 'application'), cls=CommandGroupWithAlias, help="""An application contains functions and defined attributes shared between those functions, such as network configuration and configuration. Avoid entering confidential information.""")
 @cli_util.help_option_group
 def application_group():
@@ -33,9 +39,24 @@ def function_group():
     pass
 
 
+@click.command(cli_util.override('functions_management.triggers_collection_group.command_name', 'triggers-collection'), cls=CommandGroupWithAlias, help="""Results of a Trigger search. Contains boh TriggerSummary items and other information, such as metadata.""")
+@cli_util.help_option_group
+def triggers_collection_group():
+    pass
+
+
+@click.command(cli_util.override('functions_management.pbf_listing_version_group.command_name', 'pbf-listing-version'), cls=CommandGroupWithAlias, help="""This represents a version of a PbfListing. Each new update from the publisher or the change in the image will result in the creation of new PbfListingVersion resource creation. This is a sub-resource of a PbfListing.""")
+@cli_util.help_option_group
+def pbf_listing_version_group():
+    pass
+
+
 fn_service_cli.fn_service_group.add_command(functions_management_root_group)
+functions_management_root_group.add_command(pbf_listing_group)
 functions_management_root_group.add_command(application_group)
 functions_management_root_group.add_command(function_group)
+functions_management_root_group.add_command(triggers_collection_group)
+functions_management_root_group.add_command(pbf_listing_version_group)
 
 
 @application_group.command(name=cli_util.override('functions_management.change_application_compartment.command_name', 'change-compartment'), help=u"""Moves an application into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources Between Compartments]. \n[Command Reference](changeApplicationCompartment)""")
@@ -163,9 +184,10 @@ def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @function_group.command(name=cli_util.override('functions_management.create_function.command_name', 'create'), help=u"""Creates a new function. \n[Command Reference](createFunction)""")
 @cli_util.option('--display-name', required=True, help=u"""The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.""")
 @cli_util.option('--application-id', required=True, help=u"""The OCID of the application this function belongs to.""")
-@cli_util.option('--image', required=True, help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
 @cli_util.option('--memory-in-mbs', required=True, type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
+@cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
 @cli_util.option('--image-digest', help=u"""The image digest for the version of the image that will be pulled when invoking this function. If no value is specified, the digest currently associated with the image in the OCI Registry will be used. Example: `sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7`""")
+@cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Function configuration. These values are passed on to the function as environment variables, this overrides application configuration values. Keys must be ASCII strings consisting solely of letters, digits, and the '_' (underscore) character, and must not begin with a digit. Values should be limited to printable unicode characters.
 
 Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
@@ -183,12 +205,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
 @cli_util.wrap_exceptions
-def create_function(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, application_id, image, memory_in_mbs, image_digest, config, timeout_in_seconds, provisioned_concurrency_config, trace_config, freeform_tags, defined_tags):
+def create_function(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, application_id, memory_in_mbs, image, image_digest, source_details, config, timeout_in_seconds, provisioned_concurrency_config, trace_config, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -196,11 +218,16 @@ def create_function(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     _details = {}
     _details['displayName'] = display_name
     _details['applicationId'] = application_id
-    _details['image'] = image
     _details['memoryInMBs'] = memory_in_mbs
+
+    if image is not None:
+        _details['image'] = image
 
     if image_digest is not None:
         _details['imageDigest'] = image_digest
+
+    if source_details is not None:
+        _details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
 
     if config is not None:
         _details['config'] = cli_util.parse_json_parameter("config", config)
@@ -251,12 +278,111 @@ def create_function(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
+@function_group.command(name=cli_util.override('functions_management.create_function_pre_built_function_source_details.command_name', 'create-function-pre-built-function-source-details'), help=u"""Creates a new function. \n[Command Reference](createFunction)""")
+@cli_util.option('--display-name', required=True, help=u"""The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.""")
+@cli_util.option('--application-id', required=True, help=u"""The OCID of the application this function belongs to.""")
+@cli_util.option('--memory-in-mbs', required=True, type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
+@cli_util.option('--source-details-pbf-listing-id', required=True, help=u"""The [OCID] of the PbfListing this function is sourced from.""")
+@cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
+@cli_util.option('--image-digest', help=u"""The image digest for the version of the image that will be pulled when invoking this function. If no value is specified, the digest currently associated with the image in the OCI Registry will be used. Example: `sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7`""")
+@cli_util.option('--config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Function configuration. These values are passed on to the function as environment variables, this overrides application configuration values. Keys must be ASCII strings consisting solely of letters, digits, and the '_' (underscore) character, and must not begin with a digit. Values should be limited to printable unicode characters.
+
+Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
+
+The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout for executions of the function. Value in seconds.""")
+@cli_util.option('--provisioned-concurrency-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--trace-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@cli_util.wrap_exceptions
+def create_function_pre_built_function_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, application_id, memory_in_mbs, source_details_pbf_listing_id, image, image_digest, config, timeout_in_seconds, provisioned_concurrency_config, trace_config, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['sourceDetails'] = {}
+    _details['displayName'] = display_name
+    _details['applicationId'] = application_id
+    _details['memoryInMBs'] = memory_in_mbs
+    _details['sourceDetails']['pbfListingId'] = source_details_pbf_listing_id
+
+    if image is not None:
+        _details['image'] = image
+
+    if image_digest is not None:
+        _details['imageDigest'] = image_digest
+
+    if config is not None:
+        _details['config'] = cli_util.parse_json_parameter("config", config)
+
+    if timeout_in_seconds is not None:
+        _details['timeoutInSeconds'] = timeout_in_seconds
+
+    if provisioned_concurrency_config is not None:
+        _details['provisionedConcurrencyConfig'] = cli_util.parse_json_parameter("provisioned_concurrency_config", provisioned_concurrency_config)
+
+    if trace_config is not None:
+        _details['traceConfig'] = cli_util.parse_json_parameter("trace_config", trace_config)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['sourceDetails']['sourceType'] = 'PRE_BUILT_FUNCTIONS'
+
+    client = cli_util.build_client('functions', 'functions_management', ctx)
+    result = client.create_function(
+        create_function_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_function') and callable(getattr(client, 'get_function')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_function(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @function_group.command(name=cli_util.override('functions_management.create_function_none_provisioned_concurrency_config.command_name', 'create-function-none-provisioned-concurrency-config'), help=u"""Creates a new function. \n[Command Reference](createFunction)""")
 @cli_util.option('--display-name', required=True, help=u"""The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.""")
 @cli_util.option('--application-id', required=True, help=u"""The OCID of the application this function belongs to.""")
-@cli_util.option('--image', required=True, help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
 @cli_util.option('--memory-in-mbs', required=True, type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
+@cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
 @cli_util.option('--image-digest', help=u"""The image digest for the version of the image that will be pulled when invoking this function. If no value is specified, the digest currently associated with the image in the OCI Registry will be used. Example: `sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7`""")
+@cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Function configuration. These values are passed on to the function as environment variables, this overrides application configuration values. Keys must be ASCII strings consisting solely of letters, digits, and the '_' (underscore) character, and must not begin with a digit. Values should be limited to printable unicode characters.
 
 Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
@@ -273,12 +399,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
 @cli_util.wrap_exceptions
-def create_function_none_provisioned_concurrency_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, application_id, image, memory_in_mbs, image_digest, config, timeout_in_seconds, trace_config, freeform_tags, defined_tags):
+def create_function_none_provisioned_concurrency_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, application_id, memory_in_mbs, image, image_digest, source_details, config, timeout_in_seconds, trace_config, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -287,11 +413,16 @@ def create_function_none_provisioned_concurrency_config(ctx, from_json, wait_for
     _details['provisionedConcurrencyConfig'] = {}
     _details['displayName'] = display_name
     _details['applicationId'] = application_id
-    _details['image'] = image
     _details['memoryInMBs'] = memory_in_mbs
+
+    if image is not None:
+        _details['image'] = image
 
     if image_digest is not None:
         _details['imageDigest'] = image_digest
+
+    if source_details is not None:
+        _details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
 
     if config is not None:
         _details['config'] = cli_util.parse_json_parameter("config", config)
@@ -344,10 +475,11 @@ def create_function_none_provisioned_concurrency_config(ctx, from_json, wait_for
 @function_group.command(name=cli_util.override('functions_management.create_function_constant_provisioned_concurrency_config.command_name', 'create-function-constant-provisioned-concurrency-config'), help=u"""Creates a new function. \n[Command Reference](createFunction)""")
 @cli_util.option('--display-name', required=True, help=u"""The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.""")
 @cli_util.option('--application-id', required=True, help=u"""The OCID of the application this function belongs to.""")
-@cli_util.option('--image', required=True, help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
 @cli_util.option('--memory-in-mbs', required=True, type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
 @cli_util.option('--provisioned-concurrency-config-count', required=True, type=click.INT, help=u"""""")
+@cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
 @cli_util.option('--image-digest', help=u"""The image digest for the version of the image that will be pulled when invoking this function. If no value is specified, the digest currently associated with the image in the OCI Registry will be used. Example: `sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7`""")
+@cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Function configuration. These values are passed on to the function as environment variables, this overrides application configuration values. Keys must be ASCII strings consisting solely of letters, digits, and the '_' (underscore) character, and must not begin with a digit. Values should be limited to printable unicode characters.
 
 Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
@@ -364,12 +496,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
 @cli_util.wrap_exceptions
-def create_function_constant_provisioned_concurrency_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, application_id, image, memory_in_mbs, provisioned_concurrency_config_count, image_digest, config, timeout_in_seconds, trace_config, freeform_tags, defined_tags):
+def create_function_constant_provisioned_concurrency_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, application_id, memory_in_mbs, provisioned_concurrency_config_count, image, image_digest, source_details, config, timeout_in_seconds, trace_config, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -378,12 +510,17 @@ def create_function_constant_provisioned_concurrency_config(ctx, from_json, wait
     _details['provisionedConcurrencyConfig'] = {}
     _details['displayName'] = display_name
     _details['applicationId'] = application_id
-    _details['image'] = image
     _details['memoryInMBs'] = memory_in_mbs
     _details['provisionedConcurrencyConfig']['count'] = provisioned_concurrency_config_count
 
+    if image is not None:
+        _details['image'] = image
+
     if image_digest is not None:
         _details['imageDigest'] = image_digest
+
+    if source_details is not None:
+        _details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
 
     if config is not None:
         _details['config'] = cli_util.parse_json_parameter("config", config)
@@ -605,6 +742,50 @@ def get_function(ctx, from_json, function_id):
     cli_util.render_response(result, ctx)
 
 
+@pbf_listing_group.command(name=cli_util.override('functions_management.get_pbf_listing.command_name', 'get'), help=u"""Fetches a Pre-built Function(PBF) Listing. Returns a PbfListing response model. \n[Command Reference](getPbfListing)""")
+@cli_util.option('--pbf-listing-id', required=True, help=u"""unique PbfListing identifier""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'functions', 'class': 'PbfListing'})
+@cli_util.wrap_exceptions
+def get_pbf_listing(ctx, from_json, pbf_listing_id):
+
+    if isinstance(pbf_listing_id, six.string_types) and len(pbf_listing_id.strip()) == 0:
+        raise click.UsageError('Parameter --pbf-listing-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('functions', 'functions_management', ctx)
+    result = client.get_pbf_listing(
+        pbf_listing_id=pbf_listing_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pbf_listing_version_group.command(name=cli_util.override('functions_management.get_pbf_listing_version.command_name', 'get'), help=u"""Gets a PbfListingVersion by identifier for a PbfListing. \n[Command Reference](getPbfListingVersion)""")
+@cli_util.option('--pbf-listing-version-id', required=True, help=u"""unique PbfListingVersion identifier""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'functions', 'class': 'PbfListingVersion'})
+@cli_util.wrap_exceptions
+def get_pbf_listing_version(ctx, from_json, pbf_listing_version_id):
+
+    if isinstance(pbf_listing_version_id, six.string_types) and len(pbf_listing_version_id.strip()) == 0:
+        raise click.UsageError('Parameter --pbf-listing-version-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('functions', 'functions_management', ctx)
+    result = client.get_pbf_listing_version(
+        pbf_listing_version_id=pbf_listing_version_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @application_group.command(name=cli_util.override('functions_management.list_applications.command_name', 'list'), help=u"""Lists applications for a compartment. \n[Command Reference](listApplications)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to which this resource belongs.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return. 1 is the minimum, 50 is the maximum.
@@ -742,6 +923,204 @@ def list_functions(ctx, from_json, all_pages, page_size, application_id, limit, 
     else:
         result = client.list_functions(
             application_id=application_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@pbf_listing_version_group.command(name=cli_util.override('functions_management.list_pbf_listing_versions.command_name', 'list'), help=u"""Fetches a wrapped list of all Pre-built Function(PBF) Listing versions. Returns a PbfListingVersionCollection containing an array of PbfListingVersionSummary response models.
+
+Note that the PbfListingIdentifier must be provided as a query parameter, otherwise an exception shall be thrown. \n[Command Reference](listPbfListingVersions)""")
+@cli_util.option('--pbf-listing-id', required=True, help=u"""unique PbfListing identifier""")
+@cli_util.option('--pbf-listing-version-id', help=u"""unique PbfListingVersion identifier""")
+@cli_util.option('--name', help=u"""Matches a PbfListingVersion based on a provided semantic version name for a PbfListingVersion. Each PbfListingVersion name is unique with respect to its associated PbfListing.""")
+@cli_util.option('--is-current-version', type=click.BOOL, help=u"""Matches the current version (the most recently added version with an Active lifecycleState) associated with a PbfListing.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return. 1 is the minimum, 50 is the maximum.
+
+Default: 10""")
+@cli_util.option('--page', help=u"""The pagination token for a list query returned by a previous operation""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order.
+
+* **ASC:** Ascending sort order. * **DESC:** Descending sort order.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "name"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for name is ascending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'functions', 'class': 'PbfListingVersionsCollection'})
+@cli_util.wrap_exceptions
+def list_pbf_listing_versions(ctx, from_json, all_pages, page_size, pbf_listing_id, pbf_listing_version_id, name, is_current_version, lifecycle_state, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if pbf_listing_version_id is not None:
+        kwargs['pbf_listing_version_id'] = pbf_listing_version_id
+    if name is not None:
+        kwargs['name'] = name
+    if is_current_version is not None:
+        kwargs['is_current_version'] = is_current_version
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('functions', 'functions_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_pbf_listing_versions,
+            pbf_listing_id=pbf_listing_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_pbf_listing_versions,
+            limit,
+            page_size,
+            pbf_listing_id=pbf_listing_id,
+            **kwargs
+        )
+    else:
+        result = client.list_pbf_listing_versions(
+            pbf_listing_id=pbf_listing_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@pbf_listing_group.command(name=cli_util.override('functions_management.list_pbf_listings.command_name', 'list'), help=u"""Fetches a wrapped list of all Pre-built Function(PBF) Listings. Returns a PbfListingCollection containing an array of PbfListingSummary response models. \n[Command Reference](listPbfListings)""")
+@cli_util.option('--pbf-listing-id', help=u"""unique PbfListing identifier""")
+@cli_util.option('--name', help=u"""A filter to return only resources that match the entire PBF name given.""")
+@cli_util.option('--name-contains', help=u"""A filter to return only resources that contain the supplied filter text in the PBF name given.""")
+@cli_util.option('--name-starts-with', help=u"""A filter to return only resources that start with the supplied filter text in the PBF name given.""")
+@cli_util.option('--trigger', multiple=True, help=u"""A filter to return only resources that match the service trigger sources of a PBF.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return. 1 is the minimum, 50 is the maximum.
+
+Default: 10""")
+@cli_util.option('--page', help=u"""The pagination token for a list query returned by a previous operation""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order.
+
+* **ASC:** Ascending sort order. * **DESC:** Descending sort order.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "name"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for name is ascending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'trigger': {'module': 'functions', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'trigger': {'module': 'functions', 'class': 'list[string]'}}, output_type={'module': 'functions', 'class': 'PbfListingsCollection'})
+@cli_util.wrap_exceptions
+def list_pbf_listings(ctx, from_json, all_pages, page_size, pbf_listing_id, name, name_contains, name_starts_with, trigger, lifecycle_state, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if pbf_listing_id is not None:
+        kwargs['pbf_listing_id'] = pbf_listing_id
+    if name is not None:
+        kwargs['name'] = name
+    if name_contains is not None:
+        kwargs['name_contains'] = name_contains
+    if name_starts_with is not None:
+        kwargs['name_starts_with'] = name_starts_with
+    if trigger is not None and len(trigger) > 0:
+        kwargs['trigger'] = trigger
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('functions', 'functions_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_pbf_listings,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_pbf_listings,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_pbf_listings(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@triggers_collection_group.command(name=cli_util.override('functions_management.list_triggers.command_name', 'list-triggers'), help=u"""Returns a list of Triggers. \n[Command Reference](listTriggers)""")
+@cli_util.option('--name', help=u"""A filter to return only resources that match the service trigger source of a PBF.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return. 1 is the minimum, 50 is the maximum.
+
+Default: 10""")
+@cli_util.option('--page', help=u"""The pagination token for a list query returned by a previous operation""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order.
+
+* **ASC:** Ascending sort order. * **DESC:** Descending sort order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'functions', 'class': 'TriggersCollection'})
+@cli_util.wrap_exceptions
+def list_triggers(ctx, from_json, all_pages, page_size, name, limit, page, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if name is not None:
+        kwargs['name'] = name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('functions', 'functions_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_triggers,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_triggers,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_triggers(
             **kwargs
         )
     cli_util.render_response(result, ctx)

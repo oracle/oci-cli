@@ -144,26 +144,31 @@ def create_build_pipeline_stage_create_wait_stage_details_extended(ctx, **kwargs
 
 @cli_util.copy_params_from_generated_command(
     devops_cli.create_build_pipeline_stage_create_build_stage_details,
-    params_to_exclude=['build_pipeline_stage_predecessor_collection', 'private_access_config'])
+    params_to_exclude=['build_pipeline_stage_predecessor_collection', 'private_access_config', 'build_runner_shape_config'])
 @devops_cli.build_pipeline_stage_group.command(
     name=cli_util.override(
         'build_pipeline_stage.create_build_pipeline_stage_create_build_stage_details.command_name', 'create-build-stage'),
     help=devops_cli.create_build_pipeline_stage_create_build_stage_details.help)
 @cli_util.option('--stage-predecessor-collection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--network-channel', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--build-runner-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(
     input_params_to_complex_types={
         'stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'},
         'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'},
         'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'},
-        'build-source-collection': {'module': 'devops', 'class': 'BuildSourceCollection'}},
+        'build-source-collection': {'module': 'devops', 'class': 'BuildSourceCollection'},
+        'build-runner-config': {'module': 'devops', 'class': 'BuildRunnerShapeConfig'}},
     output_type={'module': 'devops', 'class': 'BuildPipelineStage'})
 @cli_util.wrap_exceptions
 def create_build_pipeline_stage_create_build_stage_details_extended(ctx, **kwargs):
     if 'network_channel' in kwargs:
         kwargs['private_access_config'] = kwargs['network_channel']
         kwargs.pop('network_channel')
+    if 'build_runner_config' in kwargs:
+        kwargs['build_runner_shape_config'] = kwargs['build_runner_config']
+        kwargs.pop('build_runner_config')
     if 'stage_predecessor_collection' in kwargs:
         kwargs['build_pipeline_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
         kwargs.pop('stage_predecessor_collection')
@@ -249,7 +254,7 @@ def update_build_pipeline_stage_update_wait_stage_details_extended(ctx, **kwargs
 
 @cli_util.copy_params_from_generated_command(
     devops_cli.update_build_pipeline_stage_update_build_stage_details,
-    params_to_exclude=['build_pipeline_stage_id', 'build_pipeline_stage_predecessor_collection', 'private_access_config'])
+    params_to_exclude=['build_pipeline_stage_id', 'build_pipeline_stage_predecessor_collection', 'private_access_config', 'build_runner_shape_config'])
 @devops_cli.build_pipeline_stage_group.command(
     name=cli_util.override(
         'build_pipeline_stage.update_build_pipeline_stage_update_build_stage_details.command_name', 'update-build-stage'),
@@ -257,13 +262,15 @@ def update_build_pipeline_stage_update_wait_stage_details_extended(ctx, **kwargs
 @cli_util.option('--stage-id', required=True, help=u"""Unique stage identifier.""")
 @cli_util.option('--stage-predecessor-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--network-channel', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--build-runner-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(
     input_params_to_complex_types={
         'stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'},
         'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'},
         'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'},
-        'build-source-collection': {'module': 'devops', 'class': 'BuildSourceCollection'}},
+        'build-source-collection': {'module': 'devops', 'class': 'BuildSourceCollection'},
+        'build-runner-config': {'module': 'devops', 'class': 'BuildRunnerShapeConfig'}},
     output_type={'module': 'devops', 'class': 'BuildPipelineStage'})
 @cli_util.wrap_exceptions
 def update_build_pipeline_stage_update_build_stage_details_extended(ctx, **kwargs):
@@ -273,6 +280,9 @@ def update_build_pipeline_stage_update_build_stage_details_extended(ctx, **kwarg
     if 'network_channel' in kwargs:
         kwargs['private_access_config'] = kwargs['network_channel']
         kwargs.pop('network_channel')
+    if 'build_runner_config' in kwargs:
+        kwargs['build_runner_shape_config'] = kwargs['build_runner_config']
+        kwargs.pop('build_runner_config')
     if 'stage_predecessor_collection' in kwargs:
         kwargs['build_pipeline_stage_predecessor_collection'] = kwargs['stage_predecessor_collection']
         kwargs.pop('stage_predecessor_collection')

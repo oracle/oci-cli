@@ -27,6 +27,11 @@ cli_util.SERVICES_REQUIRING_ENDPOINTS.append("functions_invoke")
 # oci functions functions-management function get
 # oci functions functions-management function list
 # oci functions functions-invoke function --function-id --invoke-function-body --file --endpoint --fn-intent --fn-invoke-type
+# oci functions functions-management pbf-listing get
+# oci functions functions-management pbf-listing list
+# oci functions functions-management pbf-listing-version get
+# oci functions functions-management pbf-listing-version list
+# oci functions functions-management triggers-collection list-triggers
 
 # To:
 # oci fn application change-compartment
@@ -41,9 +46,20 @@ cli_util.SERVICES_REQUIRING_ENDPOINTS.append("functions_invoke")
 # oci fn function get
 # oci fn function list
 # oci fn function invoke --function-id --body --file --fn-intent --fn-invoke-type
+# oci fn pbf-listing get
+# oci fn pbf-listing list
+# oci fn pbf-listing-version get
+# oci fn pbf-listing-version list
+# oci fn triggers list
+
+cli_util.rename_command(fn_service_cli, functionsmanagement_cli.functions_management_root_group, functionsmanagement_cli.triggers_collection_group, 'trigger')
+cli_util.rename_command(fn_service_cli, functionsmanagement_cli.triggers_collection_group, functionsmanagement_cli.list_triggers, 'list')
 
 fn_service_cli.fn_service_group.add_command(functionsmanagement_cli.application_group)
 fn_service_cli.fn_service_group.add_command(functionsmanagement_cli.function_group)
+fn_service_cli.fn_service_group.add_command(functionsmanagement_cli.pbf_listing_group)
+fn_service_cli.fn_service_group.add_command(functionsmanagement_cli.triggers_collection_group)
+fn_service_cli.fn_service_group.add_command(functionsmanagement_cli.pbf_listing_version_group)
 fn_service_cli.fn_service_group.commands.pop(functionsmanagement_cli.functions_management_root_group.name)
 functionsmanagement_cli.function_group.add_command(functionsinvoke_cli.functions_invoke_root_group)
 fn_service_cli.fn_service_group.commands.pop(functionsinvoke_cli.functions_invoke_root_group.name)

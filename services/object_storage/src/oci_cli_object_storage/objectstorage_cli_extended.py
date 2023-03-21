@@ -1698,7 +1698,7 @@ def sync(ctx, from_json, namespace, bucket_name, src_dir, dest_dir, cache_contro
                                                        excluded_object_set, parallel_operations_count, prefix,
                                                        del_pars=False, del_rep_pol=False, del_uploads=False)
 
-            # combine upload output with delete data based on output format
+            # Combine upload output with delete data based on output format
             delete_output_data = stacked_output[0].get_output(output_format)
             if output_format == 'json':
                 output_data.update(delete_output_data)

@@ -34,12 +34,22 @@ the file://path/to/file syntax.
 The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
 in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
 @cli_util.wrap_exceptions
 def create_function_extended(ctx, **kwargs):
     if 'provisioned_concurrency' in kwargs:
         kwargs['provisioned_concurrency_config'] = kwargs['provisioned_concurrency']
         kwargs.pop('provisioned_concurrency')
+
+    if not (kwargs.get('source_details') or kwargs.get('image')):
+        raise click.UsageError('Must specify --source-details or --image.')
+
+    source_details = {}
+    if kwargs.get('source_details') is not None:
+        source_details = cli_util.parse_json_parameter("source_details", kwargs.get('source_details'))
+
+    if source_details.get('pbfListingId') and kwargs.get('image'):
+        raise click.UsageError('Cannot specify both pbfListingId (in --source-details) and --image.')
 
     ctx.invoke(functionsmanagement_cli.create_function, **kwargs)
 
@@ -60,3 +70,7 @@ def update_function_extended(ctx, **kwargs):
         kwargs.pop('provisioned_concurrency')
 
     ctx.invoke(functionsmanagement_cli.update_function, **kwargs)
+
+
+# Remove create-function-pre-built-function-source-details from oci fn function
+functionsmanagement_cli.function_group.commands.pop(functionsmanagement_cli.create_function_pre_built_function_source_details.name)
