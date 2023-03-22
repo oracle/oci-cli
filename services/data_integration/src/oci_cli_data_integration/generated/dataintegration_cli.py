@@ -537,7 +537,7 @@ def create_application_detailed_description(ctx, from_json, workspace_id, applic
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
 @cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--model-type', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_ADWC_CONNECTION", "ORACLE_ATP_CONNECTION", "ORACLE_OBJECT_STORAGE_CONNECTION", "ORACLEDB_CONNECTION", "MYSQL_CONNECTION", "GENERIC_JDBC_CONNECTION", "BICC_CONNECTION", "AMAZON_S3_CONNECTION", "BIP_CONNECTION", "LAKE_HOUSE_CONNECTION", "REST_NO_AUTH_CONNECTION", "REST_BASIC_AUTH_CONNECTION"]), help=u"""The type of the connection.""")
+@cli_util.option('--model-type', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_ADWC_CONNECTION", "ORACLE_ATP_CONNECTION", "ORACLE_OBJECT_STORAGE_CONNECTION", "ORACLEDB_CONNECTION", "MYSQL_CONNECTION", "GENERIC_JDBC_CONNECTION", "BICC_CONNECTION", "AMAZON_S3_CONNECTION", "BIP_CONNECTION", "LAKE_CONNECTION", "REST_NO_AUTH_CONNECTION", "REST_BASIC_AUTH_CONNECTION"]), help=u"""The type of the connection.""")
 @cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
 @cli_util.option('--model-version', help=u"""The model version of an object.""")
 @cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -731,68 +731,6 @@ def create_connection_create_connection_from_amazon_s3(ctx, from_json, workspace
         _details['secretKey'] = cli_util.parse_json_parameter("secret_key", secret_key)
 
     _details['modelType'] = 'AMAZON_S3_CONNECTION'
-
-    client = cli_util.build_client('data_integration', 'data_integration', ctx)
-    result = client.create_connection(
-        workspace_id=workspace_id,
-        create_connection_details=_details,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
-@connection_group.command(name=cli_util.override('data_integration.create_connection_create_connection_from_lakehouse.command_name', 'create-connection-create-connection-from-lakehouse'), help=u"""Creates a connection under an existing data asset. \n[Command Reference](createConnection)""")
-@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
-@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
-@cli_util.option('--model-version', help=u"""The model version of an object.""")
-@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--description', help=u"""User-defined description for the connection.""")
-@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
-
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
-@cli_util.wrap_exceptions
-def create_connection_create_connection_from_lakehouse(ctx, from_json, workspace_id, name, identifier, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata):
-
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
-        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['name'] = name
-    _details['identifier'] = identifier
-
-    if key is not None:
-        _details['key'] = key
-
-    if model_version is not None:
-        _details['modelVersion'] = model_version
-
-    if parent_ref is not None:
-        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
-
-    if description is not None:
-        _details['description'] = description
-
-    if object_status is not None:
-        _details['objectStatus'] = object_status
-
-    if connection_properties is not None:
-        _details['connectionProperties'] = cli_util.parse_json_parameter("connection_properties", connection_properties)
-
-    if registry_metadata is not None:
-        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
-
-    _details['modelType'] = 'LAKE_HOUSE_CONNECTION'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.create_connection(
@@ -1469,6 +1407,68 @@ def create_connection_create_connection_from_object_storage(ctx, from_json, work
     cli_util.render_response(result, ctx)
 
 
+@connection_group.command(name=cli_util.override('data_integration.create_connection_create_connection_from_lake.command_name', 'create-connection-create-connection-from-lake'), help=u"""Creates a connection under an existing data asset. \n[Command Reference](createConnection)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def create_connection_create_connection_from_lake(ctx, from_json, workspace_id, name, identifier, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['identifier'] = identifier
+
+    if key is not None:
+        _details['key'] = key
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if connection_properties is not None:
+        _details['connectionProperties'] = cli_util.parse_json_parameter("connection_properties", connection_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    _details['modelType'] = 'LAKE_CONNECTION'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_connection(
+        workspace_id=workspace_id,
+        create_connection_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation.command_name', 'create'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1667,6 +1667,87 @@ def create_connection_validation_create_data_asset_from_my_sql(ctx, from_json, w
         _details['dataAsset']['defaultConnection'] = cli_util.parse_json_parameter("data_asset_default_connection", data_asset_default_connection)
 
     _details['dataAsset']['modelType'] = 'MYSQL_DATA_ASSET'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_connection_validation(
+        workspace_id=workspace_id,
+        create_connection_validation_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_data_asset_from_lake.command_name', 'create-connection-validation-create-data-asset-from-lake'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--data-asset-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--data-asset-identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--data-asset-lake-id', required=True, help=u"""The Lake Ocid.""")
+@cli_util.option('--data-asset-default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset-key', help=u"""Currently not used on data asset creation. Reserved for future.""")
+@cli_util.option('--data-asset-model-version', help=u"""The model version of an object.""")
+@cli_util.option('--data-asset-description', help=u"""User-defined description of the data asset.""")
+@cli_util.option('--data-asset-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--data-asset-external-key', help=u"""The external key for the object.""")
+@cli_util.option('--data-asset-asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset-metastore-id', help=u"""The metastoreId for the specified Lake Resource.""")
+@cli_util.option('--data-asset-lake-proxy-endpoint', help=u"""The lakeProxyEndpoint for the specified Lake Resource.""")
+@json_skeleton_utils.get_cli_json_input_option({'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromLake'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromLake'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
+@cli_util.wrap_exceptions
+def create_connection_validation_create_data_asset_from_lake(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, data_asset_lake_id, data_asset_default_connection, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata, data_asset_metastore_id, data_asset_lake_proxy_endpoint):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dataAsset'] = {}
+    _details['dataAsset']['name'] = data_asset_name
+    _details['dataAsset']['identifier'] = data_asset_identifier
+    _details['dataAsset']['lakeId'] = data_asset_lake_id
+    _details['dataAsset']['defaultConnection'] = cli_util.parse_json_parameter("data_asset_default_connection", data_asset_default_connection)
+
+    if connection is not None:
+        _details['connection'] = cli_util.parse_json_parameter("connection", connection)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if data_asset_key is not None:
+        _details['dataAsset']['key'] = data_asset_key
+
+    if data_asset_model_version is not None:
+        _details['dataAsset']['modelVersion'] = data_asset_model_version
+
+    if data_asset_description is not None:
+        _details['dataAsset']['description'] = data_asset_description
+
+    if data_asset_object_status is not None:
+        _details['dataAsset']['objectStatus'] = data_asset_object_status
+
+    if data_asset_external_key is not None:
+        _details['dataAsset']['externalKey'] = data_asset_external_key
+
+    if data_asset_asset_properties is not None:
+        _details['dataAsset']['assetProperties'] = cli_util.parse_json_parameter("data_asset_asset_properties", data_asset_asset_properties)
+
+    if data_asset_registry_metadata is not None:
+        _details['dataAsset']['registryMetadata'] = cli_util.parse_json_parameter("data_asset_registry_metadata", data_asset_registry_metadata)
+
+    if data_asset_metastore_id is not None:
+        _details['dataAsset']['metastoreId'] = data_asset_metastore_id
+
+    if data_asset_lake_proxy_endpoint is not None:
+        _details['dataAsset']['lakeProxyEndpoint'] = data_asset_lake_proxy_endpoint
+
+    _details['dataAsset']['modelType'] = 'LAKE_DATA_ASSET'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.create_connection_validation(
@@ -2144,87 +2225,6 @@ def create_connection_validation_create_data_asset_from_fusion_app(ctx, from_jso
     cli_util.render_response(result, ctx)
 
 
-@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_data_asset_from_lakehouse.command_name', 'create-connection-validation-create-data-asset-from-lakehouse'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
-@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
-@cli_util.option('--data-asset-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--data-asset-identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--data-asset-lakehouse-ocid', required=True, help=u"""The Lakehouse Ocid.""")
-@cli_util.option('--data-asset-default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data-asset-key', help=u"""Currently not used on data asset creation. Reserved for future.""")
-@cli_util.option('--data-asset-model-version', help=u"""The model version of an object.""")
-@cli_util.option('--data-asset-description', help=u"""User-defined description of the data asset.""")
-@cli_util.option('--data-asset-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--data-asset-external-key', help=u"""The external key for the object.""")
-@cli_util.option('--data-asset-asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data-asset-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data-asset-metastore-id', help=u"""The metastoreId for the specified Lakehouse Resource.""")
-@cli_util.option('--data-asset-ranger-endpoint', help=u"""The rangerEndpoint for the specified Lakehouse Resource.""")
-@json_skeleton_utils.get_cli_json_input_option({'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromLakehouse'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromLakehouse'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
-@cli_util.wrap_exceptions
-def create_connection_validation_create_data_asset_from_lakehouse(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, data_asset_lakehouse_ocid, data_asset_default_connection, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata, data_asset_metastore_id, data_asset_ranger_endpoint):
-
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
-        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['dataAsset'] = {}
-    _details['dataAsset']['name'] = data_asset_name
-    _details['dataAsset']['identifier'] = data_asset_identifier
-    _details['dataAsset']['lakehouseOcid'] = data_asset_lakehouse_ocid
-    _details['dataAsset']['defaultConnection'] = cli_util.parse_json_parameter("data_asset_default_connection", data_asset_default_connection)
-
-    if connection is not None:
-        _details['connection'] = cli_util.parse_json_parameter("connection", connection)
-
-    if registry_metadata is not None:
-        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
-
-    if data_asset_key is not None:
-        _details['dataAsset']['key'] = data_asset_key
-
-    if data_asset_model_version is not None:
-        _details['dataAsset']['modelVersion'] = data_asset_model_version
-
-    if data_asset_description is not None:
-        _details['dataAsset']['description'] = data_asset_description
-
-    if data_asset_object_status is not None:
-        _details['dataAsset']['objectStatus'] = data_asset_object_status
-
-    if data_asset_external_key is not None:
-        _details['dataAsset']['externalKey'] = data_asset_external_key
-
-    if data_asset_asset_properties is not None:
-        _details['dataAsset']['assetProperties'] = cli_util.parse_json_parameter("data_asset_asset_properties", data_asset_asset_properties)
-
-    if data_asset_registry_metadata is not None:
-        _details['dataAsset']['registryMetadata'] = cli_util.parse_json_parameter("data_asset_registry_metadata", data_asset_registry_metadata)
-
-    if data_asset_metastore_id is not None:
-        _details['dataAsset']['metastoreId'] = data_asset_metastore_id
-
-    if data_asset_ranger_endpoint is not None:
-        _details['dataAsset']['rangerEndpoint'] = data_asset_ranger_endpoint
-
-    _details['dataAsset']['modelType'] = 'LAKE_HOUSE_DATA_ASSET'
-
-    client = cli_util.build_client('data_integration', 'data_integration', ctx)
-    result = client.create_connection_validation(
-        workspace_id=workspace_id,
-        create_connection_validation_details=_details,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
 @connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_data_asset_from_atp.command_name', 'create-connection-validation-create-data-asset-from-atp'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--data-asset-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
@@ -2587,77 +2587,6 @@ def create_connection_validation_create_connection_from_amazon_s3(ctx, from_json
         _details['connection']['secretKey'] = cli_util.parse_json_parameter("connection_secret_key", connection_secret_key)
 
     _details['connection']['modelType'] = 'AMAZON_S3_CONNECTION'
-
-    client = cli_util.build_client('data_integration', 'data_integration', ctx)
-    result = client.create_connection_validation(
-        workspace_id=workspace_id,
-        create_connection_validation_details=_details,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
-@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_connection_from_lakehouse.command_name', 'create-connection-validation-create-connection-from-lakehouse'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
-@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
-@cli_util.option('--connection-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--connection-identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connection-key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
-@cli_util.option('--connection-model-version', help=u"""The model version of an object.""")
-@cli_util.option('--connection-parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connection-description', help=u"""User-defined description for the connection.""")
-@cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
-
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
-@cli_util.wrap_exceptions
-def create_connection_validation_create_connection_from_lakehouse(ctx, from_json, workspace_id, connection_name, connection_identifier, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata):
-
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
-        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['connection'] = {}
-    _details['connection']['name'] = connection_name
-    _details['connection']['identifier'] = connection_identifier
-
-    if data_asset is not None:
-        _details['dataAsset'] = cli_util.parse_json_parameter("data_asset", data_asset)
-
-    if registry_metadata is not None:
-        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
-
-    if connection_key is not None:
-        _details['connection']['key'] = connection_key
-
-    if connection_model_version is not None:
-        _details['connection']['modelVersion'] = connection_model_version
-
-    if connection_parent_ref is not None:
-        _details['connection']['parentRef'] = cli_util.parse_json_parameter("connection_parent_ref", connection_parent_ref)
-
-    if connection_description is not None:
-        _details['connection']['description'] = connection_description
-
-    if connection_object_status is not None:
-        _details['connection']['objectStatus'] = connection_object_status
-
-    if connection_connection_properties is not None:
-        _details['connection']['connectionProperties'] = cli_util.parse_json_parameter("connection_connection_properties", connection_connection_properties)
-
-    if connection_registry_metadata is not None:
-        _details['connection']['registryMetadata'] = cli_util.parse_json_parameter("connection_registry_metadata", connection_registry_metadata)
-
-    _details['connection']['modelType'] = 'LAKE_HOUSE_CONNECTION'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.create_connection_validation(
@@ -3415,6 +3344,77 @@ def create_connection_validation_create_connection_from_object_storage(ctx, from
     cli_util.render_response(result, ctx)
 
 
+@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_connection_from_lake.command_name', 'create-connection-validation-create-connection-from-lake'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--connection-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--connection-identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--connection-model-version', help=u"""The model version of an object.""")
+@cli_util.option('--connection-parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
+@cli_util.wrap_exceptions
+def create_connection_validation_create_connection_from_lake(ctx, from_json, workspace_id, connection_name, connection_identifier, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['connection'] = {}
+    _details['connection']['name'] = connection_name
+    _details['connection']['identifier'] = connection_identifier
+
+    if data_asset is not None:
+        _details['dataAsset'] = cli_util.parse_json_parameter("data_asset", data_asset)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if connection_key is not None:
+        _details['connection']['key'] = connection_key
+
+    if connection_model_version is not None:
+        _details['connection']['modelVersion'] = connection_model_version
+
+    if connection_parent_ref is not None:
+        _details['connection']['parentRef'] = cli_util.parse_json_parameter("connection_parent_ref", connection_parent_ref)
+
+    if connection_description is not None:
+        _details['connection']['description'] = connection_description
+
+    if connection_object_status is not None:
+        _details['connection']['objectStatus'] = connection_object_status
+
+    if connection_connection_properties is not None:
+        _details['connection']['connectionProperties'] = cli_util.parse_json_parameter("connection_connection_properties", connection_connection_properties)
+
+    if connection_registry_metadata is not None:
+        _details['connection']['registryMetadata'] = cli_util.parse_json_parameter("connection_registry_metadata", connection_registry_metadata)
+
+    _details['connection']['modelType'] = 'LAKE_CONNECTION'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_connection_validation(
+        workspace_id=workspace_id,
+        create_connection_validation_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @copy_object_request_group.command(name=cli_util.override('data_integration.create_copy_object_request.command_name', 'create'), help=u"""Copy Metadata Object. \n[Command Reference](createCopyObjectRequest)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--source-workspace-id', required=True, help=u"""The workspace id of the source from where we need to copy object.""")
@@ -3475,7 +3475,7 @@ def create_copy_object_request(ctx, from_json, wait_for_state, max_wait_seconds,
 
 @data_asset_group.command(name=cli_util.override('data_integration.create_data_asset.command_name', 'create'), help=u"""Creates a data asset with default connection. \n[Command Reference](createDataAsset)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
-@cli_util.option('--model-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_DATA_ASSET", "ORACLE_OBJECT_STORAGE_DATA_ASSET", "ORACLE_ATP_DATA_ASSET", "ORACLE_ADWC_DATA_ASSET", "MYSQL_DATA_ASSET", "GENERIC_JDBC_DATA_ASSET", "FUSION_APP_DATA_ASSET", "AMAZON_S3_DATA_ASSET", "LAKE_HOUSE_DATA_ASSET", "REST_DATA_ASSET"]), help=u"""The type of the data asset.""")
+@cli_util.option('--model-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_DATA_ASSET", "ORACLE_OBJECT_STORAGE_DATA_ASSET", "ORACLE_ATP_DATA_ASSET", "ORACLE_ADWC_DATA_ASSET", "MYSQL_DATA_ASSET", "GENERIC_JDBC_DATA_ASSET", "FUSION_APP_DATA_ASSET", "AMAZON_S3_DATA_ASSET", "LAKE_DATA_ASSET", "REST_DATA_ASSET"]), help=u"""The type of the data asset.""")
 @cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
 @cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--key', help=u"""Currently not used on data asset creation. Reserved for future.""")
@@ -3675,6 +3675,78 @@ def create_data_asset_create_data_asset_from_my_sql(ctx, from_json, workspace_id
         _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
 
     _details['modelType'] = 'MYSQL_DATA_ASSET'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_data_asset(
+        workspace_id=workspace_id,
+        create_data_asset_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@data_asset_group.command(name=cli_util.override('data_integration.create_data_asset_create_data_asset_from_lake.command_name', 'create-data-asset-create-data-asset-from-lake'), help=u"""Creates a data asset with default connection. \n[Command Reference](createDataAsset)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--lake-id', required=True, help=u"""The Lake Ocid.""")
+@cli_util.option('--default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--key', help=u"""Currently not used on data asset creation. Reserved for future.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--description', help=u"""User-defined description of the data asset.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--external-key', help=u"""The external key for the object.""")
+@cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--metastore-id', help=u"""The metastoreId for the specified Lake Resource.""")
+@cli_util.option('--lake-proxy-endpoint', help=u"""The lakeProxyEndpoint for the specified Lake Resource.""")
+@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromLake'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromLake'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
+@cli_util.wrap_exceptions
+def create_data_asset_create_data_asset_from_lake(ctx, from_json, workspace_id, name, identifier, lake_id, default_connection, key, model_version, description, object_status, external_key, asset_properties, registry_metadata, metastore_id, lake_proxy_endpoint):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['identifier'] = identifier
+    _details['lakeId'] = lake_id
+    _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
+
+    if key is not None:
+        _details['key'] = key
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if external_key is not None:
+        _details['externalKey'] = external_key
+
+    if asset_properties is not None:
+        _details['assetProperties'] = cli_util.parse_json_parameter("asset_properties", asset_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if metastore_id is not None:
+        _details['metastoreId'] = metastore_id
+
+    if lake_proxy_endpoint is not None:
+        _details['lakeProxyEndpoint'] = lake_proxy_endpoint
+
+    _details['modelType'] = 'LAKE_DATA_ASSET'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.create_data_asset(
@@ -4097,78 +4169,6 @@ def create_data_asset_create_data_asset_from_fusion_app(ctx, from_json, workspac
         _details['bucketSchema'] = cli_util.parse_json_parameter("bucket_schema", bucket_schema)
 
     _details['modelType'] = 'FUSION_APP_DATA_ASSET'
-
-    client = cli_util.build_client('data_integration', 'data_integration', ctx)
-    result = client.create_data_asset(
-        workspace_id=workspace_id,
-        create_data_asset_details=_details,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
-@data_asset_group.command(name=cli_util.override('data_integration.create_data_asset_create_data_asset_from_lakehouse.command_name', 'create-data-asset-create-data-asset-from-lakehouse'), help=u"""Creates a data asset with default connection. \n[Command Reference](createDataAsset)""")
-@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
-@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--lakehouse-ocid', required=True, help=u"""The Lakehouse Ocid.""")
-@cli_util.option('--default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--key', help=u"""Currently not used on data asset creation. Reserved for future.""")
-@cli_util.option('--model-version', help=u"""The model version of an object.""")
-@cli_util.option('--description', help=u"""User-defined description of the data asset.""")
-@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--external-key', help=u"""The external key for the object.""")
-@cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--metastore-id', help=u"""The metastoreId for the specified Lakehouse Resource.""")
-@cli_util.option('--ranger-endpoint', help=u"""The rangerEndpoint for the specified Lakehouse Resource.""")
-@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromLakehouse'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromLakehouse'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
-@cli_util.wrap_exceptions
-def create_data_asset_create_data_asset_from_lakehouse(ctx, from_json, workspace_id, name, identifier, lakehouse_ocid, default_connection, key, model_version, description, object_status, external_key, asset_properties, registry_metadata, metastore_id, ranger_endpoint):
-
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
-        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['name'] = name
-    _details['identifier'] = identifier
-    _details['lakehouseOcid'] = lakehouse_ocid
-    _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
-
-    if key is not None:
-        _details['key'] = key
-
-    if model_version is not None:
-        _details['modelVersion'] = model_version
-
-    if description is not None:
-        _details['description'] = description
-
-    if object_status is not None:
-        _details['objectStatus'] = object_status
-
-    if external_key is not None:
-        _details['externalKey'] = external_key
-
-    if asset_properties is not None:
-        _details['assetProperties'] = cli_util.parse_json_parameter("asset_properties", asset_properties)
-
-    if registry_metadata is not None:
-        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
-
-    if metastore_id is not None:
-        _details['metastoreId'] = metastore_id
-
-    if ranger_endpoint is not None:
-        _details['rangerEndpoint'] = ranger_endpoint
-
-    _details['modelType'] = 'LAKE_HOUSE_DATA_ASSET'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.create_data_asset(
@@ -6540,7 +6540,7 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.option('--auth-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--endpoint-parameterconflict', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--method-type', type=custom_types.CliCaseInsensitiveChoice(["GET", "POST", "PATCH", "DELETE", "PUT"]), help=u"""The REST method to use. This property is deprecated, use ExecuteRestCallConfig's methodType property instead.""")
-@cli_util.option('--headers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--headers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Headers data for the request.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--json-data', help=u"""JSON data for payload body. This property is deprecated, use ExecuteRestCallConfig's payload config param instead.""")
 @cli_util.option('--api-call-mode', type=custom_types.CliCaseInsensitiveChoice(["SYNCHRONOUS", "ASYNC_OCI_WORKREQUEST", "ASYNC_GENERIC"]), help=u"""The REST invocation pattern to use. ASYNC_OCI_WORKREQUEST is being deprecated as well as cancelEndpoint/MethodType.""")
 @cli_util.option('--cancel-endpoint', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -12490,7 +12490,7 @@ def update_application_detailed_description(ctx, from_json, workspace_id, applic
 @connection_group.command(name=cli_util.override('data_integration.update_connection.command_name', 'update'), help=u"""Updates a connection under a data asset. \n[Command Reference](updateConnection)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
-@cli_util.option('--model-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_ADWC_CONNECTION", "ORACLE_ATP_CONNECTION", "ORACLE_OBJECT_STORAGE_CONNECTION", "ORACLEDB_CONNECTION", "MYSQL_CONNECTION", "GENERIC_JDBC_CONNECTION", "BICC_CONNECTION", "AMAZON_S3_CONNECTION", "BIP_CONNECTION", "LAKE_HOUSE_CONNECTION", "REST_NO_AUTH_CONNECTION", "REST_BASIC_AUTH_CONNECTION"]), help=u"""The type of the connection.""")
+@cli_util.option('--model-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_ADWC_CONNECTION", "ORACLE_ATP_CONNECTION", "ORACLE_OBJECT_STORAGE_CONNECTION", "ORACLEDB_CONNECTION", "MYSQL_CONNECTION", "GENERIC_JDBC_CONNECTION", "BICC_CONNECTION", "AMAZON_S3_CONNECTION", "BIP_CONNECTION", "LAKE_CONNECTION", "REST_NO_AUTH_CONNECTION", "REST_BASIC_AUTH_CONNECTION"]), help=u"""The type of the connection.""")
 @cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
 @cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
 @cli_util.option('--model-version', help=u"""The model version of an object.""")
@@ -12555,6 +12555,85 @@ def update_connection(ctx, from_json, force, workspace_id, connection_key, model
 
     if registry_metadata is not None:
         _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_connection(
+        workspace_id=workspace_id,
+        connection_key=connection_key,
+        update_connection_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('data_integration.update_connection_update_connection_from_lake.command_name', 'update-connection-update-connection-from-lake'), help=u"""Updates a connection under a data asset. \n[Command Reference](updateConnection)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
+@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def update_connection_update_connection_from_lake(ctx, from_json, force, workspace_id, connection_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+        raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
+    if not force:
+        if parent_ref or connection_properties or registry_metadata:
+            if not click.confirm("WARNING: Updates to parent-ref and connection-properties and registry-metadata will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['key'] = key
+    _details['objectVersion'] = object_version
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if name is not None:
+        _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if identifier is not None:
+        _details['identifier'] = identifier
+
+    if connection_properties is not None:
+        _details['connectionProperties'] = cli_util.parse_json_parameter("connection_properties", connection_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    _details['modelType'] = 'LAKE_CONNECTION'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.update_connection(
@@ -13195,85 +13274,6 @@ def update_connection_update_connection_from_rest_basic_auth(ctx, from_json, for
     cli_util.render_response(result, ctx)
 
 
-@connection_group.command(name=cli_util.override('data_integration.update_connection_update_connection_from_lakehouse.command_name', 'update-connection-update-connection-from-lakehouse'), help=u"""Updates a connection under a data asset. \n[Command Reference](updateConnection)""")
-@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
-@cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
-@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
-@cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
-@cli_util.option('--model-version', help=u"""The model version of an object.""")
-@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--description', help=u"""User-defined description for the connection.""")
-@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
-
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
-@cli_util.wrap_exceptions
-def update_connection_update_connection_from_lakehouse(ctx, from_json, force, workspace_id, connection_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, if_match):
-
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
-        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
-
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
-        raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
-    if not force:
-        if parent_ref or connection_properties or registry_metadata:
-            if not click.confirm("WARNING: Updates to parent-ref and connection-properties and registry-metadata will replace any existing values. Are you sure you want to continue?"):
-                ctx.abort()
-
-    kwargs = {}
-    if if_match is not None:
-        kwargs['if_match'] = if_match
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['key'] = key
-    _details['objectVersion'] = object_version
-
-    if model_version is not None:
-        _details['modelVersion'] = model_version
-
-    if parent_ref is not None:
-        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
-
-    if name is not None:
-        _details['name'] = name
-
-    if description is not None:
-        _details['description'] = description
-
-    if object_status is not None:
-        _details['objectStatus'] = object_status
-
-    if identifier is not None:
-        _details['identifier'] = identifier
-
-    if connection_properties is not None:
-        _details['connectionProperties'] = cli_util.parse_json_parameter("connection_properties", connection_properties)
-
-    if registry_metadata is not None:
-        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
-
-    _details['modelType'] = 'LAKE_HOUSE_CONNECTION'
-
-    client = cli_util.build_client('data_integration', 'data_integration', ctx)
-    result = client.update_connection(
-        workspace_id=workspace_id,
-        connection_key=connection_key,
-        update_connection_details=_details,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
 @connection_group.command(name=cli_util.override('data_integration.update_connection_update_connection_from_oracle.command_name', 'update-connection-update-connection-from-oracle'), help=u"""Updates a connection under a data asset. \n[Command Reference](updateConnection)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
@@ -13683,7 +13683,7 @@ def update_copy_object_request(ctx, from_json, workspace_id, copy_object_request
 @data_asset_group.command(name=cli_util.override('data_integration.update_data_asset.command_name', 'update'), help=u"""Updates a specific data asset with default connection. \n[Command Reference](updateDataAsset)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""The data asset key.""")
-@cli_util.option('--model-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_DATA_ASSET", "ORACLE_OBJECT_STORAGE_DATA_ASSET", "ORACLE_ATP_DATA_ASSET", "ORACLE_ADWC_DATA_ASSET", "MYSQL_DATA_ASSET", "GENERIC_JDBC_DATA_ASSET", "FUSION_APP_DATA_ASSET", "AMAZON_S3_DATA_ASSET", "LAKE_HOUSE_DATA_ASSET", "REST_DATA_ASSET"]), help=u"""The type of the data asset.""")
+@cli_util.option('--model-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_DATA_ASSET", "ORACLE_OBJECT_STORAGE_DATA_ASSET", "ORACLE_ATP_DATA_ASSET", "ORACLE_ADWC_DATA_ASSET", "MYSQL_DATA_ASSET", "GENERIC_JDBC_DATA_ASSET", "FUSION_APP_DATA_ASSET", "AMAZON_S3_DATA_ASSET", "LAKE_DATA_ASSET", "REST_DATA_ASSET"]), help=u"""The type of the data asset.""")
 @cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify data asset.""")
 @cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
 @cli_util.option('--model-version', help=u"""The model version of an object.""")
@@ -13946,95 +13946,6 @@ def update_data_asset_update_data_asset_from_atp(ctx, from_json, force, workspac
         _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
 
     _details['modelType'] = 'ORACLE_ATP_DATA_ASSET'
-
-    client = cli_util.build_client('data_integration', 'data_integration', ctx)
-    result = client.update_data_asset(
-        workspace_id=workspace_id,
-        data_asset_key=data_asset_key,
-        update_data_asset_details=_details,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
-@data_asset_group.command(name=cli_util.override('data_integration.update_data_asset_update_data_asset_from_lakehouse.command_name', 'update-data-asset-update-data-asset-from-lakehouse'), help=u"""Updates a specific data asset with default connection. \n[Command Reference](updateDataAsset)""")
-@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
-@cli_util.option('--data-asset-key', required=True, help=u"""The data asset key.""")
-@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify data asset.""")
-@cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
-@cli_util.option('--lakehouse-ocid', required=True, help=u"""The Lakehouse Ocid.""")
-@cli_util.option('--default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--model-version', help=u"""The model version of an object.""")
-@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--description', help=u"""The user-defined description of the data asset.""")
-@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--external-key', help=u"""The external key for the object.""")
-@cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--metastore-id', help=u"""The metastoreId for the specified Lakehouse Resource.""")
-@cli_util.option('--ranger-endpoint', help=u"""The rangerEndpoint for the specified Lakehouse Resource.""")
-@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'UpdateConnectionFromLakehouse'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'UpdateConnectionFromLakehouse'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
-@cli_util.wrap_exceptions
-def update_data_asset_update_data_asset_from_lakehouse(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, lakehouse_ocid, default_connection, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, metastore_id, ranger_endpoint, if_match):
-
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
-        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
-
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
-        raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
-    if not force:
-        if asset_properties or registry_metadata or default_connection:
-            if not click.confirm("WARNING: Updates to asset-properties and registry-metadata and default-connection will replace any existing values. Are you sure you want to continue?"):
-                ctx.abort()
-
-    kwargs = {}
-    if if_match is not None:
-        kwargs['if_match'] = if_match
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['key'] = key
-    _details['objectVersion'] = object_version
-    _details['lakehouseOcid'] = lakehouse_ocid
-    _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
-
-    if model_version is not None:
-        _details['modelVersion'] = model_version
-
-    if name is not None:
-        _details['name'] = name
-
-    if description is not None:
-        _details['description'] = description
-
-    if object_status is not None:
-        _details['objectStatus'] = object_status
-
-    if identifier is not None:
-        _details['identifier'] = identifier
-
-    if external_key is not None:
-        _details['externalKey'] = external_key
-
-    if asset_properties is not None:
-        _details['assetProperties'] = cli_util.parse_json_parameter("asset_properties", asset_properties)
-
-    if registry_metadata is not None:
-        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
-
-    if metastore_id is not None:
-        _details['metastoreId'] = metastore_id
-
-    if ranger_endpoint is not None:
-        _details['rangerEndpoint'] = ranger_endpoint
-
-    _details['modelType'] = 'LAKE_HOUSE_DATA_ASSET'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.update_data_asset(
@@ -14710,6 +14621,95 @@ def update_data_asset_update_data_asset_from_oracle(ctx, from_json, force, works
         _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
 
     _details['modelType'] = 'ORACLE_DATA_ASSET'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_data_asset(
+        workspace_id=workspace_id,
+        data_asset_key=data_asset_key,
+        update_data_asset_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@data_asset_group.command(name=cli_util.override('data_integration.update_data_asset_update_data_asset_from_lake.command_name', 'update-data-asset-update-data-asset-from-lake'), help=u"""Updates a specific data asset with default connection. \n[Command Reference](updateDataAsset)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--data-asset-key', required=True, help=u"""The data asset key.""")
+@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify data asset.""")
+@cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--lake-id', required=True, help=u"""The Lake Ocid.""")
+@cli_util.option('--default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--description', help=u"""The user-defined description of the data asset.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--external-key', help=u"""The external key for the object.""")
+@cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--metastore-id', help=u"""The metastoreId for the specified Lake Resource.""")
+@cli_util.option('--lake-proxy-endpoint', help=u"""The rangerEndpoint for the specified Lake Resource.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'UpdateConnectionFromLake'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'UpdateConnectionFromLake'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
+@cli_util.wrap_exceptions
+def update_data_asset_update_data_asset_from_lake(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, lake_id, default_connection, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, metastore_id, lake_proxy_endpoint, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+        raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
+    if not force:
+        if asset_properties or registry_metadata or default_connection:
+            if not click.confirm("WARNING: Updates to asset-properties and registry-metadata and default-connection will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['key'] = key
+    _details['objectVersion'] = object_version
+    _details['lakeId'] = lake_id
+    _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if name is not None:
+        _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if identifier is not None:
+        _details['identifier'] = identifier
+
+    if external_key is not None:
+        _details['externalKey'] = external_key
+
+    if asset_properties is not None:
+        _details['assetProperties'] = cli_util.parse_json_parameter("asset_properties", asset_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if metastore_id is not None:
+        _details['metastoreId'] = metastore_id
+
+    if lake_proxy_endpoint is not None:
+        _details['lakeProxyEndpoint'] = lake_proxy_endpoint
+
+    _details['modelType'] = 'LAKE_DATA_ASSET'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.update_data_asset(
@@ -16253,7 +16253,7 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @cli_util.option('--auth-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--endpoint-parameterconflict', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--method-type', type=custom_types.CliCaseInsensitiveChoice(["GET", "POST", "PATCH", "DELETE", "PUT"]), help=u"""The REST method to use. This property is deprecated, use ExecuteRestCallConfig's methodType property instead.""")
-@cli_util.option('--headers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--headers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Headers data for the request.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--additional-properties', help=u"""Header value.""")
 @cli_util.option('--json-data', help=u"""JSON data for payload body. This property is deprecated, use ExecuteRestCallConfig's payload config param instead.""")
 @cli_util.option('--api-call-mode', type=custom_types.CliCaseInsensitiveChoice(["SYNCHRONOUS", "ASYNC_OCI_WORKREQUEST", "ASYNC_GENERIC"]), help=u"""The REST invocation pattern to use. ASYNC_OCI_WORKREQUEST is being deprecated as well as cancelEndpoint/MethodType.""")

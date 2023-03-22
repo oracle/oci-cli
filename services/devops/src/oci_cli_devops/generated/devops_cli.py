@@ -883,16 +883,17 @@ def create_build_pipeline_stage_create_wait_stage_details(ctx, from_json, wait_f
 @cli_util.option('--build-spec-file', help=u"""The path to the build specification file for this environment. The default location of the file if not specified is build_spec.yaml.""")
 @cli_util.option('--stage-execution-timeout-in-seconds', type=click.INT, help=u"""Timeout for the build stage execution. Specify value in seconds.""")
 @cli_util.option('--primary-build-source', help=u"""Name of the build source where the build_spec.yml file is located. If not specified, the first entry in the build source collection is chosen as primary build source.""")
+@cli_util.option('--build-runner-shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-access-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'build-source-collection': {'module': 'devops', 'class': 'BuildSourceCollection'}, 'private-access-config': {'module': 'devops', 'class': 'NetworkChannel'}})
+@json_skeleton_utils.get_cli_json_input_option({'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'build-source-collection': {'module': 'devops', 'class': 'BuildSourceCollection'}, 'build-runner-shape-config': {'module': 'devops', 'class': 'BuildRunnerShapeConfig'}, 'private-access-config': {'module': 'devops', 'class': 'NetworkChannel'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'build-source-collection': {'module': 'devops', 'class': 'BuildSourceCollection'}, 'private-access-config': {'module': 'devops', 'class': 'NetworkChannel'}}, output_type={'module': 'devops', 'class': 'BuildPipelineStage'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'build-source-collection': {'module': 'devops', 'class': 'BuildSourceCollection'}, 'build-runner-shape-config': {'module': 'devops', 'class': 'BuildRunnerShapeConfig'}, 'private-access-config': {'module': 'devops', 'class': 'NetworkChannel'}}, output_type={'module': 'devops', 'class': 'BuildPipelineStage'})
 @cli_util.wrap_exceptions
-def create_build_pipeline_stage_create_build_stage_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_id, build_pipeline_stage_predecessor_collection, image, build_source_collection, display_name, description, freeform_tags, defined_tags, build_spec_file, stage_execution_timeout_in_seconds, primary_build_source, private_access_config):
+def create_build_pipeline_stage_create_build_stage_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_id, build_pipeline_stage_predecessor_collection, image, build_source_collection, display_name, description, freeform_tags, defined_tags, build_spec_file, stage_execution_timeout_in_seconds, primary_build_source, build_runner_shape_config, private_access_config):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -923,6 +924,9 @@ def create_build_pipeline_stage_create_build_stage_details(ctx, from_json, wait_
 
     if primary_build_source is not None:
         _details['primaryBuildSource'] = primary_build_source
+
+    if build_runner_shape_config is not None:
+        _details['buildRunnerShapeConfig'] = cli_util.parse_json_parameter("build_runner_shape_config", build_runner_shape_config)
 
     if private_access_config is not None:
         _details['privateAccessConfig'] = cli_util.parse_json_parameter("private_access_config", private_access_config)
@@ -960,7 +964,7 @@ def create_build_pipeline_stage_create_build_stage_details(ctx, from_json, wait_
     cli_util.render_response(result, ctx)
 
 
-@build_run_group.command(name=cli_util.override('devops.create_build_run.command_name', 'create'), help=u"""Starts a build pipeline run for a predefined build pipeline. \n[Command Reference](createBuildRun)""")
+@build_run_group.command(name=cli_util.override('devops.create_build_run.command_name', 'create'), help=u"""Starts a build pipeline run for a predefined build pipeline. Please ensure the completion of any work request for creation/updation of Build Pipeline before starting a Build Run. \n[Command Reference](createBuildRun)""")
 @cli_util.option('--build-pipeline-id', required=True, help=u"""The OCID of the build pipeline.""")
 @cli_util.option('--display-name', help=u"""Build run display name, which can be renamed and is not necessarily unique. Avoid entering confidential information.""")
 @cli_util.option('--commit-info', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5594,7 +5598,7 @@ def get_commit(ctx, from_json, repository_id, commit_id):
 
 @repository_group.command(name=cli_util.override('devops.get_commit_diff.command_name', 'get-commit-diff'), help=u"""Compares two revisions for their differences. Supports comparison between two references or commits. \n[Command Reference](getCommitDiff)""")
 @cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
-@cli_util.option('--target-version', required=True, help=u"""The commit or reference name where changes are coming from.""")
+@cli_util.option('--target-version', required=True, help=u"""The commit or reference name that represents the newer changes against the base version.""")
 @cli_util.option('--base-version', help=u"""The commit or reference name to compare changes against. If base version is not provided, the difference goes against an empty tree.""")
 @cli_util.option('--is-comparison-from-merge-base', type=click.BOOL, help=u"""Boolean value to indicate whether to use merge base or most recent revision.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -8070,24 +8074,25 @@ def update_build_pipeline_stage_update_wait_stage_details(ctx, from_json, force,
 @cli_util.option('--stage-execution-timeout-in-seconds', type=click.INT, help=u"""Timeout for the build stage execution. Specify value in seconds.""")
 @cli_util.option('--build-source-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--primary-build-source', help=u"""Name of the build source where the build_spec.yml file is located. If not specified, the first entry in the build source collection is chosen as primary build source.""")
+@cli_util.option('--build-runner-shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-access-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'build-source-collection': {'module': 'devops', 'class': 'BuildSourceCollection'}, 'private-access-config': {'module': 'devops', 'class': 'NetworkChannel'}})
+@json_skeleton_utils.get_cli_json_input_option({'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'build-source-collection': {'module': 'devops', 'class': 'BuildSourceCollection'}, 'build-runner-shape-config': {'module': 'devops', 'class': 'BuildRunnerShapeConfig'}, 'private-access-config': {'module': 'devops', 'class': 'NetworkChannel'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'build-source-collection': {'module': 'devops', 'class': 'BuildSourceCollection'}, 'private-access-config': {'module': 'devops', 'class': 'NetworkChannel'}}, output_type={'module': 'devops', 'class': 'BuildPipelineStage'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'build-pipeline-stage-predecessor-collection': {'module': 'devops', 'class': 'BuildPipelineStagePredecessorCollection'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'build-source-collection': {'module': 'devops', 'class': 'BuildSourceCollection'}, 'build-runner-shape-config': {'module': 'devops', 'class': 'BuildRunnerShapeConfig'}, 'private-access-config': {'module': 'devops', 'class': 'NetworkChannel'}}, output_type={'module': 'devops', 'class': 'BuildPipelineStage'})
 @cli_util.wrap_exceptions
-def update_build_pipeline_stage_update_build_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_stage_id, display_name, description, build_pipeline_stage_predecessor_collection, freeform_tags, defined_tags, image, build_spec_file, stage_execution_timeout_in_seconds, build_source_collection, primary_build_source, private_access_config, if_match):
+def update_build_pipeline_stage_update_build_stage_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, build_pipeline_stage_id, display_name, description, build_pipeline_stage_predecessor_collection, freeform_tags, defined_tags, image, build_spec_file, stage_execution_timeout_in_seconds, build_source_collection, primary_build_source, build_runner_shape_config, private_access_config, if_match):
 
     if isinstance(build_pipeline_stage_id, six.string_types) and len(build_pipeline_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --build-pipeline-stage-id cannot be whitespace or empty string')
     if not force:
-        if build_pipeline_stage_predecessor_collection or freeform_tags or defined_tags or build_source_collection or private_access_config:
-            if not click.confirm("WARNING: Updates to build-pipeline-stage-predecessor-collection and freeform-tags and defined-tags and build-source-collection and private-access-config will replace any existing values. Are you sure you want to continue?"):
+        if build_pipeline_stage_predecessor_collection or freeform_tags or defined_tags or build_source_collection or build_runner_shape_config or private_access_config:
+            if not click.confirm("WARNING: Updates to build-pipeline-stage-predecessor-collection and freeform-tags and defined-tags and build-source-collection and build-runner-shape-config and private-access-config will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -8126,6 +8131,9 @@ def update_build_pipeline_stage_update_build_stage_details(ctx, from_json, force
 
     if primary_build_source is not None:
         _details['primaryBuildSource'] = primary_build_source
+
+    if build_runner_shape_config is not None:
+        _details['buildRunnerShapeConfig'] = cli_util.parse_json_parameter("build_runner_shape_config", build_runner_shape_config)
 
     if private_access_config is not None:
         _details['privateAccessConfig'] = cli_util.parse_json_parameter("private_access_config", private_access_config)

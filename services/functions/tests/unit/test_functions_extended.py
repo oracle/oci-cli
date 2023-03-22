@@ -15,6 +15,9 @@ class TestFunctions(unittest.TestCase):
         result = util.invoke_command(['fn'])
         assert 'application' in result.output
         assert 'function' in result.output
+        assert 'pbf-listing' in result.output
+        assert 'pbf-listing-version' in result.output
+        assert 'trigger' in result.output
 
     def test_fn_application(self):
         result = util.invoke_command(['fn', 'application'])
@@ -76,12 +79,17 @@ class TestFunctions(unittest.TestCase):
         assert 'Error: Missing option(s)' in result.output
         assert '--display-name' in result.output
         assert '--application-id' in result.output
-        assert '--image' in result.output
         assert '--memory-in-mbs' in result.output
         result = util.invoke_command(['fn', 'function', 'create', '--memory-in-mbs', 'x'])
         assert "Error: Invalid value for '--memory-in-mbs': 'x' is not a valid integer" in result.output
         result = util.invoke_command(['fn', 'function', 'create', '--config'])
         assert 'Error: Option \'--config\' requires an argument' in result.output
+        result = util.invoke_command(['fn', 'function', 'create', '--display-name', 'test', '--application-id', 'dummyOcid', '--memory-in-mbs', '512',
+                                      '--image', 'dummyImage', '--source-details', '{"sourceType": "PRE_BUILT_FUNCTIONS","pbfListingId": "ocid1"}'])
+        assert 'Cannot specify both pbfListingId (in --source-details) and --image.' in result.output
+        result = util.invoke_command(['fn', 'function', 'create', '--display-name', 'test',
+                                      '--application-id', 'dummyOcid', '--memory-in-mbs', '512'])
+        assert 'Must specify --source-details or --image.' in result.output
 
     def test_function_delete(self):
         result = util.invoke_command(['fn', 'function', 'delete'])
@@ -119,3 +127,32 @@ class TestFunctions(unittest.TestCase):
         assert "Error: Invalid value for '--fn-intent': invalid choice: x. (choose from httprequest, cloudevent)" in result.output
         result = util.invoke_command(['fn', 'function', 'invoke', '--fn-invoke-type', 'x'])
         assert "Error: Invalid value for '--fn-invoke-type': invalid choice: x. (choose from detached, sync)" in result.output
+
+    def test_fn_pbf_listing(self):
+        result = util.invoke_command(['fn', 'pbf-listing'])
+        assert 'get' in result.output
+        assert 'list' in result.output
+
+    def test_fn_pbf_listing_get(self):
+        result = util.invoke_command(['fn', 'pbf-listing', 'get'])
+        assert 'Error: Missing option(s)' in result.output
+        assert '--pbf-listing-id' in result.output
+
+    def test_fn_pbf_listing_version(self):
+        result = util.invoke_command(['fn', 'pbf-listing-version'])
+        assert 'get' in result.output
+        assert 'list' in result.output
+
+    def test_fn_pbf_listing_version_get(self):
+        result = util.invoke_command(['fn', 'pbf-listing-version', 'get'])
+        assert 'Error: Missing option(s)' in result.output
+        assert '--pbf-listing-version-id' in result.output
+
+    def test_fn_pbf_listing_version_list(self):
+        result = util.invoke_command(['fn', 'pbf-listing-version', 'list'])
+        assert 'Error: Missing option(s)' in result.output
+        assert '--pbf-listing-id' in result.output
+
+    def test_fn_trigger(self):
+        result = util.invoke_command(['fn', 'trigger'])
+        assert 'list' in result.output
