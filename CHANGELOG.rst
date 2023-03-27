@@ -6,6 +6,51 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.25.0 - 2023-03-28
+--------------------
+
+Added
+~~~~~
+* Compute service
+
+  * Support for new compute cluster commands
+
+    * ``oci compute compute-cluster change-compartment``
+    * ``oci compute compute-cluster create``
+    * ``oci compute compute-cluster delete``
+    * ``oci compute compute-cluster get``
+    * ``oci compute compute-cluster list``
+    * ``oci compute compute-cluster update``
+
+  * Support for a new optional parameter --compute-cluster-id
+
+    * ``oci compute instance launch --compute-cluster-id``
+    * ``oci compute instance list --compute-cluster-id``
+
+* Support for a new command to get connection diagnostics for registered databases in the Database Migration service
+
+  * ``oci database-migration connection connection-diagnostics``
+
+* Support for a new command to validate connection credentials in the DevOps service
+
+  * ``oci devops connection validate``
+
+* Support for a new optional parameter allowing ACD and OKV wallet naming in the Database service
+
+  * ``oci db autonomous-container-database create --db-name``
+
+Changed
+~~~~~~~
+* [BREAKING] Database service
+
+  * The command db-system-compute-performance list has been renamed
+
+    * ``oci db system list-db-system-compute-performances``
+
+  * The command db-system-storage-performance list has been renamed
+
+    * ``oci db system list-db-system-storage-performances``
+
 3.24.0 - 2023-03-21
 --------------------
 

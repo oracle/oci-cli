@@ -416,6 +416,31 @@ def clone_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
+@connection_group.command(name=cli_util.override('database_migration.connection_diagnostics.command_name', 'connection-diagnostics'), help=u"""Perform connection test for a database connection. \n[Command Reference](connectionDiagnostics)""")
+@cli_util.option('--connection-id', required=True, help=u"""The OCID of the database connection""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_migration', 'class': 'DiagnosticsResult'})
+@cli_util.wrap_exceptions
+def connection_diagnostics(ctx, from_json, connection_id, if_match):
+
+    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+        raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.connection_diagnostics(
+        connection_id=connection_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @connection_group.command(name=cli_util.override('database_migration.create_connection.command_name', 'create'), help=u"""Create a Database Connection resource that contains the details to connect to either a Source or Target Database in the migration. \n[Command Reference](createConnection)""")
 @cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment""")
 @cli_util.option('--database-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["MANUAL", "AUTONOMOUS", "USER_MANAGED_OCI"]), help=u"""Database connection type.""")

@@ -161,6 +161,14 @@ def app_catalog_subscription_group():
     pass
 
 
+@click.command(cli_util.override('compute.compute_cluster_group.command_name', 'compute-cluster'), cls=CommandGroupWithAlias, help="""A remote direct memory access (RDMA) network group. Compute clusters are groups of high performance computing (HPC) bare metal instances that are connected with an ultra low latency network. Compute clusters allow you to manage instances in the cluster individually. For more information, see [Compute Clusters].
+
+For details about cluster networks that use intance pools to manage groups of identical instances, see [ClusterNetwork].""")
+@cli_util.help_option_group
+def compute_cluster_group():
+    pass
+
+
 @click.command(cli_util.override('compute.boot_volume_attachment_group.command_name', 'boot-volume-attachment'), cls=CommandGroupWithAlias, help="""Represents an attachment between a boot volume and an instance.
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
@@ -243,6 +251,7 @@ compute_root_group.add_command(app_catalog_listing_resource_version_group)
 compute_root_group.add_command(image_shape_compatibility_entry_group)
 compute_root_group.add_command(app_catalog_listing_group)
 compute_root_group.add_command(app_catalog_subscription_group)
+compute_root_group.add_command(compute_cluster_group)
 compute_root_group.add_command(boot_volume_attachment_group)
 compute_root_group.add_command(measured_boot_report_group)
 compute_root_group.add_command(compute_global_image_capability_schema_version_group)
@@ -927,6 +936,39 @@ def change_compute_capacity_reservation_compartment(ctx, from_json, wait_for_sta
     cli_util.render_response(result, ctx)
 
 
+@compute_cluster_group.command(name=cli_util.override('compute.change_compute_cluster_compartment.command_name', 'change-compartment'), help=u"""Moves a compute cluster into a different compartment within the same tenancy. A compute cluster is a remote direct memory access (RDMA) network group.
+
+For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeComputeClusterCompartment)""")
+@cli_util.option('--compute-cluster-id', required=True, help=u"""The [OCID] of the compute cluster. A compute cluster is a remote direct memory access (RDMA) network group. For more information, see [Compute Clusters].""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the compute cluster to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_compute_cluster_compartment(ctx, from_json, compute_cluster_id, compartment_id, if_match):
+
+    if isinstance(compute_cluster_id, six.string_types) and len(compute_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.change_compute_cluster_compartment(
+        compute_cluster_id=compute_cluster_id,
+        change_compute_cluster_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @compute_image_capability_schema_group.command(name=cli_util.override('compute.change_compute_image_capability_schema_compartment.command_name', 'change-compartment'), help=u"""Moves a compute image capability schema into a different compartment within the same tenancy. For information about moving resources between compartments, see         [Moving Resources to a Different Compartment]. \n[Command Reference](changeComputeImageCapabilitySchemaCompartment)""")
 @cli_util.option('--compute-image-capability-schema-id', required=True, help=u"""The id of the compute image capability schema or the image ocid""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the instance configuration to.""")
@@ -1224,6 +1266,75 @@ def create_compute_capacity_reservation(ctx, from_json, wait_for_state, max_wait
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_compute_capacity_reservation(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@compute_cluster_group.command(name=cli_util.override('compute.create_compute_cluster.command_name', 'create'), help=u"""Creates an empty compute cluster, which is a remote direct memory access (RDMA) network group. After the compute cluster is created, you can use the compute cluster's OCID with the [LaunchInstance] operation to create instances in the compute cluster. For more information, see [Compute Clusters].
+
+To create a cluster network that uses intance pools to manage groups of identical instances, see [CreateClusterNetwork]. \n[Command Reference](createComputeCluster)""")
+@cli_util.option('--availability-domain', required=True, help=u"""The availability domain that the compute cluster is running in. Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains this compute cluster.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'ComputeCluster'})
+@cli_util.wrap_exceptions
+def create_compute_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, display_name, defined_tags, freeform_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['compartmentId'] = compartment_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.create_compute_cluster(
+        create_compute_cluster_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_compute_cluster') and callable(getattr(client, 'get_compute_cluster')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_compute_cluster(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -1804,6 +1915,70 @@ def delete_compute_capacity_reservation(ctx, from_json, wait_for_state, max_wait
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@compute_cluster_group.command(name=cli_util.override('compute.delete_compute_cluster.command_name', 'delete'), help=u"""Deletes the compute cluster, which is a remote direct memory access (RDMA) network group. To delete a compute cluster, all instances in the cluster must be deleted first. \n[Command Reference](deleteComputeCluster)""")
+@cli_util.option('--compute-cluster-id', required=True, help=u"""The [OCID] of the compute cluster. A compute cluster is a remote direct memory access (RDMA) network group. For more information, see [Compute Clusters].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_compute_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_cluster_id, if_match):
+
+    if isinstance(compute_cluster_id, six.string_types) and len(compute_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.delete_compute_cluster(
+        compute_cluster_id=compute_cluster_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_compute_cluster') and callable(getattr(client, 'get_compute_cluster')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_compute_cluster(compute_cluster_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -2602,6 +2777,28 @@ def get_compute_capacity_reservation(ctx, from_json, capacity_reservation_id):
     cli_util.render_response(result, ctx)
 
 
+@compute_cluster_group.command(name=cli_util.override('compute.get_compute_cluster.command_name', 'get'), help=u"""Gets information about the specified compute cluster. \n[Command Reference](getComputeCluster)""")
+@cli_util.option('--compute-cluster-id', required=True, help=u"""The [OCID] of the compute cluster. A compute cluster is a remote direct memory access (RDMA) network group. For more information, see [Compute Clusters].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeCluster'})
+@cli_util.wrap_exceptions
+def get_compute_cluster(ctx, from_json, compute_cluster_id):
+
+    if isinstance(compute_cluster_id, six.string_types) and len(compute_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.get_compute_cluster(
+        compute_cluster_id=compute_cluster_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @compute_global_image_capability_schema_group.command(name=cli_util.override('compute.get_compute_global_image_capability_schema.command_name', 'get'), help=u"""Gets the specified Compute Global Image Capability Schema \n[Command Reference](getComputeGlobalImageCapabilitySchema)""")
 @cli_util.option('--compute-global-image-capability-schema-id', required=True, help=u"""The [OCID] of the compute global image capability schema""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3329,6 +3526,7 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
 @cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
 @cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
@@ -3389,7 +3587,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'platform-config': {'module': 'core', 'class': 'LaunchInstancePlatformConfig'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config):
+def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config):
 
     kwargs = {}
 
@@ -3421,6 +3619,9 @@ def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if compute_cluster_id is not None:
+        _details['computeClusterId'] = compute_cluster_id
 
     if hostname_label is not None:
         _details['hostnameLabel'] = hostname_label
@@ -3540,6 +3741,7 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
 @cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
 @cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
@@ -3611,7 +3813,7 @@ For volumes with the auto-tuned performance feature enabled, this is set to the 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'platform-config': {'module': 'core', 'class': 'LaunchInstancePlatformConfig'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_instance_source_via_image_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, source_details_image_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, subnet_id, is_pv_encryption_in_transit_enabled, platform_config, source_details_boot_volume_size_in_gbs, source_details_boot_volume_vpus_per_gb):
+def launch_instance_instance_source_via_image_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, source_details_image_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, subnet_id, is_pv_encryption_in_transit_enabled, platform_config, source_details_boot_volume_size_in_gbs, source_details_boot_volume_vpus_per_gb):
 
     kwargs = {}
 
@@ -3645,6 +3847,9 @@ def launch_instance_instance_source_via_image_details(ctx, from_json, wait_for_s
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if compute_cluster_id is not None:
+        _details['computeClusterId'] = compute_cluster_id
 
     if hostname_label is not None:
         _details['hostnameLabel'] = hostname_label
@@ -3769,6 +3974,7 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
 @cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
 @cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
@@ -3828,7 +4034,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'platform-config': {'module': 'core', 'class': 'LaunchInstancePlatformConfig'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_instance_source_via_boot_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, source_details_boot_volume_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, subnet_id, is_pv_encryption_in_transit_enabled, platform_config):
+def launch_instance_instance_source_via_boot_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, source_details_boot_volume_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, subnet_id, is_pv_encryption_in_transit_enabled, platform_config):
 
     kwargs = {}
 
@@ -3862,6 +4068,9 @@ def launch_instance_instance_source_via_boot_volume_details(ctx, from_json, wait
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if compute_cluster_id is not None:
+        _details['computeClusterId'] = compute_cluster_id
 
     if hostname_label is not None:
         _details['hostnameLabel'] = hostname_label
@@ -3979,6 +4188,7 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
 @cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
 @cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
@@ -4049,7 +4259,7 @@ Intel and AMD processors have two hardware execution threads per core (OCPU). SM
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_rome_bm_gpu_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled):
+def launch_instance_amd_rome_bm_gpu_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled):
 
     kwargs = {}
 
@@ -4082,6 +4292,9 @@ def launch_instance_amd_rome_bm_gpu_launch_instance_platform_config(ctx, from_js
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if compute_cluster_id is not None:
+        _details['computeClusterId'] = compute_cluster_id
 
     if hostname_label is not None:
         _details['hostnameLabel'] = hostname_label
@@ -4226,6 +4439,7 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
 @cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
 @cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
@@ -4299,7 +4513,7 @@ If the applications that you run on the instance use a core-based licensing mode
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_rome_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled):
+def launch_instance_amd_rome_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled):
 
     kwargs = {}
 
@@ -4332,6 +4546,9 @@ def launch_instance_amd_rome_bm_launch_instance_platform_config(ctx, from_json, 
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if compute_cluster_id is not None:
+        _details['computeClusterId'] = compute_cluster_id
 
     if hostname_label is not None:
         _details['hostnameLabel'] = hostname_label
@@ -4479,6 +4696,7 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
 @cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
 @cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
@@ -4550,7 +4768,7 @@ If the applications that you run on the instance use a core-based licensing mode
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_intel_icelake_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled):
+def launch_instance_intel_icelake_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled):
 
     kwargs = {}
 
@@ -4583,6 +4801,9 @@ def launch_instance_intel_icelake_bm_launch_instance_platform_config(ctx, from_j
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if compute_cluster_id is not None:
+        _details['computeClusterId'] = compute_cluster_id
 
     if hostname_label is not None:
         _details['hostnameLabel'] = hostname_label
@@ -4724,6 +4945,7 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
 @cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
 @cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
@@ -4787,7 +5009,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_vm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled):
+def launch_instance_amd_vm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled):
 
     kwargs = {}
 
@@ -4820,6 +5042,9 @@ def launch_instance_amd_vm_launch_instance_platform_config(ctx, from_json, wait_
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if compute_cluster_id is not None:
+        _details['computeClusterId'] = compute_cluster_id
 
     if hostname_label is not None:
         _details['hostnameLabel'] = hostname_label
@@ -4949,6 +5174,7 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
 @cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
 @cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
@@ -5012,7 +5238,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_intel_vm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled):
+def launch_instance_intel_vm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled):
 
     kwargs = {}
 
@@ -5045,6 +5271,9 @@ def launch_instance_intel_vm_launch_instance_platform_config(ctx, from_json, wai
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if compute_cluster_id is not None:
+        _details['computeClusterId'] = compute_cluster_id
 
     if hostname_label is not None:
         _details['hostnameLabel'] = hostname_label
@@ -5174,6 +5403,7 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
 @cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
 @cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
@@ -5237,7 +5467,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_intel_skylake_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled):
+def launch_instance_intel_skylake_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled):
 
     kwargs = {}
 
@@ -5270,6 +5500,9 @@ def launch_instance_intel_skylake_bm_launch_instance_platform_config(ctx, from_j
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if compute_cluster_id is not None:
+        _details['computeClusterId'] = compute_cluster_id
 
     if hostname_label is not None:
         _details['hostnameLabel'] = hostname_label
@@ -5399,6 +5632,7 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
 @cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
 @cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
@@ -5472,7 +5706,7 @@ If the applications that you run on the instance use a core-based licensing mode
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_milan_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled):
+def launch_instance_amd_milan_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled):
 
     kwargs = {}
 
@@ -5505,6 +5739,9 @@ def launch_instance_amd_milan_bm_launch_instance_platform_config(ctx, from_json,
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if compute_cluster_id is not None:
+        _details['computeClusterId'] = compute_cluster_id
 
     if hostname_label is not None:
         _details['hostnameLabel'] = hostname_label
@@ -5652,6 +5889,7 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
 @cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
 @cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
@@ -5722,7 +5960,7 @@ Intel and AMD processors have two hardware execution threads per core (OCPU). SM
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_milan_bm_gpu_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled):
+def launch_instance_amd_milan_bm_gpu_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled):
 
     kwargs = {}
 
@@ -5755,6 +5993,9 @@ def launch_instance_amd_milan_bm_gpu_launch_instance_platform_config(ctx, from_j
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if compute_cluster_id is not None:
+        _details['computeClusterId'] = compute_cluster_id
 
     if hostname_label is not None:
         _details['hostnameLabel'] = hostname_label
@@ -6294,6 +6535,74 @@ def list_compute_capacity_reservations(ctx, from_json, all_pages, page_size, com
         )
     else:
         result = client.list_compute_capacity_reservations(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@compute_cluster_group.command(name=cli_util.override('compute.list_compute_clusters.command_name', 'list'), help=u"""Lists the compute clusters in the specified compartment. A [compute cluster] is a remote direct memory access (RDMA) network group. \n[Command Reference](listComputeClusters)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--availability-domain', help=u"""The name of the availability domain.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeClusterCollection'})
+@cli_util.wrap_exceptions
+def list_compute_clusters(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, display_name, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    if sort_by and not availability_domain and not all_pages:
+        raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
+    kwargs = {}
+    if availability_domain is not None:
+        kwargs['availability_domain'] = availability_domain
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_compute_clusters,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_compute_clusters,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_compute_clusters(
             compartment_id=compartment_id,
             **kwargs
         )
@@ -7086,6 +7395,7 @@ def list_instance_devices(ctx, from_json, all_pages, page_size, instance_id, is_
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation.""")
+@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the compute cluster. A compute cluster is a remote direct memory access (RDMA) network group. For more information, see [Compute Clusters].""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -7103,7 +7413,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Instance]'})
 @cli_util.wrap_exceptions
-def list_instances(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, capacity_reservation_id, display_name, limit, page, sort_by, sort_order, lifecycle_state):
+def list_instances(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, capacity_reservation_id, compute_cluster_id, display_name, limit, page, sort_by, sort_order, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -7115,6 +7425,8 @@ def list_instances(ctx, from_json, all_pages, page_size, compartment_id, availab
         kwargs['availability_domain'] = availability_domain
     if capacity_reservation_id is not None:
         kwargs['capacity_reservation_id'] = capacity_reservation_id
+    if compute_cluster_id is not None:
+        kwargs['compute_cluster_id'] = compute_cluster_id
     if display_name is not None:
         kwargs['display_name'] = display_name
     if limit is not None:
@@ -7522,6 +7834,82 @@ def update_compute_capacity_reservation(ctx, from_json, force, wait_for_state, m
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@compute_cluster_group.command(name=cli_util.override('compute.update_compute_cluster.command_name', 'update'), help=u"""Updates the specified compute cluster. \n[Command Reference](updateComputeCluster)""")
+@cli_util.option('--compute-cluster-id', required=True, help=u"""The [OCID] of the compute cluster. A compute cluster is a remote direct memory access (RDMA) network group. For more information, see [Compute Clusters].""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'ComputeCluster'})
+@cli_util.wrap_exceptions
+def update_compute_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_cluster_id, display_name, defined_tags, freeform_tags, if_match):
+
+    if isinstance(compute_cluster_id, six.string_types) and len(compute_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-cluster-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.update_compute_cluster(
+        compute_cluster_id=compute_cluster_id,
+        update_compute_cluster_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_compute_cluster') and callable(getattr(client, 'get_compute_cluster')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_compute_cluster(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
