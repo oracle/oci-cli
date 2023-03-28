@@ -147,12 +147,6 @@ def maintenance_run_group():
     pass
 
 
-@click.command(cli_util.override('db.db_system_compute_performance_group.command_name', 'db-system-compute-performance'), cls=CommandGroupWithAlias, help="""Representation of disk performance detail parameters.""")
-@cli_util.help_option_group
-def db_system_compute_performance_group():
-    pass
-
-
 @click.command(cli_util.override('db.cloud_exadata_infrastructure_unallocated_resources_group.command_name', 'cloud-exadata-infrastructure-unallocated-resources'), cls=CommandGroupWithAlias, help="""Details of unallocated resources of the Cloud Exadata infrastructure. Applies to Cloud Exadata infrastructure instances only.""")
 @cli_util.help_option_group
 def cloud_exadata_infrastructure_unallocated_resources_group():
@@ -315,12 +309,6 @@ def autonomous_container_database_dataguard_association_group():
     pass
 
 
-@click.command(cli_util.override('db.db_system_storage_performance_group.command_name', 'db-system-storage-performance'), cls=CommandGroupWithAlias, help="""Representation of storage performance summary per shapeType .""")
-@cli_util.help_option_group
-def db_system_storage_performance_group():
-    pass
-
-
 @click.command(cli_util.override('db.db_system_group.command_name', 'db-system'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def db_system_group():
@@ -423,7 +411,6 @@ db_root_group.add_command(pdb_conversion_history_entry_group)
 db_root_group.add_command(cloud_exadata_infrastructure_group)
 db_root_group.add_command(backup_destination_group)
 db_root_group.add_command(maintenance_run_group)
-db_root_group.add_command(db_system_compute_performance_group)
 db_root_group.add_command(cloud_exadata_infrastructure_unallocated_resources_group)
 db_root_group.add_command(autonomous_database_group)
 db_root_group.add_command(autonomous_database_dataguard_association_group)
@@ -449,7 +436,6 @@ db_root_group.add_command(database_upgrade_history_entry_group)
 db_root_group.add_command(external_backup_job_group)
 db_root_group.add_command(autonomous_database_character_sets_group)
 db_root_group.add_command(autonomous_container_database_dataguard_association_group)
-db_root_group.add_command(db_system_storage_performance_group)
 db_root_group.add_command(db_system_group)
 db_root_group.add_command(autonomous_vm_cluster_group)
 db_root_group.add_command(key_store_group)
@@ -2287,6 +2273,7 @@ def convert_to_pdb_pdb_conversion_to_new_database_details(ctx, from_json, wait_f
 @cli_util.option('--display-name', required=True, help=u"""The display name for the Autonomous Container Database.""")
 @cli_util.option('--patch-model', required=True, type=custom_types.CliCaseInsensitiveChoice(["RELEASE_UPDATES", "RELEASE_UPDATE_REVISIONS"]), help=u"""Database Patch model preference.""")
 @cli_util.option('--db-unique-name', help=u"""**Deprecated.** The `DB_UNIQUE_NAME` value is set by Oracle Cloud Infrastructure.  Do not specify a value for this parameter. Specifying a value for this field will cause Terraform operations to fail.""")
+@cli_util.option('--db-name', help=u"""The database name for the Autonomous Container Database. The name must be unique within the Cloud Autonomous VM Cluster, must start with an alphabetic character and followed by 1 to 7 alphanumeric characters.""")
 @cli_util.option('--service-level-agreement-type', type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "AUTONOMOUS_DATAGUARD"]), help=u"""The service level agreement type of the Autonomous Container Database. The default is STANDARD. For an autonomous dataguard Autonomous Container Database, the specified Autonomous Exadata Infrastructure must be associated with a remote Autonomous Exadata Infrastructure.""")
 @cli_util.option('--autonomous-exadata-infrastructure-id', help=u"""**No longer used.** This parameter is no longer used for Autonomous Database on dedicated Exadata infrasture. Specify a `cloudAutonomousVmClusterId` instead. Using this parameter will cause the operation to fail.""")
 @cli_util.option('--db-version', help=u"""The base version for the Autonomous Container Database.""")
@@ -2323,7 +2310,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'peer-autonomous-container-database-backup-config': {'module': 'database', 'class': 'PeerAutonomousContainerDatabaseBackupConfig'}, 'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'backup-config': {'module': 'database', 'class': 'AutonomousContainerDatabaseBackupConfig'}}, output_type={'module': 'database', 'class': 'AutonomousContainerDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, patch_model, db_unique_name, service_level_agreement_type, autonomous_exadata_infrastructure_id, db_version, peer_autonomous_exadata_infrastructure_id, peer_autonomous_container_database_display_name, protection_mode, fast_start_fail_over_lag_limit_in_seconds, is_automatic_failover_enabled, peer_cloud_autonomous_vm_cluster_id, peer_autonomous_vm_cluster_id, peer_autonomous_container_database_compartment_id, peer_autonomous_container_database_backup_config, peer_db_unique_name, autonomous_vm_cluster_id, cloud_autonomous_vm_cluster_id, compartment_id, maintenance_window_details, standby_maintenance_buffer_in_days, version_preference, freeform_tags, defined_tags, backup_config, kms_key_id, kms_key_version_id, vault_id, key_store_id):
+def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, patch_model, db_unique_name, db_name, service_level_agreement_type, autonomous_exadata_infrastructure_id, db_version, peer_autonomous_exadata_infrastructure_id, peer_autonomous_container_database_display_name, protection_mode, fast_start_fail_over_lag_limit_in_seconds, is_automatic_failover_enabled, peer_cloud_autonomous_vm_cluster_id, peer_autonomous_vm_cluster_id, peer_autonomous_container_database_compartment_id, peer_autonomous_container_database_backup_config, peer_db_unique_name, autonomous_vm_cluster_id, cloud_autonomous_vm_cluster_id, compartment_id, maintenance_window_details, standby_maintenance_buffer_in_days, version_preference, freeform_tags, defined_tags, backup_config, kms_key_id, kms_key_version_id, vault_id, key_store_id):
 
     kwargs = {}
 
@@ -2333,6 +2320,9 @@ def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wai
 
     if db_unique_name is not None:
         _details['dbUniqueName'] = db_unique_name
+
+    if db_name is not None:
+        _details['dbName'] = db_name
 
     if service_level_agreement_type is not None:
         _details['serviceLevelAgreementType'] = service_level_agreement_type
@@ -14942,7 +14932,7 @@ def list_db_servers(ctx, from_json, all_pages, page_size, compartment_id, exadat
     cli_util.render_response(result, ctx)
 
 
-@db_system_compute_performance_group.command(name=cli_util.override('db.list_db_system_compute_performances.command_name', 'list'), help=u"""Gets a list of expected compute performance parameters for a virtual machine DB system based on system configuration. \n[Command Reference](listDbSystemComputePerformances)""")
+@db_system_group.command(name=cli_util.override('db.list_db_system_compute_performances.command_name', 'list-db-system-compute-performances'), help=u"""Gets a list of expected compute performance parameters for a virtual machine DB system based on system configuration. \n[Command Reference](listDbSystemComputePerformances)""")
 @cli_util.option('--db-system-shape', help=u"""If provided, filters the results to the set of database versions which are supported for the given shape.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -15113,7 +15103,7 @@ def list_db_system_shapes(ctx, from_json, all_pages, page_size, compartment_id, 
     cli_util.render_response(result, ctx)
 
 
-@db_system_storage_performance_group.command(name=cli_util.override('db.list_db_system_storage_performances.command_name', 'list'), help=u"""Gets a list of possible expected storage performance parameters of a VMDB System based on Configuration. \n[Command Reference](listDbSystemStoragePerformances)""")
+@db_system_group.command(name=cli_util.override('db.list_db_system_storage_performances.command_name', 'list-db-system-storage-performances'), help=u"""Gets a list of possible expected storage performance parameters of a VMDB System based on Configuration. \n[Command Reference](listDbSystemStoragePerformances)""")
 @cli_util.option('--storage-management', required=True, type=custom_types.CliCaseInsensitiveChoice(["ASM", "LVM"]), help=u"""The DB system storage management option. Used to list database versions available for that storage manager. Valid values are `ASM` and `LVM`. * ASM specifies Oracle Automatic Storage Management * LVM specifies logical volume manager, sometimes called logical disk manager.""")
 @cli_util.option('--shape-type', help=u"""Optional. Filters the performance results by shape type.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")

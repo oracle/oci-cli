@@ -191,7 +191,7 @@ def list_groups_for_user(ctx, from_json, compartment_id, user_id, page, limit, a
 @identity_cli.group_group.command(name='list-users', help="""Lists the users in the specified group. You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
 @cli_util.option('--compartment-id', required=True,
                  help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
-@cli_util.option('--group-id', required=True, help="""The OCID of the user.""")
+@cli_util.option('--group-id', required=True, help="""The OCID of the group.""")
 @cli_util.option('--page',
                  help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
