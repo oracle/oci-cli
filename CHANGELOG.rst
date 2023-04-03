@@ -6,6 +6,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.25.1 - 2023-04-04
+--------------------
+
+Added
+~~~~~
+* Support for a new optional parameter to HTTP healthchecks for HTTPS backendsets in the Load Balancer service
+
+  * ``oci lb health-checker update --is-force-plain-text``
+
 3.25.0 - 2023-03-28
 --------------------
 
