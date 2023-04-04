@@ -1993,7 +1993,7 @@ Changes in Shape will result in a downtime as the MySQL DB System is migrated to
 @cli_util.option('--admin-password', help=u"""The password for the administrative user. The password must be between 8 and 32 characters long, and must contain at least 1 numeric character, 1 lowercase character, 1 uppercase character, and 1 special (nonalphanumeric) character.""")
 @cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""Expands the DB System's storage to the specified value. Only supports values larger than the current DB System's storage size.
 
-DB Systems with initial storage of 400 GB or less can be expanded up to 32 TB. DB Systems with initial storage larger than 400 GB can be expanded up to 64 TB.
+DB Systems with an initial storage size of 400 GB or less can be expanded up to 32 TB. DB Systems with an initial storage size between 401-800 GB can be expanded up to 64 TB. DB Systems with an initial storage size between 801-1200 GB can be expanded up to 96 TB. DB Systems with an initial storage size of 1201 GB or more can be expanded up to 128 TB.
 
 It is not possible to decrease data storage size.""")
 @cli_util.option('--hostname-label', help=u"""The hostname for the primary endpoint of the DB System. Used for DNS. The value is the hostname portion of the primary private IP's fully qualified domain name (FQDN) (for example, \"dbsystem-1\" in FQDN \"dbsystem-1.subnet123.vcn1.oraclevcn.com\"). Must be unique across all VNICs in the subnet and comply with RFC 952 and RFC 1123.""")

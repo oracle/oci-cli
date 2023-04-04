@@ -3215,6 +3215,13 @@ Example: `example_backend_set`""")
 @cli_util.option('--url-path', help=u"""The path against which to run the health check.
 
 Example: `/healthcheck`""")
+@cli_util.option('--is-force-plain-text', type=click.BOOL, help=u"""Specifies if health checks should always be done using plain text instead of depending on whether or not the associated backend set is using SSL.
+
+If \"true\", health checks will be done using plain text even if the associated backend set is configured to use SSL.
+
+If \"false\", health checks will be done using SSL encryption if the associated backend set is configured to use SSL. If the backend set is not so configured the health checks will be done using plain text.
+
+Example: `true`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
 
 For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
@@ -3230,7 +3237,7 @@ Example: `example-etag`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def update_health_checker(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, protocol, port, return_code, retries, timeout_in_millis, interval_in_millis, response_body_regex, load_balancer_id, backend_set_name, url_path, if_match):
+def update_health_checker(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, protocol, port, return_code, retries, timeout_in_millis, interval_in_millis, response_body_regex, load_balancer_id, backend_set_name, url_path, is_force_plain_text, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -3254,6 +3261,9 @@ def update_health_checker(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
     if url_path is not None:
         _details['urlPath'] = url_path
+
+    if is_force_plain_text is not None:
+        _details['isForcePlainText'] = is_force_plain_text
 
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.update_health_checker(
