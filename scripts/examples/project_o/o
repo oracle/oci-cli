@@ -17,11 +17,12 @@ import json
 import getopt
 import sys
 import os
-import fcntl
+if (sys.platform != "win32"):
+    import fcntl
 import errno
 import datetime
-VERSION = "1.5"
-UPDATED = "2023-02-28"
+VERSION = "1.6"
+UPDATED = "2023-04-05"
 
 # ==============================================================================
 # Global variables
@@ -34,8 +35,7 @@ command = []             # commands with required and optional params
 show_help = False        # user asked for help
 go = False               # execute the oci cli command
 nogo = False             # don't execute due to error in ocid substitutions
-quiet = False            # quiet mode - don't show expanded command or headers
-Quiet = False            # Quieter mode - don't show matching commands
+quiet = 0                # quiet mode - 1: don't show command; 2: don't show headers
 debug = False            # Debug output
 region = ''              # region
 region_code = ''         # 3-letter region code
@@ -91,16 +91,25 @@ def usage(s=''):
       <oci-options>    Options and parameters for <oci-command>
                        These will be expanded into a more correct oci command
 
-      . or go          Run the oci command if the line ends with "." (or "go")
+      . or go          Run the oci command if the line ends with "." (or "go")""")
 
-      o help           More "o" options.  Use "--help ." to get oci help""")
-
-    if s == "help":
+    if s != "help":
         print("""
+      o help           More "o" options.  Use "--help ." to get oci help""")
+    else:
+        print("""
+    More output options:
+      o -o shap.ocpus       Show matching sub-field, e.g. shape-config.ocpus
+      o -o +route#dns-label Add fields default output
+      o -o +shap.ocpus      Append fields to default output
+      o -o +/               Keep default fields, change format to Text
+      o -o created:10.10    Show first 10 characters of time-created
+      o -o id:-10.10        Show last 10 characters of OCID
+
     More "o" options:
-         -q            Suppress headers, non-"data" results from output
+         -q            Suppress display of "oci" command line
+         -qq           Also suppress headers and non-"data" results from output
                        Useful when piping results other commands
-         -Q            Suppress display of "oci" command line
 
       o oci_commands   Build (or rebuild) the $HOME/.oci/oci_commands file
 
@@ -232,8 +241,8 @@ def get_from_oci_config(key):
                     this_profile = m.group(1)
 
                 if this_profile in ('DEFAULT', profile):
-                    m = re.search(key, line)
-                    if m:
+                    m = re.search(r'[^#]*' + key, line)
+                    if m and not line.startswith('#'):
                         value = line.split('=')[1].strip()
                         if this_profile == profile:
                             return value
@@ -342,13 +351,14 @@ def ocids_file(action, new_ocids={}):
         return
 
     tries = 1
-    while tries <= 10:
+    while tries <= 50:
         try:
             if os.path.exists(ocids_file_name):
                 os.umask(0o077)
                 f = open(ocids_file_name, 'r+')
                 if new_ocids:
-                    fcntl.flock(f, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                    if (sys.platform != "win32"):
+                        fcntl.flock(f, fcntl.LOCK_EX | fcntl.LOCK_NB)
                 if new_ocids or action == 'read':
                     ocids = json.load(f)
                     # Convert list of ocids into dict of ocids.
@@ -387,20 +397,20 @@ def ocids_file(action, new_ocids={}):
             return
 
         except IOError as e:
+            # ocids file locked for writes - take short nap and try to write again
             if e.errno != errno.EAGAIN:
                 print(bold(ocids_file_name + ': not accessible'), file=sys.stderr)
             f.close()
-            time.sleep(0.05 * 2**tries)
+            msec = (int.from_bytes(os.urandom(4)) % 200 + 5) * tries
+            time.sleep(msec / 1000.)
             tries += 1
         except ValueError:
-            # Try again
-            print(bold(ocids_file_name + ': JSON error on read - retry #' + str(tries)),
-                  file=sys.stderr)
+            # ocids file corrupt (write in progress?) - sleep and try to read again
             f.close()
             time.sleep(0.05 * tries)
             tries += 1
 
-    if tries >= 10:
+    if tries >= 50:
         print(bold(ocids_file_name + ':  ' + action + ' failed'), file=sys.stderr)
 
     return
@@ -427,12 +437,9 @@ def get_new_ocids_from_returned_items(items):
             if 'identifier' in i and 'id' not in i:
                 i['id'] = i['identifier']
 
-    #if not items or 'id' not in items[0]:
-    #    return {}
-
     collected = {}
     try:
-        for item in [ i for i in items if 'id' in i]:
+        for item in [i for i in items if 'id' in i]:
             type = item['id'].split('.')[1] if '.' in item['id'] else ''
             # Special case: save AD-name:n because commands use name, not ocid
             ID = item['id']
@@ -575,7 +582,7 @@ def args_match_command(c, params):
             continue
 
         # look for word starting with arg
-        if ' ' + a in action:
+        if ' ' + a in action or '-' + a in action:
             # Scratch out this match
             action = re.sub(' ' + a + r'\S+', ' ', action, count=1)
             continue
@@ -805,9 +812,9 @@ def datetime_parameter(dt):
 # ==============================================================================
 
 
-def get_region():
+def get_region(r=''):
     """Determine the region in this order of precedence:
-        --region on cmd line
+        r passed in - from command line
         OCI_CLI_REGION in env
         --profile on cmd line
         OCI_CLI_PROFILE in env
@@ -817,11 +824,7 @@ def get_region():
     if 'regionlist' not in ocid:
         return '', ''
 
-    r = ''
-    if '--region ' in oci_command_line:
-        ocl = oci_command_line.split()
-        r = ocl[ocl.index('--region') + 1]
-    elif os.getenv('OCI_CLI_REGION'):
+    if not r:
         r = os.getenv('OCI_CLI_REGION')
 
     # If region not set, get it from config file
@@ -879,6 +882,8 @@ def get_matching_ocid(option, value):
             opt_type = 'localpeeringgateway'
         elif opt_type == 'peer' and 'remote' in oci_command_line:
             opt_type = 'remotepeeringconnection'
+        elif opt_type == 'organization':
+            opt_type = 'organizationsentity'
         # Add new idtypes to the above when the --whatever-id does not match ocid1.whatevs...
 
     matches = [item for k, item in ocid.items() if
@@ -1068,14 +1073,13 @@ def get_fields_from(spec, keynames):
                                  and (sf[-1].lower() in kf[-1].lower())
                                  and (sf[-2].lower() in kf[-2].lower())))):
                     fields.append(k)
-                    column[k] = {'format': fmt, 'offset': 0, 'minwidth': len(s)}
+                    column[k] = {'format': fmt, 'offset': 0, 'minwidth': len(kf[-1])}
                     if debug: print('{:>30.30}'.format(s), '->', k)    # noqa: E701
 
     if len(fields) == 0:
         if user_out_spec != default_out_spec:
             print(bold("no matching output fields: " + spec), file=sys.stderr)
         return get_fields_from("/", keynames)
-    # if debug: print("COLUMN:", column)     # noqa: E701
     return fields, sep
 
 # ==============================================================================
@@ -1088,16 +1092,18 @@ def set_column_widths(fields, out_sep, item_list):
             maxwidth = max([len(str(f[k])) for f in item_list])
         else:
             maxwidth = 3
-            for f in item_list:
-                if k in f:
-                    width = len(str(f[k]))
-                    if k != 'id' and str(f[k]) in ocid:
-                        width = len(ocid[f[k]]['alias'])
+            for i in item_list:
+                if k in i:
+                    width = len(str(i[k]))
+                    if k != 'id' and str(i[k]) in ocid:
+                        width = len(ocid[i[k]]['alias'])
+                    maxwidth = max([maxwidth, width])
+                else:
+                    width = len(get_field_from_item(k, i))
                     maxwidth = max([maxwidth, width])
         maxwidth = max([maxwidth, column[k]['minwidth']])
         column[k]['maxwidth'] = maxwidth
 
-        # if {:.<prec>} with no width, set width to min(maxwidth, <prec>)
         m = re.search(r':[<^>]*\.(\d+)', column[k]['format'])
         if m:
             n = min(maxwidth, int(m.group(1)))
@@ -1121,12 +1127,14 @@ def set_column_widths(fields, out_sep, item_list):
 
 
 def show_column_headers(out_fields, sep):
-    if quiet:
+    if quiet > 1:
         return
     if sep == '|':
         for k in out_fields:
             # print(bold(column[k]['format'].format(k)), end=' ', file=sys.stderr)
             try:
+                if k == 'id' and user_out_spec == default_out_spec:
+                    print(bold(' reg'), end=' ', file=sys.stderr)
                 print(bold(column[k]['format'].format(k.split(".")[-1])),
                       end=' ', file=sys.stderr)
             except ValueError:
@@ -1158,30 +1166,38 @@ def jdump_item(item, indent=2):
 # ==============================================================================
 
 
+def get_field_from_item(field, item):
+    """field contains "." - need to look for sub-fields"""
+    value = ''
+    if '.' not in field:
+        if field in item:
+            value = str(item[field])
+    else:
+        f = field.split('.')
+        if f[-1] in item[f[0]]:
+            value = jdump_item(item[f[0]][f[1]])
+        else:
+            if type(item[f[0]]) is list and len(item[f[0]]) > 0:
+                subitem = item[f[0]]
+            else:
+                subitem = item[f[0]][f[1]] if f[1] in item[f[0]] else None
+            if type(subitem) is dict and f[-1] in subitem:
+                value = jdump_item(subitem[f[-1]])
+            if type(subitem) is list and f[-1] in subitem[0]:
+                s = ['    ' + v[f[-1]] for v in subitem if f[-1] in v]
+                value = jdump_item(s)
+    return(value.strip())
+
+# ==============================================================================
+
+
 def show_item(item, fields, sep):
     """Report result in user specified -o format."""
 
     out = []
     for field in fields:
         value = ''
-        if field in item:
-            value = str(item[field])
-        else:
-            # field contains "." - need to look deeper
-            f = field.split('.')
-            if len(f) > 1:
-                if f[-1] in item[f[0]]:
-                    value = jdump_item(item[f[0]][f[1]])
-                else:
-                    if type(item[f[0]]) is list:
-                        subitem = jdump_item(item[f[0]])
-                    else:
-                        subitem = item[f[0]][f[1]] if f[1] in item[f[0]] else None
-                    if type(subitem) is dict and f[-1] in subitem:
-                        value = jdump_item(subitem[f[-1]])
-                    if type(subitem) is list and f[-1] in subitem[0]:
-                        s = ['    ' + v[f[-1]] for v in subitem if f[-1] in v]
-                        value = jdump_item(s)
+        value = get_field_from_item(field, item)
 
         if field not in ('id', 'identifier') and value in ocid and not ocids_in_output:
             value = ocid[value]['alias']
@@ -1194,28 +1210,34 @@ def show_item(item, fields, sep):
             else:
                 out.append(value)
         else:
+            if field == 'id' and sep == '|' and user_out_spec == default_out_spec:
+                out.append(' ' + value.split('.')[3])
             out.append(column[field]['format'].format(re.sub(r'[{}\'[\]\n]', '', value)[
                        column[field]['offset']:]))
 
     # one field per line
     if sep == '/':
-        indent = '   ' + ' ' * maxkeylen
+        indent = ''
+        if quiet < 2:
+            indent = '   ' + ' ' * maxkeylen
         for k, value in zip(fields, out):
+            if quiet < 2:
+                print(column['keyfmt'].format(k) + '  ', end='')
+            value = re.sub(r'^ +', '', value)
             # Wrap long lines
             if k == 'access-uri':
-                print(column['keyfmt'].format(k) + '  ' + value)
+                print(value)
             elif '\n' in value:
-                value = re.sub(r'\n ', '\n' + ' ' * (maxkeylen + 3), value)
+                value = re.sub(r'\n ', '\n' + indent, value)
                 value = re.sub(r'$\n', '', value)
                 value = re.sub(r'^  ', '', re.sub('\n  ', '\n', value))
-                print(column['keyfmt'].format(k) + '  ' + value)
+                print(value)
             else:
-                print(column['keyfmt'].format(k) + '  '
-                      + textwrap.fill(value,
-                                      subsequent_indent=indent,
-                                      break_on_hyphens=True,
-                                      break_long_words=True,
-                                      width=wrap - maxkeylen - 3))
+                print(textwrap.fill(value,
+                                    subsequent_indent=indent,
+                                    break_on_hyphens=True,
+                                    break_long_words=True,
+                                    width=wrap - maxkeylen - 3))
         if len(fields) > 1:
             print('')
 
@@ -1319,6 +1341,7 @@ def output(jsonOut):
         if debug: print("USER_SPEC:", user_out_spec)     # noqa: E701
         if debug: print("OUT_FIELDS:", out_fields)       # noqa: E701
         set_column_widths(out_fields, out_sep, results)
+        if debug > 1: print("COLUMN:", column)             # noqa: E701
         # Then output header and requested fields from item_list
         show_column_headers(out_fields, out_sep)
         for item in results:
@@ -1336,7 +1359,7 @@ def output(jsonOut):
                                 "alias": "opc-next-page",
                                 "name": "opc-next-page",
                                 "id": jsonOut[k]})
-                s = '--page' if k == 'opc-next-page' else '--start';
+                s = '--page' if k == 'opc-next-page' else '--start'
                 nondata += 'For next page:  ' + s + ' next\n'
             elif not quiet and k != 'data' and jsonOut[k]:
                 nondata += kfmt.format(k) + '  '
@@ -1831,7 +1854,8 @@ def get_oci_commands(argv):
 # MAIN PROGRAM STARTS HERE - choose map, prune, ocids, oci_commands or "o" main
 # ==============================================================================
 signal.signal(signal.SIGINT, interrupted)
-signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+if (sys.platform != "win32"):
+    signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
 if len(sys.argv) > 1 and sys.argv[1] == 'map':
     omap(sys.argv[2:])
@@ -1855,14 +1879,13 @@ ocids_file('read')
 # Process 'o' options: -o 'output keys' ...  help go
 # ==============================================================================
 try:
-    optvals, CLI_params = getopt.getopt(sys.argv[1:], 'Di:Oo:Qqw:')
+    optvals, CLI_params = getopt.getopt(sys.argv[1:], 'Di:Oo:qw:')
 except getopt.error as err:
     usage(str(err))
 
 opts = [o for o, v in optvals]
-quiet = '-q' in opts
-Quiet = '-Q' in opts
-debug = '-D' in opts
+quiet = sum(1 for o in opts if o == '-q')
+debug = sum(1 for o in opts if o == '-D')
 if '-w' in opts:
     wrap = int([int(v) for o, v in optvals if o == '-w'][0])
 if '-O' in opts:
@@ -1896,6 +1919,11 @@ if '-o' in opts:
             user_out_spec = re.sub(r'#', sep, default_out_spec) + sep + spec
 else:
     user_out_spec = default_out_spec
+
+# if -o specified but no command and no -i, get input from .oci/.otmp
+
+if len(CLI_params) == 0 and '-o' in opts and 'user_in_spec' not in locals():
+    user_in_spec = os.path.expanduser('~/.oci/.otmp')
 
 if 'user_in_spec' in locals():
     try:
@@ -1953,7 +1981,7 @@ if len(matches) == 0:
           + '\n\nTry:  o .')
 
 # If many matches, list matches and exit
-elif len(matches) > 16:
+elif len(matches) > 16 and ('db' not in CLI_params):
     print(bold('Possible commands:'))
     for c in matches:
         show_command(c, prefix='    ')
@@ -1968,7 +1996,7 @@ elif show_help:
     exit(0)
 
 # Fewer than 16 matches. Didn't ask for help.
-elif not go and not Quiet:
+elif not go and quiet < 1:
     if len(matches) > 1:
         if options_in_args:
             print(bold(str(len(matches)) + ' other matching commands not shown.'
@@ -1986,7 +2014,7 @@ elif not go and not Quiet:
 # Continue interpreting additional parameters (even if no 'go')
 # ==============================================================================
 c = matches[best_match]
-oci_command_line = 'oci ' + c['action']
+oci_command_line = 'oci ' + c['action'] + ' '
 
 if c['action'] in ('audit event list', 'logging-search search-logs') and \
         user_out_spec == default_out_spec:
@@ -1997,21 +2025,22 @@ remaining_options = all_options_for_this_cmd
 while CLI_params and CLI_params[0][0] != '-':
     CLI_params.pop(0)
 
-# Determine the target region for this command, so that we can filter
+# Determine the target region for this command up front, so that we can filter
 # ocids by region.  See if region or profile is on command line...
-for i in range(len(CLI_params)):
+for i in reversed(range(len(CLI_params))):
     a = CLI_params[i]
     if len(a) == 0 or not a.startswith('-'):
         continue
-    if option_parameter(a) == '--region':
-        oci_command_line += ' --region ' + CLI_params[i + 1]
-        break
-    if option_parameter(a) == '--profile':
-        oci_command_line += ' --profile ' + CLI_params[i + 1]
-region_code, region = get_region()
+    if option_parameter(a) in ('--region', '--profile'):
+        options_out.append(option_parameter(a))
+        if option_parameter(a) == '--region':
+            region_code, region = get_region(CLI_params[i + 1])
+            options_out.append(region)
+        else:
+            options_out.append(CLI_params[i + 1])
+        del CLI_params[i:i + 2]
 
 # Interpret remaining command line arguments based on command:
-rn = None
 last_option = ''
 for a in CLI_params:
     if len(a) == 0:
@@ -2024,8 +2053,6 @@ for a in CLI_params:
                                    + r'(\[[A-Za-z0-9-_|\]]* )',
                                    '', remaining_options)
     else:
-        if last_option == '--region':
-            rn = len(options_out)
         options_out.append(value_parameter(last_option, a))
 
 # if orphans found while processing parameters, remove them from ocids file
@@ -2034,14 +2061,9 @@ if orphans:
 
 for o in options_out:
     if o.startswith('-') and o != '-':
-        oci_command_line += '\\\n   '
+        if (sys.platform != "win32"):
+            oci_command_line += '\\\n   '
     oci_command_line += shell_escape(o) + ' '
-
-# if region is different from what was on command line, fix command line
-if rn and region and options_out[rn] != region:
-    oci_command_line = re.sub('--region ' + options_out[rn],
-                              '--region ' + region, oci_command_line)
-    options_out[rn] = region
 
 # ==============================================================================
 # Display the full oci cli command with expanded options
@@ -2080,18 +2102,20 @@ except subprocess.SubprocessError as err:
     print('ERROR:', err)
     exit(1)
 
-flags = fcntl.fcntl(cli.stdout, fcntl.F_GETFL)
-fcntl.fcntl(cli.stdout, fcntl.F_SETFL, flags | os.O_NONBLOCK)
-flags = fcntl.fcntl(cli.stderr, fcntl.F_GETFL)
-fcntl.fcntl(cli.stderr, fcntl.F_SETFL, flags | os.O_NONBLOCK)
+if (sys.platform != "win32"):
+    flags = fcntl.fcntl(cli.stdout, fcntl.F_GETFL)
+    fcntl.fcntl(cli.stdout, fcntl.F_SETFL, flags | os.O_NONBLOCK)
+    flags = fcntl.fcntl(cli.stderr, fcntl.F_GETFL)
+    fcntl.fcntl(cli.stderr, fcntl.F_SETFL, flags | os.O_NONBLOCK)
 
 # Read output from cli - show non-JSON on stdout
 JSONstdout = ''
 while True:
-    stderr = cli.stderr.readline()
-    returncode = cli.poll()
-    if stderr:
-        print(bold(stderr), end='', flush=True)
+    if (sys.platform != "win32"):
+        stderr = cli.stderr.readline()
+        returncode = cli.poll()
+        if stderr:
+            print(bold(stderr), end='', flush=True)
 
     stdout = cli.stdout.readline()
     returncode = cli.poll()
@@ -2117,6 +2141,15 @@ except ValueError:
     if stderr is not None:
         error_out(stderr)
     exit(1)
+
+tmpfile = os.path.expanduser('~/.oci/.otmp')
+if os.path.isfile(tmpfile):
+    try:
+        os.umask(0o077)
+        with open(tmpfile, 'w+') as f:
+            f.write(JSONstdout)
+    except IOError:
+        pass
 
 results = output(jsonOut)
 if results == 1:

@@ -147,3 +147,43 @@ datasafe_cli.target_database_group.commands.pop(datasafe_cli.update_target_datab
 
 # Remove update-target-database-private-endpoint from oci data-safe target-database
 datasafe_cli.target_database_group.commands.pop(datasafe_cli.update_target_database_private_endpoint.name)
+
+
+# oci data-safe masking-schema-collection list-masking-schemas -> oci data-safe masking-schema-collection list
+cli_util.rename_command(datasafe_cli, datasafe_cli.masking_schema_collection_group, datasafe_cli.list_masking_schemas, "list")
+
+
+# oci data-safe masking-object-collection list-masking-objects -> oci data-safe masking-object-collection list
+cli_util.rename_command(datasafe_cli, datasafe_cli.masking_object_collection_group, datasafe_cli.list_masking_objects, "list")
+
+
+# oci data-safe sensitive-schema-collection list-sensitive-schemas -> oci data-safe sensitive-schema-collection list
+cli_util.rename_command(datasafe_cli, datasafe_cli.sensitive_schema_collection_group, datasafe_cli.list_sensitive_schemas, "list")
+
+
+# oci data-safe sensitive-object-collection list-sensitive-objects -> oci data-safe sensitive-object-collection list
+cli_util.rename_command(datasafe_cli, datasafe_cli.sensitive_object_collection_group, datasafe_cli.list_sensitive_objects, "list")
+
+
+# oci data-safe masking-schema-collection -> oci data-safe masking-schema
+cli_util.rename_command(datasafe_cli, datasafe_cli.data_safe_root_group, datasafe_cli.masking_schema_collection_group, "masking-schema")
+
+
+# oci data-safe masking-object-collection -> oci data-safe masking-object
+cli_util.rename_command(datasafe_cli, datasafe_cli.data_safe_root_group, datasafe_cli.masking_object_collection_group, "masking-object")
+
+
+# oci data-safe sensitive-schema-collection -> oci data-safe sensitive-schema
+cli_util.rename_command(datasafe_cli, datasafe_cli.data_safe_root_group, datasafe_cli.sensitive_schema_collection_group, "sensitive-schema")
+
+
+# oci data-safe sensitive-object-collection -> oci data-safe sensitive-object
+cli_util.rename_command(datasafe_cli, datasafe_cli.data_safe_root_group, datasafe_cli.sensitive_object_collection_group, "sensitive-object")
+
+
+# oci data-safe audit-policy-analytic-collection list-audit-policy-analytics -> oci data-safe audit-policy-analytic-collection list
+cli_util.rename_command(datasafe_cli, datasafe_cli.audit_policy_analytic_collection_group, datasafe_cli.list_audit_policy_analytics, "list")
+
+
+# oci data-safe audit-policy-analytic-collection -> oci data-safe audit-policy-analytics
+cli_util.rename_command(datasafe_cli, datasafe_cli.data_safe_root_group, datasafe_cli.audit_policy_analytic_collection_group, "audit-policy-analytics")

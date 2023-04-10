@@ -95,6 +95,14 @@ DEFAULT_OPTIONAL_FEATURES = ''  # Default is to not install any optional feature
 
 DEFAULT_DEPENDENCY_DIR = 'cli-deps'
 
+ANNOUNCEMENT_MESSAGE = "Announcement\n" \
+                       "============\n" \
+                       "\033[1m1. Interactive mode now available in CLI\033[0;0m\n" \
+                       "Have you tried the new interactive features in OCI CLI yet? You can get started by typing `oci -i`.\n" \
+                       "Learn more by watching our informative video on YouTube -> https://www.youtube.com/watch?v=lX29Xw1Te54&ab_channel=OracleLearning\n" \
+                       "Also see https://docs.oracle.com/iaas/Content/API/SDKDocs/cliusing_topic-Using_Interactive_Mode.htm\n" \
+                       "============"
+
 
 class CLIInstallError(Exception):
     pass
@@ -735,7 +743,8 @@ def main():
 
     shutil.rmtree(tmp_dir)
     print_status("Installation successful.")
-    print_status("Run the CLI with {} --help".format(oci_exec_path))
+    print('\n' + ANNOUNCEMENT_MESSAGE)
+    print_status("Run the CLI with {} --help".format(oci_exec_path), True)
 
 
 if __name__ == '__main__':
