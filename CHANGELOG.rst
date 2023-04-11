@@ -6,6 +6,80 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.25.2 - 2023-04-11
+--------------------
+
+Added
+~~~~~
+
+* Support for rotation of certificate of ORDS service on Autonomous VM Clusters on Exadata Cloud in the Database service.
+
+  * ``oci db autonomous-vm-cluster rotate-autonomous-vm-cluster-ords-certs``
+  * ``oci db autonomous-vm-cluster rotate-autonomous-vm-cluster-ssl-certs``
+
+* Support for Application Virtual IP (VIP) features in the Database Service
+
+  * ``oci db application-vip create``
+  * ``oci db application-vip delete``
+  * ``oci db application-vip get``
+  * ``oci db application-vip list``
+
+* Support for ADDM Spotlight for databases enabled in the Operations Insights service
+
+  * ``oci opsi database-insights ingest-addm-reports``
+  * ``oci opsi database-insights list-addm-db-finding-categories``
+  * ``oci opsi database-insights list-addm-db-findings-time-series``
+  * ``oci opsi database-insights list-addm-db-parameter-categories``
+  * ``oci opsi database-insights list-addm-db-recommendation-categories``
+  * ``oci opsi database-insights list-addm-db-recommendations-time-series``
+  * ``oci opsi database-insights list-addm-dbs``
+  * ``oci opsi database-insights summarize-addm-db-findings``
+  * ``oci opsi database-insights summarize-addm-db-parameter-changes``
+  * ``oci opsi database-insights summarize-addm-db-parameters``
+  * ``oci opsi database-insights summarize-addm-db-recommendations``
+  * ``oci opsi database-insights summarize-addm-db-schema-objects``
+  * ``oci opsi database-insights summarize-addm-db-sql-statements``
+
+* Data Safe service
+
+  * Support for new command to list aggregated audit policy details on target databases
+
+    * ``oci data-safe audit-policy-analytics list``
+
+  * Support for new commands for data masking
+
+    * ``oci data-safe difference-column get``
+    * ``oci data-safe masking-object list``
+    * ``oci data-safe masking-policy apply-sdm-masking-policy-difference``
+    * ``oci data-safe masking-schema list``
+    * ``oci data-safe sdm-masking-policy-difference``
+
+  * Support for new commands for data discovery
+
+    * ``oci data-safe sensitive-object list``
+    * ``oci data-safe sensitive-schema list``
+
+  * Support for new commands to list user profiles and analytics
+
+    * ``oci data-safe user-assessment get-profile``
+    * ``oci data-safe profile list-profile-analytics``
+    * ``oci data-safe user-assessment list-profile-summaries``
+
+  * Support for new optional parameters
+
+    * ``oci data-safe masking-policy mask-data --is-drop-temp-tables-enabled --is-redo-logging-enabled --is-refresh-stats-enabled --parallel-degree --recompile``
+    * ``oci data-safe security-assessment list-findings --references``
+    * ``oci data-safe sensitive-column list --is-case-in-sensitive``
+
+
+Changed
+~~~~~~~
+* Required parameter --display-name is now optional for below commands in the Data Safe service
+
+  * ``oci data-safe private-endpoint update --display-name``
+  * ``oci data-safe user-assessment list-users --user-profile --user-role --user-type``
+
+
 3.25.1 - 2023-04-04
 --------------------
 

@@ -63,7 +63,7 @@ class TestDataSafeCliChanges(unittest.TestCase):
         result = util.invoke_command(['data-safe', 'data-safe-private-endpoint'])
         assert 'Error: No such command ' in result.output
         result = util.invoke_command(['data-safe', 'private-endpoint', 'update'])
-        assert 'Missing option(s) --display-name, --private-endpoint-id.' in result.output
+        assert 'Error: Missing option(s) --private-endpoint-id' in result.output
 
     # Test 6 :
     # From: oci data-safe enable-data-safe-configuration-details enable-data-safe-configuration --compartment-id | -c, --defined-tags, --force, --freeform-tags, -? | -h | --help, --is-enabled

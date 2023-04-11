@@ -1,67 +1,56 @@
 # o - a smart oci-cli wrapper
-**`O`** accelerates your use the Oracle Cloud Infrastructure's `oci` command line interface.  With **`o`** you can
- - quickly find the right command
- - get concise usage help
- - build the `oci` command using *resource names*, not OCIDs
- - get easy-to-read output in multiple formats
- - use shortcuts for *all* commands, parameters, resource names - no need to predefine aliases!
+**`o`** helps you use the Oracle Cloud Infrastructure's `oci` command line interface.  With **`o`** you can
+ - quickly find a command and get usage info
+ - simply run commands using *resource names*, not OCIDs
+ - easily get the output you want
 
-With **`o`**  you can run most ``oci`` commands with no scripting. You no longer have to save OCIDs to variables in order to build a command.
+**`o`** uses shortcuts for *everything*.  All commands, parameters, and resource names have intuitive, *automatic* shortcuts.
+You can run most commands with no scripting. Say goodbye to saving OCIDs to variables.
 
-Through clever substitution, **``o``** instantly transforms this
+**``O``** instantly transforms this:
 ```
 $ o list subn -c sales -v west -a
 ```
-into this ready-to-run ``oci`` command
+into this ready-to-run ``oci`` command:
 ```
 $ oci network subnet list \
    --compartment-id ocid1.compartment.oc1..aaaaaaaaid7ybnzph4hmx46tohdg6cnclyc343hkevcosxwcsmycxamcujfa \
    --vcn-id ocid1.vcn.oc1.iad.aaaaaaaaxlfwxbld5nvhzgkot7p5dj52qv52lesn3kevcocemubg5uy6pj5q
    --all
 ```
-**``o``** works similar magic on output.  Where ``oci``'s JSON output often spews hundreds of lines like this
+**``o``** works similar magic with output.  Where ``oci``'s JSON output is suitable for computers, **`o`** output is designed for humans:
 ```
-{
-  "data": [
-    {
-      "availability-domain": "VLKn:US-ASHBURN-AD-3",
-      "cidr-block": "10.0.2.0/24",
-      "compartment-id": "ocid1.compartment.oc1..aaaaaaaaid7ybnzph4hmx46tohdg6cnclyc343kevcossxwcsmycxamcujfa",
-      "defined-tags": {},
-      "dhcp-options-id": "ocid1.dhcpoptions.oc1.iad.aaaaaaaar7wdbqmpxs4d7aj3lih7bs2a5bwkevco7ngxbmr7thwzcntpw6ta",
-      "display-name": "Public Subnet VLKn:US-ASHBURN-AD-3",
-      "dns-label": "sub01281626512",
-      "freeform-tags": {},
-      "id": "ocid1.subnet.oc1.iad.aaaaaaaadomh23d27sli42hhrb2jo3hzock2l5u4kevconnlpdt5h2ocwn7a",
-      "lifecycle-state": "AVAILABLE",
-...
-```
-with **``o``** you get this
-```
-$ o -o display#life#cidr-block#compartment list subn -c sales -v west go
+$ o -o name#shape#shape-conf.ocpus#state list comp inst -c kevco.
 
-display-name                       lifecycle cidr-block  compartment-id
-Public Subnet VLKn:US-ASHBURN-AD-3 AVAILABLE 10.0.2.0/24 sales
-Public Subnet VLKn:US-ASHBURN-AD-2 AVAILABLE 10.0.1.0/24 sales
-Public Subnet VLKn:US-ASHBURN-AD-1 AVAILABLE 10.0.0.0/24 sales
+display-name shape               ocpus lifecycle-state
+atos         VM.Standard.E4.Flex 1.0   STOPPED
+cron         VM.Standard.A1.Flex 1.0   RUNNING
+zara         VM.Standard2.4      4.0   RUNNING
+humans       VM.Standard2.1      1.0   STOPPED
+robotics     VM.Standard.E2.1    1.0   RUNNING
 ```
-**``o``** default output is a table of commonly useful fields, but **``o``** makes it easy to pick just what you want (as seen in the above example).
+**``o``** picks just what you want from the output.
 
+<a name="install"></a>
 ## Installation
 
-**Pre-reqs:** **``o``** works in Linux, Mac, WSL and CloudShell. `oci` must installed and configured. `o` does not replace `oci`, but it *uses* `oci`.  See [Requirements](#requirements) below for more details.
+**Important:** `oci` must *installed* and *configured*.  `o` does not replace `oci`, but helps you *use* `oci`.
 
-**``o``** is a single file. To install, get **``o``** from github, place it in your PATH (probably in the same place as ``oci``), and make it executable.  Use these commands to download ``o`` and install it next to ``oci``.
-<a name="install"></a>
+To install, get **``o``** from github, place it in your PATH (perhaps in the same place as ``oci``), and make it executable.  Use these commands to download ``o`` and install it next to ``oci``.
 ```
 o_src=https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/examples/project_o/o
-where=$(which oci) && to=${where%ci} && wget -q $o_src -O $to && chmod a+x $to
+where=$(which oci) && to=${where%ci} && curl -so $to $o_src && chmod +x $to
 ```
+**`O`** version 1.6 runs in **Windows** PowerShell or Command shell, but installation not automated.  Get **`o`**
+```
+curl -o o.py https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/examples/project_o/o
+```
+
 #### Setup
 
-When you first run `o` it will tell you run `o oci_commands` to create the commands file *$HOME/.oci/oci_commands*.  This collects a list of all possible `oci` commands with usage details.
+When you first run `o` it will tell you run `o oci_commands` to create the commands file *$HOME/.oci/oci_commands*.  This collects a list of all possible `oci` commands with usage details.  This should take about two minutes.  If it doesn't work (in Windows) or runs slowly (python 3.6), copy `oci_commands` from another source to *$HOME/.oci/oci_commands*.
 
-Then `o` asks you to run `o <tenancy_ocid>` to initialize your *$HOME/.oci/ocids*.  This seeds your *ocids* file with OCIDs of the compartments in your tenancy.
+Then `o` asks you to run `o <tenancy_ocid>` to initialize your *$HOME/.oci/ocids*.  This seeds your *ocids* file with OCIDs of the compartments in your tenancy.  If this doesn't work it probably means that your `oci` is not configured properly.
 
 #### Updates and maintenance
 
@@ -71,7 +60,9 @@ To install an `o` update, just re-run the two-line [installation command](#insta
 
 Update `oci` every few months (or more frequently to keep up with the latest service additions).  See [Upgrading the CLI](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliupgrading.htm).
 
-Run `o oci_commands` every couple of months to update *$HOME/.oci/oci_commands* with commands for the latest services added to OCI.
+After you update `oci`, also update *$HOME/.oci/oci_commands* with the latest commands and services:
+ - `rm $HOME/.oci/oci_commands`
+ - `o oci_commands`
 
 Keep using your existing *$HOME/.oci/ocids* file.  If, however, it becomes unusable (with old data) or you want a fresh start, simply remove it and create a new one:
  - `rm $HOME/.oci/ocids`
@@ -142,8 +133,7 @@ This will get a fresh list of all compartments in the tenancy, which is a great 
    - Example:  For table output with right-most 8 characters of `id`, 10 (or more) characters of `display-name`, and first 10 characters (no more than 10) of `time-created`
     - `o -o id:-.8#name:10#create:.10 comp inst list`
 
-<a name="newinversion"></a>
-#### New in version 1.5 (2023-02-28)
+#### New in version 1.5 (2023-02-27)
  - If you like the default output but want to add another field use `-o +field`:
    - Example: `o -o +subnet list-vnics -c sales`
  - If you like the default output fields, but want to change the format style, just add the separator:
@@ -151,6 +141,25 @@ This will get a fresh list of all compartments in the tenancy, which is a great 
       - change to CSV output: `o -o +, <command>`
       - change to "text" and add fields: `-o +/subnet list-vnics ...`
  - Show additional output fields (not in "data") to stderr, such as "etag" or os "prefixes".  Use `o -q` to hide this non-data.
+
+<a name="newinversion"></a>
+#### New in version 1.6 (2023-04-03)
+ - **o** runs on *Windows* PowerShell and Command shell. Not fully tested, but the basics appear to work.
+   - Download `o` and put it in your PATH:
+ ```
+ curl -o o.py https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/examples/project_o/o
+ ```
+   PATHEXT should contain `.PY` to allow execution of `o.py`
+   - oci_commands generation doesn’t work, so pull the file from another system and copy it to your `.oci\oci_commands`
+ - Output from the last command is saved to `.oci/.otmp` if `.oci/.otmp` exists
+   - re-format the output by running `o -o <format>` with no oci command or parameters
+   - `o -o/` is useful for seeing what fields are available in the data
+   - `o -oj` shows JSON output
+   - `o -o name#id:.10#...` - customize the format without needing to rerun the `oci` command
+   - to activate this feature, simply touch `$HOME/.oci/.otmp`
+ - Added “reg" column to identify region key in default table output
+   - This is not shown nor available in csv or text formats.
+   - Region isn't in the resource data for most data types. **o** is extracting it from the ocid
 
 ## How **``o``** works  
  - **``o``** compares your input with thousands of ``oci`` commands, and uses an fuzzy matching to find the command you want.
@@ -161,25 +170,24 @@ This will get a fresh list of all compartments in the tenancy, which is a great 
 
  - Options for **`o`** such as `-o field#list` must appear *before* the `<command>`  specification. `oci` options must appear *after* `<command>`.  While this ordering is not strictly required by `oci`, `o` uses this to determine which options are for `o` and which are for `oci`.
 
- - Add `go` or `.` to the end of the command and **``o``** will execute the ``oci`` command.
+ - Add `go` or `.` to the end of the command and **``o``** will execute the ``oci`` command.  Add `!` to force run (sometimes needed when `o` doesn't know the command is complete).
 
  - ``oci`` returns JSON data when you create, get, list, or update resources.  **``o``** captures resource names and Oracle Cloud IDs (OCIDs) and saves these to your *$HOME/.oci/ocids* file. **``o``** later uses this information to find resources by name, and to translate names to IDs.
 
- - **``o``** scans the JSON results from ``oci`` for key names that match or partially match any of your <nobr>``-o key/word/list``</nobr>.  The key words determine *what* presented, while the **``/``** separator character determines *how* they are presented.
+ - **``o``** scans the JSON data from ``oci`` for key names that match or partially match any of your <nobr>``-o key/word/list``</nobr>.  The key words determine *what* presented, while the **``/``** separator character determines *how* they are presented.
 
 ##  <a name="requirements"></a> Requirements
 
 You will need:
 
-- MacOS, Linux or WSL.
-- Python 3.6+.  If ``oci`` is installed, you have Python.  (`oci` works better with python 3.7+)
 - ``oci`` - The Oracle Cloud Infrastructure command line interface must be *installed and configured*.
-  - Try running ``oci os ns get`` to verify that it's working.
+  - Try running ``oci os ns get`` to verify that it's authenticating okay.
   - See https://docs.cloud.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm
   - You need sufficient permissions in your tenancy
     - **Authorization failed or requested resource not found** often means you connected to the cloud okay, but policies don't allow you to do what you tried to do.
     - Minimally you need permission to **inspect** resources in order for most commands to work.
 - ``oci`` must be in your PATH so that ``o`` can find it
+- Python 3.6+.  If ``oci`` is installed, you have Python.  (`oci` and `o` work better with python 3.7+)
 
 **OCIDs File**
 
@@ -214,7 +222,7 @@ If you use ``oci`` for multiple tenancies, by default ``o`` will save OCIDs for 
 
 **``o``** works on MacOS and Linux (including Windows WSL) and Oracle CloudShell.
 
-**``o``** should be relatively easy to port to Windows, but isn't there yet.  Volunteer?
+**``o``** version 1.6 introduces partial support for Windows PowerShell and Command shell.  The `o` command works, but installation and setup are not automated.
 
 ## Design principle
 
