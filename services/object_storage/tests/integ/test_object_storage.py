@@ -17,7 +17,7 @@ import random
 from mimetypes import guess_type
 from tests import util
 from tests import test_config_container
-from services.object_storage.tests.common.constants import CASSETTE_LIBRARY_DIR
+from services.object_storage.tests.common.constants import CASSETTE_LIBRARY_DIR, DEST_REGION
 from conftest import runner
 from tests.util import target_profile_region   # noqa: F401
 
@@ -518,7 +518,7 @@ def test_create_replication_policy(config_file, config_profile, test_id, delete_
     validate_response(result)
 
     # create policy
-    result = invoke(runner, config_file, config_profile, ['replication', 'create-replication-policy', '-ns', util.NAMESPACE, '--name', 'replication-test-policy', '-bn', source_bucket, '--destination-bucket', dest_bucket, '--destination-region', util.OS_REPLICATION_DESTINATION_REGION])
+    result = invoke(runner, config_file, config_profile, ['replication', 'create-replication-policy', '-ns', util.NAMESPACE, '--name', 'replication-test-policy', '-bn', source_bucket, '--destination-bucket', dest_bucket, '--destination-region', DEST_REGION])
     validate_response(result)
     response = json.loads(result.output)
     replication_id = response['data']['id']
