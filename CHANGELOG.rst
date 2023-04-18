@@ -6,6 +6,27 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.25.3 - 2023-04-18
+--------------------
+
+Added
+~~~~~
+
+* Support for private endpoints in the Digital Assistant service
+
+  * ``oci oda management oda-private-endpoint``
+  * ``oci oda management oda-private-endpoint-attachment``
+  * ``oci oda management oda-private-endpoint-scan-proxy``
+
+* Support for cancel backup in Database Service
+
+  * ``oci db backup cancel --backup-id``
+
+* Support for param ``--record-metadata-job-id``  in Data Labeling service
+
+  * ``oci data-labeling-service-dataplane record create-record-document-metadata --record-metadata-job-id``
+  * ``oci data-labeling-service-dataplane record update-record-document-metadata --record-metadata-job-id``
+
 3.25.2 - 2023-04-11
 --------------------
 
