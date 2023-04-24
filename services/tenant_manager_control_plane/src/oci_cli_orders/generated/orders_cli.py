@@ -16,7 +16,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.tenant_manager_control_plane.src.oci_cli_tenant_manager_control_plane.generated import organizations_service_cli
 
 
-@click.command(cli_util.override('orders.orders_root_group.command_name', 'orders'), cls=CommandGroupWithAlias, help=cli_util.override('orders.orders_root_group.help', """The Organizations API allows you to consolidate multiple OCI tenancies into an organization, and centrally manage your tenancies and its resources."""), short_help=cli_util.override('orders.orders_root_group.short_help', """Organizations API"""))
+@click.command(cli_util.override('orders.orders_root_group.command_name', 'orders'), cls=CommandGroupWithAlias, help=cli_util.override('orders.orders_root_group.help', """Use the Organizations API to consolidate multiple OCI tenancies into an organization, and centrally manage your tenancies and organization resources. For more information, see [Organization Management Overview]."""), short_help=cli_util.override('orders.orders_root_group.short_help', """Organizations API"""))
 @cli_util.help_option_group
 def orders_root_group():
     pass
@@ -34,7 +34,7 @@ orders_root_group.add_command(order_group)
 
 @order_group.command(name=cli_util.override('orders.activate_order.command_name', 'activate'), help=u"""Triggers an order activation workflow on behalf of the tenant, given by compartment ID in the body. \n[Command Reference](activateOrder)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Tenant ID to activate the order.""")
-@cli_util.option('--activation-token', required=True, help=u"""Activation Token containing an order ID. A JWT RFC 7519 formatted string.""")
+@cli_util.option('--activation-token', required=True, help=u"""Activation token containing an order ID. A JWT RFC 7519-formatted string.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -86,8 +86,8 @@ def activate_order(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@order_group.command(name=cli_util.override('orders.get_order.command_name', 'get'), help=u"""Returns the Order Details given by the order ID in the JWT. \n[Command Reference](getOrder)""")
-@cli_util.option('--activation-token', required=True, help=u"""Activation Token containing an order ID. A JWT RFC 7519 formatted string.""")
+@order_group.command(name=cli_util.override('orders.get_order.command_name', 'get'), help=u"""Returns the order details given by the order ID in the JWT. \n[Command Reference](getOrder)""")
+@cli_util.option('--activation-token', required=True, help=u"""Activation token containing an order ID. A JWT RFC 7519-formatted string.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context

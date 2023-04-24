@@ -542,6 +542,9 @@ def build_client(spec_name, service_name, ctx):
         if service_name in SERVICES_REQUIRING_ENDPOINTS:
             kwargs['service_endpoint'] = ctx.obj.get('endpoint')
 
+        # SDK uses 'client_level_realm_specific_endpoint_template_enabled' in their base_client as the realm-specific endpoint flag
+        kwargs['client_level_realm_specific_endpoint_template_enabled'] = ctx.obj['realm_specific_endpoint']
+
         try:
             client = client_class(client_config, **kwargs)
         except exceptions.MissingPrivateKeyPassphrase:
@@ -1365,6 +1368,14 @@ def load_context_obj_values_from_defaults(ctx):
             ctx.obj['no_retry'] = get_default_value_from_defaults_file(ctx, 'no_retry', click.BOOL, False)
     else:
         populate_dict_key_with_default_value(ctx, 'no_retry', click.BOOL)
+
+    if 'realm_specific_endpoint' in ctx.obj:
+        if not ctx.obj['realm_specific_endpoint']:
+            # False for realm_specific_endpoint means not provided, so just load it if there is a default value. If there's nothing there, then this'll be
+            # None, which is still false-y
+            ctx.obj['realm_specific_endpoint'] = get_default_value_from_defaults_file(ctx, 'realm-specific-endpoint', click.BOOL, False)
+    else:
+        populate_dict_key_with_default_value(ctx, 'realm_specific_endpoint', click.BOOL, param_name='realm-specific-endpoint')
 
 
 def populate_dict_key_with_default_value(ctx, key, param_type, param_name=None, param_takes_multiple=False):
