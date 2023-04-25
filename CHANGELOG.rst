@@ -6,6 +6,67 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.25.4 - 2023-04-25
+--------------------
+
+Added
+~~~~~
+
+* Database Management service
+
+  * Support for new commands to monitor external exadata infrastructure
+
+    * ``oci database-management external-exadata-infrastructure change-compartment``
+    * ``oci database-management external-exadata-infrastructure create``
+    * ``oci database-management external-exadata-infrastructure delete``
+    * ``oci database-management external-exadata-infrastructure disable-external-exadata-infrastructure-management``
+    * ``oci database-management external-exadata-infrastructure discover``
+    * ``oci database-management external-exadata-infrastructure enable-external-exadata-infrastructure-management``
+    * ``oci database-management external-exadata-infrastructure get``
+    * ``oci database-management external-exadata-infrastructure list``
+    * ``oci database-management external-exadata-infrastructure update``
+    * ``oci database-management external-exadata-storage-connector check``
+    * ``oci database-management external-exadata-storage-connector create``
+    * ``oci database-management external-exadata-storage-connector delete``
+    * ``oci database-management external-exadata-storage-connector get``
+    * ``oci database-management external-exadata-storage-connector list``
+    * ``oci database-management external-exadata-storage-connector update``
+    * ``oci database-management external-exadata-storage-grid get``
+    * ``oci database-management external-exadata-storage-server get``
+    * ``oci database-management external-exadata-storage-server get-iorm-plan``
+    * ``oci database-management external-exadata-storage-server get-open-alert-history``
+    * ``oci database-management external-exadata-storage-server get-top-sql-cpu-activity``
+    * ``oci database-management external-exadata-storage-server list``
+
+  * Support for new optional parameter --external-exadata-infrastructure-id
+
+    * ``oci database-management managed-database list --external-exadata-infrastructure-id``
+
+* Support for new optional parameters in the Database service
+
+  * ``oci db cloud-autonomous-vm-cluster create --is-mtls-enabled-vm-cluster --scan-listener-port-non-tls --scan-listener-port-tls``
+  * ``oci db exadata-infrastructure create --network-bonding-mode-details``
+  * ``oci db exadata-infrastructure update --network-bonding-mode-details``
+
+* Support for new commands in the Integration service
+
+  * ``oci integration integration-instance change-private-endpoint-outbound-connection``
+  * ``oci integration integration-instance change-private-endpoint-outbound-connection-none-outbound-connection``
+  * ``oci integration integration-instance change-private-endpoint-outbound-connection-private-endpoint-outbound-connection``
+  * ``oci integration integration-instance enable-process-automation``
+
+* Organizations service
+
+  * Support for new commands
+
+    * ``oci organizations governance organization-tenancy add``
+    * ``oci organizations governance organization-tenancy remove``
+
+  * Support for new optional parameters
+
+    * ``oci organizations child-tenancy create --governance-status``
+    * ``oci organizations sender-invitation create --subjects``
+
 3.25.3 - 2023-04-18
 --------------------
 

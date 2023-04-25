@@ -16,7 +16,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.tenant_manager_control_plane.src.oci_cli_tenant_manager_control_plane.generated import organizations_service_cli
 
 
-@click.command(cli_util.override('subscription.subscription_root_group.command_name', 'subscription'), cls=CommandGroupWithAlias, help=cli_util.override('subscription.subscription_root_group.help', """The Organizations API allows you to consolidate multiple OCI tenancies into an organization, and centrally manage your tenancies and its resources."""), short_help=cli_util.override('subscription.subscription_root_group.short_help', """Organizations API"""))
+@click.command(cli_util.override('subscription.subscription_root_group.command_name', 'subscription'), cls=CommandGroupWithAlias, help=cli_util.override('subscription.subscription_root_group.help', """Use the Organizations API to consolidate multiple OCI tenancies into an organization, and centrally manage your tenancies and organization resources. For more information, see [Organization Management Overview]."""), short_help=cli_util.override('subscription.subscription_root_group.short_help', """Organizations API"""))
 @cli_util.help_option_group
 def subscription_root_group():
     pass
@@ -231,7 +231,7 @@ def get_subscription_mapping(ctx, from_json, subscription_mapping_id):
 
 
 @assigned_subscription_group.command(name=cli_util.override('subscription.list_assigned_subscriptions.command_name', 'list'), help=u"""Lists subscriptions that are consumed by the compartment. Only the root compartment is allowed. \n[Command Reference](listAssignedSubscriptions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment. Always a tenancy OCID.""")
 @cli_util.option('--subscription-id', help=u"""The ID of the subscription to which the tenancy is associated.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -322,8 +322,8 @@ def list_available_regions(ctx, from_json, all_pages, subscription_id, page):
 
 @subscription_mapping_group.command(name=cli_util.override('subscription.list_subscription_mappings.command_name', 'list'), help=u"""Lists the subscription mappings for all the subscriptions owned by a given compartmentId. Only the root compartment is allowed. \n[Command Reference](listSubscriptionMappings)""")
 @cli_util.option('--subscription-id', required=True, help=u"""The ID of the subscription to which the tenancy is associated.""")
-@cli_util.option('--subscription-mapping-id', help=u"""SubscriptionMappingId is a unique ID for subscription and tenancy mapping.""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--subscription-mapping-id', help=u"""A unique ID for subscription and tenancy mapping.""")
+@cli_util.option('--compartment-id', help=u"""OCID of the compartment. Always a tenancy OCID.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""The lifecycle state of the resource.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -384,7 +384,7 @@ def list_subscription_mappings(ctx, from_json, all_pages, page_size, subscriptio
 
 
 @subscription_group.command(name=cli_util.override('subscription.list_subscriptions.command_name', 'list'), help=u"""List the subscriptions that a compartment owns. Only the root compartment is allowed. \n[Command Reference](listSubscriptions)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', help=u"""OCID of the compartment. Always a tenancy OCID.""")
 @cli_util.option('--subscription-id', help=u"""The ID of the subscription to which the tenancy is associated.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")

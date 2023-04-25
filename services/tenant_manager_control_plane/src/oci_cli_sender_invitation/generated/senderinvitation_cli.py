@@ -16,7 +16,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.tenant_manager_control_plane.src.oci_cli_tenant_manager_control_plane.generated import organizations_service_cli
 
 
-@click.command(cli_util.override('sender_invitation.sender_invitation_root_group.command_name', 'sender-invitation'), cls=CommandGroupWithAlias, help=cli_util.override('sender_invitation.sender_invitation_root_group.help', """The Organizations API allows you to consolidate multiple OCI tenancies into an organization, and centrally manage your tenancies and its resources."""), short_help=cli_util.override('sender_invitation.sender_invitation_root_group.short_help', """Organizations API"""))
+@click.command(cli_util.override('sender_invitation.sender_invitation_root_group.command_name', 'sender-invitation'), cls=CommandGroupWithAlias, help=cli_util.override('sender_invitation.sender_invitation_root_group.help', """Use the Organizations API to consolidate multiple OCI tenancies into an organization, and centrally manage your tenancies and organization resources. For more information, see [Organization Management Overview]."""), short_help=cli_util.override('sender_invitation.sender_invitation_root_group.short_help', """Organizations API"""))
 @cli_util.help_option_group
 def sender_invitation_root_group():
     pass
@@ -88,17 +88,20 @@ def cancel_sender_invitation(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.option('--recipient-tenancy-id', required=True, help=u"""OCID of the recipient tenancy.""")
 @cli_util.option('--recipient-email-address', help=u"""Email address of the recipient.""")
 @cli_util.option('--display-name', help=u"""A user-created name to describe the invitation. Avoid entering confidential information.""")
+@cli_util.option('--subjects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of subjects this invitation contains.
+
+This option is a JSON list with items of type InvitationSubject.  For documentation on InvitationSubject please see our API reference: https://docs.cloud.oracle.com/api/#/en/senderinvitation/20200801/datatypes/InvitationSubject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'tenant_manager_control_plane', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'tenant_manager_control_plane', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'subjects': {'module': 'tenant_manager_control_plane', 'class': 'list[InvitationSubject]'}, 'freeform-tags': {'module': 'tenant_manager_control_plane', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'tenant_manager_control_plane', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'tenant_manager_control_plane', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'tenant_manager_control_plane', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'tenant_manager_control_plane', 'class': 'SenderInvitation'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'subjects': {'module': 'tenant_manager_control_plane', 'class': 'list[InvitationSubject]'}, 'freeform-tags': {'module': 'tenant_manager_control_plane', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'tenant_manager_control_plane', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'tenant_manager_control_plane', 'class': 'SenderInvitation'})
 @cli_util.wrap_exceptions
-def create_sender_invitation(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, recipient_tenancy_id, recipient_email_address, display_name, freeform_tags, defined_tags):
+def create_sender_invitation(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, recipient_tenancy_id, recipient_email_address, display_name, subjects, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -112,6 +115,9 @@ def create_sender_invitation(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if subjects is not None:
+        _details['subjects'] = cli_util.parse_json_parameter("subjects", subjects)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -173,7 +179,7 @@ def get_sender_invitation(ctx, from_json, sender_invitation_id):
 
 
 @sender_invitation_group.command(name=cli_util.override('sender_invitation.list_sender_invitations.command_name', 'list'), help=u"""Return a (paginated) list of sender invitations. \n[Command Reference](listSenderInvitations)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment. Always a tenancy OCID.""")
 @cli_util.option('--recipient-tenancy-id', help=u"""The tenancy that the invitation is addressed to.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "FAILED", "TERMINATED"]), help=u"""The lifecycle state of the resource.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["PENDING", "CANCELED", "ACCEPTED", "EXPIRED", "FAILED"]), help=u"""The status of the sender invitation.""")
@@ -238,7 +244,7 @@ def list_sender_invitations(ctx, from_json, all_pages, page_size, compartment_id
     cli_util.render_response(result, ctx)
 
 
-@sender_invitation_group.command(name=cli_util.override('sender_invitation.update_sender_invitation.command_name', 'update'), help=u"""Updates the SenderInvitation. \n[Command Reference](updateSenderInvitation)""")
+@sender_invitation_group.command(name=cli_util.override('sender_invitation.update_sender_invitation.command_name', 'update'), help=u"""Updates the sender invitation. \n[Command Reference](updateSenderInvitation)""")
 @cli_util.option('--sender-invitation-id', required=True, help=u"""OCID of the sender invitation to update.""")
 @cli_util.option('--display-name', help=u"""A user-created name to describe the invitation. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

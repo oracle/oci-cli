@@ -5,502 +5,627 @@
 service_mapping = {
     "adm": [
         "adm",
-        "Application Dependency Management"
+        "Application Dependency Management",
+        "Developer Services"
     ],
     "ai": [
         "ai_language",
-        "Language"
+        "Language",
+        "Analytics & AI"
     ],
     "ai-document": [
         "ai_document",
-        "Document Understanding"
+        "Document Understanding",
+        "Others"
     ],
     "ai-vision": [
         "ai_vision",
-        "Vision"
+        "Vision",
+        "Analytics & AI"
     ],
     "analytics": [
         "analytics",
-        "Analytics"
+        "Analytics",
+        "Analytics & AI"
     ],
     "announce": [
         "announcements_service",
-        "Announcements Service"
+        "Announcements Service",
+        "Governance & Administration"
     ],
     "anomaly-detection": [
         "ai_anomaly_detection",
-        "Anomaly Detection"
+        "Anomaly Detection",
+        "Analytics & AI"
     ],
     "api-gateway": [
         "apigateway",
-        "API Gateway"
+        "API Gateway",
+        "Developer Services"
     ],
     "apm-config": [
         "apm_config",
-        "Application Performance Monitoring Configuration"
+        "Application Performance Monitoring Configuration",
+        "Observability & Management"
     ],
     "apm-control-plane": [
         "apm_control_plane",
-        "Application Performance Monitoring Control Plane"
+        "Application Performance Monitoring Control Plane",
+        "Observability & Management"
     ],
     "apm-synthetics": [
         "apm_synthetics",
-        "Application Performance Monitoring Synthetic Monitoring"
+        "Application Performance Monitoring Synthetic Monitoring",
+        "Observability & Management"
     ],
     "apm-traces": [
         "apm_traces",
-        "Application Performance Monitoring Trace Explorer"
+        "Application Performance Monitoring Trace Explorer",
+        "Observability & Management"
     ],
     "application-migration": [
         "application_migration",
-        "Application Migration"
+        "Application Migration",
+        "Others"
     ],
     "appmgmt-control": [
         "appmgmt_control",
-        "Resource Discovery and Monitoring Control"
+        "Resource Discovery and Monitoring Control",
+        "Others"
     ],
     "artifacts": [
         "artifacts",
-        "Artifacts and Container Images"
+        "Artifacts and Container Images",
+        "Developer Services"
     ],
     "audit": [
         "audit",
-        "Audit"
+        "Audit",
+        "Identity & Security"
     ],
     "autoscaling": [
         "autoscaling",
-        "Autoscaling"
+        "Autoscaling",
+        "Compute"
     ],
     "bastion": [
         "bastion",
-        "Bastion"
+        "Bastion",
+        "Identity & Security"
     ],
     "bds": [
         "bds",
-        "Big Data Service"
+        "Big Data Service",
+        "Analytics & AI"
     ],
     "blockchain": [
         "blockchain",
-        "Blockchain Platform Control Plane"
+        "Blockchain Platform Control Plane",
+        "Developer Services"
     ],
     "budgets": [
         "budget",
-        "Budgets"
+        "Budgets",
+        "Billing & Cost Management"
     ],
     "bv": [
         "core",
-        "Block Volume Service"
+        "Block Volume Service",
+        "Storage"
     ],
     "ce": [
         "container_engine",
-        "Container Engine for Kubernetes"
+        "Container Engine for Kubernetes",
+        "Developer Services"
     ],
     "certificates": [
         "certificates",
-        "Certificates Service Retrieval"
+        "Certificates Service Retrieval",
+        "Identity & Security"
     ],
     "certs-mgmt": [
         "certificates_management",
-        "Certificates Service Management"
+        "Certificates Service Management",
+        "Identity & Security"
     ],
     "cloud-bridge": [
         "cloud_bridge",
-        "Oracle Cloud Bridge"
+        "Oracle Cloud Bridge",
+        "Others"
     ],
     "cloud-guard": [
         "cloud_guard",
-        "Cloud Guard and Security Zones"
+        "Cloud Guard and Security Zones",
+        "Identity & Security"
     ],
     "cloud-migrations": [
         "cloud_migrations",
-        "Oracle Cloud Migrations"
+        "Oracle Cloud Migrations",
+        "Others"
     ],
     "compute": [
         "core",
-        "Compute Service"
+        "Compute Service",
+        "Compute"
     ],
     "compute-management": [
         "core",
-        "Compute Management Service"
+        "Compute Management Service",
+        "Compute"
     ],
     "container-instances": [
         "container_instances",
-        "Container Instance"
+        "Container Instance",
+        "Others"
     ],
     "dashboard-service": [
         "dashboard_service",
-        "Dashboards"
+        "Dashboards",
+        "Observability & Management"
     ],
     "data-catalog": [
         "data_catalog",
-        "Data Catalog"
+        "Data Catalog",
+        "Analytics & AI"
     ],
     "data-connectivity": [
         "data_connectivity",
-        "Data Connectivity Management"
+        "Data Connectivity Management",
+        "Others"
     ],
     "data-flow": [
         "data_flow",
-        "Data Flow"
+        "Data Flow",
+        "Analytics & AI"
     ],
     "data-integration": [
         "data_integration",
-        "Data Integration"
+        "Data Integration",
+        "Analytics & AI"
     ],
     "data-labeling-service": [
         "data_labeling_service",
-        "Data Labeling Management"
+        "Data Labeling Management",
+        "Analytics & AI"
     ],
     "data-labeling-service-dataplane": [
         "data_labeling_service_dataplane",
-        "Data Labeling"
+        "Data Labeling",
+        "Analytics & AI"
     ],
     "data-safe": [
         "data_safe",
-        "Data Safe"
+        "Data Safe",
+        "Oracle Database"
     ],
     "data-science": [
         "data_science",
-        "Data Science"
+        "Data Science",
+        "Analytics & AI"
     ],
     "database-management": [
         "database_management",
-        "Database Management"
+        "Database Management",
+        "Databases"
     ],
     "database-migration": [
         "database_migration",
-        "Oracle Database Migration Service"
+        "Oracle Database Migration Service",
+        "Migration"
     ],
     "db": [
         "database",
-        "Database Service"
+        "Database Service",
+        "Databases"
     ],
     "dbtools": [
         "database_tools",
-        "Database Tools"
+        "Database Tools",
+        "Developer Services"
     ],
     "devops": [
         "devops",
-        "DevOps"
+        "DevOps",
+        "Developer Services"
     ],
     "disaster-recovery": [
         "disaster_recovery",
-        "Full Stack Disaster Recovery"
+        "Full Stack Disaster Recovery",
+        "Others"
     ],
     "dns": [
         "dns",
-        "DNS"
+        "DNS",
+        "Networking"
     ],
     "dts": [
         "dts",
-        "Data Transfer Service"
+        "Data Transfer Service",
+        "Migration"
     ],
     "em-warehouse": [
         "em_warehouse",
-        "EM Warehouse"
+        "EM Warehouse",
+        "Others"
     ],
     "email": [
         "email",
-        "Email Delivery"
+        "Email Delivery",
+        "Developer Services"
     ],
     "events": [
         "events",
-        "Events"
+        "Events",
+        "Observability & Management"
     ],
     "fn": [
         "functions",
-        "Functions Service"
+        "Functions Service",
+        "Developer Services"
     ],
     "fs": [
         "file_storage",
-        "File Storage"
+        "File Storage",
+        "Storage"
     ],
     "fusion-apps": [
         "fusion_apps",
-        "Fusion Applications Environment Management"
+        "Fusion Applications Environment Management",
+        "Others"
     ],
     "goldengate": [
         "golden_gate",
-        "GoldenGate"
+        "GoldenGate",
+        "Oracle Database"
     ],
     "governance-rules-control-plane": [
         "governance_rules_control_plane",
-        "GovernanceRulesControlPlane"
+        "GovernanceRulesControlPlane",
+        "Governance & Administration"
     ],
     "health-checks": [
         "healthchecks",
-        "Health Checks"
+        "Health Checks",
+        "Observability & Management"
     ],
     "iam": [
         "identity",
-        "Identity and Access Management Service"
+        "Identity and Access Management Service",
+        "Identity & Security"
     ],
     "identity-domains": [
         "identity_domains",
-        "Identity Domains"
+        "Identity Domains",
+        "Others"
     ],
     "instance-agent": [
         "compute_instance_agent",
-        "Compute Instance Agent Service"
+        "Compute Instance Agent Service",
+        "Others"
     ],
     "integration": [
         "integration",
-        "Oracle Integration"
+        "Oracle Integration",
+        "Others"
     ],
     "jms": [
         "jms",
-        "Java Management Service"
+        "Java Management Service",
+        "Observability & Management"
     ],
     "kms": [
         "key_management",
-        "Key Management"
+        "Key Management",
+        "Observability & Management"
     ],
     "lb": [
         "load_balancer",
-        "Load Balancing"
+        "Load Balancing",
+        "Networking"
     ],
     "license-manager": [
         "license_manager",
-        "License Manager"
+        "License Manager",
+        "Governance & Administration"
     ],
     "limits": [
         "limits",
-        "Service Limits"
+        "Service Limits",
+        "Governance & Administration"
     ],
     "log-analytics": [
         "log_analytics",
-        "LogAnalytics"
+        "LogAnalytics",
+        "Observability & Management"
     ],
     "logging": [
         "logging",
-        "Logging Management"
+        "Logging Management",
+        "Observability & Management"
     ],
     "logging-ingestion": [
         "loggingingestion",
-        "Logging Ingestion"
+        "Logging Ingestion",
+        "Observability & Management"
     ],
     "logging-search": [
         "loggingsearch",
-        "Logging Search"
+        "Logging Search",
+        "Observability & Management"
     ],
     "management-agent": [
         "management_agent",
-        "Management Agent"
+        "Management Agent",
+        "Observability & Management"
     ],
     "management-dashboard": [
         "management_dashboard",
-        "ManagementDashboard"
+        "ManagementDashboard",
+        "Others"
     ],
     "marketplace": [
         "marketplace",
-        "Marketplace Service"
+        "Marketplace Service",
+        "Observability & Management"
     ],
     "media-services": [
         "media_services",
-        "Media Services"
+        "Media Services",
+        "Others"
     ],
     "monitoring": [
         "monitoring",
-        "Monitoring"
+        "Monitoring",
+        "Others"
     ],
     "mysql": [
         "mysql",
-        "MySQL Database Service"
+        "MySQL Database Service",
+        "Databases"
     ],
     "network": [
         "core",
-        "Networking Service"
+        "Networking Service",
+        "Networking"
     ],
     "network-firewall": [
         "network_firewall",
-        "Network Firewall"
+        "Network Firewall",
+        "Networking"
     ],
     "nlb": [
         "network_load_balancer",
-        "NetworkLoadBalancer"
+        "NetworkLoadBalancer",
+        "Networking"
     ],
     "nosql": [
         "nosql",
-        "NoSQL Database"
+        "NoSQL Database",
+        "Databases"
     ],
     "oce": [
         "oce",
-        "Oracle Content and Experience"
+        "Oracle Content and Experience",
+        "Developer Services"
     ],
     "ocvs": [
         "ocvp",
-        "Oracle Cloud VMware Solution"
+        "Oracle Cloud VMware Solution",
+        "Hybrid"
     ],
     "oda": [
         "oda",
-        "Digital Assistant Service Instance"
+        "Digital Assistant Service Instance",
+        "Analytics & AI"
     ],
     "oma": [
         "lockbox",
-        "Managed Access"
+        "Managed Access",
+        "Identity & Security"
     ],
     "onesubscription": [
         "onesubscription",
-        "OneSubscription"
+        "OneSubscription",
+        "Billing & Cost Management"
     ],
     "ons": [
         "ons",
-        "Notifications"
+        "Notifications",
+        "Others"
     ],
     "opa": [
         "opa",
-        "OracleProcessAutomation"
+        "OracleProcessAutomation",
+        "Others"
     ],
     "opctl": [
         "operator_access_control",
-        "OperatorAccessControl"
+        "OperatorAccessControl",
+        "Oracle Database"
     ],
     "opensearch": [
         "opensearch",
-        "OpenSearch Service"
+        "OpenSearch Service",
+        "Others"
     ],
     "opsi": [
         "opsi",
-        "Operations Insights"
+        "Operations Insights",
+        "Observability & Management"
     ],
     "optimizer": [
         "optimizer",
-        "Cloud Advisor"
+        "Cloud Advisor",
+        "Others"
     ],
     "organizations": [
         "tenant_manager_control_plane",
-        "Organizations"
+        "Organizations",
+        "Governance & Administration"
     ],
     "os": [
         "object_storage",
-        "Object Storage Service"
+        "Object Storage Service",
+        "Storage"
     ],
     "os-management": [
         "os_management",
-        "OS Management"
+        "OS Management",
+        "Compute"
     ],
     "osp-gateway": [
         "osp_gateway",
-        "OSP Gateway"
+        "OSP Gateway",
+        "Developer Services"
     ],
     "osub-billing-schedule": [
         "osub_billing_schedule",
-        "OneSubscription  Billing Schedule"
+        "OneSubscription  Billing Schedule",
+        "Billing & Cost Management"
     ],
     "osub-organization-subscription": [
         "osub_organization_subscription",
-        "OneSubscription Gateway  Organization's Subscription"
+        "OneSubscription Gateway  Organization's Subscription",
+        "Billing & Cost Management"
     ],
     "osub-subscription": [
         "osub_subscription",
-        "OneSubscription  Subscription, Commitment and and Rate Card Details"
+        "OneSubscription  Subscription, Commitment and and Rate Card Details",
+        "Billing & Cost Management"
     ],
     "osub-usage": [
         "osub_usage",
-        "OneSubscription  Usage Computation"
+        "OneSubscription  Usage Computation",
+        "Billing & Cost Management"
     ],
     "queue": [
         "queue",
-        "Queue"
+        "Queue",
+        "Others"
     ],
     "recovery": [
         "recovery",
-        "Oracle Database Autonomous Recovery Service"
+        "Oracle Database Autonomous Recovery Service",
+        "Others"
     ],
     "resource-manager": [
         "resource_manager",
-        "Resource Manager"
+        "Resource Manager",
+        "Developer Services"
     ],
     "rover": [
         "rover",
-        "RoverCloudService"
+        "RoverCloudService",
+        "Hybrid"
     ],
     "sch": [
         "sch",
-        "Service Connector Hub"
+        "Service Connector Hub",
+        "Observability & Management"
     ],
     "search": [
         "resource_search",
-        "Search Service"
+        "Search Service",
+        "Observability & Management"
     ],
     "secrets": [
         "secrets",
-        "Vault Secret Retrieval"
+        "Vault Secret Retrieval",
+        "Others"
     ],
     "service-catalog": [
         "service_catalog",
-        "Service Catalog"
+        "Service Catalog",
+        "Observability & Management"
     ],
     "service-manager-proxy": [
         "service_manager_proxy",
-        "Service Manager Proxy"
+        "Service Manager Proxy",
+        "Others"
     ],
     "service-mesh": [
         "service_mesh",
-        "Service Mesh"
+        "Service Mesh",
+        "Developer Services"
     ],
     "speech": [
         "ai_speech",
-        "Speech"
+        "Speech",
+        "Analytics & AI"
     ],
     "stack-monitoring": [
         "stack_monitoring",
-        "Stack Monitoring"
+        "Stack Monitoring",
+        "Developer Services"
     ],
     "streaming": [
         "streaming",
-        "Streaming"
+        "Streaming",
+        "Analytics & AI"
     ],
     "support": [
         "cims",
-        "Support Management"
+        "Support Management",
+        "Governance & Administration"
     ],
     "threat-intelligence": [
         "threat_intelligence",
-        "Threat Intelligence"
+        "Threat Intelligence",
+        "Identity & Security"
     ],
     "usage": [
         "usage",
-        "Usage Proxy"
+        "Usage Proxy",
+        "Governance & Administration"
     ],
     "usage-api": [
         "usage_api",
-        "Usage"
+        "Usage",
+        "Governance & Administration"
     ],
     "vault": [
         "vault",
-        "Vault Secret Management"
+        "Vault Secret Management",
+        "Identity & Security"
     ],
     "vbstudio": [
         "vbs_inst",
-        "VB Studio Controlplane Instance API"
+        "VB Studio Controlplane Instance API",
+        "Others"
     ],
     "visual-builder": [
         "visual_builder",
-        "Visual Builder"
+        "Visual Builder",
+        "Developer Services"
     ],
     "vn-monitoring": [
         "vn_monitoring",
-        "Network Monitoring"
+        "Network Monitoring",
+        "Others"
     ],
     "vulnerability-scanning": [
         "vulnerability_scanning",
-        "Scanning"
+        "Scanning",
+        "Identity & Security"
     ],
     "waa": [
         "waa",
-        "Web Application Acceleration (WAA)"
+        "Web Application Acceleration (WAA)",
+        "Others"
     ],
     "waas": [
         "waas",
-        "Web Application Acceleration and Security Services"
+        "Web Application Acceleration and Security Services",
+        "Others"
     ],
     "waf": [
         "waf",
-        "Web Application Firewall (WAF)"
+        "Web Application Firewall (WAF)",
+        "Identity & Security"
     ],
     "work-requests": [
         "work_requests",
-        "Work Requests"
+        "Work Requests",
+        "Governance & Administration"
     ]
 }

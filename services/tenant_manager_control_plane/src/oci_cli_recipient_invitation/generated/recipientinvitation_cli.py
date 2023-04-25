@@ -16,7 +16,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.tenant_manager_control_plane.src.oci_cli_tenant_manager_control_plane.generated import organizations_service_cli
 
 
-@click.command(cli_util.override('recipient_invitation.recipient_invitation_root_group.command_name', 'recipient-invitation'), cls=CommandGroupWithAlias, help=cli_util.override('recipient_invitation.recipient_invitation_root_group.help', """The Organizations API allows you to consolidate multiple OCI tenancies into an organization, and centrally manage your tenancies and its resources."""), short_help=cli_util.override('recipient_invitation.recipient_invitation_root_group.short_help', """Organizations API"""))
+@click.command(cli_util.override('recipient_invitation.recipient_invitation_root_group.command_name', 'recipient-invitation'), cls=CommandGroupWithAlias, help=cli_util.override('recipient_invitation.recipient_invitation_root_group.help', """Use the Organizations API to consolidate multiple OCI tenancies into an organization, and centrally manage your tenancies and organization resources. For more information, see [Organization Management Overview]."""), short_help=cli_util.override('recipient_invitation.recipient_invitation_root_group.short_help', """Organizations API"""))
 @cli_util.help_option_group
 def recipient_invitation_root_group():
     pass
@@ -157,7 +157,7 @@ def ignore_recipient_invitation(ctx, from_json, wait_for_state, max_wait_seconds
 
 
 @recipient_invitation_group.command(name=cli_util.override('recipient_invitation.list_recipient_invitations.command_name', 'list'), help=u"""Return a (paginated) list of recipient invitations. \n[Command Reference](listRecipientInvitations)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment. Always a tenancy OCID.""")
 @cli_util.option('--sender-tenancy-id', help=u"""The tenancy that sent the invitation.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "FAILED", "TERMINATED"]), help=u"""The lifecycle state of the resource.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["PENDING", "CANCELED", "ACCEPTED", "IGNORED", "EXPIRED", "FAILED"]), help=u"""The status of the recipient invitation.""")
@@ -195,7 +195,7 @@ def list_recipient_invitations(ctx, from_json, all_pages, compartment_id, sender
     cli_util.render_response(result, ctx)
 
 
-@recipient_invitation_group.command(name=cli_util.override('recipient_invitation.update_recipient_invitation.command_name', 'update'), help=u"""Updates the RecipientInvitation. \n[Command Reference](updateRecipientInvitation)""")
+@recipient_invitation_group.command(name=cli_util.override('recipient_invitation.update_recipient_invitation.command_name', 'update'), help=u"""Updates the recipient invitation. \n[Command Reference](updateRecipientInvitation)""")
 @cli_util.option('--recipient-invitation-id', required=True, help=u"""OCID of the recipient invitation to update.""")
 @cli_util.option('--display-name', help=u"""A user-created name to describe the invitation. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

@@ -44,6 +44,20 @@ logging.basicConfig(level=logging.WARN)
 
 OCI_CLI_AUTH_CHOICES = [cli_constants.OCI_CLI_AUTH_API_KEY, cli_constants.OCI_CLI_AUTH_INSTANCE_PRINCIPAL, cli_constants.OCI_CLI_AUTH_SESSION_TOKEN, cli_constants.OCI_CLI_AUTH_INSTANCE_OBO_USER, cli_constants.OCI_CLI_AUTH_RESOURCE_PRINCIPAL]
 
+REALM_SPECIFIC_ENDPOINT_HELP = """Use a realm-specific endpoint, instead of the default region-wide endpoint.
+
+Example::
+    oci os ns get --realm-specific-endpoint
+
+With this flag, your request will be made to a realm-specific service endpoint, such as, "https://myNamespace.objectstorage.us-phoenix-1.oci.oraclecloud.com". Use the --debug option to identify which endpoint is used for your request.
+
+This flag has priority over the environment variable OCI_REALM_SPECIFIC_SERVICE_ENDPOINT_TEMPLATE_ENABLED.
+
+To use this flag by default, set this flag to true in your OCI CLI-specific configuration file. For more information, see https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliconfigure.htm
+
+If the flag is used for a service that does not support such feature, the default region-wide endpoint will be used.
+"""
+
 GENERATE_PARAM_JSON_HELP = """Complex input, such as arrays and objects, are passed in JSON format.
 
 When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.
@@ -380,6 +394,7 @@ For more information about the cli configuration file, see {cli_constants.CLI_CO
               help='The request id to use for tracking the request.')
 @click.option('--region', callback=read_values_from_env, help='The region to make calls against.  For a list of valid region names use the command: "oci iam region list".')
 @click.option('--endpoint', callback=read_values_from_env, help='The value to use as the service endpoint, including any required API version path. For example: "https://iaas.us-phoenix-1.oracle.com/20160918". This will override the default service endpoint / API version path. Note: The --region parameter is the recommended way of targeting different regions.')
+@click.option('--realm-specific-endpoint', is_flag=True, help=REALM_SPECIFIC_ENDPOINT_HELP)
 @click.option('--connection-timeout', 'connection_timeout', type=click.INT, callback=read_values_from_env, help='The value of the connection timeout in seconds to make establish connection from sdk to services. This will override the default connection timeout value of 10 secs. ')
 @click.option('--read-timeout', 'read_timeout', type=click.INT, callback=read_values_from_env, help='The value of the read timeout in seconds to wait for service calls to send response to sdk. This will override the default read timeout value of 60 secs. ')
 @click.option('--cert-bundle', callback=read_values_from_env, help='The full path to a CA certificate bundle to be used for SSL verification. This will override the default CA certificate bundle.')
@@ -403,7 +418,7 @@ For more information, see the Using Queries section at {cli_constants.INPUT_OUTP
 For information on interactive features, see {cli_constants.INTERACTIVE_CLI_DOCUMENTATION}.''')
 @click.option('-?', '-h', '--help', is_flag=True, help='For detailed help on the individual OCI CLI command, enter <command> --help.')
 @click.pass_context
-def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, cert_bundle, output, query, raw_output, auth, auth_purpose, no_retry, max_retries, generate_full_command_json_input, generate_param_json_input, debug, cli_auto_prompt, connection_timeout, read_timeout, help):
+def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, realm_specific_endpoint, cert_bundle, output, query, raw_output, auth, auth_purpose, no_retry, max_retries, generate_full_command_json_input, generate_param_json_input, debug, cli_auto_prompt, connection_timeout, read_timeout, help):
 
     if max_retries and no_retry:
         raise click.UsageError('The option --max-retries is not applicable when using the --no-retry flag.')
@@ -444,6 +459,7 @@ def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, ce
         'request_id': request_id,
         'region': region,
         'endpoint': endpoint,
+        'realm_specific_endpoint': realm_specific_endpoint,
         'connection_timeout': connection_timeout,
         'read_timeout': read_timeout,
         'cert_bundle': cert_bundle,
@@ -543,16 +559,36 @@ def echo_help(ctx):
     help_text_commands = help_text[2].split("\n")
     help_text = help_text[0] + help_text[1]
     command_list = []
+    # populate a dict of group and corresponding commands as key & value.
+    group_dict = {}
     for command in help_text_commands:
+
         # If the service is present in servicemapping.py it should not be added in non service group
         if len(command) > 0 and command.strip().split(None, 1)[0] in service_mapping:
             continue
         else:
             command_list.append(tuple(command.strip().split(None, 1)))
-    formatter = click.formatting.HelpFormatter()
-    for service in sorted(service_mapping):
-        command_list.append((service, service_mapping[service][1]))
+    # holds value of group name currently being processed. Initialise with empty string.
+    current_group = ""
+    # fetch entries from service_mapping{} sorted by group name
+    for (service_key, service_value) in sorted(service_mapping.items(), key=lambda item: item[1][2]):
+        if current_group != service_value[2]:
+            if command_list:
+                # encountered new group, so dump the so far command_list and re-init it for new group
+                group_dict.update({current_group: command_list})
+                # empty command_list
+                command_list = []
+            current_group = service_value[2]
+        # update command_list with tuple of command name and desc, fetched from service_mapping
+        command_list.append((service_key, service_mapping[service_key][1]))
+    # Update group_dict for the last entry of above for-loop
+    group_dict.update({current_group: command_list})
     click.echo(help_text, color=ctx.color)
-    with formatter.indentation():
-        formatter.write_dl(command_list)
+    for group_name in group_dict.keys():
+        formatter = click.formatting.HelpFormatter()
+        formatter.write(group_name)
+        formatter.write("\n\n")
+        formatter.indent()
+        with formatter.indentation():
+            formatter.write_dl(group_dict[group_name])
         click.echo(formatter.getvalue(), color=ctx.color)

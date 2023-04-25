@@ -16,7 +16,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.tenant_manager_control_plane.src.oci_cli_tenant_manager_control_plane.generated import organizations_service_cli
 
 
-@click.command(cli_util.override('work_request.work_request_root_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help=cli_util.override('work_request.work_request_root_group.help', """The Organizations API allows you to consolidate multiple OCI tenancies into an organization, and centrally manage your tenancies and its resources."""), short_help=cli_util.override('work_request.work_request_root_group.short_help', """Organizations API"""))
+@click.command(cli_util.override('work_request.work_request_root_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help=cli_util.override('work_request.work_request_root_group.help', """Use the Organizations API to consolidate multiple OCI tenancies into an organization, and centrally manage your tenancies and organization resources. For more information, see [Organization Management Overview]."""), short_help=cli_util.override('work_request.work_request_root_group.short_help', """Organizations API"""))
 @cli_util.help_option_group
 def work_request_root_group():
     pass
@@ -177,7 +177,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('work_request.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment. Always a tenancy OCID.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, whether 'asc' or 'desc'.""")

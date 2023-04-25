@@ -16,7 +16,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.tenant_manager_control_plane.src.oci_cli_tenant_manager_control_plane.generated import organizations_service_cli
 
 
-@click.command(cli_util.override('link.link_root_group.command_name', 'link'), cls=CommandGroupWithAlias, help=cli_util.override('link.link_root_group.help', """The Organizations API allows you to consolidate multiple OCI tenancies into an organization, and centrally manage your tenancies and its resources."""), short_help=cli_util.override('link.link_root_group.short_help', """Organizations API"""))
+@click.command(cli_util.override('link.link_root_group.command_name', 'link'), cls=CommandGroupWithAlias, help=cli_util.override('link.link_root_group.help', """Use the Organizations API to consolidate multiple OCI tenancies into an organization, and centrally manage your tenancies and organization resources. For more information, see [Organization Management Overview]."""), short_help=cli_util.override('link.link_root_group.short_help', """Organizations API"""))
 @cli_util.help_option_group
 def link_root_group():
     pass

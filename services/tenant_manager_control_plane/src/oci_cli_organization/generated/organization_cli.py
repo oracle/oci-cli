@@ -16,13 +16,13 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.tenant_manager_control_plane.src.oci_cli_tenant_manager_control_plane.generated import organizations_service_cli
 
 
-@click.command(cli_util.override('organization.organization_root_group.command_name', 'organization'), cls=CommandGroupWithAlias, help=cli_util.override('organization.organization_root_group.help', """The Organizations API allows you to consolidate multiple OCI tenancies into an organization, and centrally manage your tenancies and its resources."""), short_help=cli_util.override('organization.organization_root_group.short_help', """Organizations API"""))
+@click.command(cli_util.override('organization.organization_root_group.command_name', 'organization'), cls=CommandGroupWithAlias, help=cli_util.override('organization.organization_root_group.help', """Use the Organizations API to consolidate multiple OCI tenancies into an organization, and centrally manage your tenancies and organization resources. For more information, see [Organization Management Overview]."""), short_help=cli_util.override('organization.organization_root_group.short_help', """Organizations API"""))
 @cli_util.help_option_group
 def organization_root_group():
     pass
 
 
-@click.command(cli_util.override('organization.organization_tenancy_group.command_name', 'organization-tenancy'), cls=CommandGroupWithAlias, help="""The information about the OrganizationTenancy.""")
+@click.command(cli_util.override('organization.organization_tenancy_group.command_name', 'organization-tenancy'), cls=CommandGroupWithAlias, help="""The information about the organization tenancy.""")
 @cli_util.help_option_group
 def organization_tenancy_group():
     pass
@@ -47,7 +47,7 @@ organization_root_group.add_command(child_tenancy_group)
 
 
 @organization_tenancy_group.command(name=cli_util.override('organization.approve_organization_tenancy_for_transfer.command_name', 'approve-organization-tenancy-for-transfer'), help=u"""Approve an organization's child tenancy for transfer. \n[Command Reference](approveOrganizationTenancyForTransfer)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment. Always a tenancy OCID.""")
 @cli_util.option('--organization-tenancy-id', required=True, help=u"""OCID of the child tenancy.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -77,8 +77,9 @@ def approve_organization_tenancy_for_transfer(ctx, from_json, compartment_id, or
 @cli_util.option('--compartment-id', required=True, help=u"""The tenancy ID of the parent tenancy.""")
 @cli_util.option('--tenancy-name', required=True, help=u"""The tenancy name to use for the child tenancy.""")
 @cli_util.option('--home-region', required=True, help=u"""The home region to use for the child tenancy. This must be a region where the parent tenancy is subscribed.""")
-@cli_util.option('--admin-email', required=True, help=u"""The email address of the administrator of the child tenancy.""")
+@cli_util.option('--admin-email', required=True, help=u"""Email address of the child tenancy administrator.""")
 @cli_util.option('--policy-name', help=u"""The name to use for the administrator policy in the child tenancy. Must contain only letters and underscores.""")
+@cli_util.option('--governance-status', type=custom_types.CliCaseInsensitiveChoice(["OPTED_IN", "OPTED_OUT"]), help=u"""The governance status of the child tenancy.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -87,7 +88,7 @@ def approve_organization_tenancy_for_transfer(ctx, from_json, compartment_id, or
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def create_child_tenancy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, tenancy_name, home_region, admin_email, policy_name):
+def create_child_tenancy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, tenancy_name, home_region, admin_email, policy_name, governance_status):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -100,6 +101,9 @@ def create_child_tenancy(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if policy_name is not None:
         _details['policyName'] = policy_name
+
+    if governance_status is not None:
+        _details['governanceStatus'] = governance_status
 
     client = cli_util.build_client('tenant_manager_control_plane', 'organization', ctx)
     result = client.create_child_tenancy(
@@ -285,7 +289,7 @@ def list_organization_tenancies(ctx, from_json, all_pages, page_size, organizati
 
 
 @organization_group.command(name=cli_util.override('organization.list_organizations.command_name', 'list'), help=u"""Lists organizations associated with the caller. \n[Command Reference](listOrganizations)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment. Always a tenancy OCID.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -332,7 +336,7 @@ def list_organizations(ctx, from_json, all_pages, page_size, compartment_id, pag
     cli_util.render_response(result, ctx)
 
 
-@organization_tenancy_group.command(name=cli_util.override('organization.restore_organization_tenancy.command_name', 'restore'), help=u"""An asynchronous API to restore tenancy. \n[Command Reference](restoreOrganizationTenancy)""")
+@organization_tenancy_group.command(name=cli_util.override('organization.restore_organization_tenancy.command_name', 'restore'), help=u"""An asynchronous API to restore a tenancy. \n[Command Reference](restoreOrganizationTenancy)""")
 @cli_util.option('--organization-tenancy-id', required=True, help=u"""OCID of the tenancy to be restored.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -384,7 +388,7 @@ def restore_organization_tenancy(ctx, from_json, wait_for_state, max_wait_second
 
 
 @organization_tenancy_group.command(name=cli_util.override('organization.unapprove_organization_tenancy_for_transfer.command_name', 'unapprove-organization-tenancy-for-transfer'), help=u"""Cancel an organization's child tenancy for transfer. \n[Command Reference](unapproveOrganizationTenancyForTransfer)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment. Always a tenancy OCID.""")
 @cli_util.option('--organization-tenancy-id', required=True, help=u"""OCID of the child tenancy.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -410,9 +414,9 @@ def unapprove_organization_tenancy_for_transfer(ctx, from_json, compartment_id, 
     cli_util.render_response(result, ctx)
 
 
-@organization_group.command(name=cli_util.override('organization.update_organization.command_name', 'update'), help=u"""Assign the default subscription to the organization. \n[Command Reference](updateOrganization)""")
+@organization_group.command(name=cli_util.override('organization.update_organization.command_name', 'update'), help=u"""Map the default subscription to the organization. \n[Command Reference](updateOrganization)""")
 @cli_util.option('--organization-id', required=True, help=u"""OCID of the organization.""")
-@cli_util.option('--default-ucm-subscription-id', required=True, help=u"""OCID of the default UCM subscription. Any tenancy joining the organization will automatically get assigned this subscription if a subscription if not explictly assigned.""")
+@cli_util.option('--default-ucm-subscription-id', required=True, help=u"""OCID of the default Universal Credits Model subscription. Any tenancy joining the organization will automatically get assigned this subscription, if a subscription is not explictly assigned.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")

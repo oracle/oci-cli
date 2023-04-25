@@ -16,7 +16,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.tenant_manager_control_plane.src.oci_cli_tenant_manager_control_plane.generated import organizations_service_cli
 
 
-@click.command(cli_util.override('domain_governance.domain_governance_root_group.command_name', 'domain-governance'), cls=CommandGroupWithAlias, help=cli_util.override('domain_governance.domain_governance_root_group.help', """The Organizations API allows you to consolidate multiple OCI tenancies into an organization, and centrally manage your tenancies and its resources."""), short_help=cli_util.override('domain_governance.domain_governance_root_group.short_help', """Organizations API"""))
+@click.command(cli_util.override('domain_governance.domain_governance_root_group.command_name', 'domain-governance'), cls=CommandGroupWithAlias, help=cli_util.override('domain_governance.domain_governance_root_group.help', """Use the Organizations API to consolidate multiple OCI tenancies into an organization, and centrally manage your tenancies and organization resources. For more information, see [Organization Management Overview]."""), short_help=cli_util.override('domain_governance.domain_governance_root_group.short_help', """Organizations API"""))
 @cli_util.help_option_group
 def domain_governance_root_group():
     pass
@@ -35,7 +35,7 @@ domain_governance_root_group.add_command(domain_governance_group)
 @domain_governance_group.command(name=cli_util.override('domain_governance.create_domain_governance.command_name', 'create'), help=u"""Adds domain governance to a claimed domain. \n[Command Reference](createDomainGovernance)""")
 @cli_util.option('--compartment-id', required=True, help=u"""OCID of the tenancy.""")
 @cli_util.option('--domain-id', required=True, help=u"""OCID of the domain.""")
-@cli_util.option('--subscription-email', required=True, help=u"""The email to notify the user, and that the ONS subscription will be created with.""")
+@cli_util.option('--subscription-email', required=True, help=u"""Email address to be used to notify the user, and that the ONS subscription will be created with.""")
 @cli_util.option('--ons-topic-id', required=True, help=u"""The ONS topic associated with this domain governance entity.""")
 @cli_util.option('--ons-subscription-id', required=True, help=u"""The ONS subscription associated with this domain governance entity.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -184,7 +184,7 @@ def get_domain_governance(ctx, from_json, domain_governance_id):
 
 
 @domain_governance_group.command(name=cli_util.override('domain_governance.list_domain_governances.command_name', 'list'), help=u"""Return a (paginated) list of domain governance entities. \n[Command Reference](listDomainGovernances)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment. Always a tenancy OCID.""")
 @cli_util.option('--domain-id', help=u"""The domain OCID.""")
 @cli_util.option('--domain-governance-id', help=u"""The domain governance OCID.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "FAILED", "TERMINATED"]), help=u"""The lifecycle state of the resource.""")
@@ -251,7 +251,7 @@ def list_domain_governances(ctx, from_json, all_pages, page_size, compartment_id
 
 @domain_governance_group.command(name=cli_util.override('domain_governance.update_domain_governance.command_name', 'update'), help=u"""Updates the domain governance entity. \n[Command Reference](updateDomainGovernance)""")
 @cli_util.option('--domain-governance-id', required=True, help=u"""The domain governance OCID.""")
-@cli_util.option('--subscription-email', help=u"""The email to notify the user, and that the ONS subscription will be created with. The ONS subscription for the previous email will also be deleted.""")
+@cli_util.option('--subscription-email', help=u"""Email address to be used to notify the user, and that the ONS subscription will be created with. The ONS subscription for the previous email will also be deleted.""")
 @cli_util.option('--is-governance-enabled', type=click.BOOL, help=u"""Indicates whether governance is enabled for this domain.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

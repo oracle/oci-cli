@@ -1,0 +1,2 @@
+[DEFAULT]
+os.realm-specific-endpoint = true
