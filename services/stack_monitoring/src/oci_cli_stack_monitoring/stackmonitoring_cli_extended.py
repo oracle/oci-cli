@@ -119,7 +119,7 @@ the file://path/to/file syntax.
 The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
 in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'db-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'credentials': {'module': 'stack_monitoring', 'class': 'MonitoredResourceCredential'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'db-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'credentials': {'module': 'stack_monitoring', 'class': 'MonitoredResourceCredential'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'additional-credentials': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceCredential]'}, 'additional-aliases': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceAliasCredential]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
 def create_monitored_resource_extended(ctx, **kwargs):
     if 'db_connection_details' in kwargs:
@@ -138,7 +138,7 @@ the file://path/to/file syntax.
 The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
 in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'db-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'credentials': {'module': 'stack_monitoring', 'class': 'MonitoredResourceCredential'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'db-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'credentials': {'module': 'stack_monitoring', 'class': 'MonitoredResourceCredential'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'additional-credentials': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceCredential]'}, 'additional-aliases': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceAliasCredential]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
 def update_monitored_resource_extended(ctx, **kwargs):
     if 'resource_id' in kwargs:

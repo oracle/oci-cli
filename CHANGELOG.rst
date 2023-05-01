@@ -6,12 +6,52 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.26.0 - 2023-05-02
+--------------------
+
+Added
+~~~~~
+* Support for new command in stack-monitoring in the Resource service
+
+  * ``oci stack-monitoring resource update-and-propagate-tags``
+
+* Support for on-demand node upgrade optional parameter for Kubernetes in the Container Engine service
+
+  * ``oci ce node-pool create --node-pool-cycling-details``
+  * ``oci ce node-pool update --node-pool-cycling-details``
+
+* Data Science serivce
+
+  * [BREAKING] Support for new BYOL SSL and ORDS certificates required parameters for Cloud Autonomous VM Clusters
+
+    * ``oci db cloud-autonomous-vm-cluster rotate-cloud-autonomous-vm-cluster-ords-certs --certificate-generation-type``
+    * ``oci db cloud-autonomous-vm-cluster rotate-cloud-autonomous-vm-cluster-ssl-certs --certificate-generation-type``
+
+  * Support for new BYOL SSL and ORDS certificates optional parameters for Cloud Autonomous VM Clusters
+
+    * ``oci db cloud-autonomous-vm-cluster rotate-cloud-autonomous-vm-cluster-ords-certs --ca-bundle-id --certificate-authority-id --certificate-id``
+    * ``oci db cloud-autonomous-vm-cluster rotate-cloud-autonomous-vm-cluster-ssl-certs --ca-bundle-id --certificate-authority-id --certificate-id```
+
+* Stack Monitoring service
+
+  * Support for new optional parameter in creating discorvery job
+
+    * ``oci stack-monitoring discovery-job create --should-propagate-tags-to-discovered-resources``
+
+  * Support for new optional parameters to resources create and update commands
+
+    * ``oci stack-monitoring resource create --additional-aliases --additional-credentials --defined-tags --freeform-tags``
+    * ``oci stack-monitoring resource update --additional-aliases --additional-credentials --defined-tags --freeform-tags``
+
+  * Support for new command in resources
+
+    * ``oci stack-monitoring resource update-and-propagate-tagss``
+
 3.25.4 - 2023-04-25
 --------------------
 
 Added
 ~~~~~
-
 * Database Management service
 
   * Support for new commands to monitor external exadata infrastructure
@@ -72,7 +112,6 @@ Added
 
 Added
 ~~~~~
-
 * Support for private endpoints in the Digital Assistant service
 
   * ``oci oda management oda-private-endpoint``
@@ -93,7 +132,6 @@ Added
 
 Added
 ~~~~~
-
 * Support for rotation of certificate of ORDS service on Autonomous VM Clusters on Exadata Cloud in the Database service.
 
   * ``oci db autonomous-vm-cluster rotate-autonomous-vm-cluster-ords-certs``
