@@ -16,7 +16,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('opa.opa_root_group.command_name', 'opa'), cls=CommandGroupWithAlias, help=cli_util.override('opa.opa_root_group.help', """A description of the OracleProcessAutomation API"""), short_help=cli_util.override('opa.opa_root_group.short_help', """OracleProcessAutomation API"""))
+@cli.command(cli_util.override('opa.opa_root_group.command_name', 'opa'), cls=CommandGroupWithAlias, help=cli_util.override('opa.opa_root_group.help', """Process Automation helps you to rapidly design, automate, and manage business processes in the cloud. With the Process Automation design-time (Designer) and the runtime (Workspace) environments, you can easily create, develop, manage, test, and monitor process applications and their components."""), short_help=cli_util.override('opa.opa_root_group.short_help', """Process Automation"""))
 @cli_util.help_option_group
 def opa_root_group():
     pass

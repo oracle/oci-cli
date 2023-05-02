@@ -18116,6 +18116,10 @@ def rotate_autonomous_vm_cluster_ssl_certs(ctx, from_json, wait_for_state, max_w
 
 @cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.rotate_cloud_autonomous_vm_cluster_ords_certs.command_name', 'rotate-cloud-autonomous-vm-cluster-ords-certs'), help=u"""Rotates the Oracle REST Data Services (ORDS) certificates for a cloud Autonomous Exadata VM cluster. \n[Command Reference](rotateCloudAutonomousVmClusterOrdsCerts)""")
 @cli_util.option('--cloud-autonomous-vm-cluster-id', required=True, help=u"""The Cloud VM cluster [OCID].""")
+@cli_util.option('--certificate-generation-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SYSTEM", "BYOC"]), help=u"""Specify SYSTEM for using Oracle managed certificates. Specify BYOC when you want to bring your own certificate.""")
+@cli_util.option('--certificate-id', help=u"""The [OCID] of the certificate to use.""")
+@cli_util.option('--certificate-authority-id', help=u"""The [OCID] of the certificate authority.""")
+@cli_util.option('--ca-bundle-id', help=u"""The [OCID] of the certificate bundle.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -18125,7 +18129,7 @@ def rotate_autonomous_vm_cluster_ssl_certs(ctx, from_json, wait_for_state, max_w
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def rotate_cloud_autonomous_vm_cluster_ords_certs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_autonomous_vm_cluster_id, if_match):
+def rotate_cloud_autonomous_vm_cluster_ords_certs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_autonomous_vm_cluster_id, certificate_generation_type, certificate_id, certificate_authority_id, ca_bundle_id, if_match):
 
     if isinstance(cloud_autonomous_vm_cluster_id, six.string_types) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-autonomous-vm-cluster-id cannot be whitespace or empty string')
@@ -18134,9 +18138,23 @@ def rotate_cloud_autonomous_vm_cluster_ords_certs(ctx, from_json, wait_for_state
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['certificateGenerationType'] = certificate_generation_type
+
+    if certificate_id is not None:
+        _details['certificateId'] = certificate_id
+
+    if certificate_authority_id is not None:
+        _details['certificateAuthorityId'] = certificate_authority_id
+
+    if ca_bundle_id is not None:
+        _details['caBundleId'] = ca_bundle_id
+
     client = cli_util.build_client('database', 'database', ctx)
     result = client.rotate_cloud_autonomous_vm_cluster_ords_certs(
         cloud_autonomous_vm_cluster_id=cloud_autonomous_vm_cluster_id,
+        rotate_cloud_autonomous_vm_cluster_ords_certs_details=_details,
         **kwargs
     )
     work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
@@ -18175,6 +18193,10 @@ def rotate_cloud_autonomous_vm_cluster_ords_certs(ctx, from_json, wait_for_state
 
 @cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.rotate_cloud_autonomous_vm_cluster_ssl_certs.command_name', 'rotate-cloud-autonomous-vm-cluster-ssl-certs'), help=u"""Rotates the SSL certficates for a cloud Autonomous Exadata VM cluster. \n[Command Reference](rotateCloudAutonomousVmClusterSslCerts)""")
 @cli_util.option('--cloud-autonomous-vm-cluster-id', required=True, help=u"""The Cloud VM cluster [OCID].""")
+@cli_util.option('--certificate-generation-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SYSTEM", "BYOC"]), help=u"""Specify SYSTEM for using Oracle managed certificates. Specify BYOC when you want to bring your own certificate.""")
+@cli_util.option('--certificate-id', help=u"""The [OCID] of the certificate to use.""")
+@cli_util.option('--certificate-authority-id', help=u"""The [OCID] of the certificate authority.""")
+@cli_util.option('--ca-bundle-id', help=u"""The [OCID] of the certificate bundle.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -18184,7 +18206,7 @@ def rotate_cloud_autonomous_vm_cluster_ords_certs(ctx, from_json, wait_for_state
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def rotate_cloud_autonomous_vm_cluster_ssl_certs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_autonomous_vm_cluster_id, if_match):
+def rotate_cloud_autonomous_vm_cluster_ssl_certs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_autonomous_vm_cluster_id, certificate_generation_type, certificate_id, certificate_authority_id, ca_bundle_id, if_match):
 
     if isinstance(cloud_autonomous_vm_cluster_id, six.string_types) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-autonomous-vm-cluster-id cannot be whitespace or empty string')
@@ -18193,9 +18215,23 @@ def rotate_cloud_autonomous_vm_cluster_ssl_certs(ctx, from_json, wait_for_state,
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['certificateGenerationType'] = certificate_generation_type
+
+    if certificate_id is not None:
+        _details['certificateId'] = certificate_id
+
+    if certificate_authority_id is not None:
+        _details['certificateAuthorityId'] = certificate_authority_id
+
+    if ca_bundle_id is not None:
+        _details['caBundleId'] = ca_bundle_id
+
     client = cli_util.build_client('database', 'database', ctx)
     result = client.rotate_cloud_autonomous_vm_cluster_ssl_certs(
         cloud_autonomous_vm_cluster_id=cloud_autonomous_vm_cluster_id,
+        rotate_cloud_autonomous_vm_cluster_ssl_certs_details=_details,
         **kwargs
     )
     work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)

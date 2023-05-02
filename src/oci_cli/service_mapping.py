@@ -435,7 +435,7 @@ service_mapping = {
     ],
     "opa": [
         "opa",
-        "OracleProcessAutomation",
+        "Process Automation",
         "Others"
     ],
     "opctl": [

@@ -28,7 +28,7 @@ def discovery_job_collection_group():
     pass
 
 
-@click.command(cli_util.override('stack_monitoring.monitored_resource_group.command_name', 'monitored-resource'), cls=CommandGroupWithAlias, help="""The information about monitored resource.""")
+@click.command(cli_util.override('stack_monitoring.monitored_resource_group.command_name', 'monitored-resource'), cls=CommandGroupWithAlias, help="""The response object for create monitored resource and get monitored resource operations. This contains information about the monitored resource. Credentials and credential aliases attributes will be returned as null due to security reasons.""")
 @cli_util.help_option_group
 def monitored_resource_group():
     pass
@@ -80,11 +80,11 @@ stack_monitoring_root_group.add_command(discovery_job_log_collection_group)
 stack_monitoring_root_group.add_command(work_request_log_entry_collection_group)
 
 
-@monitored_resource_group.command(name=cli_util.override('stack_monitoring.associate_monitored_resources.command_name', 'associate'), help=u"""Create an association between two monitored resources. \n[Command Reference](associateMonitoredResources)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID]""")
-@cli_util.option('--association-type', required=True, help=u"""Association type to be created between source and destination resources""")
-@cli_util.option('--source-resource-id', required=True, help=u"""Source Monitored Resource Identifier [OCID]""")
-@cli_util.option('--destination-resource-id', required=True, help=u"""Destination Monitored Resource Identifier [OCID]""")
+@monitored_resource_group.command(name=cli_util.override('stack_monitoring.associate_monitored_resources.command_name', 'associate'), help=u"""Create an association between two monitored resources. Associations can be created between resources from different compartments as long they are in same tenancy. User should have required access in both the compartments. \n[Command Reference](associateMonitoredResources)""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
+@cli_util.option('--association-type', required=True, help=u"""Association type to be created between source and destination resources.""")
+@cli_util.option('--source-resource-id', required=True, help=u"""Source Monitored Resource Identifier [OCID].""")
+@cli_util.option('--destination-resource-id', required=True, help=u"""Destination Monitored Resource Identifier [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -112,7 +112,7 @@ def associate_monitored_resources(ctx, from_json, compartment_id, association_ty
     cli_util.render_response(result, ctx)
 
 
-@monitored_resource_group.command(name=cli_util.override('stack_monitoring.change_monitored_resource_compartment.command_name', 'change-compartment'), help=u"""Moves a MonitoredResource resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeMonitoredResourceCompartment)""")
+@monitored_resource_group.command(name=cli_util.override('stack_monitoring.change_monitored_resource_compartment.command_name', 'change-compartment'), help=u"""Moves a monitored resource from one compartment to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeMonitoredResourceCompartment)""")
 @cli_util.option('--monitored-resource-id', required=True, help=u"""The [OCID] of monitored resource.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -174,6 +174,7 @@ def change_monitored_resource_compartment(ctx, from_json, wait_for_state, max_wa
 @cli_util.option('--discovery-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--discovery-type', type=custom_types.CliCaseInsensitiveChoice(["ADD", "ADD_WITH_RETRY", "REFRESH"]), help=u"""Add option submits new discovery Job. Add with retry option to re-submit failed discovery job. Refresh option refreshes the existing discovered resources.""")
 @cli_util.option('--discovery-client', help=u"""Client who submits discovery job.""")
+@cli_util.option('--should-propagate-tags-to-discovered-resources', type=click.BOOL, help=u"""If this parameter set to true, the specified tags will be applied to all resources discovered in the current request. Default is true.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -184,7 +185,7 @@ def change_monitored_resource_compartment(ctx, from_json, wait_for_state, max_wa
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'discovery-details': {'module': 'stack_monitoring', 'class': 'DiscoveryDetails'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'stack_monitoring', 'class': 'DiscoveryJob'})
 @cli_util.wrap_exceptions
-def create_discovery_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, discovery_details, discovery_type, discovery_client, freeform_tags, defined_tags):
+def create_discovery_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, discovery_details, discovery_type, discovery_client, should_propagate_tags_to_discovered_resources, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -198,6 +199,9 @@ def create_discovery_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if discovery_client is not None:
         _details['discoveryClient'] = discovery_client
+
+    if should_propagate_tags_to_discovered_resources is not None:
+        _details['shouldPropagateTagsToDiscoveredResources'] = should_propagate_tags_to_discovered_resources
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -236,31 +240,39 @@ def create_discovery_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@monitored_resource_group.command(name=cli_util.override('stack_monitoring.create_monitored_resource.command_name', 'create'), help=u"""Creates a new monitored resource for the given resource type \n[Command Reference](createMonitoredResource)""")
-@cli_util.option('--name', required=True, help=u"""Monitored resource name""")
-@cli_util.option('--type', required=True, help=u"""Monitored resource type""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID]""")
+@monitored_resource_group.command(name=cli_util.override('stack_monitoring.create_monitored_resource.command_name', 'create'), help=u"""Creates a new monitored resource for the given resource type with the details and submits a work request for promoting the resource to agent. Once the resource is successfully added to agent, resource state will be marked active. \n[Command Reference](createMonitoredResource)""")
+@cli_util.option('--name', required=True, help=u"""Monitored Resource Name.""")
+@cli_util.option('--type', required=True, help=u"""Monitored Resource Type.""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
 @cli_util.option('--display-name', help=u"""Monitored resource display name.""")
-@cli_util.option('--host-name', help=u"""Host name of the monitored resource""")
+@cli_util.option('--host-name', help=u"""Host name of the monitored resource.""")
 @cli_util.option('--external-id', help=u"""External resource is any OCI resource identifier [OCID] which is not a Stack Monitoring service resource. Currently supports only OCI compute instance.""")
 @cli_util.option('--management-agent-id', help=u"""Management Agent Identifier [OCID].""")
-@cli_util.option('--resource-time-zone', help=u"""Time zone in the form of tz database canonical zone ID.""")
-@cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of monitored resource properties
+@cli_util.option('--resource-time-zone', help=u"""Time zone in the form of tz database canonical zone ID. Specifies the preference with a value that uses the IANA Time Zone Database format (x-obmcs-time-zone). For example - America/Los_Angeles""")
+@cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of monitored resource properties.
 
 This option is a JSON list with items of type MonitoredResourceProperty.  For documentation on MonitoredResourceProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-connection-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--aliases', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--additional-credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of MonitoredResourceCredentials. This property complements the existing \"credentials\" property by allowing user to specify more than one credential. If both \"credential\" and \"additionalCredentials\" are specified, union of the values is used as list of credentials applicable for this resource. If any duplicate found in the combined list of \"credentials\" and \"additionalCredentials\", an error will be thrown.
+
+This option is a JSON list with items of type MonitoredResourceCredential.  For documentation on MonitoredResourceCredential please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceCredential.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--additional-aliases', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of MonitoredResourceAliasCredentials. This property complements the existing \"aliases\" property by allowing user to specify more than one credential alias. If both \"aliases\" and \"additionalAliases\" are specified, union of the values is used as list of aliases applicable for this resource. If any duplicate found in the combined list of \"alias\" and \"additionalAliases\", an error will be thrown.
+
+This option is a JSON list with items of type MonitoredResourceAliasCredential.  For documentation on MonitoredResourceAliasCredential please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceAliasCredential.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--external-resource-id', help=u"""Generally used by DBaaS to send the Database OCID stored on the DBaaS. The same will be passed to resource service to enable Stack Monitoring Service on DBM. This will be stored in Stack Monitoring Resource Service data store as identifier for monitored resource. If this header is not set as part of the request, then an id will be generated and stored for the resource.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'credentials': {'module': 'stack_monitoring', 'class': 'MonitoredResourceCredential'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}})
+@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'credentials': {'module': 'stack_monitoring', 'class': 'MonitoredResourceCredential'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'additional-credentials': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceCredential]'}, 'additional-aliases': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceAliasCredential]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'credentials': {'module': 'stack_monitoring', 'class': 'MonitoredResourceCredential'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResource'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'credentials': {'module': 'stack_monitoring', 'class': 'MonitoredResourceCredential'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'additional-credentials': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceCredential]'}, 'additional-aliases': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceAliasCredential]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResource'})
 @cli_util.wrap_exceptions
-def create_monitored_resource(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, type, compartment_id, display_name, host_name, external_id, management_agent_id, resource_time_zone, properties, database_connection_details, credentials, aliases, external_resource_id):
+def create_monitored_resource(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, type, compartment_id, display_name, host_name, external_id, management_agent_id, resource_time_zone, properties, database_connection_details, credentials, aliases, additional_credentials, additional_aliases, freeform_tags, defined_tags, external_resource_id):
 
     kwargs = {}
     if external_resource_id is not None:
@@ -299,6 +311,18 @@ def create_monitored_resource(ctx, from_json, wait_for_state, max_wait_seconds, 
     if aliases is not None:
         _details['aliases'] = cli_util.parse_json_parameter("aliases", aliases)
 
+    if additional_credentials is not None:
+        _details['additionalCredentials'] = cli_util.parse_json_parameter("additional_credentials", additional_credentials)
+
+    if additional_aliases is not None:
+        _details['additionalAliases'] = cli_util.parse_json_parameter("additional_aliases", additional_aliases)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
     client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
     result = client.create_monitored_resource(
         create_monitored_resource_details=_details,
@@ -330,34 +354,42 @@ def create_monitored_resource(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@monitored_resource_group.command(name=cli_util.override('stack_monitoring.create_monitored_resource_pre_existing_credentials.command_name', 'create-monitored-resource-pre-existing-credentials'), help=u"""Creates a new monitored resource for the given resource type \n[Command Reference](createMonitoredResource)""")
-@cli_util.option('--name', required=True, help=u"""Monitored resource name""")
-@cli_util.option('--type', required=True, help=u"""Monitored resource type""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID]""")
+@monitored_resource_group.command(name=cli_util.override('stack_monitoring.create_monitored_resource_pre_existing_credentials.command_name', 'create-monitored-resource-pre-existing-credentials'), help=u"""Creates a new monitored resource for the given resource type with the details and submits a work request for promoting the resource to agent. Once the resource is successfully added to agent, resource state will be marked active. \n[Command Reference](createMonitoredResource)""")
+@cli_util.option('--name', required=True, help=u"""Monitored Resource Name.""")
+@cli_util.option('--type', required=True, help=u"""Monitored Resource Type.""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
 @cli_util.option('--display-name', help=u"""Monitored resource display name.""")
-@cli_util.option('--host-name', help=u"""Host name of the monitored resource""")
+@cli_util.option('--host-name', help=u"""Host name of the monitored resource.""")
 @cli_util.option('--external-id', help=u"""External resource is any OCI resource identifier [OCID] which is not a Stack Monitoring service resource. Currently supports only OCI compute instance.""")
 @cli_util.option('--management-agent-id', help=u"""Management Agent Identifier [OCID].""")
-@cli_util.option('--resource-time-zone', help=u"""Time zone in the form of tz database canonical zone ID.""")
-@cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of monitored resource properties
+@cli_util.option('--resource-time-zone', help=u"""Time zone in the form of tz database canonical zone ID. Specifies the preference with a value that uses the IANA Time Zone Database format (x-obmcs-time-zone). For example - America/Los_Angeles""")
+@cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of monitored resource properties.
 
 This option is a JSON list with items of type MonitoredResourceProperty.  For documentation on MonitoredResourceProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-connection-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--aliases', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--additional-credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of MonitoredResourceCredentials. This property complements the existing \"credentials\" property by allowing user to specify more than one credential. If both \"credential\" and \"additionalCredentials\" are specified, union of the values is used as list of credentials applicable for this resource. If any duplicate found in the combined list of \"credentials\" and \"additionalCredentials\", an error will be thrown.
+
+This option is a JSON list with items of type MonitoredResourceCredential.  For documentation on MonitoredResourceCredential please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceCredential.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--additional-aliases', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of MonitoredResourceAliasCredentials. This property complements the existing \"aliases\" property by allowing user to specify more than one credential alias. If both \"aliases\" and \"additionalAliases\" are specified, union of the values is used as list of aliases applicable for this resource. If any duplicate found in the combined list of \"alias\" and \"additionalAliases\", an error will be thrown.
+
+This option is a JSON list with items of type MonitoredResourceAliasCredential.  For documentation on MonitoredResourceAliasCredential please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceAliasCredential.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--external-resource-id', help=u"""Generally used by DBaaS to send the Database OCID stored on the DBaaS. The same will be passed to resource service to enable Stack Monitoring Service on DBM. This will be stored in Stack Monitoring Resource Service data store as identifier for monitored resource. If this header is not set as part of the request, then an id will be generated and stored for the resource.""")
-@cli_util.option('--credentials-source', help=u"""The source type and source name combination,delimited with (.) separator. {source type}.{source name} and source type max char limit is 63.""")
+@cli_util.option('--credentials-source', help=u"""The source type and source name combination, delimited with (.) separator. {source type}.{source name} and source type max char limit is 63.""")
 @cli_util.option('--credentials-name', help=u"""The name of the credential, within the context of the source.""")
 @cli_util.option('--credentials-type', help=u"""The type of the credential ( ex. JMXCreds,DBCreds).""")
 @cli_util.option('--credentials-description', help=u"""The user-specified textual description of the credential.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}})
+@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'additional-credentials': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceCredential]'}, 'additional-aliases': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceAliasCredential]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResource'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'additional-credentials': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceCredential]'}, 'additional-aliases': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceAliasCredential]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResource'})
 @cli_util.wrap_exceptions
-def create_monitored_resource_pre_existing_credentials(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, type, compartment_id, display_name, host_name, external_id, management_agent_id, resource_time_zone, properties, database_connection_details, aliases, external_resource_id, credentials_source, credentials_name, credentials_type, credentials_description):
+def create_monitored_resource_pre_existing_credentials(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, type, compartment_id, display_name, host_name, external_id, management_agent_id, resource_time_zone, properties, database_connection_details, aliases, additional_credentials, additional_aliases, freeform_tags, defined_tags, external_resource_id, credentials_source, credentials_name, credentials_type, credentials_description):
 
     kwargs = {}
     if external_resource_id is not None:
@@ -393,6 +425,18 @@ def create_monitored_resource_pre_existing_credentials(ctx, from_json, wait_for_
 
     if aliases is not None:
         _details['aliases'] = cli_util.parse_json_parameter("aliases", aliases)
+
+    if additional_credentials is not None:
+        _details['additionalCredentials'] = cli_util.parse_json_parameter("additional_credentials", additional_credentials)
+
+    if additional_aliases is not None:
+        _details['additionalAliases'] = cli_util.parse_json_parameter("additional_aliases", additional_aliases)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if credentials_source is not None:
         _details['credentials']['source'] = credentials_source
@@ -439,36 +483,44 @@ def create_monitored_resource_pre_existing_credentials(ctx, from_json, wait_for_
     cli_util.render_response(result, ctx)
 
 
-@monitored_resource_group.command(name=cli_util.override('stack_monitoring.create_monitored_resource_encrypted_credentials.command_name', 'create-monitored-resource-encrypted-credentials'), help=u"""Creates a new monitored resource for the given resource type \n[Command Reference](createMonitoredResource)""")
-@cli_util.option('--name', required=True, help=u"""Monitored resource name""")
-@cli_util.option('--type', required=True, help=u"""Monitored resource type""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID]""")
-@cli_util.option('--credentials-key-id', required=True, help=u"""The master key OCID and applicable only for property value type ENCRYPTION. Key OCID is passed as input to Key management service decrypt API to retrieve the encrypted property value text.""")
+@monitored_resource_group.command(name=cli_util.override('stack_monitoring.create_monitored_resource_encrypted_credentials.command_name', 'create-monitored-resource-encrypted-credentials'), help=u"""Creates a new monitored resource for the given resource type with the details and submits a work request for promoting the resource to agent. Once the resource is successfully added to agent, resource state will be marked active. \n[Command Reference](createMonitoredResource)""")
+@cli_util.option('--name', required=True, help=u"""Monitored Resource Name.""")
+@cli_util.option('--type', required=True, help=u"""Monitored Resource Type.""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
+@cli_util.option('--credentials-key-id', required=True, help=u"""The master key should be created in OCI Vault owned by the client of this API. The user should have permission to access the vault key.""")
 @cli_util.option('--credentials-properties', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The credential properties list. Credential property values will be encrypted format.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""Monitored resource display name.""")
-@cli_util.option('--host-name', help=u"""Host name of the monitored resource""")
+@cli_util.option('--host-name', help=u"""Host name of the monitored resource.""")
 @cli_util.option('--external-id', help=u"""External resource is any OCI resource identifier [OCID] which is not a Stack Monitoring service resource. Currently supports only OCI compute instance.""")
 @cli_util.option('--management-agent-id', help=u"""Management Agent Identifier [OCID].""")
-@cli_util.option('--resource-time-zone', help=u"""Time zone in the form of tz database canonical zone ID.""")
-@cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of monitored resource properties
+@cli_util.option('--resource-time-zone', help=u"""Time zone in the form of tz database canonical zone ID. Specifies the preference with a value that uses the IANA Time Zone Database format (x-obmcs-time-zone). For example - America/Los_Angeles""")
+@cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of monitored resource properties.
 
 This option is a JSON list with items of type MonitoredResourceProperty.  For documentation on MonitoredResourceProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-connection-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--aliases', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--additional-credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of MonitoredResourceCredentials. This property complements the existing \"credentials\" property by allowing user to specify more than one credential. If both \"credential\" and \"additionalCredentials\" are specified, union of the values is used as list of credentials applicable for this resource. If any duplicate found in the combined list of \"credentials\" and \"additionalCredentials\", an error will be thrown.
+
+This option is a JSON list with items of type MonitoredResourceCredential.  For documentation on MonitoredResourceCredential please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceCredential.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--additional-aliases', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of MonitoredResourceAliasCredentials. This property complements the existing \"aliases\" property by allowing user to specify more than one credential alias. If both \"aliases\" and \"additionalAliases\" are specified, union of the values is used as list of aliases applicable for this resource. If any duplicate found in the combined list of \"alias\" and \"additionalAliases\", an error will be thrown.
+
+This option is a JSON list with items of type MonitoredResourceAliasCredential.  For documentation on MonitoredResourceAliasCredential please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceAliasCredential.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--external-resource-id', help=u"""Generally used by DBaaS to send the Database OCID stored on the DBaaS. The same will be passed to resource service to enable Stack Monitoring Service on DBM. This will be stored in Stack Monitoring Resource Service data store as identifier for monitored resource. If this header is not set as part of the request, then an id will be generated and stored for the resource.""")
-@cli_util.option('--credentials-source', help=u"""The source type and source name combination,delimited with (.) separator. {source type}.{source name} and source type max char limit is 63.""")
+@cli_util.option('--credentials-source', help=u"""The source type and source name combination, delimited with (.) separator. {source type}.{source name} and source type max char limit is 63.""")
 @cli_util.option('--credentials-name', help=u"""The name of the credential, within the context of the source.""")
 @cli_util.option('--credentials-type', help=u"""The type of the credential ( ex. JMXCreds,DBCreds).""")
 @cli_util.option('--credentials-description', help=u"""The user-specified textual description of the credential.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'credentials-properties': {'module': 'stack_monitoring', 'class': 'list[CredentialProperty]'}})
+@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'additional-credentials': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceCredential]'}, 'additional-aliases': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceAliasCredential]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'credentials-properties': {'module': 'stack_monitoring', 'class': 'list[CredentialProperty]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'credentials-properties': {'module': 'stack_monitoring', 'class': 'list[CredentialProperty]'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResource'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'additional-credentials': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceCredential]'}, 'additional-aliases': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceAliasCredential]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'credentials-properties': {'module': 'stack_monitoring', 'class': 'list[CredentialProperty]'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResource'})
 @cli_util.wrap_exceptions
-def create_monitored_resource_encrypted_credentials(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, type, compartment_id, credentials_key_id, credentials_properties, display_name, host_name, external_id, management_agent_id, resource_time_zone, properties, database_connection_details, aliases, external_resource_id, credentials_source, credentials_name, credentials_type, credentials_description):
+def create_monitored_resource_encrypted_credentials(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, type, compartment_id, credentials_key_id, credentials_properties, display_name, host_name, external_id, management_agent_id, resource_time_zone, properties, database_connection_details, aliases, additional_credentials, additional_aliases, freeform_tags, defined_tags, external_resource_id, credentials_source, credentials_name, credentials_type, credentials_description):
 
     kwargs = {}
     if external_resource_id is not None:
@@ -506,6 +558,18 @@ def create_monitored_resource_encrypted_credentials(ctx, from_json, wait_for_sta
 
     if aliases is not None:
         _details['aliases'] = cli_util.parse_json_parameter("aliases", aliases)
+
+    if additional_credentials is not None:
+        _details['additionalCredentials'] = cli_util.parse_json_parameter("additional_credentials", additional_credentials)
+
+    if additional_aliases is not None:
+        _details['additionalAliases'] = cli_util.parse_json_parameter("additional_aliases", additional_aliases)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if credentials_source is not None:
         _details['credentials']['source'] = credentials_source
@@ -552,35 +616,43 @@ def create_monitored_resource_encrypted_credentials(ctx, from_json, wait_for_sta
     cli_util.render_response(result, ctx)
 
 
-@monitored_resource_group.command(name=cli_util.override('stack_monitoring.create_monitored_resource_plain_text_credentials.command_name', 'create-monitored-resource-plain-text-credentials'), help=u"""Creates a new monitored resource for the given resource type \n[Command Reference](createMonitoredResource)""")
-@cli_util.option('--name', required=True, help=u"""Monitored resource name""")
-@cli_util.option('--type', required=True, help=u"""Monitored resource type""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID]""")
-@cli_util.option('--credentials-properties', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The credential properties list. Credential property values will be either in plain text format.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@monitored_resource_group.command(name=cli_util.override('stack_monitoring.create_monitored_resource_plain_text_credentials.command_name', 'create-monitored-resource-plain-text-credentials'), help=u"""Creates a new monitored resource for the given resource type with the details and submits a work request for promoting the resource to agent. Once the resource is successfully added to agent, resource state will be marked active. \n[Command Reference](createMonitoredResource)""")
+@cli_util.option('--name', required=True, help=u"""Monitored Resource Name.""")
+@cli_util.option('--type', required=True, help=u"""Monitored Resource Type.""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
+@cli_util.option('--credentials-properties', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The credential properties list. Credential property values will be either in plain text format or encrypted for encrypted credentials.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""Monitored resource display name.""")
-@cli_util.option('--host-name', help=u"""Host name of the monitored resource""")
+@cli_util.option('--host-name', help=u"""Host name of the monitored resource.""")
 @cli_util.option('--external-id', help=u"""External resource is any OCI resource identifier [OCID] which is not a Stack Monitoring service resource. Currently supports only OCI compute instance.""")
 @cli_util.option('--management-agent-id', help=u"""Management Agent Identifier [OCID].""")
-@cli_util.option('--resource-time-zone', help=u"""Time zone in the form of tz database canonical zone ID.""")
-@cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of monitored resource properties
+@cli_util.option('--resource-time-zone', help=u"""Time zone in the form of tz database canonical zone ID. Specifies the preference with a value that uses the IANA Time Zone Database format (x-obmcs-time-zone). For example - America/Los_Angeles""")
+@cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of monitored resource properties.
 
 This option is a JSON list with items of type MonitoredResourceProperty.  For documentation on MonitoredResourceProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-connection-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--aliases', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--additional-credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of MonitoredResourceCredentials. This property complements the existing \"credentials\" property by allowing user to specify more than one credential. If both \"credential\" and \"additionalCredentials\" are specified, union of the values is used as list of credentials applicable for this resource. If any duplicate found in the combined list of \"credentials\" and \"additionalCredentials\", an error will be thrown.
+
+This option is a JSON list with items of type MonitoredResourceCredential.  For documentation on MonitoredResourceCredential please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceCredential.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--additional-aliases', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of MonitoredResourceAliasCredentials. This property complements the existing \"aliases\" property by allowing user to specify more than one credential alias. If both \"aliases\" and \"additionalAliases\" are specified, union of the values is used as list of aliases applicable for this resource. If any duplicate found in the combined list of \"alias\" and \"additionalAliases\", an error will be thrown.
+
+This option is a JSON list with items of type MonitoredResourceAliasCredential.  For documentation on MonitoredResourceAliasCredential please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceAliasCredential.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--external-resource-id', help=u"""Generally used by DBaaS to send the Database OCID stored on the DBaaS. The same will be passed to resource service to enable Stack Monitoring Service on DBM. This will be stored in Stack Monitoring Resource Service data store as identifier for monitored resource. If this header is not set as part of the request, then an id will be generated and stored for the resource.""")
-@cli_util.option('--credentials-source', help=u"""The source type and source name combination,delimited with (.) separator. {source type}.{source name} and source type max char limit is 63.""")
+@cli_util.option('--credentials-source', help=u"""The source type and source name combination, delimited with (.) separator. {source type}.{source name} and source type max char limit is 63.""")
 @cli_util.option('--credentials-name', help=u"""The name of the credential, within the context of the source.""")
 @cli_util.option('--credentials-type', help=u"""The type of the credential ( ex. JMXCreds,DBCreds).""")
 @cli_util.option('--credentials-description', help=u"""The user-specified textual description of the credential.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'credentials-properties': {'module': 'stack_monitoring', 'class': 'list[CredentialProperty]'}})
+@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'additional-credentials': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceCredential]'}, 'additional-aliases': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceAliasCredential]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'credentials-properties': {'module': 'stack_monitoring', 'class': 'list[CredentialProperty]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'credentials-properties': {'module': 'stack_monitoring', 'class': 'list[CredentialProperty]'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResource'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'additional-credentials': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceCredential]'}, 'additional-aliases': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceAliasCredential]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'credentials-properties': {'module': 'stack_monitoring', 'class': 'list[CredentialProperty]'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResource'})
 @cli_util.wrap_exceptions
-def create_monitored_resource_plain_text_credentials(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, type, compartment_id, credentials_properties, display_name, host_name, external_id, management_agent_id, resource_time_zone, properties, database_connection_details, aliases, external_resource_id, credentials_source, credentials_name, credentials_type, credentials_description):
+def create_monitored_resource_plain_text_credentials(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, type, compartment_id, credentials_properties, display_name, host_name, external_id, management_agent_id, resource_time_zone, properties, database_connection_details, aliases, additional_credentials, additional_aliases, freeform_tags, defined_tags, external_resource_id, credentials_source, credentials_name, credentials_type, credentials_description):
 
     kwargs = {}
     if external_resource_id is not None:
@@ -617,6 +689,18 @@ def create_monitored_resource_plain_text_credentials(ctx, from_json, wait_for_st
 
     if aliases is not None:
         _details['aliases'] = cli_util.parse_json_parameter("aliases", aliases)
+
+    if additional_credentials is not None:
+        _details['additionalCredentials'] = cli_util.parse_json_parameter("additional_credentials", additional_credentials)
+
+    if additional_aliases is not None:
+        _details['additionalAliases'] = cli_util.parse_json_parameter("additional_aliases", additional_aliases)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if credentials_source is not None:
         _details['credentials']['source'] = credentials_source
@@ -727,10 +811,10 @@ def delete_discovery_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@monitored_resource_group.command(name=cli_util.override('stack_monitoring.delete_monitored_resource.command_name', 'delete'), help=u"""Deletes a monitored resource by identifier \n[Command Reference](deleteMonitoredResource)""")
+@monitored_resource_group.command(name=cli_util.override('stack_monitoring.delete_monitored_resource.command_name', 'delete'), help=u"""Delete monitored resource by the given identifier [OCID]. By default, only the specified resource is deleted. If the parameter 'isDeleteMembers' is set to true, then the member resources will be deleted too. If the operation fails partially, the deleted entries will not be rolled back. \n[Command Reference](deleteMonitoredResource)""")
 @cli_util.option('--monitored-resource-id', required=True, help=u"""The [OCID] of monitored resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--is-delete-members', type=click.BOOL, help=u"""A filter to delete the associated children or not for given resource.""")
+@cli_util.option('--is-delete-members', type=click.BOOL, help=u"""If this query parameter is specified and set to true, all the member resources will be deleted before deleting the specified resource.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -782,7 +866,7 @@ def delete_monitored_resource(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@monitored_resource_group.command(name=cli_util.override('stack_monitoring.disable_external_database.command_name', 'disable-external-database'), help=u"""Disable external database resource monitoring. \n[Command Reference](disableExternalDatabase)""")
+@monitored_resource_group.command(name=cli_util.override('stack_monitoring.disable_external_database.command_name', 'disable-external-database'), help=u"""Disable external database resource monitoring. All the references in DBaaS, DBM and resource service will be deleted as part of this operation. \n[Command Reference](disableExternalDatabase)""")
 @cli_util.option('--monitored-resource-id', required=True, help=u"""The [OCID] of monitored resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -834,10 +918,10 @@ def disable_external_database(ctx, from_json, wait_for_state, max_wait_seconds, 
 
 
 @monitored_resource_group.command(name=cli_util.override('stack_monitoring.disassociate_monitored_resources.command_name', 'disassociate'), help=u"""Removes associations between two monitored resources. \n[Command Reference](disassociateMonitoredResources)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID]""")
-@cli_util.option('--association-type', help=u"""Association type to be created between source and destination resources""")
-@cli_util.option('--source-resource-id', help=u"""Source Monitored Resource Identifier [OCID]""")
-@cli_util.option('--destination-resource-id', help=u"""Destination Monitored Resource Identifier [OCID]""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
+@cli_util.option('--association-type', help=u"""Association type between source and destination resources.""")
+@cli_util.option('--source-resource-id', help=u"""Source Monitored Resource Identifier [OCID].""")
+@cli_util.option('--destination-resource-id', help=u"""Destination Monitored Resource Identifier [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -893,7 +977,7 @@ def get_discovery_job(ctx, from_json, discovery_job_id):
     cli_util.render_response(result, ctx)
 
 
-@monitored_resource_group.command(name=cli_util.override('stack_monitoring.get_monitored_resource.command_name', 'get'), help=u"""Gets a monitored resource by identifier \n[Command Reference](getMonitoredResource)""")
+@monitored_resource_group.command(name=cli_util.override('stack_monitoring.get_monitored_resource.command_name', 'get'), help=u"""Get monitored resource for the given identifier [OCID]. \n[Command Reference](getMonitoredResource)""")
 @cli_util.option('--monitored-resource-id', required=True, help=u"""The [OCID] of monitored resource.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1231,12 +1315,12 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
     cli_util.render_response(result, ctx)
 
 
-@monitored_resource_group.command(name=cli_util.override('stack_monitoring.search_associated_resources.command_name', 'search-associated-resources'), help=u"""List associated monitored resources. \n[Command Reference](searchAssociatedResources)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID]""")
+@monitored_resource_group.command(name=cli_util.override('stack_monitoring.search_associated_resources.command_name', 'search-associated-resources'), help=u"""List all associated resources recursively up-to a specified level, for the monitored resources of type specified. \n[Command Reference](searchAssociatedResources)""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
 @cli_util.option('--resource-type', help=u"""A filter to return associated resources that match resources of type. Either resourceId or resourceType should be provided.""")
 @cli_util.option('--resource-id', help=u"""Monitored resource identifier for which the associated resources should be fetched. Either resourceId or resourceType should be provided.""")
 @cli_util.option('--limit-level', type=click.INT, help=u"""The field which determines the depth of hierarchy while searching for associated resources. Possible values - 0 for all levels. And positive number to indicate different levels. Default value is 1, which indicates 1st level associations.""")
-@cli_util.option('--association-types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of association types to be searched for finding associated resources""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--association-types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Association types filter to be searched for finding associated resources.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--fields', multiple=True, help=u"""Partial response refers to an optimization technique offered by the RESTful web APIs, to return only the information (fields) required by the client. In this mechanism, the client sends the required field names as the query parameters for an API to the server, and the server trims down the default response content by removing the fields that are not required by the client. The parameter controls which fields to return and should be a query string parameter called \"fields\" of an array type, provide the values as enums, and use collectionFormat.""")
 @cli_util.option('--exclude-fields', multiple=True, help=u"""Partial response refers to an optimization technique offered by the RESTful web APIs, to return all the information except the fields requested to be excluded (excludeFields) by the client. In this mechanism, the client sends the exclude field names as the query parameters for an API to the server, and the server trims down the default response content by removing the fields that are not required by the client. The parameter controls which fields to exlude and to return and should be a query string parameter called \"excludeFields\" of an array type, provide the values as enums, and use collectionFormat.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1285,15 +1369,15 @@ def search_associated_resources(ctx, from_json, compartment_id, resource_type, r
     cli_util.render_response(result, ctx)
 
 
-@monitored_resource_group.command(name=cli_util.override('stack_monitoring.search_monitored_resource_associations.command_name', 'search-monitored-resource-associations'), help=u"""Returns a list of monitored resource associations. \n[Command Reference](searchMonitoredResourceAssociations)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID]""")
-@cli_util.option('--source-resource-id', help=u"""Source Monitored Resource Identifier [OCID]""")
-@cli_util.option('--source-resource-name', help=u"""Source Monitored Resource Name""")
-@cli_util.option('--source-resource-type', help=u"""Source Monitored Resource Type""")
-@cli_util.option('--destination-resource-id', help=u"""Destination Monitored Resource Identifier [OCID]""")
-@cli_util.option('--destination-resource-name', help=u"""Source Monitored Resource Name""")
-@cli_util.option('--destination-resource-type', help=u"""Source Monitored Resource Type""")
-@cli_util.option('--association-type', help=u"""Association type to be created between source and destination resources""")
+@monitored_resource_group.command(name=cli_util.override('stack_monitoring.search_monitored_resource_associations.command_name', 'search-monitored-resource-associations'), help=u"""Search associations in the given compartment based on the search criteria. \n[Command Reference](searchMonitoredResourceAssociations)""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
+@cli_util.option('--source-resource-id', help=u"""Source Monitored Resource Identifier [OCID].""")
+@cli_util.option('--source-resource-name', help=u"""Source Monitored Resource Name.""")
+@cli_util.option('--source-resource-type', help=u"""Source Monitored Resource Type.""")
+@cli_util.option('--destination-resource-id', help=u"""Destination Monitored Resource Identifier [OCID].""")
+@cli_util.option('--destination-resource-name', help=u"""Source Monitored Resource Name.""")
+@cli_util.option('--destination-resource-type', help=u"""Source Monitored Resource Type.""")
+@cli_util.option('--association-type', help=u"""Association type filter to search associated resources.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_CREATED", "ASSOC_TYPE"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for assocType is descending.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -1353,10 +1437,10 @@ def search_monitored_resource_associations(ctx, from_json, compartment_id, sourc
     cli_util.render_response(result, ctx)
 
 
-@monitored_resource_group.command(name=cli_util.override('stack_monitoring.search_monitored_resource_members.command_name', 'search-monitored-resource-members'), help=u"""List resources which are members of the given monitored resource \n[Command Reference](searchMonitoredResourceMembers)""")
+@monitored_resource_group.command(name=cli_util.override('stack_monitoring.search_monitored_resource_members.command_name', 'search-monitored-resource-members'), help=u"""List the member resources for the given monitored resource identifier [OCID]. \n[Command Reference](searchMonitoredResourceMembers)""")
 @cli_util.option('--monitored-resource-id', required=True, help=u"""The [OCID] of monitored resource.""")
-@cli_util.option('--destination-resource-id', help=u"""Destination Monitored Resource Identifier [OCID]""")
-@cli_util.option('--limit-level', type=click.INT, help=u"""The field which determines the depth of hierarchy while searching for members""")
+@cli_util.option('--destination-resource-id', help=u"""Destination Monitored Resource Identifier [OCID].""")
+@cli_util.option('--limit-level', type=click.INT, help=u"""The field which determines the depth of hierarchy while searching for members.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["resourceName", "resourceType", "sourceResourceType"]), help=u"""If this query parameter is specified, the result is sorted by this query parameter value.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -1402,14 +1486,14 @@ def search_monitored_resource_members(ctx, from_json, monitored_resource_id, des
     cli_util.render_response(result, ctx)
 
 
-@monitored_resource_group.command(name=cli_util.override('stack_monitoring.search_monitored_resources.command_name', 'search'), help=u"""Returns a list of monitored resources. \n[Command Reference](searchMonitoredResources)""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID]""")
-@cli_util.option('--name', help=u"""A filter to return resources that match exact resource name""")
+@monitored_resource_group.command(name=cli_util.override('stack_monitoring.search_monitored_resources.command_name', 'search'), help=u"""Gets a list of all monitored resources in a compartment for the given search criteria. \n[Command Reference](searchMonitoredResources)""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
+@cli_util.option('--name', help=u"""A filter to return resources that match exact resource name.""")
 @cli_util.option('--name-contains', help=u"""A filter to return resources that match resource name pattern given. The match is not case sensitive.""")
-@cli_util.option('--type', help=u"""A filter to return resources that match resource type""")
-@cli_util.option('--host-name', help=u"""A filter to return resources with host name match""")
-@cli_util.option('--external-id', help=u"""External resource is any OCI resource identifier [OCID] which is not a Stack Monitoring service resource. Currently supports only following resource type identifiers - externalcontainerdatabase, externalnoncontainerdatabase, externalpluggabledatabase and OCI compute instance.""")
-@cli_util.option('--host-name-contains', help=u"""A filter to return resources with host name pattern""")
+@cli_util.option('--type', help=u"""A filter to return resources that match resource type.""")
+@cli_util.option('--host-name', help=u"""A filter to return resources with host name match.""")
+@cli_util.option('--external-id', help=u"""External resource is any OCI resource identifier [OCID] which is not a Stack Monitoring service resource. Currently supports only following resource types - Container database, non-container database, pluggable database and OCI compute instance.""")
+@cli_util.option('--host-name-contains', help=u"""A filter to return resources with host name pattern.""")
 @cli_util.option('--management-agent-id', help=u"""A filter to return resources with matching management agent id.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return resources with matching lifecycle state.""")
 @cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Search for resources that were created within a specific date range, using this parameter to specify the earliest creation date for the returned list (inclusive). Specifying this parameter without the corresponding `timeCreatedLessThan` parameter will retrieve resources created from the given `timeCreatedGreaterThanOrEqualTo` to the current time, in \"YYYY-MM-ddThh:mmZ\" format with a Z offset, as defined by [RFC 3339].
@@ -1424,7 +1508,7 @@ def search_monitored_resource_members(ctx, from_json, monitored_resource_id, des
 @cli_util.option('--time-updated-less-than', type=custom_types.CLI_DATETIME, help=u"""Search for resources that were updated within a specific date range, using this parameter to specify the latest creation date for the returned list (exclusive). Specifying this parameter without the corresponding `timeUpdatedGreaterThanOrEqualTo` parameter will retrieve all resources updated before the specified end date, in \"YYYY-MM-ddThh:mmZ\" format with a Z offset, as defined by [RFC 3339].
 
 **Example:** 2016-12-19T16:39:57.600Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--resource-time-zone', help=u"""Time zone in the form of tz database canonical zone ID.""")
+@cli_util.option('--resource-time-zone', help=u"""Time zone in the form of tz database canonical zone ID. Specifies the preference with a value that uses the IANA Time Zone Database format (x-obmcs-time-zone). For example - America/Los_Angeles""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_CREATED", "RESOURCE_NAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for resources is ascending.""")
 @cli_util.option('--property-equals', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Criteria based on resource property.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1512,34 +1596,109 @@ def search_monitored_resources(ctx, from_json, compartment_id, name, name_contai
     cli_util.render_response(result, ctx)
 
 
-@monitored_resource_group.command(name=cli_util.override('stack_monitoring.update_monitored_resource.command_name', 'update'), help=u"""Updates the Monitored Resource \n[Command Reference](updateMonitoredResource)""")
+@monitored_resource_group.command(name=cli_util.override('stack_monitoring.update_and_propagate_tags.command_name', 'update-and-propagate-tags'), help=u"""Provided tags will be added or updated in the existing list of tags for the affected resources. Resources to be updated are identified based on association types specified. If association types not specified, then tags will be updated only for the resource identified by the given monitored resource identifier [OCID]. \n[Command Reference](updateAndPropagateTags)""")
+@cli_util.option('--monitored-resource-id', required=True, help=u"""The [OCID] of monitored resource.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--association-types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Association types that will be traversed recursively starting from the current resource, to identify resources for which the tags will be updated. If no association type is specified, only current resource will be updated. Default is empty list, which means no related resources will be updated.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'association-types': {'module': 'stack_monitoring', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'association-types': {'module': 'stack_monitoring', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def update_and_propagate_tags(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_id, freeform_tags, defined_tags, association_types, if_match):
+
+    if isinstance(monitored_resource_id, six.string_types) and len(monitored_resource_id.strip()) == 0:
+        raise click.UsageError('Parameter --monitored-resource-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if association_types is not None:
+        _details['associationTypes'] = cli_util.parse_json_parameter("association_types", association_types)
+
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.update_and_propagate_tags(
+        monitored_resource_id=monitored_resource_id,
+        update_and_propagate_tags_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@monitored_resource_group.command(name=cli_util.override('stack_monitoring.update_monitored_resource.command_name', 'update'), help=u"""Update monitored resource by the given identifier [OCID]. Note that \"properties\" object, if specified, will entirely replace the existing object, as part this operation. \n[Command Reference](updateMonitoredResource)""")
 @cli_util.option('--monitored-resource-id', required=True, help=u"""The [OCID] of monitored resource.""")
 @cli_util.option('--display-name', help=u"""Monitored resource display name.""")
-@cli_util.option('--host-name', help=u"""Host name of the monitored resource""")
-@cli_util.option('--resource-time-zone', help=u"""Time zone in the form of tz database canonical zone ID.""")
-@cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of monitored resource properties
+@cli_util.option('--host-name', help=u"""Host name of the monitored resource.""")
+@cli_util.option('--resource-time-zone', help=u"""Time zone in the form of tz database canonical zone ID. Specifies the preference with a value that uses the IANA Time Zone Database format (x-obmcs-time-zone). For example - America/Los_Angeles""")
+@cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of monitored resource properties.
 
 This option is a JSON list with items of type MonitoredResourceProperty.  For documentation on MonitoredResourceProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-connection-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--aliases', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--additional-credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of MonitoredResourceCredentials. This property complements the existing \"credentials\" property by allowing user to specify more than one credential. If both \"credential\" and \"additionalCredentials\" are specified, union of the values is used as list of credentials applicable for this resource. If any duplicate found in the combined list of \"credentials\" and \"additionalCredentials\", an error will be thrown.
+
+This option is a JSON list with items of type MonitoredResourceCredential.  For documentation on MonitoredResourceCredential please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceCredential.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--additional-aliases', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of MonitoredResourceAliasCredentials. This property complements the existing \"aliases\" property by allowing user to specify more than one credential alias. If both \"aliases\" and \"additionalAliases\" are specified, union of the values is used as list of aliases applicable for this resource. If any duplicate found in the combined list of \"alias\" and \"additionalAliases\", an error will be thrown.
+
+This option is a JSON list with items of type MonitoredResourceAliasCredential.  For documentation on MonitoredResourceAliasCredential please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceAliasCredential.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'credentials': {'module': 'stack_monitoring', 'class': 'MonitoredResourceCredential'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}})
+@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'credentials': {'module': 'stack_monitoring', 'class': 'MonitoredResourceCredential'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'additional-credentials': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceCredential]'}, 'additional-aliases': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceAliasCredential]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'credentials': {'module': 'stack_monitoring', 'class': 'MonitoredResourceCredential'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'credentials': {'module': 'stack_monitoring', 'class': 'MonitoredResourceCredential'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'additional-credentials': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceCredential]'}, 'additional-aliases': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceAliasCredential]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_monitored_resource(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_id, display_name, host_name, resource_time_zone, properties, database_connection_details, credentials, aliases, if_match):
+def update_monitored_resource(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_id, display_name, host_name, resource_time_zone, properties, database_connection_details, credentials, aliases, additional_credentials, additional_aliases, freeform_tags, defined_tags, if_match):
 
     if isinstance(monitored_resource_id, six.string_types) and len(monitored_resource_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-resource-id cannot be whitespace or empty string')
     if not force:
-        if properties or database_connection_details or credentials or aliases:
-            if not click.confirm("WARNING: Updates to properties and database-connection-details and credentials and aliases will replace any existing values. Are you sure you want to continue?"):
+        if properties or database_connection_details or credentials or aliases or additional_credentials or additional_aliases or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to properties and database-connection-details and credentials and aliases and additional-credentials and additional-aliases and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1569,6 +1728,18 @@ def update_monitored_resource(ctx, from_json, force, wait_for_state, max_wait_se
 
     if aliases is not None:
         _details['aliases'] = cli_util.parse_json_parameter("aliases", aliases)
+
+    if additional_credentials is not None:
+        _details['additionalCredentials'] = cli_util.parse_json_parameter("additional_credentials", additional_credentials)
+
+    if additional_aliases is not None:
+        _details['additionalAliases'] = cli_util.parse_json_parameter("additional_aliases", additional_aliases)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
     result = client.update_monitored_resource(
@@ -1602,18 +1773,26 @@ def update_monitored_resource(ctx, from_json, force, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
-@monitored_resource_group.command(name=cli_util.override('stack_monitoring.update_monitored_resource_pre_existing_credentials.command_name', 'update-monitored-resource-pre-existing-credentials'), help=u"""Updates the Monitored Resource \n[Command Reference](updateMonitoredResource)""")
+@monitored_resource_group.command(name=cli_util.override('stack_monitoring.update_monitored_resource_pre_existing_credentials.command_name', 'update-monitored-resource-pre-existing-credentials'), help=u"""Update monitored resource by the given identifier [OCID]. Note that \"properties\" object, if specified, will entirely replace the existing object, as part this operation. \n[Command Reference](updateMonitoredResource)""")
 @cli_util.option('--monitored-resource-id', required=True, help=u"""The [OCID] of monitored resource.""")
 @cli_util.option('--display-name', help=u"""Monitored resource display name.""")
-@cli_util.option('--host-name', help=u"""Host name of the monitored resource""")
-@cli_util.option('--resource-time-zone', help=u"""Time zone in the form of tz database canonical zone ID.""")
-@cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of monitored resource properties
+@cli_util.option('--host-name', help=u"""Host name of the monitored resource.""")
+@cli_util.option('--resource-time-zone', help=u"""Time zone in the form of tz database canonical zone ID. Specifies the preference with a value that uses the IANA Time Zone Database format (x-obmcs-time-zone). For example - America/Los_Angeles""")
+@cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of monitored resource properties.
 
 This option is a JSON list with items of type MonitoredResourceProperty.  For documentation on MonitoredResourceProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-connection-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--aliases', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--additional-credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of MonitoredResourceCredentials. This property complements the existing \"credentials\" property by allowing user to specify more than one credential. If both \"credential\" and \"additionalCredentials\" are specified, union of the values is used as list of credentials applicable for this resource. If any duplicate found in the combined list of \"credentials\" and \"additionalCredentials\", an error will be thrown.
+
+This option is a JSON list with items of type MonitoredResourceCredential.  For documentation on MonitoredResourceCredential please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceCredential.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--additional-aliases', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of MonitoredResourceAliasCredentials. This property complements the existing \"aliases\" property by allowing user to specify more than one credential alias. If both \"aliases\" and \"additionalAliases\" are specified, union of the values is used as list of aliases applicable for this resource. If any duplicate found in the combined list of \"alias\" and \"additionalAliases\", an error will be thrown.
+
+This option is a JSON list with items of type MonitoredResourceAliasCredential.  For documentation on MonitoredResourceAliasCredential please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceAliasCredential.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--credentials-source', help=u"""The source type and source name combination,delimited with (.) separator. {source type}.{source name} and source type max char limit is 63.""")
+@cli_util.option('--credentials-source', help=u"""The source type and source name combination, delimited with (.) separator. {source type}.{source name} and source type max char limit is 63.""")
 @cli_util.option('--credentials-name', help=u"""The name of the credential, within the context of the source.""")
 @cli_util.option('--credentials-type', help=u"""The type of the credential ( ex. JMXCreds,DBCreds).""")
 @cli_util.option('--credentials-description', help=u"""The user-specified textual description of the credential.""")
@@ -1621,18 +1800,18 @@ This option is a JSON list with items of type MonitoredResourceProperty.  For do
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}})
+@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'additional-credentials': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceCredential]'}, 'additional-aliases': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceAliasCredential]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'additional-credentials': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceCredential]'}, 'additional-aliases': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceAliasCredential]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_monitored_resource_pre_existing_credentials(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_id, display_name, host_name, resource_time_zone, properties, database_connection_details, aliases, if_match, credentials_source, credentials_name, credentials_type, credentials_description):
+def update_monitored_resource_pre_existing_credentials(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_id, display_name, host_name, resource_time_zone, properties, database_connection_details, aliases, additional_credentials, additional_aliases, freeform_tags, defined_tags, if_match, credentials_source, credentials_name, credentials_type, credentials_description):
 
     if isinstance(monitored_resource_id, six.string_types) and len(monitored_resource_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-resource-id cannot be whitespace or empty string')
     if not force:
-        if properties or database_connection_details or aliases:
-            if not click.confirm("WARNING: Updates to properties and database-connection-details and aliases will replace any existing values. Are you sure you want to continue?"):
+        if properties or database_connection_details or aliases or additional_credentials or additional_aliases or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to properties and database-connection-details and aliases and additional-credentials and additional-aliases and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1660,6 +1839,18 @@ def update_monitored_resource_pre_existing_credentials(ctx, from_json, force, wa
 
     if aliases is not None:
         _details['aliases'] = cli_util.parse_json_parameter("aliases", aliases)
+
+    if additional_credentials is not None:
+        _details['additionalCredentials'] = cli_util.parse_json_parameter("additional_credentials", additional_credentials)
+
+    if additional_aliases is not None:
+        _details['additionalAliases'] = cli_util.parse_json_parameter("additional_aliases", additional_aliases)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if credentials_source is not None:
         _details['credentials']['source'] = credentials_source
@@ -1707,20 +1898,28 @@ def update_monitored_resource_pre_existing_credentials(ctx, from_json, force, wa
     cli_util.render_response(result, ctx)
 
 
-@monitored_resource_group.command(name=cli_util.override('stack_monitoring.update_monitored_resource_encrypted_credentials.command_name', 'update-monitored-resource-encrypted-credentials'), help=u"""Updates the Monitored Resource \n[Command Reference](updateMonitoredResource)""")
+@monitored_resource_group.command(name=cli_util.override('stack_monitoring.update_monitored_resource_encrypted_credentials.command_name', 'update-monitored-resource-encrypted-credentials'), help=u"""Update monitored resource by the given identifier [OCID]. Note that \"properties\" object, if specified, will entirely replace the existing object, as part this operation. \n[Command Reference](updateMonitoredResource)""")
 @cli_util.option('--monitored-resource-id', required=True, help=u"""The [OCID] of monitored resource.""")
-@cli_util.option('--credentials-key-id', required=True, help=u"""The master key OCID and applicable only for property value type ENCRYPTION. Key OCID is passed as input to Key management service decrypt API to retrieve the encrypted property value text.""")
+@cli_util.option('--credentials-key-id', required=True, help=u"""The master key should be created in OCI Vault owned by the client of this API. The user should have permission to access the vault key.""")
 @cli_util.option('--credentials-properties', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The credential properties list. Credential property values will be encrypted format.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""Monitored resource display name.""")
-@cli_util.option('--host-name', help=u"""Host name of the monitored resource""")
-@cli_util.option('--resource-time-zone', help=u"""Time zone in the form of tz database canonical zone ID.""")
-@cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of monitored resource properties
+@cli_util.option('--host-name', help=u"""Host name of the monitored resource.""")
+@cli_util.option('--resource-time-zone', help=u"""Time zone in the form of tz database canonical zone ID. Specifies the preference with a value that uses the IANA Time Zone Database format (x-obmcs-time-zone). For example - America/Los_Angeles""")
+@cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of monitored resource properties.
 
 This option is a JSON list with items of type MonitoredResourceProperty.  For documentation on MonitoredResourceProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-connection-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--aliases', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--additional-credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of MonitoredResourceCredentials. This property complements the existing \"credentials\" property by allowing user to specify more than one credential. If both \"credential\" and \"additionalCredentials\" are specified, union of the values is used as list of credentials applicable for this resource. If any duplicate found in the combined list of \"credentials\" and \"additionalCredentials\", an error will be thrown.
+
+This option is a JSON list with items of type MonitoredResourceCredential.  For documentation on MonitoredResourceCredential please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceCredential.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--additional-aliases', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of MonitoredResourceAliasCredentials. This property complements the existing \"aliases\" property by allowing user to specify more than one credential alias. If both \"aliases\" and \"additionalAliases\" are specified, union of the values is used as list of aliases applicable for this resource. If any duplicate found in the combined list of \"alias\" and \"additionalAliases\", an error will be thrown.
+
+This option is a JSON list with items of type MonitoredResourceAliasCredential.  For documentation on MonitoredResourceAliasCredential please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceAliasCredential.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--credentials-source', help=u"""The source type and source name combination,delimited with (.) separator. {source type}.{source name} and source type max char limit is 63.""")
+@cli_util.option('--credentials-source', help=u"""The source type and source name combination, delimited with (.) separator. {source type}.{source name} and source type max char limit is 63.""")
 @cli_util.option('--credentials-name', help=u"""The name of the credential, within the context of the source.""")
 @cli_util.option('--credentials-type', help=u"""The type of the credential ( ex. JMXCreds,DBCreds).""")
 @cli_util.option('--credentials-description', help=u"""The user-specified textual description of the credential.""")
@@ -1728,18 +1927,18 @@ This option is a JSON list with items of type MonitoredResourceProperty.  For do
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'credentials-properties': {'module': 'stack_monitoring', 'class': 'list[CredentialProperty]'}})
+@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'additional-credentials': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceCredential]'}, 'additional-aliases': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceAliasCredential]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'credentials-properties': {'module': 'stack_monitoring', 'class': 'list[CredentialProperty]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'credentials-properties': {'module': 'stack_monitoring', 'class': 'list[CredentialProperty]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'additional-credentials': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceCredential]'}, 'additional-aliases': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceAliasCredential]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'credentials-properties': {'module': 'stack_monitoring', 'class': 'list[CredentialProperty]'}})
 @cli_util.wrap_exceptions
-def update_monitored_resource_encrypted_credentials(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_id, credentials_key_id, credentials_properties, display_name, host_name, resource_time_zone, properties, database_connection_details, aliases, if_match, credentials_source, credentials_name, credentials_type, credentials_description):
+def update_monitored_resource_encrypted_credentials(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_id, credentials_key_id, credentials_properties, display_name, host_name, resource_time_zone, properties, database_connection_details, aliases, additional_credentials, additional_aliases, freeform_tags, defined_tags, if_match, credentials_source, credentials_name, credentials_type, credentials_description):
 
     if isinstance(monitored_resource_id, six.string_types) and len(monitored_resource_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-resource-id cannot be whitespace or empty string')
     if not force:
-        if properties or database_connection_details or aliases:
-            if not click.confirm("WARNING: Updates to properties and database-connection-details and aliases will replace any existing values. Are you sure you want to continue?"):
+        if properties or database_connection_details or aliases or additional_credentials or additional_aliases or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to properties and database-connection-details and aliases and additional-credentials and additional-aliases and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1769,6 +1968,18 @@ def update_monitored_resource_encrypted_credentials(ctx, from_json, force, wait_
 
     if aliases is not None:
         _details['aliases'] = cli_util.parse_json_parameter("aliases", aliases)
+
+    if additional_credentials is not None:
+        _details['additionalCredentials'] = cli_util.parse_json_parameter("additional_credentials", additional_credentials)
+
+    if additional_aliases is not None:
+        _details['additionalAliases'] = cli_util.parse_json_parameter("additional_aliases", additional_aliases)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if credentials_source is not None:
         _details['credentials']['source'] = credentials_source
@@ -1816,19 +2027,27 @@ def update_monitored_resource_encrypted_credentials(ctx, from_json, force, wait_
     cli_util.render_response(result, ctx)
 
 
-@monitored_resource_group.command(name=cli_util.override('stack_monitoring.update_monitored_resource_plain_text_credentials.command_name', 'update-monitored-resource-plain-text-credentials'), help=u"""Updates the Monitored Resource \n[Command Reference](updateMonitoredResource)""")
+@monitored_resource_group.command(name=cli_util.override('stack_monitoring.update_monitored_resource_plain_text_credentials.command_name', 'update-monitored-resource-plain-text-credentials'), help=u"""Update monitored resource by the given identifier [OCID]. Note that \"properties\" object, if specified, will entirely replace the existing object, as part this operation. \n[Command Reference](updateMonitoredResource)""")
 @cli_util.option('--monitored-resource-id', required=True, help=u"""The [OCID] of monitored resource.""")
-@cli_util.option('--credentials-properties', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The credential properties list. Credential property values will be either in plain text format.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--credentials-properties', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The credential properties list. Credential property values will be either in plain text format or encrypted for encrypted credentials.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""Monitored resource display name.""")
-@cli_util.option('--host-name', help=u"""Host name of the monitored resource""")
-@cli_util.option('--resource-time-zone', help=u"""Time zone in the form of tz database canonical zone ID.""")
-@cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of monitored resource properties
+@cli_util.option('--host-name', help=u"""Host name of the monitored resource.""")
+@cli_util.option('--resource-time-zone', help=u"""Time zone in the form of tz database canonical zone ID. Specifies the preference with a value that uses the IANA Time Zone Database format (x-obmcs-time-zone). For example - America/Los_Angeles""")
+@cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of monitored resource properties.
 
 This option is a JSON list with items of type MonitoredResourceProperty.  For documentation on MonitoredResourceProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-connection-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--aliases', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--additional-credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of MonitoredResourceCredentials. This property complements the existing \"credentials\" property by allowing user to specify more than one credential. If both \"credential\" and \"additionalCredentials\" are specified, union of the values is used as list of credentials applicable for this resource. If any duplicate found in the combined list of \"credentials\" and \"additionalCredentials\", an error will be thrown.
+
+This option is a JSON list with items of type MonitoredResourceCredential.  For documentation on MonitoredResourceCredential please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceCredential.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--additional-aliases', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of MonitoredResourceAliasCredentials. This property complements the existing \"aliases\" property by allowing user to specify more than one credential alias. If both \"aliases\" and \"additionalAliases\" are specified, union of the values is used as list of aliases applicable for this resource. If any duplicate found in the combined list of \"alias\" and \"additionalAliases\", an error will be thrown.
+
+This option is a JSON list with items of type MonitoredResourceAliasCredential.  For documentation on MonitoredResourceAliasCredential please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceAliasCredential.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--credentials-source', help=u"""The source type and source name combination,delimited with (.) separator. {source type}.{source name} and source type max char limit is 63.""")
+@cli_util.option('--credentials-source', help=u"""The source type and source name combination, delimited with (.) separator. {source type}.{source name} and source type max char limit is 63.""")
 @cli_util.option('--credentials-name', help=u"""The name of the credential, within the context of the source.""")
 @cli_util.option('--credentials-type', help=u"""The type of the credential ( ex. JMXCreds,DBCreds).""")
 @cli_util.option('--credentials-description', help=u"""The user-specified textual description of the credential.""")
@@ -1836,18 +2055,18 @@ This option is a JSON list with items of type MonitoredResourceProperty.  For do
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'credentials-properties': {'module': 'stack_monitoring', 'class': 'list[CredentialProperty]'}})
+@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'additional-credentials': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceCredential]'}, 'additional-aliases': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceAliasCredential]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'credentials-properties': {'module': 'stack_monitoring', 'class': 'list[CredentialProperty]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'credentials-properties': {'module': 'stack_monitoring', 'class': 'list[CredentialProperty]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'additional-credentials': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceCredential]'}, 'additional-aliases': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceAliasCredential]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'credentials-properties': {'module': 'stack_monitoring', 'class': 'list[CredentialProperty]'}})
 @cli_util.wrap_exceptions
-def update_monitored_resource_plain_text_credentials(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_id, credentials_properties, display_name, host_name, resource_time_zone, properties, database_connection_details, aliases, if_match, credentials_source, credentials_name, credentials_type, credentials_description):
+def update_monitored_resource_plain_text_credentials(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_id, credentials_properties, display_name, host_name, resource_time_zone, properties, database_connection_details, aliases, additional_credentials, additional_aliases, freeform_tags, defined_tags, if_match, credentials_source, credentials_name, credentials_type, credentials_description):
 
     if isinstance(monitored_resource_id, six.string_types) and len(monitored_resource_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-resource-id cannot be whitespace or empty string')
     if not force:
-        if properties or database_connection_details or aliases:
-            if not click.confirm("WARNING: Updates to properties and database-connection-details and aliases will replace any existing values. Are you sure you want to continue?"):
+        if properties or database_connection_details or aliases or additional_credentials or additional_aliases or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to properties and database-connection-details and aliases and additional-credentials and additional-aliases and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1876,6 +2095,18 @@ def update_monitored_resource_plain_text_credentials(ctx, from_json, force, wait
 
     if aliases is not None:
         _details['aliases'] = cli_util.parse_json_parameter("aliases", aliases)
+
+    if additional_credentials is not None:
+        _details['additionalCredentials'] = cli_util.parse_json_parameter("additional_credentials", additional_credentials)
+
+    if additional_aliases is not None:
+        _details['additionalAliases'] = cli_util.parse_json_parameter("additional_aliases", additional_aliases)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if credentials_source is not None:
         _details['credentials']['source'] = credentials_source
