@@ -95,3 +95,4 @@ identity-domains, user-password-resetter, put
 identity-domains, user-status-changer, put
 identity-domains, users, search
 fn, function, create
+ocvs, sddc, create

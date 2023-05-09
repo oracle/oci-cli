@@ -172,7 +172,7 @@ Use the [WorkRequest] operations to track the creation of the SDDC.
 
 For example, if the value is `mySDDC`, the ESXi hosts are named `mySDDC-1`, `mySDDC-2`, and so on.""")
 @cli_util.option('--initial-sku', type=custom_types.CliCaseInsensitiveChoice(["HOUR", "MONTH", "ONE_YEAR", "THREE_YEARS"]), help=u"""The billing option selected during SDDC creation. [ListSupportedSkus].""")
-@cli_util.option('--is-hcx-enabled', type=click.BOOL, help=u"""Indicates whether to enable HCX for this SDDC.""")
+@cli_util.option('--is-hcx-enabled', type=click.BOOL, help=u"""For SDDC with dense compute shapes, this parameter indicates whether to enable HCX Advanced for this SDDC. For SDDC with standard compute shapes, this parameter is equivalent to `isHcxEnterpriseEnabled`.""")
 @cli_util.option('--hcx-vlan-id', help=u"""The [OCID] of the VLAN to use for the HCX component of the VMware environment. This value is required only when `isHcxEnabled` is true.""")
 @cli_util.option('--is-hcx-enterprise-enabled', type=click.BOOL, help=u"""Indicates whether to enable HCX Enterprise for this SDDC.""")
 @cli_util.option('--is-single-host-sddc', type=click.BOOL, help=u"""Indicates whether this SDDC is designated for only single ESXi host.""")
@@ -183,6 +183,9 @@ For example, if the value is `mySDDC`, the ESXi hosts are named `mySDDC-1`, `myS
 @cli_util.option('--initial-host-ocpu-count', type=click.FLOAT, help=u"""The initial OCPU count of the SDDC's ESXi hosts.""")
 @cli_util.option('--is-shielded-instance-enabled', type=click.BOOL, help=u"""Indicates whether shielded instance is enabled for this SDDC.""")
 @cli_util.option('--capacity-reservation-id', help=u"""The [OCID] of the Capacity Reservation.""")
+@cli_util.option('--datastores', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of datastore info for the SDDC. This value is required only when `initialHostShapeName` is a standard shape.
+
+This option is a JSON list with items of type DatastoreInfo.  For documentation on DatastoreInfo please see our API reference: https://docs.cloud.oracle.com/api/#/en/sddc/20200501/datatypes/DatastoreInfo.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -192,12 +195,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'datastores': {'module': 'ocvp', 'class': 'list[DatastoreInfo]'}, 'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'datastores': {'module': 'ocvp', 'class': 'list[DatastoreInfo]'}, 'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_availability_domain, vmware_software_version, compartment_id, esxi_hosts_count, ssh_authorized_keys, provisioning_subnet_id, vsphere_vlan_id, vmotion_vlan_id, vsan_vlan_id, nsx_v_tep_vlan_id, nsx_edge_v_tep_vlan_id, nsx_edge_uplink1_vlan_id, nsx_edge_uplink2_vlan_id, display_name, instance_display_name_prefix, initial_sku, is_hcx_enabled, hcx_vlan_id, is_hcx_enterprise_enabled, is_single_host_sddc, workload_network_cidr, replication_vlan_id, provisioning_vlan_id, initial_host_shape_name, initial_host_ocpu_count, is_shielded_instance_enabled, capacity_reservation_id, freeform_tags, defined_tags):
+def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_availability_domain, vmware_software_version, compartment_id, esxi_hosts_count, ssh_authorized_keys, provisioning_subnet_id, vsphere_vlan_id, vmotion_vlan_id, vsan_vlan_id, nsx_v_tep_vlan_id, nsx_edge_v_tep_vlan_id, nsx_edge_uplink1_vlan_id, nsx_edge_uplink2_vlan_id, display_name, instance_display_name_prefix, initial_sku, is_hcx_enabled, hcx_vlan_id, is_hcx_enterprise_enabled, is_single_host_sddc, workload_network_cidr, replication_vlan_id, provisioning_vlan_id, initial_host_shape_name, initial_host_ocpu_count, is_shielded_instance_enabled, capacity_reservation_id, datastores, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -258,6 +261,9 @@ def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
     if capacity_reservation_id is not None:
         _details['capacityReservationId'] = capacity_reservation_id
+
+    if datastores is not None:
+        _details['datastores'] = cli_util.parse_json_parameter("datastores", datastores)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -350,7 +356,7 @@ def delete_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@sddc_group.command(name=cli_util.override('sddc.downgrade_hcx.command_name', 'downgrade-hcx'), help=u"""Downgrade the specified SDDC from HCX Enterprise to HCX Advanced. Downgrading from HCX Enterprise to HCX Advanced reduces the number of provided license keys from 10 to 3. Downgrade remains in a `PENDING` state until the end of the current billing cycle. You can use [cancelDowngradeHcx] to cancel the downgrade while it's still in a `PENDING` state. \n[Command Reference](downgradeHcx)""")
+@sddc_group.command(name=cli_util.override('sddc.downgrade_hcx.command_name', 'downgrade-hcx'), help=u"""Downgrade the specified SDDC from HCX Enterprise to HCX Advanced. SDDC with standard compute shapes will always use HCX Enterprise if HCX is enabled and cannot be downgraded. Downgrading from HCX Enterprise to HCX Advanced reduces the number of provided license keys from 10 to 3. Downgrade remains in a `PENDING` state until the end of the current billing cycle. You can use [cancelDowngradeHcx] to cancel the downgrade while it's still in a `PENDING` state. \n[Command Reference](downgradeHcx)""")
 @cli_util.option('--reserving-hcx-on-premise-license-keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The HCX on-premise license keys to be reserved when downgrading from HCX Enterprise to HCX Advanced.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--sddc-id', required=True, help=u"""The [OCID] of the SDDC.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -554,6 +560,7 @@ def list_supported_host_shapes(ctx, from_json, all_pages, page_size, compartment
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--host-shape-name', help=u"""A filter to return only resources that match or support the given ESXi host shape.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -561,7 +568,7 @@ def list_supported_host_shapes(ctx, from_json, all_pages, page_size, compartment
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ocvp', 'class': 'SupportedSkuSummaryCollection'})
 @cli_util.wrap_exceptions
-def list_supported_skus(ctx, from_json, all_pages, page_size, compartment_id, limit, page):
+def list_supported_skus(ctx, from_json, all_pages, page_size, compartment_id, limit, page, host_shape_name):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -571,6 +578,8 @@ def list_supported_skus(ctx, from_json, all_pages, page_size, compartment_id, li
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if host_shape_name is not None:
+        kwargs['host_shape_name'] = host_shape_name
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('ocvp', 'sddc', ctx)
     if all_pages:

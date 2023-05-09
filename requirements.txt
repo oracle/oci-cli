@@ -14,7 +14,7 @@ Jinja2==3.0.3
 jmespath==0.10.0
 ndg-httpsclient==0.4.2
 mock==2.0.0
-oci==2.100.0
+oci==2.101.0
 packaging==20.2
 pluggy==0.13.0
 py==1.10.0
@@ -38,7 +38,7 @@ vcrpy==4.2.1; python_version >= '3.10'
 virtualenv==20.13.0
 pytest-xdist==1.22.2
 pytest-forked==1.0.2
-PyYAML>=5.4,<6
+PyYAML>=5.4,<=6
 docutils==0.15.2
 prompt-toolkit==3.0.29
 setuptools>65.5.1; python_version > '3.6'

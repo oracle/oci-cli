@@ -60,7 +60,7 @@ Avoid entering confidential information.""")
 @cli_util.option('--host-shape-name', help=u"""The compute shape name of the ESXi host. [ListSupportedHostShapes].""")
 @cli_util.option('--host-ocpu-count', type=click.FLOAT, help=u"""The OCPU count of the ESXi host.""")
 @cli_util.option('--capacity-reservation-id', help=u"""The [OCID] of the Capacity Reservation.""")
-@cli_util.option('--non-upgraded-esxi-host-id', help=u"""The [OCID] of the ESXi host that will be upgraded. This is an optional parameter. If this parameter is specified, an ESXi host with new version will be created to replace the original one, and the `nonUpgradedEsxiHostId` field will be updated in the newly created Esxi host.""")
+@cli_util.option('--non-upgraded-esxi-host-id', help=u"""The [OCID] of the ESXi host that will be upgraded. This is an optional parameter. If this parameter is specified, an ESXi host with the new software version is created to replace the original one, and the `nonUpgradedEsxiHostId` field is updated in the newly created Esxi host. See [Upgrading VMware Software] for more information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

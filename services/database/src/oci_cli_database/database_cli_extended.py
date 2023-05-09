@@ -359,6 +359,10 @@ cli_util.rename_command(database_cli, database_cli.autonomous_database_group, da
 @cli_util.option('--ncharacter-set', help="""National character set for the database. The default is AL16UTF16. Allowed values are: AL16UTF16 or UTF8.""")
 @cli_util.option('--pdb-name', help="""Pluggable database name. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted. Pluggable database should not be same as database name.""")
 @cli_util.option('--auto-backup-enabled', type=click.BOOL, help="""If set to true, schedules backups automatically. Default is false.""")
+@cli_util.option('--auto-backup-window', required=False, help="""Specifying a two hour slot when the backup should kick in eg:- SLOT_ONE,SLOT_TWO. Default is anytime""")
+@cli_util.option('--auto-full-backup-day', required=False, help="""Day of the week the full backup should be applied on the database system. If no option is selected, the value is null and we will default to Sunday.""")
+@cli_util.option('--auto-full-backup-window', required=False, help="""Specifying a two hour slot when the full backup should kick in eg:- SLOT_ONE,SLOT_TWO. Default is anytime""")
+@cli_util.option('--run-immediate-full-backup', type=click.BOOL, required=False, help="""If set to true, configures automatic full backups in the local region (the region of the DB system) for the first backup run immediately.""")
 @cli_util.option('--recovery-window-in-days', type=click.IntRange(1, 60), help="""The number of days between the current and the earliest point of recoverability covered by automatic backups (1 to 60).""")
 @cli_util.option('--ssh-authorized-keys-file', required=True, type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the DB System. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
 @cli_util.option('--storage-management', type=custom_types.CliCaseInsensitiveChoice(["LVM", "ASM"]), help="""Option for storage management for the database system. Allowed values are: LVM, ASM.""")
@@ -421,6 +425,15 @@ def launch_db_system_extended(ctx, **kwargs):
             db_backup_config['autoBackupEnabled'] = kwargs['auto_backup_enabled']
         if kwargs['recovery_window_in_days'] is not None:
             db_backup_config['recoveryWindowInDays'] = kwargs['recovery_window_in_days']
+        if kwargs['auto_backup_window'] is not None:
+            db_backup_config.autoBackupWindow = kwargs['auto_backup_window']
+        if kwargs['auto_full_backup_day'] is not None:
+            db_backup_config.autoFullBackupDay = kwargs['auto_full_backup_day']
+        if kwargs['auto_full_backup_window'] is not None:
+            db_backup_config.autoFullBackupWindow = kwargs['auto_full_backup_window']
+        if kwargs['run_immediate_full_backup'] is not None:
+            db_backup_config.runImmediateFullBackup = kwargs['run_immediate_full_backup']
+
         create_database_details['db_backup_config'] = db_backup_config
     create_db_home_details['database'] = create_database_details
 
@@ -474,6 +487,10 @@ def launch_db_system_extended(ctx, **kwargs):
     del kwargs['is_diagnostics_events_enabled']
     del kwargs['is_health_monitoring_enabled']
     del kwargs['is_incident_logs_enabled']
+    del kwargs['auto_backup_window']
+    del kwargs['auto_full_backup_day']
+    del kwargs['auto_full_backup_window']
+    del kwargs['run_immediate_full_backup']
 
     ctx.invoke(database_cli.launch_db_system_launch_db_system_details, **kwargs)
 
@@ -623,6 +640,9 @@ def launch_db_system_from_database_extended(ctx, **kwargs):
 @cli_util.option('--auto-backup-enabled', type=click.BOOL, help="""If set to true, schedules backups automatically. Default is false.""")
 @cli_util.option('--recovery-window-in-days', type=click.IntRange(1, 60), help="""The number of days between the current and the earliest point of recoverability covered by automatic backups (1 to 60).""")
 @cli_util.option('--auto-backup-window', required=False, help="""Specifying a two hour slot when the backup should kick in eg:- SLOT_ONE,SLOT_TWO. Default is anytime""")
+@cli_util.option('--auto-full-backup-day', required=False, help="""Day of the week the full backup should be applied on the database system. If no option is selected, the value is null and we will default to Sunday.""")
+@cli_util.option('--auto-full-backup-window', required=False, help="""Specifying a two hour slot when the full backup should kick in eg:- SLOT_ONE,SLOT_TWO. Default is anytime""")
+@cli_util.option('--run-immediate-full-backup', type=click.BOOL, required=False, help="""If set to true, configures automatic full backups in the local region (the region of the DB system) for the first backup run immediately.""")
 @cli_util.option('--backup-destination', required=False, type=custom_types.CLI_COMPLEX_TYPE, help="""backup destination list""")
 @cli_util.option('--vault-id', required=False, help="""The OCID of the Oracle Cloud Infrastructure vault.""")
 @click.pass_context
@@ -708,6 +728,14 @@ def create_database(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds
             db_backup_config.auto_backup_enabled = kwargs['auto_backup_enabled']
         if kwargs['recovery_window_in_days'] is not None:
             db_backup_config.recoveryWindowInDays = kwargs['recovery_window_in_days']
+        if kwargs['auto_backup_window'] is not None:
+            db_backup_config.autoBackupWindow = kwargs['auto_backup_window']
+        if kwargs['auto_full_backup_day'] is not None:
+            db_backup_config.autoFullBackupDay = kwargs['auto_full_backup_day']
+        if kwargs['auto_full_backup_window'] is not None:
+            db_backup_config.autoFullBackupWindow = kwargs['auto_full_backup_window']
+        if kwargs['run_immediate_full_backup'] is not None:
+            db_backup_config.runImmediateFullBackup = kwargs['run_immediate_full_backup']
     create_database_details.db_backup_config = db_backup_config
     del kwargs['auto_backup_enabled']
     del kwargs['recovery_window_in_days']
@@ -715,6 +743,10 @@ def create_database(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds
     del kwargs['vault_id']
     del kwargs['kms_key_id']
     del kwargs['kms_key_version_id']
+    del kwargs['auto_backup_window']
+    del kwargs['auto_full_backup_day']
+    del kwargs['auto_full_backup_window']
+    del kwargs['run_immediate_full_backup']
 
     create_db_home_details.database = create_database_details
     if 'db_version' in kwargs and kwargs['db_version']:
@@ -879,6 +911,8 @@ def create_database_from_backup(ctx, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.option('--auto-backup-enabled', type=click.BOOL, help="""If set to true, schedules backups automatically. Default is false.""")
 @cli_util.option('--recovery-window-in-days', type=click.IntRange(1, 60), help="""The number of days between the current and the earliest point of recoverability covered by automatic backups (1 to 60).""")
 @cli_util.option('--auto-backup-window', required=False, help="""Specifying a two hour slot when the backup should kick in eg:- SLOT_ONE,SLOT_TWO. Default is anytime""")
+@cli_util.option('--auto-full-backup-day', required=False, help="""Day of the week the full backup should be applied on the database system. If no option is selected, the value is null and we will default to Sunday.""")
+@cli_util.option('--auto-full-backup-window', required=False, help="""Specifying a two hour slot when the full backup should kick in eg:- SLOT_ONE,SLOT_TWO. Default is anytime""")
 @cli_util.option('--backup-destination', required=False, type=custom_types.CLI_COMPLEX_TYPE, help="""backup destination list""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-destination': {'module': 'database', 'class': 'list[BackupDestinationDetails]'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}}, output_type={'module': 'database', 'class': 'Database'})
@@ -889,6 +923,14 @@ def update_database_extended(ctx, **kwargs):
         if 'auto_backup_window' in kwargs and kwargs['auto_backup_window'] and kwargs['auto_backup_enabled'] is not None:
             db_backup_config['autoBackupEnabled'] = kwargs['auto_backup_enabled']
             db_backup_config['autoBackupWindow'] = kwargs['auto_backup_window']
+        if 'auto_full_backup_day' in kwargs and kwargs['auto_full_backup_day'] and \
+                kwargs['auto_backup_enabled'] is not None:
+            db_backup_config['autoBackupEnabled'] = kwargs['auto_backup_enabled']
+            db_backup_config['autoFullBackupDay'] = kwargs['auto_full_backup_day']
+        if 'auto_full_backup_window' in kwargs and kwargs['auto_full_backup_window'] and \
+                kwargs['auto_backup_enabled'] is not None:
+            db_backup_config['autoBackupEnabled'] = kwargs['auto_backup_enabled']
+            db_backup_config['autoFullBackupWindow'] = kwargs['auto_full_backup_window']
         if kwargs['auto_backup_enabled'] is not None:
             db_backup_config['autoBackupEnabled'] = kwargs['auto_backup_enabled']
         if kwargs['recovery_window_in_days'] is not None:
@@ -900,6 +942,8 @@ def update_database_extended(ctx, **kwargs):
     del kwargs['auto_backup_enabled']
     del kwargs['recovery_window_in_days']
     del kwargs['auto_backup_window']
+    del kwargs['auto_full_backup_day']
+    del kwargs['auto_full_backup_window']
     del kwargs['backup_destination']
 
     ctx.invoke(database_cli.update_database, **kwargs)
@@ -3264,3 +3308,13 @@ cli_util.rename_command(database_cli, database_cli.autonomous_database_group, da
 def create_vm_cluster_extended(ctx, **kwargs):
 
     ctx.invoke(database_cli.create_vm_cluster, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.change_disaster_recovery_configuration, params_to_exclude=['time_snapshot_standby_enabled_till'])
+@database_cli.autonomous_database_group.command(name=database_cli.change_disaster_recovery_configuration.name, help=database_cli.change_disaster_recovery_configuration.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@cli_util.wrap_exceptions
+def change_disaster_recovery_configuration_extended(ctx, **kwargs):
+
+    ctx.invoke(database_cli.change_disaster_recovery_configuration, **kwargs)
