@@ -6,6 +6,50 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.27.0 - 2023-05-09
+--------------------
+Added
+~~~~~
+* Support for the Access Governance cloud service
+
+  * ``oci access-governance-cp``
+
+* Database Service
+
+  * Support for One-Off Patches resource to create, download database patches for customers that lost access to MOS.
+
+    * ``oci db oneoff-patch create``
+    * ``oci db oneoff-patch get``
+    * ``oci db oneoff-patch list``
+    * ``oci db oneoff-patch delete``
+    * ``oci db oneoff-patch update``
+    * ``oci db oneoff-patch download``
+
+  * Support for changing Disaster Recovery configuration of a remote Autonomous Database in remote region of whether it's a snapshot standby
+
+    * ``oci db autonomous-database change-disaster-recovery-configuration --is-snapshot-standby``
+
+  * Support for Schedule automatic backup for exacs and dbcs
+
+    * ``oci db database create --auto-backup-enabled --auto-backup-window --auto-full-backup-day --auto-full-backup-window --run-immediate-full-backup``
+    * ``oci db database update --database-id --auto-backup-enabled --auto-backup-window --auto-full-backup-day --auto-full-backup-window --run-immediate-full-backup``
+    * ``oci db system launch --auto-backup-enabled --auto-backup-window --auto-full-backup-day --auto-full-backup-window --run-immediate-full-backup``
+
+
+* Support for provisioning Software Defined Data Center (SDDCs) using standard bare metal shapes with Block Storage as the datastore in the Oracle Cloud Vmware Solution
+
+  * ``oci ocvs sddc create --datastores``
+
+* Support for the Instance Configuration Parity feature in the Core Services
+
+  * ``oci compute-management instance-configuration``
+
+Changed
+~~~~~~~
+* [BREAKING] The Data Connectivity service is now removed
+
+  * ``oci data-connectivity``
+
 3.26.0 - 2023-05-02
 --------------------
 

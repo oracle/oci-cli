@@ -12,6 +12,7 @@ from interactive.utils import (
     AUTO_PROMPT_PARAMS,
     DEBUG_PARAMS,
     OCI_CLI_DISABLE_COLORS_ENV_VAR,
+    print_suggestion_message
 )
 
 from interactive.key_bindings import override_key_binding
@@ -21,7 +22,8 @@ import sys
 
 
 def start_interactive_shell(ctx):
-
+    # print help message like you tube vedios for first time
+    print_suggestion_message()
     # Getting the commands before --cli-auto-prompt, for example if the user execute oci --profile X compute instance --cli-auto-prompt,
     # then the interactive mode will begin with oci --profile X compute instance
     arguments = sys.argv[1:]

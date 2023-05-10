@@ -21,8 +21,8 @@ if (sys.platform != "win32"):
     import fcntl
 import errno
 import datetime
-VERSION = "1.6"
-UPDATED = "2023-04-05"
+VERSION = "1.7"
+UPDATED = "2023-05-02"
 
 # ==============================================================================
 # Global variables
@@ -884,6 +884,8 @@ def get_matching_ocid(option, value):
             opt_type = 'remotepeeringconnection'
         elif opt_type == 'organization':
             opt_type = 'organizationsentity'
+        elif opt_type == 'routedistribution':
+            opt_type = 'drgroutedistribution'
         # Add new idtypes to the above when the --whatever-id does not match ocid1.whatevs...
 
     matches = [item for k, item in ocid.items() if
@@ -1742,7 +1744,7 @@ def get_oci_commands(argv):
                             stderr=subprocess.PIPE)
         out = sp.stdout.decode('utf-8')
         part1 = re.sub(r'.*Options:\n|Commands:\n.*', '', out, flags=re.S)
-        globals = sorted(list(dict.fromkeys(re.findall(r'--[A-Za-z-]*', part1))))
+        globals = sorted(list(dict.fromkeys(re.findall(r'(--[A-Za-z-]*[a-z])[, \n]', part1))))
         if not os.path.exists(oci_dir):
             os.mkdir(oci_dir, mode=0o755)
         print("Creating", bold(oci_commands_file))
@@ -1751,10 +1753,7 @@ def get_oci_commands(argv):
         f.close()
 
         part2 = re.sub(r'.*Commands:\n', '', out, flags=re.S)
-        r = re.compile("  [a-z]")
-        services = [re.sub('^  |  .*$', '', s)
-                    for s in list(set(filter(r.match, part2.splitlines())))]
-        services.sort()
+        services = sorted(list(dict.fromkeys(re.findall(r'^ {2,4}([a-z-]+)', part2, flags=re.MULTILINE))))
         for n, service in enumerate(services, start=1):
             print('\033[2K\r({}/{}) Getting {} commands...'.format(
                   n, len(services), service) + 30 * ' ')
@@ -1969,8 +1968,10 @@ priority_services = ('compute ', 'bv ', 'os ', 'network ', 'iam ')
 
 # Find matching commands.  Sort by priority, then by command length.
 matches = sorted([c for c in command if args_match_command(c, CLI_params)],
-                 key=lambda c: (not c['action'].startswith(priority_services),
-                 len(c['action'])), reverse=True)
+                 key=lambda c: (len(c['action']) if len(c['action']) < 25 else int(round(len(c['action']) / 10.) * 10.))
+                 if c['action'].startswith(priority_services)
+                 else (1.5 * len(c['action']) if len(c['action']) < 25 else 1.5 * int(round(len(c['action']) / 10.) * 10.)),
+                 reverse=True)
 best_match = len(matches) - 1
 
 # ==============================================================================
@@ -1981,7 +1982,8 @@ if len(matches) == 0:
           + '\n\nTry:  o .')
 
 # If many matches, list matches and exit
-elif len(matches) > 16 and ('db' not in CLI_params):
+elif not (len(matches) <= 16 or ('db' in CLI_params and len(matches) <= 50)
+          or matches[best_match]['action'].split(' ')[0] + ' ' in priority_services):
     print(bold('Possible commands:'))
     for c in matches:
         show_command(c, prefix='    ')

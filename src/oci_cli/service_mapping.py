@@ -3,6 +3,11 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 service_mapping = {
+    "access-governance-cp": [
+        "access_governance_cp",
+        "Access Governance",
+        "Others"
+    ],
     "adm": [
         "adm",
         "Application Dependency Management",
@@ -167,11 +172,6 @@ service_mapping = {
         "data_catalog",
         "Data Catalog",
         "Analytics & AI"
-    ],
-    "data-connectivity": [
-        "data_connectivity",
-        "Data Connectivity Management",
-        "Others"
     ],
     "data-flow": [
         "data_flow",

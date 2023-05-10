@@ -70,6 +70,10 @@ parameter_resource_mapping = {
 # Add those commands in REQUIRED_PARAM_EXCEPTION so that interactive CLI will let a user execute a command
 # even without providing that required param
 REQUIRED_PARAM_EXCEPTION = ["oci iam compartment list", "oci iam user list"]
+MESSAGE = "Learn more about interactive features in CLI by watching our informative video on YouTube -> " \
+          "https://www.youtube.com/watch?v=lX29Xw1Te54&ab_channel=OracleLearning \n" \
+          "Also see https://docs.oracle.com/iaas/Content/API/SDKDocs/cliusing_topic-Using_Interactive_Mode.htm"
+file_name = "suggestion_variable.txt"
 
 
 def validate_commands_limit(filename):
@@ -97,3 +101,19 @@ def validate_commands_limit(filename):
         data = file.read().splitlines(True)
         with open(filename, "w") as file_write:
             file_write.writelines(data[3:])
+
+
+def print_suggestion_message():
+    value = 0
+    # read value from txt file
+    path = os.path.join(os.path.dirname(__file__), file_name)
+    if os.path.exists(path):
+        # if the file exists, read the value from the file
+        with open(path, "r") as f:
+            value = int(f.read())
+    # print for 1st time
+    if value == 0:
+        print(MESSAGE)
+        value = 1
+        with open(path, "w") as f:
+            f.write(str(value))
