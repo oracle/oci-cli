@@ -420,6 +420,7 @@ For information on interactive features, see {cli_constants.INTERACTIVE_CLI_DOCU
 @click.pass_context
 def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, realm_specific_endpoint, cert_bundle, output, query, raw_output, auth, auth_purpose, no_retry, max_retries, generate_full_command_json_input, generate_param_json_input, debug, cli_auto_prompt, connection_timeout, read_timeout, help):
 
+    click.exceptions.UsageError.show = cli_util.update_click_help_message
     if max_retries and no_retry:
         raise click.UsageError('The option --max-retries is not applicable when using the --no-retry flag.')
 

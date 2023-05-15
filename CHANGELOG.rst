@@ -6,6 +6,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.27.1 - 2023-05-16
+--------------------
+Added
+~~~~~
+* Support for Self Service Integration in the Fusion Application service
+ 
+  * ``oci fusion-apps service-attachment create``
+  * ``oci fusion-apps service-attachment delete``
+  * ``oci fusion-apps service-attachment verify``
+
 3.27.0 - 2023-05-09
 --------------------
 Added
