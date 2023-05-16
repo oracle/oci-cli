@@ -75,3 +75,6 @@ TROUBLESHOOTING_DOCUMENTATION = 'https://docs.oracle.com/iaas/Content/API/SDKDoc
 SERVICE_ERROR_DOCUMENTATION = 'https://docs.oracle.com/iaas/Content/API/References/apierrors.htm'
 
 GITHUB_CHANGELOG = 'https://github.com/oracle/oci-cli/blob/master/CHANGELOG.rst'
+
+INTERACTIVE_CLI_SUGGESTION_MESSAGE = 'For OCI CLI commands and parameters suggestion, auto completion and ' \
+                                     'other useful features, try the Interactive mode by typing `oci -i`.'

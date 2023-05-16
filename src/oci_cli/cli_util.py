@@ -2605,6 +2605,13 @@ def get_request_endpoint_from_exception_string(exception_string: str):
         return None
 
 
+def update_click_help_message(self):
+    if self.ctx is not None:
+        print(self.ctx.get_usage() + '\n')
+    print('Error: %s\n' % self.format_message())
+    print(cli_constants.INTERACTIVE_CLI_SUGGESTION_MESSAGE)
+
+
 class CommandExample:
 
     def __init__(self, description, usage, output):
