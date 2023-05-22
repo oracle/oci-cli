@@ -6,6 +6,49 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.28.0 - 2023-05-23
+--------------------
+Added
+~~~~~
+* Logging Management service
+
+  * New optional parameter for CRI-O parser
+
+    * ``oci logging service list --service-stage``
+
+  * Added new CRI-O parser in the option ``--service-configuration``
+
+  * [BREAKING] Commands removed
+
+    * ``oci logging log-included-search get``
+    * ``oci logging log-included-search list``
+
+* Database Service
+
+  * Added availability domain information in get VM cluster and Exadata Infrastructure.
+
+    * ``oci db vm-cluster get --vm-cluster-id``
+    * ``oci db exadata-infrastructure get --exadata-infrastructure-id``
+
+  * Support for new optional parameter dbservers in the autonomous database dedicated service
+
+    * ``oci db cloud-autonomous-vm-cluster create --dbservers``
+
+
+* DNS service
+
+  * Support for secondary egress zones API operations
+
+    * ``oci dns zone create --compartment-id --name --zone-type --external-downstreams ``
+
+  * Support to create zone from zone-file
+
+    * ``oci dns zone create-zone-from-zone-file --compartment-id --create-zone-from-zone-file-details``
+
+  * Support for new optional parameter external-downstream in zone-update
+
+    * ``oci dns zone update --external-downstreams``
+
 3.27.1 - 2023-05-16
 --------------------
 Added

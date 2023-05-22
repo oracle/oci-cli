@@ -42,7 +42,7 @@ def zone():
 @option('--compartment-id', required=True, help="""The OCID of the compartment the resource belongs to.""")
 @option('--zone-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRIMARY", "SECONDARY"]), help=u"""The type of the zone. Must be either `PRIMARY` or `SECONDARY`.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'external-masters': {'module': 'dns', 'class': 'list[ExternalMaster]'}}, output_type={'module': 'dns', 'class': 'Zone'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'external-masters': {'module': 'dns', 'class': 'list[ExternalMaster]'}, 'external-downstreams': {'module': 'dns', 'class': 'list[ExternalDownstream]'}}, output_type={'module': 'dns', 'class': 'Zone'})
 @cli_util.wrap_exceptions
 def create_zone(ctx, **kwargs):
     ctx.invoke(dns_cli.create_zone_create_zone_details, **kwargs)
