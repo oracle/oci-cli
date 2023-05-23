@@ -96,3 +96,7 @@ identity-domains, user-status-changer, put
 identity-domains, users, search
 fn, function, create
 ocvs, sddc, create
+db, cloud-exadata-infrastructure-unallocated-resources, get
+db, exadata-infrastructure-un-allocated-resources, get
+logging, service, list
+dns, zone, create-zone-from-zone-file

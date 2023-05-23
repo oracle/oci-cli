@@ -322,6 +322,12 @@ def autonomous_container_database_dataguard_association_group():
     pass
 
 
+@click.command(cli_util.override('db.exadata_infrastructure_un_allocated_resources_group.command_name', 'exadata-infrastructure-un-allocated-resources'), cls=CommandGroupWithAlias, help="""Un allocated resources details of the Exadata Cloud@Customer infrastructure. Applies to Exadata Cloud@Customer instances only.""")
+@cli_util.help_option_group
+def exadata_infrastructure_un_allocated_resources_group():
+    pass
+
+
 @click.command(cli_util.override('db.db_system_group.command_name', 'db-system'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def db_system_group():
@@ -451,6 +457,7 @@ db_root_group.add_command(database_upgrade_history_entry_group)
 db_root_group.add_command(external_backup_job_group)
 db_root_group.add_command(autonomous_database_character_sets_group)
 db_root_group.add_command(autonomous_container_database_dataguard_association_group)
+db_root_group.add_command(exadata_infrastructure_un_allocated_resources_group)
 db_root_group.add_command(db_system_group)
 db_root_group.add_command(autonomous_vm_cluster_group)
 db_root_group.add_command(key_store_group)
@@ -2481,7 +2488,7 @@ def create_application_vip(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.option('--display-name', required=True, help=u"""The display name for the Autonomous Container Database.""")
 @cli_util.option('--patch-model', required=True, type=custom_types.CliCaseInsensitiveChoice(["RELEASE_UPDATES", "RELEASE_UPDATE_REVISIONS"]), help=u"""Database Patch model preference.""")
 @cli_util.option('--db-unique-name', help=u"""**Deprecated.** The `DB_UNIQUE_NAME` value is set by Oracle Cloud Infrastructure.  Do not specify a value for this parameter. Specifying a value for this field will cause Terraform operations to fail.""")
-@cli_util.option('--db-name', help=u"""The database name for the Autonomous Container Database. The name must be unique within the Cloud Autonomous VM Cluster, must start with an alphabetic character and followed by 1 to 7 alphanumeric characters.""")
+@cli_util.option('--db-name', help=u"""The Database name for the Autonomous Container Database. The name must be unique within the Cloud Autonomous VM Cluster, starting with an alphabetic character, followed by 1 to 7 alphanumeric characters.""")
 @cli_util.option('--service-level-agreement-type', type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "AUTONOMOUS_DATAGUARD"]), help=u"""The service level agreement type of the Autonomous Container Database. The default is STANDARD. For an autonomous dataguard Autonomous Container Database, the specified Autonomous Exadata Infrastructure must be associated with a remote Autonomous Exadata Infrastructure.""")
 @cli_util.option('--autonomous-exadata-infrastructure-id', help=u"""**No longer used.** This parameter is no longer used for Autonomous Database on dedicated Exadata infrasture. Specify a `cloudAutonomousVmClusterId` instead. Using this parameter will cause the operation to fail.""")
 @cli_util.option('--db-version', help=u"""The base version for the Autonomous Container Database.""")
@@ -5017,7 +5024,7 @@ def create_autonomous_database_backup(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.option('--total-container-databases', type=click.INT, help=u"""The total number of Autonomous Container Databases that can be created.""")
 @cli_util.option('--cpu-core-count-per-node', type=click.INT, help=u"""The number of CPU cores to enable per VM cluster node.""")
 @cli_util.option('--compute-model', type=custom_types.CliCaseInsensitiveChoice(["ECPU", "OCPU"]), help=u"""The compute model of the Autonomous VM Cluster. See [Compute Models in Autonomous Database on Dedicated Exadata Infrastructure] for more details.""")
-@cli_util.option('--memory-per-oracle-compute-unit-in-gbs', type=click.INT, help=u"""The amount of memory (in GBs) to be enabled per each CPU core.""")
+@cli_util.option('--memory-per-oracle-compute-unit-in-gbs', type=click.INT, help=u"""The amount of memory (in GBs) to be enabled per OCPU or ECPU. See [Compute Models in Autonomous Database on Dedicated Exadata Infrastructure] for more details.""")
 @cli_util.option('--autonomous-data-storage-size-in-tbs', help=u"""The data disk group size to be allocated for Autonomous Databases, in TBs.""")
 @cli_util.option('--maintenance-window-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--db-servers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of [OCIDs] of the Db servers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5382,7 +5389,7 @@ def create_backup_destination_create_recovery_appliance_backup_destination_detai
 @cli_util.option('--description', help=u"""User defined description of the cloud Autonomous VM cluster.""")
 @cli_util.option('--total-container-databases', type=click.INT, help=u"""The total number of Autonomous Container Databases that can be created.""")
 @cli_util.option('--cpu-core-count-per-node', type=click.INT, help=u"""The number of CPU cores to be enabled per VM cluster node.""")
-@cli_util.option('--memory-per-oracle-compute-unit-in-gbs', type=click.INT, help=u"""The amount of memory (in GBs) to be enabled per each CPU core.""")
+@cli_util.option('--memory-per-oracle-compute-unit-in-gbs', type=click.INT, help=u"""The amount of memory (in GBs) to be enabled per OCPU or ECPU. See [Compute Models in Autonomous Database on Dedicated Exadata Infrastructure] for more details.""")
 @cli_util.option('--autonomous-data-storage-size-in-tbs', help=u"""The data disk group size to be allocated for Autonomous Databases, in TBs.""")
 @cli_util.option('--cluster-time-zone', help=u"""The time zone to use for the Cloud Autonomous VM cluster. For details, see [DB System Time Zones].""")
 @cli_util.option('--compute-model', type=custom_types.CliCaseInsensitiveChoice(["ECPU", "OCPU"]), help=u"""The compute model of the Cloud Autonomous VM Cluster. See [Compute Models in Autonomous Database on Dedicated Exadata Infrastructure] for more details.""")
@@ -11695,17 +11702,20 @@ def get_cloud_exadata_infrastructure(ctx, from_json, cloud_exadata_infrastructur
 
 @cloud_exadata_infrastructure_unallocated_resources_group.command(name=cli_util.override('db.get_cloud_exadata_infrastructure_unallocated_resources.command_name', 'get'), help=u"""Gets unallocated resources information for the specified Cloud Exadata infrastructure. \n[Command Reference](getCloudExadataInfrastructureUnallocatedResources)""")
 @cli_util.option('--cloud-exadata-infrastructure-id', required=True, help=u"""The cloud Exadata infrastructure [OCID].""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--db-servers', multiple=True, help=u"""The list of [OCIDs] of the Db servers.""")
+@json_skeleton_utils.get_cli_json_input_option({'db-servers': {'module': 'database', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'CloudExadataInfrastructureUnallocatedResources'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-servers': {'module': 'database', 'class': 'list[string]'}}, output_type={'module': 'database', 'class': 'CloudExadataInfrastructureUnallocatedResources'})
 @cli_util.wrap_exceptions
-def get_cloud_exadata_infrastructure_unallocated_resources(ctx, from_json, cloud_exadata_infrastructure_id):
+def get_cloud_exadata_infrastructure_unallocated_resources(ctx, from_json, cloud_exadata_infrastructure_id, db_servers):
 
     if isinstance(cloud_exadata_infrastructure_id, six.string_types) and len(cloud_exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if db_servers is not None and len(db_servers) > 0:
+        kwargs['db_servers'] = db_servers
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database', 'database', ctx)
     result = client.get_cloud_exadata_infrastructure_unallocated_resources(
@@ -12198,6 +12208,31 @@ def get_exadata_infrastructure_ocpus(ctx, from_json, autonomous_exadata_infrastr
     client = cli_util.build_client('database', 'database', ctx)
     result = client.get_exadata_infrastructure_ocpus(
         autonomous_exadata_infrastructure_id=autonomous_exadata_infrastructure_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@exadata_infrastructure_un_allocated_resources_group.command(name=cli_util.override('db.get_exadata_infrastructure_un_allocated_resources.command_name', 'get'), help=u"""Gets un allocated resources information for the specified Exadata infrastructure. Applies to Exadata Cloud@Customer instances only. \n[Command Reference](getExadataInfrastructureUnAllocatedResources)""")
+@cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
+@cli_util.option('--db-servers', multiple=True, help=u"""The list of [OCIDs] of the Db servers.""")
+@json_skeleton_utils.get_cli_json_input_option({'db-servers': {'module': 'database', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-servers': {'module': 'database', 'class': 'list[string]'}}, output_type={'module': 'database', 'class': 'ExadataInfrastructureUnAllocatedResources'})
+@cli_util.wrap_exceptions
+def get_exadata_infrastructure_un_allocated_resources(ctx, from_json, exadata_infrastructure_id, db_servers):
+
+    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+        raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if db_servers is not None and len(db_servers) > 0:
+        kwargs['db_servers'] = db_servers
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.get_exadata_infrastructure_un_allocated_resources(
+        exadata_infrastructure_id=exadata_infrastructure_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -18272,7 +18307,7 @@ def rotate_autonomous_database_encryption_key(ctx, from_json, wait_for_state, ma
 
 
 @autonomous_vm_cluster_group.command(name=cli_util.override('db.rotate_autonomous_vm_cluster_ords_certs.command_name', 'rotate-autonomous-vm-cluster-ords-certs'), help=u"""Rotates the Oracle REST Data Services (ORDS) certificates for Autonomous Exadata VM cluster. \n[Command Reference](rotateAutonomousVmClusterOrdsCerts)""")
-@cli_util.option('--certificate-generation-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SYSTEM", "BYOC"]), help=u"""Specify SYSTEM for using Oracle managed certificates. Specify BYOC when you want to bring your own certificate.""")
+@cli_util.option('--certificate-generation-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SYSTEM", "BYOC"]), help=u"""Specify SYSTEM to use Oracle-managed certificates. Specify BYOC when you want to bring your own certificate.""")
 @cli_util.option('--autonomous-vm-cluster-id', required=True, help=u"""The autonomous VM cluster [OCID].""")
 @cli_util.option('--certificate-id', help=u"""The [OCID] of the certificate to use.""")
 @cli_util.option('--certificate-authority-id', help=u"""The [OCID] of the certificate authority.""")
@@ -18349,7 +18384,7 @@ def rotate_autonomous_vm_cluster_ords_certs(ctx, from_json, wait_for_state, max_
 
 
 @autonomous_vm_cluster_group.command(name=cli_util.override('db.rotate_autonomous_vm_cluster_ssl_certs.command_name', 'rotate-autonomous-vm-cluster-ssl-certs'), help=u"""Rotates the SSL certificates for Autonomous Exadata VM cluster. \n[Command Reference](rotateAutonomousVmClusterSslCerts)""")
-@cli_util.option('--certificate-generation-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SYSTEM", "BYOC"]), help=u"""Specify SYSTEM for using Oracle managed certificates. Specify BYOC when you want to bring your own certificate.""")
+@cli_util.option('--certificate-generation-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SYSTEM", "BYOC"]), help=u"""Specify SYSTEM to use Oracle-managed certificates. Specify BYOC when you want to bring your own certificate.""")
 @cli_util.option('--autonomous-vm-cluster-id', required=True, help=u"""The autonomous VM cluster [OCID].""")
 @cli_util.option('--certificate-id', help=u"""The [OCID] of the certificate to use.""")
 @cli_util.option('--certificate-authority-id', help=u"""The [OCID] of the certificate authority.""")
@@ -18427,7 +18462,7 @@ def rotate_autonomous_vm_cluster_ssl_certs(ctx, from_json, wait_for_state, max_w
 
 @cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.rotate_cloud_autonomous_vm_cluster_ords_certs.command_name', 'rotate-cloud-autonomous-vm-cluster-ords-certs'), help=u"""Rotates the Oracle REST Data Services (ORDS) certificates for a cloud Autonomous Exadata VM cluster. \n[Command Reference](rotateCloudAutonomousVmClusterOrdsCerts)""")
 @cli_util.option('--cloud-autonomous-vm-cluster-id', required=True, help=u"""The Cloud VM cluster [OCID].""")
-@cli_util.option('--certificate-generation-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SYSTEM", "BYOC"]), help=u"""Specify SYSTEM for using Oracle managed certificates. Specify BYOC when you want to bring your own certificate.""")
+@cli_util.option('--certificate-generation-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SYSTEM", "BYOC"]), help=u"""Specify SYSTEM to use Oracle-managed certificates. Specify BYOC when you want to bring your own certificate.""")
 @cli_util.option('--certificate-id', help=u"""The [OCID] of the certificate to use.""")
 @cli_util.option('--certificate-authority-id', help=u"""The [OCID] of the certificate authority.""")
 @cli_util.option('--ca-bundle-id', help=u"""The [OCID] of the certificate bundle.""")
@@ -18504,7 +18539,7 @@ def rotate_cloud_autonomous_vm_cluster_ords_certs(ctx, from_json, wait_for_state
 
 @cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.rotate_cloud_autonomous_vm_cluster_ssl_certs.command_name', 'rotate-cloud-autonomous-vm-cluster-ssl-certs'), help=u"""Rotates the SSL certficates for a cloud Autonomous Exadata VM cluster. \n[Command Reference](rotateCloudAutonomousVmClusterSslCerts)""")
 @cli_util.option('--cloud-autonomous-vm-cluster-id', required=True, help=u"""The Cloud VM cluster [OCID].""")
-@cli_util.option('--certificate-generation-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SYSTEM", "BYOC"]), help=u"""Specify SYSTEM for using Oracle managed certificates. Specify BYOC when you want to bring your own certificate.""")
+@cli_util.option('--certificate-generation-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SYSTEM", "BYOC"]), help=u"""Specify SYSTEM to use Oracle-managed certificates. Specify BYOC when you want to bring your own certificate.""")
 @cli_util.option('--certificate-id', help=u"""The [OCID] of the certificate to use.""")
 @cli_util.option('--certificate-authority-id', help=u"""The [OCID] of the certificate authority.""")
 @cli_util.option('--ca-bundle-id', help=u"""The [OCID] of the certificate bundle.""")

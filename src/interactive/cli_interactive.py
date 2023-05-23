@@ -20,6 +20,8 @@ from interactive.prompt_session import create_oci_prompt_session
 import os
 import sys
 
+PROFILE_PARAM = '--profile'
+
 
 def start_interactive_shell(ctx):
     # print help message like you tube vedios for first time
@@ -83,6 +85,10 @@ def start_interactive_shell(ctx):
         + " "
         + text if text else ""
     )
+
+    if PROFILE_PARAM in text.split():
+        print("--profile param should be provided before entering into interactive mode")
+        return
 
     # Execute Command
     os.system(command)

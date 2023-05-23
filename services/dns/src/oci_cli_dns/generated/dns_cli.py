@@ -45,19 +45,19 @@ def zone_transfer_server_group():
     pass
 
 
-@click.command(cli_util.override('dns.steering_policy_attachment_group.command_name', 'steering-policy-attachment'), cls=CommandGroupWithAlias, help="""An attachment between a steering policy and a domain. An attachment constructs DNS responses using its steering policy instead of the records at its defined domain. Only records of the policy's covered rtype are blocked at the domain. A domain can have a maximum of one attachment covering any given rtype.
-
-**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
-@cli_util.help_option_group
-def steering_policy_attachment_group():
-    pass
-
-
 @click.command(cli_util.override('dns.zone_group.command_name', 'zone'), cls=CommandGroupWithAlias, help="""A DNS zone.
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def zone_group():
+    pass
+
+
+@click.command(cli_util.override('dns.steering_policy_attachment_group.command_name', 'steering-policy-attachment'), cls=CommandGroupWithAlias, help="""An attachment between a steering policy and a domain. An attachment constructs DNS responses using its steering policy instead of the records at its defined domain. Only records of the policy's covered rtype are blocked at the domain. A domain can have a maximum of one attachment covering any given rtype.
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@cli_util.help_option_group
+def steering_policy_attachment_group():
     pass
 
 
@@ -98,8 +98,8 @@ def records_group():
 dns_root_group.add_command(resolver_group)
 dns_root_group.add_command(view_group)
 dns_root_group.add_command(zone_transfer_server_group)
-dns_root_group.add_command(steering_policy_attachment_group)
 dns_root_group.add_command(zone_group)
+dns_root_group.add_command(steering_policy_attachment_group)
 dns_root_group.add_command(tsig_key_group)
 dns_root_group.add_command(rr_set_group)
 dns_root_group.add_command(steering_policy_group)
@@ -840,6 +840,9 @@ Private zones must have a zone type of `PRIMARY`. Creating a private zone at or 
 @cli_util.option('--external-masters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""External master servers for the zone. `externalMasters` becomes a required parameter when the `zoneType` value is `SECONDARY`.
 
 This option is a JSON list with items of type ExternalMaster.  For documentation on ExternalMaster please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/ExternalMaster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--external-downstreams', type=custom_types.CLI_COMPLEX_TYPE, help=u"""External secondary servers for the zone. This field is currently not supported when `zoneType` is `SECONDARY` or `scope` is `PRIVATE`.
+
+This option is a JSON list with items of type ExternalDownstream.  For documentation on ExternalDownstream please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/ExternalDownstream.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")
@@ -848,12 +851,12 @@ This parameter is deprecated and should be omitted.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'external-masters': {'module': 'dns', 'class': 'list[ExternalMaster]'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'external-masters': {'module': 'dns', 'class': 'list[ExternalMaster]'}, 'external-downstreams': {'module': 'dns', 'class': 'list[ExternalDownstream]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'external-masters': {'module': 'dns', 'class': 'list[ExternalMaster]'}}, output_type={'module': 'dns', 'class': 'Zone'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'external-masters': {'module': 'dns', 'class': 'list[ExternalMaster]'}, 'external-downstreams': {'module': 'dns', 'class': 'list[ExternalDownstream]'}}, output_type={'module': 'dns', 'class': 'Zone'})
 @cli_util.wrap_exceptions
-def create_zone_create_zone_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, freeform_tags, defined_tags, zone_type, external_masters, compartment_id, scope, view_id):
+def create_zone_create_zone_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, freeform_tags, defined_tags, zone_type, external_masters, external_downstreams, compartment_id, scope, view_id):
 
     kwargs = {}
     if compartment_id is not None:
@@ -885,6 +888,9 @@ def create_zone_create_zone_details(ctx, from_json, wait_for_state, max_wait_sec
 
     if external_masters is not None:
         _details['externalMasters'] = cli_util.parse_json_parameter("external_masters", external_masters)
+
+    if external_downstreams is not None:
+        _details['externalDownstreams'] = cli_util.parse_json_parameter("external_downstreams", external_downstreams)
 
     _details['migrationSource'] = 'NONE'
 
@@ -997,6 +1003,37 @@ def create_zone_create_migrated_dynect_zone_details(ctx, from_json, wait_for_sta
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@zone_group.command(name=cli_util.override('dns.create_zone_from_zone_file.command_name', 'create-zone-from-zone-file'), help=u"""Creates a new zone from a zone file in the specified compartment. Not supported for private zones. \n[Command Reference](createZoneFromZoneFile)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--create-zone-from-zone-file-details', required=True, help=u"""The zone file contents.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'Zone'})
+@cli_util.wrap_exceptions
+def create_zone_from_zone_file(ctx, from_json, compartment_id, create_zone_from_zone_file_details, scope, view_id):
+
+    kwargs = {}
+    if scope is not None:
+        kwargs['scope'] = scope
+    if view_id is not None:
+        kwargs['view_id'] = view_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    # do not automatically retry operations with binary inputs
+    kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()
+
+    client = cli_util.build_client('dns', 'dns', ctx)
+    result = client.create_zone_from_zone_file(
+        compartment_id=compartment_id,
+        create_zone_from_zone_file_details=create_zone_from_zone_file_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -3514,6 +3551,9 @@ Global secondary zones may have their external masters updated. For more informa
 @cli_util.option('--external-masters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""External master servers for the zone. `externalMasters` becomes a required parameter when the `zoneType` value is `SECONDARY`.
 
 This option is a JSON list with items of type ExternalMaster.  For documentation on ExternalMaster please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/ExternalMaster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--external-downstreams', type=custom_types.CLI_COMPLEX_TYPE, help=u"""External secondary servers for the zone. This field is currently not supported when `zoneType` is `SECONDARY` or `scope` is `PRIVATE`.
+
+This option is a JSON list with items of type ExternalDownstream.  For documentation on ExternalDownstream please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/ExternalDownstream.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
@@ -3525,18 +3565,18 @@ This parameter is deprecated and should be omitted.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'external-masters': {'module': 'dns', 'class': 'list[ExternalMaster]'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'external-masters': {'module': 'dns', 'class': 'list[ExternalMaster]'}, 'external-downstreams': {'module': 'dns', 'class': 'list[ExternalDownstream]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'external-masters': {'module': 'dns', 'class': 'list[ExternalMaster]'}}, output_type={'module': 'dns', 'class': 'Zone'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'external-masters': {'module': 'dns', 'class': 'list[ExternalMaster]'}, 'external-downstreams': {'module': 'dns', 'class': 'list[ExternalDownstream]'}}, output_type={'module': 'dns', 'class': 'Zone'})
 @cli_util.wrap_exceptions
-def update_zone(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, zone_name_or_id, freeform_tags, defined_tags, external_masters, if_match, if_unmodified_since, scope, view_id, compartment_id):
+def update_zone(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, zone_name_or_id, freeform_tags, defined_tags, external_masters, external_downstreams, if_match, if_unmodified_since, scope, view_id, compartment_id):
 
     if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags or external_masters:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and external-masters will replace any existing values. Are you sure you want to continue?"):
+        if freeform_tags or defined_tags or external_masters or external_downstreams:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and external-masters and external-downstreams will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -3562,6 +3602,9 @@ def update_zone(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
 
     if external_masters is not None:
         _details['externalMasters'] = cli_util.parse_json_parameter("external_masters", external_masters)
+
+    if external_downstreams is not None:
+        _details['externalDownstreams'] = cli_util.parse_json_parameter("external_downstreams", external_downstreams)
 
     client = cli_util.build_client('dns', 'dns', ctx)
     result = client.update_zone(
