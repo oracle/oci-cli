@@ -100,3 +100,13 @@ db, cloud-exadata-infrastructure-unallocated-resources, get
 db, exadata-infrastructure-un-allocated-resources, get
 logging, service, list
 dns, zone, create-zone-from-zone-file
+fs, file-system, list
+fs, filesystem-snapshot-policy, change-compartment
+fs, filesystem-snapshot-policy, create
+fs, filesystem-snapshot-policy, delete
+fs, filesystem-snapshot-policy, get
+fs, filesystem-snapshot-policy, list
+fs, filesystem-snapshot-policy, pause
+fs, filesystem-snapshot-policy, unpause
+fs, filesystem-snapshot-policy, update
+fs, snapshot, list

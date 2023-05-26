@@ -23,6 +23,16 @@ def fs_root_group():
     pass
 
 
+@click.command(cli_util.override('fs.filesystem_snapshot_policy_group.command_name', 'filesystem-snapshot-policy'), cls=CommandGroupWithAlias, help="""A file system snapshot policy is used to automate snapshot creation and deletion. It contains a list of snapshot schedules that define the frequency of snapshot creation for the associated file systems and the retention period of snapshots taken on schedule.
+
+For more information, see [Snapshot Scheduling].
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+@cli_util.help_option_group
+def filesystem_snapshot_policy_group():
+    pass
+
+
 @click.command(cli_util.override('fs.replication_group.command_name', 'replication'), cls=CommandGroupWithAlias, help="""Replications are the primary resource that governs the policy of cross-region replication between source and target file systems. Replications are associated with a secondary resource called a [`ReplicationTarget`] located in another availability domain in the same or different region. The replication retrieves the delta of data between two snapshots of a source file system and sends it to the associated `ReplicationTarget`, which applies it to the target file system. For more information, see [File System Replication].""")
 @cli_util.help_option_group
 def replication_group():
@@ -83,6 +93,7 @@ def snapshot_group():
     pass
 
 
+fs_root_group.add_command(filesystem_snapshot_policy_group)
 fs_root_group.add_command(replication_group)
 fs_root_group.add_command(file_system_group)
 fs_root_group.add_command(replication_target_group)
@@ -118,6 +129,37 @@ def change_file_system_compartment(ctx, from_json, file_system_id, compartment_i
     result = client.change_file_system_compartment(
         file_system_id=file_system_id,
         change_file_system_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@filesystem_snapshot_policy_group.command(name=cli_util.override('fs.change_filesystem_snapshot_policy_compartment.command_name', 'change-compartment'), help=u"""Moves a file system snapshot policy into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeFilesystemSnapshotPolicyCompartment)""")
+@cli_util.option('--filesystem-snapshot-policy-id', required=True, help=u"""The [OCID] of the file system snapshot policy.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the file system snapshot policy to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_filesystem_snapshot_policy_compartment(ctx, from_json, filesystem_snapshot_policy_id, compartment_id, if_match):
+
+    if isinstance(filesystem_snapshot_policy_id, six.string_types) and len(filesystem_snapshot_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --filesystem-snapshot-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.change_filesystem_snapshot_policy_compartment(
+        filesystem_snapshot_policy_id=filesystem_snapshot_policy_id,
+        change_filesystem_snapshot_policy_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -195,7 +237,7 @@ Avoid entering confidential information.
 Example: `/mediafiles`""")
 @cli_util.option('--export-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Export options for the new export. If left unspecified, defaults to:
 
-       [          {             \"source\" : \"0.0.0.0/0\",             \"requirePrivilegedSourcePort\" : false,             \"access\" : \"READ_WRITE\",             \"identitySquash\" : \"NONE\"           }        ]
+       [          {             \"source\" : \"0.0.0.0/0\",             \"requirePrivilegedSourcePort\" : false,             \"access\": \"READ_WRITE\",             \"identitySquash\": \"NONE\",             \"anonymousUid\": 65534,             \"anonymousGid\": 65534,             \"isAnonymousAccessAllowed\": false,             \"allowedAuth\": [\"SYS\"]           }        ]
 
   **Note:** Mount targets do not have Internet-routable IP   addresses.  Therefore they will not be reachable from the   Internet, even if an associated `ClientOptions` item has   a source of `0.0.0.0/0`.
 
@@ -278,6 +320,9 @@ Example: `My file system`""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The [OCID] of the KMS key used to encrypt the encryption keys associated with this file system.""")
 @cli_util.option('--source-snapshot-id', help=u"""The [OCID] of the snapshot used to create a cloned file system. See [Cloning a File System].""")
+@cli_util.option('--filesystem-snapshot-policy-id', help=u"""The [OCID] of the associated file system snapshot policy, which controls the frequency of snapshot creation and retention period of the taken snapshots.
+
+May be unset as a blank value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -286,7 +331,7 @@ Example: `My file system`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'FileSystem'})
 @cli_util.wrap_exceptions
-def create_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, display_name, freeform_tags, defined_tags, kms_key_id, source_snapshot_id):
+def create_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, display_name, freeform_tags, defined_tags, kms_key_id, source_snapshot_id, filesystem_snapshot_policy_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -310,6 +355,9 @@ def create_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     if source_snapshot_id is not None:
         _details['sourceSnapshotId'] = source_snapshot_id
 
+    if filesystem_snapshot_policy_id is not None:
+        _details['filesystemSnapshotPolicyId'] = filesystem_snapshot_policy_id
+
     client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.create_file_system(
         create_file_system_details=_details,
@@ -327,6 +375,89 @@ def create_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_file_system(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@filesystem_snapshot_policy_group.command(name=cli_util.override('fs.create_filesystem_snapshot_policy.command_name', 'create'), help=u"""Creates a new file system snapshot policy in the specified compartment and availability domain.
+
+After you create a file system snapshot policy, you can associate it with file systems. \n[Command Reference](createFilesystemSnapshotPolicy)""")
+@cli_util.option('--availability-domain', required=True, help=u"""The availability domain that the file system snapshot policy is in.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the file system snapshot policy.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.
+
+Example: `policy1`""")
+@cli_util.option('--policy-prefix', help=u"""The prefix to apply to all snapshots created by this policy.
+
+Example: `acme`""")
+@cli_util.option('--schedules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of associated snapshot schedules. A maximum of 10 schedules can be associated with a policy.
+
+If using the CLI, provide the schedule as a list of JSON strings, with the list wrapped in quotation marks, i.e. ```   --schedules '[{\"timeZone\":\"UTC\",\"period\":\"DAILY\",\"hourOfDay\":18},{\"timeZone\":\"UTC\",\"period\":\"HOURLY\"}]' ```
+
+This option is a JSON list with items of type SnapshotSchedule.  For documentation on SnapshotSchedule please see our API reference: https://docs.cloud.oracle.com/api/#/en/filestorage/20171215/datatypes/SnapshotSchedule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "INACTIVE", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'schedules': {'module': 'file_storage', 'class': 'list[SnapshotSchedule]'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schedules': {'module': 'file_storage', 'class': 'list[SnapshotSchedule]'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'FilesystemSnapshotPolicy'})
+@cli_util.wrap_exceptions
+def create_filesystem_snapshot_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, display_name, policy_prefix, schedules, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['compartmentId'] = compartment_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if policy_prefix is not None:
+        _details['policyPrefix'] = policy_prefix
+
+    if schedules is not None:
+        _details['schedules'] = cli_util.parse_json_parameter("schedules", schedules)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.create_filesystem_snapshot_policy(
+        create_filesystem_snapshot_policy_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_filesystem_snapshot_policy') and callable(getattr(client, 'get_filesystem_snapshot_policy')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_filesystem_snapshot_policy(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -522,6 +653,7 @@ def create_replication(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 Avoid entering confidential information.
 
 Example: `Sunday`""")
+@cli_util.option('--expiration-time', type=custom_types.CLI_DATETIME, help=u"""The time when this snapshot will be deleted.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -532,7 +664,7 @@ Example: `Sunday`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'Snapshot'})
 @cli_util.wrap_exceptions
-def create_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, file_system_id, name, freeform_tags, defined_tags):
+def create_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, file_system_id, name, expiration_time, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -540,6 +672,9 @@ def create_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     _details = {}
     _details['fileSystemId'] = file_system_id
     _details['name'] = name
+
+    if expiration_time is not None:
+        _details['expirationTime'] = expiration_time
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -680,6 +815,70 @@ def delete_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, client.get_file_system(file_system_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@filesystem_snapshot_policy_group.command(name=cli_util.override('fs.delete_filesystem_snapshot_policy.command_name', 'delete'), help=u"""Deletes the specified file system snapshot policy. \n[Command Reference](deleteFilesystemSnapshotPolicy)""")
+@cli_util.option('--filesystem-snapshot-policy-id', required=True, help=u"""The [OCID] of the file system snapshot policy.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "INACTIVE", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_filesystem_snapshot_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, filesystem_snapshot_policy_id, if_match):
+
+    if isinstance(filesystem_snapshot_policy_id, six.string_types) and len(filesystem_snapshot_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --filesystem-snapshot-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.delete_filesystem_snapshot_policy(
+        filesystem_snapshot_policy_id=filesystem_snapshot_policy_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_filesystem_snapshot_policy') and callable(getattr(client, 'get_filesystem_snapshot_policy')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_filesystem_snapshot_policy(filesystem_snapshot_policy_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -1059,6 +1258,28 @@ def get_file_system(ctx, from_json, file_system_id):
     cli_util.render_response(result, ctx)
 
 
+@filesystem_snapshot_policy_group.command(name=cli_util.override('fs.get_filesystem_snapshot_policy.command_name', 'get'), help=u"""Gets the specified file system snapshot policy's information. \n[Command Reference](getFilesystemSnapshotPolicy)""")
+@cli_util.option('--filesystem-snapshot-policy-id', required=True, help=u"""The [OCID] of the file system snapshot policy.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'file_storage', 'class': 'FilesystemSnapshotPolicy'})
+@cli_util.wrap_exceptions
+def get_filesystem_snapshot_policy(ctx, from_json, filesystem_snapshot_policy_id):
+
+    if isinstance(filesystem_snapshot_policy_id, six.string_types) and len(filesystem_snapshot_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --filesystem-snapshot-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.get_filesystem_snapshot_policy(
+        filesystem_snapshot_policy_id=filesystem_snapshot_policy_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @mount_target_group.command(name=cli_util.override('fs.get_mount_target.command_name', 'get'), help=u"""Gets the specified mount target's information. \n[Command Reference](getMountTarget)""")
 @cli_util.option('--mount-target-id', required=True, help=u"""The [OCID] of the mount target.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1297,7 +1518,7 @@ def list_exports(ctx, from_json, all_pages, page_size, compartment_id, limit, pa
     cli_util.render_response(result, ctx)
 
 
-@file_system_group.command(name=cli_util.override('fs.list_file_systems.command_name', 'list'), help=u"""Lists the file system resources in the specified compartment. \n[Command Reference](listFileSystems)""")
+@file_system_group.command(name=cli_util.override('fs.list_file_systems.command_name', 'list'), help=u"""Lists the file system resources in the specified compartment, or by the specified compartment and file system snapshot policy. \n[Command Reference](listFileSystems)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
 
@@ -1317,6 +1538,7 @@ Example: `My resource`""")
 @cli_util.option('--id', help=u"""Filter results by [OCID]. Must be an OCID of the correct type for the resouce type.""")
 @cli_util.option('--source-snapshot-id', help=u"""The [OCID] of the snapshot used to create a cloned file system. See [Cloning a File System].""")
 @cli_util.option('--parent-file-system-id', help=u"""The [OCID] of the file system that contains the source snapshot of a cloned file system. See [Cloning a File System].""")
+@cli_util.option('--filesystem-snapshot-policy-id', help=u"""The [OCID] of the file system snapshot policy that is associated with the file systems.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide either value, but not both. By default, when you sort by time created, results are shown in descending order. When you sort by display name, results are shown in ascending order.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending. The default order is 'desc' except for numeric values.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1326,7 +1548,7 @@ Example: `My resource`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'file_storage', 'class': 'list[FileSystemSummary]'})
 @cli_util.wrap_exceptions
-def list_file_systems(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, limit, page, display_name, lifecycle_state, id, source_snapshot_id, parent_file_system_id, sort_by, sort_order):
+def list_file_systems(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, limit, page, display_name, lifecycle_state, id, source_snapshot_id, parent_file_system_id, filesystem_snapshot_policy_id, sort_by, sort_order):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1348,6 +1570,8 @@ def list_file_systems(ctx, from_json, all_pages, page_size, compartment_id, avai
         kwargs['source_snapshot_id'] = source_snapshot_id
     if parent_file_system_id is not None:
         kwargs['parent_file_system_id'] = parent_file_system_id
+    if filesystem_snapshot_policy_id is not None:
+        kwargs['filesystem_snapshot_policy_id'] = filesystem_snapshot_policy_id
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
@@ -1375,6 +1599,85 @@ def list_file_systems(ctx, from_json, all_pages, page_size, compartment_id, avai
         )
     else:
         result = client.list_file_systems(
+            compartment_id=compartment_id,
+            availability_domain=availability_domain,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@filesystem_snapshot_policy_group.command(name=cli_util.override('fs.list_filesystem_snapshot_policies.command_name', 'list'), help=u"""Lists file system snapshot policies in the specified compartment. \n[Command Reference](listFilesystemSnapshotPolicies)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
+
+For important details about how pagination works, see [List Pagination].
+
+Example: `500`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable.
+
+Example: `My resource`""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "INACTIVE"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
+@cli_util.option('--id', help=u"""Filter results by [OCID]. Must be an OCID of the correct type for the resouce type.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide either value, but not both. By default, when you sort by time created, results are shown in descending order. When you sort by displayName, results are shown in ascending alphanumeric order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending. The default order is 'desc' except for numeric values.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'file_storage', 'class': 'list[FilesystemSnapshotPolicySummary]'})
+@cli_util.wrap_exceptions
+def list_filesystem_snapshot_policies(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, limit, page, display_name, lifecycle_state, id, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    if sort_by and not availability_domain and not all_pages:
+        raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if id is not None:
+        kwargs['id'] = id
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_filesystem_snapshot_policies,
+            compartment_id=compartment_id,
+            availability_domain=availability_domain,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_filesystem_snapshot_policies,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            availability_domain=availability_domain,
+            **kwargs
+        )
+    else:
+        result = client.list_filesystem_snapshot_policies(
             compartment_id=compartment_id,
             availability_domain=availability_domain,
             **kwargs
@@ -1625,8 +1928,9 @@ def list_replications(ctx, from_json, all_pages, page_size, compartment_id, avai
     cli_util.render_response(result, ctx)
 
 
-@snapshot_group.command(name=cli_util.override('fs.list_snapshots.command_name', 'list'), help=u"""Lists snapshots of the specified file system. \n[Command Reference](listSnapshots)""")
-@cli_util.option('--file-system-id', required=True, help=u"""The [OCID] of the file system.""")
+@snapshot_group.command(name=cli_util.override('fs.list_snapshots.command_name', 'list'), help=u"""Lists snapshots of the specified file system, or by file system snapshot policy and compartment, or by file system snapshot policy and file system.
+
+If file system ID is not specified, a file system snapshot policy ID and compartment ID must be specified. \n[Command Reference](listSnapshots)""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum.
 
 For important details about how pagination works, see [List Pagination].
@@ -1637,6 +1941,9 @@ Example: `100`""")
 For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
 @cli_util.option('--id', help=u"""Filter results by [OCID]. Must be an OCID of the correct type for the resouce type.""")
+@cli_util.option('--filesystem-snapshot-policy-id', help=u"""The [OCID] of the file system snapshot policy that is used to create the snapshots.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--file-system-id', help=u"""The [OCID] of the file system.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending. The default order is 'desc' except for numeric values.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -1645,7 +1952,7 @@ For important details about how pagination works, see [List Pagination].""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'file_storage', 'class': 'list[SnapshotSummary]'})
 @cli_util.wrap_exceptions
-def list_snapshots(ctx, from_json, all_pages, page_size, file_system_id, limit, page, lifecycle_state, id, sort_order):
+def list_snapshots(ctx, from_json, all_pages, page_size, limit, page, lifecycle_state, id, filesystem_snapshot_policy_id, compartment_id, file_system_id, sort_order):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1659,6 +1966,12 @@ def list_snapshots(ctx, from_json, all_pages, page_size, file_system_id, limit, 
         kwargs['lifecycle_state'] = lifecycle_state
     if id is not None:
         kwargs['id'] = id
+    if filesystem_snapshot_policy_id is not None:
+        kwargs['filesystem_snapshot_policy_id'] = filesystem_snapshot_policy_id
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if file_system_id is not None:
+        kwargs['file_system_id'] = file_system_id
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1669,7 +1982,6 @@ def list_snapshots(ctx, from_json, all_pages, page_size, file_system_id, limit, 
 
         result = cli_util.list_call_get_all_results(
             client.list_snapshots,
-            file_system_id=file_system_id,
             **kwargs
         )
     elif limit is not None:
@@ -1677,14 +1989,118 @@ def list_snapshots(ctx, from_json, all_pages, page_size, file_system_id, limit, 
             client.list_snapshots,
             limit,
             page_size,
-            file_system_id=file_system_id,
             **kwargs
         )
     else:
         result = client.list_snapshots(
-            file_system_id=file_system_id,
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@filesystem_snapshot_policy_group.command(name=cli_util.override('fs.pause_filesystem_snapshot_policy.command_name', 'pause'), help=u"""This operation pauses the scheduled snapshot creation and snapshot deletion of the policy and updates the lifecycle state of the file system snapshot policy from ACTIVE to INACTIVE. When a file system snapshot policy is paused, file systems that are associated with the policy will not have scheduled snapshots created or deleted.
+
+If the policy is already paused, or in the INACTIVE state, you cannot pause it again. You can't pause a policy that is in a DELETING, DELETED, FAILED, CREATING or INACTIVE state; attempts to pause a policy in these states result in a 409 conflict error. \n[Command Reference](pauseFilesystemSnapshotPolicy)""")
+@cli_util.option('--filesystem-snapshot-policy-id', required=True, help=u"""The [OCID] of the file system snapshot policy.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "INACTIVE", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'file_storage', 'class': 'FilesystemSnapshotPolicy'})
+@cli_util.wrap_exceptions
+def pause_filesystem_snapshot_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, filesystem_snapshot_policy_id, if_match):
+
+    if isinstance(filesystem_snapshot_policy_id, six.string_types) and len(filesystem_snapshot_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --filesystem-snapshot-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.pause_filesystem_snapshot_policy(
+        filesystem_snapshot_policy_id=filesystem_snapshot_policy_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_filesystem_snapshot_policy') and callable(getattr(client, 'get_filesystem_snapshot_policy')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_filesystem_snapshot_policy(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@filesystem_snapshot_policy_group.command(name=cli_util.override('fs.unpause_filesystem_snapshot_policy.command_name', 'unpause'), help=u"""This operation unpauses a paused file system snapshot policy and updates the lifecycle state of the file system snapshot policy from INACTIVE to ACTIVE. By default, file system snapshot policies are in the ACTIVE state. When a file system snapshot policy is not paused, or in the ACTIVE state, file systems that are associated with the policy will have snapshots created and deleted according to the schedules defined in the policy.
+
+If the policy is already in the ACTIVE state, you cannot unpause it. You can't unpause a policy that is in a DELETING, DELETED, FAILED, CREATING, or ACTIVE state; attempts to unpause a policy in these states result in a 409 conflict error. \n[Command Reference](unpauseFilesystemSnapshotPolicy)""")
+@cli_util.option('--filesystem-snapshot-policy-id', required=True, help=u"""The [OCID] of the file system snapshot policy.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "INACTIVE", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'file_storage', 'class': 'FilesystemSnapshotPolicy'})
+@cli_util.wrap_exceptions
+def unpause_filesystem_snapshot_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, filesystem_snapshot_policy_id, if_match):
+
+    if isinstance(filesystem_snapshot_policy_id, six.string_types) and len(filesystem_snapshot_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --filesystem-snapshot-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.unpause_filesystem_snapshot_policy(
+        filesystem_snapshot_policy_id=filesystem_snapshot_policy_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_filesystem_snapshot_policy') and callable(getattr(client, 'get_filesystem_snapshot_policy')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_filesystem_snapshot_policy(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -1837,6 +2253,9 @@ Example: `My file system`""")
 @cli_util.option('--kms-key-id', help=u"""The [OCID] of the Key Management master encryption key to associate with the specified file system. If this value is empty, the Update operation will remove the associated key, if there is one, from the file system. (The file system will continue to be encrypted, but with an encryption key managed by Oracle.)
 
 If updating to a new Key Management key, the old key must remain enabled so that files previously encrypted continue to be accessible. For more information, see [Overview of Key Management].""")
+@cli_util.option('--filesystem-snapshot-policy-id', help=u"""The [OCID] of the associated file system snapshot policy, which controls the frequency of snapshot creation and retention period of the taken snapshots.
+
+If string is empty, the policy reference (if any) would be removed.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1847,7 +2266,7 @@ If updating to a new Key Management key, the old key must remain enabled so that
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'FileSystem'})
 @cli_util.wrap_exceptions
-def update_file_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, file_system_id, display_name, freeform_tags, defined_tags, kms_key_id, if_match):
+def update_file_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, file_system_id, display_name, freeform_tags, defined_tags, kms_key_id, filesystem_snapshot_policy_id, if_match):
 
     if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
@@ -1875,6 +2294,9 @@ def update_file_system(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     if kms_key_id is not None:
         _details['kmsKeyId'] = kms_key_id
 
+    if filesystem_snapshot_policy_id is not None:
+        _details['filesystemSnapshotPolicyId'] = filesystem_snapshot_policy_id
+
     client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.update_file_system(
         file_system_id=file_system_id,
@@ -1893,6 +2315,94 @@ def update_file_system(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_file_system(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@filesystem_snapshot_policy_group.command(name=cli_util.override('fs.update_filesystem_snapshot_policy.command_name', 'update'), help=u"""Updates the specified file system snapshot policy's information. \n[Command Reference](updateFilesystemSnapshotPolicy)""")
+@cli_util.option('--filesystem-snapshot-policy-id', required=True, help=u"""The [OCID] of the file system snapshot policy.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.
+
+Example: `policy1`""")
+@cli_util.option('--policy-prefix', help=u"""The prefix to apply to all snapshots created by this policy.
+
+Example: `acme`""")
+@cli_util.option('--schedules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of associated snapshot schedules. A maximum of 10 schedules can be associated with a policy.
+
+If using the CLI, provide the schedule as a list of JSON strings, with the list wrapped in quotation marks, i.e. ```   --schedules '[{\"timeZone\":\"UTC\",\"period\":\"DAILY\",\"hourOfDay\":18},{\"timeZone\":\"UTC\",\"period\":\"HOURLY\"}]' ```
+
+This option is a JSON list with items of type SnapshotSchedule.  For documentation on SnapshotSchedule please see our API reference: https://docs.cloud.oracle.com/api/#/en/filestorage/20171215/datatypes/SnapshotSchedule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "INACTIVE", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'schedules': {'module': 'file_storage', 'class': 'list[SnapshotSchedule]'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schedules': {'module': 'file_storage', 'class': 'list[SnapshotSchedule]'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'FilesystemSnapshotPolicy'})
+@cli_util.wrap_exceptions
+def update_filesystem_snapshot_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, filesystem_snapshot_policy_id, display_name, policy_prefix, schedules, freeform_tags, defined_tags, if_match):
+
+    if isinstance(filesystem_snapshot_policy_id, six.string_types) and len(filesystem_snapshot_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --filesystem-snapshot-policy-id cannot be whitespace or empty string')
+    if not force:
+        if schedules or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to schedules and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if policy_prefix is not None:
+        _details['policyPrefix'] = policy_prefix
+
+    if schedules is not None:
+        _details['schedules'] = cli_util.parse_json_parameter("schedules", schedules)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.update_filesystem_snapshot_policy(
+        filesystem_snapshot_policy_id=filesystem_snapshot_policy_id,
+        update_filesystem_snapshot_policy_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_filesystem_snapshot_policy') and callable(getattr(client, 'get_filesystem_snapshot_policy')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_filesystem_snapshot_policy(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -2065,6 +2575,9 @@ def update_replication(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 @cli_util.option('--snapshot-id', required=True, help=u"""The [OCID] of the snapshot.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--expiration-time', type=custom_types.CLI_DATETIME, help=u"""The UTC time when this snapshot will be deleted. To remove the expiration time, set this field to the minimum date-time value using Date(0).
+
+Example: `Thu Jan 01 01:00:00 GMT 1970`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2075,7 +2588,7 @@ def update_replication(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'Snapshot'})
 @cli_util.wrap_exceptions
-def update_snapshot(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, snapshot_id, freeform_tags, defined_tags, if_match):
+def update_snapshot(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, snapshot_id, freeform_tags, defined_tags, expiration_time, if_match):
 
     if isinstance(snapshot_id, six.string_types) and len(snapshot_id.strip()) == 0:
         raise click.UsageError('Parameter --snapshot-id cannot be whitespace or empty string')
@@ -2096,6 +2609,9 @@ def update_snapshot(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if expiration_time is not None:
+        _details['expirationTime'] = expiration_time
 
     client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.update_snapshot(
