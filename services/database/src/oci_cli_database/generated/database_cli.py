@@ -7976,6 +7976,9 @@ def create_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--vm-networks', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details of the client and backup networks.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dns', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of DNS server IP addresses. Maximum of 3 allowed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ntp', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of NTP server IP addresses. Maximum of 3 allowed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--dr-scans', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The SCAN details for DR network
+
+This option is a JSON list with items of type DrScanDetails.  For documentation on DrScanDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/DrScanDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -7983,12 +7986,12 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "REQUIRES_VALIDATION", "VALIDATING", "VALIDATED", "VALIDATION_FAILED", "UPDATING", "ALLOCATED", "TERMINATING", "TERMINATED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'scans': {'module': 'database', 'class': 'list[ScanDetails]'}, 'dns': {'module': 'database', 'class': 'list[string]'}, 'ntp': {'module': 'database', 'class': 'list[string]'}, 'vm-networks': {'module': 'database', 'class': 'list[VmNetworkDetails]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'scans': {'module': 'database', 'class': 'list[ScanDetails]'}, 'dns': {'module': 'database', 'class': 'list[string]'}, 'ntp': {'module': 'database', 'class': 'list[string]'}, 'vm-networks': {'module': 'database', 'class': 'list[VmNetworkDetails]'}, 'dr-scans': {'module': 'database', 'class': 'list[DrScanDetails]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scans': {'module': 'database', 'class': 'list[ScanDetails]'}, 'dns': {'module': 'database', 'class': 'list[string]'}, 'ntp': {'module': 'database', 'class': 'list[string]'}, 'vm-networks': {'module': 'database', 'class': 'list[VmNetworkDetails]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'VmClusterNetwork'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scans': {'module': 'database', 'class': 'list[ScanDetails]'}, 'dns': {'module': 'database', 'class': 'list[string]'}, 'ntp': {'module': 'database', 'class': 'list[string]'}, 'vm-networks': {'module': 'database', 'class': 'list[VmNetworkDetails]'}, 'dr-scans': {'module': 'database', 'class': 'list[DrScanDetails]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'VmClusterNetwork'})
 @cli_util.wrap_exceptions
-def create_vm_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_infrastructure_id, compartment_id, display_name, scans, vm_networks, dns, ntp, freeform_tags, defined_tags):
+def create_vm_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_infrastructure_id, compartment_id, display_name, scans, vm_networks, dns, ntp, dr_scans, freeform_tags, defined_tags):
 
     if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
@@ -8007,6 +8010,9 @@ def create_vm_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     if ntp is not None:
         _details['ntp'] = cli_util.parse_json_parameter("ntp", ntp)
+
+    if dr_scans is not None:
+        _details['drScans'] = cli_util.parse_json_parameter("dr_scans", dr_scans)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -11294,6 +11300,7 @@ def generate_autonomous_database_wallet(ctx, from_json, file, autonomous_databas
 @cli_util.option('--db-servers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of Db server Ids to configure network.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--scan-listener-port-tcp', type=click.INT, help=u"""The SCAN TCPIP port. Default is 1521.""")
 @cli_util.option('--scan-listener-port-tcp-ssl', type=click.INT, help=u"""The SCAN TCPIP SSL port. Default is 2484.""")
+@cli_util.option('--dr-scan-listener-port-tcp', type=click.INT, help=u"""The DR SCAN TCPIP port. Default is 1521.""")
 @cli_util.option('--dns', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of DNS server IP addresses. Maximum of 3 allowed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ntp', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of NTP server IP addresses. Maximum of 3 allowed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -11305,7 +11312,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-servers': {'module': 'database', 'class': 'list[string]'}, 'networks': {'module': 'database', 'class': 'list[InfoForNetworkGenDetails]'}, 'dns': {'module': 'database', 'class': 'list[string]'}, 'ntp': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'VmClusterNetworkDetails'})
 @cli_util.wrap_exceptions
-def generate_recommended_vm_cluster_network(ctx, from_json, exadata_infrastructure_id, compartment_id, display_name, networks, db_servers, scan_listener_port_tcp, scan_listener_port_tcp_ssl, dns, ntp, freeform_tags, defined_tags):
+def generate_recommended_vm_cluster_network(ctx, from_json, exadata_infrastructure_id, compartment_id, display_name, networks, db_servers, scan_listener_port_tcp, scan_listener_port_tcp_ssl, dr_scan_listener_port_tcp, dns, ntp, freeform_tags, defined_tags):
 
     if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
@@ -11326,6 +11333,9 @@ def generate_recommended_vm_cluster_network(ctx, from_json, exadata_infrastructu
 
     if scan_listener_port_tcp_ssl is not None:
         _details['scanListenerPortTcpSsl'] = scan_listener_port_tcp_ssl
+
+    if dr_scan_listener_port_tcp is not None:
+        _details['drScanListenerPortTcp'] = dr_scan_listener_port_tcp
 
     if dns is not None:
         _details['dns'] = cli_util.parse_json_parameter("dns", dns)
@@ -22271,6 +22281,9 @@ This option is a JSON list with items of type ScanDetails.  For documentation on
 @cli_util.option('--vm-networks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details of the client and backup networks.
 
 This option is a JSON list with items of type VmNetworkDetails.  For documentation on VmNetworkDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/VmNetworkDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--dr-scans', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The SCAN details for DR network
+
+This option is a JSON list with items of type DrScanDetails.  For documentation on DrScanDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/DrScanDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -22280,12 +22293,12 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "REQUIRES_VALIDATION", "VALIDATING", "VALIDATED", "VALIDATION_FAILED", "UPDATING", "ALLOCATED", "TERMINATING", "TERMINATED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'scans': {'module': 'database', 'class': 'list[ScanDetails]'}, 'dns': {'module': 'database', 'class': 'list[string]'}, 'ntp': {'module': 'database', 'class': 'list[string]'}, 'vm-networks': {'module': 'database', 'class': 'list[VmNetworkDetails]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'scans': {'module': 'database', 'class': 'list[ScanDetails]'}, 'dns': {'module': 'database', 'class': 'list[string]'}, 'ntp': {'module': 'database', 'class': 'list[string]'}, 'vm-networks': {'module': 'database', 'class': 'list[VmNetworkDetails]'}, 'dr-scans': {'module': 'database', 'class': 'list[DrScanDetails]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scans': {'module': 'database', 'class': 'list[ScanDetails]'}, 'dns': {'module': 'database', 'class': 'list[string]'}, 'ntp': {'module': 'database', 'class': 'list[string]'}, 'vm-networks': {'module': 'database', 'class': 'list[VmNetworkDetails]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'VmClusterNetwork'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scans': {'module': 'database', 'class': 'list[ScanDetails]'}, 'dns': {'module': 'database', 'class': 'list[string]'}, 'ntp': {'module': 'database', 'class': 'list[string]'}, 'vm-networks': {'module': 'database', 'class': 'list[VmNetworkDetails]'}, 'dr-scans': {'module': 'database', 'class': 'list[DrScanDetails]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'VmClusterNetwork'})
 @cli_util.wrap_exceptions
-def update_vm_cluster_network(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_infrastructure_id, vm_cluster_network_id, scans, dns, ntp, vm_networks, freeform_tags, defined_tags, if_match):
+def update_vm_cluster_network(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_infrastructure_id, vm_cluster_network_id, scans, dns, ntp, vm_networks, dr_scans, freeform_tags, defined_tags, if_match):
 
     if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
@@ -22293,8 +22306,8 @@ def update_vm_cluster_network(ctx, from_json, force, wait_for_state, max_wait_se
     if isinstance(vm_cluster_network_id, six.string_types) and len(vm_cluster_network_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-network-id cannot be whitespace or empty string')
     if not force:
-        if scans or dns or ntp or vm_networks or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to scans and dns and ntp and vm-networks and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if scans or dns or ntp or vm_networks or dr_scans or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to scans and dns and ntp and vm-networks and dr-scans and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -22315,6 +22328,9 @@ def update_vm_cluster_network(ctx, from_json, force, wait_for_state, max_wait_se
 
     if vm_networks is not None:
         _details['vmNetworks'] = cli_util.parse_json_parameter("vm_networks", vm_networks)
+
+    if dr_scans is not None:
+        _details['drScans'] = cli_util.parse_json_parameter("dr_scans", dr_scans)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

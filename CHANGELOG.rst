@@ -6,6 +6,44 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.28.1 - 2023-05-30
+--------------------
+Added
+~~~~~
+* File Storage service
+
+  * Support for new policy-based snapshots commands
+
+    * ``oci fs filesystem-snapshot-policy``
+
+  * Support for optional parameters to file-system and snapshot
+
+    * ``oci fs file-system create --filesystem-snapshot-policy-id``
+    * ``oci fs file-system list  --filesystem-snapshot-policy-id``
+    * ``oci fs file-system update --filesystem-snapshot-policy-id``
+    * ``oci fs snapshot create --expiration-time``
+    * ``oci fs snapshot update --expiration-time``
+    * ``oci fs snapshot list --compartment-id --filesystem-snapshot-policy-id``
+
+* Support for creating and updating a VM Cluster network with DR network support in the Database service
+
+  * ``oci db exadata-infrastructure-network create --dr-scan-details``
+  * ``oci db exadata-infrastructure-network update --dr-scan-details``
+
+* Support for optional parameter to indicate a dashboard is shared in the Management Dashboard services
+
+  * ``oci management-dashboard dashboard create --features-config``
+  * ``oci management-dashboard dashboard update --features-config``
+  * ``oci management-dashboard saved-search create --features-config``
+  * ``oci management-dashboard saved-search update --features-config``
+
+Changed
+~~~~~~~
+* Required parameter --file-system-id is now optional for below command in the File Storage service
+
+  * ``oci fs snapshot list --file-system-id``
+
+
 3.28.0 - 2023-05-23
 --------------------
 Added
