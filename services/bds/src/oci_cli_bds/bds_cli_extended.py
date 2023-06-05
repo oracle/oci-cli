@@ -31,6 +31,19 @@ bds_cli.bds_instance_group.add_command(bds_worker_nodes_group)
 bds_worker_nodes_group.add_command(bds_cli.add_worker_nodes)
 
 
+# oci bds bds-instance add  -> oci bds kafka
+# oci bds bds-instance remove  -> oci bds kafka
+@click.command('kafka', cls=CommandGroupWithAlias, help='Kafka')
+@cli_util.help_option_group
+def bds_kafka_group():
+    pass
+
+
+bds_cli.bds_root_group.add_command(bds_kafka_group)
+bds_kafka_group.add_command(bds_cli.add_kafka)
+bds_kafka_group.add_command(bds_cli.remove_kafka)
+
+
 # Add command: oci bds block-storage add
 @click.command('block-storage', cls=CommandGroupWithAlias, help=bds_cli.add_block_storage.help)
 @cli_util.help_option_group

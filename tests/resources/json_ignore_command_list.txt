@@ -110,3 +110,5 @@ fs, filesystem-snapshot-policy, pause
 fs, filesystem-snapshot-policy, unpause
 fs, filesystem-snapshot-policy, update
 fs, snapshot, list
+bds, kafka, add
+bds, kafka, remove
