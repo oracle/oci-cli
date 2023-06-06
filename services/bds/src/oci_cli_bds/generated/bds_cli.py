@@ -294,7 +294,7 @@ def add_auto_scaling_configuration_add_metric_based_horizontal_scaling_policy_de
 @cli_util.option('--policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--policy-details-timezone', help=u"""The time zone of the execution schedule, in IANA time zone database name format""")
-@cli_util.option('--policy-details-schedule-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
+@cli_util.option('--policy-details-schedule-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details of a vertical scaling schedule.
 
 This option is a JSON list with items of type VerticalScalingScheduleDetails.  For documentation on VerticalScalingScheduleDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/bds/20190531/datatypes/VerticalScalingScheduleDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -376,7 +376,7 @@ def add_auto_scaling_configuration_add_schedule_based_vertical_scaling_policy_de
 @cli_util.option('--policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--policy-details-timezone', help=u"""The time zone of the execution schedule, in IANA time zone database name format""")
-@cli_util.option('--policy-details-schedule-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
+@cli_util.option('--policy-details-schedule-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details of a horizontal scaling schedule.
 
 This option is a JSON list with items of type HorizontalScalingScheduleDetails.  For documentation on HorizontalScalingScheduleDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/bds/20190531/datatypes/HorizontalScalingScheduleDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -533,7 +533,7 @@ def add_auto_scaling_configuration_add_metric_based_vertical_scaling_policy_deta
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
 @cli_util.option('--block-volume-size-in-gbs', required=True, type=click.INT, help=u"""The size of block volume in GB to be added to each worker node. All the details needed for attaching the block volume are managed by service itself.""")
-@cli_util.option('--node-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["WORKER", "COMPUTE_ONLY_WORKER"]), help=u"""Worker node types, can either be Worker Data node or Compute only worker node.""")
+@cli_util.option('--node-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["WORKER", "COMPUTE_ONLY_WORKER", "KAFKA_BROKER"]), help=u"""Worker node types.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -657,11 +657,80 @@ def add_cloud_sql(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
+@bds_instance_group.command(name=cli_util.override('bds.add_kafka.command_name', 'add'), help=u"""Adds Kafka to a cluster. \n[Command Reference](addKafka)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--shape', required=True, help=u"""Shape of the Kafka broker node.""")
+@cli_util.option('--number-of-kafka-nodes', required=True, type=click.INT, help=u"""Number of Kafka nodes for the cluster.""")
+@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--block-volume-size-in-gbs', type=click.INT, help=u"""The size of block volme in GB to be attached to the given node. All details needed for attaching the block volume are managed by the service itself.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'shape-config': {'module': 'bds', 'class': 'ShapeConfigDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'shape-config': {'module': 'bds', 'class': 'ShapeConfigDetails'}})
+@cli_util.wrap_exceptions
+def add_kafka(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, shape, number_of_kafka_nodes, cluster_admin_password, shape_config, block_volume_size_in_gbs, if_match):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['shape'] = shape
+    _details['numberOfKafkaNodes'] = number_of_kafka_nodes
+    _details['clusterAdminPassword'] = cluster_admin_password
+
+    if shape_config is not None:
+        _details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
+
+    if block_volume_size_in_gbs is not None:
+        _details['blockVolumeSizeInGBs'] = block_volume_size_in_gbs
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.add_kafka(
+        bds_instance_id=bds_instance_id,
+        add_kafka_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @bds_instance_group.command(name=cli_util.override('bds.add_worker_nodes.command_name', 'add'), help=u"""Increases the size (scales out) a cluster by adding worker nodes(data/compute). The added worker nodes will have the same shape and will have the same amount of attached block storage as other worker nodes in the cluster. \n[Command Reference](addWorkerNodes)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
 @cli_util.option('--number-of-worker-nodes', required=True, type=click.INT, help=u"""Number of additional worker nodes for the cluster.""")
-@cli_util.option('--node-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["WORKER", "COMPUTE_ONLY_WORKER", "EDGE"]), help=u"""Worker node types, can either be Worker Data node or Compute only worker node.""")
+@cli_util.option('--node-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["WORKER", "COMPUTE_ONLY_WORKER", "EDGE", "KAFKA_BROKER"]), help=u"""Worker node types, can either be Worker Data node or Compute only worker node.""")
 @cli_util.option('--shape', help=u"""Shape of the node. This has to be specified when adding compute only worker node at the first time. Otherwise, it's a read-only property.""")
 @cli_util.option('--block-volume-size-in-gbs', type=click.INT, help=u"""The size of block volume in GB to be attached to the given node. This has to be specified when adding compute only worker node at the first time. Otherwise, it's a read-only property.""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2143,6 +2212,63 @@ def remove_cloud_sql(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
+@bds_instance_group.command(name=cli_util.override('bds.remove_kafka.command_name', 'remove'), help=u"""Remove Kafka from the cluster. \n[Command Reference](removeKafka)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def remove_kafka(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, if_match):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['clusterAdminPassword'] = cluster_admin_password
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.remove_kafka(
+        bds_instance_id=bds_instance_id,
+        remove_kafka_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @bds_instance_group.command(name=cli_util.override('bds.remove_node.command_name', 'remove'), help=u"""Remove a single node of a Big Data Service cluster \n[Command Reference](removeNode)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster (and Cloudera Manager) admin user.""")
@@ -2602,7 +2728,7 @@ def update_auto_scaling_configuration(ctx, from_json, force, wait_for_state, max
 @cli_util.option('--policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--policy-details-timezone', help=u"""The time zone of the execution schedule, in IANA time zone database name format""")
-@cli_util.option('--policy-details-schedule-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
+@cli_util.option('--policy-details-schedule-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details of a horizontal scaling schedule.
 
 This option is a JSON list with items of type HorizontalScalingScheduleDetails.  For documentation on HorizontalScalingScheduleDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/bds/20190531/datatypes/HorizontalScalingScheduleDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -2880,7 +3006,7 @@ def update_auto_scaling_configuration_update_metric_based_horizontal_scaling_pol
 @cli_util.option('--policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--policy-details-timezone', help=u"""The time zone of the execution schedule, in IANA time zone database name format""")
-@cli_util.option('--policy-details-schedule-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
+@cli_util.option('--policy-details-schedule-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details of a vertical scaling schedule.
 
 This option is a JSON list with items of type VerticalScalingScheduleDetails.  For documentation on VerticalScalingScheduleDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/bds/20190531/datatypes/VerticalScalingScheduleDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)

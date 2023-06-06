@@ -6,6 +6,30 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.28.2 - 2023-06-06
+--------------------
+Added
+~~~~~
+* Support for adding and removing Kafka in the Big Data service
+
+  * ``oci bds kafka add``
+  * ``oci bds kafka remove``
+
+* Support for obtaining compute capacity report in Core services
+
+  * ``oci compute compute-capacity-report``
+
+* Support for enabling and disabling MySQL HeatWave Lakehouse in the Mysql Database service
+
+  * ``oci mysql db-system heatwave-cluster add --is-lakehouse-enabled``
+  * ``oci mysql db-system heatwave-cluster update --is-lakehouse-enabled``
+
+* Support for adding, creating, and removing migration with csvText in the Database Migration service
+
+  * ``oci database-migration migration add --csv-text``
+  * ``oci database-migration migration create --csv-text``
+  * ``oci database-migration migration remove --csv-text``
+
 3.28.1 - 2023-05-30
 --------------------
 Added

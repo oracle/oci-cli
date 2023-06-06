@@ -162,6 +162,14 @@ def app_catalog_subscription_group():
     pass
 
 
+@click.command(cli_util.override('compute.compute_capacity_report_group.command_name', 'compute-capacity-report'), cls=CommandGroupWithAlias, help="""A report of the host capacity within an availability domain that is available for you to create compute instances. Host capacity is the physical infrastructure that resources such as compute instances run on.
+
+Use the capacity report to determine whether sufficient capacity is available for a shape before you create an instance or change the shape of an instance.""")
+@cli_util.help_option_group
+def compute_capacity_report_group():
+    pass
+
+
 @click.command(cli_util.override('compute.compute_cluster_group.command_name', 'compute-cluster'), cls=CommandGroupWithAlias, help="""A remote direct memory access (RDMA) network group. Compute clusters are groups of high performance computing (HPC) bare metal instances that are connected with an ultra low latency network. Compute clusters allow you to manage instances in the cluster individually. For more information, see [Compute Clusters].
 
 For details about cluster networks that use intance pools to manage groups of identical instances, see [ClusterNetwork].""")
@@ -252,6 +260,7 @@ compute_root_group.add_command(app_catalog_listing_resource_version_group)
 compute_root_group.add_command(image_shape_compatibility_entry_group)
 compute_root_group.add_command(app_catalog_listing_group)
 compute_root_group.add_command(app_catalog_subscription_group)
+compute_root_group.add_command(compute_capacity_report_group)
 compute_root_group.add_command(compute_cluster_group)
 compute_root_group.add_command(boot_volume_attachment_group)
 compute_root_group.add_command(measured_boot_report_group)
@@ -1195,6 +1204,37 @@ def create_app_catalog_subscription(ctx, from_json, compartment_id, listing_id, 
     client = cli_util.build_client('core', 'compute', ctx)
     result = client.create_app_catalog_subscription(
         create_app_catalog_subscription_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@compute_capacity_report_group.command(name=cli_util.override('compute.create_compute_capacity_report.command_name', 'create'), help=u"""Generates a report of the host capacity within an availability domain that is available for you to create compute instances. Host capacity is the physical infrastructure that resources such as compute instances run on.
+
+Use the capacity report to determine whether sufficient capacity is available for a shape before you create an instance or change the shape of an instance. \n[Command Reference](createComputeCapacityReport)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] for the compartment. This should always be the root compartment.""")
+@cli_util.option('--availability-domain', required=True, help=u"""The availability domain for the capacity report.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--shape-availabilities', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Information about the shapes in the capacity report.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'shape-availabilities': {'module': 'core', 'class': 'list[CreateCapacityReportShapeAvailabilityDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'shape-availabilities': {'module': 'core', 'class': 'list[CreateCapacityReportShapeAvailabilityDetails]'}}, output_type={'module': 'core', 'class': 'ComputeCapacityReport'})
+@cli_util.wrap_exceptions
+def create_compute_capacity_report(ctx, from_json, compartment_id, availability_domain, shape_availabilities):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['availabilityDomain'] = availability_domain
+    _details['shapeAvailabilities'] = cli_util.parse_json_parameter("shape_availabilities", shape_availabilities)
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.create_compute_capacity_report(
+        create_compute_capacity_report_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -3497,7 +3537,9 @@ When you launch an instance, it is automatically attached to a virtual network i
 
 You can later add secondary VNICs to an instance. For more information, see [Virtual Network Interface Cards (VNICs)].
 
-To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion]. \n[Command Reference](launchInstance)""")
+To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion].
+
+To determine whether capacity is available for a specific shape before you create an instance, use the [CreateComputeCapacityReport] operation. \n[Command Reference](launchInstance)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -3711,7 +3753,9 @@ When you launch an instance, it is automatically attached to a virtual network i
 
 You can later add secondary VNICs to an instance. For more information, see [Virtual Network Interface Cards (VNICs)].
 
-To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion]. \n[Command Reference](launchInstance)""")
+To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion].
+
+To determine whether capacity is available for a specific shape before you create an instance, use the [CreateComputeCapacityReport] operation. \n[Command Reference](launchInstance)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -3944,7 +3988,9 @@ When you launch an instance, it is automatically attached to a virtual network i
 
 You can later add secondary VNICs to an instance. For more information, see [Virtual Network Interface Cards (VNICs)].
 
-To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion]. \n[Command Reference](launchInstance)""")
+To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion].
+
+To determine whether capacity is available for a specific shape before you create an instance, use the [CreateComputeCapacityReport] operation. \n[Command Reference](launchInstance)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -4159,7 +4205,9 @@ When you launch an instance, it is automatically attached to a virtual network i
 
 You can later add secondary VNICs to an instance. For more information, see [Virtual Network Interface Cards (VNICs)].
 
-To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion]. \n[Command Reference](launchInstance)""")
+To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion].
+
+To determine whether capacity is available for a specific shape before you create an instance, use the [CreateComputeCapacityReport] operation. \n[Command Reference](launchInstance)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -4410,7 +4458,9 @@ When you launch an instance, it is automatically attached to a virtual network i
 
 You can later add secondary VNICs to an instance. For more information, see [Virtual Network Interface Cards (VNICs)].
 
-To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion]. \n[Command Reference](launchInstance)""")
+To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion].
+
+To determine whether capacity is available for a specific shape before you create an instance, use the [CreateComputeCapacityReport] operation. \n[Command Reference](launchInstance)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -4667,7 +4717,9 @@ When you launch an instance, it is automatically attached to a virtual network i
 
 You can later add secondary VNICs to an instance. For more information, see [Virtual Network Interface Cards (VNICs)].
 
-To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion]. \n[Command Reference](launchInstance)""")
+To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion].
+
+To determine whether capacity is available for a specific shape before you create an instance, use the [CreateComputeCapacityReport] operation. \n[Command Reference](launchInstance)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -4916,7 +4968,9 @@ When you launch an instance, it is automatically attached to a virtual network i
 
 You can later add secondary VNICs to an instance. For more information, see [Virtual Network Interface Cards (VNICs)].
 
-To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion]. \n[Command Reference](launchInstance)""")
+To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion].
+
+To determine whether capacity is available for a specific shape before you create an instance, use the [CreateComputeCapacityReport] operation. \n[Command Reference](launchInstance)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -5145,7 +5199,9 @@ When you launch an instance, it is automatically attached to a virtual network i
 
 You can later add secondary VNICs to an instance. For more information, see [Virtual Network Interface Cards (VNICs)].
 
-To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion]. \n[Command Reference](launchInstance)""")
+To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion].
+
+To determine whether capacity is available for a specific shape before you create an instance, use the [CreateComputeCapacityReport] operation. \n[Command Reference](launchInstance)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -5374,7 +5430,9 @@ When you launch an instance, it is automatically attached to a virtual network i
 
 You can later add secondary VNICs to an instance. For more information, see [Virtual Network Interface Cards (VNICs)].
 
-To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion]. \n[Command Reference](launchInstance)""")
+To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion].
+
+To determine whether capacity is available for a specific shape before you create an instance, use the [CreateComputeCapacityReport] operation. \n[Command Reference](launchInstance)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -5603,7 +5661,9 @@ When you launch an instance, it is automatically attached to a virtual network i
 
 You can later add secondary VNICs to an instance. For more information, see [Virtual Network Interface Cards (VNICs)].
 
-To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion]. \n[Command Reference](launchInstance)""")
+To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion].
+
+To determine whether capacity is available for a specific shape before you create an instance, use the [CreateComputeCapacityReport] operation. \n[Command Reference](launchInstance)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -5860,7 +5920,9 @@ When you launch an instance, it is automatically attached to a virtual network i
 
 You can later add secondary VNICs to an instance. For more information, see [Virtual Network Interface Cards (VNICs)].
 
-To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion]. \n[Command Reference](launchInstance)""")
+To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion].
+
+To determine whether capacity is available for a specific shape before you create an instance, use the [CreateComputeCapacityReport] operation. \n[Command Reference](launchInstance)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -8239,6 +8301,8 @@ The combined size of the `metadata` and `extendedMetadata` objects can be a maxi
 For details about the CPUs, memory, and other properties of each shape, see [Compute Shapes].
 
 The new shape must be compatible with the image that was used to launch the instance. You can enumerate all available shapes and determine image compatibility by calling [ListShapes].
+
+To determine whether capacity is available for a specific shape before you change the shape of an instance, use the [CreateComputeCapacityReport] operation.
 
 If the instance is running when you change the shape, the instance is rebooted.
 

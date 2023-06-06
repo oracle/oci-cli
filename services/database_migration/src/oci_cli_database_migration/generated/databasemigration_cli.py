@@ -197,13 +197,14 @@ def abort_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_se
 @migration_group.command(name=cli_util.override('database_migration.add_migration_objects.command_name', 'add'), help=u"""Add excluded/included object to the list. \n[Command Reference](addMigrationObjects)""")
 @cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
 @cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to exclude/include from migration""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--csv-text', help=u"""Database objects to exclude/include from migration in CSV format. The items field will be ignored if this field is not null.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'database_migration', 'class': 'list[MigrationObjectSummary]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'database_migration', 'class': 'list[MigrationObjectSummary]'}})
 @cli_util.wrap_exceptions
-def add_migration_objects(ctx, from_json, migration_id, items, if_match):
+def add_migration_objects(ctx, from_json, migration_id, items, csv_text, if_match):
 
     if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
@@ -215,6 +216,9 @@ def add_migration_objects(ctx, from_json, migration_id, items, if_match):
 
     _details = {}
     _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    if csv_text is not None:
+        _details['csvText'] = csv_text
 
     client = cli_util.build_client('database_migration', 'database_migration', ctx)
     result = client.add_migration_objects(
@@ -563,6 +567,7 @@ This option is a JSON list with items of type DatabaseObject.  For documentation
 @cli_util.option('--include-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to include from migration, cannot be specified alongside 'excludeObjects'
 
 This option is a JSON list with items of type DatabaseObject.  For documentation on DatabaseObject please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20210929/datatypes/DatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--csv-text', help=u"""Database objects to exclude/include from migration in CSV format. The excludeObjects and includeObjects fields will be ignored if this field is not null.""")
 @cli_util.option('--golden-gate-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vault-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -575,7 +580,7 @@ This option is a JSON list with items of type DatabaseObject.  For documentation
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-transfer-medium-details': {'module': 'database_migration', 'class': 'CreateDataTransferMediumDetails'}, 'dump-transfer-details': {'module': 'database_migration', 'class': 'CreateDumpTransferDetails'}, 'datapump-settings': {'module': 'database_migration', 'class': 'CreateDataPumpSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'CreateAdvisorSettings'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'golden-gate-details': {'module': 'database_migration', 'class': 'CreateGoldenGateDetails'}, 'vault-details': {'module': 'database_migration', 'class': 'CreateVaultDetails'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_migration', 'class': 'Migration'})
 @cli_util.wrap_exceptions
-def create_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, source_database_connection_id, target_database_connection_id, display_name, agent_id, source_container_database_connection_id, data_transfer_medium_details, dump_transfer_details, datapump_settings, advisor_settings, exclude_objects, include_objects, golden_gate_details, vault_details, freeform_tags, defined_tags):
+def create_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, source_database_connection_id, target_database_connection_id, display_name, agent_id, source_container_database_connection_id, data_transfer_medium_details, dump_transfer_details, datapump_settings, advisor_settings, exclude_objects, include_objects, csv_text, golden_gate_details, vault_details, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -612,6 +617,9 @@ def create_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     if include_objects is not None:
         _details['includeObjects'] = cli_util.parse_json_parameter("include_objects", include_objects)
+
+    if csv_text is not None:
+        _details['csvText'] = csv_text
 
     if golden_gate_details is not None:
         _details['goldenGateDetails'] = cli_util.parse_json_parameter("golden_gate_details", golden_gate_details)
@@ -1807,13 +1815,14 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
 @migration_group.command(name=cli_util.override('database_migration.remove_migration_objects.command_name', 'remove'), help=u"""Remove excluded/included objects. \n[Command Reference](removeMigrationObjects)""")
 @cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
 @cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to exclude/include from migration""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--csv-text', help=u"""Database objects to exclude/include from migration in CSV format. The items field will be ignored if this field is not null.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'database_migration', 'class': 'list[MigrationObjectSummary]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'database_migration', 'class': 'list[MigrationObjectSummary]'}})
 @cli_util.wrap_exceptions
-def remove_migration_objects(ctx, from_json, migration_id, items, if_match):
+def remove_migration_objects(ctx, from_json, migration_id, items, csv_text, if_match):
 
     if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
@@ -1825,6 +1834,9 @@ def remove_migration_objects(ctx, from_json, migration_id, items, if_match):
 
     _details = {}
     _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    if csv_text is not None:
+        _details['csvText'] = csv_text
 
     client = cli_util.build_client('database_migration', 'database_migration', ctx)
     result = client.remove_migration_objects(

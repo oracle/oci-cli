@@ -297,7 +297,9 @@ def change_instance_pool_compartment(ctx, from_json, instance_pool_id, compartme
     cli_util.render_response(result, ctx)
 
 
-@cluster_network_group.command(name=cli_util.override('compute_management.create_cluster_network.command_name', 'create'), help=u"""Creates a cluster network. For more information about cluster networks, see [Managing Cluster Networks]. \n[Command Reference](createClusterNetwork)""")
+@cluster_network_group.command(name=cli_util.override('compute_management.create_cluster_network.command_name', 'create'), help=u"""Creates a cluster network. For more information about cluster networks, see [Managing Cluster Networks].
+
+To determine whether capacity is available for a specific shape before you create a cluster network, use the [CreateComputeCapacityReport] operation. \n[Command Reference](createClusterNetwork)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the cluster network.""")
 @cli_util.option('--instance-pools', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The data to create the instance pools in the cluster network.
 
@@ -503,7 +505,9 @@ def create_instance_configuration_create_instance_configuration_from_instance_de
     cli_util.render_response(result, ctx)
 
 
-@instance_pool_group.command(name=cli_util.override('compute_management.create_instance_pool.command_name', 'create'), help=u"""Creates an instance pool. \n[Command Reference](createInstancePool)""")
+@instance_pool_group.command(name=cli_util.override('compute_management.create_instance_pool.command_name', 'create'), help=u"""Creates an instance pool.
+
+To determine whether capacity is available for a specific shape before you create an instance pool, use the [CreateComputeCapacityReport] operation. \n[Command Reference](createInstancePool)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the instance pool.""")
 @cli_util.option('--instance-configuration-id', required=True, help=u"""The [OCID] of the instance configuration associated with the instance pool.""")
 @cli_util.option('--placement-configurations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The placement configurations for the instance pool. Provide one placement configuration for each availability domain.
@@ -850,7 +854,9 @@ def get_instance_pool_load_balancer_attachment(ctx, from_json, instance_pool_id,
 
 @instance_group.command(name=cli_util.override('compute_management.launch_instance_configuration.command_name', 'launch-instance-configuration'), help=u"""Creates an instance from an instance configuration.
 
-If the instance configuration does not include all of the parameters that are required to create an instance, such as the availability domain and subnet ID, you must provide these parameters when you create an instance from the instance configuration. For more information, see the [InstanceConfiguration] resource. \n[Command Reference](launchInstanceConfiguration)""")
+If the instance configuration does not include all of the parameters that are required to create an instance, such as the availability domain and subnet ID, you must provide these parameters when you create an instance from the instance configuration. For more information, see the [InstanceConfiguration] resource.
+
+To determine whether capacity is available for a specific shape before you create an instance, use the [CreateComputeCapacityReport] operation. \n[Command Reference](launchInstanceConfiguration)""")
 @cli_util.option('--instance-configuration-id', required=True, help=u"""The OCID of the instance configuration.""")
 @cli_util.option('--instance-type', required=True, help=u"""The type of instance details. Supported instanceType is compute""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -879,7 +885,9 @@ def launch_instance_configuration(ctx, from_json, instance_configuration_id, ins
 
 @instance_group.command(name=cli_util.override('compute_management.launch_instance_configuration_compute_instance_details.command_name', 'launch-instance-configuration-compute-instance-details'), help=u"""Creates an instance from an instance configuration.
 
-If the instance configuration does not include all of the parameters that are required to create an instance, such as the availability domain and subnet ID, you must provide these parameters when you create an instance from the instance configuration. For more information, see the [InstanceConfiguration] resource. \n[Command Reference](launchInstanceConfiguration)""")
+If the instance configuration does not include all of the parameters that are required to create an instance, such as the availability domain and subnet ID, you must provide these parameters when you create an instance from the instance configuration. For more information, see the [InstanceConfiguration] resource.
+
+To determine whether capacity is available for a specific shape before you create an instance, use the [CreateComputeCapacityReport] operation. \n[Command Reference](launchInstanceConfiguration)""")
 @cli_util.option('--instance-configuration-id', required=True, help=u"""The OCID of the instance configuration.""")
 @cli_util.option('--block-volumes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Block volume parameters.
 
@@ -1761,7 +1769,9 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 To use the instance pool with a regional subnet, provide a placement configuration for each availability domain, and include the regional subnet in each placement configuration.
 
 This option is a JSON list with items of type UpdateInstancePoolPlacementConfigurationDetails.  For documentation on UpdateInstancePoolPlacementConfigurationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/UpdateInstancePoolPlacementConfigurationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--size', type=click.INT, help=u"""The number of instances that should be in the instance pool.""")
+@cli_util.option('--size', type=click.INT, help=u"""The number of instances that should be in the instance pool.
+
+To determine whether capacity is available for a specific shape before you resize an instance pool, use the [CreateComputeCapacityReport] operation.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
