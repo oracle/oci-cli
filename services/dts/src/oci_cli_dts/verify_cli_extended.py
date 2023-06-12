@@ -45,9 +45,9 @@ def prepared(ctx, from_json, compartment_id, job_id, bucket):
         check_os_connectivity(ctx, compartment_id),
         check_iam_users_groups_policies(ctx, compartment_id),
         check_bucket_belongs_to_compartment(ctx, compartment_id, bucket),
-        check_upload_user_credentials(ctx, bucket),
         check_dts_entitlement(ctx, compartment_id),
         check_dts_job_and_appliance_request(ctx, compartment_id, job_id, bucket),
+        check_upload_user_credentials(ctx, bucket),
     ]
 
     if not all(results):

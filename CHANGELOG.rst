@@ -6,6 +6,95 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.29.0 - 2023-06-13
+--------------------
+Added
+~~~~~
+* Support for the OCI Control Center service
+
+  * ``oci occ``
+
+* Oracle Cloud Vmware Solution service
+
+  * Support for allowing users to select the billing interval of deleted ESXi hosts while adding new ESXi hosts
+
+    * ``oci ocvs esxi-host swap-billing --swap-billing-host-id``
+    * ``oci ocvs esxi-host create --billing-donor-host-id``
+    * ``oci ocvs esxi-host list --is-billing-donors-only``
+    * ``oci ocvs esxi-host update --billing-donor-host-id``
+
+  * Support swap-billing in ocvs
+
+    * ``oci ocvs esxi-host swap-billing``
+
+* Support for resource quota and limit in the Usage service
+
+  * ``oci usage usagelimits usage-limit-summary``
+  * ``oci usage resources resource-summary list-resources``
+  * ``oci usage resources resource-quotum-summary list-resource-quota``
+
+* Custom Key Value and Custom Document Classification Support in the AI Document service
+
+  * ``oci ai-document model``
+  * ``oci ai-document project``
+  * ``oci ai-document work-request``
+  * ``oci ai-document work-request-error``
+  * ``oci ai-document work-request-log-entry list-work-request-logs``
+
+* Support for the Domain Name System service in Object Storage service
+
+  * ``oci os ns get --realm-specific-endpoint``
+
+* Java Management service
+
+  * Support for Java Migration Analysis
+
+    * ``oci jms fleet request-java-migration-analyses``
+    * ``oci jms java-migration-analysis-result``
+
+  * Support for Performance Tuning Analysis
+
+    * ``oci jms fleet request-performance-tuning-analyses``
+    * ``oci jms performance-tuning-analysis-result ``
+
+  * Support Fleet Diagnoses
+
+    * ``oci jms fleet-diagnosis-summary list-fleet-diagnoses``
+
+  * Support announcements
+
+    * ``oci jms announcement-collection list-announcements``
+
+  * Support Application Installation
+
+    * ``oci jms application-installation-usage-summary summarize-application-installation-usage``
+    * ``oci jms deployed-application-installation-usage-summary summarize-deployed-application-installation-usage``
+
+  * Add optional --waiting-period-in-minutes option to JFR and crypto analysis
+
+    * ``oci jms fleet request-crypto-analyses --waiting-period-in-minutes``
+    * ``oci jms fleet request-jfr-recordings --waiting-period-in-minutes``
+
+  * Support for new optional parameters --java-migration-analysis --performance-tuning-analysis
+
+    * ``oci jms fleet-advanced-feature-configuration update --java-migration-analysis --performance-tuning-analysis``
+
+* Support of TCPS protocol for Cloud Databases (Oracle Base Databases and Exadata on Dedicated Infrastructure) in Operations Insights service
+
+  * ``oci opsi database-insights create-pe-comanged-database --connection-details``
+  * ``oci opsi database-insights change-pe-comanaged-database-detail --connection-details``
+  * ``oci opsi database-insights enable-pe-comanaged-database --connection-details``
+
+Changed
+~~~~~~~
+* [BREAKING] Rename subgroup in usage service. New subgroup named 'rewards'
+
+  * ``oci usage rewards redeemable-user``
+  * ``oci usage rewards redemption-summary``
+  * ``oci usage rewards redeemable-user-summary``
+  * ``oci usage rewards product-summary``
+  * ``oci usage rewards monthly-reward-summary``
+
 3.28.2 - 2023-06-06
 --------------------
 Added
