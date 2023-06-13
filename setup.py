@@ -18,6 +18,7 @@ def open_relative(*path):
     filename = os.path.join(here, *path)
     return io.open(filename, mode="r", encoding="utf-8")
 
+
 with open_relative("src", "oci_cli", "version.py") as fd:
     version = re.search(
         r"^__version__\s*=\s*['\"]([^'\"]*)['\"]",
@@ -29,7 +30,7 @@ with open_relative("README.rst") as f:
     readme = f.read()
 
 requires = [
-    'oci==2.104.1',
+    'oci==2.104.2',
     'arrow>=1.0.0',
     'certifi',
     'click==8.0.4',
@@ -73,26 +74,26 @@ for package in packages:
             package_path = os.path.join(package_path, pkg)
 all_packages.extend(service_packages)
 
-setup(
-    name='oci-cli',
-    url='https://docs.cloud.oracle.com/iaas/Content/API/Concepts/cliconcepts.htm',
-    version=version,
-    author='Oracle',
-    author_email='joe.levy@oracle.com',
-    description='Oracle Cloud Infrastructure CLI',
-    long_description=readme,
-    entry_points={
+setup_parameters = {
+    "name": 'oci-cli',
+    "url": 'https://docs.cloud.oracle.com/iaas/Content/API/Concepts/cliconcepts.htm',
+    "version": version,
+    "author": 'Oracle',
+    "author_email": 'joe.levy@oracle.com',
+    "description": 'Oracle Cloud Infrastructure CLI',
+    "long_description": readme,
+    "entry_points": {
         'console_scripts': ["oci=oci_cli.cli:cli",
                             "create_backup_from_onprem=oci_cli.scripts.database.dbaas:create_backup_from_onprem"]
     },
-    install_requires=requires,
-    extras_require=extras,
-    packages=all_packages,
-    package_dir=package_dirs,
-    include_package_data=True,
-    python_requires='>=3.6',
-    license="Universal Permissive License 1.0 or Apache License 2.0",
-    classifiers=[
+    "install_requires": requires,
+    "python_requires": '>=3.6',
+    "extras_require": extras,
+    "packages": all_packages,
+    "package_dir": package_dirs,
+    "include_package_data": True,
+    "license": "Universal Permissive License 1.0 or Apache License 2.0",
+    "classifiers": [
         "Development Status :: 5 - Production/Stable",
         "Environment :: Console",
         "Intended Audience :: Information Technology",
@@ -105,4 +106,12 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9"
     ]
-)
+}
+
+
+def main():
+    setup(**setup_parameters)
+
+
+if __name__ == '__main__':
+    main()

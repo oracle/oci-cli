@@ -138,6 +138,7 @@ def test_managed_instance_group_crud(managed_instance_id_fixture, config_file, c
             util.validate_response(result)
 
 
+@pytest.mark.skip('Skipped to allow DEXREQ-4879')
 def test_managed_instance_tests(managed_instance_id_fixture, config_file, config_profile):
     # test managed instance list
     params = [

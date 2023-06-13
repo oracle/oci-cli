@@ -24,7 +24,13 @@ class WorkPool():
         release_semaphore_callback = WorkPoolTaskCallback(self._sempahore.release)
         work_pool_task.add_completion_callback(release_semaphore_callback)
 
-        return WorkPoolFuture(self._inner_pool.apply_async(work_pool_task.do_work))
+        try:
+            # If this pool is closed for further tasks then we need to release the acquired semaphore else we will run
+            # into deadlocks when apply_async throws an exception
+            return WorkPoolFuture(self._inner_pool.apply_async(work_pool_task.do_work))
+        except Exception:
+            release_semaphore_callback.execute()
+            raise
 
     def map(self, function, iterable):
         self._inner_pool.map(function, iterable)

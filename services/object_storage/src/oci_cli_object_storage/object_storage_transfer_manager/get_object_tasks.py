@@ -5,16 +5,23 @@
 from .work_pool import WorkPool
 from .work_pool_task import WorkPoolTask
 from .work_pool_task import WorkPoolTaskCallbacksContainer, WorkPoolTaskErrorCallback
+from oci._vendor.urllib3.exceptions import (
+    ReadTimeoutError,
+    ProtocolError
+)
 
 import heapq
 import oci
 import os
 import six
 import threading
+import random
+import time
 
 
 MEBIBYTE = 1024 * 1024
 OBJECT_GET_CHUNK_SIZE = MEBIBYTE
+DEFAULT_RETRY_COUNT = 5
 
 
 def _make_retrying_get_call(object_storage_client, **kwargs):
@@ -30,6 +37,36 @@ def _make_retrying_get_call(object_storage_client, **kwargs):
         opc_sse_customer_key=kwargs.get('opc_sse_customer_key'),
         opc_sse_customer_key_sha256=kwargs.get('opc_sse_customer_key_sha256')
     )
+
+
+# Retry the given function with exponential backoff until either retry count is zero or exception is not retryable
+def _retry_with_backoff(fn, *fn_args, **kwargs):
+    retries = DEFAULT_RETRY_COUNT
+    backoff_multiplier_in_secs = 1
+    if 'retries' in kwargs:
+        retries = kwargs["retries"]
+    if 'backoff_multiplier_in_secs' in kwargs:
+        backoff_multiplier_in_secs = kwargs["backoff_multiplier_in_secs"]
+    retry_count = 0
+
+    while True:
+        try:
+            return fn(*fn_args)
+        except Exception as e:
+            # Raise if retries are exhausted or exception is not retryable
+            if (retry_count == retries) or (not _is_retryable(e)):
+                raise
+            sleep = (backoff_multiplier_in_secs * 2 ** retry_count + random.uniform(0, 1))
+            time.sleep(sleep)
+            retry_count += 1
+
+
+# Check if the exception is retryable, currently this is either ConnectionError or ReadTimeoutError
+# or ProtocolError (which can be due either ConnectionResetError or ReadIncompleteError)
+def _is_retryable(exception):
+    if isinstance(exception, (ConnectionError, ReadTimeoutError, ProtocolError)):
+        return True
+    return False
 
 
 # A task which can retrieve an object from Object Storage and write it to a file
@@ -242,7 +279,7 @@ class GetObjectRangeTask(WorkPoolTask):
         self.io_writer_pool = io_writer_pool
         self.pending_writes = pending_writes
         self.add_pending_write_lock = add_pending_write_lock
-
+        self.retry_count = 0 if isinstance(self.object_storage_client.retry_strategy, oci.retry.NoneRetryStrategy) else DEFAULT_RETRY_COUNT
         self.destination_file_handle = destination_file_handle
         self.downloaded_data = six.BytesIO()
 
@@ -259,16 +296,9 @@ class GetObjectRangeTask(WorkPoolTask):
             self.part_completed_callback = None
 
     def do_work_hook(self):
-        get_object_response = _make_retrying_get_call(self.object_storage_client, **self.kwargs)
-        total_size = 0
-        for chunk in get_object_response.data.raw.stream(OBJECT_GET_CHUNK_SIZE, decode_content=False):
-            self.downloaded_data.write(chunk)
-            total_size += len(chunk)
-            if self.chunk_written_callback:
-                self.chunk_written_callback(len(chunk))
-
-        if self.part_completed_callback:
-            self.part_completed_callback(total_size)
+        # Get object request -> stream data with retries (connection breaks during data streaming will raise urllib
+        # exceptions which are being caught in _retry_with_backoff)
+        self.downloaded_data = _retry_with_backoff(self._get_object, retries=self.retry_count)
 
         # PendingWrites uses heapq, which is not thread safe, so we need to lock it
         with self.add_pending_write_lock:
@@ -283,6 +313,19 @@ class GetObjectRangeTask(WorkPoolTask):
                     part_completed_callback=self.part_completed_callback
                 )
             )
+
+    def _get_object(self):
+        downloaded_data = six.BytesIO()
+        get_object_response = _make_retrying_get_call(self.object_storage_client, **self.kwargs)
+        total_size = 0
+        for chunk in get_object_response.data.raw.stream(None, decode_content=False):
+            downloaded_data.write(chunk)
+            total_size += len(chunk)
+            if self.chunk_written_callback:
+                self.chunk_written_callback(len(chunk))
+        if self.part_completed_callback:
+            self.part_completed_callback(total_size)
+        return downloaded_data
 
 
 class GetObjectRangeIOWriterTask(WorkPoolTask):

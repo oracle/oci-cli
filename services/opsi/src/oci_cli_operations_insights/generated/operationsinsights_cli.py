@@ -427,6 +427,7 @@ def change_autonomous_database_insight_advanced_features_credentials_by_source(c
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--credential-details-user-name', help=u"""database user name.""")
 @cli_util.option('--credential-details-password-secret-id', help=u"""The secret [OCID] mapping to the database credentials.""")
+@cli_util.option('--credential-details-wallet-secret-id', help=u"""The [OCID] of the Secret where the database keystore contents are stored. This is used for TCPS support in BM/VM/ExaCS cases.""")
 @cli_util.option('--credential-details-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL"]), help=u"""database user role.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -436,7 +437,7 @@ def change_autonomous_database_insight_advanced_features_credentials_by_source(c
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
 @cli_util.wrap_exceptions
-def change_autonomous_database_insight_advanced_features_credential_by_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, database_insight_id, credential_details_credential_source_name, opsi_private_endpoint_id, if_match, credential_details_user_name, credential_details_password_secret_id, credential_details_role):
+def change_autonomous_database_insight_advanced_features_credential_by_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, database_insight_id, credential_details_credential_source_name, opsi_private_endpoint_id, if_match, credential_details_user_name, credential_details_password_secret_id, credential_details_wallet_secret_id, credential_details_role):
 
     if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
@@ -459,6 +460,9 @@ def change_autonomous_database_insight_advanced_features_credential_by_vault(ctx
 
     if credential_details_password_secret_id is not None:
         _details['credentialDetails']['passwordSecretId'] = credential_details_password_secret_id
+
+    if credential_details_wallet_secret_id is not None:
+        _details['credentialDetails']['walletSecretId'] = credential_details_wallet_secret_id
 
     if credential_details_role is not None:
         _details['credentialDetails']['role'] = credential_details_role
@@ -846,16 +850,17 @@ def change_opsi_configuration_compartment(ctx, from_json, wait_for_state, max_wa
 @cli_util.option('--service-name', required=True, help=u"""Database service name used for connection requests.""")
 @cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--opsi-private-endpoint-id', required=True, help=u"""The [OCID] of the OPSI private endpoint""")
+@cli_util.option('--connection-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'opsi', 'class': 'CredentialDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'opsi', 'class': 'CredentialDetails'}, 'connection-details': {'module': 'opsi', 'class': 'PeComanagedDatabaseConnectionDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'opsi', 'class': 'CredentialDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'opsi', 'class': 'CredentialDetails'}, 'connection-details': {'module': 'opsi', 'class': 'PeComanagedDatabaseConnectionDetails'}})
 @cli_util.wrap_exceptions
-def change_pe_comanaged_database_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, service_name, credential_details, opsi_private_endpoint_id, if_match):
+def change_pe_comanaged_database_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, service_name, credential_details, opsi_private_endpoint_id, connection_details, if_match):
 
     if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
@@ -869,6 +874,9 @@ def change_pe_comanaged_database_insight(ctx, from_json, wait_for_state, max_wai
     _details['serviceName'] = service_name
     _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
     _details['opsiPrivateEndpointId'] = opsi_private_endpoint_id
+
+    if connection_details is not None:
+        _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
 
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.change_pe_comanaged_database_insight(
@@ -907,16 +915,17 @@ def change_pe_comanaged_database_insight(ctx, from_json, wait_for_state, max_wai
 @cli_util.option('--service-name', required=True, help=u"""Database service name used for connection requests.""")
 @cli_util.option('--opsi-private-endpoint-id', required=True, help=u"""The [OCID] of the OPSI private endpoint""")
 @cli_util.option('--credential-details-credential-source-name', required=True, help=u"""Credential source name that had been added in Management Agent wallet. This is supplied in the External Database Service.""")
+@cli_util.option('--connection-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'connection-details': {'module': 'opsi', 'class': 'PeComanagedDatabaseConnectionDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'PeComanagedDatabaseConnectionDetails'}})
 @cli_util.wrap_exceptions
-def change_pe_comanaged_database_insight_credentials_by_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, service_name, opsi_private_endpoint_id, credential_details_credential_source_name, if_match):
+def change_pe_comanaged_database_insight_credentials_by_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, service_name, opsi_private_endpoint_id, credential_details_credential_source_name, connection_details, if_match):
 
     if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
@@ -931,6 +940,9 @@ def change_pe_comanaged_database_insight_credentials_by_source(ctx, from_json, w
     _details['serviceName'] = service_name
     _details['opsiPrivateEndpointId'] = opsi_private_endpoint_id
     _details['credentialDetails']['credentialSourceName'] = credential_details_credential_source_name
+
+    if connection_details is not None:
+        _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
 
     _details['credentialDetails']['credentialType'] = 'CREDENTIALS_BY_SOURCE'
 
@@ -971,19 +983,21 @@ def change_pe_comanaged_database_insight_credentials_by_source(ctx, from_json, w
 @cli_util.option('--service-name', required=True, help=u"""Database service name used for connection requests.""")
 @cli_util.option('--opsi-private-endpoint-id', required=True, help=u"""The [OCID] of the OPSI private endpoint""")
 @cli_util.option('--credential-details-credential-source-name', required=True, help=u"""Credential source name that had been added in Management Agent wallet. This is supplied in the External Database Service.""")
+@cli_util.option('--connection-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--credential-details-user-name', help=u"""database user name.""")
 @cli_util.option('--credential-details-password-secret-id', help=u"""The secret [OCID] mapping to the database credentials.""")
+@cli_util.option('--credential-details-wallet-secret-id', help=u"""The [OCID] of the Secret where the database keystore contents are stored. This is used for TCPS support in BM/VM/ExaCS cases.""")
 @cli_util.option('--credential-details-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL"]), help=u"""database user role.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'connection-details': {'module': 'opsi', 'class': 'PeComanagedDatabaseConnectionDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'PeComanagedDatabaseConnectionDetails'}})
 @cli_util.wrap_exceptions
-def change_pe_comanaged_database_insight_credential_by_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, service_name, opsi_private_endpoint_id, credential_details_credential_source_name, if_match, credential_details_user_name, credential_details_password_secret_id, credential_details_role):
+def change_pe_comanaged_database_insight_credential_by_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, service_name, opsi_private_endpoint_id, credential_details_credential_source_name, connection_details, if_match, credential_details_user_name, credential_details_password_secret_id, credential_details_wallet_secret_id, credential_details_role):
 
     if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
@@ -999,11 +1013,17 @@ def change_pe_comanaged_database_insight_credential_by_vault(ctx, from_json, wai
     _details['opsiPrivateEndpointId'] = opsi_private_endpoint_id
     _details['credentialDetails']['credentialSourceName'] = credential_details_credential_source_name
 
+    if connection_details is not None:
+        _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
+
     if credential_details_user_name is not None:
         _details['credentialDetails']['userName'] = credential_details_user_name
 
     if credential_details_password_secret_id is not None:
         _details['credentialDetails']['passwordSecretId'] = credential_details_password_secret_id
+
+    if credential_details_wallet_secret_id is not None:
+        _details['credentialDetails']['walletSecretId'] = credential_details_wallet_secret_id
 
     if credential_details_role is not None:
         _details['credentialDetails']['role'] = credential_details_role
@@ -1244,16 +1264,17 @@ def create_database_insight_create_em_managed_external_database_insight_details(
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--opsi-private-endpoint-id', help=u"""The [OCID] of the OPSI private endpoint""")
 @cli_util.option('--dbm-private-endpoint-id', help=u"""The [OCID] of the Database Management private endpoint""")
+@cli_util.option('--connection-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""System tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'credential-details': {'module': 'opsi', 'class': 'CredentialDetails'}, 'system-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'credential-details': {'module': 'opsi', 'class': 'CredentialDetails'}, 'connection-details': {'module': 'opsi', 'class': 'PeComanagedDatabaseConnectionDetails'}, 'system-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'credential-details': {'module': 'opsi', 'class': 'CredentialDetails'}, 'system-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'opsi', 'class': 'DatabaseInsight'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'credential-details': {'module': 'opsi', 'class': 'CredentialDetails'}, 'connection-details': {'module': 'opsi', 'class': 'PeComanagedDatabaseConnectionDetails'}, 'system-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'opsi', 'class': 'DatabaseInsight'})
 @cli_util.wrap_exceptions
-def create_database_insight_create_pe_comanaged_database_insight_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_id, database_resource_type, service_name, credential_details, deployment_type, freeform_tags, defined_tags, opsi_private_endpoint_id, dbm_private_endpoint_id, system_tags):
+def create_database_insight_create_pe_comanaged_database_insight_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_id, database_resource_type, service_name, credential_details, deployment_type, freeform_tags, defined_tags, opsi_private_endpoint_id, dbm_private_endpoint_id, connection_details, system_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1277,6 +1298,9 @@ def create_database_insight_create_pe_comanaged_database_insight_details(ctx, fr
 
     if dbm_private_endpoint_id is not None:
         _details['dbmPrivateEndpointId'] = dbm_private_endpoint_id
+
+    if connection_details is not None:
+        _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
 
     if system_tags is not None:
         _details['systemTags'] = cli_util.parse_json_parameter("system_tags", system_tags)
@@ -3083,6 +3107,7 @@ def enable_autonomous_database_insight_advanced_features_credentials_by_source(c
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--credential-details-user-name', help=u"""database user name.""")
 @cli_util.option('--credential-details-password-secret-id', help=u"""The secret [OCID] mapping to the database credentials.""")
+@cli_util.option('--credential-details-wallet-secret-id', help=u"""The [OCID] of the Secret where the database keystore contents are stored. This is used for TCPS support in BM/VM/ExaCS cases.""")
 @cli_util.option('--credential-details-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL"]), help=u"""database user role.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3092,7 +3117,7 @@ def enable_autonomous_database_insight_advanced_features_credentials_by_source(c
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
 @cli_util.wrap_exceptions
-def enable_autonomous_database_insight_advanced_features_credential_by_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, database_insight_id, credential_details_credential_source_name, opsi_private_endpoint_id, if_match, credential_details_user_name, credential_details_password_secret_id, credential_details_role):
+def enable_autonomous_database_insight_advanced_features_credential_by_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, database_insight_id, credential_details_credential_source_name, opsi_private_endpoint_id, if_match, credential_details_user_name, credential_details_password_secret_id, credential_details_wallet_secret_id, credential_details_role):
 
     if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
@@ -3115,6 +3140,9 @@ def enable_autonomous_database_insight_advanced_features_credential_by_vault(ctx
 
     if credential_details_password_secret_id is not None:
         _details['credentialDetails']['passwordSecretId'] = credential_details_password_secret_id
+
+    if credential_details_wallet_secret_id is not None:
+        _details['credentialDetails']['walletSecretId'] = credential_details_wallet_secret_id
 
     if credential_details_role is not None:
         _details['credentialDetails']['role'] = credential_details_role
@@ -3273,6 +3301,7 @@ def enable_database_insight_enable_em_managed_external_database_insight_details(
 @cli_util.option('--service-name', required=True, help=u"""Database service name used for connection requests.""")
 @cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
+@cli_util.option('--connection-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""System tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3280,12 +3309,12 @@ def enable_database_insight_enable_em_managed_external_database_insight_details(
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'opsi', 'class': 'CredentialDetails'}, 'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'opsi', 'class': 'CredentialDetails'}, 'connection-details': {'module': 'opsi', 'class': 'PeComanagedDatabaseConnectionDetails'}, 'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'opsi', 'class': 'CredentialDetails'}, 'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'opsi', 'class': 'CredentialDetails'}, 'connection-details': {'module': 'opsi', 'class': 'PeComanagedDatabaseConnectionDetails'}, 'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def enable_database_insight_enable_pe_comanaged_database_insight_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, opsi_private_endpoint_id, service_name, credential_details, database_insight_id, freeform_tags, defined_tags, system_tags, if_match):
+def enable_database_insight_enable_pe_comanaged_database_insight_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, opsi_private_endpoint_id, service_name, credential_details, database_insight_id, connection_details, freeform_tags, defined_tags, system_tags, if_match):
 
     if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
@@ -3300,6 +3329,9 @@ def enable_database_insight_enable_pe_comanaged_database_insight_details(ctx, fr
     _details['opsiPrivateEndpointId'] = opsi_private_endpoint_id
     _details['serviceName'] = service_name
     _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if connection_details is not None:
+        _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -5557,7 +5589,7 @@ def list_exadata_insights(ctx, from_json, all_pages, page_size, compartment_id, 
 @cli_util.option('--enterprise-manager-bridge-id', help=u"""Unique Enterprise Manager bridge identifier""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of host insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
-@cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "SOLARIS", "SUNOS", "ZLINUX"]), multiple=True, help=u"""Filter by one or more platform types. Supported platformType(s) for MACS-managed external host insight: [LINUX]. Supported platformType(s) for MACS-managed cloud host insight: [LINUX]. Supported platformType(s) for EM-managed external host insight: [LINUX, SOLARIS, SUNOS, ZLINUX].""")
+@cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "SOLARIS", "SUNOS", "ZLINUX", "WINDOWS", "AIX"]), multiple=True, help=u"""Filter by one or more platform types. Supported platformType(s) for MACS-managed external host insight: [LINUX, SOLARIS, WINDOWS]. Supported platformType(s) for MACS-managed cloud host insight: [LINUX]. Supported platformType(s) for EM-managed external host insight: [LINUX, SOLARIS, SUNOS, ZLINUX, WINDOWS, AIX].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
@@ -5647,7 +5679,7 @@ def list_host_configurations(ctx, from_json, all_pages, page_size, compartment_i
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help=u"""Lifecycle states""")
 @cli_util.option('--host-type', multiple=True, help=u"""Filter by one or more host types. Possible values are CLOUD-HOST, EXTERNAL-HOST, COMANAGED-VM-HOST, COMANAGED-BM-HOST, COMANAGED-EXACS-HOST""")
-@cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "SOLARIS", "SUNOS", "ZLINUX"]), multiple=True, help=u"""Filter by one or more platform types. Supported platformType(s) for MACS-managed external host insight: [LINUX]. Supported platformType(s) for MACS-managed cloud host insight: [LINUX]. Supported platformType(s) for EM-managed external host insight: [LINUX, SOLARIS, SUNOS, ZLINUX].""")
+@cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "SOLARIS", "SUNOS", "ZLINUX", "WINDOWS", "AIX"]), multiple=True, help=u"""Filter by one or more platform types. Supported platformType(s) for MACS-managed external host insight: [LINUX, SOLARIS, WINDOWS]. Supported platformType(s) for MACS-managed cloud host insight: [LINUX]. Supported platformType(s) for EM-managed external host insight: [LINUX, SOLARIS, SUNOS, ZLINUX, WINDOWS, AIX].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
@@ -5724,7 +5756,7 @@ def list_host_insights(ctx, from_json, all_pages, page_size, compartment_id, id,
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "SOLARIS", "SUNOS", "ZLINUX"]), multiple=True, help=u"""Filter by one or more platform types. Supported platformType(s) for MACS-managed external host insight: [LINUX]. Supported platformType(s) for MACS-managed cloud host insight: [LINUX]. Supported platformType(s) for EM-managed external host insight: [LINUX, SOLARIS, SUNOS, ZLINUX].""")
+@cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "SOLARIS", "SUNOS", "ZLINUX", "WINDOWS", "AIX"]), multiple=True, help=u"""Filter by one or more platform types. Supported platformType(s) for MACS-managed external host insight: [LINUX, SOLARIS, WINDOWS]. Supported platformType(s) for MACS-managed cloud host insight: [LINUX]. Supported platformType(s) for EM-managed external host insight: [LINUX, SOLARIS, SUNOS, ZLINUX, WINDOWS, AIX].""")
 @cli_util.option('--exadata-insight-id', help=u"""[OCID] of exadata insight resource.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -8918,7 +8950,7 @@ def summarize_host_insight_network_usage_trend(ctx, from_json, compartment_id, i
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "SOLARIS", "SUNOS", "ZLINUX"]), multiple=True, help=u"""Filter by one or more platform types. Supported platformType(s) for MACS-managed external host insight: [LINUX]. Supported platformType(s) for MACS-managed cloud host insight: [LINUX]. Supported platformType(s) for EM-managed external host insight: [LINUX, SOLARIS, SUNOS, ZLINUX].""")
+@cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "SOLARIS", "SUNOS", "ZLINUX", "WINDOWS", "AIX"]), multiple=True, help=u"""Filter by one or more platform types. Supported platformType(s) for MACS-managed external host insight: [LINUX, SOLARIS, WINDOWS]. Supported platformType(s) for MACS-managed cloud host insight: [LINUX]. Supported platformType(s) for EM-managed external host insight: [LINUX, SOLARIS, SUNOS, ZLINUX, WINDOWS, AIX].""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of host insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
 @cli_util.option('--utilization-level', type=custom_types.CliCaseInsensitiveChoice(["HIGH_UTILIZATION", "LOW_UTILIZATION", "MEDIUM_HIGH_UTILIZATION", "MEDIUM_LOW_UTILIZATION"]), help=u"""Filter by utilization level by the following buckets:   - HIGH_UTILIZATION: DBs with utilization greater or equal than 75.   - LOW_UTILIZATION: DBs with utilization lower than 25.   - MEDIUM_HIGH_UTILIZATION: DBs with utilization greater or equal than 50 but lower than 75.   - MEDIUM_LOW_UTILIZATION: DBs with utilization greater or equal than 25 but lower than 50.""")
@@ -8999,7 +9031,7 @@ def summarize_host_insight_resource_capacity_trend(ctx, from_json, compartment_i
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "SOLARIS", "SUNOS", "ZLINUX"]), multiple=True, help=u"""Filter by one or more platform types. Supported platformType(s) for MACS-managed external host insight: [LINUX]. Supported platformType(s) for MACS-managed cloud host insight: [LINUX]. Supported platformType(s) for EM-managed external host insight: [LINUX, SOLARIS, SUNOS, ZLINUX].""")
+@cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "SOLARIS", "SUNOS", "ZLINUX", "WINDOWS", "AIX"]), multiple=True, help=u"""Filter by one or more platform types. Supported platformType(s) for MACS-managed external host insight: [LINUX, SOLARIS, WINDOWS]. Supported platformType(s) for MACS-managed cloud host insight: [LINUX]. Supported platformType(s) for EM-managed external host insight: [LINUX, SOLARIS, SUNOS, ZLINUX, WINDOWS, AIX].""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of host insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
 @cli_util.option('--statistic', type=custom_types.CliCaseInsensitiveChoice(["AVG", "MAX"]), help=u"""Choose the type of statistic metric data to be used for forecasting.""")
@@ -9092,7 +9124,7 @@ def summarize_host_insight_resource_forecast_trend(ctx, from_json, compartment_i
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "SOLARIS", "SUNOS", "ZLINUX"]), multiple=True, help=u"""Filter by one or more platform types. Supported platformType(s) for MACS-managed external host insight: [LINUX]. Supported platformType(s) for MACS-managed cloud host insight: [LINUX]. Supported platformType(s) for EM-managed external host insight: [LINUX, SOLARIS, SUNOS, ZLINUX].""")
+@cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "SOLARIS", "SUNOS", "ZLINUX", "WINDOWS", "AIX"]), multiple=True, help=u"""Filter by one or more platform types. Supported platformType(s) for MACS-managed external host insight: [LINUX, SOLARIS, WINDOWS]. Supported platformType(s) for MACS-managed cloud host insight: [LINUX]. Supported platformType(s) for EM-managed external host insight: [LINUX, SOLARIS, SUNOS, ZLINUX, WINDOWS, AIX].""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of host insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
 @cli_util.option('--percentile', type=click.INT, help=u"""Percentile values of daily usage to be used for computing the aggregate resource usage.""")
@@ -9182,7 +9214,7 @@ def summarize_host_insight_resource_statistics(ctx, from_json, compartment_id, r
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "SOLARIS", "SUNOS", "ZLINUX"]), multiple=True, help=u"""Filter by one or more platform types. Supported platformType(s) for MACS-managed external host insight: [LINUX]. Supported platformType(s) for MACS-managed cloud host insight: [LINUX]. Supported platformType(s) for EM-managed external host insight: [LINUX, SOLARIS, SUNOS, ZLINUX].""")
+@cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "SOLARIS", "SUNOS", "ZLINUX", "WINDOWS", "AIX"]), multiple=True, help=u"""Filter by one or more platform types. Supported platformType(s) for MACS-managed external host insight: [LINUX, SOLARIS, WINDOWS]. Supported platformType(s) for MACS-managed cloud host insight: [LINUX]. Supported platformType(s) for EM-managed external host insight: [LINUX, SOLARIS, SUNOS, ZLINUX, WINDOWS, AIX].""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of host insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -9251,7 +9283,7 @@ def summarize_host_insight_resource_usage(ctx, from_json, compartment_id, resour
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "SOLARIS", "SUNOS", "ZLINUX"]), multiple=True, help=u"""Filter by one or more platform types. Supported platformType(s) for MACS-managed external host insight: [LINUX]. Supported platformType(s) for MACS-managed cloud host insight: [LINUX]. Supported platformType(s) for EM-managed external host insight: [LINUX, SOLARIS, SUNOS, ZLINUX].""")
+@cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "SOLARIS", "SUNOS", "ZLINUX", "WINDOWS", "AIX"]), multiple=True, help=u"""Filter by one or more platform types. Supported platformType(s) for MACS-managed external host insight: [LINUX, SOLARIS, WINDOWS]. Supported platformType(s) for MACS-managed cloud host insight: [LINUX]. Supported platformType(s) for EM-managed external host insight: [LINUX, SOLARIS, SUNOS, ZLINUX, WINDOWS, AIX].""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of host insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -9323,7 +9355,7 @@ def summarize_host_insight_resource_usage_trend(ctx, from_json, compartment_id, 
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "SOLARIS", "SUNOS", "ZLINUX"]), multiple=True, help=u"""Filter by one or more platform types. Supported platformType(s) for MACS-managed external host insight: [LINUX]. Supported platformType(s) for MACS-managed cloud host insight: [LINUX]. Supported platformType(s) for EM-managed external host insight: [LINUX, SOLARIS, SUNOS, ZLINUX].""")
+@cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "SOLARIS", "SUNOS", "ZLINUX", "WINDOWS", "AIX"]), multiple=True, help=u"""Filter by one or more platform types. Supported platformType(s) for MACS-managed external host insight: [LINUX, SOLARIS, WINDOWS]. Supported platformType(s) for MACS-managed cloud host insight: [LINUX]. Supported platformType(s) for EM-managed external host insight: [LINUX, SOLARIS, SUNOS, ZLINUX, WINDOWS, AIX].""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of host insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
 @cli_util.option('--forecast-days', type=click.INT, help=u"""Number of days used for utilization forecast analysis.""")

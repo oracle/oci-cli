@@ -403,6 +403,11 @@ service_mapping = {
         "NoSQL Database",
         "Databases"
     ],
+    "occ": [
+        "oci_control_center",
+        "OCI Control Center",
+        "Others"
+    ],
     "oce": [
         "oce",
         "Oracle Content and Experience",

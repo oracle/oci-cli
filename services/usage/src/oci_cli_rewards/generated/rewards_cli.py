@@ -8,58 +8,59 @@ import click
 import oci  # noqa: F401
 import six  # noqa: F401
 import sys  # noqa: F401
-from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
+from services.usage.src.oci_cli_usage.generated import usage_service_cli
 
 
-@cli.command(cli_util.override('usage.usage_root_group.command_name', 'usage'), cls=CommandGroupWithAlias, help=cli_util.override('usage.usage_root_group.help', """Use the Usage Proxy API to list Oracle Support Rewards, view related detailed usage information, and manage users who redeem rewards. For more information, see [Oracle Support Rewards Overview]."""), short_help=cli_util.override('usage.usage_root_group.short_help', """Usage Proxy API"""))
+@click.command(cli_util.override('rewards.rewards_root_group.command_name', 'rewards'), cls=CommandGroupWithAlias, help=cli_util.override('rewards.rewards_root_group.help', """Use the Usage Proxy API to list Oracle Support Rewards, view related detailed usage information, and manage users who redeem rewards. For more information, see [Oracle Support Rewards Overview]."""), short_help=cli_util.override('rewards.rewards_root_group.short_help', """Usage Proxy API"""))
 @cli_util.help_option_group
-def usage_root_group():
+def rewards_root_group():
     pass
 
 
-@click.command(cli_util.override('usage.redeemable_user_group.command_name', 'redeemable-user'), cls=CommandGroupWithAlias, help="""The summary of a user that can redeem rewards.""")
+@click.command(cli_util.override('rewards.redeemable_user_group.command_name', 'redeemable-user'), cls=CommandGroupWithAlias, help="""The summary of a user that can redeem rewards.""")
 @cli_util.help_option_group
 def redeemable_user_group():
     pass
 
 
-@click.command(cli_util.override('usage.redeemable_user_summary_group.command_name', 'redeemable-user-summary'), cls=CommandGroupWithAlias, help="""User summary that can redeem rewards.""")
+@click.command(cli_util.override('rewards.redeemable_user_summary_group.command_name', 'redeemable-user-summary'), cls=CommandGroupWithAlias, help="""User summary that can redeem rewards.""")
 @cli_util.help_option_group
 def redeemable_user_summary_group():
     pass
 
 
-@click.command(cli_util.override('usage.redemption_summary_group.command_name', 'redemption-summary'), cls=CommandGroupWithAlias, help="""The redemption summary for the requested subscription ID and date range.""")
+@click.command(cli_util.override('rewards.redemption_summary_group.command_name', 'redemption-summary'), cls=CommandGroupWithAlias, help="""The redemption summary for the requested subscription ID and date range.""")
 @cli_util.help_option_group
 def redemption_summary_group():
     pass
 
 
-@click.command(cli_util.override('usage.monthly_reward_summary_group.command_name', 'monthly-reward-summary'), cls=CommandGroupWithAlias, help="""Object describing the monthly rewards summary for the requested subscription ID.""")
+@click.command(cli_util.override('rewards.monthly_reward_summary_group.command_name', 'monthly-reward-summary'), cls=CommandGroupWithAlias, help="""Object describing the monthly rewards summary for the requested subscription ID.""")
 @cli_util.help_option_group
 def monthly_reward_summary_group():
     pass
 
 
-@click.command(cli_util.override('usage.product_summary_group.command_name', 'product-summary'), cls=CommandGroupWithAlias, help="""Provides details about product rewards and the usage amount.""")
+@click.command(cli_util.override('rewards.product_summary_group.command_name', 'product-summary'), cls=CommandGroupWithAlias, help="""Provides details about product rewards and the usage amount.""")
 @cli_util.help_option_group
 def product_summary_group():
     pass
 
 
-usage_root_group.add_command(redeemable_user_group)
-usage_root_group.add_command(redeemable_user_summary_group)
-usage_root_group.add_command(redemption_summary_group)
-usage_root_group.add_command(monthly_reward_summary_group)
-usage_root_group.add_command(product_summary_group)
+usage_service_cli.usage_service_group.add_command(rewards_root_group)
+rewards_root_group.add_command(redeemable_user_group)
+rewards_root_group.add_command(redeemable_user_summary_group)
+rewards_root_group.add_command(redemption_summary_group)
+rewards_root_group.add_command(monthly_reward_summary_group)
+rewards_root_group.add_command(product_summary_group)
 
 
-@redeemable_user_group.command(name=cli_util.override('usage.create_redeemable_user.command_name', 'create'), help=u"""Adds the list of redeemable user summary for a subscription ID. \n[Command Reference](createRedeemableUser)""")
+@redeemable_user_group.command(name=cli_util.override('rewards.create_redeemable_user.command_name', 'create'), help=u"""Adds the list of redeemable user summary for a subscription ID. \n[Command Reference](createRedeemableUser)""")
 @cli_util.option('--tenancy-id', required=True, help=u"""The OCID of the tenancy.""")
 @cli_util.option('--subscription-id', required=True, help=u"""The subscription ID for which rewards information is requested for.""")
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of new user to be added to the list of user that can redeem rewards.
@@ -99,7 +100,7 @@ def create_redeemable_user(ctx, from_json, tenancy_id, subscription_id, items, u
     cli_util.render_response(result, ctx)
 
 
-@redeemable_user_group.command(name=cli_util.override('usage.delete_redeemable_user.command_name', 'delete'), help=u"""Deletes the list of redeemable user email ID for a subscription ID. \n[Command Reference](deleteRedeemableUser)""")
+@redeemable_user_group.command(name=cli_util.override('rewards.delete_redeemable_user.command_name', 'delete'), help=u"""Deletes the list of redeemable user email ID for a subscription ID. \n[Command Reference](deleteRedeemableUser)""")
 @cli_util.option('--email-id', required=True, help=u"""The email ID that needs to be deleted.""")
 @cli_util.option('--tenancy-id', required=True, help=u"""The OCID of the tenancy.""")
 @cli_util.option('--subscription-id', required=True, help=u"""The subscription ID for which rewards information is requested for.""")
@@ -129,7 +130,7 @@ def delete_redeemable_user(ctx, from_json, email_id, tenancy_id, subscription_id
     cli_util.render_response(result, ctx)
 
 
-@product_summary_group.command(name=cli_util.override('usage.list_products.command_name', 'list-products'), help=u"""Provides product information that is specific to a reward usage period and its usage details. \n[Command Reference](listProducts)""")
+@product_summary_group.command(name=cli_util.override('rewards.list_products.command_name', 'list-products'), help=u"""Provides product information that is specific to a reward usage period and its usage details. \n[Command Reference](listProducts)""")
 @cli_util.option('--tenancy-id', required=True, help=u"""The OCID of the tenancy.""")
 @cli_util.option('--subscription-id', required=True, help=u"""The subscription ID for which rewards information is requested for.""")
 @cli_util.option('--usage-period-key', required=True, help=u"""The SPM Identifier for the usage period.""")
@@ -197,7 +198,7 @@ def list_products(ctx, from_json, all_pages, page_size, tenancy_id, subscription
     cli_util.render_response(result, ctx)
 
 
-@redeemable_user_summary_group.command(name=cli_util.override('usage.list_redeemable_users.command_name', 'list-redeemable-users'), help=u"""Provides the list of user summary that can redeem rewards for the given subscription ID. \n[Command Reference](listRedeemableUsers)""")
+@redeemable_user_summary_group.command(name=cli_util.override('rewards.list_redeemable_users.command_name', 'list-redeemable-users'), help=u"""Provides the list of user summary that can redeem rewards for the given subscription ID. \n[Command Reference](listRedeemableUsers)""")
 @cli_util.option('--tenancy-id', required=True, help=u"""The OCID of the tenancy.""")
 @cli_util.option('--subscription-id', required=True, help=u"""The subscription ID for which rewards information is requested for.""")
 @cli_util.option('--page', help=u"""The value of the 'opc-next-page' response header from the previous call.""")
@@ -258,7 +259,7 @@ def list_redeemable_users(ctx, from_json, all_pages, page_size, tenancy_id, subs
     cli_util.render_response(result, ctx)
 
 
-@redemption_summary_group.command(name=cli_util.override('usage.list_redemptions.command_name', 'list-redemptions'), help=u"""Returns the list of redemption for the subscription ID. \n[Command Reference](listRedemptions)""")
+@redemption_summary_group.command(name=cli_util.override('rewards.list_redemptions.command_name', 'list-redemptions'), help=u"""Returns the list of redemption for the subscription ID. \n[Command Reference](listRedemptions)""")
 @cli_util.option('--tenancy-id', required=True, help=u"""The OCID of the tenancy.""")
 @cli_util.option('--subscription-id', required=True, help=u"""The subscription ID for which rewards information is requested for.""")
 @cli_util.option('--time-redeemed-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The starting redeemed date filter for the redemption history.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -325,7 +326,7 @@ def list_redemptions(ctx, from_json, all_pages, page_size, tenancy_id, subscript
     cli_util.render_response(result, ctx)
 
 
-@monthly_reward_summary_group.command(name=cli_util.override('usage.list_rewards.command_name', 'list-rewards'), help=u"""Returns the list of rewards for a subscription ID. \n[Command Reference](listRewards)""")
+@monthly_reward_summary_group.command(name=cli_util.override('rewards.list_rewards.command_name', 'list-rewards'), help=u"""Returns the list of rewards for a subscription ID. \n[Command Reference](listRewards)""")
 @cli_util.option('--tenancy-id', required=True, help=u"""The OCID of the tenancy.""")
 @cli_util.option('--subscription-id', required=True, help=u"""The subscription ID for which rewards information is requested for.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
