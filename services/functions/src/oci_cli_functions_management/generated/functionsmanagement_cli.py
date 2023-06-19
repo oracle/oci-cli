@@ -100,6 +100,7 @@ def change_application_compartment(ctx, from_json, application_id, compartment_i
 Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
 
 The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--shape', type=custom_types.CliCaseInsensitiveChoice(["GENERIC_X86", "GENERIC_ARM", "GENERIC_X86_ARM"]), help=u"""Valid values are `GENERIC_X86`, `GENERIC_ARM` and `GENERIC_X86_ARM`. Default is `GENERIC_X86`. Setting this to `GENERIC_X86`, will run the functions in the application on X86 processor architecture. Setting this to `GENERIC_ARM`, will run the functions in the application on ARM processor architecture. When set to `GENERIC_X86_ARM`, functions in the application are run on either X86 or ARM processor architecture. Accepted values are: `GENERIC_X86`, `GENERIC_ARM`, `GENERIC_X86_ARM`""")
 @cli_util.option('--network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The [OCID]s of the Network Security Groups to add the application to.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--syslog-url', help=u"""A syslog URL to which to send all function logs. Supports tcp, udp, and tcp+tls. The syslog URL must be reachable from all of the subnets configured for the application. Note: If you enable the OCI Logging service for this application, the syslogUrl value is ignored. Function logs are sent to the OCI Logging service, and not to the syslog URL.
 
@@ -120,7 +121,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'subnet-ids': {'module': 'functions', 'class': 'list[string]'}, 'network-security-group-ids': {'module': 'functions', 'class': 'list[string]'}, 'trace-config': {'module': 'functions', 'class': 'ApplicationTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}, 'image-policy-config': {'module': 'functions', 'class': 'ImagePolicyConfig'}}, output_type={'module': 'functions', 'class': 'Application'})
 @cli_util.wrap_exceptions
-def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, subnet_ids, config, network_security_group_ids, syslog_url, trace_config, freeform_tags, defined_tags, image_policy_config):
+def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, subnet_ids, config, shape, network_security_group_ids, syslog_url, trace_config, freeform_tags, defined_tags, image_policy_config):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -132,6 +133,9 @@ def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if config is not None:
         _details['config'] = cli_util.parse_json_parameter("config", config)
+
+    if shape is not None:
+        _details['shape'] = shape
 
     if network_security_group_ids is not None:
         _details['networkSecurityGroupIds'] = cli_util.parse_json_parameter("network_security_group_ids", network_security_group_ids)
@@ -477,7 +481,7 @@ def create_function_none_provisioned_concurrency_config(ctx, from_json, wait_for
 @cli_util.option('--display-name', required=True, help=u"""The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.""")
 @cli_util.option('--application-id', required=True, help=u"""The OCID of the application this function belongs to.""")
 @cli_util.option('--memory-in-mbs', required=True, type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
-@cli_util.option('--provisioned-concurrency-config-count', required=True, type=click.INT, help=u"""""")
+@cli_util.option('--provisioned-concurrency-config-count', required=True, type=click.INT, help=u"""Configuration specifying a constant amount of provisioned concurrency.""")
 @cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
 @cli_util.option('--image-digest', help=u"""The image digest for the version of the image that will be pulled when invoking this function. If no value is specified, the digest currently associated with the image in the OCI Registry will be used. Example: `sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7`""")
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1430,7 +1434,7 @@ def update_function_none_provisioned_concurrency_config(ctx, from_json, force, w
 
 @function_group.command(name=cli_util.override('functions_management.update_function_constant_provisioned_concurrency_config.command_name', 'update-function-constant-provisioned-concurrency-config'), help=u"""Modifies a function \n[Command Reference](updateFunction)""")
 @cli_util.option('--function-id', required=True, help=u"""The [OCID] of this function.""")
-@cli_util.option('--provisioned-concurrency-config-count', required=True, type=click.INT, help=u"""""")
+@cli_util.option('--provisioned-concurrency-config-count', required=True, type=click.INT, help=u"""Configuration specifying a constant amount of provisioned concurrency.""")
 @cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. If an image is specified but no value for imageDigest is provided, the digest currently associated with the image tag in the OCI Registry will be used. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
 @cli_util.option('--image-digest', help=u"""The image digest for the version of the image that will be pulled when invoking this function. Example: `sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7`""")
 @cli_util.option('--memory-in-mbs', type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")

@@ -16,7 +16,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('iam.iam_root_group.command_name', 'iam'), cls=CommandGroupWithAlias, help=cli_util.override('iam.iam_root_group.help', """APIs for managing users, groups, compartments, policies, and identity domains."""), short_help=cli_util.override('iam.iam_root_group.short_help', """Identity and Access Management Service API"""))
+@cli.command(cli_util.override('iam.iam_root_group.command_name', 'iam'), cls=CommandGroupWithAlias, help=cli_util.override('iam.iam_root_group.help', """Use the Identity and Access Management Service API to manage users, groups, identity domains, compartments, policies, tagging, and limits. For information about managing users, groups, compartments, and policies, see [Identity and Access Management (without identity domains)]. For information about tagging and service limits, see [Tagging] and [Service Limits]. For information about creating, modifying, and deleting identity domains, see [Identity and Access Management (with identity domains)]."""), short_help=cli_util.override('iam.iam_root_group.short_help', """Identity and Access Management Service API"""))
 @cli_util.help_option_group
 def iam_root_group():
     pass
@@ -723,7 +723,9 @@ def bulk_delete_resources(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 @tag_group.command(name=cli_util.override('iam.bulk_delete_tags.command_name', 'bulk-delete'), help=u"""Deletes the specified tag key definitions. This operation triggers a process that removes the tags from all resources in your tenancy. The tag key definitions must be within the same tag namespace.
 
-The following actions happen immediately: \u00A0   * If the tag is a cost-tracking tag, the tag no longer counts against your   10 cost-tracking tags limit, even if you do not disable the tag before running this operation.   * If the tag is used with dynamic groups, the rules that contain the tag are no longer   evaluated against the tag.
+The following actions happen immediately:
+
+  * If the tag is a cost-tracking tag, the tag no longer counts against your   10 cost-tracking tags limit, even if you do not disable the tag before running this operation.   * If the tag is used with dynamic groups, the rules that contain the tag are no longer   evaluated against the tag.
 
 After you start this operation, the state of the tag changes to DELETING, and tag removal from resources begins. This process can take up to 48 hours depending on the number of resources that are tagged and the regions in which those resources reside.
 
@@ -3677,7 +3679,7 @@ def generate_totp_seed(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@authentication_policy_group.command(name=cli_util.override('iam.get_authentication_policy.command_name', 'get'), help=u"""Gets the authentication policy for the given tenancy. You must specify your tenant\u2019s OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). \n[Command Reference](getAuthenticationPolicy)""")
+@authentication_policy_group.command(name=cli_util.override('iam.get_authentication_policy.command_name', 'get'), help=u"""Gets the authentication policy for the given tenancy. You must specify your tenant's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). \n[Command Reference](getAuthenticationPolicy)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option

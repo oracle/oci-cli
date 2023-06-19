@@ -11,20 +11,112 @@ import json
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
+from oci_cli.aliasing import CommandGroupWithAlias
 from services.rover.src.constants import ROVER_WORKLOAD_TYPE_IMAGE
 from services.rover.src.oci_cli_rover.generated import rover_service_cli
 from services.rover.src.oci_cli_rover.rover_utils import export_compute_image_helper, \
     prompt_for_secrets, prompt_for_workload_delete, export_compute_image_status_helper, \
     validate_bucket, validate_get_image, prepare_image_workload_data, prepare_bucket_workload_data, \
     create_master_key_policy_rover_resource, remove_additional_params_after_policy
+from services.rover.src.oci_cli_rover_bundle.generated import roverbundle_cli
 from services.rover.src.oci_cli_rover_node.generated import rovernode_cli
 from oci.util import formatted_flat_dict
+
+
+@click.command('ca-bundle', cls=CommandGroupWithAlias, help="""Rover Node Certificate Bundle.""")
+@cli_util.help_option_group
+def rover_ca_bundle_group():
+    pass
+
+
+@click.command('certificate', cls=CommandGroupWithAlias, help="""Rover Node Certificate.""")
+@cli_util.help_option_group
+def rover_certificate_group():
+    pass
+
+
+@click.command('certificate-authority', cls=CommandGroupWithAlias, help="""Rover Node Certificate Authority.""")
+@cli_util.help_option_group
+def rover_certificate_authority_group():
+    pass
+
+
+@click.command('rover-bundle-request', cls=CommandGroupWithAlias, help="""Rover Bundle Requests for Node.""")
+@cli_util.help_option_group
+def rover_bundle_request_group():
+    pass
+
+
+@click.command('rover-bundle', cls=CommandGroupWithAlias, help="""Rover Bundle for Node.""")
+@cli_util.help_option_group
+def rover_bundle_group():
+    pass
+
+
+@click.command('rover-bundle-version', cls=CommandGroupWithAlias, help="""Rover Bundle Version for Cluster.""")
+@cli_util.help_option_group
+def rover_bundle_version_group():
+    pass
+
+
+rovernode_cli.rover_node_group.add_command(rover_ca_bundle_group)
+rovernode_cli.rover_node_group.add_command(rover_certificate_group)
+rovernode_cli.rover_node_group.add_command(rover_certificate_authority_group)
+rovernode_cli.rover_node_group.add_command(rover_bundle_request_group)
+rovernode_cli.rover_node_group.add_command(rover_bundle_group)
+rovernode_cli.rover_node_group.add_command(rover_bundle_version_group)
 
 cli_util.rename_command(rover_service_cli, rover_service_cli.rover_service_group, rovernode_cli.rover_node_group, 'node')
 cli_util.rename_command(rover_service_cli, rovernode_cli.rover_node_group, rovernode_cli.get_rover_node, 'show')
 cli_util.rename_command(rover_service_cli, rovernode_cli.rover_node_group, rovernode_cli.list_rover_nodes, 'list')
 cli_util.rename_command(rover_service_cli, rovernode_cli.rover_node_group, rovernode_cli.get_rover_node_encryption_key, 'get-encryption-key')
 cli_util.rename_command(rover_service_cli, rovernode_cli.rover_node_group, rovernode_cli.get_rover_node_certificate, 'get-certificate')
+
+
+# oci rover node rover-node-action-retrieve-ca-bundle -> oci rover node ca-bundle get
+rovernode_cli.rover_node_group.commands.pop(rovernode_cli.rover_node_action_retrieve_ca_bundle.name)
+rover_ca_bundle_group.add_command(rovernode_cli.rover_node_action_retrieve_ca_bundle)
+cli_util.rename_command(rovernode_cli, rover_ca_bundle_group, rovernode_cli.rover_node_action_retrieve_ca_bundle, "get")
+
+# # oci rover node rover-node-generate-certificate -> oci rover node certificate create
+rovernode_cli.rover_node_group.commands.pop(rovernode_cli.rover_node_generate_certificate.name)
+rover_certificate_group.add_command(rovernode_cli.rover_node_generate_certificate)
+cli_util.rename_command(rovernode_cli, rover_certificate_group, rovernode_cli.rover_node_generate_certificate, "create")
+
+# oci rover node rover-node-renew-certificate -> oci rover node certificate update
+rovernode_cli.rover_node_group.commands.pop(rovernode_cli.rover_node_renew_certificate.name)
+rover_certificate_group.add_command(rovernode_cli.rover_node_renew_certificate)
+cli_util.rename_command(rovernode_cli, rover_certificate_group, rovernode_cli.rover_node_renew_certificate, "update")
+
+# oci rover node rover-node-retrieve-leaf-certificate -> oci rover node certificate get-leaf-certificate
+rovernode_cli.rover_node_group.commands.pop(rovernode_cli.rover_node_retrieve_leaf_certificate.name)
+rover_certificate_group.add_command(rovernode_cli.rover_node_retrieve_leaf_certificate)
+cli_util.rename_command(rovernode_cli, rover_certificate_group, rovernode_cli.rover_node_retrieve_leaf_certificate, "get-leaf-certificate")
+
+# oci rover node rover-node-replace-certificate-authority -> oci rover node certificate-authority update-root-ca
+rovernode_cli.rover_node_group.commands.pop(rovernode_cli.rover_node_replace_certificate_authority.name)
+rover_certificate_authority_group.add_command(rovernode_cli.rover_node_replace_certificate_authority)
+cli_util.rename_command(rovernode_cli, rover_certificate_authority_group, rovernode_cli.rover_node_replace_certificate_authority, "update-root-ca")
+
+# oci rover rover-bundle rover-node list-rover-node-rover-bundle-requests -> oci rover node rover-bundle-request list
+roverbundle_cli.rover_node_group.commands.pop(roverbundle_cli.list_rover_node_rover_bundle_requests.name)
+rover_bundle_request_group.add_command(roverbundle_cli.list_rover_node_rover_bundle_requests)
+cli_util.rename_command(roverbundle_cli, rover_bundle_request_group, roverbundle_cli.list_rover_node_rover_bundle_requests, "list")
+
+#  oci rover rover-bundle rover-node request-bundle -> oci rover node rover-bundle copy-to-customer
+roverbundle_cli.rover_node_group.commands.pop(roverbundle_cli.request_bundle_rover_node.name)
+rover_bundle_group.add_command(roverbundle_cli.request_bundle_rover_node)
+cli_util.rename_command(roverbundle_cli, rover_bundle_group, roverbundle_cli.request_bundle_rover_node, "copy-to-customer")
+
+#  oci rover rover-bundle rover-node retrieve-bundle-status -> oci rover node rover-bundle get-status
+roverbundle_cli.rover_node_group.commands.pop(roverbundle_cli.retrieve_bundle_status_rover_node.name)
+rover_bundle_group.add_command(roverbundle_cli.retrieve_bundle_status_rover_node)
+cli_util.rename_command(roverbundle_cli, rover_bundle_group, roverbundle_cli.retrieve_bundle_status_rover_node, "get-status")
+
+#  oci rover rover-bundle rover-node retrieve-available-bundle-versions -> oci rover node rover-bundle-version get
+roverbundle_cli.rover_node_group.commands.pop(roverbundle_cli.retrieve_available_bundle_versions_rover_node.name)
+rover_bundle_version_group.add_command(roverbundle_cli.retrieve_available_bundle_versions_rover_node)
+cli_util.rename_command(roverbundle_cli, rover_bundle_version_group, roverbundle_cli.retrieve_available_bundle_versions_rover_node, "get")
 
 
 def complex_shipping_address_param(**kwargs):
@@ -131,8 +223,9 @@ def setup_identity_helper(ctx, **kwargs):
     return create_policies_result
 
 
-@cli_util.copy_params_from_generated_command(rovernode_cli.create_rover_node, params_to_exclude=['customer_shipping_address', 'data_validation_code', 'import_compartment_id', 'import_file_bucket', 'is_import_requested', 'node_workloads', 'public_key', 'serial_number', 'super_user_password', 'unlock_passphrase', 'oracle_shipping_tracking_url', 'shipping_vendor', 'time_pickup_expected'])
+@cli_util.copy_params_from_generated_command(rovernode_cli.create_rover_node, params_to_exclude=['customer_shipping_address', 'data_validation_code', 'import_compartment_id', 'import_file_bucket', 'is_import_requested', 'node_workloads', 'public_key', 'serial_number', 'super_user_password', 'unlock_passphrase', 'oracle_shipping_tracking_url', 'shipping_vendor', 'time_pickup_expected', 'certificate_authority_id'])
 @rovernode_cli.rover_node_group.command(name=rovernode_cli.create_rover_node.name, help=rovernode_cli.create_rover_node.help)
+@cli_util.option('--issuer-certificate-authority-id', help="""The certificateAuthorityId of subordinate/intermediate certificate authority.""")
 @cli_util.option('--shape', required=True, help=u"""Shape of the node on Rover device""")
 @cli_util.option('--addressee', help=u"""Company or person to send the appliance to""")
 @cli_util.option('--care-of', help=u"""Place/person to direct the package to.""")
@@ -198,6 +291,25 @@ def create_rover_node_extended(ctx, **kwargs):
 
     if kwargs['system_tags'] is not None:
         _details['systemTags'] = cli_util.parse_json_parameter("system_tags", kwargs['system_tags'])
+
+    if 'issuer_certificate_authority_id' in kwargs:
+        _details['certificateAuthorityId'] = kwargs['issuer_certificate_authority_id']
+        kwargs.pop('issuer_certificate_authority_id')
+
+    if 'cert_compartment_id' in kwargs:
+        _details['certCompartmentId'] = kwargs['cert_compartment_id']
+
+    if 'cert_key_algorithm' in kwargs:
+        _details['certKeyAlgorithm'] = kwargs['cert_key_algorithm']
+
+    if 'cert_signature_algorithm' in kwargs:
+        _details['certSignatureAlgorithm'] = kwargs['cert_signature_algorithm']
+
+    if 'common_name' in kwargs:
+        _details['commonName'] = kwargs['common_name']
+
+    if 'time_cert_validity_end' in kwargs:
+        _details['timeCertValidityEnd'] = kwargs['time_cert_validity_end']
 
     # set up policy for master key if provided
     if kwargs['master_key_id']:

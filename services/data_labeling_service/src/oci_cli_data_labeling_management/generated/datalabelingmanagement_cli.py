@@ -177,18 +177,19 @@ def change_dataset_compartment(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A user provided description of the dataset""")
 @cli_util.option('--initial-record-generation-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--initial-import-dataset-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--labeling-instructions', help=u"""The labeling instructions for human labelers in rich text format""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "SUCCEEDED", "CANCELING", "CANCELED", "FAILED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'dataset-source-details': {'module': 'data_labeling_service', 'class': 'DatasetSourceDetails'}, 'dataset-format-details': {'module': 'data_labeling_service', 'class': 'DatasetFormatDetails'}, 'initial-record-generation-configuration': {'module': 'data_labeling_service', 'class': 'InitialRecordGenerationConfiguration'}, 'label-set': {'module': 'data_labeling_service', 'class': 'LabelSet'}, 'freeform-tags': {'module': 'data_labeling_service', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_labeling_service', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'dataset-source-details': {'module': 'data_labeling_service', 'class': 'DatasetSourceDetails'}, 'dataset-format-details': {'module': 'data_labeling_service', 'class': 'DatasetFormatDetails'}, 'initial-record-generation-configuration': {'module': 'data_labeling_service', 'class': 'InitialRecordGenerationConfiguration'}, 'initial-import-dataset-configuration': {'module': 'data_labeling_service', 'class': 'InitialImportDatasetConfiguration'}, 'label-set': {'module': 'data_labeling_service', 'class': 'LabelSet'}, 'freeform-tags': {'module': 'data_labeling_service', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_labeling_service', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'dataset-source-details': {'module': 'data_labeling_service', 'class': 'DatasetSourceDetails'}, 'dataset-format-details': {'module': 'data_labeling_service', 'class': 'DatasetFormatDetails'}, 'initial-record-generation-configuration': {'module': 'data_labeling_service', 'class': 'InitialRecordGenerationConfiguration'}, 'label-set': {'module': 'data_labeling_service', 'class': 'LabelSet'}, 'freeform-tags': {'module': 'data_labeling_service', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_labeling_service', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_labeling_service', 'class': 'Dataset'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'dataset-source-details': {'module': 'data_labeling_service', 'class': 'DatasetSourceDetails'}, 'dataset-format-details': {'module': 'data_labeling_service', 'class': 'DatasetFormatDetails'}, 'initial-record-generation-configuration': {'module': 'data_labeling_service', 'class': 'InitialRecordGenerationConfiguration'}, 'initial-import-dataset-configuration': {'module': 'data_labeling_service', 'class': 'InitialImportDatasetConfiguration'}, 'label-set': {'module': 'data_labeling_service', 'class': 'LabelSet'}, 'freeform-tags': {'module': 'data_labeling_service', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_labeling_service', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_labeling_service', 'class': 'Dataset'})
 @cli_util.wrap_exceptions
-def create_dataset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, annotation_format, dataset_source_details, dataset_format_details, label_set, display_name, description, initial_record_generation_configuration, labeling_instructions, freeform_tags, defined_tags):
+def create_dataset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, annotation_format, dataset_source_details, dataset_format_details, label_set, display_name, description, initial_record_generation_configuration, initial_import_dataset_configuration, labeling_instructions, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -208,6 +209,9 @@ def create_dataset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
     if initial_record_generation_configuration is not None:
         _details['initialRecordGenerationConfiguration'] = cli_util.parse_json_parameter("initial_record_generation_configuration", initial_record_generation_configuration)
+
+    if initial_import_dataset_configuration is not None:
+        _details['initialImportDatasetConfiguration'] = cli_util.parse_json_parameter("initial_import_dataset_configuration", initial_import_dataset_configuration)
 
     if labeling_instructions is not None:
         _details['labelingInstructions'] = labeling_instructions
@@ -259,6 +263,7 @@ def create_dataset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A user provided description of the dataset""")
 @cli_util.option('--initial-record-generation-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--initial-import-dataset-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--labeling-instructions', help=u"""The labeling instructions for human labelers in rich text format""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -266,12 +271,12 @@ def create_dataset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "SUCCEEDED", "CANCELING", "CANCELED", "FAILED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'dataset-format-details': {'module': 'data_labeling_service', 'class': 'DatasetFormatDetails'}, 'initial-record-generation-configuration': {'module': 'data_labeling_service', 'class': 'InitialRecordGenerationConfiguration'}, 'label-set': {'module': 'data_labeling_service', 'class': 'LabelSet'}, 'freeform-tags': {'module': 'data_labeling_service', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_labeling_service', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'dataset-format-details': {'module': 'data_labeling_service', 'class': 'DatasetFormatDetails'}, 'initial-record-generation-configuration': {'module': 'data_labeling_service', 'class': 'InitialRecordGenerationConfiguration'}, 'initial-import-dataset-configuration': {'module': 'data_labeling_service', 'class': 'InitialImportDatasetConfiguration'}, 'label-set': {'module': 'data_labeling_service', 'class': 'LabelSet'}, 'freeform-tags': {'module': 'data_labeling_service', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_labeling_service', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'dataset-format-details': {'module': 'data_labeling_service', 'class': 'DatasetFormatDetails'}, 'initial-record-generation-configuration': {'module': 'data_labeling_service', 'class': 'InitialRecordGenerationConfiguration'}, 'label-set': {'module': 'data_labeling_service', 'class': 'LabelSet'}, 'freeform-tags': {'module': 'data_labeling_service', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_labeling_service', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_labeling_service', 'class': 'Dataset'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'dataset-format-details': {'module': 'data_labeling_service', 'class': 'DatasetFormatDetails'}, 'initial-record-generation-configuration': {'module': 'data_labeling_service', 'class': 'InitialRecordGenerationConfiguration'}, 'initial-import-dataset-configuration': {'module': 'data_labeling_service', 'class': 'InitialImportDatasetConfiguration'}, 'label-set': {'module': 'data_labeling_service', 'class': 'LabelSet'}, 'freeform-tags': {'module': 'data_labeling_service', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_labeling_service', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_labeling_service', 'class': 'Dataset'})
 @cli_util.wrap_exceptions
-def create_dataset_object_storage_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, annotation_format, dataset_format_details, label_set, dataset_source_details_namespace, dataset_source_details_bucket, display_name, description, initial_record_generation_configuration, labeling_instructions, freeform_tags, defined_tags, dataset_source_details_prefix):
+def create_dataset_object_storage_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, annotation_format, dataset_format_details, label_set, dataset_source_details_namespace, dataset_source_details_bucket, display_name, description, initial_record_generation_configuration, initial_import_dataset_configuration, labeling_instructions, freeform_tags, defined_tags, dataset_source_details_prefix):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -293,6 +298,9 @@ def create_dataset_object_storage_source_details(ctx, from_json, wait_for_state,
 
     if initial_record_generation_configuration is not None:
         _details['initialRecordGenerationConfiguration'] = cli_util.parse_json_parameter("initial_record_generation_configuration", initial_record_generation_configuration)
+
+    if initial_import_dataset_configuration is not None:
+        _details['initialImportDatasetConfiguration'] = cli_util.parse_json_parameter("initial_import_dataset_configuration", initial_import_dataset_configuration)
 
     if labeling_instructions is not None:
         _details['labelingInstructions'] = labeling_instructions
@@ -347,18 +355,19 @@ def create_dataset_object_storage_source_details(ctx, from_json, wait_for_state,
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A user provided description of the dataset""")
 @cli_util.option('--initial-record-generation-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--initial-import-dataset-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--labeling-instructions', help=u"""The labeling instructions for human labelers in rich text format""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "SUCCEEDED", "CANCELING", "CANCELED", "FAILED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'dataset-source-details': {'module': 'data_labeling_service', 'class': 'DatasetSourceDetails'}, 'initial-record-generation-configuration': {'module': 'data_labeling_service', 'class': 'InitialRecordGenerationConfiguration'}, 'label-set': {'module': 'data_labeling_service', 'class': 'LabelSet'}, 'freeform-tags': {'module': 'data_labeling_service', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_labeling_service', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'dataset-source-details': {'module': 'data_labeling_service', 'class': 'DatasetSourceDetails'}, 'initial-record-generation-configuration': {'module': 'data_labeling_service', 'class': 'InitialRecordGenerationConfiguration'}, 'initial-import-dataset-configuration': {'module': 'data_labeling_service', 'class': 'InitialImportDatasetConfiguration'}, 'label-set': {'module': 'data_labeling_service', 'class': 'LabelSet'}, 'freeform-tags': {'module': 'data_labeling_service', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_labeling_service', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'dataset-source-details': {'module': 'data_labeling_service', 'class': 'DatasetSourceDetails'}, 'initial-record-generation-configuration': {'module': 'data_labeling_service', 'class': 'InitialRecordGenerationConfiguration'}, 'label-set': {'module': 'data_labeling_service', 'class': 'LabelSet'}, 'freeform-tags': {'module': 'data_labeling_service', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_labeling_service', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_labeling_service', 'class': 'Dataset'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'dataset-source-details': {'module': 'data_labeling_service', 'class': 'DatasetSourceDetails'}, 'initial-record-generation-configuration': {'module': 'data_labeling_service', 'class': 'InitialRecordGenerationConfiguration'}, 'initial-import-dataset-configuration': {'module': 'data_labeling_service', 'class': 'InitialImportDatasetConfiguration'}, 'label-set': {'module': 'data_labeling_service', 'class': 'LabelSet'}, 'freeform-tags': {'module': 'data_labeling_service', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_labeling_service', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_labeling_service', 'class': 'Dataset'})
 @cli_util.wrap_exceptions
-def create_dataset_image_dataset_format_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, annotation_format, dataset_source_details, label_set, display_name, description, initial_record_generation_configuration, labeling_instructions, freeform_tags, defined_tags):
+def create_dataset_image_dataset_format_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, annotation_format, dataset_source_details, label_set, display_name, description, initial_record_generation_configuration, initial_import_dataset_configuration, labeling_instructions, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -378,6 +387,9 @@ def create_dataset_image_dataset_format_details(ctx, from_json, wait_for_state, 
 
     if initial_record_generation_configuration is not None:
         _details['initialRecordGenerationConfiguration'] = cli_util.parse_json_parameter("initial_record_generation_configuration", initial_record_generation_configuration)
+
+    if initial_import_dataset_configuration is not None:
+        _details['initialImportDatasetConfiguration'] = cli_util.parse_json_parameter("initial_import_dataset_configuration", initial_import_dataset_configuration)
 
     if labeling_instructions is not None:
         _details['labelingInstructions'] = labeling_instructions
@@ -429,18 +441,19 @@ def create_dataset_image_dataset_format_details(ctx, from_json, wait_for_state, 
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A user provided description of the dataset""")
 @cli_util.option('--initial-record-generation-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--initial-import-dataset-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--labeling-instructions', help=u"""The labeling instructions for human labelers in rich text format""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "SUCCEEDED", "CANCELING", "CANCELED", "FAILED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'dataset-source-details': {'module': 'data_labeling_service', 'class': 'DatasetSourceDetails'}, 'initial-record-generation-configuration': {'module': 'data_labeling_service', 'class': 'InitialRecordGenerationConfiguration'}, 'label-set': {'module': 'data_labeling_service', 'class': 'LabelSet'}, 'freeform-tags': {'module': 'data_labeling_service', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_labeling_service', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'dataset-source-details': {'module': 'data_labeling_service', 'class': 'DatasetSourceDetails'}, 'initial-record-generation-configuration': {'module': 'data_labeling_service', 'class': 'InitialRecordGenerationConfiguration'}, 'initial-import-dataset-configuration': {'module': 'data_labeling_service', 'class': 'InitialImportDatasetConfiguration'}, 'label-set': {'module': 'data_labeling_service', 'class': 'LabelSet'}, 'freeform-tags': {'module': 'data_labeling_service', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_labeling_service', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'dataset-source-details': {'module': 'data_labeling_service', 'class': 'DatasetSourceDetails'}, 'initial-record-generation-configuration': {'module': 'data_labeling_service', 'class': 'InitialRecordGenerationConfiguration'}, 'label-set': {'module': 'data_labeling_service', 'class': 'LabelSet'}, 'freeform-tags': {'module': 'data_labeling_service', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_labeling_service', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_labeling_service', 'class': 'Dataset'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'dataset-source-details': {'module': 'data_labeling_service', 'class': 'DatasetSourceDetails'}, 'initial-record-generation-configuration': {'module': 'data_labeling_service', 'class': 'InitialRecordGenerationConfiguration'}, 'initial-import-dataset-configuration': {'module': 'data_labeling_service', 'class': 'InitialImportDatasetConfiguration'}, 'label-set': {'module': 'data_labeling_service', 'class': 'LabelSet'}, 'freeform-tags': {'module': 'data_labeling_service', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_labeling_service', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_labeling_service', 'class': 'Dataset'})
 @cli_util.wrap_exceptions
-def create_dataset_document_dataset_format_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, annotation_format, dataset_source_details, label_set, display_name, description, initial_record_generation_configuration, labeling_instructions, freeform_tags, defined_tags):
+def create_dataset_document_dataset_format_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, annotation_format, dataset_source_details, label_set, display_name, description, initial_record_generation_configuration, initial_import_dataset_configuration, labeling_instructions, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -460,6 +473,9 @@ def create_dataset_document_dataset_format_details(ctx, from_json, wait_for_stat
 
     if initial_record_generation_configuration is not None:
         _details['initialRecordGenerationConfiguration'] = cli_util.parse_json_parameter("initial_record_generation_configuration", initial_record_generation_configuration)
+
+    if initial_import_dataset_configuration is not None:
+        _details['initialImportDatasetConfiguration'] = cli_util.parse_json_parameter("initial_import_dataset_configuration", initial_import_dataset_configuration)
 
     if labeling_instructions is not None:
         _details['labelingInstructions'] = labeling_instructions
@@ -511,6 +527,7 @@ def create_dataset_document_dataset_format_details(ctx, from_json, wait_for_stat
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A user provided description of the dataset""")
 @cli_util.option('--initial-record-generation-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--initial-import-dataset-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--labeling-instructions', help=u"""The labeling instructions for human labelers in rich text format""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -518,12 +535,12 @@ def create_dataset_document_dataset_format_details(ctx, from_json, wait_for_stat
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "SUCCEEDED", "CANCELING", "CANCELED", "FAILED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'dataset-source-details': {'module': 'data_labeling_service', 'class': 'DatasetSourceDetails'}, 'initial-record-generation-configuration': {'module': 'data_labeling_service', 'class': 'InitialRecordGenerationConfiguration'}, 'label-set': {'module': 'data_labeling_service', 'class': 'LabelSet'}, 'freeform-tags': {'module': 'data_labeling_service', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_labeling_service', 'class': 'dict(str, dict(str, object))'}, 'dataset-format-details-text-file-type-metadata': {'module': 'data_labeling_service', 'class': 'TextFileTypeMetadata'}})
+@json_skeleton_utils.get_cli_json_input_option({'dataset-source-details': {'module': 'data_labeling_service', 'class': 'DatasetSourceDetails'}, 'initial-record-generation-configuration': {'module': 'data_labeling_service', 'class': 'InitialRecordGenerationConfiguration'}, 'initial-import-dataset-configuration': {'module': 'data_labeling_service', 'class': 'InitialImportDatasetConfiguration'}, 'label-set': {'module': 'data_labeling_service', 'class': 'LabelSet'}, 'freeform-tags': {'module': 'data_labeling_service', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_labeling_service', 'class': 'dict(str, dict(str, object))'}, 'dataset-format-details-text-file-type-metadata': {'module': 'data_labeling_service', 'class': 'TextFileTypeMetadata'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'dataset-source-details': {'module': 'data_labeling_service', 'class': 'DatasetSourceDetails'}, 'initial-record-generation-configuration': {'module': 'data_labeling_service', 'class': 'InitialRecordGenerationConfiguration'}, 'label-set': {'module': 'data_labeling_service', 'class': 'LabelSet'}, 'freeform-tags': {'module': 'data_labeling_service', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_labeling_service', 'class': 'dict(str, dict(str, object))'}, 'dataset-format-details-text-file-type-metadata': {'module': 'data_labeling_service', 'class': 'TextFileTypeMetadata'}}, output_type={'module': 'data_labeling_service', 'class': 'Dataset'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'dataset-source-details': {'module': 'data_labeling_service', 'class': 'DatasetSourceDetails'}, 'initial-record-generation-configuration': {'module': 'data_labeling_service', 'class': 'InitialRecordGenerationConfiguration'}, 'initial-import-dataset-configuration': {'module': 'data_labeling_service', 'class': 'InitialImportDatasetConfiguration'}, 'label-set': {'module': 'data_labeling_service', 'class': 'LabelSet'}, 'freeform-tags': {'module': 'data_labeling_service', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_labeling_service', 'class': 'dict(str, dict(str, object))'}, 'dataset-format-details-text-file-type-metadata': {'module': 'data_labeling_service', 'class': 'TextFileTypeMetadata'}}, output_type={'module': 'data_labeling_service', 'class': 'Dataset'})
 @cli_util.wrap_exceptions
-def create_dataset_text_dataset_format_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, annotation_format, dataset_source_details, label_set, display_name, description, initial_record_generation_configuration, labeling_instructions, freeform_tags, defined_tags, dataset_format_details_text_file_type_metadata):
+def create_dataset_text_dataset_format_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, annotation_format, dataset_source_details, label_set, display_name, description, initial_record_generation_configuration, initial_import_dataset_configuration, labeling_instructions, freeform_tags, defined_tags, dataset_format_details_text_file_type_metadata):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -543,6 +560,9 @@ def create_dataset_text_dataset_format_details(ctx, from_json, wait_for_state, m
 
     if initial_record_generation_configuration is not None:
         _details['initialRecordGenerationConfiguration'] = cli_util.parse_json_parameter("initial_record_generation_configuration", initial_record_generation_configuration)
+
+    if initial_import_dataset_configuration is not None:
+        _details['initialImportDatasetConfiguration'] = cli_util.parse_json_parameter("initial_import_dataset_configuration", initial_import_dataset_configuration)
 
     if labeling_instructions is not None:
         _details['labelingInstructions'] = labeling_instructions
@@ -741,6 +761,137 @@ def get_work_request(ctx, from_json, work_request_id):
         work_request_id=work_request_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@dataset_group.command(name=cli_util.override('data_labeling_service.import_pre_annotated_data.command_name', 'import-pre-annotated-data'), help=u"""Imports records and annotations from dataset files into existing Dataset. \n[Command Reference](importPreAnnotatedData)""")
+@cli_util.option('--dataset-id', required=True, help=u"""Unique Dataset OCID""")
+@cli_util.option('--import-format', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--import-metadata-path', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "SUCCEEDED", "CANCELING", "CANCELED", "FAILED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'import-format': {'module': 'data_labeling_service', 'class': 'ImportFormat'}, 'import-metadata-path': {'module': 'data_labeling_service', 'class': 'ImportMetadataPath'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'import-format': {'module': 'data_labeling_service', 'class': 'ImportFormat'}, 'import-metadata-path': {'module': 'data_labeling_service', 'class': 'ImportMetadataPath'}})
+@cli_util.wrap_exceptions
+def import_pre_annotated_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dataset_id, import_format, import_metadata_path, if_match):
+
+    if isinstance(dataset_id, six.string_types) and len(dataset_id.strip()) == 0:
+        raise click.UsageError('Parameter --dataset-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if import_format is not None:
+        _details['importFormat'] = cli_util.parse_json_parameter("import_format", import_format)
+
+    if import_metadata_path is not None:
+        _details['importMetadataPath'] = cli_util.parse_json_parameter("import_metadata_path", import_metadata_path)
+
+    client = cli_util.build_client('data_labeling_service', 'data_labeling_management', ctx)
+    result = client.import_pre_annotated_data(
+        dataset_id=dataset_id,
+        import_pre_annotated_data_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@dataset_group.command(name=cli_util.override('data_labeling_service.import_pre_annotated_data_object_storage_import_metadata_path.command_name', 'import-pre-annotated-data-object-storage-import-metadata-path'), help=u"""Imports records and annotations from dataset files into existing Dataset. \n[Command Reference](importPreAnnotatedData)""")
+@cli_util.option('--dataset-id', required=True, help=u"""Unique Dataset OCID""")
+@cli_util.option('--import-metadata-path-namespace', required=True, help=u"""Bucket namespace name""")
+@cli_util.option('--import-metadata-path-bucket', required=True, help=u"""Bucket name""")
+@cli_util.option('--import-metadata-path-path', required=True, help=u"""Path for the metadata file.""")
+@cli_util.option('--import-format', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "SUCCEEDED", "CANCELING", "CANCELED", "FAILED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'import-format': {'module': 'data_labeling_service', 'class': 'ImportFormat'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'import-format': {'module': 'data_labeling_service', 'class': 'ImportFormat'}})
+@cli_util.wrap_exceptions
+def import_pre_annotated_data_object_storage_import_metadata_path(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dataset_id, import_metadata_path_namespace, import_metadata_path_bucket, import_metadata_path_path, import_format, if_match):
+
+    if isinstance(dataset_id, six.string_types) and len(dataset_id.strip()) == 0:
+        raise click.UsageError('Parameter --dataset-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['importMetadataPath'] = {}
+    _details['importMetadataPath']['namespace'] = import_metadata_path_namespace
+    _details['importMetadataPath']['bucket'] = import_metadata_path_bucket
+    _details['importMetadataPath']['path'] = import_metadata_path_path
+
+    if import_format is not None:
+        _details['importFormat'] = cli_util.parse_json_parameter("import_format", import_format)
+
+    _details['importMetadataPath']['sourceType'] = 'OBJECT_STORAGE'
+
+    client = cli_util.build_client('data_labeling_service', 'data_labeling_management', ctx)
+    result = client.import_pre_annotated_data(
+        dataset_id=dataset_id,
+        import_pre_annotated_data_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

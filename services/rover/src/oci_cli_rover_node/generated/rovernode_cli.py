@@ -119,6 +119,12 @@ This option is a JSON list with items of type RoverWorkload.  For documentation 
 @cli_util.option('--import-file-bucket', help=u"""Name of a bucket where files from NFS share will be imported to upon Rover node return.""")
 @cli_util.option('--data-validation-code', help=u"""Validation code returned by data validation tool. Required for return shipping label generation if data import was requested.""")
 @cli_util.option('--master-key-id', help=u"""Customer provided master key ID to encrypt secret information. If not provided, Rover's master key will be used for encryption.""")
+@cli_util.option('--certificate-authority-id', help=u"""The certificateAuthorityId of subordinate/intermediate certificate authority.""")
+@cli_util.option('--time-cert-validity-end', type=custom_types.CLI_DATETIME, help=u"""The time after which leaf certificate will invalid.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--common-name', help=u"""The common name for the leaf certificate.""")
+@cli_util.option('--cert-compartment-id', help=u"""The compartmentId of the leaf certificate.""")
+@cli_util.option('--cert-key-algorithm', type=custom_types.CliCaseInsensitiveChoice(["RSA2048", "RSA4096", "ECDSA_P256", "ECDSA_P384"]), help=u"""key algorithm for issuing leaf certificate.""")
+@cli_util.option('--cert-signature-algorithm', type=custom_types.CliCaseInsensitiveChoice(["SHA256_WITH_RSA", "SHA384_WITH_RSA", "SHA512_WITH_RSA", "SHA256_WITH_ECDSA", "SHA384_WITH_ECDSA", "SHA512_WITH_ECDSA"]), help=u"""signature algorithm for issuing leaf certificate.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The freeform tags associated with this resource, if any. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The defined tags associated with this resource, if any. Each key is predefined and scoped to namespaces. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The system tags associated with this resource, if any. The system tags are set by Oracle cloud infrastructure services. Each key is predefined and scoped to namespaces. For more information, see [Resource Tags]. Example: `{orcl-cloud: {free-tier-retain: true}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -130,7 +136,7 @@ This option is a JSON list with items of type RoverWorkload.  For documentation 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'customer-shipping-address': {'module': 'rover', 'class': 'ShippingAddress'}, 'node-workloads': {'module': 'rover', 'class': 'list[RoverWorkload]'}, 'freeform-tags': {'module': 'rover', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'rover', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'rover', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'rover', 'class': 'RoverNode'})
 @cli_util.wrap_exceptions
-def create_rover_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, shape, customer_shipping_address, node_workloads, super_user_password, unlock_passphrase, point_of_contact, point_of_contact_phone_number, shipping_preference, shipping_vendor, time_pickup_expected, public_key, time_return_window_starts, time_return_window_ends, lifecycle_state, enclosure_type, lifecycle_state_details, serial_number, oracle_shipping_tracking_url, is_import_requested, import_compartment_id, import_file_bucket, data_validation_code, master_key_id, freeform_tags, defined_tags, system_tags):
+def create_rover_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, shape, customer_shipping_address, node_workloads, super_user_password, unlock_passphrase, point_of_contact, point_of_contact_phone_number, shipping_preference, shipping_vendor, time_pickup_expected, public_key, time_return_window_starts, time_return_window_ends, lifecycle_state, enclosure_type, lifecycle_state_details, serial_number, oracle_shipping_tracking_url, is_import_requested, import_compartment_id, import_file_bucket, data_validation_code, master_key_id, certificate_authority_id, time_cert_validity_end, common_name, cert_compartment_id, cert_key_algorithm, cert_signature_algorithm, freeform_tags, defined_tags, system_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -207,6 +213,24 @@ def create_rover_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
     if master_key_id is not None:
         _details['masterKeyId'] = master_key_id
+
+    if certificate_authority_id is not None:
+        _details['certificateAuthorityId'] = certificate_authority_id
+
+    if time_cert_validity_end is not None:
+        _details['timeCertValidityEnd'] = time_cert_validity_end
+
+    if common_name is not None:
+        _details['commonName'] = common_name
+
+    if cert_compartment_id is not None:
+        _details['certCompartmentId'] = cert_compartment_id
+
+    if cert_key_algorithm is not None:
+        _details['certKeyAlgorithm'] = cert_key_algorithm
+
+    if cert_signature_algorithm is not None:
+        _details['certSignatureAlgorithm'] = cert_signature_algorithm
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -468,6 +492,31 @@ def list_rover_nodes(ctx, from_json, all_pages, page_size, compartment_id, displ
     cli_util.render_response(result, ctx)
 
 
+@rover_node_group.command(name=cli_util.override('rover_node.rover_node_action_retrieve_ca_bundle.command_name', 'rover-node-action-retrieve-ca-bundle'), help=u"""Retrieve Ca Bundle for a rover node \n[Command Reference](roverNodeActionRetrieveCaBundle)""")
+@cli_util.option('--rover-node-id', required=True, help=u"""Unique RoverNode identifier""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'rover', 'class': 'CaBundleResponse'})
+@cli_util.wrap_exceptions
+def rover_node_action_retrieve_ca_bundle(ctx, from_json, rover_node_id, if_match):
+
+    if isinstance(rover_node_id, six.string_types) and len(rover_node_id.strip()) == 0:
+        raise click.UsageError('Parameter --rover-node-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('rover', 'rover_node', ctx)
+    result = client.rover_node_action_retrieve_ca_bundle(
+        rover_node_id=rover_node_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @rover_node_set_key_group.command(name=cli_util.override('rover_node.rover_node_action_set_key.command_name', 'rover-node-action-set-key'), help=u"""Get the resource principal public key for a rover node \n[Command Reference](roverNodeActionSetKey)""")
 @cli_util.option('--rover-node-id', required=True, help=u"""Unique RoverNode identifier""")
 @cli_util.option('--jwt', required=True, help=u"""The Java Web Token which is a signature of the request that is signed with the resource's private key This is meant solely in the context of getRpt""")
@@ -503,6 +552,136 @@ def rover_node_action_set_key(ctx, from_json, rover_node_id, jwt, public_key, if
     cli_util.render_response(result, ctx)
 
 
+@rover_node_group.command(name=cli_util.override('rover_node.rover_node_generate_certificate.command_name', 'rover-node-generate-certificate'), help=u"""Request to generate certificate for a roverNode. \n[Command Reference](roverNodeGenerateCertificate)""")
+@cli_util.option('--csr', required=True, help=u"""The certificate signing request (in PEM format), max size 10240.""")
+@cli_util.option('--time-cert-validity-end', required=True, type=custom_types.CLI_DATETIME, help=u"""Time when the generated certificate's validity will end.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--rover-node-id', required=True, help=u"""Unique RoverNode identifier""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'rover', 'class': 'GenerateCertificateResponse'})
+@cli_util.wrap_exceptions
+def rover_node_generate_certificate(ctx, from_json, csr, time_cert_validity_end, rover_node_id, if_match):
+
+    if isinstance(rover_node_id, six.string_types) and len(rover_node_id.strip()) == 0:
+        raise click.UsageError('Parameter --rover-node-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['csr'] = csr
+    _details['timeCertValidityEnd'] = time_cert_validity_end
+
+    client = cli_util.build_client('rover', 'rover_node', ctx)
+    result = client.rover_node_generate_certificate(
+        rover_node_id=rover_node_id,
+        rover_node_generate_certificate_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@rover_node_group.command(name=cli_util.override('rover_node.rover_node_renew_certificate.command_name', 'rover-node-renew-certificate'), help=u"""Request to renew certificate for a roverNode. \n[Command Reference](roverNodeRenewCertificate)""")
+@cli_util.option('--csr', required=True, help=u"""The certificate signing request (in PEM format), max size 10240.""")
+@cli_util.option('--time-cert-validity-end', required=True, type=custom_types.CLI_DATETIME, help=u"""Time when the renewed certificate's validity will end.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--rover-node-id', required=True, help=u"""Unique RoverNode identifier""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'rover', 'class': 'RenewCertificateResponse'})
+@cli_util.wrap_exceptions
+def rover_node_renew_certificate(ctx, from_json, csr, time_cert_validity_end, rover_node_id, if_match):
+
+    if isinstance(rover_node_id, six.string_types) and len(rover_node_id.strip()) == 0:
+        raise click.UsageError('Parameter --rover-node-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['csr'] = csr
+    _details['timeCertValidityEnd'] = time_cert_validity_end
+
+    client = cli_util.build_client('rover', 'rover_node', ctx)
+    result = client.rover_node_renew_certificate(
+        rover_node_id=rover_node_id,
+        rover_node_renew_certificate_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@rover_node_group.command(name=cli_util.override('rover_node.rover_node_replace_certificate_authority.command_name', 'rover-node-replace-certificate-authority'), help=u"""Request to replace certificate authority for a roverNode. \n[Command Reference](roverNodeReplaceCertificateAuthority)""")
+@cli_util.option('--certificate-authority-id', required=True, help=u"""The certificate authority id.""")
+@cli_util.option('--rover-node-id', required=True, help=u"""Unique RoverNode identifier""")
+@cli_util.option('--cert-key-algorithm', type=custom_types.CliCaseInsensitiveChoice(["RSA2048", "RSA4096", "ECDSA_P256", "ECDSA_P384"]), help=u"""key algorithm for issuing leaf certificate.""")
+@cli_util.option('--cert-signature-algorithm', type=custom_types.CliCaseInsensitiveChoice(["SHA256_WITH_RSA", "SHA384_WITH_RSA", "SHA512_WITH_RSA", "SHA256_WITH_ECDSA", "SHA384_WITH_ECDSA", "SHA512_WITH_ECDSA"]), help=u"""signature algorithm for issuing leaf certificate.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'rover', 'class': 'ReplaceCertificateAuthorityResponse'})
+@cli_util.wrap_exceptions
+def rover_node_replace_certificate_authority(ctx, from_json, certificate_authority_id, rover_node_id, cert_key_algorithm, cert_signature_algorithm, if_match):
+
+    if isinstance(rover_node_id, six.string_types) and len(rover_node_id.strip()) == 0:
+        raise click.UsageError('Parameter --rover-node-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['certificateAuthorityId'] = certificate_authority_id
+
+    if cert_key_algorithm is not None:
+        _details['certKeyAlgorithm'] = cert_key_algorithm
+
+    if cert_signature_algorithm is not None:
+        _details['certSignatureAlgorithm'] = cert_signature_algorithm
+
+    client = cli_util.build_client('rover', 'rover_node', ctx)
+    result = client.rover_node_replace_certificate_authority(
+        rover_node_id=rover_node_id,
+        rover_node_replace_certificate_authority_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@rover_node_group.command(name=cli_util.override('rover_node.rover_node_retrieve_leaf_certificate.command_name', 'rover-node-retrieve-leaf-certificate'), help=u"""Retrieve the leaf certificate info for a rover node \n[Command Reference](roverNodeRetrieveLeafCertificate)""")
+@cli_util.option('--rover-node-id', required=True, help=u"""Unique RoverNode identifier""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'rover', 'class': 'LeafCertificateResponse'})
+@cli_util.wrap_exceptions
+def rover_node_retrieve_leaf_certificate(ctx, from_json, rover_node_id, if_match):
+
+    if isinstance(rover_node_id, six.string_types) and len(rover_node_id.strip()) == 0:
+        raise click.UsageError('Parameter --rover-node-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('rover', 'rover_node', ctx)
+    result = client.rover_node_retrieve_leaf_certificate(
+        rover_node_id=rover_node_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @rover_node_group.command(name=cli_util.override('rover_node.update_rover_node.command_name', 'update'), help=u"""Updates the RoverNode \n[Command Reference](updateRoverNode)""")
 @cli_util.option('--rover-node-id', required=True, help=u"""Unique RoverNode identifier""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
@@ -530,6 +709,12 @@ This option is a JSON list with items of type RoverWorkload.  For documentation 
 @cli_util.option('--import-file-bucket', help=u"""Name of a bucket where files from NFS share will be imported to upon Rover node return.""")
 @cli_util.option('--data-validation-code', help=u"""Validation code returned by data validation tool. Required for return shipping label generation if data import was requested.""")
 @cli_util.option('--public-key', help=u"""The public key of the resource principal""")
+@cli_util.option('--certificate-authority-id', help=u"""The certificateAuthorityId of subordinate/intermediate certificate authority.""")
+@cli_util.option('--time-cert-validity-end', type=custom_types.CLI_DATETIME, help=u"""The time after which leaf certificate will invalid.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--common-name', help=u"""The common name for the leaf certificate.""")
+@cli_util.option('--cert-compartment-id', help=u"""The compartmentId of the leaf certificate.""")
+@cli_util.option('--cert-key-algorithm', type=custom_types.CliCaseInsensitiveChoice(["RSA2048", "RSA4096", "ECDSA_P256", "ECDSA_P384"]), help=u"""key algorithm for issuing leaf certificate.""")
+@cli_util.option('--cert-signature-algorithm', type=custom_types.CliCaseInsensitiveChoice(["SHA256_WITH_RSA", "SHA384_WITH_RSA", "SHA512_WITH_RSA", "SHA256_WITH_ECDSA", "SHA384_WITH_ECDSA", "SHA512_WITH_ECDSA"]), help=u"""signature algorithm for issuing leaf certificate.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The freeform tags associated with this resource, if any. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The defined tags associated with this resource, if any. Each key is predefined and scoped to namespaces. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The system tags associated with this resource, if any. The system tags are set by Oracle cloud infrastructure services. Each key is predefined and scoped to namespaces. For more information, see [Resource Tags]. Example: `{orcl-cloud: {free-tier-retain: true}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -543,7 +728,7 @@ This option is a JSON list with items of type RoverWorkload.  For documentation 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'customer-shipping-address': {'module': 'rover', 'class': 'ShippingAddress'}, 'node-workloads': {'module': 'rover', 'class': 'list[RoverWorkload]'}, 'freeform-tags': {'module': 'rover', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'rover', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'rover', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'rover', 'class': 'RoverNode'})
 @cli_util.wrap_exceptions
-def update_rover_node(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, rover_node_id, display_name, shape, serial_number, customer_shipping_address, node_workloads, super_user_password, unlock_passphrase, point_of_contact, point_of_contact_phone_number, oracle_shipping_tracking_url, shipping_preference, shipping_vendor, time_pickup_expected, lifecycle_state, enclosure_type, lifecycle_state_details, time_return_window_starts, time_return_window_ends, is_import_requested, import_compartment_id, import_file_bucket, data_validation_code, public_key, freeform_tags, defined_tags, system_tags, if_match):
+def update_rover_node(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, rover_node_id, display_name, shape, serial_number, customer_shipping_address, node_workloads, super_user_password, unlock_passphrase, point_of_contact, point_of_contact_phone_number, oracle_shipping_tracking_url, shipping_preference, shipping_vendor, time_pickup_expected, lifecycle_state, enclosure_type, lifecycle_state_details, time_return_window_starts, time_return_window_ends, is_import_requested, import_compartment_id, import_file_bucket, data_validation_code, public_key, certificate_authority_id, time_cert_validity_end, common_name, cert_compartment_id, cert_key_algorithm, cert_signature_algorithm, freeform_tags, defined_tags, system_tags, if_match):
 
     if isinstance(rover_node_id, six.string_types) and len(rover_node_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-node-id cannot be whitespace or empty string')
@@ -627,6 +812,24 @@ def update_rover_node(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 
     if public_key is not None:
         _details['publicKey'] = public_key
+
+    if certificate_authority_id is not None:
+        _details['certificateAuthorityId'] = certificate_authority_id
+
+    if time_cert_validity_end is not None:
+        _details['timeCertValidityEnd'] = time_cert_validity_end
+
+    if common_name is not None:
+        _details['commonName'] = common_name
+
+    if cert_compartment_id is not None:
+        _details['certCompartmentId'] = cert_compartment_id
+
+    if cert_key_algorithm is not None:
+        _details['certKeyAlgorithm'] = cert_key_algorithm
+
+    if cert_signature_algorithm is not None:
+        _details['certSignatureAlgorithm'] = cert_signature_algorithm
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
