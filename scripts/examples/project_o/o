@@ -21,8 +21,8 @@ if (sys.platform != "win32"):
     import fcntl
 import errno
 import datetime
-VERSION = "1.7"
-UPDATED = "2023-05-02"
+VERSION = "1.8"
+UPDATED = "2023-06-12"
 
 # ==============================================================================
 # Global variables
@@ -57,7 +57,6 @@ default_out_spec = 'name{:.30}#shape#cidr-block#prohibit-public{:5.5}' \
     '#token'
 
 matches = []                   # list of commands that match user input
-best_match = None              # matches[best_match] is the closest match
 all_options_for_this_cmd = ''  # for best_match
 remaining_options = ''         # for best_match
 options_out = []               # list of expanded options to be passed to oci cli
@@ -91,11 +90,13 @@ def usage(s=''):
       <oci-options>    Options and parameters for <oci-command>
                        These will be expanded into a more correct oci command
 
-      . or go          Run the oci command if the line ends with "." (or "go")""")
+      . or go          If the line ends with "." (or "go") run the oci command
+      !                If line ends with "!", force-run the command, even if
+                       param substitution fails""")
 
     if s != "help":
         print("""
-      o help           More "o" options.  Use "--help ." to get oci help""")
+      o help           More "o" options and usage.""")
     else:
         print("""
     More output options:
@@ -122,7 +123,15 @@ def usage(s=''):
 
       o prune "name"   Remove OCIDs for resources matching "name" from
                        $HOME/.oci/ocids.  If "name" is a compartment, remove
-                       all OCIDS under compartment "name".""")
+                       all OCIDS under compartment "name".
+
+      touch $HOME/.oci/.otmp    Activate "save last result" feature. With this
+                                you can reformat output from the last command
+                                without re-running the command with:
+                                  o -o <fmt>
+
+      o <oci-command> help      Show all parameters, including globals
+      o <oci-command> --help .  Get help from oci""")
     print("""
     o Version {} - {}
     """.format(VERSION, UPDATED))
@@ -271,10 +280,9 @@ def setup_ocids_file():
 
 and I'll do this for you:
 
-  o iam compartment get -c <tenancy-ocid> go
-  o iam ad list -c <tenancy-ocid> go
-  o iam region list go
-  o iam compartment list -c <tenancy-ocid> -ciis true -all go
+  o iam compartment list -c <tenancy-ocid> -ciis true -all .
+  o iam ad list -c <tenancy-ocid> .
+  o iam region-subscription list .
         """)
 
         # To be extra helpful, get likely tenancy ocid from oci config file
@@ -293,23 +301,30 @@ and I'll do this for you:
         if len(sys.argv) == 3:
             print("Tenancy name:", sys.argv[2])
         print(bold('Setting up your ' + ocids_file_name + ' file:'))
-        if run_command(sys.argv[0] + ' -o name iam compartment get -c ' + sys.argv[1] + ' go'):
+        print(bold('\nGetting compartment names and ocids...'), end='')
+        if run_command(sys.argv[0] + ' -o name iam compartment list -c ' + sys.argv[1] + ' -ciis true -all .'):
+            print('\nThat didn\'t work.  Your account may need additional privileges.')
+            exit(0)
+        print(bold('\nGetting availability domains...'), end='')
+        run_command(sys.argv[0] + ' -o name iam ad list -c ' + sys.argv[1] + ' .')
+        print(bold('\nGetting regions...'), end='')
+        run_command(sys.argv[0] + ' -o name iam region-subscription list .')
+        print(bold('\nGetting tenancy name from root compartment...'), end='')
+        if run_command(sys.argv[0] + ' -o name iam compartment get -c ' + sys.argv[1] + ' .'):
             # compartment get on tenancy failed; try saving a stub for tenancy
-            print("\nThat didn't work.  Creating a stub for tenancy root.")
+            print("\nCould not get root compartment.")
+            tenancy_name = input(bold("Enter tenancy name: "))
+            if not tenancy_name:
+                tenancy_name = 'root'
             newids = {'root': {
                       'type': 'tenancy',
-                      'alias': 'root' if len(sys.argv) == 2
-                               else sys.argv[2],
+                      'alias': tenancy_name,
                       'id': sys.argv[1],
-                      'name': 'root' if len(sys.argv) == 2 else sys.argv[2]
+                      'name': tenancy_name,
                       },
                       }
             ocids_file('write', newids)
             exit(0)
-        run_command(sys.argv[0] + ' -o name iam ad list -c ' + sys.argv[1] + ' go')
-        run_command(sys.argv[0] + ' -o name iam region list go')
-        run_command(sys.argv[0] + ' -o name iam compartment list -c '
-                    + sys.argv[1] + ' -ciis true -all go')
         print('\n' + bold('All set. Have fun!\n'))
 
     exit(0)
@@ -342,7 +357,7 @@ def ocids_file(action, new_ocids={}):
     # Run setup if no ocids_file exists or
     # if this is an "o <tenancy>" setup command and new_ocids is empty
     if (not new_ocids
-            and (not re.search('get.*-c ocid..tenancy', ' '.join(sys.argv))
+            and (not (re.search('iam compartment list .*-c ocid..tenancy', ' '.join(sys.argv)))
                  and (not os.path.exists(ocids_file_name)
                  or re.search('o [^c]*ocid..tenancy', ' '.join(sys.argv))))):
         setup_ocids_file()
@@ -570,10 +585,8 @@ def args_match_command(c, params):
         # accept plurals in place of singulars
         if (len(a) > 3 and a[-1] == 's' and a not in ['address', 'access', 'waas']):
             a = a[:-1]
-
-        # stop searching at first -opt
-        if (len(a) and a[0] == '-'):
-            return (True)
+            if a[-2:] == 'ie':
+                a = a[:-2]
 
         # Look for full-word match first
         if ' ' + a + ' ' in action:
@@ -584,7 +597,7 @@ def args_match_command(c, params):
         # look for word starting with arg
         if ' ' + a in action or '-' + a in action:
             # Scratch out this match
-            action = re.sub(' ' + a + r'\S+', ' ', action, count=1)
+            action = re.sub(' ' + r'(\S+-)*' + a + r'(\S+)', ' ', action, count=1)
             continue
 
         # look for rlc -> really-long-command
@@ -1163,7 +1176,7 @@ def jdump_item(item, indent=2):
             re.sub(r'(?m)^[\s{}[\],]+\n', '',         # noqa: E128
             # noqa: E128 change  key: [ value ] ->  key: value
             re.sub(r': \[\s+("[^"]*")\s+]', r': \1',  # noqa: E128
-            json.dumps(item, indent=indent)))))))     # noqa: E128
+            json.dumps(item, indent=indent, ensure_ascii=False)))))))     # noqa: E128
 
 # ==============================================================================
 
@@ -1212,7 +1225,7 @@ def show_item(item, fields, sep):
             else:
                 out.append(value)
         else:
-            if field == 'id' and sep == '|' and user_out_spec == default_out_spec:
+            if field == 'id' and sep == '|' and user_out_spec == default_out_spec and 'ocid' in value:
                 out.append(' ' + value.split('.')[3])
             out.append(column[field]['format'].format(re.sub(r'[{}\'[\]\n]', '', value)[
                        column[field]['offset']:]))
@@ -1959,20 +1972,19 @@ elif 'help' == CLI_params[-1]:
 # ==============================================================================
 # Identify matching oci cli command(s)
 # ==============================================================================
-options_in_args = any(len(i) > 0 and '-' in i[0] for i in CLI_params)
+command_words = [i for i, w in enumerate(CLI_params) if w.startswith('-')]
+ncw = command_words[0] if command_words else len(CLI_params)
+options_in_args = len(command_words) > 0
 
-# Prioritize core services above others.  The list could include: os, fs, bv
-# But these already have priority due to their short service names.
-# Each service name must end with ' '.
-priority_services = ('compute ', 'bv ', 'os ', 'network ', 'iam ')
+# Prioritize core services above others.
+priority_services = ('compute ', 'bv ', 'os ', 'network ', 'iam ', 'db ')
 
 # Find matching commands.  Sort by priority, then by command length.
-matches = sorted([c for c in command if args_match_command(c, CLI_params)],
+matches = sorted([c for c in command if args_match_command(c, CLI_params[:ncw])],
                  key=lambda c: (len(c['action']) if len(c['action']) < 25 else int(round(len(c['action']) / 10.) * 10.))
                  if c['action'].startswith(priority_services)
                  else (1.5 * len(c['action']) if len(c['action']) < 25 else 1.5 * int(round(len(c['action']) / 10.) * 10.)),
                  reverse=True)
-best_match = len(matches) - 1
 
 # ==============================================================================
 # Take action - either show help or 'go' run the command
@@ -1982,8 +1994,8 @@ if len(matches) == 0:
           + '\n\nTry:  o .')
 
 # If many matches, list matches and exit
-elif not (len(matches) <= 16 or ('db' in CLI_params and len(matches) <= 50)
-          or matches[best_match]['action'].split(' ')[0] + ' ' in priority_services):
+elif not (len(matches) <= 16
+          or (matches[-1]['action'].split(' ')[0] + ' ' in priority_services and len(matches) < 200 and ncw > 1)):
     print(bold('Possible commands:'))
     for c in matches:
         show_command(c, prefix='    ')
@@ -1994,28 +2006,30 @@ elif not (len(matches) <= 16 or ('db' in CLI_params and len(matches) <= 50)
 elif show_help:
     for c in matches:
         show_command(c, full=True)
-    print('use:', bold('o ' + c['action'] + ' --help go'), 'for full oci help')
+    print('For oci help:', bold('o ' + c['action'] + ' --help .\n')
+          + 'https://docs.oracle.com/en-us/iaas/tools/oci-cli/latest/oci_cli_docs/cmdref/'
+          + c['action'].replace(' ', '/') + '.html')
     exit(0)
 
 # Fewer than 16 matches. Didn't ask for help.
 elif not go and quiet < 1:
     if len(matches) > 1:
         if options_in_args:
-            print(bold(str(len(matches)) + ' other matching commands not shown.'
+            print(bold(str(len(matches) - 1) + ' other matching commands not shown.'
                   + ' (Remove parameters to see other commands.)'), end='')
         else:
             print(bold('Possible matches:'))
             for i in range(len(matches)):
-                if i != best_match:
+                if i != len(matches) - 1:
                     show_command(matches[i], prefix='    ')
         print(bold('\nBest match:'))
-    show_command(matches[best_match], full=True)
+    show_command(matches[-1], full=True)
 
 # ==============================================================================
-# We've settled on matching_command[best_match].
+# We've settled on matches[-1] as the best match.
 # Continue interpreting additional parameters (even if no 'go')
 # ==============================================================================
-c = matches[best_match]
+c = matches[-1]
 oci_command_line = 'oci ' + c['action'] + ' '
 
 if c['action'] in ('audit event list', 'logging-search search-logs') and \

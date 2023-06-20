@@ -46,6 +46,12 @@ def work_request_error_group():
     pass
 
 
+@click.command(cli_util.override('data_flow.pool_group.command_name', 'pool'), cls=CommandGroupWithAlias, help="""A Data Flow pool object.""")
+@cli_util.help_option_group
+def pool_group():
+    pass
+
+
 @click.command(cli_util.override('data_flow.private_endpoint_group.command_name', 'private-endpoint'), cls=CommandGroupWithAlias, help="""A Data Flow private endpoint object.""")
 @cli_util.help_option_group
 def private_endpoint_group():
@@ -80,6 +86,7 @@ data_flow_root_group.add_command(work_request_log_group)
 data_flow_root_group.add_command(statement_collection_group)
 data_flow_root_group.add_command(application_group)
 data_flow_root_group.add_command(work_request_error_group)
+data_flow_root_group.add_command(pool_group)
 data_flow_root_group.add_command(private_endpoint_group)
 data_flow_root_group.add_command(statement_group)
 data_flow_root_group.add_command(run_log_summary_group)
@@ -113,6 +120,37 @@ def change_application_compartment(ctx, from_json, application_id, compartment_i
     result = client.change_application_compartment(
         application_id=application_id,
         change_application_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pool_group.command(name=cli_util.override('data_flow.change_pool_compartment.command_name', 'change-compartment'), help=u"""Moves a pool into a different compartment. When provided, If-Match is checked against ETag values of the resource. Associated resources, like historical metrics, will not be automatically moved. The pool must be in a terminal state (STOPPED, FAILED) in order for it to be moved to a different compartment \n[Command Reference](changePoolCompartment)""")
+@cli_util.option('--pool-id', required=True, help=u"""The unique ID for a pool.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of a compartment.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_pool_compartment(ctx, from_json, pool_id, compartment_id, if_match):
+
+    if isinstance(pool_id, six.string_types) and len(pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --pool-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
+    result = client.change_pool_compartment(
+        pool_id=pool_id,
+        change_pool_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -231,6 +269,7 @@ def change_run_compartment(ctx, from_json, run_id, compartment_id, if_match):
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of name/value pairs used to fill placeholders found in properties like `Application.arguments`.  The name must be a string of one or more word characters (a-z, A-Z, 0-9, _).  The value can be a string of 0 or more characters of any kind. Example:  [ { name: \"iterations\", value: \"10\"}, { name: \"input_file\", value: \"mydata.xml\" }, { name: \"variable_x\", value: \"${x}\"} ]
 
 This option is a JSON list with items of type ApplicationParameter.  For documentation on ApplicationParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataflow/20200129/datatypes/ApplicationParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--pool-id', help=u"""The OCID of a pool. Unique Id to indentify a dataflow pool resource.""")
 @cli_util.option('--private-endpoint-id', help=u"""The OCID of a private endpoint.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["BATCH", "STREAMING", "SESSION"]), help=u"""The Spark application processing type.""")
 @cli_util.option('--warehouse-bucket-uri', help=u"""An Oracle Cloud Infrastructure URI of the bucket to be used as default warehouse directory for BATCH SQL runs. See https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/hdfsconnector.htm#uriformat.""")
@@ -244,7 +283,7 @@ This option is a JSON list with items of type ApplicationParameter.  For documen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'arguments': {'module': 'data_flow', 'class': 'list[string]'}, 'application-log-config': {'module': 'data_flow', 'class': 'ApplicationLogConfig'}, 'configuration': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'driver-shape-config': {'module': 'data_flow', 'class': 'ShapeConfig'}, 'executor-shape-config': {'module': 'data_flow', 'class': 'ShapeConfig'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'parameters': {'module': 'data_flow', 'class': 'list[ApplicationParameter]'}}, output_type={'module': 'data_flow', 'class': 'Application'})
 @cli_util.wrap_exceptions
-def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, driver_shape, executor_shape, language, num_executors, spark_version, archive_uri, arguments, application_log_config, class_name, configuration, defined_tags, description, driver_shape_config, execute, executor_shape_config, file_uri, freeform_tags, logs_bucket_uri, metastore_id, parameters, private_endpoint_id, type, warehouse_bucket_uri, max_duration_in_minutes, idle_timeout_in_minutes):
+def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, driver_shape, executor_shape, language, num_executors, spark_version, archive_uri, arguments, application_log_config, class_name, configuration, defined_tags, description, driver_shape_config, execute, executor_shape_config, file_uri, freeform_tags, logs_bucket_uri, metastore_id, parameters, pool_id, private_endpoint_id, type, warehouse_bucket_uri, max_duration_in_minutes, idle_timeout_in_minutes):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -303,6 +342,9 @@ def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     if parameters is not None:
         _details['parameters'] = cli_util.parse_json_parameter("parameters", parameters)
 
+    if pool_id is not None:
+        _details['poolId'] = pool_id
+
     if private_endpoint_id is not None:
         _details['privateEndpointId'] = private_endpoint_id
 
@@ -346,6 +388,81 @@ def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pool_group.command(name=cli_util.override('data_flow.create_pool.command_name', 'create'), help=u"""Create a pool to be used by dataflow runs or applications. \n[Command Reference](createPool)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of a compartment.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique. Avoid entering confidential information.""")
+@cli_util.option('--configurations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of PoolConfig items.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""A user-friendly description. Avoid entering confidential information.""")
+@cli_util.option('--schedules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of schedules for pool to auto start and stop.
+
+This option is a JSON list with items of type PoolSchedule.  For documentation on PoolSchedule please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataflow/20200129/datatypes/PoolSchedule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idle-timeout-in-minutes', type=click.INT, help=u"""Optional timeout value in minutes used to auto stop Pools. A Pool will be auto stopped after inactivity for this amount of time period. If value not set, pool will not be auto stopped auto.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "CANCELLED", "CANCELLING", "FAILED", "INPROGRESS", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'configurations': {'module': 'data_flow', 'class': 'list[PoolConfig]'}, 'schedules': {'module': 'data_flow', 'class': 'list[PoolSchedule]'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configurations': {'module': 'data_flow', 'class': 'list[PoolConfig]'}, 'schedules': {'module': 'data_flow', 'class': 'list[PoolSchedule]'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_flow', 'class': 'Pool'})
+@cli_util.wrap_exceptions
+def create_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, configurations, description, schedules, idle_timeout_in_minutes, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['configurations'] = cli_util.parse_json_parameter("configurations", configurations)
+
+    if description is not None:
+        _details['description'] = description
+
+    if schedules is not None:
+        _details['schedules'] = cli_util.parse_json_parameter("schedules", schedules)
+
+    if idle_timeout_in_minutes is not None:
+        _details['idleTimeoutInMinutes'] = idle_timeout_in_minutes
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
+    result = client.create_pool(
+        create_pool_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -453,6 +570,7 @@ def create_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of name/value pairs used to fill placeholders found in properties like `Application.arguments`.  The name must be a string of one or more word characters (a-z, A-Z, 0-9, _).  The value can be a string of 0 or more characters of any kind. Example:  [ { name: \"iterations\", value: \"10\"}, { name: \"input_file\", value: \"mydata.xml\" }, { name: \"variable_x\", value: \"${x}\"} ]
 
 This option is a JSON list with items of type ApplicationParameter.  For documentation on ApplicationParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataflow/20200129/datatypes/ApplicationParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--pool-id', help=u"""The OCID of a pool. Unique Id to indentify a dataflow pool resource.""")
 @cli_util.option('--spark-version', help=u"""The Spark version utilized to run the application. This value may be set if applicationId is not since the Spark version will be taken from the associated application.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["BATCH", "STREAMING", "SESSION"]), help=u"""The Spark application processing type.""")
 @cli_util.option('--warehouse-bucket-uri', help=u"""An Oracle Cloud Infrastructure URI of the bucket to be used as default warehouse directory for BATCH SQL runs. See https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/hdfsconnector.htm#uriformat.""")
@@ -466,7 +584,7 @@ This option is a JSON list with items of type ApplicationParameter.  For documen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'application-log-config': {'module': 'data_flow', 'class': 'ApplicationLogConfig'}, 'arguments': {'module': 'data_flow', 'class': 'list[string]'}, 'configuration': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'driver-shape-config': {'module': 'data_flow', 'class': 'ShapeConfig'}, 'executor-shape-config': {'module': 'data_flow', 'class': 'ShapeConfig'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'parameters': {'module': 'data_flow', 'class': 'list[ApplicationParameter]'}}, output_type={'module': 'data_flow', 'class': 'Run'})
 @cli_util.wrap_exceptions
-def create_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, application_log_config, application_id, archive_uri, arguments, configuration, defined_tags, display_name, driver_shape, driver_shape_config, execute, executor_shape, executor_shape_config, freeform_tags, logs_bucket_uri, metastore_id, num_executors, parameters, spark_version, type, warehouse_bucket_uri, max_duration_in_minutes, idle_timeout_in_minutes):
+def create_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, application_log_config, application_id, archive_uri, arguments, configuration, defined_tags, display_name, driver_shape, driver_shape_config, execute, executor_shape, executor_shape_config, freeform_tags, logs_bucket_uri, metastore_id, num_executors, parameters, pool_id, spark_version, type, warehouse_bucket_uri, max_duration_in_minutes, idle_timeout_in_minutes):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -524,6 +642,9 @@ def create_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
     if parameters is not None:
         _details['parameters'] = cli_util.parse_json_parameter("parameters", parameters)
+
+    if pool_id is not None:
+        _details['poolId'] = pool_id
 
     if spark_version is not None:
         _details['sparkVersion'] = spark_version
@@ -663,6 +784,70 @@ def delete_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, client.get_application(application_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pool_group.command(name=cli_util.override('data_flow.delete_pool.command_name', 'delete'), help=u"""Deletes a pool using a `poolId`. \n[Command Reference](deletePool)""")
+@cli_util.option('--pool-id', required=True, help=u"""The unique ID for a pool.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "SCHEDULED", "CREATING", "ACTIVE", "STOPPING", "STOPPED", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pool_id, if_match):
+
+    if isinstance(pool_id, six.string_types) and len(pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --pool-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
+    result = client.delete_pool(
+        pool_id=pool_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_pool') and callable(getattr(client, 'get_pool')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_pool(pool_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -853,6 +1038,28 @@ def get_application(ctx, from_json, application_id):
     client = cli_util.build_client('data_flow', 'data_flow', ctx)
     result = client.get_application(
         application_id=application_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pool_group.command(name=cli_util.override('data_flow.get_pool.command_name', 'get'), help=u"""Retrieves a pool using a `poolId`. \n[Command Reference](getPool)""")
+@cli_util.option('--pool-id', required=True, help=u"""The unique ID for a pool.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_flow', 'class': 'Pool'})
+@cli_util.wrap_exceptions
+def get_pool(ctx, from_json, pool_id):
+
+    if isinstance(pool_id, six.string_types) and len(pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --pool-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
+    result = client.get_pool(
+        pool_id=pool_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1067,6 +1274,72 @@ def list_applications(ctx, from_json, all_pages, page_size, compartment_id, limi
     cli_util.render_response(result, ctx)
 
 
+@pool_group.command(name=cli_util.override('data_flow.list_pools.command_name', 'list'), help=u"""Lists all pools in the specified compartment. The query must include compartmentId. The query may also include one other parameter. If the query does not include compartmentId, or includes compartmentId, but with two or more other parameters, an error is returned. \n[Command Reference](listPools)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of results to return in a paginated `List` call.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` or `opc-prev-page` response header from the last `List` call to sent back to server for getting the next page of results.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "SCHEDULED", "CREATING", "ACTIVE", "STOPPING", "STOPPED", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""The LifecycleState of the pool.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated"]), help=u"""The field used to sort the results. Multiple fields are not supported.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The ordering of results in ascending or descending order.""")
+@cli_util.option('--display-name', help=u"""The query parameter for the Spark application name.""")
+@cli_util.option('--owner-principal-id', help=u"""The OCID of the user who created the resource.""")
+@cli_util.option('--display-name-starts-with', help=u"""The displayName prefix.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_flow', 'class': 'PoolCollection'})
+@cli_util.wrap_exceptions
+def list_pools(ctx, from_json, all_pages, page_size, compartment_id, limit, page, lifecycle_state, sort_by, sort_order, display_name, owner_principal_id, display_name_starts_with):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if owner_principal_id is not None:
+        kwargs['owner_principal_id'] = owner_principal_id
+    if display_name_starts_with is not None:
+        kwargs['display_name_starts_with'] = display_name_starts_with
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_pools,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_pools,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_pools(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @private_endpoint_group.command(name=cli_util.override('data_flow.list_private_endpoints.command_name', 'list'), help=u"""Lists all private endpoints in the specified compartment. The query must include compartmentId. The query may also include one other parameter. If the query does not include compartmentId, or includes compartmentId, but with two or more other parameters, an error is returned. \n[Command Reference](listPrivateEndpoints)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of results to return in a paginated `List` call.""")
@@ -1187,6 +1460,7 @@ def list_run_logs(ctx, from_json, all_pages, page_size, run_id, limit, page):
 @run_group.command(name=cli_util.override('data_flow.list_runs.command_name', 'list'), help=u"""Lists all runs of an application in the specified compartment.  Only one parameter other than compartmentId may also be included in a query. The query must include compartmentId. If the query does not include compartmentId, or includes compartmentId but two or more other parameters an error is returned. \n[Command Reference](listRuns)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--application-id', help=u"""The ID of the application.""")
+@cli_util.option('--pool-id', help=u"""The ID of the pool.""")
 @cli_util.option('--owner-principal-id', help=u"""The OCID of the user who created the resource.""")
 @cli_util.option('--display-name-starts-with', help=u"""The displayName prefix.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "CANCELING", "CANCELED", "FAILED", "SUCCEEDED", "STOPPING", "STOPPED"]), help=u"""The LifecycleState of the run.""")
@@ -1203,7 +1477,7 @@ def list_run_logs(ctx, from_json, all_pages, page_size, run_id, limit, page):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_flow', 'class': 'list[RunSummary]'})
 @cli_util.wrap_exceptions
-def list_runs(ctx, from_json, all_pages, page_size, compartment_id, application_id, owner_principal_id, display_name_starts_with, lifecycle_state, time_created_greater_than, limit, page, sort_by, sort_order, display_name):
+def list_runs(ctx, from_json, all_pages, page_size, compartment_id, application_id, pool_id, owner_principal_id, display_name_starts_with, lifecycle_state, time_created_greater_than, limit, page, sort_by, sort_order, display_name):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1211,6 +1485,8 @@ def list_runs(ctx, from_json, all_pages, page_size, compartment_id, application_
     kwargs = {}
     if application_id is not None:
         kwargs['application_id'] = application_id
+    if pool_id is not None:
+        kwargs['pool_id'] = pool_id
     if owner_principal_id is not None:
         kwargs['owner_principal_id'] = owner_principal_id
     if display_name_starts_with is not None:
@@ -1466,6 +1742,108 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, lim
     cli_util.render_response(result, ctx)
 
 
+@pool_group.command(name=cli_util.override('data_flow.start_pool.command_name', 'start'), help=u"""Starts the dataflow pool for a given `poolId`. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](startPool)""")
+@cli_util.option('--pool-id', required=True, help=u"""The unique ID for a pool.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "CANCELLED", "CANCELLING", "FAILED", "INPROGRESS", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def start_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pool_id, if_match):
+
+    if isinstance(pool_id, six.string_types) and len(pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --pool-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
+    result = client.start_pool(
+        pool_id=pool_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pool_group.command(name=cli_util.override('data_flow.stop_pool.command_name', 'stop'), help=u"""Stops the dataflow pool for a given `poolId`. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](stopPool)""")
+@cli_util.option('--pool-id', required=True, help=u"""The unique ID for a pool.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "CANCELLED", "CANCELLING", "FAILED", "INPROGRESS", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def stop_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pool_id, if_match):
+
+    if isinstance(pool_id, six.string_types) and len(pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --pool-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
+    result = client.stop_pool(
+        pool_id=pool_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @application_group.command(name=cli_util.override('data_flow.update_application.command_name', 'update'), help=u"""Updates an application using an `applicationId`. \n[Command Reference](updateApplication)""")
 @cli_util.option('--application-id', required=True, help=u"""The unique ID for an application.""")
 @cli_util.option('--class-name', help=u"""The class for the application.""")
@@ -1491,6 +1869,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, lim
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of name/value pairs used to fill placeholders found in properties like `Application.arguments`.  The name must be a string of one or more word characters (a-z, A-Z, 0-9, _).  The value can be a string of 0 or more characters of any kind. Example:  [ { name: \"iterations\", value: \"10\"}, { name: \"input_file\", value: \"mydata.xml\" }, { name: \"variable_x\", value: \"${x}\"} ]
 
 This option is a JSON list with items of type ApplicationParameter.  For documentation on ApplicationParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataflow/20200129/datatypes/ApplicationParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--pool-id', help=u"""The OCID of a pool. Unique Id to indentify a dataflow pool resource.""")
 @cli_util.option('--private-endpoint-id', help=u"""The OCID of a private endpoint.""")
 @cli_util.option('--warehouse-bucket-uri', help=u"""An Oracle Cloud Infrastructure URI of the bucket to be used as default warehouse directory for BATCH SQL runs. See https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/hdfsconnector.htm#uriformat.""")
 @cli_util.option('--max-duration-in-minutes', type=click.INT, help=u"""The maximum duration in minutes for which an Application should run. Data Flow Run would be terminated once it reaches this duration from the time it transitions to `IN_PROGRESS` state.""")
@@ -1505,7 +1884,7 @@ This option is a JSON list with items of type ApplicationParameter.  For documen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'application-log-config': {'module': 'data_flow', 'class': 'ApplicationLogConfig'}, 'arguments': {'module': 'data_flow', 'class': 'list[string]'}, 'configuration': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'driver-shape-config': {'module': 'data_flow', 'class': 'ShapeConfig'}, 'executor-shape-config': {'module': 'data_flow', 'class': 'ShapeConfig'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'parameters': {'module': 'data_flow', 'class': 'list[ApplicationParameter]'}}, output_type={'module': 'data_flow', 'class': 'Application'})
 @cli_util.wrap_exceptions
-def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, application_id, class_name, file_uri, spark_version, language, application_log_config, archive_uri, arguments, configuration, defined_tags, description, display_name, driver_shape, driver_shape_config, execute, executor_shape, executor_shape_config, freeform_tags, logs_bucket_uri, metastore_id, num_executors, parameters, private_endpoint_id, warehouse_bucket_uri, max_duration_in_minutes, idle_timeout_in_minutes, if_match):
+def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, application_id, class_name, file_uri, spark_version, language, application_log_config, archive_uri, arguments, configuration, defined_tags, description, display_name, driver_shape, driver_shape_config, execute, executor_shape, executor_shape_config, freeform_tags, logs_bucket_uri, metastore_id, num_executors, parameters, pool_id, private_endpoint_id, warehouse_bucket_uri, max_duration_in_minutes, idle_timeout_in_minutes, if_match):
 
     if isinstance(application_id, six.string_types) and len(application_id.strip()) == 0:
         raise click.UsageError('Parameter --application-id cannot be whitespace or empty string')
@@ -1584,6 +1963,9 @@ def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     if parameters is not None:
         _details['parameters'] = cli_util.parse_json_parameter("parameters", parameters)
 
+    if pool_id is not None:
+        _details['poolId'] = pool_id
+
     if private_endpoint_id is not None:
         _details['privateEndpointId'] = private_endpoint_id
 
@@ -1625,6 +2007,98 @@ def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, 
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pool_group.command(name=cli_util.override('data_flow.update_pool.command_name', 'update'), help=u"""Updates a pool using a `poolId`.If changes to a pool doesn't match a previously defined pool,then a 409 status code will be returned.This indicates that a conflict has been detected. \n[Command Reference](updatePool)""")
+@cli_util.option('--pool-id', required=True, help=u"""The unique ID for a pool.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""A user-friendly description. Avoid entering confidential information.""")
+@cli_util.option('--configurations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of PoolConfig items.
+
+This option is a JSON list with items of type PoolConfig.  For documentation on PoolConfig please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataflow/20200129/datatypes/PoolConfig.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--schedules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of schedules for pool to auto start and stop.
+
+This option is a JSON list with items of type PoolSchedule.  For documentation on PoolSchedule please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataflow/20200129/datatypes/PoolSchedule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idle-timeout-in-minutes', type=click.INT, help=u"""Optional timeout value in minutes used to auto stop Pools. A Pool will be auto stopped after inactivity for this amount of time period. If value not set, pool will not be auto stopped auto.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "CANCELLED", "CANCELLING", "FAILED", "INPROGRESS", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'configurations': {'module': 'data_flow', 'class': 'list[PoolConfig]'}, 'schedules': {'module': 'data_flow', 'class': 'list[PoolSchedule]'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configurations': {'module': 'data_flow', 'class': 'list[PoolConfig]'}, 'schedules': {'module': 'data_flow', 'class': 'list[PoolSchedule]'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, pool_id, display_name, description, configurations, schedules, idle_timeout_in_minutes, freeform_tags, defined_tags, if_match):
+
+    if isinstance(pool_id, six.string_types) and len(pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --pool-id cannot be whitespace or empty string')
+    if not force:
+        if configurations or schedules or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to configurations and schedules and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if configurations is not None:
+        _details['configurations'] = cli_util.parse_json_parameter("configurations", configurations)
+
+    if schedules is not None:
+        _details['schedules'] = cli_util.parse_json_parameter("schedules", schedules)
+
+    if idle_timeout_in_minutes is not None:
+        _details['idleTimeoutInMinutes'] = idle_timeout_in_minutes
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
+    result = client.update_pool(
+        pool_id=pool_id,
+        update_pool_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

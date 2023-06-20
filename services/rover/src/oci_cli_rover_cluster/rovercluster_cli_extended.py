@@ -13,6 +13,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.rover.src.oci_cli_rover.generated import rover_service_cli
 from services.rover.src.constants import ROVER_CLUSTER_STANDALONE_TYPE, \
     ROVER_CLUSTER_STATION_TYPE
+from services.rover.src.oci_cli_rover_bundle.generated import roverbundle_cli
 from services.rover.src.oci_cli_rover_cluster.generated import rovercluster_cli
 from services.rover.src.oci_cli_rover_cluster.rovercluster_utils import delete_workload_common, \
     add_workload_common, change_cluster_compartment_common, set_secrets_cluster_common, delete_cluster_common, \
@@ -31,7 +32,51 @@ def rover_station_group():
     pass
 
 
+@click.command('rover-bundle-request', cls=CommandGroupWithAlias, help="""Rover Bundle Requests for Cluster.""")
+@cli_util.help_option_group
+def rover_bundle_request_group():
+    pass
+
+
+@click.command('rover-bundle', cls=CommandGroupWithAlias, help="""Rover Bundle for Cluster.""")
+@cli_util.help_option_group
+def rover_bundle_group():
+    pass
+
+
+@click.command('rover-bundle-version', cls=CommandGroupWithAlias, help="""Rover Bundle Version for Cluster.""")
+@cli_util.help_option_group
+def rover_bundle_version_group():
+    pass
+
+
 rover_service_cli.rover_service_group.add_command(rover_station_group)
+rovercluster_cli.rover_cluster_group.add_command(rover_bundle_request_group)
+rovercluster_cli.rover_cluster_group.add_command(rover_bundle_group)
+rovercluster_cli.rover_cluster_group.add_command(rover_bundle_version_group)
+
+#  oci rover rover-bundle rover-cluster list-rover-cluster-rover-bundle-requests -> oci rover standalone-cluster rover-bundle-request list
+roverbundle_cli.rover_cluster_group.commands.pop(roverbundle_cli.list_rover_cluster_rover_bundle_requests.name)
+rover_bundle_request_group.add_command(roverbundle_cli.list_rover_cluster_rover_bundle_requests)
+cli_util.rename_command(roverbundle_cli, rover_bundle_request_group, roverbundle_cli.list_rover_cluster_rover_bundle_requests, "list")
+
+#  oci rover rover-bundle rover-cluster request-bundle -> oci rover standalone-cluster rover-bundle copy-to-customer
+roverbundle_cli.rover_cluster_group.commands.pop(roverbundle_cli.request_bundle_rover_cluster.name)
+rover_bundle_group.add_command(roverbundle_cli.request_bundle_rover_cluster)
+cli_util.rename_command(roverbundle_cli, rover_bundle_group, roverbundle_cli.request_bundle_rover_cluster, "copy-to-customer")
+
+#  oci rover rover-bundle rover-cluster retrieve-bundle-status -> oci rover standalone-cluster rover-bundle get-status
+roverbundle_cli.rover_cluster_group.commands.pop(roverbundle_cli.retrieve_bundle_status_rover_cluster.name)
+rover_bundle_group.add_command(roverbundle_cli.retrieve_bundle_status_rover_cluster)
+cli_util.rename_command(roverbundle_cli, rover_bundle_group, roverbundle_cli.retrieve_bundle_status_rover_cluster, "get-status")
+
+#  oci rover rover-bundle rover-cluster retrieve-available-bundle-versions -> oci rover standalone-cluster rover-bundle-version get
+roverbundle_cli.rover_cluster_group.commands.pop(roverbundle_cli.retrieve_available_bundle_versions_rover_cluster.name)
+rover_bundle_version_group.add_command(roverbundle_cli.retrieve_available_bundle_versions_rover_cluster)
+cli_util.rename_command(roverbundle_cli, rover_bundle_version_group, roverbundle_cli.retrieve_available_bundle_versions_rover_cluster, "get")
+
+#  Remove request_additional_nodes
+rovercluster_cli.rover_cluster_group.commands.pop(rovercluster_cli.request_additional_nodes.name)
 
 
 def complex_shipping_address_param(**kwargs):

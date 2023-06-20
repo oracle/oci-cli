@@ -5,6 +5,74 @@ Change Log
 All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
+3.29.1 - 2023-06-20
+--------------------
+Added
+~~~~~
+
+* Support for the Serial Console Access in the Database service
+
+  * ``oci db console-connection create``
+  * ``oci db console-connection delete``
+  * ``oci db console-connection update``
+  * ``oci db node update``
+
+* Database Migration Service
+
+  * Support for creating a new connection with Network Security Group (NSG) Id's
+
+    * ``oci database-migration connection create --nsg-ids``
+
+  * Support for updating a connection with new Network Security Group (NSG) Id's
+
+    * ``oci database-migration connection update --nsg-ids``
+
+* Support for new optional parameter in the Functions service
+
+  * ``oci fn application create --shape``
+
+* Data Flow service
+
+  * Support for creating and managing Data Flow Pools
+
+    * ``oci data-flow pool``
+
+  * Support for additional optional parameters for using Data Flow pools
+
+    * ``oci data-flow application create --pool-id``
+    * ``oci data-flow application update --pool-id``
+    * ``oci data-flow run create --pool-id``
+    * ``oci data-flow run submit --pool-id``
+    * ``oci data-flow run list --pool-id``
+
+* Rover Node Service
+
+  * Support for the following in the Roving Edge Infrastructure Service
+
+    * ``oci rover node create --cert-compartment-id --cert-key-algorithm --cert-signature-algorithm --common-name --issuer-certificate-authority-id --time-cert-validity-end``
+    * ``oci rover node update --cert-compartment-id --cert-key-algorithm --cert-signature-algorithm --certificate-authority-id --common-name --time-cert-validity-end``
+
+  * Commands for rover upgrade bundle support
+
+    * ``oci rover node rover-bundle copy-to-customer``
+    * ``oci rover node rover-bundle get-status``
+    * ``oci rover node rover-bundle-request list``
+    * ``oci rover node rover-bundle-version get``
+
+  * Commands for rover node certificate support
+
+    * ``oci rover node ca-bundle get``
+    * ``oci rover node certificate create``
+    * ``oci rover node certificate update``
+    * ``oci rover node certificate get-leaf-certificate``
+    * ``oci rover node certificate-authority update-root-ca``
+
+  * Commands for rover upgrade bundle support
+
+    * ``oci rover standalone-cluster rover-bundle copy-to-customer``
+    * ``oci rover standalone-cluster rover-bundle get-status``
+    * ``oci rover standalone-cluster rover-bundle-request list``
+    * ``oci rover standalone-cluster rover-bundle-version get``
 
 3.29.0 - 2023-06-13
 --------------------
