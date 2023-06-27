@@ -221,6 +221,8 @@ def create_channel_create_channel_source_from_mysql_details(ctx, from_json, wait
 @cli_util.option('--target-filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Replication filter rules to be applied at the DB System Channel target.
 
 This option is a JSON list with items of type ChannelFilter.  For documentation on ChannelFilter please see our API reference: https://docs.cloud.oracle.com/api/#/en/channels/20190415/datatypes/ChannelFilter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--target-tables-without-primary-key-handling', help=u"""Specifies how a replication channel handles the creation and alteration of tables that do not have a primary key. The default value is set to ALLOW.""")
+@cli_util.option('--target-delay-in-seconds', type=click.INT, help=u"""Specifies the amount of time, in seconds, that the channel waits before applying a transaction received from the source.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -229,7 +231,7 @@ This option is a JSON list with items of type ChannelFilter.  For documentation 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source': {'module': 'mysql', 'class': 'CreateChannelSourceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'target-filters': {'module': 'mysql', 'class': 'list[ChannelFilter]'}}, output_type={'module': 'mysql', 'class': 'Channel'})
 @cli_util.wrap_exceptions
-def create_channel_create_channel_target_from_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, source, target_db_system_id, compartment_id, display_name, is_enabled, description, freeform_tags, defined_tags, target_channel_name, target_applier_username, target_filters):
+def create_channel_create_channel_target_from_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, source, target_db_system_id, compartment_id, display_name, is_enabled, description, freeform_tags, defined_tags, target_channel_name, target_applier_username, target_filters, target_tables_without_primary_key_handling, target_delay_in_seconds):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -265,6 +267,12 @@ def create_channel_create_channel_target_from_db_system_details(ctx, from_json, 
 
     if target_filters is not None:
         _details['target']['filters'] = cli_util.parse_json_parameter("target_filters", target_filters)
+
+    if target_tables_without_primary_key_handling is not None:
+        _details['target']['tablesWithoutPrimaryKeyHandling'] = target_tables_without_primary_key_handling
+
+    if target_delay_in_seconds is not None:
+        _details['target']['delayInSeconds'] = target_delay_in_seconds
 
     _details['target']['targetType'] = 'DBSYSTEM'
 
@@ -776,6 +784,8 @@ def update_channel_update_channel_source_from_mysql_details(ctx, from_json, forc
 @cli_util.option('--target-filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Replication filter rules to be applied at the DB System Channel target.
 
 This option is a JSON list with items of type ChannelFilter.  For documentation on ChannelFilter please see our API reference: https://docs.cloud.oracle.com/api/#/en/channels/20190415/datatypes/ChannelFilter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--target-tables-without-primary-key-handling', help=u"""Specifies how a replication channel handles the creation and alteration of tables that do not have a primary key.""")
+@cli_util.option('--target-delay-in-seconds', type=click.INT, help=u"""Specifies the amount of time, in seconds, that the channel waits before applying a transaction received from the source.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -785,7 +795,7 @@ This option is a JSON list with items of type ChannelFilter.  For documentation 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source': {'module': 'mysql', 'class': 'UpdateChannelSourceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'target-filters': {'module': 'mysql', 'class': 'list[ChannelFilter]'}})
 @cli_util.wrap_exceptions
-def update_channel_update_channel_target_from_db_system_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, channel_id, source, display_name, is_enabled, description, freeform_tags, defined_tags, if_match, target_channel_name, target_applier_username, target_filters):
+def update_channel_update_channel_target_from_db_system_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, channel_id, source, display_name, is_enabled, description, freeform_tags, defined_tags, if_match, target_channel_name, target_applier_username, target_filters, target_tables_without_primary_key_handling, target_delay_in_seconds):
 
     if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
@@ -828,6 +838,12 @@ def update_channel_update_channel_target_from_db_system_details(ctx, from_json, 
 
     if target_filters is not None:
         _details['target']['filters'] = cli_util.parse_json_parameter("target_filters", target_filters)
+
+    if target_tables_without_primary_key_handling is not None:
+        _details['target']['tablesWithoutPrimaryKeyHandling'] = target_tables_without_primary_key_handling
+
+    if target_delay_in_seconds is not None:
+        _details['target']['delayInSeconds'] = target_delay_in_seconds
 
     _details['target']['targetType'] = 'DBSYSTEM'
 

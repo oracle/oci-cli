@@ -179,7 +179,27 @@ IGNORED_COMMANDS = [
     ['identity-domains', 'identity-provider', 'create'],
     ['identity-domains', 'identity-provider', 'put'],
     ['identity-domains', 'user', 'create'],
-    ['identity-domains', 'user', 'put']
+    ['identity-domains', 'user', 'put'],
+    ['os-management-hub', 'managed-instance', 'update-packages'],
+    ['os-management-hub', 'managed-instance-group', 'update-all-packages'],
+    ['os-management-hub', 'software-source', 'list'],
+    ['os-management-hub', 'update-all-packages-in-compartment'],
+    ['os-management-hub', 'work-request', 'list'],
+    ['os-management-hub', 'lifecycle-environment', 'list'],
+    ['os-management-hub', 'lifecycle-stage', 'list'],
+    ['os-management-hub', 'lifecycle-stage', 'list-installed-packages'],
+    ['os-management-hub', 'managed-instance', 'get-analytic-content'],
+    ['os-management-hub', 'managed-instance', 'list'],
+    ['os-management-hub', 'managed-instance', 'list-available-packages'],
+    ['os-management-hub', 'managed-instance', 'list-available-software-sources'],
+    ['os-management-hub', 'managed-instance', 'list-installed-packages'],
+    ['os-management-hub', 'managed-instance', 'list-updatable-packages'],
+    ['os-management-hub', 'managed-instance', 'summarize-analytics'],
+    ['os-management-hub', 'managed-instance-group', 'list'],
+    ['os-management-hub', 'managed-instance-group', 'list-available-packages'],
+    ['os-management-hub', 'managed-instance-group', 'list-available-software-sources'],
+    ['os-management-hub', 'managed-instance-group', 'list-installed-packages'],
+    ['os-management-hub', 'profile', 'list'],
 ]
 
 IGNORED_COMMANDS_DOCS = [

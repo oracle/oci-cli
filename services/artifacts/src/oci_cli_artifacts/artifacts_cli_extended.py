@@ -159,8 +159,7 @@ cli_util.rename_command(artifacts_cli, container_group, artifacts_cli.container_
     help=artifacts_cli.update_container_repository.help)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(
-    input_params_to_complex_types={'readme': {'module': 'artifacts', 'class': 'ContainerRepositoryReadme'}},
-    output_type={'module': 'artifacts', 'class': 'ContainerRepository'})
+    input_params_to_complex_types={'readme': {'module': 'artifacts', 'class': 'ContainerRepositoryReadme'}, 'freeform-tags': {'module': 'artifacts', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'artifacts', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'artifacts', 'class': 'ContainerRepository'})
 @cli_util.wrap_exceptions
 def update_container_repository_extended(ctx, **kwargs):
     ctx.invoke(artifacts_cli.update_container_repository, **kwargs)
