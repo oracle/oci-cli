@@ -760,7 +760,7 @@ def list_top_utilized_product_licenses(ctx, from_json, all_pages, page_size, com
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--is-compartment-id-in-subtree', type=click.BOOL, help=u"""Indicates if the given compartment is the root compartment.""")
-@cli_util.option('--resource-unit-type', type=custom_types.CliCaseInsensitiveChoice(["OCPU"]), help=u"""A filter to return only resources whose unit matches the given resource unit.""")
+@cli_util.option('--resource-unit-type', type=custom_types.CliCaseInsensitiveChoice(["OCPU", "ECPU"]), help=u"""A filter to return only resources whose unit matches the given resource unit.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, whether `ASC` or `DESC`.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["totalUnits"]), help=u"""Specifies the attribute with which to sort the rules.
 

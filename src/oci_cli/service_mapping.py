@@ -478,6 +478,11 @@ service_mapping = {
         "OS Management",
         "Compute"
     ],
+    "os-management-hub": [
+        "os_management_hub",
+        "OS Management Hub",
+        "Observability & Management"
+    ],
     "osp-gateway": [
         "osp_gateway",
         "OSP Gateway",

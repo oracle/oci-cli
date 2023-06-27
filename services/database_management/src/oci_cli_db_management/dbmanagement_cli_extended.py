@@ -353,6 +353,962 @@ def remove_data_file_tablespace_admin_secret_credential_details_extended(ctx, **
     ctx.invoke(dbmanagement_cli.remove_data_file_tablespace_admin_secret_credential_details, **kwargs)
 
 
+# oci database-management managed-database change-plan-retention-managed-database-password-credential -> oci database-management managed-database change-plan-retention-with-password
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.change_plan_retention_managed_database_password_credential, "change-plan-retention-with-password")
+
+
+# oci database-management managed-database change-plan-retention-managed-database-secret-credential -> oci database-management managed-database change-plan-retention-with-secret
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.change_plan_retention_managed_database_secret_credential, "change-plan-retention-with-secret")
+
+
+# oci database-management managed-database change-space-budget-managed-database-password-credential -> oci database-management managed-database change-space-budget-with-password
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.change_space_budget_managed_database_password_credential, "change-space-budget-with-password")
+
+
+# oci database-management managed-database change-space-budget-managed-database-secret-credential -> oci database-management managed-database change-space-budget-with-secret
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.change_space_budget_managed_database_secret_credential, "change-space-budget-with-secret")
+
+
+# oci database-management managed-database change-sql-plan-baselines-attributes -> oci database-management managed-database change-spb-attr
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.change_sql_plan_baselines_attributes, "change-spb-attr")
+
+
+# oci database-management managed-database change-sql-plan-baselines-attributes-managed-database-password-credential -> oci database-management managed-database change-spb-attr-with-password
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.change_sql_plan_baselines_attributes_managed_database_password_credential, "change-spb-attr-with-password")
+
+
+# oci database-management managed-database change-sql-plan-baselines-attributes-managed-database-secret-credential -> oci database-management managed-database change-spb-attr-with-secret
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.change_sql_plan_baselines_attributes_managed_database_secret_credential, "change-spb-attr-with-secret")
+
+
+# oci database-management managed-database configure-automatic-capture-filters -> oci database-management managed-database cfg-auto-capture-filters
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.configure_automatic_capture_filters, "cfg-auto-capture-filters")
+
+
+# oci database-management managed-database configure-automatic-capture-filters-managed-database-password-credential -> oci database-management managed-database cfg-auto-capture-filters-with-password
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.configure_automatic_capture_filters_managed_database_password_credential, "cfg-auto-capture-filters-with-password")
+
+
+# oci database-management managed-database configure-automatic-capture-filters-managed-database-secret-credential -> oci database-management managed-database cfg-auto-capture-filters-with-secret
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.configure_automatic_capture_filters_managed_database_secret_credential, "cfg-auto-capture-filters-with-secret")
+
+
+# oci database-management managed-database configure-automatic-spm-evolve-advisor-task -> oci database-management managed-database cfg-auto-spm-evolve-task
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.configure_automatic_spm_evolve_advisor_task, "cfg-auto-spm-evolve-task")
+
+
+# oci database-management managed-database configure-automatic-spm-evolve-advisor-task-managed-database-password-credential -> oci database-management managed-database cfg-auto-spm-evolve-task-with-password
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.configure_automatic_spm_evolve_advisor_task_managed_database_password_credential, "cfg-auto-spm-evolve-task-with-password")
+
+
+# oci database-management managed-database configure-automatic-spm-evolve-advisor-task-managed-database-secret-credential -> oci database-management managed-database cfg-auto-spm-evolve-task-with-secret
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.configure_automatic_spm_evolve_advisor_task_managed_database_secret_credential, "cfg-auto-spm-evolve-task-with-secret")
+
+
+# oci database-management managed-database disable-automatic-initial-plan-capture -> oci database-management managed-database disable-auto-plan-capture
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.disable_automatic_initial_plan_capture, "disable-auto-plan-capture")
+
+
+# oci database-management managed-database disable-automatic-initial-plan-capture-managed-database-password-credential -> oci database-management managed-database disable-auto-plan-capture-with-password
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.disable_automatic_initial_plan_capture_managed_database_password_credential, "disable-auto-plan-capture-with-password")
+
+
+# oci database-management managed-database disable-automatic-initial-plan-capture-managed-database-secret-credential -> oci database-management managed-database disable-auto-plan-capture-with-secret
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.disable_automatic_initial_plan_capture_managed_database_secret_credential, "disable-auto-plan-capture-with-secret")
+
+
+# oci database-management managed-database disable-automatic-spm-evolve-advisor-task -> oci database-management managed-database disable-auto-spm-evolve-task
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.disable_automatic_spm_evolve_advisor_task, "disable-auto-spm-evolve-task")
+
+
+# oci database-management managed-database disable-automatic-spm-evolve-advisor-task-managed-database-password-credential -> oci database-management managed-database disable-auto-spm-evolve-task-with-password
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.disable_automatic_spm_evolve_advisor_task_managed_database_password_credential, "disable-auto-spm-evolve-task-with-password")
+
+
+# oci database-management managed-database disable-automatic-spm-evolve-advisor-task-managed-database-secret-credential -> oci database-management managed-database disable-auto-spm-evolve-task-with-secret
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.disable_automatic_spm_evolve_advisor_task_managed_database_secret_credential, "disable-auto-spm-evolve-task-with-secret")
+
+
+# oci database-management managed-database disable-high-frequency-automatic-spm-evolve-advisor-task -> oci database-management managed-database disable-hf-auto-spm-evolve-task
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.disable_high_frequency_automatic_spm_evolve_advisor_task, "disable-hf-auto-spm-evolve-task")
+
+
+# oci database-management managed-database disable-high-frequency-automatic-spm-evolve-advisor-task-managed-database-password-credential -> oci database-management managed-database disable-hf-auto-spm-evolve-task-with-password
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.disable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_password_credential, "disable-hf-auto-spm-evolve-task-with-password")
+
+
+# oci database-management managed-database disable-high-frequency-automatic-spm-evolve-advisor-task-managed-database-secret-credential -> oci database-management managed-database disable-hf-auto-spm-evolve-task-with-secret
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.disable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_secret_credential, "disable-hf-auto-spm-evolve-task-with-secret")
+
+
+# oci database-management managed-database disable-sql-plan-baselines-usage -> oci database-management managed-database disable-spb-usage
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.disable_sql_plan_baselines_usage, "disable-spb-usage")
+
+
+# oci database-management managed-database disable-sql-plan-baselines-usage-managed-database-password-credential -> oci database-management managed-database disable-spb-usage-with-password
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.disable_sql_plan_baselines_usage_managed_database_password_credential, "disable-spb-usage-with-password")
+
+
+# oci database-management managed-database disable-sql-plan-baselines-usage-managed-database-secret-credential -> oci database-management managed-database disable-spb-usage-with-secret
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.disable_sql_plan_baselines_usage_managed_database_secret_credential, "disable-spb-usage-with-secret")
+
+
+# oci database-management managed-database drop-sql-plan-baselines-managed-database-password-credential -> oci database-management managed-database drop-sql-plan-baselines-with-password
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.drop_sql_plan_baselines_managed_database_password_credential, "drop-sql-plan-baselines-with-password")
+
+
+# oci database-management managed-database drop-sql-plan-baselines-managed-database-secret-credential -> oci database-management managed-database drop-sql-plan-baselines-with-secret
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.drop_sql_plan_baselines_managed_database_secret_credential, "drop-sql-plan-baselines-with-secret")
+
+
+# oci database-management managed-database enable-automatic-initial-plan-capture -> oci database-management managed-database enable-auto-plan-capture
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.enable_automatic_initial_plan_capture, "enable-auto-plan-capture")
+
+
+# oci database-management managed-database enable-automatic-initial-plan-capture-managed-database-password-credential -> oci database-management managed-database enable-auto-plan-capture-with-password
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.enable_automatic_initial_plan_capture_managed_database_password_credential, "enable-auto-plan-capture-with-password")
+
+
+# oci database-management managed-database enable-automatic-initial-plan-capture-managed-database-secret-credential -> oci database-management managed-database enable-auto-plan-capture-with-secret
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.enable_automatic_initial_plan_capture_managed_database_secret_credential, "enable-auto-plan-capture-with-secret")
+
+
+# oci database-management managed-database enable-automatic-spm-evolve-advisor-task -> oci database-management managed-database enable-auto-spm-evolve-task
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.enable_automatic_spm_evolve_advisor_task, "enable-auto-spm-evolve-task")
+
+
+# oci database-management managed-database enable-automatic-spm-evolve-advisor-task-managed-database-password-credential -> oci database-management managed-database enable-auto-spm-evolve-task-with-password
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.enable_automatic_spm_evolve_advisor_task_managed_database_password_credential, "enable-auto-spm-evolve-task-with-password")
+
+
+# oci database-management managed-database enable-automatic-spm-evolve-advisor-task-managed-database-secret-credential -> oci database-management managed-database enable-auto-spm-evolve-task-with-secret
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.enable_automatic_spm_evolve_advisor_task_managed_database_secret_credential, "enable-auto-spm-evolve-task-with-secret")
+
+
+# oci database-management managed-database enable-high-frequency-automatic-spm-evolve-advisor-task -> oci database-management managed-database enable-hf-auto-spm-evolve-task
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.enable_high_frequency_automatic_spm_evolve_advisor_task, "enable-hf-auto-spm-evolve-task")
+
+
+# oci database-management managed-database enable-high-frequency-automatic-spm-evolve-advisor-task-managed-database-password-credential -> oci database-management managed-database enable-hf-auto-spm-evolve-task-with-password
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.enable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_password_credential, "enable-hf-auto-spm-evolve-task-with-password")
+
+
+# oci database-management managed-database enable-high-frequency-automatic-spm-evolve-advisor-task-managed-database-secret-credential -> oci database-management managed-database enable-hf-auto-spm-evolve-task-with-secret
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.enable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_secret_credential, "enable-hf-auto-spm-evolve-task-with-secret")
+
+
+# oci database-management managed-database enable-sql-plan-baselines-usage -> oci database-management managed-database enable-spb-usage
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.enable_sql_plan_baselines_usage, "enable-spb-usage")
+
+
+# oci database-management managed-database enable-sql-plan-baselines-usage-managed-database-password-credential -> oci database-management managed-database enable-spb-usage-with-password
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.enable_sql_plan_baselines_usage_managed_database_password_credential, "enable-spb-usage-with-password")
+
+
+# oci database-management managed-database enable-sql-plan-baselines-usage-managed-database-secret-credential -> oci database-management managed-database enable-spb-usage-with-secret
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.enable_sql_plan_baselines_usage_managed_database_secret_credential, "enable-spb-usage-with-secret")
+
+
+# oci database-management managed-database get-sql-plan-baseline-configuration -> oci database-management managed-database get-spb-configuration
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.get_sql_plan_baseline_configuration, "get-spb-configuration")
+
+
+# oci database-management managed-database list-sql-plan-baseline-jobs -> oci database-management managed-database list-spb-jobs
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.list_sql_plan_baseline_jobs, "list-spb-jobs")
+
+
+# oci database-management managed-database load-sql-plan-baselines-from-awr -> oci database-management managed-database load-spb-from-awr
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.load_sql_plan_baselines_from_awr, "load-spb-from-awr")
+
+
+# oci database-management managed-database load-sql-plan-baselines-from-awr-managed-database-password-credential -> oci database-management managed-database load-spb-from-awr-with-password
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.load_sql_plan_baselines_from_awr_managed_database_password_credential, "load-spb-from-awr-with-password")
+
+
+# oci database-management managed-database load-sql-plan-baselines-from-awr-managed-database-secret-credential -> oci database-management managed-database load-spb-from-awr-with-secret
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.load_sql_plan_baselines_from_awr_managed_database_secret_credential, "load-spb-from-awr-with-secret")
+
+
+# oci database-management managed-database load-sql-plan-baselines-from-cursor-cache -> oci database-management managed-database load-spb-from-cc
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.load_sql_plan_baselines_from_cursor_cache, "load-spb-from-cc")
+
+
+# oci database-management managed-database load-sql-plan-baselines-from-cursor-cache-managed-database-password-credential -> oci database-management managed-database load-spb-from-cc-with-password
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.load_sql_plan_baselines_from_cursor_cache_managed_database_password_credential, "load-spb-from-cc-with-password")
+
+
+# oci database-management managed-database load-sql-plan-baselines-from-cursor-cache-managed-database-secret-credential -> oci database-management managed-database load-spb-from-cc-with-secret
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.managed_database_group, dbmanagement_cli.load_sql_plan_baselines_from_cursor_cache_managed_database_secret_credential, "load-spb-from-cc-with-secret")
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.change_plan_retention_managed_database_password_credential, params_to_exclude=['credentials_password', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.change_plan_retention_managed_database_password_credential.name, help=dbmanagement_cli.change_plan_retention_managed_database_password_credential.help)
+@cli_util.option('--password', required=True, help=u"""The database user's password encoded using BASE64 scheme. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_plan_retention_managed_database_password_credential_extended(ctx, **kwargs):
+    if 'password' in kwargs:
+        kwargs['credentials_password'] = kwargs['password']
+        kwargs.pop('password')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.change_plan_retention_managed_database_password_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.change_plan_retention_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.change_plan_retention_managed_database_secret_credential.name, help=dbmanagement_cli.change_plan_retention_managed_database_secret_credential.help)
+@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_plan_retention_managed_database_secret_credential_extended(ctx, **kwargs):
+    if 'secret_id' in kwargs:
+        kwargs['credentials_password_secret_id'] = kwargs['secret_id']
+        kwargs.pop('secret_id')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.change_plan_retention_managed_database_secret_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.change_space_budget_managed_database_password_credential, params_to_exclude=['credentials_password', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.change_space_budget_managed_database_password_credential.name, help=dbmanagement_cli.change_space_budget_managed_database_password_credential.help)
+@cli_util.option('--password', required=True, help=u"""The database user's password encoded using BASE64 scheme. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_space_budget_managed_database_password_credential_extended(ctx, **kwargs):
+    if 'password' in kwargs:
+        kwargs['credentials_password'] = kwargs['password']
+        kwargs.pop('password')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.change_space_budget_managed_database_password_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.change_space_budget_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.change_space_budget_managed_database_secret_credential.name, help=dbmanagement_cli.change_space_budget_managed_database_secret_credential.help)
+@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_space_budget_managed_database_secret_credential_extended(ctx, **kwargs):
+    if 'secret_id' in kwargs:
+        kwargs['credentials_password_secret_id'] = kwargs['secret_id']
+        kwargs.pop('secret_id')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.change_space_budget_managed_database_secret_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.change_sql_plan_baselines_attributes_managed_database_password_credential, params_to_exclude=['credentials_password', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.change_sql_plan_baselines_attributes_managed_database_password_credential.name, help=dbmanagement_cli.change_sql_plan_baselines_attributes_managed_database_password_credential.help)
+@cli_util.option('--password', required=True, help=u"""The database user's password encoded using BASE64 scheme. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_sql_plan_baselines_attributes_managed_database_password_credential_extended(ctx, **kwargs):
+    if 'password' in kwargs:
+        kwargs['credentials_password'] = kwargs['password']
+        kwargs.pop('password')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.change_sql_plan_baselines_attributes_managed_database_password_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.change_sql_plan_baselines_attributes_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.change_sql_plan_baselines_attributes_managed_database_secret_credential.name, help=dbmanagement_cli.change_sql_plan_baselines_attributes_managed_database_secret_credential.help)
+@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_sql_plan_baselines_attributes_managed_database_secret_credential_extended(ctx, **kwargs):
+    if 'secret_id' in kwargs:
+        kwargs['credentials_password_secret_id'] = kwargs['secret_id']
+        kwargs.pop('secret_id')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.change_sql_plan_baselines_attributes_managed_database_secret_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.configure_automatic_capture_filters_managed_database_password_credential, params_to_exclude=['credentials_password', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.configure_automatic_capture_filters_managed_database_password_credential.name, help=dbmanagement_cli.configure_automatic_capture_filters_managed_database_password_credential.help)
+@cli_util.option('--password', required=True, help=u"""The database user's password encoded using BASE64 scheme. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'auto-capture-filters': {'module': 'database_management', 'class': 'list[AutomaticCaptureFilterDetails]'}})
+@cli_util.wrap_exceptions
+def configure_automatic_capture_filters_managed_database_password_credential_extended(ctx, **kwargs):
+    if 'password' in kwargs:
+        kwargs['credentials_password'] = kwargs['password']
+        kwargs.pop('password')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.configure_automatic_capture_filters_managed_database_password_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.configure_automatic_capture_filters_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.configure_automatic_capture_filters_managed_database_secret_credential.name, help=dbmanagement_cli.configure_automatic_capture_filters_managed_database_secret_credential.help)
+@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'auto-capture-filters': {'module': 'database_management', 'class': 'list[AutomaticCaptureFilterDetails]'}})
+@cli_util.wrap_exceptions
+def configure_automatic_capture_filters_managed_database_secret_credential_extended(ctx, **kwargs):
+    if 'secret_id' in kwargs:
+        kwargs['credentials_password_secret_id'] = kwargs['secret_id']
+        kwargs.pop('secret_id')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.configure_automatic_capture_filters_managed_database_secret_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.configure_automatic_spm_evolve_advisor_task_managed_database_password_credential, params_to_exclude=['credentials_password', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.configure_automatic_spm_evolve_advisor_task_managed_database_password_credential.name, help=dbmanagement_cli.configure_automatic_spm_evolve_advisor_task_managed_database_password_credential.help)
+@cli_util.option('--password', required=True, help=u"""The database user's password encoded using BASE64 scheme. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-parameters': {'module': 'database_management', 'class': 'SpmEvolveTaskParameters'}})
+@cli_util.wrap_exceptions
+def configure_automatic_spm_evolve_advisor_task_managed_database_password_credential_extended(ctx, **kwargs):
+    if 'password' in kwargs:
+        kwargs['credentials_password'] = kwargs['password']
+        kwargs.pop('password')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.configure_automatic_spm_evolve_advisor_task_managed_database_password_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.configure_automatic_spm_evolve_advisor_task_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.configure_automatic_spm_evolve_advisor_task_managed_database_secret_credential.name, help=dbmanagement_cli.configure_automatic_spm_evolve_advisor_task_managed_database_secret_credential.help)
+@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-parameters': {'module': 'database_management', 'class': 'SpmEvolveTaskParameters'}})
+@cli_util.wrap_exceptions
+def configure_automatic_spm_evolve_advisor_task_managed_database_secret_credential_extended(ctx, **kwargs):
+    if 'secret_id' in kwargs:
+        kwargs['credentials_password_secret_id'] = kwargs['secret_id']
+        kwargs.pop('secret_id')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.configure_automatic_spm_evolve_advisor_task_managed_database_secret_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.disable_automatic_initial_plan_capture_managed_database_password_credential, params_to_exclude=['credentials_password', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.disable_automatic_initial_plan_capture_managed_database_password_credential.name, help=dbmanagement_cli.disable_automatic_initial_plan_capture_managed_database_password_credential.help)
+@cli_util.option('--password', required=True, help=u"""The database user's password encoded using BASE64 scheme. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def disable_automatic_initial_plan_capture_managed_database_password_credential_extended(ctx, **kwargs):
+    if 'password' in kwargs:
+        kwargs['credentials_password'] = kwargs['password']
+        kwargs.pop('password')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.disable_automatic_initial_plan_capture_managed_database_password_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.disable_automatic_initial_plan_capture_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.disable_automatic_initial_plan_capture_managed_database_secret_credential.name, help=dbmanagement_cli.disable_automatic_initial_plan_capture_managed_database_secret_credential.help)
+@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def disable_automatic_initial_plan_capture_managed_database_secret_credential_extended(ctx, **kwargs):
+    if 'secret_id' in kwargs:
+        kwargs['credentials_password_secret_id'] = kwargs['secret_id']
+        kwargs.pop('secret_id')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.disable_automatic_initial_plan_capture_managed_database_secret_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.disable_automatic_spm_evolve_advisor_task_managed_database_password_credential, params_to_exclude=['credentials_password', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.disable_automatic_spm_evolve_advisor_task_managed_database_password_credential.name, help=dbmanagement_cli.disable_automatic_spm_evolve_advisor_task_managed_database_password_credential.help)
+@cli_util.option('--password', required=True, help=u"""The database user's password encoded using BASE64 scheme. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def disable_automatic_spm_evolve_advisor_task_managed_database_password_credential_extended(ctx, **kwargs):
+    if 'password' in kwargs:
+        kwargs['credentials_password'] = kwargs['password']
+        kwargs.pop('password')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.disable_automatic_spm_evolve_advisor_task_managed_database_password_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.disable_automatic_spm_evolve_advisor_task_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.disable_automatic_spm_evolve_advisor_task_managed_database_secret_credential.name, help=dbmanagement_cli.disable_automatic_spm_evolve_advisor_task_managed_database_secret_credential.help)
+@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def disable_automatic_spm_evolve_advisor_task_managed_database_secret_credential_extended(ctx, **kwargs):
+    if 'secret_id' in kwargs:
+        kwargs['credentials_password_secret_id'] = kwargs['secret_id']
+        kwargs.pop('secret_id')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.disable_automatic_spm_evolve_advisor_task_managed_database_secret_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.disable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_password_credential, params_to_exclude=['credentials_password', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.disable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_password_credential.name, help=dbmanagement_cli.disable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_password_credential.help)
+@cli_util.option('--password', required=True, help=u"""The database user's password encoded using BASE64 scheme. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def disable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_password_credential_extended(ctx, **kwargs):
+    if 'password' in kwargs:
+        kwargs['credentials_password'] = kwargs['password']
+        kwargs.pop('password')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.disable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_password_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.disable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.disable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_secret_credential.name, help=dbmanagement_cli.disable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_secret_credential.help)
+@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def disable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_secret_credential_extended(ctx, **kwargs):
+    if 'secret_id' in kwargs:
+        kwargs['credentials_password_secret_id'] = kwargs['secret_id']
+        kwargs.pop('secret_id')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.disable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_secret_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.disable_sql_plan_baselines_usage_managed_database_password_credential, params_to_exclude=['credentials_password', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.disable_sql_plan_baselines_usage_managed_database_password_credential.name, help=dbmanagement_cli.disable_sql_plan_baselines_usage_managed_database_password_credential.help)
+@cli_util.option('--password', required=True, help=u"""The database user's password encoded using BASE64 scheme. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def disable_sql_plan_baselines_usage_managed_database_password_credential_extended(ctx, **kwargs):
+    if 'password' in kwargs:
+        kwargs['credentials_password'] = kwargs['password']
+        kwargs.pop('password')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.disable_sql_plan_baselines_usage_managed_database_password_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.disable_sql_plan_baselines_usage_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.disable_sql_plan_baselines_usage_managed_database_secret_credential.name, help=dbmanagement_cli.disable_sql_plan_baselines_usage_managed_database_secret_credential.help)
+@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def disable_sql_plan_baselines_usage_managed_database_secret_credential_extended(ctx, **kwargs):
+    if 'secret_id' in kwargs:
+        kwargs['credentials_password_secret_id'] = kwargs['secret_id']
+        kwargs.pop('secret_id')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.disable_sql_plan_baselines_usage_managed_database_secret_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.drop_sql_plan_baselines_managed_database_password_credential, params_to_exclude=['credentials_password', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.drop_sql_plan_baselines_managed_database_password_credential.name, help=dbmanagement_cli.drop_sql_plan_baselines_managed_database_password_credential.help)
+@cli_util.option('--password', required=True, help=u"""The database user's password encoded using BASE64 scheme. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def drop_sql_plan_baselines_managed_database_password_credential_extended(ctx, **kwargs):
+    if 'password' in kwargs:
+        kwargs['credentials_password'] = kwargs['password']
+        kwargs.pop('password')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.drop_sql_plan_baselines_managed_database_password_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.drop_sql_plan_baselines_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.drop_sql_plan_baselines_managed_database_secret_credential.name, help=dbmanagement_cli.drop_sql_plan_baselines_managed_database_secret_credential.help)
+@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def drop_sql_plan_baselines_managed_database_secret_credential_extended(ctx, **kwargs):
+    if 'secret_id' in kwargs:
+        kwargs['credentials_password_secret_id'] = kwargs['secret_id']
+        kwargs.pop('secret_id')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.drop_sql_plan_baselines_managed_database_secret_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.enable_automatic_initial_plan_capture_managed_database_password_credential, params_to_exclude=['credentials_password', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.enable_automatic_initial_plan_capture_managed_database_password_credential.name, help=dbmanagement_cli.enable_automatic_initial_plan_capture_managed_database_password_credential.help)
+@cli_util.option('--password', required=True, help=u"""The database user's password encoded using BASE64 scheme. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def enable_automatic_initial_plan_capture_managed_database_password_credential_extended(ctx, **kwargs):
+    if 'password' in kwargs:
+        kwargs['credentials_password'] = kwargs['password']
+        kwargs.pop('password')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.enable_automatic_initial_plan_capture_managed_database_password_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.enable_automatic_initial_plan_capture_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.enable_automatic_initial_plan_capture_managed_database_secret_credential.name, help=dbmanagement_cli.enable_automatic_initial_plan_capture_managed_database_secret_credential.help)
+@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def enable_automatic_initial_plan_capture_managed_database_secret_credential_extended(ctx, **kwargs):
+    if 'secret_id' in kwargs:
+        kwargs['credentials_password_secret_id'] = kwargs['secret_id']
+        kwargs.pop('secret_id')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.enable_automatic_initial_plan_capture_managed_database_secret_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.enable_automatic_spm_evolve_advisor_task_managed_database_password_credential, params_to_exclude=['credentials_password', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.enable_automatic_spm_evolve_advisor_task_managed_database_password_credential.name, help=dbmanagement_cli.enable_automatic_spm_evolve_advisor_task_managed_database_password_credential.help)
+@cli_util.option('--password', required=True, help=u"""The database user's password encoded using BASE64 scheme. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def enable_automatic_spm_evolve_advisor_task_managed_database_password_credential_extended(ctx, **kwargs):
+    if 'password' in kwargs:
+        kwargs['credentials_password'] = kwargs['password']
+        kwargs.pop('password')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.enable_automatic_spm_evolve_advisor_task_managed_database_password_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.enable_automatic_spm_evolve_advisor_task_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.enable_automatic_spm_evolve_advisor_task_managed_database_secret_credential.name, help=dbmanagement_cli.enable_automatic_spm_evolve_advisor_task_managed_database_secret_credential.help)
+@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def enable_automatic_spm_evolve_advisor_task_managed_database_secret_credential_extended(ctx, **kwargs):
+    if 'secret_id' in kwargs:
+        kwargs['credentials_password_secret_id'] = kwargs['secret_id']
+        kwargs.pop('secret_id')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.enable_automatic_spm_evolve_advisor_task_managed_database_secret_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.enable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_password_credential, params_to_exclude=['credentials_password', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.enable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_password_credential.name, help=dbmanagement_cli.enable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_password_credential.help)
+@cli_util.option('--password', required=True, help=u"""The database user's password encoded using BASE64 scheme. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def enable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_password_credential_extended(ctx, **kwargs):
+    if 'password' in kwargs:
+        kwargs['credentials_password'] = kwargs['password']
+        kwargs.pop('password')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.enable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_password_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.enable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.enable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_secret_credential.name, help=dbmanagement_cli.enable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_secret_credential.help)
+@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def enable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_secret_credential_extended(ctx, **kwargs):
+    if 'secret_id' in kwargs:
+        kwargs['credentials_password_secret_id'] = kwargs['secret_id']
+        kwargs.pop('secret_id')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.enable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_secret_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.enable_sql_plan_baselines_usage_managed_database_password_credential, params_to_exclude=['credentials_password', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.enable_sql_plan_baselines_usage_managed_database_password_credential.name, help=dbmanagement_cli.enable_sql_plan_baselines_usage_managed_database_password_credential.help)
+@cli_util.option('--password', required=True, help=u"""The database user's password encoded using BASE64 scheme. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def enable_sql_plan_baselines_usage_managed_database_password_credential_extended(ctx, **kwargs):
+    if 'password' in kwargs:
+        kwargs['credentials_password'] = kwargs['password']
+        kwargs.pop('password')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.enable_sql_plan_baselines_usage_managed_database_password_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.enable_sql_plan_baselines_usage_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.enable_sql_plan_baselines_usage_managed_database_secret_credential.name, help=dbmanagement_cli.enable_sql_plan_baselines_usage_managed_database_secret_credential.help)
+@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def enable_sql_plan_baselines_usage_managed_database_secret_credential_extended(ctx, **kwargs):
+    if 'secret_id' in kwargs:
+        kwargs['credentials_password_secret_id'] = kwargs['secret_id']
+        kwargs.pop('secret_id')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.enable_sql_plan_baselines_usage_managed_database_secret_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.load_sql_plan_baselines_from_awr_managed_database_password_credential, params_to_exclude=['credentials_password', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.load_sql_plan_baselines_from_awr_managed_database_password_credential.name, help=dbmanagement_cli.load_sql_plan_baselines_from_awr_managed_database_password_credential.help)
+@cli_util.option('--password', required=True, help=u"""The database user's password encoded using BASE64 scheme. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlPlanBaselineJob'})
+@cli_util.wrap_exceptions
+def load_sql_plan_baselines_from_awr_managed_database_password_credential_extended(ctx, **kwargs):
+    if 'password' in kwargs:
+        kwargs['credentials_password'] = kwargs['password']
+        kwargs.pop('password')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.load_sql_plan_baselines_from_awr_managed_database_password_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.load_sql_plan_baselines_from_awr_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.load_sql_plan_baselines_from_awr_managed_database_secret_credential.name, help=dbmanagement_cli.load_sql_plan_baselines_from_awr_managed_database_secret_credential.help)
+@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlPlanBaselineJob'})
+@cli_util.wrap_exceptions
+def load_sql_plan_baselines_from_awr_managed_database_secret_credential_extended(ctx, **kwargs):
+    if 'secret_id' in kwargs:
+        kwargs['credentials_password_secret_id'] = kwargs['secret_id']
+        kwargs.pop('secret_id')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.load_sql_plan_baselines_from_awr_managed_database_secret_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.load_sql_plan_baselines_from_cursor_cache_managed_database_password_credential, params_to_exclude=['credentials_password', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.load_sql_plan_baselines_from_cursor_cache_managed_database_password_credential.name, help=dbmanagement_cli.load_sql_plan_baselines_from_cursor_cache_managed_database_password_credential.help)
+@cli_util.option('--password', required=True, help=u"""The database user's password encoded using BASE64 scheme. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlPlanBaselineJob'})
+@cli_util.wrap_exceptions
+def load_sql_plan_baselines_from_cursor_cache_managed_database_password_credential_extended(ctx, **kwargs):
+    if 'password' in kwargs:
+        kwargs['credentials_password'] = kwargs['password']
+        kwargs.pop('password')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.load_sql_plan_baselines_from_cursor_cache_managed_database_password_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(dbmanagement_cli.load_sql_plan_baselines_from_cursor_cache_managed_database_secret_credential, params_to_exclude=['credentials_password_secret_id', 'credentials_role', 'credentials_username'])
+@dbmanagement_cli.managed_database_group.command(name=dbmanagement_cli.load_sql_plan_baselines_from_cursor_cache_managed_database_secret_credential.name, help=dbmanagement_cli.load_sql_plan_baselines_from_cursor_cache_managed_database_secret_credential.help)
+@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored. [required]""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user. [required]""")
+@cli_util.option('--username', required=True, help=u"""The user name used to connect to the database. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlPlanBaselineJob'})
+@cli_util.wrap_exceptions
+def load_sql_plan_baselines_from_cursor_cache_managed_database_secret_credential_extended(ctx, **kwargs):
+    if 'secret_id' in kwargs:
+        kwargs['credentials_password_secret_id'] = kwargs['secret_id']
+        kwargs.pop('secret_id')
+
+    if 'role' in kwargs:
+        kwargs['credentials_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'username' in kwargs:
+        kwargs['credentials_username'] = kwargs['username']
+        kwargs.pop('username')
+
+    ctx.invoke(dbmanagement_cli.load_sql_plan_baselines_from_cursor_cache_managed_database_secret_credential, **kwargs)
+
+
 # oci database-management preferred-credential test-preferred-credential-test-basic-preferred-credential-details -> oci database-management preferred-credential test-basic-preferred-credential-details
 cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.preferred_credential_group, dbmanagement_cli.test_preferred_credential_test_basic_preferred_credential_details, "test-basic-preferred-credential-details")
 

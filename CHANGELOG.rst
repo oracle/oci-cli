@@ -5,6 +5,98 @@ Change Log
 All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
+
+3.29.2 - 2023-06-27
+--------------------
+Added
+~~~~~
+
+* Support for the OS Management Hub service
+
+  * ``oci os-management-hub``
+  
+* Support for ECPU integration in the License Manager service
+
+  * ``oci license-manager product-license list-top-utilized-resources --resource-unit-type ECPU``
+
+* Support for SqlEndpoints in the Data Flow service
+
+  * ``oci data-flow sql-endpoint``
+
+* Support for freeform and defined tags in the Artifacts service
+
+  * ``oci artifacts container repository create --freeform-tags --defined-tags``
+  * ``oci artifacts container repository update --freeform-tags --defined-tags``
+  * ``oci artifacts container image update --freeform-tags --defined-tags``
+  * ``oci artifacts container image-signature create --freeform-tags --defined-tags``
+  * ``oci artifacts container image-signature update --freeform-tags --defined-tags``
+
+* Support for OS Management Hub in the OS Management Hub service
+
+* Mysql Database Service
+
+  * Support for new optional parameters that allow to set up replication delay.
+
+    * ``oci mysql channel create-from-mysql --target-delay-in-seconds``
+    * ``oci mysql channel update-from-mysql --target-delay-in-seconds``
+
+  * Support for new optional parameters that allow to set up how to handle replicated tables that do not have a Primary Key.
+
+    * ``oci mysql channel create-from-mysql --target-tables-without-primary-key-handling``
+    * ``oci mysql channel update-from-mysql --target-tables-without-primary-key-handling``
+
+* Database Service
+
+  * Support for the CDB key store type change
+
+    * ``oci db database change-key-store-type``
+
+  * Support for the PDB rotate key
+
+    * ``oci db pluggable-database rotate-encryption-key --pluggable-database-id``
+
+* Database Management Service
+
+  * Support for SQL Plan Management(SPM)
+
+    * ``oci database-management managed-database list-sql-plan-baselines``
+    * ``oci database-management managed-database get-sql-plan-baseline``
+    * ``oci database-management managed-database drop-sql-plan-baselines``
+    * ``oci database-management managed-database enable-auto-plan-capture``
+    * ``oci database-management managed-database disable-auto-plan-capture``
+    * ``oci database-management managed-database cfg-auto-capture-filters``
+    * ``oci database-management managed-database enable-spb-usage``
+    * ``oci database-management managed-database disable-spb-usage``
+    * ``oci database-management managed-database get-spb-configuration``
+    * ``oci database-management managed-database summarize-sql-plan-baselines``
+    * ``oci database-management managed-database summarize-sql-plan-baselines-by-last-execution``
+    * ``oci database-management managed-database enable-auto-spm-evolve-task``
+    * ``oci database-management managed-database disable-auto-spm-evolve-task``
+    * ``oci database-management managed-database cfg-auto-spm-evolve-task``
+    * ``oci database-management managed-database enable-hf-auto-spm-evolve-task``
+    * ``oci database-management managed-database disable-hf-auto-spm-evolve-task``
+    * ``oci database-management managed-database load-spb-from-cc``
+    * ``oci database-management managed-database load-spb-from-awr``
+    * ``oci database-management managed-database change-plan-retention``
+    * ``oci database-management managed-database change-space-budget``
+    * ``oci database-management managed-database change-spb-attr``
+    * ``oci database-management managed-database list-cursor-cache-statements``
+    * ``oci database-management managed-database list-spb-jobs``
+
+  * Support for Enable/disable of Stack Monitoring service for External DB System
+
+    * ``oci database-management external-db-system enable-external-db-system-stack-monitoring``
+    * ``oci database-management external-db-system disable-external-db-system-stack-monitoring``
+
+  * Support for new optional paramater for External DB System
+
+    * ``oci database-management external-db-system create --stack-monitoring-config``
+
+  * Support for IN and OUT binds in SQL Jobs
+
+    * ``oci database-management job create-sql-job --in-binds --out-binds``
+    * ``oci database-management job update-sql-job-details --in-binds --out-binds``
+
 3.29.1 - 2023-06-20
 --------------------
 Added

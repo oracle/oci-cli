@@ -74,7 +74,9 @@ class TestChannelsCliExtend(unittest.TestCase):
                                       '--target-db-system-id', 'dummy',
                                       '--target-channel-name', 'dummy',
                                       '--target-applier-username', 'dummy',
-                                      '--target-filters', '[]'])
+                                      '--target-filters', '[]',
+                                      '--target-delay-in-seconds', 'dummy',
+                                      '--target-tables-withouth-primary-key-handling', 'dummy'])
         assert 'Error: Missing option(s)' not in result.output
 
     # test command override channel update_channel_update_channel_source_from_mysql_details -> oci mysql channel update-from-mysql
@@ -96,7 +98,9 @@ class TestChannelsCliExtend(unittest.TestCase):
                                       '--channel-id', 'dummy',
                                       '--target-applier-username', 'dummy',
                                       '--target-channel-name', 'dummy',
-                                      '--target-filters', '[]'])
+                                      '--target-filters', '[]',
+                                      '--target-delay-in-seconds', 'dummy',
+                                      '--target-tables-withouth-primary-key-handling', 'dummy'])
         assert 'Error: Missing option(s)' not in result.output
 
     # test override of WARNING message in update-from-mysql

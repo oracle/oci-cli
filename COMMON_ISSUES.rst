@@ -34,6 +34,10 @@ Offline Installation issues
 
     * To fix the above error, please install the packages gcc, zlib-devel, python3-devel and OpenSSL 1.1.1-latest in the System and try the installation again
 
+* Error " pip requires Python '>=3.7' but the running Python is 3.6.11"
+
+  * To fix the above error, install python 3.7 or higher version of python <3.11
+
 ================
 Troubleshooting
 ================

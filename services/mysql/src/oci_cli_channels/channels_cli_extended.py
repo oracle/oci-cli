@@ -21,6 +21,8 @@ cli_util.rename_command(channels_cli, channels_cli.channel_group, channels_cli.c
 @cli_util.option('--target-applier-username', help=copy_help_from_generated_code(channels_cli.create_channel_create_channel_target_from_db_system_details, "target_applier_username", remove_required=False))
 @cli_util.option('--target-channel-name', help=copy_help_from_generated_code(channels_cli.create_channel_create_channel_target_from_db_system_details, "target_channel_name", remove_required=False))
 @cli_util.option('--target-filters', type=custom_types.CLI_COMPLEX_TYPE, help=copy_help_from_generated_code(channels_cli.create_channel_create_channel_target_from_db_system_details, "target_filters", remove_required=False))
+@cli_util.option('--target-tables-without-primary-key-handling', help=copy_help_from_generated_code(channels_cli.create_channel_create_channel_target_from_db_system_details, "target_tables_without_primary_key_handling", remove_required=False))
+@cli_util.option('--target-delay-in-seconds', type=click.INT, help=copy_help_from_generated_code(channels_cli.create_channel_create_channel_target_from_db_system_details, "target_delay_in_seconds", remove_required=False))
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'source-ssl-ca-certificate': {'module': 'mysql', 'class': 'CaCertificate'}, 'source-anonymous-transactions-handling': {'module': 'mysql', 'class': 'AnonymousTransactionsHandling'}, 'target-filters': {'module': 'mysql', 'class': 'list[ChannelFilter]'}})
 @cli_util.wrap_exceptions
@@ -42,6 +44,14 @@ def create_channel_create_channel_source_from_mysql_details_extended(ctx, **kwar
         target_details['filters'] = cli_util.parse_json_parameter("target_filters", kwargs['target_filters'])
     kwargs.pop('target_filters')
 
+    if 'target_delay_in_seconds' in kwargs and kwargs['target_delay_in_seconds'] is not None:
+        target_details['delayInSeconds'] = kwargs['target_delay_in_seconds']
+    kwargs.pop('target_delay_in_seconds')
+
+    if 'target_tables_without_primary_key_handling' in kwargs and kwargs['target_tables_without_primary_key_handling'] is not None:
+        target_details['tablesWithoutPrimaryKeyHandling'] = kwargs['target_tables_without_primary_key_handling']
+    kwargs.pop('target_tables_without_primary_key_handling')
+
     target_details['targetType'] = 'DBSYSTEM'
 
     if len(target_details) > 0:
@@ -60,6 +70,8 @@ cli_util.rename_command(channels_cli, channels_cli.channel_group, channels_cli.u
 @cli_util.option('--target-applier-username', help=copy_help_from_generated_code(channels_cli.update_channel_update_channel_target_from_db_system_details, "target_applier_username", remove_required=False))
 @cli_util.option('--target-channel-name', help=copy_help_from_generated_code(channels_cli.update_channel_update_channel_target_from_db_system_details, "target_channel_name", remove_required=False))
 @cli_util.option('--target-filters', type=custom_types.CLI_COMPLEX_TYPE, help=copy_help_from_generated_code(channels_cli.update_channel_update_channel_target_from_db_system_details, "target_filters", remove_required=False))
+@cli_util.option('--target-tables-without-primary-key-handling', help=copy_help_from_generated_code(channels_cli.update_channel_update_channel_target_from_db_system_details, "target_tables_without_primary_key_handling", remove_required=False))
+@cli_util.option('--target-delay-in-seconds', type=click.INT, help=copy_help_from_generated_code(channels_cli.update_channel_update_channel_target_from_db_system_details, "target_delay_in_seconds", remove_required=False))
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'source-ssl-ca-certificate': {'module': 'mysql', 'class': 'CaCertificate'}, 'source-anonymous-transactions-handling': {'module': 'mysql', 'class': 'AnonymousTransactionsHandling'}, 'target-filters': {'module': 'mysql', 'class': 'list[ChannelFilter]'}})
 @cli_util.wrap_exceptions
@@ -77,6 +89,14 @@ def update_channel_update_channel_source_from_mysql_details_extended(ctx, **kwar
     if 'target_filters' in kwargs and kwargs['target_filters'] is not None:
         target_details['filters'] = cli_util.parse_json_parameter("target_filters", kwargs['target_filters'])
     kwargs.pop('target_filters')
+
+    if 'target_delay_in_seconds' in kwargs and kwargs['target_delay_in_seconds'] is not None:
+        target_details['delayInSeconds'] = kwargs['target_delay_in_seconds']
+    kwargs.pop('target_delay_in_seconds')
+
+    if 'target_tables_without_primary_key_handling' in kwargs and kwargs['target_tables_without_primary_key_handling'] is not None:
+        target_details['tablesWithoutPrimaryKeyHandling'] = kwargs['target_tables_without_primary_key_handling']
+    kwargs.pop('target_tables_without_primary_key_handling')
 
     target_details['targetType'] = 'DBSYSTEM'
 

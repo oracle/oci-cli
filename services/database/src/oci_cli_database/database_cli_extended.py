@@ -3318,3 +3318,7 @@ def create_vm_cluster_extended(ctx, **kwargs):
 def change_disaster_recovery_configuration_extended(ctx, **kwargs):
 
     ctx.invoke(database_cli.change_disaster_recovery_configuration, **kwargs)
+
+
+# Rename command: oci db pluggable-database rotate-pluggable-database-encryption-key -> oci db pluggable-database rotate-encryption-key
+cli_util.rename_command(database_cli, database_cli.pluggable_database_group, database_cli.rotate_pluggable_database_encryption_key, "rotate-encryption-key")
