@@ -16,6 +16,11 @@ dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_con
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_lake.name)
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_rest_basic_auth.name)
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_rest_no_auth.name)
+dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_hdfs.name)
+dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_my_sql_heat_wave.name)
+dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_oracle_ebs.name)
+dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_oracle_people_soft.name)
+dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_oracle_siebel.name)
 
 create_connection_args = [
     'workspace_id',
@@ -136,6 +141,62 @@ def create_connection_extended(ctx, **kwargs):
             }
         )
         ctx.invoke(dataintegration_cli.create_connection_create_connection_from_rest_no_auth, **oracle_db_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'HDFS_CONNECTION':
+        temp_args = {}
+        temp_args.update(common_args)
+        temp_args.update(
+            {
+                'hdfs_principal': kwargs['hdfs_principal'],
+                'data_node_principal': kwargs['data_node_principal'],
+                'name_node_principal': kwargs['name_node_principal'],
+                'connection_properties': kwargs['connection_properties']
+            }
+        )
+        ctx.invoke(dataintegration_cli.create_connection_create_connection_from_hdfs, **temp_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'MYSQL_HEATWAVE_CONNECTION':
+        temp_args = {}
+        temp_args.update(common_args)
+        temp_args.update(
+            {
+                'username': kwargs['username'],
+                'password': kwargs['password'],
+                'connection_properties': kwargs['connection_properties']
+            }
+        )
+        ctx.invoke(dataintegration_cli.create_connection_create_connection_from_my_sql_heat_wave, **temp_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'ORACLE_OEBS_CONNECTION':
+        temp_args = {}
+        temp_args.update(common_args)
+        temp_args.update(
+            {
+                'username': kwargs['username'],
+                'password': kwargs['password'],
+                'connection_properties': kwargs['connection_properties']
+            }
+        )
+        ctx.invoke(dataintegration_cli.create_connection_create_connection_from_oracle_ebs, **temp_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'ORACLE_PEOPLESOFT_CONNECTION':
+        temp_args = {}
+        temp_args.update(common_args)
+        temp_args.update(
+            {
+                'username': kwargs['username'],
+                'password': kwargs['password'],
+                'connection_properties': kwargs['connection_properties']
+            }
+        )
+        ctx.invoke(dataintegration_cli.create_connection_create_connection_from_oracle_people_soft, **temp_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'ORACLE_SIEBEL_CONNECTION':
+        temp_args = {}
+        temp_args.update(common_args)
+        temp_args.update(
+            {
+                'username': kwargs['username'],
+                'password': kwargs['password'],
+                'connection_properties': kwargs['connection_properties']
+            }
+        )
+        ctx.invoke(dataintegration_cli.create_connection_create_connection_from_oracle_siebel, **temp_args)
 
 
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_object_storage.name)
@@ -145,6 +206,11 @@ dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_con
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_lake.name)
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_rest_basic_auth.name)
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_rest_no_auth.name)
+dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_hdfs.name)
+dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_my_sql_heat_wave.name)
+dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_oracle_ebs.name)
+dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_oracle_people_soft.name)
+dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_oracle_siebel.name)
 
 update_connection_args = [
     'workspace_id',
@@ -269,6 +335,62 @@ def update_connection_extended(ctx, **kwargs):
             }
         )
         ctx.invoke(dataintegration_cli.update_connection_update_connection_from_rest_no_auth, **oracle_db_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'HDFS_CONNECTION':
+        temp_args = {}
+        temp_args.update(common_args)
+        temp_args.update(
+            {
+                'hdfs_principal': kwargs['hdfs_principal'],
+                'data_node_principal': kwargs['data_node_principal'],
+                'name_node_principal': kwargs['name_node_principal'],
+                'connection_properties': kwargs['connection_properties']
+            }
+        )
+        ctx.invoke(dataintegration_cli.update_connection_update_connection_from_hdfs, **temp_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'MYSQL_HEATWAVE_CONNECTION':
+        temp_args = {}
+        temp_args.update(common_args)
+        temp_args.update(
+            {
+                'username': kwargs['username'],
+                'password': kwargs['password'],
+                'connection_properties': kwargs['connection_properties']
+            }
+        )
+        ctx.invoke(dataintegration_cli.update_connection_update_connection_from_my_sql_heat_wave, **temp_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'ORACLE_OEBS_CONNECTION':
+        temp_args = {}
+        temp_args.update(common_args)
+        temp_args.update(
+            {
+                'username': kwargs['username'],
+                'password': kwargs['password'],
+                'connection_properties': kwargs['connection_properties']
+            }
+        )
+        ctx.invoke(dataintegration_cli.update_connection_update_connection_from_oracle_ebs, **temp_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'ORACLE_PEOPLESOFT_CONNECTION':
+        temp_args = {}
+        temp_args.update(common_args)
+        temp_args.update(
+            {
+                'username': kwargs['username'],
+                'password': kwargs['password'],
+                'connection_properties': kwargs['connection_properties']
+            }
+        )
+        ctx.invoke(dataintegration_cli.update_connection_update_connection_from_oracle_people_soft, **temp_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'ORACLE_SIEBEL_CONNECTION':
+        temp_args = {}
+        temp_args.update(common_args)
+        temp_args.update(
+            {
+                'username': kwargs['username'],
+                'password': kwargs['password'],
+                'connection_properties': kwargs['connection_properties']
+            }
+        )
+        ctx.invoke(dataintegration_cli.update_connection_update_connection_from_oracle_siebel, **temp_args)
 
 
 dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.create_data_asset_create_data_asset_from_object_storage.name)
@@ -383,6 +505,71 @@ def create_data_asset_extended(ctx, **kwargs):
             }
         )
         ctx.invoke(dataintegration_cli.create_data_asset_create_data_asset_from_jdbc, **generic_jdbc_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'HDFS_DATA_ASSET':
+        temp_args = {}
+        temp_args.update(common_args)
+        temp_args.update(
+            {
+                'host': kwargs['host'],
+                'port': kwargs['port'],
+                'protocol': kwargs['protocol'],
+                'default_connection': kwargs['default_connection'],
+                'asset-properties': kwargs['asset-properties']
+            }
+        )
+        ctx.invoke(dataintegration_cli.create_data_asset_create_data_asset_from_hdfs, **temp_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'MYSQL_HEATWAVE_DATA_ASSET':
+        temp_args = {}
+        temp_args.update(common_args)
+        temp_args.update(
+            {
+                'host': kwargs['host'],
+                'port': kwargs['port'],
+                'service_name': kwargs['service_name'],
+                'default_connection': kwargs['default_connection'],
+                'asset-properties': kwargs['asset-properties']
+            }
+        )
+        ctx.invoke(dataintegration_cli.create_data_asset_create_data_asset_from_my_sql_heat_wave, **temp_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'ORACLE_OEBS_DATA_ASSET':
+        temp_args = {}
+        temp_args.update(common_args)
+        temp_args.update(
+            {
+                'host': kwargs['host'],
+                'port': kwargs['port'],
+                'service_name': kwargs['service_name'],
+                'default_connection': kwargs['default_connection'],
+                'asset-properties': kwargs['asset-properties']
+            }
+        )
+        ctx.invoke(dataintegration_cli.create_data_asset_create_data_asset_from_oracle_ebs, **temp_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'ORACLE_PEOPLESOFT_DATA_ASSET':
+        temp_args = {}
+        temp_args.update(common_args)
+        temp_args.update(
+            {
+                'host': kwargs['host'],
+                'port': kwargs['port'],
+                'service_name': kwargs['service_name'],
+                'default_connection': kwargs['default_connection'],
+                'asset-properties': kwargs['asset-properties']
+            }
+        )
+        ctx.invoke(dataintegration_cli.create_data_asset_create_data_asset_from_oracle_people_soft, **temp_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'ORACLE_SIEBEL_DATA_ASSET':
+        temp_args = {}
+        temp_args.update(common_args)
+        temp_args.update(
+            {
+                'host': kwargs['host'],
+                'port': kwargs['port'],
+                'service_name': kwargs['service_name'],
+                'default_connection': kwargs['default_connection'],
+                'asset-properties': kwargs['asset-properties']
+            }
+        )
+        ctx.invoke(dataintegration_cli.create_data_asset_create_data_asset_from_oracle_siebel, **temp_args)
 
 
 dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.update_data_asset_update_data_asset_from_object_storage.name)
@@ -502,6 +689,71 @@ def update_data_asset_extended(ctx, **kwargs):
             }
         )
         ctx.invoke(dataintegration_cli.update_data_asset_update_data_asset_from_jdbc, **generic_jdbc_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'HDFS_DATA_ASSET':
+        temp_args = {}
+        temp_args.update(common_args)
+        temp_args.update(
+            {
+                'host': kwargs['host'],
+                'port': kwargs['port'],
+                'protocol': kwargs['protocol'],
+                'default_connection': kwargs['default_connection'],
+                'asset-properties': kwargs['asset-properties']
+            }
+        )
+        ctx.invoke(dataintegration_cli.update_data_asset_update_data_asset_from_hdfs, **temp_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'MYSQL_HEATWAVE_DATA_ASSET':
+        temp_args = {}
+        temp_args.update(common_args)
+        temp_args.update(
+            {
+                'host': kwargs['host'],
+                'port': kwargs['port'],
+                'service_name': kwargs['service_name'],
+                'default_connection': kwargs['default_connection'],
+                'asset-properties': kwargs['asset-properties']
+            }
+        )
+        ctx.invoke(dataintegration_cli.update_data_asset_update_data_asset_from_my_sql_heat_wave, **temp_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'ORACLE_OEBS_DATA_ASSET':
+        temp_args = {}
+        temp_args.update(common_args)
+        temp_args.update(
+            {
+                'host': kwargs['host'],
+                'port': kwargs['port'],
+                'service_name': kwargs['service_name'],
+                'default_connection': kwargs['default_connection'],
+                'asset-properties': kwargs['asset-properties']
+            }
+        )
+        ctx.invoke(dataintegration_cli.update_data_asset_update_data_asset_from_oracle_ebs, **temp_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'ORACLE_PEOPLESOFT_DATA_ASSET':
+        temp_args = {}
+        temp_args.update(common_args)
+        temp_args.update(
+            {
+                'host': kwargs['host'],
+                'port': kwargs['port'],
+                'service_name': kwargs['service_name'],
+                'default_connection': kwargs['default_connection'],
+                'asset-properties': kwargs['asset-properties']
+            }
+        )
+        ctx.invoke(dataintegration_cli.update_data_asset_update_data_asset_from_oracle_people_soft, **temp_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'ORACLE_SIEBEL_DATA_ASSET':
+        temp_args = {}
+        temp_args.update(common_args)
+        temp_args.update(
+            {
+                'host': kwargs['host'],
+                'port': kwargs['port'],
+                'service_name': kwargs['service_name'],
+                'default_connection': kwargs['default_connection'],
+                'asset-properties': kwargs['asset-properties']
+            }
+        )
+        ctx.invoke(dataintegration_cli.update_data_asset_update_data_asset_from_oracle_siebel, **temp_args)
 
 
 @cli_util.copy_params_from_generated_command(dataintegration_cli.delete_connection_validation, params_to_exclude=['connection_validation_key'])
@@ -1093,6 +1345,11 @@ dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_data_asset_from_object_storage.name)
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_data_asset_from_lake.name)
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_data_asset_from_rest.name)
+dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_data_asset_from_hdfs.name)
+dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_data_asset_from_my_sql_heat_wave.name)
+dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_data_asset_from_oracle_ebs.name)
+dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_data_asset_from_oracle_people_soft.name)
+dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_data_asset_from_oracle_siebel.name)
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_atp.name)
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_adwc.name)
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_oracle.name)
@@ -1102,6 +1359,11 @@ dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_lake.name)
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_rest_basic_auth.name)
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_rest_no_auth.name)
+dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_hdfs.name)
+dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_my_sql_heat_wave.name)
+dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_oracle_ebs.name)
+dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_oracle_people_soft.name)
+dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_oracle_siebel.name)
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_data_asset_from_my_sql.name)
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_data_asset_from_jdbc.name)
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_jdbc.name)
@@ -1124,8 +1386,18 @@ dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_bicc.name)
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_data_asset_from_fusion_app.name)
 dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.create_data_asset_create_data_asset_from_fusion_app.name)
+dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.create_data_asset_create_data_asset_from_hdfs.name)
+dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.create_data_asset_create_data_asset_from_my_sql_heat_wave.name)
+dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.create_data_asset_create_data_asset_from_oracle_ebs.name)
+dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.create_data_asset_create_data_asset_from_oracle_people_soft.name)
+dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.create_data_asset_create_data_asset_from_oracle_siebel.name)
 dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.update_data_asset_update_data_asset_from_amazon_s3.name)
 dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.update_data_asset_update_data_asset_from_fusion_app.name)
+dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.update_data_asset_update_data_asset_from_hdfs.name)
+dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.update_data_asset_update_data_asset_from_my_sql_heat_wave.name)
+dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.update_data_asset_update_data_asset_from_oracle_ebs.name)
+dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.update_data_asset_update_data_asset_from_oracle_people_soft.name)
+dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.update_data_asset_update_data_asset_from_oracle_siebel.name)
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_data_asset_from_amazon_s3.name)
 dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.create_data_asset_create_data_asset_from_amazon_s3.name)
 

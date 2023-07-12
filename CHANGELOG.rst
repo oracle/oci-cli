@@ -6,6 +6,63 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.29.3 - 2023-07-11
+--------------------
+Added
+~~~~~
+
+* Support for optional parameters in the Application Performance Monitoring Synthetic service
+
+  * ``oci apm-synthetics monitor create-browser-monitor --is-default-snapshot-enabled --verify-response-codes``
+  * ``oci apm-synthetics monitor create-rest-monitor --client-certificate-details``
+  * ``oci apm-synthetics monitor create-scripted-browser-monitor --is-default-snapshot-enabled``
+  * ``oci apm-synthetics monitor create-scripted-rest-monitor --req-authentication-scheme --verify-response-codes``
+  * ``oci apm-synthetics monitor update-browser-monitor --is-default-snapshot-enabled --verify-response-codes``
+  * ``oci apm-synthetics monitor update-rest-monitor ---client-certificate-details``
+  * ``oci apm-synthetics monitor update-scripted-browser-monitor ---is-default-snapshot-enabled``
+  * ``oci apm-synthetics monitor update-scripted-rest-monitor --req-authentication-scheme --verify-response-codes``
+
+* Support for new commands in the OSP Gateway service
+
+  * ``oci osp-gateway address-rule-service address-rule get``
+  * ``oci osp-gateway address-service address``
+
+* AI Document Service
+
+  * Support for new commands
+
+    * ``oci ai-document analyze-document-result``
+    * ``oci ai-document model patch``
+
+  * Support for new optional parameters
+
+    * ``oci ai-document model create --alias-name --component-models``
+
+* Support for workload mapping processing in the Container Engine service
+
+  * ``oci ce workload-mapping``
+  * ``oci ce workload-mapping-summary``
+
+* Support for new commands in the Data Integration service
+
+  * ``oci data-integration composite-state get``
+  * ``oci data-integration export-request``
+  * ``oci data-integration export-request-summary-collection list-export-requests``
+  * ``oci data-integration import-request``
+  * ``oci data-integration import-request-summary-collection list-import-requests``
+  * ``oci data-integration data-entity create-entity-shape-create-entity-shape-from-object``
+  * ``oci data-integration workspace delete-export-request``
+  * ``oci data-integration workspace delete-import-request``
+  * ``oci data-integration workspace update-export-request``
+  * ``oci data-integration workspace update-import-request``
+
+* Support for new optional parameter --kms-key-id in updating and creating backup and volume backup's envelope key in Core services
+
+  * ``oci bv backup create --kms-key-id``
+  * ``oci bv backup update --kms-key-id``
+  * ``oci bv boot-volume-backup create --kms-key-id``
+  * ``oci bv boot-volume-backup update --kms-key-id``
+
 3.29.2 - 2023-06-27
 --------------------
 Added

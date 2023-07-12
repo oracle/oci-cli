@@ -30,11 +30,11 @@ with open_relative("README.rst") as f:
     readme = f.read()
 
 requires = [
-    'oci==2.105.0',
+    'oci==2.106.0',
     'arrow>=1.0.0',
     'certifi',
     'click==8.0.4',
-    'cryptography>=3.2.1,<40.0.0',
+    'cryptography>=3.2.1,<42.0.0',
     'jmespath==0.10.0',
     'python-dateutil>=2.5.3,<3.0.0',
     'pytz>=2016.10',

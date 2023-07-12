@@ -26,6 +26,10 @@ Try the interactive features anytime with the ``-i`` option:
 
     oci -i
 
+.. image:: images/animation.png
+  :width: 1000
+  :alt: Alternative text
+
 Read more on `OCI Documentation`__.
 
 __ https://docs.oracle.com/iaas/Content/API/SDKDocs/cliusing_topic-Using_Interactive_Mode.htm

@@ -34,6 +34,12 @@ def project_group():
     pass
 
 
+@click.command(cli_util.override('ai_document.analyze_document_result_group.command_name', 'analyze-document-result'), cls=CommandGroupWithAlias, help="""The document analysis results.""")
+@cli_util.help_option_group
+def analyze_document_result_group():
+    pass
+
+
 @click.command(cli_util.override('ai_document.model_group.command_name', 'model'), cls=CommandGroupWithAlias, help="""Machine-learned Model.""")
 @cli_util.help_option_group
 def model_group():
@@ -60,10 +66,165 @@ def processor_job_group():
 
 ai_document_root_group.add_command(work_request_error_group)
 ai_document_root_group.add_command(project_group)
+ai_document_root_group.add_command(analyze_document_result_group)
 ai_document_root_group.add_command(model_group)
 ai_document_root_group.add_command(work_request_log_entry_group)
 ai_document_root_group.add_command(work_request_group)
 ai_document_root_group.add_command(processor_job_group)
+
+
+@analyze_document_result_group.command(name=cli_util.override('ai_document.analyze_document.command_name', 'analyze-document'), help=u"""Perform different types of document analysis. \n[Command Reference](analyzeDocument)""")
+@cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The types of document analysis requested.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--document', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', help=u"""The compartment identifier.""")
+@cli_util.option('--output-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--language', help=u"""The document language, abbreviated according to the BCP 47 syntax.""")
+@cli_util.option('--document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS"]), help=u"""The document type.""")
+@cli_util.option('--ocr-data', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({'features': {'module': 'ai_document', 'class': 'list[DocumentFeature]'}, 'document': {'module': 'ai_document', 'class': 'DocumentDetails'}, 'output-location': {'module': 'ai_document', 'class': 'OutputLocation'}, 'ocr-data': {'module': 'ai_document', 'class': 'AnalyzeDocumentResult'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'features': {'module': 'ai_document', 'class': 'list[DocumentFeature]'}, 'document': {'module': 'ai_document', 'class': 'DocumentDetails'}, 'output-location': {'module': 'ai_document', 'class': 'OutputLocation'}, 'ocr-data': {'module': 'ai_document', 'class': 'AnalyzeDocumentResult'}}, output_type={'module': 'ai_document', 'class': 'AnalyzeDocumentResult'})
+@cli_util.wrap_exceptions
+def analyze_document(ctx, from_json, features, document, compartment_id, output_location, language, document_type, ocr_data, if_match):
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['features'] = cli_util.parse_json_parameter("features", features)
+    _details['document'] = cli_util.parse_json_parameter("document", document)
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if output_location is not None:
+        _details['outputLocation'] = cli_util.parse_json_parameter("output_location", output_location)
+
+    if language is not None:
+        _details['language'] = language
+
+    if document_type is not None:
+        _details['documentType'] = document_type
+
+    if ocr_data is not None:
+        _details['ocrData'] = cli_util.parse_json_parameter("ocr_data", ocr_data)
+
+    client = cli_util.build_client('ai_document', 'ai_service_document', ctx)
+    result = client.analyze_document(
+        analyze_document_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@analyze_document_result_group.command(name=cli_util.override('ai_document.analyze_document_object_storage_document_details.command_name', 'analyze-document-object-storage-document-details'), help=u"""Perform different types of document analysis. \n[Command Reference](analyzeDocument)""")
+@cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The types of document analysis requested.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--document-namespace-name', required=True, help=u"""The Object Storage namespace.""")
+@cli_util.option('--document-bucket-name', required=True, help=u"""The Object Storage bucket name.""")
+@cli_util.option('--document-object-name', required=True, help=u"""The Object Storage object name.""")
+@cli_util.option('--compartment-id', help=u"""The compartment identifier.""")
+@cli_util.option('--output-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--language', help=u"""The document language, abbreviated according to the BCP 47 syntax.""")
+@cli_util.option('--document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS"]), help=u"""The document type.""")
+@cli_util.option('--ocr-data', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({'features': {'module': 'ai_document', 'class': 'list[DocumentFeature]'}, 'output-location': {'module': 'ai_document', 'class': 'OutputLocation'}, 'ocr-data': {'module': 'ai_document', 'class': 'AnalyzeDocumentResult'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'features': {'module': 'ai_document', 'class': 'list[DocumentFeature]'}, 'output-location': {'module': 'ai_document', 'class': 'OutputLocation'}, 'ocr-data': {'module': 'ai_document', 'class': 'AnalyzeDocumentResult'}}, output_type={'module': 'ai_document', 'class': 'AnalyzeDocumentResult'})
+@cli_util.wrap_exceptions
+def analyze_document_object_storage_document_details(ctx, from_json, features, document_namespace_name, document_bucket_name, document_object_name, compartment_id, output_location, language, document_type, ocr_data, if_match):
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['document'] = {}
+    _details['features'] = cli_util.parse_json_parameter("features", features)
+    _details['document']['namespaceName'] = document_namespace_name
+    _details['document']['bucketName'] = document_bucket_name
+    _details['document']['objectName'] = document_object_name
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if output_location is not None:
+        _details['outputLocation'] = cli_util.parse_json_parameter("output_location", output_location)
+
+    if language is not None:
+        _details['language'] = language
+
+    if document_type is not None:
+        _details['documentType'] = document_type
+
+    if ocr_data is not None:
+        _details['ocrData'] = cli_util.parse_json_parameter("ocr_data", ocr_data)
+
+    _details['document']['source'] = 'OBJECT_STORAGE'
+
+    client = cli_util.build_client('ai_document', 'ai_service_document', ctx)
+    result = client.analyze_document(
+        analyze_document_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@analyze_document_result_group.command(name=cli_util.override('ai_document.analyze_document_inline_document_details.command_name', 'analyze-document-inline-document-details'), help=u"""Perform different types of document analysis. \n[Command Reference](analyzeDocument)""")
+@cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The types of document analysis requested.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--document-data', required=True, help=u"""Raw document data with Base64 encoding.""")
+@cli_util.option('--compartment-id', help=u"""The compartment identifier.""")
+@cli_util.option('--output-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--language', help=u"""The document language, abbreviated according to the BCP 47 syntax.""")
+@cli_util.option('--document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS"]), help=u"""The document type.""")
+@cli_util.option('--ocr-data', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({'features': {'module': 'ai_document', 'class': 'list[DocumentFeature]'}, 'output-location': {'module': 'ai_document', 'class': 'OutputLocation'}, 'ocr-data': {'module': 'ai_document', 'class': 'AnalyzeDocumentResult'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'features': {'module': 'ai_document', 'class': 'list[DocumentFeature]'}, 'output-location': {'module': 'ai_document', 'class': 'OutputLocation'}, 'ocr-data': {'module': 'ai_document', 'class': 'AnalyzeDocumentResult'}}, output_type={'module': 'ai_document', 'class': 'AnalyzeDocumentResult'})
+@cli_util.wrap_exceptions
+def analyze_document_inline_document_details(ctx, from_json, features, document_data, compartment_id, output_location, language, document_type, ocr_data, if_match):
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['document'] = {}
+    _details['features'] = cli_util.parse_json_parameter("features", features)
+    _details['document']['data'] = document_data
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if output_location is not None:
+        _details['outputLocation'] = cli_util.parse_json_parameter("output_location", output_location)
+
+    if language is not None:
+        _details['language'] = language
+
+    if document_type is not None:
+        _details['documentType'] = document_type
+
+    if ocr_data is not None:
+        _details['ocrData'] = cli_util.parse_json_parameter("ocr_data", ocr_data)
+
+    _details['document']['source'] = 'INLINE'
+
+    client = cli_util.build_client('ai_document', 'ai_service_document', ctx)
+    result = client.analyze_document(
+        analyze_document_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @processor_job_group.command(name=cli_util.override('ai_document.cancel_processor_job.command_name', 'cancel'), help=u"""Cancel a processor job. \n[Command Reference](cancelProcessorJob)""")
@@ -191,17 +352,21 @@ def change_project_compartment(ctx, from_json, project_id, compartment_id, if_ma
 @cli_util.option('--max-training-time-in-hours', help=u"""The maximum model training time in hours, expressed as a decimal fraction.""")
 @cli_util.option('--testing-dataset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--validation-dataset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--component-models', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The [OCID] list of active custom Key Value models that need to be composed.
+
+This option is a JSON list with items of type ComponentModel.  For documentation on ComponentModel please see our API reference: https://docs.cloud.oracle.com/api/#/en/aiservicedocument/20221109/datatypes/ComponentModel.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--alias-name', help=u"""the alias name of the model.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'training-dataset': {'module': 'ai_document', 'class': 'Dataset'}, 'testing-dataset': {'module': 'ai_document', 'class': 'Dataset'}, 'validation-dataset': {'module': 'ai_document', 'class': 'Dataset'}, 'freeform-tags': {'module': 'ai_document', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_document', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'training-dataset': {'module': 'ai_document', 'class': 'Dataset'}, 'testing-dataset': {'module': 'ai_document', 'class': 'Dataset'}, 'validation-dataset': {'module': 'ai_document', 'class': 'Dataset'}, 'component-models': {'module': 'ai_document', 'class': 'list[ComponentModel]'}, 'freeform-tags': {'module': 'ai_document', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_document', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'training-dataset': {'module': 'ai_document', 'class': 'Dataset'}, 'testing-dataset': {'module': 'ai_document', 'class': 'Dataset'}, 'validation-dataset': {'module': 'ai_document', 'class': 'Dataset'}, 'freeform-tags': {'module': 'ai_document', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_document', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ai_document', 'class': 'Model'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'training-dataset': {'module': 'ai_document', 'class': 'Dataset'}, 'testing-dataset': {'module': 'ai_document', 'class': 'Dataset'}, 'validation-dataset': {'module': 'ai_document', 'class': 'Dataset'}, 'component-models': {'module': 'ai_document', 'class': 'list[ComponentModel]'}, 'freeform-tags': {'module': 'ai_document', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_document', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ai_document', 'class': 'Model'})
 @cli_util.wrap_exceptions
-def create_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_type, compartment_id, training_dataset, project_id, display_name, description, model_version, is_quick_mode, max_training_time_in_hours, testing_dataset, validation_dataset, freeform_tags, defined_tags):
+def create_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_type, compartment_id, training_dataset, project_id, display_name, description, model_version, is_quick_mode, max_training_time_in_hours, testing_dataset, validation_dataset, component_models, alias_name, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -232,6 +397,12 @@ def create_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
     if validation_dataset is not None:
         _details['validationDataset'] = cli_util.parse_json_parameter("validation_dataset", validation_dataset)
+
+    if component_models is not None:
+        _details['componentModels'] = cli_util.parse_json_parameter("component_models", component_models)
+
+    if alias_name is not None:
+        _details['aliasName'] = alias_name
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -1084,6 +1255,67 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
         result = client.list_work_requests(
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@model_group.command(name=cli_util.override('ai_document.patch_model.command_name', 'patch'), help=u"""Updates the model metadata only selected path parameter. \n[Command Reference](patchModel)""")
+@cli_util.option('--model-id', required=True, help=u"""A unique model identifier.""")
+@cli_util.option('--operations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of patch operations for model.
+
+This option is a JSON list with items of type PatchModelOperation.  For documentation on PatchModelOperation please see our API reference: https://docs.cloud.oracle.com/api/#/en/aiservicedocument/20221109/datatypes/PatchModelOperation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'operations': {'module': 'ai_document', 'class': 'list[PatchModelOperation]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'operations': {'module': 'ai_document', 'class': 'list[PatchModelOperation]'}}, output_type={'module': 'ai_document', 'class': 'PatchResponseMessage'})
+@cli_util.wrap_exceptions
+def patch_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, operations, if_match):
+
+    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if operations is not None:
+        _details['operations'] = cli_util.parse_json_parameter("operations", operations)
+
+    client = cli_util.build_client('ai_document', 'ai_service_document', ctx)
+    result = client.patch_model(
+        model_id=model_id,
+        patch_model_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

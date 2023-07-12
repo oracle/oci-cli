@@ -88,6 +88,12 @@ def work_request_group():
     pass
 
 
+@click.command(cli_util.override('data_integration.import_request_group.command_name', 'import-request'), cls=CommandGroupWithAlias, help="""Import metadata object response.""")
+@cli_util.help_option_group
+def import_request_group():
+    pass
+
+
 @click.command(cli_util.override('data_integration.reference_group.command_name', 'reference'), cls=CommandGroupWithAlias, help="""Reference contains application configuration information.""")
 @cli_util.help_option_group
 def reference_group():
@@ -130,6 +136,18 @@ def data_asset_group():
     pass
 
 
+@click.command(cli_util.override('data_integration.import_request_summary_collection_group.command_name', 'import-request-summary-collection'), cls=CommandGroupWithAlias, help="""This is the collection of import object requests.""")
+@cli_util.help_option_group
+def import_request_summary_collection_group():
+    pass
+
+
+@click.command(cli_util.override('data_integration.export_request_summary_collection_group.command_name', 'export-request-summary-collection'), cls=CommandGroupWithAlias, help="""This is the collection of export object requests.""")
+@cli_util.help_option_group
+def export_request_summary_collection_group():
+    pass
+
+
 @click.command(cli_util.override('data_integration.pipeline_validation_group.command_name', 'pipeline-validation'), cls=CommandGroupWithAlias, help="""The information about a pipeline validation.""")
 @cli_util.help_option_group
 def pipeline_validation_group():
@@ -142,6 +160,12 @@ def connection_group():
     pass
 
 
+@click.command(cli_util.override('data_integration.composite_state_group.command_name', 'composite-state'), cls=CommandGroupWithAlias, help="""The composite state object provides information on the state of a task or schedule.""")
+@cli_util.help_option_group
+def composite_state_group():
+    pass
+
+
 @click.command(cli_util.override('data_integration.task_run_log_group.command_name', 'task-run-log'), cls=CommandGroupWithAlias, help="""A log message from the execution of a task.""")
 @cli_util.help_option_group
 def task_run_log_group():
@@ -151,6 +175,12 @@ def task_run_log_group():
 @click.command(cli_util.override('data_integration.task_validation_group.command_name', 'task-validation'), cls=CommandGroupWithAlias, help="""The information about task validation.""")
 @cli_util.help_option_group
 def task_validation_group():
+    pass
+
+
+@click.command(cli_util.override('data_integration.export_request_group.command_name', 'export-request'), cls=CommandGroupWithAlias, help="""Export metadata object response.""")
+@cli_util.help_option_group
+def export_request_group():
     pass
 
 
@@ -249,6 +279,7 @@ data_integration_root_group.add_command(dis_application_group)
 data_integration_root_group.add_command(connection_validation_group)
 data_integration_root_group.add_command(project_group)
 data_integration_root_group.add_command(work_request_group)
+data_integration_root_group.add_command(import_request_group)
 data_integration_root_group.add_command(reference_group)
 data_integration_root_group.add_command(runtime_pipeline_summary_collection_group)
 data_integration_root_group.add_command(copy_object_request_summary_collection_group)
@@ -256,10 +287,14 @@ data_integration_root_group.add_command(task_run_lineage_summary_collection_grou
 data_integration_root_group.add_command(data_entity_group)
 data_integration_root_group.add_command(data_flow_validation_group)
 data_integration_root_group.add_command(data_asset_group)
+data_integration_root_group.add_command(import_request_summary_collection_group)
+data_integration_root_group.add_command(export_request_summary_collection_group)
 data_integration_root_group.add_command(pipeline_validation_group)
 data_integration_root_group.add_command(connection_group)
+data_integration_root_group.add_command(composite_state_group)
 data_integration_root_group.add_command(task_run_log_group)
 data_integration_root_group.add_command(task_validation_group)
+data_integration_root_group.add_command(export_request_group)
 data_integration_root_group.add_command(runtime_operator_summary_collection_group)
 data_integration_root_group.add_command(copy_object_request_group)
 data_integration_root_group.add_command(detailed_description_group)
@@ -538,7 +573,7 @@ def create_application_detailed_description(ctx, from_json, workspace_id, applic
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
 @cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--model-type', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_ADWC_CONNECTION", "ORACLE_ATP_CONNECTION", "ORACLE_OBJECT_STORAGE_CONNECTION", "ORACLEDB_CONNECTION", "MYSQL_CONNECTION", "GENERIC_JDBC_CONNECTION", "BICC_CONNECTION", "AMAZON_S3_CONNECTION", "BIP_CONNECTION", "LAKE_CONNECTION", "REST_NO_AUTH_CONNECTION", "REST_BASIC_AUTH_CONNECTION"]), help=u"""The type of the connection.""")
+@cli_util.option('--model-type', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_ADWC_CONNECTION", "ORACLE_ATP_CONNECTION", "ORACLE_OBJECT_STORAGE_CONNECTION", "ORACLEDB_CONNECTION", "MYSQL_CONNECTION", "GENERIC_JDBC_CONNECTION", "BICC_CONNECTION", "AMAZON_S3_CONNECTION", "BIP_CONNECTION", "LAKE_CONNECTION", "ORACLE_PEOPLESOFT_CONNECTION", "ORACLE_EBS_CONNECTION", "ORACLE_SIEBEL_CONNECTION", "HDFS_CONNECTION", "MYSQL_HEATWAVE_CONNECTION", "REST_NO_AUTH_CONNECTION", "REST_BASIC_AUTH_CONNECTION"]), help=u"""The type of the connection.""")
 @cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
 @cli_util.option('--model-version', help=u"""The model version of an object.""")
 @cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -598,10 +633,12 @@ def create_connection(ctx, from_json, workspace_id, name, identifier, model_type
     cli_util.render_response(result, ctx)
 
 
-@connection_group.command(name=cli_util.override('data_integration.create_connection_create_connection_from_my_sql.command_name', 'create-connection-create-connection-from-my-sql'), help=u"""Creates a connection under an existing data asset. \n[Command Reference](createConnection)""")
+@connection_group.command(name=cli_util.override('data_integration.create_connection_create_connection_from_oracle_siebel.command_name', 'create-connection-create-connection-from-oracle-siebel'), help=u"""Creates a connection under an existing data asset. \n[Command Reference](createConnection)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
 @cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--username', required=True, help=u"""The user name for the connection.""")
+@cli_util.option('--password', required=True, help=u"""The password for the connection.""")
 @cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
 @cli_util.option('--model-version', help=u"""The model version of an object.""")
 @cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -611,15 +648,13 @@ def create_connection(ctx, from_json, workspace_id, name, identifier, model_type
 
 This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--username', help=u"""The user name for the connection.""")
-@cli_util.option('--password', help=u"""The password for the connection.""")
 @cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_connection_from_my_sql(ctx, from_json, workspace_id, name, identifier, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, username, password, password_secret):
+def create_connection_create_connection_from_oracle_siebel(ctx, from_json, workspace_id, name, identifier, username, password, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, password_secret):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -630,6 +665,8 @@ def create_connection_create_connection_from_my_sql(ctx, from_json, workspace_id
     _details = {}
     _details['name'] = name
     _details['identifier'] = identifier
+    _details['username'] = username
+    _details['password'] = password
 
     if key is not None:
         _details['key'] = key
@@ -652,16 +689,10 @@ def create_connection_create_connection_from_my_sql(ctx, from_json, workspace_id
     if registry_metadata is not None:
         _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
 
-    if username is not None:
-        _details['username'] = username
-
-    if password is not None:
-        _details['password'] = password
-
     if password_secret is not None:
         _details['passwordSecret'] = cli_util.parse_json_parameter("password_secret", password_secret)
 
-    _details['modelType'] = 'MYSQL_CONNECTION'
+    _details['modelType'] = 'ORACLE_SIEBEL_CONNECTION'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.create_connection(
@@ -732,80 +763,6 @@ def create_connection_create_connection_from_amazon_s3(ctx, from_json, workspace
         _details['secretKey'] = cli_util.parse_json_parameter("secret_key", secret_key)
 
     _details['modelType'] = 'AMAZON_S3_CONNECTION'
-
-    client = cli_util.build_client('data_integration', 'data_integration', ctx)
-    result = client.create_connection(
-        workspace_id=workspace_id,
-        create_connection_details=_details,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
-@connection_group.command(name=cli_util.override('data_integration.create_connection_create_connection_from_jdbc.command_name', 'create-connection-create-connection-from-jdbc'), help=u"""Creates a connection under an existing data asset. \n[Command Reference](createConnection)""")
-@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
-@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
-@cli_util.option('--model-version', help=u"""The model version of an object.""")
-@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--description', help=u"""User-defined description for the connection.""")
-@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
-
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--username', help=u"""The user name for the connection.""")
-@cli_util.option('--password', help=u"""The password for the connection.""")
-@cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
-@cli_util.wrap_exceptions
-def create_connection_create_connection_from_jdbc(ctx, from_json, workspace_id, name, identifier, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, username, password, password_secret):
-
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
-        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['name'] = name
-    _details['identifier'] = identifier
-
-    if key is not None:
-        _details['key'] = key
-
-    if model_version is not None:
-        _details['modelVersion'] = model_version
-
-    if parent_ref is not None:
-        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
-
-    if description is not None:
-        _details['description'] = description
-
-    if object_status is not None:
-        _details['objectStatus'] = object_status
-
-    if connection_properties is not None:
-        _details['connectionProperties'] = cli_util.parse_json_parameter("connection_properties", connection_properties)
-
-    if registry_metadata is not None:
-        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
-
-    if username is not None:
-        _details['username'] = username
-
-    if password is not None:
-        _details['password'] = password
-
-    if password_secret is not None:
-        _details['passwordSecret'] = cli_util.parse_json_parameter("password_secret", password_secret)
-
-    _details['modelType'] = 'GENERIC_JDBC_CONNECTION'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.create_connection(
@@ -972,10 +929,13 @@ def create_connection_create_connection_from_atp(ctx, from_json, workspace_id, n
     cli_util.render_response(result, ctx)
 
 
-@connection_group.command(name=cli_util.override('data_integration.create_connection_create_connection_from_bip.command_name', 'create-connection-create-connection-from-bip'), help=u"""Creates a connection under an existing data asset. \n[Command Reference](createConnection)""")
+@connection_group.command(name=cli_util.override('data_integration.create_connection_create_connection_from_hdfs.command_name', 'create-connection-create-connection-from-hdfs'), help=u"""Creates a connection under an existing data asset. \n[Command Reference](createConnection)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
 @cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--hdfs-principal', required=True, help=u"""The HDFS principal.""")
+@cli_util.option('--data-node-principal', required=True, help=u"""The HDFS Data Node principal.""")
+@cli_util.option('--name-node-principal', required=True, help=u"""The HDFS Name Node principal.""")
 @cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
 @cli_util.option('--model-version', help=u"""The model version of an object.""")
 @cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -985,14 +945,15 @@ def create_connection_create_connection_from_atp(ctx, from_json, workspace_id, n
 
 This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--username', help=u"""The user name for the connection.""")
-@cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@cli_util.option('--realm', help=u"""HDFS Realm name.""")
+@cli_util.option('--key-distribution-center', help=u"""The HDFS Key Distribution Center.""")
+@cli_util.option('--key-tab-content', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'key-tab-content': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'key-tab-content': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_connection_from_bip(ctx, from_json, workspace_id, name, identifier, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, username, password_secret):
+def create_connection_create_connection_from_hdfs(ctx, from_json, workspace_id, name, identifier, hdfs_principal, data_node_principal, name_node_principal, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, realm, key_distribution_center, key_tab_content):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -1003,6 +964,9 @@ def create_connection_create_connection_from_bip(ctx, from_json, workspace_id, n
     _details = {}
     _details['name'] = name
     _details['identifier'] = identifier
+    _details['hdfsPrincipal'] = hdfs_principal
+    _details['dataNodePrincipal'] = data_node_principal
+    _details['nameNodePrincipal'] = name_node_principal
 
     if key is not None:
         _details['key'] = key
@@ -1025,13 +989,86 @@ def create_connection_create_connection_from_bip(ctx, from_json, workspace_id, n
     if registry_metadata is not None:
         _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
 
-    if username is not None:
-        _details['username'] = username
+    if realm is not None:
+        _details['realm'] = realm
+
+    if key_distribution_center is not None:
+        _details['keyDistributionCenter'] = key_distribution_center
+
+    if key_tab_content is not None:
+        _details['keyTabContent'] = cli_util.parse_json_parameter("key_tab_content", key_tab_content)
+
+    _details['modelType'] = 'HDFS_CONNECTION'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_connection(
+        workspace_id=workspace_id,
+        create_connection_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('data_integration.create_connection_create_connection_from_my_sql_heat_wave.command_name', 'create-connection-create-connection-from-my-sql-heat-wave'), help=u"""Creates a connection under an existing data asset. \n[Command Reference](createConnection)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--username', required=True, help=u"""The user name for the connection.""")
+@cli_util.option('--password', required=True, help=u"""The password for the connection.""")
+@cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def create_connection_create_connection_from_my_sql_heat_wave(ctx, from_json, workspace_id, name, identifier, username, password, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, password_secret):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['identifier'] = identifier
+    _details['username'] = username
+    _details['password'] = password
+
+    if key is not None:
+        _details['key'] = key
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if connection_properties is not None:
+        _details['connectionProperties'] = cli_util.parse_json_parameter("connection_properties", connection_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
 
     if password_secret is not None:
         _details['passwordSecret'] = cli_util.parse_json_parameter("password_secret", password_secret)
 
-    _details['modelType'] = 'BIP_CONNECTION'
+    _details['modelType'] = 'MYSQL_HEATWAVE_CONNECTION'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.create_connection(
@@ -1102,6 +1139,438 @@ def create_connection_create_connection_from_rest_basic_auth(ctx, from_json, wor
         _details['authHeader'] = auth_header
 
     _details['modelType'] = 'REST_BASIC_AUTH_CONNECTION'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_connection(
+        workspace_id=workspace_id,
+        create_connection_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('data_integration.create_connection_create_connection_from_oracle.command_name', 'create-connection-create-connection-from-oracle'), help=u"""Creates a connection under an existing data asset. \n[Command Reference](createConnection)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--username', help=u"""The user name for the connection.""")
+@cli_util.option('--password', help=u"""The password for the connection.""")
+@cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def create_connection_create_connection_from_oracle(ctx, from_json, workspace_id, name, identifier, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, username, password, password_secret):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['identifier'] = identifier
+
+    if key is not None:
+        _details['key'] = key
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if connection_properties is not None:
+        _details['connectionProperties'] = cli_util.parse_json_parameter("connection_properties", connection_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if username is not None:
+        _details['username'] = username
+
+    if password is not None:
+        _details['password'] = password
+
+    if password_secret is not None:
+        _details['passwordSecret'] = cli_util.parse_json_parameter("password_secret", password_secret)
+
+    _details['modelType'] = 'ORACLEDB_CONNECTION'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_connection(
+        workspace_id=workspace_id,
+        create_connection_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('data_integration.create_connection_create_connection_from_oracle_people_soft.command_name', 'create-connection-create-connection-from-oracle-people-soft'), help=u"""Creates a connection under an existing data asset. \n[Command Reference](createConnection)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--username', required=True, help=u"""The user name for the connection.""")
+@cli_util.option('--password', required=True, help=u"""The password for the connection.""")
+@cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def create_connection_create_connection_from_oracle_people_soft(ctx, from_json, workspace_id, name, identifier, username, password, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, password_secret):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['identifier'] = identifier
+    _details['username'] = username
+    _details['password'] = password
+
+    if key is not None:
+        _details['key'] = key
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if connection_properties is not None:
+        _details['connectionProperties'] = cli_util.parse_json_parameter("connection_properties", connection_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if password_secret is not None:
+        _details['passwordSecret'] = cli_util.parse_json_parameter("password_secret", password_secret)
+
+    _details['modelType'] = 'ORACLE_PEOPLESOFT_CONNECTION'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_connection(
+        workspace_id=workspace_id,
+        create_connection_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('data_integration.create_connection_create_connection_from_oracle_ebs.command_name', 'create-connection-create-connection-from-oracle-ebs'), help=u"""Creates a connection under an existing data asset. \n[Command Reference](createConnection)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--username', required=True, help=u"""The user name for the connection.""")
+@cli_util.option('--password', required=True, help=u"""The password for the connection.""")
+@cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def create_connection_create_connection_from_oracle_ebs(ctx, from_json, workspace_id, name, identifier, username, password, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, password_secret):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['identifier'] = identifier
+    _details['username'] = username
+    _details['password'] = password
+
+    if key is not None:
+        _details['key'] = key
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if connection_properties is not None:
+        _details['connectionProperties'] = cli_util.parse_json_parameter("connection_properties", connection_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if password_secret is not None:
+        _details['passwordSecret'] = cli_util.parse_json_parameter("password_secret", password_secret)
+
+    _details['modelType'] = 'ORACLE_EBS_CONNECTION'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_connection(
+        workspace_id=workspace_id,
+        create_connection_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('data_integration.create_connection_create_connection_from_my_sql.command_name', 'create-connection-create-connection-from-my-sql'), help=u"""Creates a connection under an existing data asset. \n[Command Reference](createConnection)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--username', help=u"""The user name for the connection.""")
+@cli_util.option('--password', help=u"""The password for the connection.""")
+@cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def create_connection_create_connection_from_my_sql(ctx, from_json, workspace_id, name, identifier, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, username, password, password_secret):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['identifier'] = identifier
+
+    if key is not None:
+        _details['key'] = key
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if connection_properties is not None:
+        _details['connectionProperties'] = cli_util.parse_json_parameter("connection_properties", connection_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if username is not None:
+        _details['username'] = username
+
+    if password is not None:
+        _details['password'] = password
+
+    if password_secret is not None:
+        _details['passwordSecret'] = cli_util.parse_json_parameter("password_secret", password_secret)
+
+    _details['modelType'] = 'MYSQL_CONNECTION'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_connection(
+        workspace_id=workspace_id,
+        create_connection_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('data_integration.create_connection_create_connection_from_jdbc.command_name', 'create-connection-create-connection-from-jdbc'), help=u"""Creates a connection under an existing data asset. \n[Command Reference](createConnection)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--username', help=u"""The user name for the connection.""")
+@cli_util.option('--password', help=u"""The password for the connection.""")
+@cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def create_connection_create_connection_from_jdbc(ctx, from_json, workspace_id, name, identifier, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, username, password, password_secret):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['identifier'] = identifier
+
+    if key is not None:
+        _details['key'] = key
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if connection_properties is not None:
+        _details['connectionProperties'] = cli_util.parse_json_parameter("connection_properties", connection_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if username is not None:
+        _details['username'] = username
+
+    if password is not None:
+        _details['password'] = password
+
+    if password_secret is not None:
+        _details['passwordSecret'] = cli_util.parse_json_parameter("password_secret", password_secret)
+
+    _details['modelType'] = 'GENERIC_JDBC_CONNECTION'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_connection(
+        workspace_id=workspace_id,
+        create_connection_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('data_integration.create_connection_create_connection_from_bip.command_name', 'create-connection-create-connection-from-bip'), help=u"""Creates a connection under an existing data asset. \n[Command Reference](createConnection)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--username', help=u"""The user name for the connection.""")
+@cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def create_connection_create_connection_from_bip(ctx, from_json, workspace_id, name, identifier, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, username, password_secret):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['identifier'] = identifier
+
+    if key is not None:
+        _details['key'] = key
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if connection_properties is not None:
+        _details['connectionProperties'] = cli_util.parse_json_parameter("connection_properties", connection_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if username is not None:
+        _details['username'] = username
+
+    if password_secret is not None:
+        _details['passwordSecret'] = cli_util.parse_json_parameter("password_secret", password_secret)
+
+    _details['modelType'] = 'BIP_CONNECTION'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.create_connection(
@@ -1246,80 +1715,6 @@ def create_connection_create_connection_from_rest_no_auth(ctx, from_json, worksp
         _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
 
     _details['modelType'] = 'REST_NO_AUTH_CONNECTION'
-
-    client = cli_util.build_client('data_integration', 'data_integration', ctx)
-    result = client.create_connection(
-        workspace_id=workspace_id,
-        create_connection_details=_details,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
-@connection_group.command(name=cli_util.override('data_integration.create_connection_create_connection_from_oracle.command_name', 'create-connection-create-connection-from-oracle'), help=u"""Creates a connection under an existing data asset. \n[Command Reference](createConnection)""")
-@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
-@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
-@cli_util.option('--model-version', help=u"""The model version of an object.""")
-@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--description', help=u"""User-defined description for the connection.""")
-@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
-
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--username', help=u"""The user name for the connection.""")
-@cli_util.option('--password', help=u"""The password for the connection.""")
-@cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
-@cli_util.wrap_exceptions
-def create_connection_create_connection_from_oracle(ctx, from_json, workspace_id, name, identifier, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, username, password, password_secret):
-
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
-        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['name'] = name
-    _details['identifier'] = identifier
-
-    if key is not None:
-        _details['key'] = key
-
-    if model_version is not None:
-        _details['modelVersion'] = model_version
-
-    if parent_ref is not None:
-        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
-
-    if description is not None:
-        _details['description'] = description
-
-    if object_status is not None:
-        _details['objectStatus'] = object_status
-
-    if connection_properties is not None:
-        _details['connectionProperties'] = cli_util.parse_json_parameter("connection_properties", connection_properties)
-
-    if registry_metadata is not None:
-        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
-
-    if username is not None:
-        _details['username'] = username
-
-    if password is not None:
-        _details['password'] = password
-
-    if password_secret is not None:
-        _details['passwordSecret'] = cli_util.parse_json_parameter("password_secret", password_secret)
-
-    _details['modelType'] = 'ORACLEDB_CONNECTION'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.create_connection(
@@ -1508,6 +1903,494 @@ def create_connection_validation(ctx, from_json, workspace_id, data_asset, conne
     cli_util.render_response(result, ctx)
 
 
+@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_data_asset_from_hdfs.command_name', 'create-connection-validation-create-data-asset-from-hdfs'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--data-asset-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--data-asset-identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--data-asset-host', required=True, help=u"""The HDFS hostname.""")
+@cli_util.option('--data-asset-port', required=True, help=u"""The HDFS port.""")
+@cli_util.option('--data-asset-protocol', required=True, help=u"""The HDFS Protocol name.""")
+@cli_util.option('--data-asset-default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset-key', help=u"""Currently not used on data asset creation. Reserved for future.""")
+@cli_util.option('--data-asset-model-version', help=u"""The model version of an object.""")
+@cli_util.option('--data-asset-description', help=u"""User-defined description of the data asset.""")
+@cli_util.option('--data-asset-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--data-asset-external-key', help=u"""The external key for the object.""")
+@cli_util.option('--data-asset-asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset-validate-certificate', type=click.BOOL, help=u"""Specifies whether certificate validation is needed""")
+@json_skeleton_utils.get_cli_json_input_option({'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromHdfs'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromHdfs'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
+@cli_util.wrap_exceptions
+def create_connection_validation_create_data_asset_from_hdfs(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, data_asset_host, data_asset_port, data_asset_protocol, data_asset_default_connection, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata, data_asset_validate_certificate):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dataAsset'] = {}
+    _details['dataAsset']['name'] = data_asset_name
+    _details['dataAsset']['identifier'] = data_asset_identifier
+    _details['dataAsset']['host'] = data_asset_host
+    _details['dataAsset']['port'] = data_asset_port
+    _details['dataAsset']['protocol'] = data_asset_protocol
+    _details['dataAsset']['defaultConnection'] = cli_util.parse_json_parameter("data_asset_default_connection", data_asset_default_connection)
+
+    if connection is not None:
+        _details['connection'] = cli_util.parse_json_parameter("connection", connection)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if data_asset_key is not None:
+        _details['dataAsset']['key'] = data_asset_key
+
+    if data_asset_model_version is not None:
+        _details['dataAsset']['modelVersion'] = data_asset_model_version
+
+    if data_asset_description is not None:
+        _details['dataAsset']['description'] = data_asset_description
+
+    if data_asset_object_status is not None:
+        _details['dataAsset']['objectStatus'] = data_asset_object_status
+
+    if data_asset_external_key is not None:
+        _details['dataAsset']['externalKey'] = data_asset_external_key
+
+    if data_asset_asset_properties is not None:
+        _details['dataAsset']['assetProperties'] = cli_util.parse_json_parameter("data_asset_asset_properties", data_asset_asset_properties)
+
+    if data_asset_registry_metadata is not None:
+        _details['dataAsset']['registryMetadata'] = cli_util.parse_json_parameter("data_asset_registry_metadata", data_asset_registry_metadata)
+
+    if data_asset_validate_certificate is not None:
+        _details['dataAsset']['validateCertificate'] = data_asset_validate_certificate
+
+    _details['dataAsset']['modelType'] = 'HDFS_DATA_ASSET'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_connection_validation(
+        workspace_id=workspace_id,
+        create_connection_validation_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_data_asset_from_lake.command_name', 'create-connection-validation-create-data-asset-from-lake'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--data-asset-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--data-asset-identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--data-asset-lake-id', required=True, help=u"""The Lake Ocid.""")
+@cli_util.option('--data-asset-default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset-key', help=u"""Currently not used on data asset creation. Reserved for future.""")
+@cli_util.option('--data-asset-model-version', help=u"""The model version of an object.""")
+@cli_util.option('--data-asset-description', help=u"""User-defined description of the data asset.""")
+@cli_util.option('--data-asset-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--data-asset-external-key', help=u"""The external key for the object.""")
+@cli_util.option('--data-asset-asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset-metastore-id', help=u"""The metastoreId for the specified Lake Resource.""")
+@cli_util.option('--data-asset-lake-proxy-endpoint', help=u"""The lakeProxyEndpoint for the specified Lake Resource.""")
+@json_skeleton_utils.get_cli_json_input_option({'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromLake'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromLake'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
+@cli_util.wrap_exceptions
+def create_connection_validation_create_data_asset_from_lake(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, data_asset_lake_id, data_asset_default_connection, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata, data_asset_metastore_id, data_asset_lake_proxy_endpoint):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dataAsset'] = {}
+    _details['dataAsset']['name'] = data_asset_name
+    _details['dataAsset']['identifier'] = data_asset_identifier
+    _details['dataAsset']['lakeId'] = data_asset_lake_id
+    _details['dataAsset']['defaultConnection'] = cli_util.parse_json_parameter("data_asset_default_connection", data_asset_default_connection)
+
+    if connection is not None:
+        _details['connection'] = cli_util.parse_json_parameter("connection", connection)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if data_asset_key is not None:
+        _details['dataAsset']['key'] = data_asset_key
+
+    if data_asset_model_version is not None:
+        _details['dataAsset']['modelVersion'] = data_asset_model_version
+
+    if data_asset_description is not None:
+        _details['dataAsset']['description'] = data_asset_description
+
+    if data_asset_object_status is not None:
+        _details['dataAsset']['objectStatus'] = data_asset_object_status
+
+    if data_asset_external_key is not None:
+        _details['dataAsset']['externalKey'] = data_asset_external_key
+
+    if data_asset_asset_properties is not None:
+        _details['dataAsset']['assetProperties'] = cli_util.parse_json_parameter("data_asset_asset_properties", data_asset_asset_properties)
+
+    if data_asset_registry_metadata is not None:
+        _details['dataAsset']['registryMetadata'] = cli_util.parse_json_parameter("data_asset_registry_metadata", data_asset_registry_metadata)
+
+    if data_asset_metastore_id is not None:
+        _details['dataAsset']['metastoreId'] = data_asset_metastore_id
+
+    if data_asset_lake_proxy_endpoint is not None:
+        _details['dataAsset']['lakeProxyEndpoint'] = data_asset_lake_proxy_endpoint
+
+    _details['dataAsset']['modelType'] = 'LAKE_DATA_ASSET'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_connection_validation(
+        workspace_id=workspace_id,
+        create_connection_validation_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_data_asset_from_my_sql_heat_wave.command_name', 'create-connection-validation-create-data-asset-from-my-sql-heat-wave'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--data-asset-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--data-asset-identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--data-asset-host', required=True, help=u"""The MySql HeatWave host name.""")
+@cli_util.option('--data-asset-port', required=True, help=u"""The MySql HeatWave port number.""")
+@cli_util.option('--data-asset-default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset-key', help=u"""Currently not used on data asset creation. Reserved for future.""")
+@cli_util.option('--data-asset-model-version', help=u"""The model version of an object.""")
+@cli_util.option('--data-asset-description', help=u"""User-defined description of the data asset.""")
+@cli_util.option('--data-asset-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--data-asset-external-key', help=u"""The external key for the object.""")
+@cli_util.option('--data-asset-asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset-service-name', help=u"""The MySql HeatWave service name for the database.""")
+@json_skeleton_utils.get_cli_json_input_option({'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromMySqlHeatWave'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromMySqlHeatWave'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
+@cli_util.wrap_exceptions
+def create_connection_validation_create_data_asset_from_my_sql_heat_wave(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, data_asset_host, data_asset_port, data_asset_default_connection, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata, data_asset_service_name):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dataAsset'] = {}
+    _details['dataAsset']['name'] = data_asset_name
+    _details['dataAsset']['identifier'] = data_asset_identifier
+    _details['dataAsset']['host'] = data_asset_host
+    _details['dataAsset']['port'] = data_asset_port
+    _details['dataAsset']['defaultConnection'] = cli_util.parse_json_parameter("data_asset_default_connection", data_asset_default_connection)
+
+    if connection is not None:
+        _details['connection'] = cli_util.parse_json_parameter("connection", connection)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if data_asset_key is not None:
+        _details['dataAsset']['key'] = data_asset_key
+
+    if data_asset_model_version is not None:
+        _details['dataAsset']['modelVersion'] = data_asset_model_version
+
+    if data_asset_description is not None:
+        _details['dataAsset']['description'] = data_asset_description
+
+    if data_asset_object_status is not None:
+        _details['dataAsset']['objectStatus'] = data_asset_object_status
+
+    if data_asset_external_key is not None:
+        _details['dataAsset']['externalKey'] = data_asset_external_key
+
+    if data_asset_asset_properties is not None:
+        _details['dataAsset']['assetProperties'] = cli_util.parse_json_parameter("data_asset_asset_properties", data_asset_asset_properties)
+
+    if data_asset_registry_metadata is not None:
+        _details['dataAsset']['registryMetadata'] = cli_util.parse_json_parameter("data_asset_registry_metadata", data_asset_registry_metadata)
+
+    if data_asset_service_name is not None:
+        _details['dataAsset']['serviceName'] = data_asset_service_name
+
+    _details['dataAsset']['modelType'] = 'MYSQL_HEATWAVE_DATA_ASSET'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_connection_validation(
+        workspace_id=workspace_id,
+        create_connection_validation_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_data_asset_from_amazon_s3.command_name', 'create-connection-validation-create-data-asset-from-amazon-s3'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--data-asset-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--data-asset-identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset-key', help=u"""Currently not used on data asset creation. Reserved for future.""")
+@cli_util.option('--data-asset-model-version', help=u"""The model version of an object.""")
+@cli_util.option('--data-asset-description', help=u"""User-defined description of the data asset.""")
+@cli_util.option('--data-asset-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--data-asset-external-key', help=u"""The external key for the object.""")
+@cli_util.option('--data-asset-asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset-region', help=u"""The region for Amazon s3""")
+@cli_util.option('--data-asset-default-connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromAmazonS3'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromAmazonS3'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
+@cli_util.wrap_exceptions
+def create_connection_validation_create_data_asset_from_amazon_s3(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata, data_asset_region, data_asset_default_connection):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dataAsset'] = {}
+    _details['dataAsset']['name'] = data_asset_name
+    _details['dataAsset']['identifier'] = data_asset_identifier
+
+    if connection is not None:
+        _details['connection'] = cli_util.parse_json_parameter("connection", connection)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if data_asset_key is not None:
+        _details['dataAsset']['key'] = data_asset_key
+
+    if data_asset_model_version is not None:
+        _details['dataAsset']['modelVersion'] = data_asset_model_version
+
+    if data_asset_description is not None:
+        _details['dataAsset']['description'] = data_asset_description
+
+    if data_asset_object_status is not None:
+        _details['dataAsset']['objectStatus'] = data_asset_object_status
+
+    if data_asset_external_key is not None:
+        _details['dataAsset']['externalKey'] = data_asset_external_key
+
+    if data_asset_asset_properties is not None:
+        _details['dataAsset']['assetProperties'] = cli_util.parse_json_parameter("data_asset_asset_properties", data_asset_asset_properties)
+
+    if data_asset_registry_metadata is not None:
+        _details['dataAsset']['registryMetadata'] = cli_util.parse_json_parameter("data_asset_registry_metadata", data_asset_registry_metadata)
+
+    if data_asset_region is not None:
+        _details['dataAsset']['region'] = data_asset_region
+
+    if data_asset_default_connection is not None:
+        _details['dataAsset']['defaultConnection'] = cli_util.parse_json_parameter("data_asset_default_connection", data_asset_default_connection)
+
+    _details['dataAsset']['modelType'] = 'AMAZON_S3_DATA_ASSET'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_connection_validation(
+        workspace_id=workspace_id,
+        create_connection_validation_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_data_asset_from_rest.command_name', 'create-connection-validation-create-data-asset-from-rest'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--data-asset-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--data-asset-identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--data-asset-base-url', required=True, help=u"""The base url of the rest server.""")
+@cli_util.option('--data-asset-manifest-file-content', required=True, help=u"""The manifest file content of the rest APIs.""")
+@cli_util.option('--data-asset-default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset-key', help=u"""Currently not used on data asset creation. Reserved for future.""")
+@cli_util.option('--data-asset-model-version', help=u"""The model version of an object.""")
+@cli_util.option('--data-asset-description', help=u"""User-defined description of the data asset.""")
+@cli_util.option('--data-asset-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--data-asset-external-key', help=u"""The external key for the object.""")
+@cli_util.option('--data-asset-asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
+@cli_util.wrap_exceptions
+def create_connection_validation_create_data_asset_from_rest(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, data_asset_base_url, data_asset_manifest_file_content, data_asset_default_connection, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dataAsset'] = {}
+    _details['dataAsset']['name'] = data_asset_name
+    _details['dataAsset']['identifier'] = data_asset_identifier
+    _details['dataAsset']['baseUrl'] = data_asset_base_url
+    _details['dataAsset']['manifestFileContent'] = data_asset_manifest_file_content
+    _details['dataAsset']['defaultConnection'] = cli_util.parse_json_parameter("data_asset_default_connection", data_asset_default_connection)
+
+    if connection is not None:
+        _details['connection'] = cli_util.parse_json_parameter("connection", connection)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if data_asset_key is not None:
+        _details['dataAsset']['key'] = data_asset_key
+
+    if data_asset_model_version is not None:
+        _details['dataAsset']['modelVersion'] = data_asset_model_version
+
+    if data_asset_description is not None:
+        _details['dataAsset']['description'] = data_asset_description
+
+    if data_asset_object_status is not None:
+        _details['dataAsset']['objectStatus'] = data_asset_object_status
+
+    if data_asset_external_key is not None:
+        _details['dataAsset']['externalKey'] = data_asset_external_key
+
+    if data_asset_asset_properties is not None:
+        _details['dataAsset']['assetProperties'] = cli_util.parse_json_parameter("data_asset_asset_properties", data_asset_asset_properties)
+
+    if data_asset_registry_metadata is not None:
+        _details['dataAsset']['registryMetadata'] = cli_util.parse_json_parameter("data_asset_registry_metadata", data_asset_registry_metadata)
+
+    _details['dataAsset']['modelType'] = 'REST_DATA_ASSET'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_connection_validation(
+        workspace_id=workspace_id,
+        create_connection_validation_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_data_asset_from_oracle_siebel.command_name', 'create-connection-validation-create-data-asset-from-oracle-siebel'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--data-asset-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--data-asset-identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--data-asset-host', required=True, help=u"""The Oracle Siebel hostname.""")
+@cli_util.option('--data-asset-port', required=True, help=u"""The Oracle Siebel port.""")
+@cli_util.option('--data-asset-default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset-key', help=u"""Currently not used on data asset creation. Reserved for future.""")
+@cli_util.option('--data-asset-model-version', help=u"""The model version of an object.""")
+@cli_util.option('--data-asset-description', help=u"""User-defined description of the data asset.""")
+@cli_util.option('--data-asset-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--data-asset-external-key', help=u"""The external key for the object.""")
+@cli_util.option('--data-asset-asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset-service-name', help=u"""The service name for the data asset.""")
+@cli_util.option('--data-asset-driver-class', help=u"""The Oracle Siebel driver class.""")
+@cli_util.option('--data-asset-sid', help=u"""The Oracle Siebel SID.""")
+@cli_util.option('--data-asset-wallet-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset-wallet-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-wallet-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'data-asset-wallet-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromOracleSiebel'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-wallet-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'data-asset-wallet-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromOracleSiebel'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
+@cli_util.wrap_exceptions
+def create_connection_validation_create_data_asset_from_oracle_siebel(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, data_asset_host, data_asset_port, data_asset_default_connection, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata, data_asset_service_name, data_asset_driver_class, data_asset_sid, data_asset_wallet_secret, data_asset_wallet_password_secret):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dataAsset'] = {}
+    _details['dataAsset']['name'] = data_asset_name
+    _details['dataAsset']['identifier'] = data_asset_identifier
+    _details['dataAsset']['host'] = data_asset_host
+    _details['dataAsset']['port'] = data_asset_port
+    _details['dataAsset']['defaultConnection'] = cli_util.parse_json_parameter("data_asset_default_connection", data_asset_default_connection)
+
+    if connection is not None:
+        _details['connection'] = cli_util.parse_json_parameter("connection", connection)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if data_asset_key is not None:
+        _details['dataAsset']['key'] = data_asset_key
+
+    if data_asset_model_version is not None:
+        _details['dataAsset']['modelVersion'] = data_asset_model_version
+
+    if data_asset_description is not None:
+        _details['dataAsset']['description'] = data_asset_description
+
+    if data_asset_object_status is not None:
+        _details['dataAsset']['objectStatus'] = data_asset_object_status
+
+    if data_asset_external_key is not None:
+        _details['dataAsset']['externalKey'] = data_asset_external_key
+
+    if data_asset_asset_properties is not None:
+        _details['dataAsset']['assetProperties'] = cli_util.parse_json_parameter("data_asset_asset_properties", data_asset_asset_properties)
+
+    if data_asset_registry_metadata is not None:
+        _details['dataAsset']['registryMetadata'] = cli_util.parse_json_parameter("data_asset_registry_metadata", data_asset_registry_metadata)
+
+    if data_asset_service_name is not None:
+        _details['dataAsset']['serviceName'] = data_asset_service_name
+
+    if data_asset_driver_class is not None:
+        _details['dataAsset']['driverClass'] = data_asset_driver_class
+
+    if data_asset_sid is not None:
+        _details['dataAsset']['sid'] = data_asset_sid
+
+    if data_asset_wallet_secret is not None:
+        _details['dataAsset']['walletSecret'] = cli_util.parse_json_parameter("data_asset_wallet_secret", data_asset_wallet_secret)
+
+    if data_asset_wallet_password_secret is not None:
+        _details['dataAsset']['walletPasswordSecret'] = cli_util.parse_json_parameter("data_asset_wallet_password_secret", data_asset_wallet_password_secret)
+
+    _details['dataAsset']['modelType'] = 'ORACLE_SIEBEL_DATA_ASSET'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_connection_validation(
+        workspace_id=workspace_id,
+        create_connection_validation_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_data_asset_from_jdbc.command_name', 'create-connection-validation-create-data-asset-from-jdbc'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--data-asset-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
@@ -1668,87 +2551,6 @@ def create_connection_validation_create_data_asset_from_my_sql(ctx, from_json, w
         _details['dataAsset']['defaultConnection'] = cli_util.parse_json_parameter("data_asset_default_connection", data_asset_default_connection)
 
     _details['dataAsset']['modelType'] = 'MYSQL_DATA_ASSET'
-
-    client = cli_util.build_client('data_integration', 'data_integration', ctx)
-    result = client.create_connection_validation(
-        workspace_id=workspace_id,
-        create_connection_validation_details=_details,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
-@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_data_asset_from_lake.command_name', 'create-connection-validation-create-data-asset-from-lake'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
-@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
-@cli_util.option('--data-asset-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--data-asset-identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--data-asset-lake-id', required=True, help=u"""The Lake Ocid.""")
-@cli_util.option('--data-asset-default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data-asset-key', help=u"""Currently not used on data asset creation. Reserved for future.""")
-@cli_util.option('--data-asset-model-version', help=u"""The model version of an object.""")
-@cli_util.option('--data-asset-description', help=u"""User-defined description of the data asset.""")
-@cli_util.option('--data-asset-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--data-asset-external-key', help=u"""The external key for the object.""")
-@cli_util.option('--data-asset-asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data-asset-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data-asset-metastore-id', help=u"""The metastoreId for the specified Lake Resource.""")
-@cli_util.option('--data-asset-lake-proxy-endpoint', help=u"""The lakeProxyEndpoint for the specified Lake Resource.""")
-@json_skeleton_utils.get_cli_json_input_option({'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromLake'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromLake'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
-@cli_util.wrap_exceptions
-def create_connection_validation_create_data_asset_from_lake(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, data_asset_lake_id, data_asset_default_connection, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata, data_asset_metastore_id, data_asset_lake_proxy_endpoint):
-
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
-        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['dataAsset'] = {}
-    _details['dataAsset']['name'] = data_asset_name
-    _details['dataAsset']['identifier'] = data_asset_identifier
-    _details['dataAsset']['lakeId'] = data_asset_lake_id
-    _details['dataAsset']['defaultConnection'] = cli_util.parse_json_parameter("data_asset_default_connection", data_asset_default_connection)
-
-    if connection is not None:
-        _details['connection'] = cli_util.parse_json_parameter("connection", connection)
-
-    if registry_metadata is not None:
-        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
-
-    if data_asset_key is not None:
-        _details['dataAsset']['key'] = data_asset_key
-
-    if data_asset_model_version is not None:
-        _details['dataAsset']['modelVersion'] = data_asset_model_version
-
-    if data_asset_description is not None:
-        _details['dataAsset']['description'] = data_asset_description
-
-    if data_asset_object_status is not None:
-        _details['dataAsset']['objectStatus'] = data_asset_object_status
-
-    if data_asset_external_key is not None:
-        _details['dataAsset']['externalKey'] = data_asset_external_key
-
-    if data_asset_asset_properties is not None:
-        _details['dataAsset']['assetProperties'] = cli_util.parse_json_parameter("data_asset_asset_properties", data_asset_asset_properties)
-
-    if data_asset_registry_metadata is not None:
-        _details['dataAsset']['registryMetadata'] = cli_util.parse_json_parameter("data_asset_registry_metadata", data_asset_registry_metadata)
-
-    if data_asset_metastore_id is not None:
-        _details['dataAsset']['metastoreId'] = data_asset_metastore_id
-
-    if data_asset_lake_proxy_endpoint is not None:
-        _details['dataAsset']['lakeProxyEndpoint'] = data_asset_lake_proxy_endpoint
-
-    _details['dataAsset']['modelType'] = 'LAKE_DATA_ASSET'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.create_connection_validation(
@@ -1985,89 +2787,12 @@ def create_connection_validation_create_data_asset_from_adwc(ctx, from_json, wor
     cli_util.render_response(result, ctx)
 
 
-@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_data_asset_from_amazon_s3.command_name', 'create-connection-validation-create-data-asset-from-amazon-s3'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
+@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_data_asset_from_oracle_ebs.command_name', 'create-connection-validation-create-data-asset-from-oracle-ebs'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--data-asset-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
 @cli_util.option('--data-asset-identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data-asset-key', help=u"""Currently not used on data asset creation. Reserved for future.""")
-@cli_util.option('--data-asset-model-version', help=u"""The model version of an object.""")
-@cli_util.option('--data-asset-description', help=u"""User-defined description of the data asset.""")
-@cli_util.option('--data-asset-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--data-asset-external-key', help=u"""The external key for the object.""")
-@cli_util.option('--data-asset-asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data-asset-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data-asset-region', help=u"""The region for Amazon s3""")
-@cli_util.option('--data-asset-default-connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromAmazonS3'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromAmazonS3'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
-@cli_util.wrap_exceptions
-def create_connection_validation_create_data_asset_from_amazon_s3(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata, data_asset_region, data_asset_default_connection):
-
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
-        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['dataAsset'] = {}
-    _details['dataAsset']['name'] = data_asset_name
-    _details['dataAsset']['identifier'] = data_asset_identifier
-
-    if connection is not None:
-        _details['connection'] = cli_util.parse_json_parameter("connection", connection)
-
-    if registry_metadata is not None:
-        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
-
-    if data_asset_key is not None:
-        _details['dataAsset']['key'] = data_asset_key
-
-    if data_asset_model_version is not None:
-        _details['dataAsset']['modelVersion'] = data_asset_model_version
-
-    if data_asset_description is not None:
-        _details['dataAsset']['description'] = data_asset_description
-
-    if data_asset_object_status is not None:
-        _details['dataAsset']['objectStatus'] = data_asset_object_status
-
-    if data_asset_external_key is not None:
-        _details['dataAsset']['externalKey'] = data_asset_external_key
-
-    if data_asset_asset_properties is not None:
-        _details['dataAsset']['assetProperties'] = cli_util.parse_json_parameter("data_asset_asset_properties", data_asset_asset_properties)
-
-    if data_asset_registry_metadata is not None:
-        _details['dataAsset']['registryMetadata'] = cli_util.parse_json_parameter("data_asset_registry_metadata", data_asset_registry_metadata)
-
-    if data_asset_region is not None:
-        _details['dataAsset']['region'] = data_asset_region
-
-    if data_asset_default_connection is not None:
-        _details['dataAsset']['defaultConnection'] = cli_util.parse_json_parameter("data_asset_default_connection", data_asset_default_connection)
-
-    _details['dataAsset']['modelType'] = 'AMAZON_S3_DATA_ASSET'
-
-    client = cli_util.build_client('data_integration', 'data_integration', ctx)
-    result = client.create_connection_validation(
-        workspace_id=workspace_id,
-        create_connection_validation_details=_details,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
-@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_data_asset_from_rest.command_name', 'create-connection-validation-create-data-asset-from-rest'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
-@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
-@cli_util.option('--data-asset-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--data-asset-identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--data-asset-base-url', required=True, help=u"""The base url of the rest server.""")
-@cli_util.option('--data-asset-manifest-file-content', required=True, help=u"""The manifest file content of the rest APIs.""")
+@cli_util.option('--data-asset-host', required=True, help=u"""The Oracle EBS hostname.""")
+@cli_util.option('--data-asset-port', required=True, help=u"""The Oracle EBS port.""")
 @cli_util.option('--data-asset-default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2078,12 +2803,17 @@ def create_connection_validation_create_data_asset_from_amazon_s3(ctx, from_json
 @cli_util.option('--data-asset-external-key', help=u"""The external key for the object.""")
 @cli_util.option('--data-asset-asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-asset-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}})
+@cli_util.option('--data-asset-service-name', help=u"""The service name for the data asset.""")
+@cli_util.option('--data-asset-driver-class', help=u"""The Oracle EBS driver class.""")
+@cli_util.option('--data-asset-sid', help=u"""The Oracle EBS SID.""")
+@cli_util.option('--data-asset-wallet-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset-wallet-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-wallet-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'data-asset-wallet-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromOracleEbs'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-wallet-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'data-asset-wallet-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromOracleEbs'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
 @cli_util.wrap_exceptions
-def create_connection_validation_create_data_asset_from_rest(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, data_asset_base_url, data_asset_manifest_file_content, data_asset_default_connection, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata):
+def create_connection_validation_create_data_asset_from_oracle_ebs(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, data_asset_host, data_asset_port, data_asset_default_connection, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata, data_asset_service_name, data_asset_driver_class, data_asset_sid, data_asset_wallet_secret, data_asset_wallet_password_secret):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -2095,8 +2825,8 @@ def create_connection_validation_create_data_asset_from_rest(ctx, from_json, wor
     _details['dataAsset'] = {}
     _details['dataAsset']['name'] = data_asset_name
     _details['dataAsset']['identifier'] = data_asset_identifier
-    _details['dataAsset']['baseUrl'] = data_asset_base_url
-    _details['dataAsset']['manifestFileContent'] = data_asset_manifest_file_content
+    _details['dataAsset']['host'] = data_asset_host
+    _details['dataAsset']['port'] = data_asset_port
     _details['dataAsset']['defaultConnection'] = cli_util.parse_json_parameter("data_asset_default_connection", data_asset_default_connection)
 
     if connection is not None:
@@ -2126,7 +2856,117 @@ def create_connection_validation_create_data_asset_from_rest(ctx, from_json, wor
     if data_asset_registry_metadata is not None:
         _details['dataAsset']['registryMetadata'] = cli_util.parse_json_parameter("data_asset_registry_metadata", data_asset_registry_metadata)
 
-    _details['dataAsset']['modelType'] = 'REST_DATA_ASSET'
+    if data_asset_service_name is not None:
+        _details['dataAsset']['serviceName'] = data_asset_service_name
+
+    if data_asset_driver_class is not None:
+        _details['dataAsset']['driverClass'] = data_asset_driver_class
+
+    if data_asset_sid is not None:
+        _details['dataAsset']['sid'] = data_asset_sid
+
+    if data_asset_wallet_secret is not None:
+        _details['dataAsset']['walletSecret'] = cli_util.parse_json_parameter("data_asset_wallet_secret", data_asset_wallet_secret)
+
+    if data_asset_wallet_password_secret is not None:
+        _details['dataAsset']['walletPasswordSecret'] = cli_util.parse_json_parameter("data_asset_wallet_password_secret", data_asset_wallet_password_secret)
+
+    _details['dataAsset']['modelType'] = 'ORACLE_EBS_DATA_ASSET'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_connection_validation(
+        workspace_id=workspace_id,
+        create_connection_validation_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_data_asset_from_oracle_people_soft.command_name', 'create-connection-validation-create-data-asset-from-oracle-people-soft'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--data-asset-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--data-asset-identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--data-asset-host', required=True, help=u"""The Oracle PeopleSoft hostname.""")
+@cli_util.option('--data-asset-port', required=True, help=u"""The Oracle PeopleSoft port.""")
+@cli_util.option('--data-asset-default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset-key', help=u"""Currently not used on data asset creation. Reserved for future.""")
+@cli_util.option('--data-asset-model-version', help=u"""The model version of an object.""")
+@cli_util.option('--data-asset-description', help=u"""User-defined description of the data asset.""")
+@cli_util.option('--data-asset-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--data-asset-external-key', help=u"""The external key for the object.""")
+@cli_util.option('--data-asset-asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset-service-name', help=u"""The service name for the data asset.""")
+@cli_util.option('--data-asset-driver-class', help=u"""The Oracle PeopleSoft driver class.""")
+@cli_util.option('--data-asset-sid', help=u"""The Oracle PeopleSoft SID.""")
+@cli_util.option('--data-asset-wallet-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-asset-wallet-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-wallet-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'data-asset-wallet-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromOraclePeopleSoft'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'data-asset-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-asset-wallet-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'data-asset-wallet-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'data-asset-default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromOraclePeopleSoft'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
+@cli_util.wrap_exceptions
+def create_connection_validation_create_data_asset_from_oracle_people_soft(ctx, from_json, workspace_id, data_asset_name, data_asset_identifier, data_asset_host, data_asset_port, data_asset_default_connection, connection, registry_metadata, data_asset_key, data_asset_model_version, data_asset_description, data_asset_object_status, data_asset_external_key, data_asset_asset_properties, data_asset_registry_metadata, data_asset_service_name, data_asset_driver_class, data_asset_sid, data_asset_wallet_secret, data_asset_wallet_password_secret):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dataAsset'] = {}
+    _details['dataAsset']['name'] = data_asset_name
+    _details['dataAsset']['identifier'] = data_asset_identifier
+    _details['dataAsset']['host'] = data_asset_host
+    _details['dataAsset']['port'] = data_asset_port
+    _details['dataAsset']['defaultConnection'] = cli_util.parse_json_parameter("data_asset_default_connection", data_asset_default_connection)
+
+    if connection is not None:
+        _details['connection'] = cli_util.parse_json_parameter("connection", connection)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if data_asset_key is not None:
+        _details['dataAsset']['key'] = data_asset_key
+
+    if data_asset_model_version is not None:
+        _details['dataAsset']['modelVersion'] = data_asset_model_version
+
+    if data_asset_description is not None:
+        _details['dataAsset']['description'] = data_asset_description
+
+    if data_asset_object_status is not None:
+        _details['dataAsset']['objectStatus'] = data_asset_object_status
+
+    if data_asset_external_key is not None:
+        _details['dataAsset']['externalKey'] = data_asset_external_key
+
+    if data_asset_asset_properties is not None:
+        _details['dataAsset']['assetProperties'] = cli_util.parse_json_parameter("data_asset_asset_properties", data_asset_asset_properties)
+
+    if data_asset_registry_metadata is not None:
+        _details['dataAsset']['registryMetadata'] = cli_util.parse_json_parameter("data_asset_registry_metadata", data_asset_registry_metadata)
+
+    if data_asset_service_name is not None:
+        _details['dataAsset']['serviceName'] = data_asset_service_name
+
+    if data_asset_driver_class is not None:
+        _details['dataAsset']['driverClass'] = data_asset_driver_class
+
+    if data_asset_sid is not None:
+        _details['dataAsset']['sid'] = data_asset_sid
+
+    if data_asset_wallet_secret is not None:
+        _details['dataAsset']['walletSecret'] = cli_util.parse_json_parameter("data_asset_wallet_secret", data_asset_wallet_secret)
+
+    if data_asset_wallet_password_secret is not None:
+        _details['dataAsset']['walletPasswordSecret'] = cli_util.parse_json_parameter("data_asset_wallet_password_secret", data_asset_wallet_password_secret)
+
+    _details['dataAsset']['modelType'] = 'ORACLE_PEOPLESOFT_DATA_ASSET'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.create_connection_validation(
@@ -2436,10 +3276,12 @@ def create_connection_validation_create_data_asset_from_object_storage(ctx, from
     cli_util.render_response(result, ctx)
 
 
-@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_connection_from_my_sql.command_name', 'create-connection-validation-create-connection-from-my-sql'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
+@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_connection_from_oracle_siebel.command_name', 'create-connection-validation-create-connection-from-oracle-siebel'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--connection-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
 @cli_util.option('--connection-identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--connection-username', required=True, help=u"""The user name for the connection.""")
+@cli_util.option('--connection-password', required=True, help=u"""The password for the connection.""")
 @cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
@@ -2451,15 +3293,13 @@ def create_connection_validation_create_data_asset_from_object_storage(ctx, from
 
 This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connection-username', help=u"""The user name for the connection.""")
-@cli_util.option('--connection-password', help=u"""The password for the connection.""")
 @cli_util.option('--connection-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
 @cli_util.wrap_exceptions
-def create_connection_validation_create_connection_from_my_sql(ctx, from_json, workspace_id, connection_name, connection_identifier, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_username, connection_password, connection_password_secret):
+def create_connection_validation_create_connection_from_oracle_siebel(ctx, from_json, workspace_id, connection_name, connection_identifier, connection_username, connection_password, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_password_secret):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -2471,6 +3311,8 @@ def create_connection_validation_create_connection_from_my_sql(ctx, from_json, w
     _details['connection'] = {}
     _details['connection']['name'] = connection_name
     _details['connection']['identifier'] = connection_identifier
+    _details['connection']['username'] = connection_username
+    _details['connection']['password'] = connection_password
 
     if data_asset is not None:
         _details['dataAsset'] = cli_util.parse_json_parameter("data_asset", data_asset)
@@ -2499,16 +3341,10 @@ def create_connection_validation_create_connection_from_my_sql(ctx, from_json, w
     if connection_registry_metadata is not None:
         _details['connection']['registryMetadata'] = cli_util.parse_json_parameter("connection_registry_metadata", connection_registry_metadata)
 
-    if connection_username is not None:
-        _details['connection']['username'] = connection_username
-
-    if connection_password is not None:
-        _details['connection']['password'] = connection_password
-
     if connection_password_secret is not None:
         _details['connection']['passwordSecret'] = cli_util.parse_json_parameter("connection_password_secret", connection_password_secret)
 
-    _details['connection']['modelType'] = 'MYSQL_CONNECTION'
+    _details['connection']['modelType'] = 'ORACLE_SIEBEL_CONNECTION'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.create_connection_validation(
@@ -2588,89 +3424,6 @@ def create_connection_validation_create_connection_from_amazon_s3(ctx, from_json
         _details['connection']['secretKey'] = cli_util.parse_json_parameter("connection_secret_key", connection_secret_key)
 
     _details['connection']['modelType'] = 'AMAZON_S3_CONNECTION'
-
-    client = cli_util.build_client('data_integration', 'data_integration', ctx)
-    result = client.create_connection_validation(
-        workspace_id=workspace_id,
-        create_connection_validation_details=_details,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
-@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_connection_from_jdbc.command_name', 'create-connection-validation-create-connection-from-jdbc'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
-@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
-@cli_util.option('--connection-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--connection-identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connection-key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
-@cli_util.option('--connection-model-version', help=u"""The model version of an object.""")
-@cli_util.option('--connection-parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connection-description', help=u"""User-defined description for the connection.""")
-@cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
-
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connection-username', help=u"""The user name for the connection.""")
-@cli_util.option('--connection-password', help=u"""The password for the connection.""")
-@cli_util.option('--connection-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
-@cli_util.wrap_exceptions
-def create_connection_validation_create_connection_from_jdbc(ctx, from_json, workspace_id, connection_name, connection_identifier, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_username, connection_password, connection_password_secret):
-
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
-        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['connection'] = {}
-    _details['connection']['name'] = connection_name
-    _details['connection']['identifier'] = connection_identifier
-
-    if data_asset is not None:
-        _details['dataAsset'] = cli_util.parse_json_parameter("data_asset", data_asset)
-
-    if registry_metadata is not None:
-        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
-
-    if connection_key is not None:
-        _details['connection']['key'] = connection_key
-
-    if connection_model_version is not None:
-        _details['connection']['modelVersion'] = connection_model_version
-
-    if connection_parent_ref is not None:
-        _details['connection']['parentRef'] = cli_util.parse_json_parameter("connection_parent_ref", connection_parent_ref)
-
-    if connection_description is not None:
-        _details['connection']['description'] = connection_description
-
-    if connection_object_status is not None:
-        _details['connection']['objectStatus'] = connection_object_status
-
-    if connection_connection_properties is not None:
-        _details['connection']['connectionProperties'] = cli_util.parse_json_parameter("connection_connection_properties", connection_connection_properties)
-
-    if connection_registry_metadata is not None:
-        _details['connection']['registryMetadata'] = cli_util.parse_json_parameter("connection_registry_metadata", connection_registry_metadata)
-
-    if connection_username is not None:
-        _details['connection']['username'] = connection_username
-
-    if connection_password is not None:
-        _details['connection']['password'] = connection_password
-
-    if connection_password_secret is not None:
-        _details['connection']['passwordSecret'] = cli_util.parse_json_parameter("connection_password_secret", connection_password_secret)
-
-    _details['connection']['modelType'] = 'GENERIC_JDBC_CONNECTION'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.create_connection_validation(
@@ -2855,10 +3608,13 @@ def create_connection_validation_create_connection_from_atp(ctx, from_json, work
     cli_util.render_response(result, ctx)
 
 
-@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_connection_from_bip.command_name', 'create-connection-validation-create-connection-from-bip'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
+@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_connection_from_hdfs.command_name', 'create-connection-validation-create-connection-from-hdfs'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--connection-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
 @cli_util.option('--connection-identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--connection-hdfs-principal', required=True, help=u"""The HDFS principal.""")
+@cli_util.option('--connection-data-node-principal', required=True, help=u"""The HDFS Data Node principal.""")
+@cli_util.option('--connection-name-node-principal', required=True, help=u"""The HDFS Name Node principal.""")
 @cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
@@ -2870,14 +3626,15 @@ def create_connection_validation_create_connection_from_atp(ctx, from_json, work
 
 This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connection-username', help=u"""The user name for the connection.""")
-@cli_util.option('--connection-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@cli_util.option('--connection-realm', help=u"""HDFS Realm name.""")
+@cli_util.option('--connection-key-distribution-center', help=u"""The HDFS Key Distribution Center.""")
+@cli_util.option('--connection-key-tab-content', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-key-tab-content': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-key-tab-content': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
 @cli_util.wrap_exceptions
-def create_connection_validation_create_connection_from_bip(ctx, from_json, workspace_id, connection_name, connection_identifier, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_username, connection_password_secret):
+def create_connection_validation_create_connection_from_hdfs(ctx, from_json, workspace_id, connection_name, connection_identifier, connection_hdfs_principal, connection_data_node_principal, connection_name_node_principal, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_realm, connection_key_distribution_center, connection_key_tab_content):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -2889,6 +3646,9 @@ def create_connection_validation_create_connection_from_bip(ctx, from_json, work
     _details['connection'] = {}
     _details['connection']['name'] = connection_name
     _details['connection']['identifier'] = connection_identifier
+    _details['connection']['hdfsPrincipal'] = connection_hdfs_principal
+    _details['connection']['dataNodePrincipal'] = connection_data_node_principal
+    _details['connection']['nameNodePrincipal'] = connection_name_node_principal
 
     if data_asset is not None:
         _details['dataAsset'] = cli_util.parse_json_parameter("data_asset", data_asset)
@@ -2917,13 +3677,95 @@ def create_connection_validation_create_connection_from_bip(ctx, from_json, work
     if connection_registry_metadata is not None:
         _details['connection']['registryMetadata'] = cli_util.parse_json_parameter("connection_registry_metadata", connection_registry_metadata)
 
-    if connection_username is not None:
-        _details['connection']['username'] = connection_username
+    if connection_realm is not None:
+        _details['connection']['realm'] = connection_realm
+
+    if connection_key_distribution_center is not None:
+        _details['connection']['keyDistributionCenter'] = connection_key_distribution_center
+
+    if connection_key_tab_content is not None:
+        _details['connection']['keyTabContent'] = cli_util.parse_json_parameter("connection_key_tab_content", connection_key_tab_content)
+
+    _details['connection']['modelType'] = 'HDFS_CONNECTION'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_connection_validation(
+        workspace_id=workspace_id,
+        create_connection_validation_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_connection_from_my_sql_heat_wave.command_name', 'create-connection-validation-create-connection-from-my-sql-heat-wave'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--connection-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--connection-identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--connection-username', required=True, help=u"""The user name for the connection.""")
+@cli_util.option('--connection-password', required=True, help=u"""The password for the connection.""")
+@cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--connection-model-version', help=u"""The model version of an object.""")
+@cli_util.option('--connection-parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
+@cli_util.wrap_exceptions
+def create_connection_validation_create_connection_from_my_sql_heat_wave(ctx, from_json, workspace_id, connection_name, connection_identifier, connection_username, connection_password, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_password_secret):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['connection'] = {}
+    _details['connection']['name'] = connection_name
+    _details['connection']['identifier'] = connection_identifier
+    _details['connection']['username'] = connection_username
+    _details['connection']['password'] = connection_password
+
+    if data_asset is not None:
+        _details['dataAsset'] = cli_util.parse_json_parameter("data_asset", data_asset)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if connection_key is not None:
+        _details['connection']['key'] = connection_key
+
+    if connection_model_version is not None:
+        _details['connection']['modelVersion'] = connection_model_version
+
+    if connection_parent_ref is not None:
+        _details['connection']['parentRef'] = cli_util.parse_json_parameter("connection_parent_ref", connection_parent_ref)
+
+    if connection_description is not None:
+        _details['connection']['description'] = connection_description
+
+    if connection_object_status is not None:
+        _details['connection']['objectStatus'] = connection_object_status
+
+    if connection_connection_properties is not None:
+        _details['connection']['connectionProperties'] = cli_util.parse_json_parameter("connection_connection_properties", connection_connection_properties)
+
+    if connection_registry_metadata is not None:
+        _details['connection']['registryMetadata'] = cli_util.parse_json_parameter("connection_registry_metadata", connection_registry_metadata)
 
     if connection_password_secret is not None:
         _details['connection']['passwordSecret'] = cli_util.parse_json_parameter("connection_password_secret", connection_password_secret)
 
-    _details['connection']['modelType'] = 'BIP_CONNECTION'
+    _details['connection']['modelType'] = 'MYSQL_HEATWAVE_CONNECTION'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.create_connection_validation(
@@ -3003,6 +3845,492 @@ def create_connection_validation_create_connection_from_rest_basic_auth(ctx, fro
         _details['connection']['authHeader'] = connection_auth_header
 
     _details['connection']['modelType'] = 'REST_BASIC_AUTH_CONNECTION'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_connection_validation(
+        workspace_id=workspace_id,
+        create_connection_validation_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_connection_from_oracle.command_name', 'create-connection-validation-create-connection-from-oracle'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--connection-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--connection-identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--connection-model-version', help=u"""The model version of an object.""")
+@cli_util.option('--connection-parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-username', help=u"""The user name for the connection.""")
+@cli_util.option('--connection-password', help=u"""The password for the connection.""")
+@cli_util.option('--connection-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
+@cli_util.wrap_exceptions
+def create_connection_validation_create_connection_from_oracle(ctx, from_json, workspace_id, connection_name, connection_identifier, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_username, connection_password, connection_password_secret):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['connection'] = {}
+    _details['connection']['name'] = connection_name
+    _details['connection']['identifier'] = connection_identifier
+
+    if data_asset is not None:
+        _details['dataAsset'] = cli_util.parse_json_parameter("data_asset", data_asset)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if connection_key is not None:
+        _details['connection']['key'] = connection_key
+
+    if connection_model_version is not None:
+        _details['connection']['modelVersion'] = connection_model_version
+
+    if connection_parent_ref is not None:
+        _details['connection']['parentRef'] = cli_util.parse_json_parameter("connection_parent_ref", connection_parent_ref)
+
+    if connection_description is not None:
+        _details['connection']['description'] = connection_description
+
+    if connection_object_status is not None:
+        _details['connection']['objectStatus'] = connection_object_status
+
+    if connection_connection_properties is not None:
+        _details['connection']['connectionProperties'] = cli_util.parse_json_parameter("connection_connection_properties", connection_connection_properties)
+
+    if connection_registry_metadata is not None:
+        _details['connection']['registryMetadata'] = cli_util.parse_json_parameter("connection_registry_metadata", connection_registry_metadata)
+
+    if connection_username is not None:
+        _details['connection']['username'] = connection_username
+
+    if connection_password is not None:
+        _details['connection']['password'] = connection_password
+
+    if connection_password_secret is not None:
+        _details['connection']['passwordSecret'] = cli_util.parse_json_parameter("connection_password_secret", connection_password_secret)
+
+    _details['connection']['modelType'] = 'ORACLEDB_CONNECTION'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_connection_validation(
+        workspace_id=workspace_id,
+        create_connection_validation_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_connection_from_oracle_people_soft.command_name', 'create-connection-validation-create-connection-from-oracle-people-soft'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--connection-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--connection-identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--connection-username', required=True, help=u"""The user name for the connection.""")
+@cli_util.option('--connection-password', required=True, help=u"""The password for the connection.""")
+@cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--connection-model-version', help=u"""The model version of an object.""")
+@cli_util.option('--connection-parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
+@cli_util.wrap_exceptions
+def create_connection_validation_create_connection_from_oracle_people_soft(ctx, from_json, workspace_id, connection_name, connection_identifier, connection_username, connection_password, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_password_secret):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['connection'] = {}
+    _details['connection']['name'] = connection_name
+    _details['connection']['identifier'] = connection_identifier
+    _details['connection']['username'] = connection_username
+    _details['connection']['password'] = connection_password
+
+    if data_asset is not None:
+        _details['dataAsset'] = cli_util.parse_json_parameter("data_asset", data_asset)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if connection_key is not None:
+        _details['connection']['key'] = connection_key
+
+    if connection_model_version is not None:
+        _details['connection']['modelVersion'] = connection_model_version
+
+    if connection_parent_ref is not None:
+        _details['connection']['parentRef'] = cli_util.parse_json_parameter("connection_parent_ref", connection_parent_ref)
+
+    if connection_description is not None:
+        _details['connection']['description'] = connection_description
+
+    if connection_object_status is not None:
+        _details['connection']['objectStatus'] = connection_object_status
+
+    if connection_connection_properties is not None:
+        _details['connection']['connectionProperties'] = cli_util.parse_json_parameter("connection_connection_properties", connection_connection_properties)
+
+    if connection_registry_metadata is not None:
+        _details['connection']['registryMetadata'] = cli_util.parse_json_parameter("connection_registry_metadata", connection_registry_metadata)
+
+    if connection_password_secret is not None:
+        _details['connection']['passwordSecret'] = cli_util.parse_json_parameter("connection_password_secret", connection_password_secret)
+
+    _details['connection']['modelType'] = 'ORACLE_PEOPLESOFT_CONNECTION'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_connection_validation(
+        workspace_id=workspace_id,
+        create_connection_validation_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_connection_from_oracle_ebs.command_name', 'create-connection-validation-create-connection-from-oracle-ebs'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--connection-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--connection-identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--connection-username', required=True, help=u"""The user name for the connection.""")
+@cli_util.option('--connection-password', required=True, help=u"""The password for the connection.""")
+@cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--connection-model-version', help=u"""The model version of an object.""")
+@cli_util.option('--connection-parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
+@cli_util.wrap_exceptions
+def create_connection_validation_create_connection_from_oracle_ebs(ctx, from_json, workspace_id, connection_name, connection_identifier, connection_username, connection_password, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_password_secret):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['connection'] = {}
+    _details['connection']['name'] = connection_name
+    _details['connection']['identifier'] = connection_identifier
+    _details['connection']['username'] = connection_username
+    _details['connection']['password'] = connection_password
+
+    if data_asset is not None:
+        _details['dataAsset'] = cli_util.parse_json_parameter("data_asset", data_asset)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if connection_key is not None:
+        _details['connection']['key'] = connection_key
+
+    if connection_model_version is not None:
+        _details['connection']['modelVersion'] = connection_model_version
+
+    if connection_parent_ref is not None:
+        _details['connection']['parentRef'] = cli_util.parse_json_parameter("connection_parent_ref", connection_parent_ref)
+
+    if connection_description is not None:
+        _details['connection']['description'] = connection_description
+
+    if connection_object_status is not None:
+        _details['connection']['objectStatus'] = connection_object_status
+
+    if connection_connection_properties is not None:
+        _details['connection']['connectionProperties'] = cli_util.parse_json_parameter("connection_connection_properties", connection_connection_properties)
+
+    if connection_registry_metadata is not None:
+        _details['connection']['registryMetadata'] = cli_util.parse_json_parameter("connection_registry_metadata", connection_registry_metadata)
+
+    if connection_password_secret is not None:
+        _details['connection']['passwordSecret'] = cli_util.parse_json_parameter("connection_password_secret", connection_password_secret)
+
+    _details['connection']['modelType'] = 'ORACLE_EBS_CONNECTION'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_connection_validation(
+        workspace_id=workspace_id,
+        create_connection_validation_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_connection_from_my_sql.command_name', 'create-connection-validation-create-connection-from-my-sql'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--connection-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--connection-identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--connection-model-version', help=u"""The model version of an object.""")
+@cli_util.option('--connection-parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-username', help=u"""The user name for the connection.""")
+@cli_util.option('--connection-password', help=u"""The password for the connection.""")
+@cli_util.option('--connection-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
+@cli_util.wrap_exceptions
+def create_connection_validation_create_connection_from_my_sql(ctx, from_json, workspace_id, connection_name, connection_identifier, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_username, connection_password, connection_password_secret):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['connection'] = {}
+    _details['connection']['name'] = connection_name
+    _details['connection']['identifier'] = connection_identifier
+
+    if data_asset is not None:
+        _details['dataAsset'] = cli_util.parse_json_parameter("data_asset", data_asset)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if connection_key is not None:
+        _details['connection']['key'] = connection_key
+
+    if connection_model_version is not None:
+        _details['connection']['modelVersion'] = connection_model_version
+
+    if connection_parent_ref is not None:
+        _details['connection']['parentRef'] = cli_util.parse_json_parameter("connection_parent_ref", connection_parent_ref)
+
+    if connection_description is not None:
+        _details['connection']['description'] = connection_description
+
+    if connection_object_status is not None:
+        _details['connection']['objectStatus'] = connection_object_status
+
+    if connection_connection_properties is not None:
+        _details['connection']['connectionProperties'] = cli_util.parse_json_parameter("connection_connection_properties", connection_connection_properties)
+
+    if connection_registry_metadata is not None:
+        _details['connection']['registryMetadata'] = cli_util.parse_json_parameter("connection_registry_metadata", connection_registry_metadata)
+
+    if connection_username is not None:
+        _details['connection']['username'] = connection_username
+
+    if connection_password is not None:
+        _details['connection']['password'] = connection_password
+
+    if connection_password_secret is not None:
+        _details['connection']['passwordSecret'] = cli_util.parse_json_parameter("connection_password_secret", connection_password_secret)
+
+    _details['connection']['modelType'] = 'MYSQL_CONNECTION'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_connection_validation(
+        workspace_id=workspace_id,
+        create_connection_validation_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_connection_from_jdbc.command_name', 'create-connection-validation-create-connection-from-jdbc'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--connection-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--connection-identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--connection-model-version', help=u"""The model version of an object.""")
+@cli_util.option('--connection-parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-username', help=u"""The user name for the connection.""")
+@cli_util.option('--connection-password', help=u"""The password for the connection.""")
+@cli_util.option('--connection-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
+@cli_util.wrap_exceptions
+def create_connection_validation_create_connection_from_jdbc(ctx, from_json, workspace_id, connection_name, connection_identifier, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_username, connection_password, connection_password_secret):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['connection'] = {}
+    _details['connection']['name'] = connection_name
+    _details['connection']['identifier'] = connection_identifier
+
+    if data_asset is not None:
+        _details['dataAsset'] = cli_util.parse_json_parameter("data_asset", data_asset)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if connection_key is not None:
+        _details['connection']['key'] = connection_key
+
+    if connection_model_version is not None:
+        _details['connection']['modelVersion'] = connection_model_version
+
+    if connection_parent_ref is not None:
+        _details['connection']['parentRef'] = cli_util.parse_json_parameter("connection_parent_ref", connection_parent_ref)
+
+    if connection_description is not None:
+        _details['connection']['description'] = connection_description
+
+    if connection_object_status is not None:
+        _details['connection']['objectStatus'] = connection_object_status
+
+    if connection_connection_properties is not None:
+        _details['connection']['connectionProperties'] = cli_util.parse_json_parameter("connection_connection_properties", connection_connection_properties)
+
+    if connection_registry_metadata is not None:
+        _details['connection']['registryMetadata'] = cli_util.parse_json_parameter("connection_registry_metadata", connection_registry_metadata)
+
+    if connection_username is not None:
+        _details['connection']['username'] = connection_username
+
+    if connection_password is not None:
+        _details['connection']['password'] = connection_password
+
+    if connection_password_secret is not None:
+        _details['connection']['passwordSecret'] = cli_util.parse_json_parameter("connection_password_secret", connection_password_secret)
+
+    _details['connection']['modelType'] = 'GENERIC_JDBC_CONNECTION'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_connection_validation(
+        workspace_id=workspace_id,
+        create_connection_validation_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_connection_from_bip.command_name', 'create-connection-validation-create-connection-from-bip'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--connection-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--connection-identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--connection-model-version', help=u"""The model version of an object.""")
+@cli_util.option('--connection-parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-username', help=u"""The user name for the connection.""")
+@cli_util.option('--connection-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
+@cli_util.wrap_exceptions
+def create_connection_validation_create_connection_from_bip(ctx, from_json, workspace_id, connection_name, connection_identifier, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_username, connection_password_secret):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['connection'] = {}
+    _details['connection']['name'] = connection_name
+    _details['connection']['identifier'] = connection_identifier
+
+    if data_asset is not None:
+        _details['dataAsset'] = cli_util.parse_json_parameter("data_asset", data_asset)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if connection_key is not None:
+        _details['connection']['key'] = connection_key
+
+    if connection_model_version is not None:
+        _details['connection']['modelVersion'] = connection_model_version
+
+    if connection_parent_ref is not None:
+        _details['connection']['parentRef'] = cli_util.parse_json_parameter("connection_parent_ref", connection_parent_ref)
+
+    if connection_description is not None:
+        _details['connection']['description'] = connection_description
+
+    if connection_object_status is not None:
+        _details['connection']['objectStatus'] = connection_object_status
+
+    if connection_connection_properties is not None:
+        _details['connection']['connectionProperties'] = cli_util.parse_json_parameter("connection_connection_properties", connection_connection_properties)
+
+    if connection_registry_metadata is not None:
+        _details['connection']['registryMetadata'] = cli_util.parse_json_parameter("connection_registry_metadata", connection_registry_metadata)
+
+    if connection_username is not None:
+        _details['connection']['username'] = connection_username
+
+    if connection_password_secret is not None:
+        _details['connection']['passwordSecret'] = cli_util.parse_json_parameter("connection_password_secret", connection_password_secret)
+
+    _details['connection']['modelType'] = 'BIP_CONNECTION'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.create_connection_validation(
@@ -3165,89 +4493,6 @@ def create_connection_validation_create_connection_from_rest_no_auth(ctx, from_j
         _details['connection']['registryMetadata'] = cli_util.parse_json_parameter("connection_registry_metadata", connection_registry_metadata)
 
     _details['connection']['modelType'] = 'REST_NO_AUTH_CONNECTION'
-
-    client = cli_util.build_client('data_integration', 'data_integration', ctx)
-    result = client.create_connection_validation(
-        workspace_id=workspace_id,
-        create_connection_validation_details=_details,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
-@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_connection_from_oracle.command_name', 'create-connection-validation-create-connection-from-oracle'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
-@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
-@cli_util.option('--connection-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--connection-identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connection-key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
-@cli_util.option('--connection-model-version', help=u"""The model version of an object.""")
-@cli_util.option('--connection-parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connection-description', help=u"""User-defined description for the connection.""")
-@cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
-
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connection-username', help=u"""The user name for the connection.""")
-@cli_util.option('--connection-password', help=u"""The password for the connection.""")
-@cli_util.option('--connection-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
-@cli_util.wrap_exceptions
-def create_connection_validation_create_connection_from_oracle(ctx, from_json, workspace_id, connection_name, connection_identifier, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_username, connection_password, connection_password_secret):
-
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
-        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['connection'] = {}
-    _details['connection']['name'] = connection_name
-    _details['connection']['identifier'] = connection_identifier
-
-    if data_asset is not None:
-        _details['dataAsset'] = cli_util.parse_json_parameter("data_asset", data_asset)
-
-    if registry_metadata is not None:
-        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
-
-    if connection_key is not None:
-        _details['connection']['key'] = connection_key
-
-    if connection_model_version is not None:
-        _details['connection']['modelVersion'] = connection_model_version
-
-    if connection_parent_ref is not None:
-        _details['connection']['parentRef'] = cli_util.parse_json_parameter("connection_parent_ref", connection_parent_ref)
-
-    if connection_description is not None:
-        _details['connection']['description'] = connection_description
-
-    if connection_object_status is not None:
-        _details['connection']['objectStatus'] = connection_object_status
-
-    if connection_connection_properties is not None:
-        _details['connection']['connectionProperties'] = cli_util.parse_json_parameter("connection_connection_properties", connection_connection_properties)
-
-    if connection_registry_metadata is not None:
-        _details['connection']['registryMetadata'] = cli_util.parse_json_parameter("connection_registry_metadata", connection_registry_metadata)
-
-    if connection_username is not None:
-        _details['connection']['username'] = connection_username
-
-    if connection_password is not None:
-        _details['connection']['password'] = connection_password
-
-    if connection_password_secret is not None:
-        _details['connection']['passwordSecret'] = cli_util.parse_json_parameter("connection_password_secret", connection_password_secret)
-
-    _details['connection']['modelType'] = 'ORACLEDB_CONNECTION'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.create_connection_validation(
@@ -3476,7 +4721,7 @@ def create_copy_object_request(ctx, from_json, wait_for_state, max_wait_seconds,
 
 @data_asset_group.command(name=cli_util.override('data_integration.create_data_asset.command_name', 'create'), help=u"""Creates a data asset with default connection. \n[Command Reference](createDataAsset)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
-@cli_util.option('--model-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_DATA_ASSET", "ORACLE_OBJECT_STORAGE_DATA_ASSET", "ORACLE_ATP_DATA_ASSET", "ORACLE_ADWC_DATA_ASSET", "MYSQL_DATA_ASSET", "GENERIC_JDBC_DATA_ASSET", "FUSION_APP_DATA_ASSET", "AMAZON_S3_DATA_ASSET", "LAKE_DATA_ASSET", "REST_DATA_ASSET"]), help=u"""The type of the data asset.""")
+@cli_util.option('--model-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_DATA_ASSET", "ORACLE_OBJECT_STORAGE_DATA_ASSET", "ORACLE_ATP_DATA_ASSET", "ORACLE_ADWC_DATA_ASSET", "MYSQL_DATA_ASSET", "GENERIC_JDBC_DATA_ASSET", "FUSION_APP_DATA_ASSET", "AMAZON_S3_DATA_ASSET", "LAKE_DATA_ASSET", "ORACLE_PEOPLESOFT_DATA_ASSET", "ORACLE_SIEBEL_DATA_ASSET", "ORACLE_EBS_DATA_ASSET", "HDFS_DATA_ASSET", "MYSQL_HEATWAVE_DATA_ASSET", "REST_DATA_ASSET"]), help=u"""The type of the data asset.""")
 @cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
 @cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
 @cli_util.option('--key', help=u"""Currently not used on data asset creation. Reserved for future.""")
@@ -3524,6 +4769,440 @@ def create_data_asset(ctx, from_json, workspace_id, model_type, name, identifier
 
     if registry_metadata is not None:
         _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_data_asset(
+        workspace_id=workspace_id,
+        create_data_asset_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@data_asset_group.command(name=cli_util.override('data_integration.create_data_asset_create_data_asset_from_hdfs.command_name', 'create-data-asset-create-data-asset-from-hdfs'), help=u"""Creates a data asset with default connection. \n[Command Reference](createDataAsset)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--host', required=True, help=u"""The HDFS hostname.""")
+@cli_util.option('--port', required=True, help=u"""The HDFS port.""")
+@cli_util.option('--protocol', required=True, help=u"""The HDFS Protocol name.""")
+@cli_util.option('--default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--key', help=u"""Currently not used on data asset creation. Reserved for future.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--description', help=u"""User-defined description of the data asset.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--external-key', help=u"""The external key for the object.""")
+@cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--validate-certificate', type=click.BOOL, help=u"""Specifies whether certificate validation is needed""")
+@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromHdfs'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromHdfs'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
+@cli_util.wrap_exceptions
+def create_data_asset_create_data_asset_from_hdfs(ctx, from_json, workspace_id, name, identifier, host, port, protocol, default_connection, key, model_version, description, object_status, external_key, asset_properties, registry_metadata, validate_certificate):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['identifier'] = identifier
+    _details['host'] = host
+    _details['port'] = port
+    _details['protocol'] = protocol
+    _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
+
+    if key is not None:
+        _details['key'] = key
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if external_key is not None:
+        _details['externalKey'] = external_key
+
+    if asset_properties is not None:
+        _details['assetProperties'] = cli_util.parse_json_parameter("asset_properties", asset_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if validate_certificate is not None:
+        _details['validateCertificate'] = validate_certificate
+
+    _details['modelType'] = 'HDFS_DATA_ASSET'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_data_asset(
+        workspace_id=workspace_id,
+        create_data_asset_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@data_asset_group.command(name=cli_util.override('data_integration.create_data_asset_create_data_asset_from_lake.command_name', 'create-data-asset-create-data-asset-from-lake'), help=u"""Creates a data asset with default connection. \n[Command Reference](createDataAsset)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--lake-id', required=True, help=u"""The Lake Ocid.""")
+@cli_util.option('--default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--key', help=u"""Currently not used on data asset creation. Reserved for future.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--description', help=u"""User-defined description of the data asset.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--external-key', help=u"""The external key for the object.""")
+@cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--metastore-id', help=u"""The metastoreId for the specified Lake Resource.""")
+@cli_util.option('--lake-proxy-endpoint', help=u"""The lakeProxyEndpoint for the specified Lake Resource.""")
+@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromLake'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromLake'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
+@cli_util.wrap_exceptions
+def create_data_asset_create_data_asset_from_lake(ctx, from_json, workspace_id, name, identifier, lake_id, default_connection, key, model_version, description, object_status, external_key, asset_properties, registry_metadata, metastore_id, lake_proxy_endpoint):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['identifier'] = identifier
+    _details['lakeId'] = lake_id
+    _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
+
+    if key is not None:
+        _details['key'] = key
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if external_key is not None:
+        _details['externalKey'] = external_key
+
+    if asset_properties is not None:
+        _details['assetProperties'] = cli_util.parse_json_parameter("asset_properties", asset_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if metastore_id is not None:
+        _details['metastoreId'] = metastore_id
+
+    if lake_proxy_endpoint is not None:
+        _details['lakeProxyEndpoint'] = lake_proxy_endpoint
+
+    _details['modelType'] = 'LAKE_DATA_ASSET'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_data_asset(
+        workspace_id=workspace_id,
+        create_data_asset_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@data_asset_group.command(name=cli_util.override('data_integration.create_data_asset_create_data_asset_from_my_sql_heat_wave.command_name', 'create-data-asset-create-data-asset-from-my-sql-heat-wave'), help=u"""Creates a data asset with default connection. \n[Command Reference](createDataAsset)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--host', required=True, help=u"""The MySql HeatWave host name.""")
+@cli_util.option('--port', required=True, help=u"""The MySql HeatWave port number.""")
+@cli_util.option('--default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--key', help=u"""Currently not used on data asset creation. Reserved for future.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--description', help=u"""User-defined description of the data asset.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--external-key', help=u"""The external key for the object.""")
+@cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--service-name', help=u"""The MySql HeatWave service name for the database.""")
+@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromMySqlHeatWave'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromMySqlHeatWave'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
+@cli_util.wrap_exceptions
+def create_data_asset_create_data_asset_from_my_sql_heat_wave(ctx, from_json, workspace_id, name, identifier, host, port, default_connection, key, model_version, description, object_status, external_key, asset_properties, registry_metadata, service_name):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['identifier'] = identifier
+    _details['host'] = host
+    _details['port'] = port
+    _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
+
+    if key is not None:
+        _details['key'] = key
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if external_key is not None:
+        _details['externalKey'] = external_key
+
+    if asset_properties is not None:
+        _details['assetProperties'] = cli_util.parse_json_parameter("asset_properties", asset_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if service_name is not None:
+        _details['serviceName'] = service_name
+
+    _details['modelType'] = 'MYSQL_HEATWAVE_DATA_ASSET'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_data_asset(
+        workspace_id=workspace_id,
+        create_data_asset_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@data_asset_group.command(name=cli_util.override('data_integration.create_data_asset_create_data_asset_from_amazon_s3.command_name', 'create-data-asset-create-data-asset-from-amazon-s3'), help=u"""Creates a data asset with default connection. \n[Command Reference](createDataAsset)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--key', help=u"""Currently not used on data asset creation. Reserved for future.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--description', help=u"""User-defined description of the data asset.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--external-key', help=u"""The external key for the object.""")
+@cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--region-parameterconflict', help=u"""The region for Amazon s3""")
+@cli_util.option('--default-connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromAmazonS3'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromAmazonS3'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
+@cli_util.wrap_exceptions
+def create_data_asset_create_data_asset_from_amazon_s3(ctx, from_json, workspace_id, name, identifier, key, model_version, description, object_status, external_key, asset_properties, registry_metadata, region_parameterconflict, default_connection):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['identifier'] = identifier
+
+    if key is not None:
+        _details['key'] = key
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if external_key is not None:
+        _details['externalKey'] = external_key
+
+    if asset_properties is not None:
+        _details['assetProperties'] = cli_util.parse_json_parameter("asset_properties", asset_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if region_parameterconflict is not None:
+        _details['region'] = region_parameterconflict
+
+    if default_connection is not None:
+        _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
+
+    _details['modelType'] = 'AMAZON_S3_DATA_ASSET'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_data_asset(
+        workspace_id=workspace_id,
+        create_data_asset_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@data_asset_group.command(name=cli_util.override('data_integration.create_data_asset_create_data_asset_from_rest.command_name', 'create-data-asset-create-data-asset-from-rest'), help=u"""Creates a data asset with default connection. \n[Command Reference](createDataAsset)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--base-url', required=True, help=u"""The base url of the rest server.""")
+@cli_util.option('--manifest-file-content', required=True, help=u"""The manifest file content of the rest APIs.""")
+@cli_util.option('--default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--key', help=u"""Currently not used on data asset creation. Reserved for future.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--description', help=u"""User-defined description of the data asset.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--external-key', help=u"""The external key for the object.""")
+@cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
+@cli_util.wrap_exceptions
+def create_data_asset_create_data_asset_from_rest(ctx, from_json, workspace_id, name, identifier, base_url, manifest_file_content, default_connection, key, model_version, description, object_status, external_key, asset_properties, registry_metadata):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['identifier'] = identifier
+    _details['baseUrl'] = base_url
+    _details['manifestFileContent'] = manifest_file_content
+    _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
+
+    if key is not None:
+        _details['key'] = key
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if external_key is not None:
+        _details['externalKey'] = external_key
+
+    if asset_properties is not None:
+        _details['assetProperties'] = cli_util.parse_json_parameter("asset_properties", asset_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    _details['modelType'] = 'REST_DATA_ASSET'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_data_asset(
+        workspace_id=workspace_id,
+        create_data_asset_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@data_asset_group.command(name=cli_util.override('data_integration.create_data_asset_create_data_asset_from_oracle_siebel.command_name', 'create-data-asset-create-data-asset-from-oracle-siebel'), help=u"""Creates a data asset with default connection. \n[Command Reference](createDataAsset)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--host', required=True, help=u"""The Oracle Siebel hostname.""")
+@cli_util.option('--port', required=True, help=u"""The Oracle Siebel port.""")
+@cli_util.option('--default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--key', help=u"""Currently not used on data asset creation. Reserved for future.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--description', help=u"""User-defined description of the data asset.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--external-key', help=u"""The external key for the object.""")
+@cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--service-name', help=u"""The service name for the data asset.""")
+@cli_util.option('--driver-class', help=u"""The Oracle Siebel driver class.""")
+@cli_util.option('--sid', help=u"""The Oracle Siebel SID.""")
+@cli_util.option('--wallet-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wallet-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'wallet-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'wallet-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromOracleSiebel'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'wallet-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'wallet-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromOracleSiebel'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
+@cli_util.wrap_exceptions
+def create_data_asset_create_data_asset_from_oracle_siebel(ctx, from_json, workspace_id, name, identifier, host, port, default_connection, key, model_version, description, object_status, external_key, asset_properties, registry_metadata, service_name, driver_class, sid, wallet_secret, wallet_password_secret):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['identifier'] = identifier
+    _details['host'] = host
+    _details['port'] = port
+    _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
+
+    if key is not None:
+        _details['key'] = key
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if external_key is not None:
+        _details['externalKey'] = external_key
+
+    if asset_properties is not None:
+        _details['assetProperties'] = cli_util.parse_json_parameter("asset_properties", asset_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if service_name is not None:
+        _details['serviceName'] = service_name
+
+    if driver_class is not None:
+        _details['driverClass'] = driver_class
+
+    if sid is not None:
+        _details['sid'] = sid
+
+    if wallet_secret is not None:
+        _details['walletSecret'] = cli_util.parse_json_parameter("wallet_secret", wallet_secret)
+
+    if wallet_password_secret is not None:
+        _details['walletPasswordSecret'] = cli_util.parse_json_parameter("wallet_password_secret", wallet_password_secret)
+
+    _details['modelType'] = 'ORACLE_SIEBEL_DATA_ASSET'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.create_data_asset(
@@ -3676,78 +5355,6 @@ def create_data_asset_create_data_asset_from_my_sql(ctx, from_json, workspace_id
         _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
 
     _details['modelType'] = 'MYSQL_DATA_ASSET'
-
-    client = cli_util.build_client('data_integration', 'data_integration', ctx)
-    result = client.create_data_asset(
-        workspace_id=workspace_id,
-        create_data_asset_details=_details,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
-@data_asset_group.command(name=cli_util.override('data_integration.create_data_asset_create_data_asset_from_lake.command_name', 'create-data-asset-create-data-asset-from-lake'), help=u"""Creates a data asset with default connection. \n[Command Reference](createDataAsset)""")
-@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
-@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--lake-id', required=True, help=u"""The Lake Ocid.""")
-@cli_util.option('--default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--key', help=u"""Currently not used on data asset creation. Reserved for future.""")
-@cli_util.option('--model-version', help=u"""The model version of an object.""")
-@cli_util.option('--description', help=u"""User-defined description of the data asset.""")
-@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--external-key', help=u"""The external key for the object.""")
-@cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--metastore-id', help=u"""The metastoreId for the specified Lake Resource.""")
-@cli_util.option('--lake-proxy-endpoint', help=u"""The lakeProxyEndpoint for the specified Lake Resource.""")
-@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromLake'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromLake'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
-@cli_util.wrap_exceptions
-def create_data_asset_create_data_asset_from_lake(ctx, from_json, workspace_id, name, identifier, lake_id, default_connection, key, model_version, description, object_status, external_key, asset_properties, registry_metadata, metastore_id, lake_proxy_endpoint):
-
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
-        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['name'] = name
-    _details['identifier'] = identifier
-    _details['lakeId'] = lake_id
-    _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
-
-    if key is not None:
-        _details['key'] = key
-
-    if model_version is not None:
-        _details['modelVersion'] = model_version
-
-    if description is not None:
-        _details['description'] = description
-
-    if object_status is not None:
-        _details['objectStatus'] = object_status
-
-    if external_key is not None:
-        _details['externalKey'] = external_key
-
-    if asset_properties is not None:
-        _details['assetProperties'] = cli_util.parse_json_parameter("asset_properties", asset_properties)
-
-    if registry_metadata is not None:
-        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
-
-    if metastore_id is not None:
-        _details['metastoreId'] = metastore_id
-
-    if lake_proxy_endpoint is not None:
-        _details['lakeProxyEndpoint'] = lake_proxy_endpoint
-
-    _details['modelType'] = 'LAKE_DATA_ASSET'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.create_data_asset(
@@ -3966,80 +5573,12 @@ def create_data_asset_create_data_asset_from_adwc(ctx, from_json, workspace_id, 
     cli_util.render_response(result, ctx)
 
 
-@data_asset_group.command(name=cli_util.override('data_integration.create_data_asset_create_data_asset_from_amazon_s3.command_name', 'create-data-asset-create-data-asset-from-amazon-s3'), help=u"""Creates a data asset with default connection. \n[Command Reference](createDataAsset)""")
+@data_asset_group.command(name=cli_util.override('data_integration.create_data_asset_create_data_asset_from_oracle_ebs.command_name', 'create-data-asset-create-data-asset-from-oracle-ebs'), help=u"""Creates a data asset with default connection. \n[Command Reference](createDataAsset)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
 @cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--key', help=u"""Currently not used on data asset creation. Reserved for future.""")
-@cli_util.option('--model-version', help=u"""The model version of an object.""")
-@cli_util.option('--description', help=u"""User-defined description of the data asset.""")
-@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--external-key', help=u"""The external key for the object.""")
-@cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--region-parameterconflict', help=u"""The region for Amazon s3""")
-@cli_util.option('--default-connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromAmazonS3'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromAmazonS3'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
-@cli_util.wrap_exceptions
-def create_data_asset_create_data_asset_from_amazon_s3(ctx, from_json, workspace_id, name, identifier, key, model_version, description, object_status, external_key, asset_properties, registry_metadata, region_parameterconflict, default_connection):
-
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
-        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['name'] = name
-    _details['identifier'] = identifier
-
-    if key is not None:
-        _details['key'] = key
-
-    if model_version is not None:
-        _details['modelVersion'] = model_version
-
-    if description is not None:
-        _details['description'] = description
-
-    if object_status is not None:
-        _details['objectStatus'] = object_status
-
-    if external_key is not None:
-        _details['externalKey'] = external_key
-
-    if asset_properties is not None:
-        _details['assetProperties'] = cli_util.parse_json_parameter("asset_properties", asset_properties)
-
-    if registry_metadata is not None:
-        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
-
-    if region_parameterconflict is not None:
-        _details['region'] = region_parameterconflict
-
-    if default_connection is not None:
-        _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
-
-    _details['modelType'] = 'AMAZON_S3_DATA_ASSET'
-
-    client = cli_util.build_client('data_integration', 'data_integration', ctx)
-    result = client.create_data_asset(
-        workspace_id=workspace_id,
-        create_data_asset_details=_details,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
-@data_asset_group.command(name=cli_util.override('data_integration.create_data_asset_create_data_asset_from_rest.command_name', 'create-data-asset-create-data-asset-from-rest'), help=u"""Creates a data asset with default connection. \n[Command Reference](createDataAsset)""")
-@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
-@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--base-url', required=True, help=u"""The base url of the rest server.""")
-@cli_util.option('--manifest-file-content', required=True, help=u"""The manifest file content of the rest APIs.""")
+@cli_util.option('--host', required=True, help=u"""The Oracle EBS hostname.""")
+@cli_util.option('--port', required=True, help=u"""The Oracle EBS port.""")
 @cli_util.option('--default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--key', help=u"""Currently not used on data asset creation. Reserved for future.""")
 @cli_util.option('--model-version', help=u"""The model version of an object.""")
@@ -4048,12 +5587,17 @@ def create_data_asset_create_data_asset_from_amazon_s3(ctx, from_json, workspace
 @cli_util.option('--external-key', help=u"""The external key for the object.""")
 @cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}})
+@cli_util.option('--service-name', help=u"""The service name for the data asset.""")
+@cli_util.option('--driver-class', help=u"""The Oracle EBS driver class.""")
+@cli_util.option('--sid', help=u"""The Oracle EBS SID.""")
+@cli_util.option('--wallet-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wallet-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'wallet-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'wallet-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromOracleEbs'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionDetails'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'wallet-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'wallet-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromOracleEbs'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
 @cli_util.wrap_exceptions
-def create_data_asset_create_data_asset_from_rest(ctx, from_json, workspace_id, name, identifier, base_url, manifest_file_content, default_connection, key, model_version, description, object_status, external_key, asset_properties, registry_metadata):
+def create_data_asset_create_data_asset_from_oracle_ebs(ctx, from_json, workspace_id, name, identifier, host, port, default_connection, key, model_version, description, object_status, external_key, asset_properties, registry_metadata, service_name, driver_class, sid, wallet_secret, wallet_password_secret):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -4064,8 +5608,8 @@ def create_data_asset_create_data_asset_from_rest(ctx, from_json, workspace_id, 
     _details = {}
     _details['name'] = name
     _details['identifier'] = identifier
-    _details['baseUrl'] = base_url
-    _details['manifestFileContent'] = manifest_file_content
+    _details['host'] = host
+    _details['port'] = port
     _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
 
     if key is not None:
@@ -4089,7 +5633,108 @@ def create_data_asset_create_data_asset_from_rest(ctx, from_json, workspace_id, 
     if registry_metadata is not None:
         _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
 
-    _details['modelType'] = 'REST_DATA_ASSET'
+    if service_name is not None:
+        _details['serviceName'] = service_name
+
+    if driver_class is not None:
+        _details['driverClass'] = driver_class
+
+    if sid is not None:
+        _details['sid'] = sid
+
+    if wallet_secret is not None:
+        _details['walletSecret'] = cli_util.parse_json_parameter("wallet_secret", wallet_secret)
+
+    if wallet_password_secret is not None:
+        _details['walletPasswordSecret'] = cli_util.parse_json_parameter("wallet_password_secret", wallet_password_secret)
+
+    _details['modelType'] = 'ORACLE_EBS_DATA_ASSET'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_data_asset(
+        workspace_id=workspace_id,
+        create_data_asset_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@data_asset_group.command(name=cli_util.override('data_integration.create_data_asset_create_data_asset_from_oracle_people_soft.command_name', 'create-data-asset-create-data-asset-from-oracle-people-soft'), help=u"""Creates a data asset with default connection. \n[Command Reference](createDataAsset)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--host', required=True, help=u"""The Oracle PeopleSoft hostname.""")
+@cli_util.option('--port', required=True, help=u"""The Oracle PeopleSoft port.""")
+@cli_util.option('--default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--key', help=u"""Currently not used on data asset creation. Reserved for future.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--description', help=u"""User-defined description of the data asset.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--external-key', help=u"""The external key for the object.""")
+@cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--service-name', help=u"""The service name for the data asset.""")
+@cli_util.option('--driver-class', help=u"""The Oracle PeopleSoft driver class.""")
+@cli_util.option('--sid', help=u"""The Oracle PeopleSoft SID.""")
+@cli_util.option('--wallet-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wallet-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'wallet-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'wallet-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromOraclePeopleSoft'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'wallet-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'wallet-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromOraclePeopleSoft'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
+@cli_util.wrap_exceptions
+def create_data_asset_create_data_asset_from_oracle_people_soft(ctx, from_json, workspace_id, name, identifier, host, port, default_connection, key, model_version, description, object_status, external_key, asset_properties, registry_metadata, service_name, driver_class, sid, wallet_secret, wallet_password_secret):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['identifier'] = identifier
+    _details['host'] = host
+    _details['port'] = port
+    _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
+
+    if key is not None:
+        _details['key'] = key
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if external_key is not None:
+        _details['externalKey'] = external_key
+
+    if asset_properties is not None:
+        _details['assetProperties'] = cli_util.parse_json_parameter("asset_properties", asset_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if service_name is not None:
+        _details['serviceName'] = service_name
+
+    if driver_class is not None:
+        _details['driverClass'] = driver_class
+
+    if sid is not None:
+        _details['sid'] = sid
+
+    if wallet_secret is not None:
+        _details['walletSecret'] = cli_util.parse_json_parameter("wallet_secret", wallet_secret)
+
+    if wallet_password_secret is not None:
+        _details['walletPasswordSecret'] = cli_util.parse_json_parameter("wallet_password_secret", wallet_password_secret)
+
+    _details['modelType'] = 'ORACLE_PEOPLESOFT_DATA_ASSET'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.create_data_asset(
@@ -4685,7 +6330,7 @@ def create_dis_application_detailed_description(ctx, from_json, workspace_id, ap
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
 @cli_util.option('--schema-resource-name', required=True, help=u"""The schema resource name used for retrieving schemas.""")
-@cli_util.option('--model-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FILE_ENTITY", "SQL_ENTITY"]), help=u"""The data entity type.""")
+@cli_util.option('--model-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FILE_ENTITY", "SQL_ENTITY", "OBJECT_ENTITY"]), help=u"""The data entity type.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -4710,6 +6355,105 @@ def create_entity_shape(ctx, from_json, workspace_id, connection_key, schema_res
 
     _details = {}
     _details['modelType'] = model_type
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_entity_shape(
+        workspace_id=workspace_id,
+        connection_key=connection_key,
+        schema_resource_name=schema_resource_name,
+        create_entity_shape_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@data_entity_group.command(name=cli_util.override('data_integration.create_entity_shape_create_entity_shape_from_object.command_name', 'create-entity-shape-create-entity-shape-from-object'), help=u"""Creates the data entity shape using the shape from the data asset. \n[Command Reference](createEntityShape)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
+@cli_util.option('--schema-resource-name', required=True, help=u"""The schema resource name used for retrieving schemas.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--key', help=u"""The object key.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""Detailed description for the object.""")
+@cli_util.option('--external-key', help=u"""The external key for the object.""")
+@cli_util.option('--shape', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--shape-id', help=u"""The shape ID.""")
+@cli_util.option('--entity-type', type=custom_types.CliCaseInsensitiveChoice(["TABLE", "VIEW", "FILE", "SQL", "OBJECT"]), help=u"""The entity type.""")
+@cli_util.option('--other-type-label', help=u"""Specifies other type label.""")
+@cli_util.option('--unique-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of unique keys.
+
+This option is a JSON list with items of type UniqueKey.  For documentation on UniqueKey please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/UniqueKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--foreign-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of foreign keys.
+
+This option is a JSON list with items of type ForeignKey.  For documentation on ForeignKey please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ForeignKey.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--resource-name', help=u"""The resource name.""")
+@cli_util.option('--data-format', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'shape': {'module': 'data_integration', 'class': 'Shape'}, 'unique-keys': {'module': 'data_integration', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_integration', 'class': 'list[ForeignKey]'}, 'data-format': {'module': 'data_integration', 'class': 'DataFormat'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'shape': {'module': 'data_integration', 'class': 'Shape'}, 'unique-keys': {'module': 'data_integration', 'class': 'list[UniqueKey]'}, 'foreign-keys': {'module': 'data_integration', 'class': 'list[ForeignKey]'}, 'data-format': {'module': 'data_integration', 'class': 'DataFormat'}}, output_type={'module': 'data_integration', 'class': 'EntityShape'})
+@cli_util.wrap_exceptions
+def create_entity_shape_create_entity_shape_from_object(ctx, from_json, workspace_id, connection_key, schema_resource_name, name, key, parent_ref, description, external_key, shape, shape_id, entity_type, other_type_label, unique_keys, foreign_keys, resource_name, data_format, identifier, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+        raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
+
+    if isinstance(schema_resource_name, six.string_types) and len(schema_resource_name.strip()) == 0:
+        raise click.UsageError('Parameter --schema-resource-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+
+    if key is not None:
+        _details['key'] = key
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if description is not None:
+        _details['description'] = description
+
+    if external_key is not None:
+        _details['externalKey'] = external_key
+
+    if shape is not None:
+        _details['shape'] = cli_util.parse_json_parameter("shape", shape)
+
+    if shape_id is not None:
+        _details['shapeId'] = shape_id
+
+    if entity_type is not None:
+        _details['entityType'] = entity_type
+
+    if other_type_label is not None:
+        _details['otherTypeLabel'] = other_type_label
+
+    if unique_keys is not None:
+        _details['uniqueKeys'] = cli_util.parse_json_parameter("unique_keys", unique_keys)
+
+    if foreign_keys is not None:
+        _details['foreignKeys'] = cli_util.parse_json_parameter("foreign_keys", foreign_keys)
+
+    if resource_name is not None:
+        _details['resourceName'] = resource_name
+
+    if data_format is not None:
+        _details['dataFormat'] = cli_util.parse_json_parameter("data_format", data_format)
+
+    if identifier is not None:
+        _details['identifier'] = identifier
+
+    _details['modelType'] = 'OBJECT_ENTITY'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.create_entity_shape(
@@ -4956,6 +6700,88 @@ def create_entity_shape_create_entity_shape_from_file(ctx, from_json, workspace_
     cli_util.render_response(result, ctx)
 
 
+@export_request_group.command(name=cli_util.override('data_integration.create_export_request.command_name', 'create'), help=u"""Export Metadata Object \n[Command Reference](createExportRequest)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--bucket-name', required=True, help=u"""Name of the Object Storage bucket where the object will be exported.""")
+@cli_util.option('--file-name', help=u"""Name of the exported zip file.""")
+@cli_util.option('--object-storage-tenancy-id', help=u"""Optional parameter to point to object storage tenancy (if using Object Storage of different tenancy)""")
+@cli_util.option('--object-storage-region', help=u"""Region of the object storage (if using object storage of different region)""")
+@cli_util.option('--is-object-overwrite-enabled', type=click.BOOL, help=u"""Flag to control whether to overwrite the object if it is already present at the provided object storage location.""")
+@cli_util.option('--object-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Field is used to specify which object keys to export""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--are-references-included', type=click.BOOL, help=u"""This field controls if the references will be exported along with the objects""")
+@cli_util.option('--filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Filters for exported objects""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'object-keys': {'module': 'data_integration', 'class': 'list[string]'}, 'filters': {'module': 'data_integration', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'object-keys': {'module': 'data_integration', 'class': 'list[string]'}, 'filters': {'module': 'data_integration', 'class': 'list[string]'}}, output_type={'module': 'data_integration', 'class': 'ExportRequest'})
+@cli_util.wrap_exceptions
+def create_export_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, workspace_id, bucket_name, file_name, object_storage_tenancy_id, object_storage_region, is_object_overwrite_enabled, object_keys, are_references_included, filters):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['bucketName'] = bucket_name
+
+    if file_name is not None:
+        _details['fileName'] = file_name
+
+    if object_storage_tenancy_id is not None:
+        _details['objectStorageTenancyId'] = object_storage_tenancy_id
+
+    if object_storage_region is not None:
+        _details['objectStorageRegion'] = object_storage_region
+
+    if is_object_overwrite_enabled is not None:
+        _details['isObjectOverwriteEnabled'] = is_object_overwrite_enabled
+
+    if object_keys is not None:
+        _details['objectKeys'] = cli_util.parse_json_parameter("object_keys", object_keys)
+
+    if are_references_included is not None:
+        _details['areReferencesIncluded'] = are_references_included
+
+    if filters is not None:
+        _details['filters'] = cli_util.parse_json_parameter("filters", filters)
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_export_request(
+        workspace_id=workspace_id,
+        create_export_request_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @external_publication_group.command(name=cli_util.override('data_integration.create_external_publication.command_name', 'create'), help=u"""Publish a DataFlow in a OCI DataFlow application. \n[Command Reference](createExternalPublication)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--task-key', required=True, help=u"""The task key.""")
@@ -5143,6 +6969,78 @@ def create_function_library(ctx, from_json, workspace_id, name, identifier, regi
         create_function_library_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@import_request_group.command(name=cli_util.override('data_integration.create_import_request.command_name', 'create'), help=u"""Import Metadata Object \n[Command Reference](createImportRequest)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--bucket-name', required=True, help=u"""Name of the Object Storage bucket where the object will be imported from.""")
+@cli_util.option('--file-name', required=True, help=u"""Name of the zip file to be imported.""")
+@cli_util.option('--object-storage-tenancy-id', help=u"""Optional parameter to point to object storage tenancy (if using Object Storage of different tenancy)""")
+@cli_util.option('--object-storage-region', help=u"""Region of the object storage (if using object storage of different region)""")
+@cli_util.option('--object-key-for-import', help=u"""Key of the object inside which all the objects will be imported""")
+@cli_util.option('--import-conflict-resolution', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'import-conflict-resolution': {'module': 'data_integration', 'class': 'ImportConflictResolution'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'import-conflict-resolution': {'module': 'data_integration', 'class': 'ImportConflictResolution'}}, output_type={'module': 'data_integration', 'class': 'ImportRequest'})
+@cli_util.wrap_exceptions
+def create_import_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, workspace_id, bucket_name, file_name, object_storage_tenancy_id, object_storage_region, object_key_for_import, import_conflict_resolution):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['bucketName'] = bucket_name
+    _details['fileName'] = file_name
+
+    if object_storage_tenancy_id is not None:
+        _details['objectStorageTenancyId'] = object_storage_tenancy_id
+
+    if object_storage_region is not None:
+        _details['objectStorageRegion'] = object_storage_region
+
+    if object_key_for_import is not None:
+        _details['objectKeyForImport'] = object_key_for_import
+
+    if import_conflict_resolution is not None:
+        _details['importConflictResolution'] = cli_util.parse_json_parameter("import_conflict_resolution", import_conflict_resolution)
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_import_request(
+        workspace_id=workspace_id,
+        create_import_request_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -7777,6 +9675,37 @@ def delete_dis_application_detailed_description(ctx, from_json, workspace_id, ap
     cli_util.render_response(result, ctx)
 
 
+@workspace_group.command(name=cli_util.override('data_integration.delete_export_request.command_name', 'delete-export-request'), help=u"""Delete export object request using the specified identifier. \n[Command Reference](deleteExportRequest)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--export-request-key', required=True, help=u"""The key of the object export object request""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_export_request(ctx, from_json, workspace_id, export_request_key, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(export_request_key, six.string_types) and len(export_request_key.strip()) == 0:
+        raise click.UsageError('Parameter --export-request-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.delete_export_request(
+        workspace_id=workspace_id,
+        export_request_key=export_request_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @external_publication_group.command(name=cli_util.override('data_integration.delete_external_publication.command_name', 'delete'), help=u"""Removes a published object using the specified identifier. \n[Command Reference](deleteExternalPublication)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--task-key', required=True, help=u"""The task key.""")
@@ -7906,6 +9835,37 @@ def delete_function_library(ctx, from_json, workspace_id, function_library_key, 
     result = client.delete_function_library(
         workspace_id=workspace_id,
         function_library_key=function_library_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@workspace_group.command(name=cli_util.override('data_integration.delete_import_request.command_name', 'delete-import-request'), help=u"""Delete import object request using the specified identifier. \n[Command Reference](deleteImportRequest)""")
+@cli_util.option('--import-request-key', required=True, help=u"""The key of the object export object request""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_import_request(ctx, from_json, import_request_key, workspace_id, if_match):
+
+    if isinstance(import_request_key, six.string_types) and len(import_request_key.strip()) == 0:
+        raise click.UsageError('Parameter --import-request-key cannot be whitespace or empty string')
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.delete_import_request(
+        import_request_key=import_request_key,
+        workspace_id=workspace_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -8384,6 +10344,35 @@ def get_application_detailed_description(ctx, from_json, workspace_id, applicati
     cli_util.render_response(result, ctx)
 
 
+@composite_state_group.command(name=cli_util.override('data_integration.get_composite_state.command_name', 'get'), help=u"""This endpoint can be used to get composite state for a given aggregator \n[Command Reference](getCompositeState)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--application-key', required=True, help=u"""The application key.""")
+@cli_util.option('--aggregator-key', required=True, help=u"""Unique key of the aggregator for which we want to get the Composite State""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_integration', 'class': 'CompositeState'})
+@cli_util.wrap_exceptions
+def get_composite_state(ctx, from_json, workspace_id, application_key, aggregator_key):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(application_key, six.string_types) and len(application_key.strip()) == 0:
+        raise click.UsageError('Parameter --application-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.get_composite_state(
+        workspace_id=workspace_id,
+        application_key=application_key,
+        aggregator_key=aggregator_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @connection_group.command(name=cli_util.override('data_integration.get_connection.command_name', 'get'), help=u"""Retrieves the connection details using the specified identifier. \n[Command Reference](getConnection)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
@@ -8699,6 +10688,33 @@ def get_dis_application_detailed_description(ctx, from_json, workspace_id, appli
     cli_util.render_response(result, ctx)
 
 
+@export_request_group.command(name=cli_util.override('data_integration.get_export_request.command_name', 'get'), help=u"""This endpoint can be used to get the summary/details of object being exported. \n[Command Reference](getExportRequest)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--export-request-key', required=True, help=u"""The key of the object export object request""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_integration', 'class': 'ExportRequest'})
+@cli_util.wrap_exceptions
+def get_export_request(ctx, from_json, workspace_id, export_request_key):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(export_request_key, six.string_types) and len(export_request_key.strip()) == 0:
+        raise click.UsageError('Parameter --export-request-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.get_export_request(
+        workspace_id=workspace_id,
+        export_request_key=export_request_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @external_publication_group.command(name=cli_util.override('data_integration.get_external_publication.command_name', 'get'), help=u"""Retrieves a publshed object in an task using the specified identifier. \n[Command Reference](getExternalPublication)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--task-key', required=True, help=u"""The task key.""")
@@ -8818,6 +10834,39 @@ def get_function_library(ctx, from_json, workspace_id, function_library_key, pro
     result = client.get_function_library(
         workspace_id=workspace_id,
         function_library_key=function_library_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@import_request_group.command(name=cli_util.override('data_integration.get_import_request.command_name', 'get'), help=u"""This endpoint can be used to get the summary/details of object being imported. \n[Command Reference](getImportRequest)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--import-request-key', required=True, help=u"""The key of the object export object request""")
+@cli_util.option('--limit', type=click.INT, help=u"""Sets the maximum number of results per page, or items to return in a paginated `List` call. See [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value for this parameter is the `opc-next-page` or the `opc-prev-page` response header from the previous `List` call. See [List Pagination].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_integration', 'class': 'ImportRequest'})
+@cli_util.wrap_exceptions
+def get_import_request(ctx, from_json, workspace_id, import_request_key, limit, page):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(import_request_key, six.string_types) and len(import_request_key.strip()) == 0:
+        raise click.UsageError('Parameter --import-request-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.get_import_request(
+        workspace_id=workspace_id,
+        import_request_key=import_request_key,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -10201,6 +12250,78 @@ def list_dis_applications(ctx, from_json, all_pages, page_size, workspace_id, co
     cli_util.render_response(result, ctx)
 
 
+@export_request_summary_collection_group.command(name=cli_util.override('data_integration.list_export_requests.command_name', 'list-export-requests'), help=u"""This endpoint can be used to get the list of export object requests. \n[Command Reference](listExportRequests)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--page', help=u"""For list pagination. The value for this parameter is the `opc-next-page` or the `opc-prev-page` response header from the previous `List` call. See [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""Sets the maximum number of results per page, or items to return in a paginated `List` call. See [List Pagination].""")
+@cli_util.option('--name', help=u"""Used to filter by the name of the object.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_CREATED", "DISPLAY_NAME", "TIME_UPDATED"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order is by relevance score in descending order).""")
+@cli_util.option('--export-status', type=custom_types.CliCaseInsensitiveChoice(["IN_PROGRESS", "SUCCESSFUL", "QUEUED", "TERMINATING", "TERMINATED", "FAILED"]), help=u"""Specifies export status to use, either -  ALL, SUCCESSFUL, IN_PROGRESS, QUEUED, FAILED .""")
+@cli_util.option('--projection', type=custom_types.CliCaseInsensitiveChoice(["SUMMARY", "DETAILS"]), help=u"""This parameter allows users to specify which view of the export object response to return. SUMMARY - Summary of the export object request will be returned. This is the default option when no value is specified. DETAILS - Details of export object request will be returned. This will include details of all the objects to be exported.""")
+@cli_util.option('--time-started-in-millis', type=click.INT, help=u"""Specifies start time of a copy object request.""")
+@cli_util.option('--time-ended-in-millis', type=click.INT, help=u"""Specifies end time of a copy object request.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_integration', 'class': 'ExportRequestSummaryCollection'})
+@cli_util.wrap_exceptions
+def list_export_requests(ctx, from_json, all_pages, page_size, workspace_id, page, limit, name, sort_order, sort_by, export_status, projection, time_started_in_millis, time_ended_in_millis):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if name is not None:
+        kwargs['name'] = name
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if export_status is not None:
+        kwargs['export_status'] = export_status
+    if projection is not None:
+        kwargs['projection'] = projection
+    if time_started_in_millis is not None:
+        kwargs['time_started_in_millis'] = time_started_in_millis
+    if time_ended_in_millis is not None:
+        kwargs['time_ended_in_millis'] = time_ended_in_millis
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_export_requests,
+            workspace_id=workspace_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_export_requests,
+            limit,
+            page_size,
+            workspace_id=workspace_id,
+            **kwargs
+        )
+    else:
+        result = client.list_export_requests(
+            workspace_id=workspace_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @external_publication_validation_group.command(name=cli_util.override('data_integration.list_external_publication_validations.command_name', 'list'), help=u"""Retrieves a lists of external publication validations in a workspace and provides options to filter the list. \n[Command Reference](listExternalPublicationValidations)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--task-key', required=True, help=u"""The task key.""")
@@ -10479,6 +12600,78 @@ def list_function_libraries(ctx, from_json, all_pages, page_size, workspace_id, 
         )
     else:
         result = client.list_function_libraries(
+            workspace_id=workspace_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@import_request_summary_collection_group.command(name=cli_util.override('data_integration.list_import_requests.command_name', 'list-import-requests'), help=u"""This endpoint can be used to get the list of import object requests. \n[Command Reference](listImportRequests)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--page', help=u"""For list pagination. The value for this parameter is the `opc-next-page` or the `opc-prev-page` response header from the previous `List` call. See [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""Sets the maximum number of results per page, or items to return in a paginated `List` call. See [List Pagination].""")
+@cli_util.option('--name', help=u"""Used to filter by the name of the object.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_CREATED", "DISPLAY_NAME", "TIME_UPDATED"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by time fields, results are shown in descending order. All other fields default to ascending order. Sorting related parameters are ignored when parameter `query` is present (search operation and sorting order is by relevance score in descending order).""")
+@cli_util.option('--import-status', type=custom_types.CliCaseInsensitiveChoice(["IN_PROGRESS", "SUCCESSFUL", "QUEUED", "TERMINATING", "TERMINATED", "FAILED"]), help=u"""Specifies import status to use, either -  ALL, SUCCESSFUL, IN_PROGRESS, QUEUED, FAILED .""")
+@cli_util.option('--projection', type=custom_types.CliCaseInsensitiveChoice(["SUMMARY", "DETAILS"]), help=u"""This parameter allows users to specify which view of the import object response to return. SUMMARY - Summary of the import object request will be returned. This is the default option when no value is specified. DETAILS - Details of import object request will be returned. This will include details of all the objects to be exported.""")
+@cli_util.option('--time-started-in-millis', type=click.INT, help=u"""Specifies start time of a copy object request.""")
+@cli_util.option('--time-ended-in-millis', type=click.INT, help=u"""Specifies end time of a copy object request.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_integration', 'class': 'ImportRequestSummaryCollection'})
+@cli_util.wrap_exceptions
+def list_import_requests(ctx, from_json, all_pages, page_size, workspace_id, page, limit, name, sort_order, sort_by, import_status, projection, time_started_in_millis, time_ended_in_millis):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if name is not None:
+        kwargs['name'] = name
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if import_status is not None:
+        kwargs['import_status'] = import_status
+    if projection is not None:
+        kwargs['projection'] = projection
+    if time_started_in_millis is not None:
+        kwargs['time_started_in_millis'] = time_started_in_millis
+    if time_ended_in_millis is not None:
+        kwargs['time_ended_in_millis'] = time_ended_in_millis
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_import_requests,
+            workspace_id=workspace_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_import_requests,
+            limit,
+            page_size,
+            workspace_id=workspace_id,
+            **kwargs
+        )
+    else:
+        result = client.list_import_requests(
             workspace_id=workspace_id,
             **kwargs
         )
@@ -12491,7 +14684,7 @@ def update_application_detailed_description(ctx, from_json, workspace_id, applic
 @connection_group.command(name=cli_util.override('data_integration.update_connection.command_name', 'update'), help=u"""Updates a connection under a data asset. \n[Command Reference](updateConnection)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
-@cli_util.option('--model-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_ADWC_CONNECTION", "ORACLE_ATP_CONNECTION", "ORACLE_OBJECT_STORAGE_CONNECTION", "ORACLEDB_CONNECTION", "MYSQL_CONNECTION", "GENERIC_JDBC_CONNECTION", "BICC_CONNECTION", "AMAZON_S3_CONNECTION", "BIP_CONNECTION", "LAKE_CONNECTION", "REST_NO_AUTH_CONNECTION", "REST_BASIC_AUTH_CONNECTION"]), help=u"""The type of the connection.""")
+@cli_util.option('--model-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_ADWC_CONNECTION", "ORACLE_ATP_CONNECTION", "ORACLE_OBJECT_STORAGE_CONNECTION", "ORACLEDB_CONNECTION", "MYSQL_CONNECTION", "GENERIC_JDBC_CONNECTION", "BICC_CONNECTION", "AMAZON_S3_CONNECTION", "BIP_CONNECTION", "LAKE_CONNECTION", "ORACLE_PEOPLESOFT_CONNECTION", "ORACLE_EBS_CONNECTION", "ORACLE_SIEBEL_CONNECTION", "HDFS_CONNECTION", "MYSQL_HEATWAVE_CONNECTION", "REST_NO_AUTH_CONNECTION", "REST_BASIC_AUTH_CONNECTION"]), help=u"""The type of the connection.""")
 @cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
 @cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
 @cli_util.option('--model-version', help=u"""The model version of an object.""")
@@ -12646,11 +14839,13 @@ def update_connection_update_connection_from_lake(ctx, from_json, force, workspa
     cli_util.render_response(result, ctx)
 
 
-@connection_group.command(name=cli_util.override('data_integration.update_connection_update_connection_from_jdbc.command_name', 'update-connection-update-connection-from-jdbc'), help=u"""Updates a connection under a data asset. \n[Command Reference](updateConnection)""")
+@connection_group.command(name=cli_util.override('data_integration.update_connection_update_connection_from_oracle_ebs.command_name', 'update-connection-update-connection-from-oracle-ebs'), help=u"""Updates a connection under a data asset. \n[Command Reference](updateConnection)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
 @cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
 @cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--username', required=True, help=u"""The user name for the connection.""")
+@cli_util.option('--password', required=True, help=u"""The password for the connection.""")
 @cli_util.option('--model-version', help=u"""The model version of an object.""")
 @cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
@@ -12661,8 +14856,6 @@ def update_connection_update_connection_from_lake(ctx, from_json, force, workspa
 
 This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--username', help=u"""The user name for the connection.""")
-@cli_util.option('--password', help=u"""The password for the connection.""")
 @cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -12671,7 +14864,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def update_connection_update_connection_from_jdbc(ctx, from_json, force, workspace_id, connection_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, username, password, password_secret, if_match):
+def update_connection_update_connection_from_oracle_ebs(ctx, from_json, force, workspace_id, connection_key, key, object_version, username, password, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, password_secret, if_match):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -12691,6 +14884,8 @@ def update_connection_update_connection_from_jdbc(ctx, from_json, force, workspa
     _details = {}
     _details['key'] = key
     _details['objectVersion'] = object_version
+    _details['username'] = username
+    _details['password'] = password
 
     if model_version is not None:
         _details['modelVersion'] = model_version
@@ -12716,16 +14911,10 @@ def update_connection_update_connection_from_jdbc(ctx, from_json, force, workspa
     if registry_metadata is not None:
         _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
 
-    if username is not None:
-        _details['username'] = username
-
-    if password is not None:
-        _details['password'] = password
-
     if password_secret is not None:
         _details['passwordSecret'] = cli_util.parse_json_parameter("password_secret", password_secret)
 
-    _details['modelType'] = 'GENERIC_JDBC_CONNECTION'
+    _details['modelType'] = 'ORACLE_EBS_CONNECTION'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.update_connection(
@@ -13002,6 +15191,633 @@ def update_connection_update_connection_from_rest_no_auth(ctx, from_json, force,
     cli_util.render_response(result, ctx)
 
 
+@connection_group.command(name=cli_util.override('data_integration.update_connection_update_connection_from_hdfs.command_name', 'update-connection-update-connection-from-hdfs'), help=u"""Updates a connection under a data asset. \n[Command Reference](updateConnection)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
+@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--hdfs-principal', required=True, help=u"""The HDFS principal.""")
+@cli_util.option('--data-node-principal', required=True, help=u"""The HDFS Data Node principal.""")
+@cli_util.option('--name-node-principal', required=True, help=u"""The HDFS Name Node principal.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--realm', help=u"""HDFS Realm name.""")
+@cli_util.option('--key-distribution-center', help=u"""The HDFS Key Distribution Center.""")
+@cli_util.option('--key-tab-content', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'key-tab-content': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'key-tab-content': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def update_connection_update_connection_from_hdfs(ctx, from_json, force, workspace_id, connection_key, key, object_version, hdfs_principal, data_node_principal, name_node_principal, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, realm, key_distribution_center, key_tab_content, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+        raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
+    if not force:
+        if parent_ref or connection_properties or registry_metadata or key_tab_content:
+            if not click.confirm("WARNING: Updates to parent-ref and connection-properties and registry-metadata and key-tab-content will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['key'] = key
+    _details['objectVersion'] = object_version
+    _details['hdfsPrincipal'] = hdfs_principal
+    _details['dataNodePrincipal'] = data_node_principal
+    _details['nameNodePrincipal'] = name_node_principal
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if name is not None:
+        _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if identifier is not None:
+        _details['identifier'] = identifier
+
+    if connection_properties is not None:
+        _details['connectionProperties'] = cli_util.parse_json_parameter("connection_properties", connection_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if realm is not None:
+        _details['realm'] = realm
+
+    if key_distribution_center is not None:
+        _details['keyDistributionCenter'] = key_distribution_center
+
+    if key_tab_content is not None:
+        _details['keyTabContent'] = cli_util.parse_json_parameter("key_tab_content", key_tab_content)
+
+    _details['modelType'] = 'HDFS_CONNECTION'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_connection(
+        workspace_id=workspace_id,
+        connection_key=connection_key,
+        update_connection_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('data_integration.update_connection_update_connection_from_rest_basic_auth.command_name', 'update-connection-update-connection-from-rest-basic-auth'), help=u"""Updates a connection under a data asset. \n[Command Reference](updateConnection)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
+@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--username', required=True, help=u"""Username for the connection.""")
+@cli_util.option('--password-secret', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--auth-header', help=u"""Optional header name if used other than default header(Authorization).""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def update_connection_update_connection_from_rest_basic_auth(ctx, from_json, force, workspace_id, connection_key, key, object_version, username, password_secret, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, auth_header, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+        raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
+    if not force:
+        if parent_ref or connection_properties or registry_metadata or password_secret:
+            if not click.confirm("WARNING: Updates to parent-ref and connection-properties and registry-metadata and password-secret will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['key'] = key
+    _details['objectVersion'] = object_version
+    _details['username'] = username
+    _details['passwordSecret'] = cli_util.parse_json_parameter("password_secret", password_secret)
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if name is not None:
+        _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if identifier is not None:
+        _details['identifier'] = identifier
+
+    if connection_properties is not None:
+        _details['connectionProperties'] = cli_util.parse_json_parameter("connection_properties", connection_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if auth_header is not None:
+        _details['authHeader'] = auth_header
+
+    _details['modelType'] = 'REST_BASIC_AUTH_CONNECTION'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_connection(
+        workspace_id=workspace_id,
+        connection_key=connection_key,
+        update_connection_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('data_integration.update_connection_update_connection_from_oracle_siebel.command_name', 'update-connection-update-connection-from-oracle-siebel'), help=u"""Updates a connection under a data asset. \n[Command Reference](updateConnection)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
+@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--username', required=True, help=u"""The user name for the connection.""")
+@cli_util.option('--password', required=True, help=u"""The password for the connection.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def update_connection_update_connection_from_oracle_siebel(ctx, from_json, force, workspace_id, connection_key, key, object_version, username, password, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, password_secret, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+        raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
+    if not force:
+        if parent_ref or connection_properties or registry_metadata or password_secret:
+            if not click.confirm("WARNING: Updates to parent-ref and connection-properties and registry-metadata and password-secret will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['key'] = key
+    _details['objectVersion'] = object_version
+    _details['username'] = username
+    _details['password'] = password
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if name is not None:
+        _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if identifier is not None:
+        _details['identifier'] = identifier
+
+    if connection_properties is not None:
+        _details['connectionProperties'] = cli_util.parse_json_parameter("connection_properties", connection_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if password_secret is not None:
+        _details['passwordSecret'] = cli_util.parse_json_parameter("password_secret", password_secret)
+
+    _details['modelType'] = 'ORACLE_SIEBEL_CONNECTION'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_connection(
+        workspace_id=workspace_id,
+        connection_key=connection_key,
+        update_connection_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('data_integration.update_connection_update_connection_from_my_sql_heat_wave.command_name', 'update-connection-update-connection-from-my-sql-heat-wave'), help=u"""Updates a connection under a data asset. \n[Command Reference](updateConnection)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
+@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--username', required=True, help=u"""The user name for the connection.""")
+@cli_util.option('--password', required=True, help=u"""The password for the connection.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def update_connection_update_connection_from_my_sql_heat_wave(ctx, from_json, force, workspace_id, connection_key, key, object_version, username, password, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, password_secret, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+        raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
+    if not force:
+        if parent_ref or connection_properties or registry_metadata or password_secret:
+            if not click.confirm("WARNING: Updates to parent-ref and connection-properties and registry-metadata and password-secret will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['key'] = key
+    _details['objectVersion'] = object_version
+    _details['username'] = username
+    _details['password'] = password
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if name is not None:
+        _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if identifier is not None:
+        _details['identifier'] = identifier
+
+    if connection_properties is not None:
+        _details['connectionProperties'] = cli_util.parse_json_parameter("connection_properties", connection_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if password_secret is not None:
+        _details['passwordSecret'] = cli_util.parse_json_parameter("password_secret", password_secret)
+
+    _details['modelType'] = 'MYSQL_HEATWAVE_CONNECTION'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_connection(
+        workspace_id=workspace_id,
+        connection_key=connection_key,
+        update_connection_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('data_integration.update_connection_update_connection_from_bip.command_name', 'update-connection-update-connection-from-bip'), help=u"""Updates a connection under a data asset. \n[Command Reference](updateConnection)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
+@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--username', help=u"""The user name for the connection.""")
+@cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def update_connection_update_connection_from_bip(ctx, from_json, force, workspace_id, connection_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, username, password_secret, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+        raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
+    if not force:
+        if parent_ref or connection_properties or registry_metadata or password_secret:
+            if not click.confirm("WARNING: Updates to parent-ref and connection-properties and registry-metadata and password-secret will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['key'] = key
+    _details['objectVersion'] = object_version
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if name is not None:
+        _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if identifier is not None:
+        _details['identifier'] = identifier
+
+    if connection_properties is not None:
+        _details['connectionProperties'] = cli_util.parse_json_parameter("connection_properties", connection_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if username is not None:
+        _details['username'] = username
+
+    if password_secret is not None:
+        _details['passwordSecret'] = cli_util.parse_json_parameter("password_secret", password_secret)
+
+    _details['modelType'] = 'BIP_CONNECTION'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_connection(
+        workspace_id=workspace_id,
+        connection_key=connection_key,
+        update_connection_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('data_integration.update_connection_update_connection_from_my_sql.command_name', 'update-connection-update-connection-from-my-sql'), help=u"""Updates a connection under a data asset. \n[Command Reference](updateConnection)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
+@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--username', help=u"""The user name for the connection.""")
+@cli_util.option('--password', help=u"""The password for the connection.""")
+@cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def update_connection_update_connection_from_my_sql(ctx, from_json, force, workspace_id, connection_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, username, password, password_secret, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+        raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
+    if not force:
+        if parent_ref or connection_properties or registry_metadata or password_secret:
+            if not click.confirm("WARNING: Updates to parent-ref and connection-properties and registry-metadata and password-secret will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['key'] = key
+    _details['objectVersion'] = object_version
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if name is not None:
+        _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if identifier is not None:
+        _details['identifier'] = identifier
+
+    if connection_properties is not None:
+        _details['connectionProperties'] = cli_util.parse_json_parameter("connection_properties", connection_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if username is not None:
+        _details['username'] = username
+
+    if password is not None:
+        _details['password'] = password
+
+    if password_secret is not None:
+        _details['passwordSecret'] = cli_util.parse_json_parameter("password_secret", password_secret)
+
+    _details['modelType'] = 'MYSQL_CONNECTION'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_connection(
+        workspace_id=workspace_id,
+        connection_key=connection_key,
+        update_connection_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('data_integration.update_connection_update_connection_from_jdbc.command_name', 'update-connection-update-connection-from-jdbc'), help=u"""Updates a connection under a data asset. \n[Command Reference](updateConnection)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
+@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--username', help=u"""The user name for the connection.""")
+@cli_util.option('--password', help=u"""The password for the connection.""")
+@cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def update_connection_update_connection_from_jdbc(ctx, from_json, force, workspace_id, connection_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, username, password, password_secret, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+        raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
+    if not force:
+        if parent_ref or connection_properties or registry_metadata or password_secret:
+            if not click.confirm("WARNING: Updates to parent-ref and connection-properties and registry-metadata and password-secret will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['key'] = key
+    _details['objectVersion'] = object_version
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if name is not None:
+        _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if identifier is not None:
+        _details['identifier'] = identifier
+
+    if connection_properties is not None:
+        _details['connectionProperties'] = cli_util.parse_json_parameter("connection_properties", connection_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if username is not None:
+        _details['username'] = username
+
+    if password is not None:
+        _details['password'] = password
+
+    if password_secret is not None:
+        _details['passwordSecret'] = cli_util.parse_json_parameter("password_secret", password_secret)
+
+    _details['modelType'] = 'GENERIC_JDBC_CONNECTION'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_connection(
+        workspace_id=workspace_id,
+        connection_key=connection_key,
+        update_connection_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @connection_group.command(name=cli_util.override('data_integration.update_connection_update_connection_from_amazon_s3.command_name', 'update-connection-update-connection-from-amazon-s3'), help=u"""Updates a connection under a data asset. \n[Command Reference](updateConnection)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
@@ -13177,93 +15993,6 @@ def update_connection_update_connection_from_atp(ctx, from_json, force, workspac
         _details['passwordSecret'] = cli_util.parse_json_parameter("password_secret", password_secret)
 
     _details['modelType'] = 'ORACLE_ATP_CONNECTION'
-
-    client = cli_util.build_client('data_integration', 'data_integration', ctx)
-    result = client.update_connection(
-        workspace_id=workspace_id,
-        connection_key=connection_key,
-        update_connection_details=_details,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
-@connection_group.command(name=cli_util.override('data_integration.update_connection_update_connection_from_rest_basic_auth.command_name', 'update-connection-update-connection-from-rest-basic-auth'), help=u"""Updates a connection under a data asset. \n[Command Reference](updateConnection)""")
-@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
-@cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
-@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
-@cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
-@cli_util.option('--username', required=True, help=u"""Username for the connection.""")
-@cli_util.option('--password-secret', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--model-version', help=u"""The model version of an object.""")
-@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--description', help=u"""User-defined description for the connection.""")
-@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
-
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--auth-header', help=u"""Optional header name if used other than default header(Authorization).""")
-@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
-@cli_util.wrap_exceptions
-def update_connection_update_connection_from_rest_basic_auth(ctx, from_json, force, workspace_id, connection_key, key, object_version, username, password_secret, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, auth_header, if_match):
-
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
-        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
-
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
-        raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
-    if not force:
-        if parent_ref or connection_properties or registry_metadata or password_secret:
-            if not click.confirm("WARNING: Updates to parent-ref and connection-properties and registry-metadata and password-secret will replace any existing values. Are you sure you want to continue?"):
-                ctx.abort()
-
-    kwargs = {}
-    if if_match is not None:
-        kwargs['if_match'] = if_match
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['key'] = key
-    _details['objectVersion'] = object_version
-    _details['username'] = username
-    _details['passwordSecret'] = cli_util.parse_json_parameter("password_secret", password_secret)
-
-    if model_version is not None:
-        _details['modelVersion'] = model_version
-
-    if parent_ref is not None:
-        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
-
-    if name is not None:
-        _details['name'] = name
-
-    if description is not None:
-        _details['description'] = description
-
-    if object_status is not None:
-        _details['objectStatus'] = object_status
-
-    if identifier is not None:
-        _details['identifier'] = identifier
-
-    if connection_properties is not None:
-        _details['connectionProperties'] = cli_util.parse_json_parameter("connection_properties", connection_properties)
-
-    if registry_metadata is not None:
-        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
-
-    if auth_header is not None:
-        _details['authHeader'] = auth_header
-
-    _details['modelType'] = 'REST_BASIC_AUTH_CONNECTION'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.update_connection(
@@ -13465,11 +16194,13 @@ def update_connection_update_connection_from_adwc(ctx, from_json, force, workspa
     cli_util.render_response(result, ctx)
 
 
-@connection_group.command(name=cli_util.override('data_integration.update_connection_update_connection_from_bip.command_name', 'update-connection-update-connection-from-bip'), help=u"""Updates a connection under a data asset. \n[Command Reference](updateConnection)""")
+@connection_group.command(name=cli_util.override('data_integration.update_connection_update_connection_from_oracle_people_soft.command_name', 'update-connection-update-connection-from-oracle-people-soft'), help=u"""Updates a connection under a data asset. \n[Command Reference](updateConnection)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
 @cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
 @cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--username', required=True, help=u"""The user name for the connection.""")
+@cli_util.option('--password', required=True, help=u"""The password for the connection.""")
 @cli_util.option('--model-version', help=u"""The model version of an object.""")
 @cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
@@ -13480,7 +16211,6 @@ def update_connection_update_connection_from_adwc(ctx, from_json, force, workspa
 
 This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--username', help=u"""The user name for the connection.""")
 @cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -13489,7 +16219,7 @@ This option is a JSON list with items of type ConnectionProperty.  For documenta
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def update_connection_update_connection_from_bip(ctx, from_json, force, workspace_id, connection_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, username, password_secret, if_match):
+def update_connection_update_connection_from_oracle_people_soft(ctx, from_json, force, workspace_id, connection_key, key, object_version, username, password, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, password_secret, if_match):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -13509,6 +16239,8 @@ def update_connection_update_connection_from_bip(ctx, from_json, force, workspac
     _details = {}
     _details['key'] = key
     _details['objectVersion'] = object_version
+    _details['username'] = username
+    _details['password'] = password
 
     if model_version is not None:
         _details['modelVersion'] = model_version
@@ -13534,104 +16266,10 @@ def update_connection_update_connection_from_bip(ctx, from_json, force, workspac
     if registry_metadata is not None:
         _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
 
-    if username is not None:
-        _details['username'] = username
-
     if password_secret is not None:
         _details['passwordSecret'] = cli_util.parse_json_parameter("password_secret", password_secret)
 
-    _details['modelType'] = 'BIP_CONNECTION'
-
-    client = cli_util.build_client('data_integration', 'data_integration', ctx)
-    result = client.update_connection(
-        workspace_id=workspace_id,
-        connection_key=connection_key,
-        update_connection_details=_details,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
-@connection_group.command(name=cli_util.override('data_integration.update_connection_update_connection_from_my_sql.command_name', 'update-connection-update-connection-from-my-sql'), help=u"""Updates a connection under a data asset. \n[Command Reference](updateConnection)""")
-@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
-@cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
-@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
-@cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
-@cli_util.option('--model-version', help=u"""The model version of an object.""")
-@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--description', help=u"""User-defined description for the connection.""")
-@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
-
-This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--username', help=u"""The user name for the connection.""")
-@cli_util.option('--password', help=u"""The password for the connection.""")
-@cli_util.option('--password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
-@cli_util.wrap_exceptions
-def update_connection_update_connection_from_my_sql(ctx, from_json, force, workspace_id, connection_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, username, password, password_secret, if_match):
-
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
-        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
-
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
-        raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
-    if not force:
-        if parent_ref or connection_properties or registry_metadata or password_secret:
-            if not click.confirm("WARNING: Updates to parent-ref and connection-properties and registry-metadata and password-secret will replace any existing values. Are you sure you want to continue?"):
-                ctx.abort()
-
-    kwargs = {}
-    if if_match is not None:
-        kwargs['if_match'] = if_match
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['key'] = key
-    _details['objectVersion'] = object_version
-
-    if model_version is not None:
-        _details['modelVersion'] = model_version
-
-    if parent_ref is not None:
-        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
-
-    if name is not None:
-        _details['name'] = name
-
-    if description is not None:
-        _details['description'] = description
-
-    if object_status is not None:
-        _details['objectStatus'] = object_status
-
-    if identifier is not None:
-        _details['identifier'] = identifier
-
-    if connection_properties is not None:
-        _details['connectionProperties'] = cli_util.parse_json_parameter("connection_properties", connection_properties)
-
-    if registry_metadata is not None:
-        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
-
-    if username is not None:
-        _details['username'] = username
-
-    if password is not None:
-        _details['password'] = password
-
-    if password_secret is not None:
-        _details['passwordSecret'] = cli_util.parse_json_parameter("password_secret", password_secret)
-
-    _details['modelType'] = 'MYSQL_CONNECTION'
+    _details['modelType'] = 'ORACLE_PEOPLESOFT_CONNECTION'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.update_connection(
@@ -13684,7 +16322,7 @@ def update_copy_object_request(ctx, from_json, workspace_id, copy_object_request
 @data_asset_group.command(name=cli_util.override('data_integration.update_data_asset.command_name', 'update'), help=u"""Updates a specific data asset with default connection. \n[Command Reference](updateDataAsset)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""The data asset key.""")
-@cli_util.option('--model-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_DATA_ASSET", "ORACLE_OBJECT_STORAGE_DATA_ASSET", "ORACLE_ATP_DATA_ASSET", "ORACLE_ADWC_DATA_ASSET", "MYSQL_DATA_ASSET", "GENERIC_JDBC_DATA_ASSET", "FUSION_APP_DATA_ASSET", "AMAZON_S3_DATA_ASSET", "LAKE_DATA_ASSET", "REST_DATA_ASSET"]), help=u"""The type of the data asset.""")
+@cli_util.option('--model-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_DATA_ASSET", "ORACLE_OBJECT_STORAGE_DATA_ASSET", "ORACLE_ATP_DATA_ASSET", "ORACLE_ADWC_DATA_ASSET", "MYSQL_DATA_ASSET", "GENERIC_JDBC_DATA_ASSET", "FUSION_APP_DATA_ASSET", "AMAZON_S3_DATA_ASSET", "LAKE_DATA_ASSET", "ORACLE_PEOPLESOFT_DATA_ASSET", "ORACLE_SIEBEL_DATA_ASSET", "ORACLE_EBS_DATA_ASSET", "HDFS_DATA_ASSET", "MYSQL_HEATWAVE_DATA_ASSET", "REST_DATA_ASSET"]), help=u"""The type of the data asset.""")
 @cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify data asset.""")
 @cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
 @cli_util.option('--model-version', help=u"""The model version of an object.""")
@@ -13841,11 +16479,14 @@ def update_data_asset_update_data_asset_from_rest(ctx, from_json, force, workspa
     cli_util.render_response(result, ctx)
 
 
-@data_asset_group.command(name=cli_util.override('data_integration.update_data_asset_update_data_asset_from_atp.command_name', 'update-data-asset-update-data-asset-from-atp'), help=u"""Updates a specific data asset with default connection. \n[Command Reference](updateDataAsset)""")
+@data_asset_group.command(name=cli_util.override('data_integration.update_data_asset_update_data_asset_from_my_sql_heat_wave.command_name', 'update-data-asset-update-data-asset-from-my-sql-heat-wave'), help=u"""Updates a specific data asset with default connection. \n[Command Reference](updateDataAsset)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""The data asset key.""")
 @cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify data asset.""")
 @cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--host', required=True, help=u"""The MySql HeatWave host name.""")
+@cli_util.option('--port', required=True, help=u"""The MySql HeatWave port number.""")
+@cli_util.option('--default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--model-version', help=u"""The model version of an object.""")
 @cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
 @cli_util.option('--description', help=u"""The user-defined description of the data asset.""")
@@ -13854,24 +16495,106 @@ def update_data_asset_update_data_asset_from_rest(ctx, from_json, force, workspa
 @cli_util.option('--external-key', help=u"""The external key for the object.""")
 @cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--service-name', help=u"""The Autonomous Transaction Processing instance service name.""")
-@cli_util.option('--driver-class', help=u"""The Autonomous Transaction Processing driver class""")
-@cli_util.option('--credential-file-content', help=u"""The credential file content from an Autonomous Transaction Processing wallet.""")
-@cli_util.option('--wallet-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wallet-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--region-id', help=u"""The Autonomous Data Warehouse instance region Id.""")
-@cli_util.option('--tenancy-id', help=u"""The Autonomous Data Warehouse instance tenancy Id.""")
-@cli_util.option('--compartment-id', help=u"""The Autonomous Data Warehouse instance compartment Id.""")
-@cli_util.option('--autonomous-db-id', help=u"""Tha Autonomous Database Id""")
-@cli_util.option('--default-connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--service-name', help=u"""The MySql HeatWave service name for the database.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'wallet-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'wallet-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'default-connection': {'module': 'data_integration', 'class': 'UpdateConnectionFromAtp'}})
+@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'UpdateConnectionFromMySqlHeatWave'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'wallet-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'wallet-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'default-connection': {'module': 'data_integration', 'class': 'UpdateConnectionFromAtp'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'UpdateConnectionFromMySqlHeatWave'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
 @cli_util.wrap_exceptions
-def update_data_asset_update_data_asset_from_atp(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, service_name, driver_class, credential_file_content, wallet_secret, wallet_password_secret, region_id, tenancy_id, compartment_id, autonomous_db_id, default_connection, if_match):
+def update_data_asset_update_data_asset_from_my_sql_heat_wave(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, host, port, default_connection, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, service_name, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+        raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
+    if not force:
+        if asset_properties or registry_metadata or default_connection:
+            if not click.confirm("WARNING: Updates to asset-properties and registry-metadata and default-connection will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['key'] = key
+    _details['objectVersion'] = object_version
+    _details['host'] = host
+    _details['port'] = port
+    _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if name is not None:
+        _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if identifier is not None:
+        _details['identifier'] = identifier
+
+    if external_key is not None:
+        _details['externalKey'] = external_key
+
+    if asset_properties is not None:
+        _details['assetProperties'] = cli_util.parse_json_parameter("asset_properties", asset_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if service_name is not None:
+        _details['serviceName'] = service_name
+
+    _details['modelType'] = 'MYSQL_HEATWAVE_DATA_ASSET'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_data_asset(
+        workspace_id=workspace_id,
+        data_asset_key=data_asset_key,
+        update_data_asset_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@data_asset_group.command(name=cli_util.override('data_integration.update_data_asset_update_data_asset_from_oracle_ebs.command_name', 'update-data-asset-update-data-asset-from-oracle-ebs'), help=u"""Updates a specific data asset with default connection. \n[Command Reference](updateDataAsset)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--data-asset-key', required=True, help=u"""The data asset key.""")
+@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify data asset.""")
+@cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--host', required=True, help=u"""The Oracle EBS hostname.""")
+@cli_util.option('--port', required=True, help=u"""The Oracle EBS port.""")
+@cli_util.option('--default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--description', help=u"""The user-defined description of the data asset.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--external-key', help=u"""The external key for the object.""")
+@cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--service-name', help=u"""The Oracle EBS service name.""")
+@cli_util.option('--driver-class', help=u"""The Oracle EBS driver class.""")
+@cli_util.option('--sid', help=u"""The Oracle EBS SID.""")
+@cli_util.option('--wallet-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wallet-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'wallet-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'wallet-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'default-connection': {'module': 'data_integration', 'class': 'UpdateConnectionFromOracleEbs'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'wallet-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'wallet-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'default-connection': {'module': 'data_integration', 'class': 'UpdateConnectionFromOracleEbs'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
+@cli_util.wrap_exceptions
+def update_data_asset_update_data_asset_from_oracle_ebs(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, host, port, default_connection, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, service_name, driver_class, sid, wallet_secret, wallet_password_secret, if_match):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -13891,6 +16614,9 @@ def update_data_asset_update_data_asset_from_atp(ctx, from_json, force, workspac
     _details = {}
     _details['key'] = key
     _details['objectVersion'] = object_version
+    _details['host'] = host
+    _details['port'] = port
+    _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
 
     if model_version is not None:
         _details['modelVersion'] = model_version
@@ -13922,8 +16648,8 @@ def update_data_asset_update_data_asset_from_atp(ctx, from_json, force, workspac
     if driver_class is not None:
         _details['driverClass'] = driver_class
 
-    if credential_file_content is not None:
-        _details['credentialFileContent'] = credential_file_content
+    if sid is not None:
+        _details['sid'] = sid
 
     if wallet_secret is not None:
         _details['walletSecret'] = cli_util.parse_json_parameter("wallet_secret", wallet_secret)
@@ -13931,22 +16657,7 @@ def update_data_asset_update_data_asset_from_atp(ctx, from_json, force, workspac
     if wallet_password_secret is not None:
         _details['walletPasswordSecret'] = cli_util.parse_json_parameter("wallet_password_secret", wallet_password_secret)
 
-    if region_id is not None:
-        _details['regionId'] = region_id
-
-    if tenancy_id is not None:
-        _details['tenancyId'] = tenancy_id
-
-    if compartment_id is not None:
-        _details['compartmentId'] = compartment_id
-
-    if autonomous_db_id is not None:
-        _details['autonomousDbId'] = autonomous_db_id
-
-    if default_connection is not None:
-        _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
-
-    _details['modelType'] = 'ORACLE_ATP_DATA_ASSET'
+    _details['modelType'] = 'ORACLE_EBS_DATA_ASSET'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.update_data_asset(
@@ -14075,11 +16786,15 @@ def update_data_asset_update_data_asset_from_adwc(ctx, from_json, force, workspa
     cli_util.render_response(result, ctx)
 
 
-@data_asset_group.command(name=cli_util.override('data_integration.update_data_asset_update_data_asset_from_jdbc.command_name', 'update-data-asset-update-data-asset-from-jdbc'), help=u"""Updates a specific data asset with default connection. \n[Command Reference](updateDataAsset)""")
+@data_asset_group.command(name=cli_util.override('data_integration.update_data_asset_update_data_asset_from_hdfs.command_name', 'update-data-asset-update-data-asset-from-hdfs'), help=u"""Updates a specific data asset with default connection. \n[Command Reference](updateDataAsset)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""The data asset key.""")
 @cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify data asset.""")
 @cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--host', required=True, help=u"""The HDFS hostname.""")
+@cli_util.option('--port', required=True, help=u"""The HDFS port.""")
+@cli_util.option('--protocol', required=True, help=u"""The HDFS Protocol name.""")
+@cli_util.option('--default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--model-version', help=u"""The model version of an object.""")
 @cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
 @cli_util.option('--description', help=u"""The user-defined description of the data asset.""")
@@ -14088,18 +16803,15 @@ def update_data_asset_update_data_asset_from_adwc(ctx, from_json, force, workspa
 @cli_util.option('--external-key', help=u"""The external key for the object.""")
 @cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--host', help=u"""The generic JDBC host name.""")
-@cli_util.option('--port', help=u"""The generic JDBC port number.""")
-@cli_util.option('--data-asset-type', help=u"""The data asset type for the generic JDBC data asset.""")
-@cli_util.option('--default-connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--validate-certificate', type=click.BOOL, help=u"""Specifies whether certificate validation is needed""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'UpdateConnectionFromJdbc'}})
+@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'UpdateConnectionFromHdfs'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'UpdateConnectionFromJdbc'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'UpdateConnectionFromHdfs'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
 @cli_util.wrap_exceptions
-def update_data_asset_update_data_asset_from_jdbc(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, host, port, data_asset_type, default_connection, if_match):
+def update_data_asset_update_data_asset_from_hdfs(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, host, port, protocol, default_connection, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, validate_certificate, if_match):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -14119,6 +16831,10 @@ def update_data_asset_update_data_asset_from_jdbc(ctx, from_json, force, workspa
     _details = {}
     _details['key'] = key
     _details['objectVersion'] = object_version
+    _details['host'] = host
+    _details['port'] = port
+    _details['protocol'] = protocol
+    _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
 
     if model_version is not None:
         _details['modelVersion'] = model_version
@@ -14144,19 +16860,113 @@ def update_data_asset_update_data_asset_from_jdbc(ctx, from_json, force, workspa
     if registry_metadata is not None:
         _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
 
-    if host is not None:
-        _details['host'] = host
+    if validate_certificate is not None:
+        _details['validateCertificate'] = validate_certificate
 
-    if port is not None:
-        _details['port'] = port
+    _details['modelType'] = 'HDFS_DATA_ASSET'
 
-    if data_asset_type is not None:
-        _details['dataAssetType'] = data_asset_type
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_data_asset(
+        workspace_id=workspace_id,
+        data_asset_key=data_asset_key,
+        update_data_asset_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
-    if default_connection is not None:
-        _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
 
-    _details['modelType'] = 'GENERIC_JDBC_DATA_ASSET'
+@data_asset_group.command(name=cli_util.override('data_integration.update_data_asset_update_data_asset_from_oracle_people_soft.command_name', 'update-data-asset-update-data-asset-from-oracle-people-soft'), help=u"""Updates a specific data asset with default connection. \n[Command Reference](updateDataAsset)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--data-asset-key', required=True, help=u"""The data asset key.""")
+@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify data asset.""")
+@cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--host', required=True, help=u"""The Oracle PeopleSoft hostname.""")
+@cli_util.option('--port', required=True, help=u"""The Oracle PeopleSoft port.""")
+@cli_util.option('--default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--description', help=u"""The user-defined description of the data asset.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--external-key', help=u"""The external key for the object.""")
+@cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--service-name', help=u"""The Oracle PeopleSoft service name.""")
+@cli_util.option('--driver-class', help=u"""The Oracle PeopleSoft driver class.""")
+@cli_util.option('--sid', help=u"""The Oracle PeopleSoft SID.""")
+@cli_util.option('--wallet-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wallet-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'wallet-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'wallet-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'default-connection': {'module': 'data_integration', 'class': 'UpdateConnectionFromOraclePeopleSoft'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'wallet-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'wallet-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'default-connection': {'module': 'data_integration', 'class': 'UpdateConnectionFromOraclePeopleSoft'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
+@cli_util.wrap_exceptions
+def update_data_asset_update_data_asset_from_oracle_people_soft(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, host, port, default_connection, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, service_name, driver_class, sid, wallet_secret, wallet_password_secret, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+        raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
+    if not force:
+        if asset_properties or registry_metadata or wallet_secret or wallet_password_secret or default_connection:
+            if not click.confirm("WARNING: Updates to asset-properties and registry-metadata and wallet-secret and wallet-password-secret and default-connection will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['key'] = key
+    _details['objectVersion'] = object_version
+    _details['host'] = host
+    _details['port'] = port
+    _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if name is not None:
+        _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if identifier is not None:
+        _details['identifier'] = identifier
+
+    if external_key is not None:
+        _details['externalKey'] = external_key
+
+    if asset_properties is not None:
+        _details['assetProperties'] = cli_util.parse_json_parameter("asset_properties", asset_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if service_name is not None:
+        _details['serviceName'] = service_name
+
+    if driver_class is not None:
+        _details['driverClass'] = driver_class
+
+    if sid is not None:
+        _details['sid'] = sid
+
+    if wallet_secret is not None:
+        _details['walletSecret'] = cli_util.parse_json_parameter("wallet_secret", wallet_secret)
+
+    if wallet_password_secret is not None:
+        _details['walletPasswordSecret'] = cli_util.parse_json_parameter("wallet_password_secret", wallet_password_secret)
+
+    _details['modelType'] = 'ORACLE_PEOPLESOFT_DATA_ASSET'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.update_data_asset(
@@ -14346,87 +17156,6 @@ def update_data_asset_update_data_asset_from_amazon_s3(ctx, from_json, force, wo
     cli_util.render_response(result, ctx)
 
 
-@data_asset_group.command(name=cli_util.override('data_integration.update_data_asset_update_data_asset_from_fusion_app.command_name', 'update-data-asset-update-data-asset-from-fusion-app'), help=u"""Updates a specific data asset with default connection. \n[Command Reference](updateDataAsset)""")
-@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
-@cli_util.option('--data-asset-key', required=True, help=u"""The data asset key.""")
-@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify data asset.""")
-@cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
-@cli_util.option('--model-version', help=u"""The model version of an object.""")
-@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--description', help=u"""The user-defined description of the data asset.""")
-@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--external-key', help=u"""The external key for the object.""")
-@cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--service-url', help=u"""The service url of the BI Server.""")
-@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
-@cli_util.wrap_exceptions
-def update_data_asset_update_data_asset_from_fusion_app(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, service_url, if_match):
-
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
-        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
-
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
-        raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
-    if not force:
-        if asset_properties or registry_metadata:
-            if not click.confirm("WARNING: Updates to asset-properties and registry-metadata will replace any existing values. Are you sure you want to continue?"):
-                ctx.abort()
-
-    kwargs = {}
-    if if_match is not None:
-        kwargs['if_match'] = if_match
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['key'] = key
-    _details['objectVersion'] = object_version
-
-    if model_version is not None:
-        _details['modelVersion'] = model_version
-
-    if name is not None:
-        _details['name'] = name
-
-    if description is not None:
-        _details['description'] = description
-
-    if object_status is not None:
-        _details['objectStatus'] = object_status
-
-    if identifier is not None:
-        _details['identifier'] = identifier
-
-    if external_key is not None:
-        _details['externalKey'] = external_key
-
-    if asset_properties is not None:
-        _details['assetProperties'] = cli_util.parse_json_parameter("asset_properties", asset_properties)
-
-    if registry_metadata is not None:
-        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
-
-    if service_url is not None:
-        _details['serviceUrl'] = service_url
-
-    _details['modelType'] = 'FUSION_APP_DATA_ASSET'
-
-    client = cli_util.build_client('data_integration', 'data_integration', ctx)
-    result = client.update_data_asset(
-        workspace_id=workspace_id,
-        data_asset_key=data_asset_key,
-        update_data_asset_details=_details,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
 @data_asset_group.command(name=cli_util.override('data_integration.update_data_asset_update_data_asset_from_my_sql.command_name', 'update-data-asset-update-data-asset-from-my-sql'), help=u"""Updates a specific data asset with default connection. \n[Command Reference](updateDataAsset)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""The data asset key.""")
@@ -14509,6 +17238,489 @@ def update_data_asset_update_data_asset_from_my_sql(ctx, from_json, force, works
         _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
 
     _details['modelType'] = 'MYSQL_DATA_ASSET'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_data_asset(
+        workspace_id=workspace_id,
+        data_asset_key=data_asset_key,
+        update_data_asset_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@data_asset_group.command(name=cli_util.override('data_integration.update_data_asset_update_data_asset_from_oracle_siebel.command_name', 'update-data-asset-update-data-asset-from-oracle-siebel'), help=u"""Updates a specific data asset with default connection. \n[Command Reference](updateDataAsset)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--data-asset-key', required=True, help=u"""The data asset key.""")
+@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify data asset.""")
+@cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--host', required=True, help=u"""The Oracle Siebel hostname.""")
+@cli_util.option('--port', required=True, help=u"""The Oracle Siebel port.""")
+@cli_util.option('--default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--description', help=u"""The user-defined description of the data asset.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--external-key', help=u"""The external key for the object.""")
+@cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--service-name', help=u"""The Oracle Siebel service name.""")
+@cli_util.option('--driver-class', help=u"""The Oracle Siebel driver class.""")
+@cli_util.option('--sid', help=u"""The Oracle Siebel SID.""")
+@cli_util.option('--wallet-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wallet-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'wallet-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'wallet-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'default-connection': {'module': 'data_integration', 'class': 'UpdateConnectionFromOracleSiebel'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'wallet-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'wallet-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'default-connection': {'module': 'data_integration', 'class': 'UpdateConnectionFromOracleSiebel'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
+@cli_util.wrap_exceptions
+def update_data_asset_update_data_asset_from_oracle_siebel(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, host, port, default_connection, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, service_name, driver_class, sid, wallet_secret, wallet_password_secret, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+        raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
+    if not force:
+        if asset_properties or registry_metadata or wallet_secret or wallet_password_secret or default_connection:
+            if not click.confirm("WARNING: Updates to asset-properties and registry-metadata and wallet-secret and wallet-password-secret and default-connection will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['key'] = key
+    _details['objectVersion'] = object_version
+    _details['host'] = host
+    _details['port'] = port
+    _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if name is not None:
+        _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if identifier is not None:
+        _details['identifier'] = identifier
+
+    if external_key is not None:
+        _details['externalKey'] = external_key
+
+    if asset_properties is not None:
+        _details['assetProperties'] = cli_util.parse_json_parameter("asset_properties", asset_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if service_name is not None:
+        _details['serviceName'] = service_name
+
+    if driver_class is not None:
+        _details['driverClass'] = driver_class
+
+    if sid is not None:
+        _details['sid'] = sid
+
+    if wallet_secret is not None:
+        _details['walletSecret'] = cli_util.parse_json_parameter("wallet_secret", wallet_secret)
+
+    if wallet_password_secret is not None:
+        _details['walletPasswordSecret'] = cli_util.parse_json_parameter("wallet_password_secret", wallet_password_secret)
+
+    _details['modelType'] = 'ORACLE_SIEBEL_DATA_ASSET'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_data_asset(
+        workspace_id=workspace_id,
+        data_asset_key=data_asset_key,
+        update_data_asset_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@data_asset_group.command(name=cli_util.override('data_integration.update_data_asset_update_data_asset_from_lake.command_name', 'update-data-asset-update-data-asset-from-lake'), help=u"""Updates a specific data asset with default connection. \n[Command Reference](updateDataAsset)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--data-asset-key', required=True, help=u"""The data asset key.""")
+@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify data asset.""")
+@cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--lake-id', required=True, help=u"""The Lake Ocid.""")
+@cli_util.option('--default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--description', help=u"""The user-defined description of the data asset.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--external-key', help=u"""The external key for the object.""")
+@cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--metastore-id', help=u"""The metastoreId for the specified Lake Resource.""")
+@cli_util.option('--lake-proxy-endpoint', help=u"""The rangerEndpoint for the specified Lake Resource.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'UpdateConnectionFromLake'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'UpdateConnectionFromLake'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
+@cli_util.wrap_exceptions
+def update_data_asset_update_data_asset_from_lake(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, lake_id, default_connection, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, metastore_id, lake_proxy_endpoint, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+        raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
+    if not force:
+        if asset_properties or registry_metadata or default_connection:
+            if not click.confirm("WARNING: Updates to asset-properties and registry-metadata and default-connection will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['key'] = key
+    _details['objectVersion'] = object_version
+    _details['lakeId'] = lake_id
+    _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if name is not None:
+        _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if identifier is not None:
+        _details['identifier'] = identifier
+
+    if external_key is not None:
+        _details['externalKey'] = external_key
+
+    if asset_properties is not None:
+        _details['assetProperties'] = cli_util.parse_json_parameter("asset_properties", asset_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if metastore_id is not None:
+        _details['metastoreId'] = metastore_id
+
+    if lake_proxy_endpoint is not None:
+        _details['lakeProxyEndpoint'] = lake_proxy_endpoint
+
+    _details['modelType'] = 'LAKE_DATA_ASSET'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_data_asset(
+        workspace_id=workspace_id,
+        data_asset_key=data_asset_key,
+        update_data_asset_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@data_asset_group.command(name=cli_util.override('data_integration.update_data_asset_update_data_asset_from_atp.command_name', 'update-data-asset-update-data-asset-from-atp'), help=u"""Updates a specific data asset with default connection. \n[Command Reference](updateDataAsset)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--data-asset-key', required=True, help=u"""The data asset key.""")
+@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify data asset.""")
+@cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--description', help=u"""The user-defined description of the data asset.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--external-key', help=u"""The external key for the object.""")
+@cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--service-name', help=u"""The Autonomous Transaction Processing instance service name.""")
+@cli_util.option('--driver-class', help=u"""The Autonomous Transaction Processing driver class""")
+@cli_util.option('--credential-file-content', help=u"""The credential file content from an Autonomous Transaction Processing wallet.""")
+@cli_util.option('--wallet-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wallet-password-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--region-id', help=u"""The Autonomous Data Warehouse instance region Id.""")
+@cli_util.option('--tenancy-id', help=u"""The Autonomous Data Warehouse instance tenancy Id.""")
+@cli_util.option('--compartment-id', help=u"""The Autonomous Data Warehouse instance compartment Id.""")
+@cli_util.option('--autonomous-db-id', help=u"""Tha Autonomous Database Id""")
+@cli_util.option('--default-connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'wallet-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'wallet-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'default-connection': {'module': 'data_integration', 'class': 'UpdateConnectionFromAtp'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'wallet-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'wallet-password-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}, 'default-connection': {'module': 'data_integration', 'class': 'UpdateConnectionFromAtp'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
+@cli_util.wrap_exceptions
+def update_data_asset_update_data_asset_from_atp(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, service_name, driver_class, credential_file_content, wallet_secret, wallet_password_secret, region_id, tenancy_id, compartment_id, autonomous_db_id, default_connection, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+        raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
+    if not force:
+        if asset_properties or registry_metadata or wallet_secret or wallet_password_secret or default_connection:
+            if not click.confirm("WARNING: Updates to asset-properties and registry-metadata and wallet-secret and wallet-password-secret and default-connection will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['key'] = key
+    _details['objectVersion'] = object_version
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if name is not None:
+        _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if identifier is not None:
+        _details['identifier'] = identifier
+
+    if external_key is not None:
+        _details['externalKey'] = external_key
+
+    if asset_properties is not None:
+        _details['assetProperties'] = cli_util.parse_json_parameter("asset_properties", asset_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if service_name is not None:
+        _details['serviceName'] = service_name
+
+    if driver_class is not None:
+        _details['driverClass'] = driver_class
+
+    if credential_file_content is not None:
+        _details['credentialFileContent'] = credential_file_content
+
+    if wallet_secret is not None:
+        _details['walletSecret'] = cli_util.parse_json_parameter("wallet_secret", wallet_secret)
+
+    if wallet_password_secret is not None:
+        _details['walletPasswordSecret'] = cli_util.parse_json_parameter("wallet_password_secret", wallet_password_secret)
+
+    if region_id is not None:
+        _details['regionId'] = region_id
+
+    if tenancy_id is not None:
+        _details['tenancyId'] = tenancy_id
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if autonomous_db_id is not None:
+        _details['autonomousDbId'] = autonomous_db_id
+
+    if default_connection is not None:
+        _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
+
+    _details['modelType'] = 'ORACLE_ATP_DATA_ASSET'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_data_asset(
+        workspace_id=workspace_id,
+        data_asset_key=data_asset_key,
+        update_data_asset_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@data_asset_group.command(name=cli_util.override('data_integration.update_data_asset_update_data_asset_from_jdbc.command_name', 'update-data-asset-update-data-asset-from-jdbc'), help=u"""Updates a specific data asset with default connection. \n[Command Reference](updateDataAsset)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--data-asset-key', required=True, help=u"""The data asset key.""")
+@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify data asset.""")
+@cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--description', help=u"""The user-defined description of the data asset.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--external-key', help=u"""The external key for the object.""")
+@cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--host', help=u"""The generic JDBC host name.""")
+@cli_util.option('--port', help=u"""The generic JDBC port number.""")
+@cli_util.option('--data-asset-type', help=u"""The data asset type for the generic JDBC data asset.""")
+@cli_util.option('--default-connection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'UpdateConnectionFromJdbc'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'UpdateConnectionFromJdbc'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
+@cli_util.wrap_exceptions
+def update_data_asset_update_data_asset_from_jdbc(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, host, port, data_asset_type, default_connection, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+        raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
+    if not force:
+        if asset_properties or registry_metadata or default_connection:
+            if not click.confirm("WARNING: Updates to asset-properties and registry-metadata and default-connection will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['key'] = key
+    _details['objectVersion'] = object_version
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if name is not None:
+        _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if identifier is not None:
+        _details['identifier'] = identifier
+
+    if external_key is not None:
+        _details['externalKey'] = external_key
+
+    if asset_properties is not None:
+        _details['assetProperties'] = cli_util.parse_json_parameter("asset_properties", asset_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if host is not None:
+        _details['host'] = host
+
+    if port is not None:
+        _details['port'] = port
+
+    if data_asset_type is not None:
+        _details['dataAssetType'] = data_asset_type
+
+    if default_connection is not None:
+        _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
+
+    _details['modelType'] = 'GENERIC_JDBC_DATA_ASSET'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_data_asset(
+        workspace_id=workspace_id,
+        data_asset_key=data_asset_key,
+        update_data_asset_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@data_asset_group.command(name=cli_util.override('data_integration.update_data_asset_update_data_asset_from_fusion_app.command_name', 'update-data-asset-update-data-asset-from-fusion-app'), help=u"""Updates a specific data asset with default connection. \n[Command Reference](updateDataAsset)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--data-asset-key', required=True, help=u"""The data asset key.""")
+@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify data asset.""")
+@cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--description', help=u"""The user-defined description of the data asset.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--external-key', help=u"""The external key for the object.""")
+@cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--service-url', help=u"""The service url of the BI Server.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
+@cli_util.wrap_exceptions
+def update_data_asset_update_data_asset_from_fusion_app(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, service_url, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+        raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
+    if not force:
+        if asset_properties or registry_metadata:
+            if not click.confirm("WARNING: Updates to asset-properties and registry-metadata will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['key'] = key
+    _details['objectVersion'] = object_version
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if name is not None:
+        _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if identifier is not None:
+        _details['identifier'] = identifier
+
+    if external_key is not None:
+        _details['externalKey'] = external_key
+
+    if asset_properties is not None:
+        _details['assetProperties'] = cli_util.parse_json_parameter("asset_properties", asset_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if service_url is not None:
+        _details['serviceUrl'] = service_url
+
+    _details['modelType'] = 'FUSION_APP_DATA_ASSET'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.update_data_asset(
@@ -14622,95 +17834,6 @@ def update_data_asset_update_data_asset_from_oracle(ctx, from_json, force, works
         _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
 
     _details['modelType'] = 'ORACLE_DATA_ASSET'
-
-    client = cli_util.build_client('data_integration', 'data_integration', ctx)
-    result = client.update_data_asset(
-        workspace_id=workspace_id,
-        data_asset_key=data_asset_key,
-        update_data_asset_details=_details,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
-@data_asset_group.command(name=cli_util.override('data_integration.update_data_asset_update_data_asset_from_lake.command_name', 'update-data-asset-update-data-asset-from-lake'), help=u"""Updates a specific data asset with default connection. \n[Command Reference](updateDataAsset)""")
-@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
-@cli_util.option('--data-asset-key', required=True, help=u"""The data asset key.""")
-@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify data asset.""")
-@cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
-@cli_util.option('--lake-id', required=True, help=u"""The Lake Ocid.""")
-@cli_util.option('--default-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--model-version', help=u"""The model version of an object.""")
-@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
-@cli_util.option('--description', help=u"""The user-defined description of the data asset.""")
-@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
-@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--external-key', help=u"""The external key for the object.""")
-@cli_util.option('--asset-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional properties for the data asset.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--metastore-id', help=u"""The metastoreId for the specified Lake Resource.""")
-@cli_util.option('--lake-proxy-endpoint', help=u"""The rangerEndpoint for the specified Lake Resource.""")
-@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
-@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'UpdateConnectionFromLake'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'UpdateConnectionFromLake'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
-@cli_util.wrap_exceptions
-def update_data_asset_update_data_asset_from_lake(ctx, from_json, force, workspace_id, data_asset_key, key, object_version, lake_id, default_connection, model_version, name, description, object_status, identifier, external_key, asset_properties, registry_metadata, metastore_id, lake_proxy_endpoint, if_match):
-
-    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
-        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
-
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
-        raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
-    if not force:
-        if asset_properties or registry_metadata or default_connection:
-            if not click.confirm("WARNING: Updates to asset-properties and registry-metadata and default-connection will replace any existing values. Are you sure you want to continue?"):
-                ctx.abort()
-
-    kwargs = {}
-    if if_match is not None:
-        kwargs['if_match'] = if_match
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['key'] = key
-    _details['objectVersion'] = object_version
-    _details['lakeId'] = lake_id
-    _details['defaultConnection'] = cli_util.parse_json_parameter("default_connection", default_connection)
-
-    if model_version is not None:
-        _details['modelVersion'] = model_version
-
-    if name is not None:
-        _details['name'] = name
-
-    if description is not None:
-        _details['description'] = description
-
-    if object_status is not None:
-        _details['objectStatus'] = object_status
-
-    if identifier is not None:
-        _details['identifier'] = identifier
-
-    if external_key is not None:
-        _details['externalKey'] = external_key
-
-    if asset_properties is not None:
-        _details['assetProperties'] = cli_util.parse_json_parameter("asset_properties", asset_properties)
-
-    if registry_metadata is not None:
-        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
-
-    if metastore_id is not None:
-        _details['metastoreId'] = metastore_id
-
-    if lake_proxy_endpoint is not None:
-        _details['lakeProxyEndpoint'] = lake_proxy_endpoint
-
-    _details['modelType'] = 'LAKE_DATA_ASSET'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.update_data_asset(
@@ -14972,6 +18095,44 @@ def update_dis_application_detailed_description(ctx, from_json, workspace_id, ap
     cli_util.render_response(result, ctx)
 
 
+@workspace_group.command(name=cli_util.override('data_integration.update_export_request.command_name', 'update-export-request'), help=u"""Updates the status of a export object request. \n[Command Reference](updateExportRequest)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--export-request-key', required=True, help=u"""The key of the object export object request""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["TERMINATING"]), help=u"""The status of the object.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_integration', 'class': 'ExportRequest'})
+@cli_util.wrap_exceptions
+def update_export_request(ctx, from_json, workspace_id, export_request_key, status, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(export_request_key, six.string_types) and len(export_request_key.strip()) == 0:
+        raise click.UsageError('Parameter --export-request-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if status is not None:
+        _details['status'] = status
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_export_request(
+        workspace_id=workspace_id,
+        export_request_key=export_request_key,
+        update_export_request_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @external_publication_group.command(name=cli_util.override('data_integration.update_external_publication.command_name', 'update'), help=u"""Updates the external publication object. \n[Command Reference](updateExternalPublication)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--task-key', required=True, help=u"""The task key.""")
@@ -15179,6 +18340,44 @@ def update_function_library(ctx, from_json, force, workspace_id, function_librar
         workspace_id=workspace_id,
         function_library_key=function_library_key,
         update_function_library_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@workspace_group.command(name=cli_util.override('data_integration.update_import_request.command_name', 'update-import-request'), help=u"""Updates the status of a import object request. \n[Command Reference](updateImportRequest)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--import-request-key', required=True, help=u"""The key of the object export object request""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["TERMINATING"]), help=u"""The status of the object.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_integration', 'class': 'ImportRequest'})
+@cli_util.wrap_exceptions
+def update_import_request(ctx, from_json, workspace_id, import_request_key, status, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(import_request_key, six.string_types) and len(import_request_key.strip()) == 0:
+        raise click.UsageError('Parameter --import-request-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if status is not None:
+        _details['status'] = status
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_import_request(
+        workspace_id=workspace_id,
+        import_request_key=import_request_key,
+        update_import_request_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
