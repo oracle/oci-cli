@@ -997,6 +997,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["FULL", "INCREMENTAL"]), help=u"""The type of backup to create. If omitted, defaults to incremental.""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Vault service key which is the master encryption key for the volume backup. For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "REQUEST_RECEIVED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1005,7 +1006,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'BootVolumeBackup'})
 @cli_util.wrap_exceptions
-def create_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_id, defined_tags, display_name, freeform_tags, type):
+def create_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_id, defined_tags, display_name, freeform_tags, type, kms_key_id):
 
     kwargs = {}
 
@@ -1023,6 +1024,9 @@ def create_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     if type is not None:
         _details['type'] = type
+
+    if kms_key_id is not None:
+        _details['kmsKeyId'] = kms_key_id
 
     client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_boot_volume_backup(
@@ -1582,6 +1586,7 @@ def create_volume_volume_source_from_volume_backup_details(ctx, from_json, wait_
 
 When the request is received, the backup object is in a REQUEST_RECEIVED state. When the data is imaged, it goes into a CREATING state. After the backup is fully uploaded to the cloud, it goes into an AVAILABLE state. \n[Command Reference](createVolumeBackup)""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume that needs to be backed up.""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Vault service key which is the master encryption key for the volume backup. For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1598,12 +1603,15 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'VolumeBackup'})
 @cli_util.wrap_exceptions
-def create_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_id, defined_tags, display_name, freeform_tags, type):
+def create_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_id, kms_key_id, defined_tags, display_name, freeform_tags, type):
 
     kwargs = {}
 
     _details = {}
     _details['volumeId'] = volume_id
+
+    if kms_key_id is not None:
+        _details['kmsKeyId'] = kms_key_id
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
@@ -3775,6 +3783,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Vault service key which is the master encryption key for the volume backup. For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "REQUEST_RECEIVED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3785,7 +3794,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'BootVolumeBackup'})
 @cli_util.wrap_exceptions
-def update_boot_volume_backup(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_backup_id, defined_tags, display_name, freeform_tags, if_match):
+def update_boot_volume_backup(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_backup_id, defined_tags, display_name, freeform_tags, kms_key_id, if_match):
 
     if isinstance(boot_volume_backup_id, six.string_types) and len(boot_volume_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-backup-id cannot be whitespace or empty string')
@@ -3808,6 +3817,9 @@ def update_boot_volume_backup(ctx, from_json, force, wait_for_state, max_wait_se
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if kms_key_id is not None:
+        _details['kmsKeyId'] = kms_key_id
 
     client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.update_boot_volume_backup(
@@ -3993,6 +4005,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Vault service key which is the master encryption key for the volume backup. For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "REQUEST_RECEIVED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -4003,7 +4016,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'VolumeBackup'})
 @cli_util.wrap_exceptions
-def update_volume_backup(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_backup_id, defined_tags, display_name, freeform_tags, if_match):
+def update_volume_backup(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_backup_id, defined_tags, display_name, freeform_tags, kms_key_id, if_match):
 
     if isinstance(volume_backup_id, six.string_types) and len(volume_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-backup-id cannot be whitespace or empty string')
@@ -4026,6 +4039,9 @@ def update_volume_backup(ctx, from_json, force, wait_for_state, max_wait_seconds
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if kms_key_id is not None:
+        _details['kmsKeyId'] = kms_key_id
 
     client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.update_volume_backup(

@@ -1,4 +1,6 @@
 # o - a smart oci-cli wrapper
+<!-- Project o - helper smart wrapper oci cli user experience -->
+
 **`o`** helps you use the Oracle Cloud Infrastructure's `oci` command line interface.  With **`o`** you can
  - quickly find a command and get usage info
  - simply run commands using *resource names*, not OCIDs
@@ -7,7 +9,7 @@
 **`o`** uses shortcuts for *everything*.  All commands, parameters, and resource names have intuitive, *automatic* shortcuts.
 You can run most commands with no scripting. Say goodbye to saving OCIDs to variables.
 
-**``O``** instantly transforms this:
+**``o``** instantly transforms this:
 ```
 $ o list subn -c sales -v west -a
 ```
@@ -41,10 +43,12 @@ To install, get **``o``** from github, place it in your PATH (perhaps in the sam
 o_src=https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/examples/project_o/o
 where=$(which oci) && to=${where%ci} && curl -so $to $o_src && chmod +x $to
 ```
-**`O`** version 1.6 runs in **Windows** PowerShell or Command shell, but installation not automated.  Get **`o`**
+#### Windows
+**`o`** version 1.6 and later runs in Windows PowerShell or Command shell, but installation not automated.  To try it, use this curl command to get **`o`**.  Then copy it to somewhere in your PATH.
 ```
 curl -o o.py https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/examples/project_o/o
 ```
+Update your PATHEXT to make it execute as `o` instead of `o.py`.
 
 #### Setup
 
@@ -86,8 +90,8 @@ This will get a fresh list of all compartments in the tenancy, which is a great 
    - identical names can be resolved by using a substring from the OCID
      - for example, ``-c ujfa`` would specify the *sales* compartment. The last four to six characters will uniquely identify most resources.
      - handy when your resource names contain spaces or special characters
- - support [complex type] parameters where a list of OCIDs is expected
-   - comma-separated resource names are converted to a JSON list
+ - support ``--*-ids`` parameters where a list of OCIDs is expected, e.g. ``--security-list-ids``
+   - comma-separated list of resource names is converted to a JSON list of OCIDs
  - simplify [datetime] parameters
    - ``--start-time today`` beginning (midnight) of current day (UTC)
    - ``--start-time today-36h`` - the day before yesterday at Noon
@@ -160,6 +164,13 @@ This will get a fresh list of all compartments in the tenancy, which is a great 
  - Added “reg" column to identify region key in default table output
    - This is not shown nor available in csv or text formats.
    - Region isn't in the resource data for most data types. **o** is extracting it from the ocid
+ - **o** runs on *Windows* PowerShell and Command shell. Not fully tested, but the basics appear to work.
+
+#### New in version 1.9 (2023-07-05)
+- "Best match" command selection adjusted to accept shorter input for commands in common, core services.  This was needed because oci-cli supports more services and more commands than before, making it more difficult to find unambiguous shortcuts.
+- More shortcuts for `o structured-search --query-text` where clauses:
+   - Use `c` or `l` for "compartment" or "lifeCycleState", followed by `=` or `!=` and the name of a compartment or lifeCycleState.  Don't worry about quotation marks around terms. E.g.
+      - `query all resources where (c = sales || c = kevco) && l != terminated`
 
 ## How **``o``** works  
  - **``o``** compares your input with thousands of ``oci`` commands, and uses an fuzzy matching to find the command you want.

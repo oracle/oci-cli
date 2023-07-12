@@ -21,8 +21,8 @@ if (sys.platform != "win32"):
     import fcntl
 import errno
 import datetime
-VERSION = "1.8"
-UPDATED = "2023-06-12"
+VERSION = "1.9"
+UPDATED = "2023-07-05"
 
 # ==============================================================================
 # Global variables
@@ -283,6 +283,7 @@ and I'll do this for you:
   o iam compartment list -c <tenancy-ocid> -ciis true -all .
   o iam ad list -c <tenancy-ocid> .
   o iam region-subscription list .
+  o iam compartment get -c <tenancy-id> .
         """)
 
         # To be extra helpful, get likely tenancy ocid from oci config file
@@ -302,15 +303,18 @@ and I'll do this for you:
             print("Tenancy name:", sys.argv[2])
         print(bold('Setting up your ' + ocids_file_name + ' file:'))
         print(bold('\nGetting compartment names and ocids...'), end='')
-        if run_command(sys.argv[0] + ' -o name iam compartment list -c ' + sys.argv[1] + ' -ciis true -all .'):
+        ocmd = sys.argv[0]
+        if ' ' in sys.argv[0]:
+            ocmd = '"' + sys.argv[0] + '"'
+        if run_command(ocmd + ' -o name iam compartment list -c ' + sys.argv[1] + ' -ciis true -all .'):
             print('\nThat didn\'t work.  Your account may need additional privileges.')
             exit(0)
         print(bold('\nGetting availability domains...'), end='')
-        run_command(sys.argv[0] + ' -o name iam ad list -c ' + sys.argv[1] + ' .')
+        run_command(ocmd + ' -o name iam ad list -c ' + sys.argv[1] + ' .')
         print(bold('\nGetting regions...'), end='')
-        run_command(sys.argv[0] + ' -o name iam region-subscription list .')
+        run_command(ocmd + ' -o name iam region-subscription list .')
         print(bold('\nGetting tenancy name from root compartment...'), end='')
-        if run_command(sys.argv[0] + ' -o name iam compartment get -c ' + sys.argv[1] + ' .'):
+        if run_command(ocmd + ' -o name iam compartment get -c ' + sys.argv[1] + ' .'):
             # compartment get on tenancy failed; try saving a stub for tenancy
             print("\nCould not get root compartment.")
             tenancy_name = input(bold("Enter tenancy name: "))
@@ -440,12 +444,16 @@ def get_new_ocids_from_returned_items(items):
     """
 
     # special case for region list - save the whole list in one entry
-    if 'oci iam region list' in oci_command_line:
+    if 'oci iam region' in oci_command_line and ' list' in oci_command_line:
+        if 'region-key' in items[0]:
+            region_list = [{'key': i['region-key'], 'name': i['region-name']} for i in items]
+        else:
+            region_list = items
         return {'regionlist': {
                 'type': 'regionlist',
                 'alias': 'regionlist',
                 'id': 'regionlist',
-                'data': items}}
+                'data': region_list}}
 
     if oci_command_line.startswith('oci search'):
         for i in items:
@@ -557,7 +565,7 @@ def show_command(c, full=False, prefix='oci '):
         print('    optional\t' + re.sub(r' -', r'\n\t\t-', c['optional']))
         if show_help:
             print('    global\t' + re.sub(r'\n', r'\n                ',
-                  textwrap.fill(global_options, width=60, break_on_hyphens=False)))
+                  textwrap.fill(global_options, width=60, break_on_hyphens=False)) + '\n')
 
 # ==============================================================================
 
@@ -597,7 +605,7 @@ def args_match_command(c, params):
         # look for word starting with arg
         if ' ' + a in action or '-' + a in action:
             # Scratch out this match
-            action = re.sub(' ' + r'(\S+-)*' + a + r'(\S+)', ' ', action, count=1)
+            action = re.sub(' ' + r'(\S)*?' + a + r'(\S)*?' + ' ', ' ', action, count=1)
             continue
 
         # look for rlc -> really-long-command
@@ -899,6 +907,8 @@ def get_matching_ocid(option, value):
             opt_type = 'organizationsentity'
         elif opt_type == 'routedistribution':
             opt_type = 'drgroutedistribution'
+        elif opt_type == 'session':
+            opt_type = 'bastionsession'
         # Add new idtypes to the above when the --whatever-id does not match ocid1.whatevs...
 
     matches = [item for k, item in ocid.items() if
@@ -973,7 +983,7 @@ def value_parameter(option, value):
             if not v:
                 continue
             o = get_matching_ocid(option, v)
-            idlist.append(v)
+            idlist.append(o)
         return repr(json.dumps(idlist))
 
     # Assist with datetime parameters
@@ -995,16 +1005,23 @@ def value_parameter(option, value):
 
     # Special help with structured-search --search-query "where compartmentId = ocid"
     if option == '--query-text':
-        match = re.findall(r"(\bc\w*) *= *('*\w+'*)", value, flags=re.IGNORECASE)
+        match = re.findall(r"(\b[cl]\w*) *!*= *('*\"*[-_/\w]+'*\"*)", value, flags=re.IGNORECASE)
         for (m, spec) in match:
             if m.lower() == 'compartmentid'[:len(m)]:
                 if m.lower() != 'compartmentid':
-                    value = re.sub(r'\b' + m + r'\b', 'compartmentId', value)
-            if spec.startswith("'"):
-                spec = spec[1:-1]
-            o = get_matching_ocid('compartment', spec)
-            if o != spec:
-                value = re.sub(spec, "'" + o + "'", value)
+                    value = re.sub(r'\b' + m + r'\b', 'compartmentId', value, count=1)
+                if spec.startswith("'") or spec.startswith('"'):
+                    spec = spec[1:-1]
+                o = get_matching_ocid('compartment', spec)
+                if o == spec:
+                    value = re.sub(spec, "'" + spec + "'", value, count=1)
+                else:
+                    value = re.sub(spec, "'" + o + "'", value, count=1)
+            elif m.lower() == 'lifecyclestate'[:len(m)]:
+                if m.lower() != 'lifecyclestate':
+                    value = re.sub(r'\b' + m + r'\b', 'lifecycleState', value, count=1)
+                if not (spec.startswith("'") or spec.startswith('"')):
+                    value = re.sub(spec, "'" + spec + "'", value)
 
     return value
 
@@ -1141,14 +1158,14 @@ def set_column_widths(fields, out_sep, item_list):
 # ==============================================================================
 
 
-def show_column_headers(out_fields, sep):
+def show_column_headers(out_fields, sep, reg=False):
     if quiet > 1:
         return
     if sep == '|':
         for k in out_fields:
             # print(bold(column[k]['format'].format(k)), end=' ', file=sys.stderr)
             try:
-                if k == 'id' and user_out_spec == default_out_spec:
+                if reg and k == 'id' and user_out_spec == default_out_spec:
                     print(bold(' reg'), end=' ', file=sys.stderr)
                 print(bold(column[k]['format'].format(k.split(".")[-1])),
                       end=' ', file=sys.stderr)
@@ -1206,7 +1223,7 @@ def get_field_from_item(field, item):
 # ==============================================================================
 
 
-def show_item(item, fields, sep):
+def show_item(item, fields, sep, reg=False):
     """Report result in user specified -o format."""
 
     out = []
@@ -1225,8 +1242,8 @@ def show_item(item, fields, sep):
             else:
                 out.append(value)
         else:
-            if field == 'id' and sep == '|' and user_out_spec == default_out_spec and 'ocid' in value:
-                out.append(' ' + value.split('.')[3])
+            if reg and field == 'id' and sep == '|' and user_out_spec == default_out_spec and 'ocid' in value:
+                out.append(' ' + (value.split('.')[3]))
             out.append(column[field]['format'].format(re.sub(r'[{}\'[\]\n]', '', value)[
                        column[field]['offset']:]))
 
@@ -1341,6 +1358,11 @@ def output(jsonOut):
     # Below we format and display the data.
     # ==========================================================================
 
+    reg_in_ocid = False
+    try:
+        reg_in_ocid = len(results[0]['id'].split('.')[3]) > 0
+    except (KeyError, IndexError):
+        pass
     if not user_out_spec:
         print(json.dumps(jsonOut, indent=4))
         return results
@@ -1358,9 +1380,9 @@ def output(jsonOut):
         set_column_widths(out_fields, out_sep, results)
         if debug > 1: print("COLUMN:", column)             # noqa: E701
         # Then output header and requested fields from item_list
-        show_column_headers(out_fields, out_sep)
+        show_column_headers(out_fields, out_sep, reg=reg_in_ocid)
         for item in results:
-            show_item(item, out_fields, out_sep)
+            show_item(item, out_fields, out_sep, reg=reg_in_ocid)
 
     # Any extra non-'data' key-values?  Send to stdout
     if type(jsonOut) is dict and jsonOut.keys() != ['data']:
@@ -1977,14 +1999,12 @@ ncw = command_words[0] if command_words else len(CLI_params)
 options_in_args = len(command_words) > 0
 
 # Prioritize core services above others.
-priority_services = ('compute ', 'bv ', 'os ', 'network ', 'iam ', 'db ')
+priority_services = ('compute ', 'bv ', 'os ', 'network ', 'iam ', 'db ', 'resource-manager')
 
 # Find matching commands.  Sort by priority, then by command length.
 matches = sorted([c for c in command if args_match_command(c, CLI_params[:ncw])],
-                 key=lambda c: (len(c['action']) if len(c['action']) < 25 else int(round(len(c['action']) / 10.) * 10.))
-                 if c['action'].startswith(priority_services)
-                 else (1.5 * len(c['action']) if len(c['action']) < 25 else 1.5 * int(round(len(c['action']) / 10.) * 10.)),
-                 reverse=True)
+                 key=lambda c: (not c['action'].startswith(priority_services),
+                 len(c['action'])), reverse=True)
 
 # ==============================================================================
 # Take action - either show help or 'go' run the command

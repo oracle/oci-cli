@@ -51,8 +51,15 @@ cli_util.rename_command(apmsynthetic_cli, apmsynthetic_cli.dedicated_vantage_poi
 cli_util.rename_command(apmsynthetic_cli, apmsynthetic_cli.dedicated_vantage_point_group, apmsynthetic_cli.update_dedicated_vantage_point_oracle_rm_stack, "update-with-oracle-rm-stack")
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_browser_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_verify_texts', 'configuration_network_configuration', 'configuration_dns_configuration'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_browser_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_verify_texts', 'configuration_network_configuration', 'configuration_dns_configuration', 'configuration_is_default_snapshot_enabled', 'configuration_verify_response_codes'])
 @apmsynthetic_cli.monitor_group.command(name=cli_util.override('apm_synthetics.create_monitor_browser_monitor_configuration.command_name', 'create-browser-monitor'), help=apmsynthetic_cli.create_monitor_browser_monitor_configuration.help)
+@cli_util.option('--is-default-snapshot-enabled', type=click.BOOL, help="""If disabled then auto snapshots are not collected.""")
+@cli_util.option('--verify-response-codes', type=custom_types.CLI_COMPLEX_TYPE, help="""Expected HTTP response codes. For status code range, set values such as 2xx, 3xx.
+This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""Dns settings. This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
@@ -78,6 +85,14 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.wrap_exceptions
 def create_monitor_browser_monitor_configuration_extended(ctx, **kwargs):
 
+    if 'is_default_snapshot_enabled' in kwargs:
+        kwargs['configuration_is_default_snapshot_enabled'] = kwargs['is_default_snapshot_enabled']
+        kwargs.pop('is_default_snapshot_enabled')
+
+    if 'verify_response_codes' in kwargs:
+        kwargs['configuration_verify_response_codes'] = kwargs['verify_response_codes']
+        kwargs.pop('verify_response_codes')
+
     if 'dns_configuration' in kwargs:
         kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
         kwargs.pop('dns_configuration')
@@ -101,8 +116,15 @@ def create_monitor_browser_monitor_configuration_extended(ctx, **kwargs):
     ctx.invoke(apmsynthetic_cli.create_monitor_browser_monitor_configuration, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_browser_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_verify_texts', 'configuration_network_configuration', 'configuration_dns_configuration'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_browser_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_verify_texts', 'configuration_network_configuration', 'configuration_dns_configuration', 'configuration_is_default_snapshot_enabled', 'configuration_verify_response_codes'])
 @apmsynthetic_cli.monitor_group.command(name=cli_util.override('apm_synthetics.update_monitor_browser_monitor_configuration.command_name', 'update-browser-monitor'), help=apmsynthetic_cli.update_monitor_browser_monitor_configuration.help)
+@cli_util.option('--is-default-snapshot-enabled', type=click.BOOL, help="""If disabled then auto snapshots are not collected.""")
+@cli_util.option('--verify-response-codes', type=custom_types.CLI_COMPLEX_TYPE, help="""Expected HTTP response codes. For status code range, set values such as 2xx, 3xx.
+This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""Dns settings. This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
@@ -128,6 +150,14 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.wrap_exceptions
 def update_monitor_browser_monitor_configuration_extended(ctx, **kwargs):
 
+    if 'is_default_snapshot_enabled' in kwargs:
+        kwargs['configuration_is_default_snapshot_enabled'] = kwargs['is_default_snapshot_enabled']
+        kwargs.pop('is_default_snapshot_enabled')
+
+    if 'verify_response_codes' in kwargs:
+        kwargs['configuration_verify_response_codes'] = kwargs['verify_response_codes']
+        kwargs.pop('verify_response_codes')
+
     if 'dns_configuration' in kwargs:
         kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
         kwargs.pop('dns_configuration')
@@ -151,8 +181,13 @@ def update_monitor_browser_monitor_configuration_extended(ctx, **kwargs):
     ctx.invoke(apmsynthetic_cli.update_monitor_browser_monitor_configuration, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_rest_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_is_redirection_enabled', 'configuration_req_authentication_details', 'configuration_req_authentication_scheme', 'configuration_request_headers', 'configuration_request_method', 'configuration_request_post_body', 'configuration_request_query_params', 'configuration_verify_response_codes', 'configuration_verify_response_content', 'configuration_network_configuration', 'configuration_dns_configuration'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_rest_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_is_redirection_enabled', 'configuration_req_authentication_details', 'configuration_req_authentication_scheme', 'configuration_request_headers', 'configuration_request_method', 'configuration_request_post_body', 'configuration_request_query_params', 'configuration_verify_response_codes', 'configuration_verify_response_content', 'configuration_network_configuration', 'configuration_dns_configuration', 'configuration_client_certificate_details'])
 @apmsynthetic_cli.monitor_group.command(name=cli_util.override('apm_synthetics.create_monitor_rest_monitor_configuration.command_name', 'create-rest-monitor'), help=apmsynthetic_cli.create_monitor_rest_monitor_configuration.help)
+@cli_util.option('--client-certificate-details', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""Dns settings. This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
@@ -198,9 +233,13 @@ The --generate-param-json-input option can be used to generate an example of the
 in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @cli_util.option('--verify-response-content', help=u"""Verify response content against regular expression based string. If response content does not match with the verifyResponseContent, then it will be considered as failure.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'req-authentication-details': {'module': 'apm_synthetics', 'class': 'RequestAuthenticationDetails'}, 'request-headers': {'module': 'apm_synthetics', 'class': 'list[Header]'}, 'request-query-params': {'module': 'apm_synthetics', 'class': 'list[RequestQueryParam]'}, 'verify-response-codes': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'client-certificate-details': {'module': 'apm_synthetics', 'class': 'ClientCertificateDetails'}, 'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'req-authentication-details': {'module': 'apm_synthetics', 'class': 'RequestAuthenticationDetails'}, 'request-headers': {'module': 'apm_synthetics', 'class': 'list[Header]'}, 'request-query-params': {'module': 'apm_synthetics', 'class': 'list[RequestQueryParam]'}, 'verify-response-codes': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
 def create_monitor_rest_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'client_certificate_details' in kwargs:
+        kwargs['configuration_client_certificate_details'] = kwargs['client_certificate_details']
+        kwargs.pop('client_certificate_details')
 
     if 'dns_configuration' in kwargs:
         kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
@@ -257,8 +296,13 @@ def create_monitor_rest_monitor_configuration_extended(ctx, **kwargs):
     ctx.invoke(apmsynthetic_cli.create_monitor_rest_monitor_configuration, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_rest_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_is_redirection_enabled', 'configuration_req_authentication_details', 'configuration_req_authentication_scheme', 'configuration_request_headers', 'configuration_request_method', 'configuration_request_post_body', 'configuration_request_query_params', 'configuration_verify_response_codes', 'configuration_verify_response_content', 'configuration_network_configuration', 'configuration_dns_configuration'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_rest_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_is_redirection_enabled', 'configuration_req_authentication_details', 'configuration_req_authentication_scheme', 'configuration_request_headers', 'configuration_request_method', 'configuration_request_post_body', 'configuration_request_query_params', 'configuration_verify_response_codes', 'configuration_verify_response_content', 'configuration_network_configuration', 'configuration_dns_configuration', 'configuration_client_certificate_details'])
 @apmsynthetic_cli.monitor_group.command(name=cli_util.override('apm_synthetics.update_monitor_rest_monitor_configuration.command_name', 'update-rest-monitor'), help=apmsynthetic_cli.update_monitor_rest_monitor_configuration.help)
+@cli_util.option('--client-certificate-details', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""Dns settings. This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
@@ -304,9 +348,13 @@ The --generate-param-json-input option can be used to generate an example of the
 in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @cli_util.option('--verify-response-content', help=u"""Verify response content against regular expression based string. If response content does not match with the verifyResponseContent, then it will be considered as failure.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'req-authentication-details': {'module': 'apm_synthetics', 'class': 'RequestAuthenticationDetails'}, 'request-headers': {'module': 'apm_synthetics', 'class': 'list[Header]'}, 'request-query-params': {'module': 'apm_synthetics', 'class': 'list[RequestQueryParam]'}, 'verify-response-codes': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'client-certificate-details': {'module': 'apm_synthetics', 'class': 'ClientCertificateDetails'}, 'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'req-authentication-details': {'module': 'apm_synthetics', 'class': 'RequestAuthenticationDetails'}, 'request-headers': {'module': 'apm_synthetics', 'class': 'list[Header]'}, 'request-query-params': {'module': 'apm_synthetics', 'class': 'list[RequestQueryParam]'}, 'verify-response-codes': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
 def update_monitor_rest_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'client_certificate_details' in kwargs:
+        kwargs['configuration_client_certificate_details'] = kwargs['client_certificate_details']
+        kwargs.pop('client_certificate_details')
 
     if 'dns_configuration' in kwargs:
         kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
@@ -363,8 +411,15 @@ def update_monitor_rest_monitor_configuration_extended(ctx, **kwargs):
     ctx.invoke(apmsynthetic_cli.update_monitor_rest_monitor_configuration, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_scripted_rest_monitor_configuration, params_to_exclude=['configuration_is_failure_retried', 'configuration_network_configuration', 'configuration_dns_configuration'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_scripted_rest_monitor_configuration, params_to_exclude=['configuration_is_failure_retried', 'configuration_network_configuration', 'configuration_dns_configuration', 'configuration_req_authentication_scheme', 'configuration_verify_response_codes'])
 @apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.create_monitor_scripted_rest_monitor_configuration.name, help=apmsynthetic_cli.create_monitor_scripted_rest_monitor_configuration.help)
+@cli_util.option('--req-authentication-scheme', type=custom_types.CliCaseInsensitiveChoice(["NONE", "RESOURCE_PRINCIPAL"]), help="""Request HTTP authentication scheme.""")
+@cli_util.option('--verify-response-codes', type=custom_types.CLI_COMPLEX_TYPE, help="""Expected HTTP response codes. For status code range, set values such as 2xx, 3xx.
+This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""Dns settings. This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
@@ -377,9 +432,17 @@ The --generate-param-json-input option can be used to generate an example of the
 in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @cli_util.option('--is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried enabled, then if call is failed then it will be retried.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
 def create_monitor_scripted_rest_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'req_authentication_scheme' in kwargs:
+        kwargs['configuration_req_authentication_scheme'] = kwargs['req_authentication_scheme']
+        kwargs.pop('req_authentication_scheme')
+
+    if 'verify_response_codes' in kwargs:
+        kwargs['configuration_verify_response_codes'] = kwargs['verify_response_codes']
+        kwargs.pop('verify_response_codes')
 
     if 'dns_configuration' in kwargs:
         kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
@@ -396,8 +459,15 @@ def create_monitor_scripted_rest_monitor_configuration_extended(ctx, **kwargs):
     ctx.invoke(apmsynthetic_cli.create_monitor_scripted_rest_monitor_configuration, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_scripted_rest_monitor_configuration, params_to_exclude=['configuration_is_failure_retried', 'configuration_network_configuration', 'configuration_dns_configuration'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_scripted_rest_monitor_configuration, params_to_exclude=['configuration_is_failure_retried', 'configuration_network_configuration', 'configuration_dns_configuration', 'configuration_req_authentication_scheme', 'configuration_verify_response_codes'])
 @apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.update_monitor_scripted_rest_monitor_configuration.name, help=apmsynthetic_cli.update_monitor_scripted_rest_monitor_configuration.help)
+@cli_util.option('--req-authentication-scheme', type=custom_types.CliCaseInsensitiveChoice(["NONE", "RESOURCE_PRINCIPAL"]), help="""Request HTTP authentication scheme.""")
+@cli_util.option('--verify-response-codes', type=custom_types.CLI_COMPLEX_TYPE, help="""Expected HTTP response codes. For status code range, set values such as 2xx, 3xx.
+This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""Dns settings. This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
@@ -410,9 +480,17 @@ The --generate-param-json-input option can be used to generate an example of the
 in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @cli_util.option('--is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried enabled, then if call is failed then it will be retried.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
 def update_monitor_scripted_rest_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'req_authentication_scheme' in kwargs:
+        kwargs['configuration_req_authentication_scheme'] = kwargs['req_authentication_scheme']
+        kwargs.pop('req_authentication_scheme')
+
+    if 'verify_response_codes' in kwargs:
+        kwargs['configuration_verify_response_codes'] = kwargs['verify_response_codes']
+        kwargs.pop('verify_response_codes')
 
     if 'dns_configuration' in kwargs:
         kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
@@ -429,8 +507,9 @@ def update_monitor_scripted_rest_monitor_configuration_extended(ctx, **kwargs):
     ctx.invoke(apmsynthetic_cli.update_monitor_scripted_rest_monitor_configuration, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_scripted_browser_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_network_configuration', 'configuration_dns_configuration'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_scripted_browser_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_network_configuration', 'configuration_dns_configuration', 'configuration_is_default_snapshot_enabled'])
 @apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.create_monitor_scripted_browser_monitor_configuration.name, help=apmsynthetic_cli.create_monitor_scripted_browser_monitor_configuration.help)
+@cli_util.option('--is-default-snapshot-enabled', type=click.BOOL, help="""If disabled then auto snapshots are not collected.""")
 @cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""Dns settings. This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
@@ -444,9 +523,13 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.option('--is-certificate-validation-enabled', type=click.BOOL, help=u"""If certificate validation enabled, then call will fail for certificate errors.""")
 @cli_util.option('--is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried enabled, then if call is failed then it will be retried.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
 def create_monitor_scripted_browser_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'is_default_snapshot_enabled' in kwargs:
+        kwargs['configuration_is_default_snapshot_enabled'] = kwargs['is_default_snapshot_enabled']
+        kwargs.pop('is_default_snapshot_enabled')
 
     if 'dns_configuration' in kwargs:
         kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
@@ -467,8 +550,9 @@ def create_monitor_scripted_browser_monitor_configuration_extended(ctx, **kwargs
     ctx.invoke(apmsynthetic_cli.create_monitor_scripted_browser_monitor_configuration, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_scripted_browser_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_network_configuration', 'configuration_dns_configuration'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_scripted_browser_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_network_configuration', 'configuration_dns_configuration', 'configuration_is_default_snapshot_enabled'])
 @apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.update_monitor_scripted_browser_monitor_configuration.name, help=apmsynthetic_cli.update_monitor_scripted_browser_monitor_configuration.help)
+@cli_util.option('--is-default-snapshot-enabled', type=click.BOOL, help="""If disabled then auto snapshots are not collected.""")
 @cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""Dns settings. This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
@@ -482,9 +566,13 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.option('--is-certificate-validation-enabled', type=click.BOOL, help=u"""If certificate validation enabled, then call will fail for certificate errors.""")
 @cli_util.option('--is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried enabled, then if call is failed then it will be retried.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
 def update_monitor_scripted_browser_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'is_default_snapshot_enabled' in kwargs:
+        kwargs['configuration_is_default_snapshot_enabled'] = kwargs['is_default_snapshot_enabled']
+        kwargs.pop('is_default_snapshot_enabled')
 
     if 'dns_configuration' in kwargs:
         kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
