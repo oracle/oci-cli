@@ -170,7 +170,8 @@ def show_transfer_job_with_details(ctx, **kwargs):
             for each_appliance_lbl in transfer_job_obj.attached_transfer_appliance_labels:
                 appliance_obj = get_transfer_appliance_helper(ctx, kwargs['from_json'], kwargs['id'], each_appliance_lbl).data
                 appliances_list.append({'label': each_appliance_lbl, 'serialNumber': appliance_obj.serial_number,
-                                        'status': appliance_obj.lifecycle_state, 'uploadStatusLogURL': appliance_obj.upload_status_log_uri})
+                                        'status': appliance_obj.lifecycle_state, 'uploadStatusLogURL': appliance_obj.upload_status_log_uri,
+                                        'returnShippingLabelUri': appliance_obj.return_shipping_label_uri})
 
     result.data.attached_transfer_appliance_labels = appliances_list
     return result

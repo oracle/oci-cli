@@ -11,7 +11,7 @@ import json
 
 from oci import exceptions
 from oci.dts.models.update_appliance_export_job_details import UpdateApplianceExportJobDetails
-from oci_cli import cli_util
+from oci_cli import cli_util, custom_types
 from oci_cli import json_skeleton_utils
 
 from services.dts.src.oci_cli_dts.appliance_constants import APPLIANCE_STATE_LOCKED, APPLIANCE_STATUS_NA
@@ -29,7 +29,7 @@ from services.dts.src.oci_cli_appliance_export_job.manifest.object_uploader impo
 from services.dts.src.oci_cli_appliance_export_job.applianceexportjob_constants import \
     LIFECYCLE_STATE_DETAILS_PENDING_SUBMISSION, LIFECYCLE_STATE_DETAILS_PENDING_APPROVAL, \
     LIFECYCLE_STATE_DETAILS_CUSTOMER_PROCESSING, OBJECT_STORAGE_BUCKET_TYPE_ARCHIVE, \
-    LIFECYCLE_STATE_DETAILS_ORACLE_SHIPPED, LIFECYCLE_STATE_DETAILS_CUSTOMER_RECEIVED
+    LIFECYCLE_STATE_DETAILS_ORACLE_SHIPPED, LIFECYCLE_STATE_DETAILS_CUSTOMER_RECEIVED, LIFECYCLE_STATE_DETAILS_RETURN_LABEL_REQUESTED
 
 cli_util.rename_command(dts_service_cli, dts_service_cli.dts_service_group, applianceexportjob_cli.appliance_export_job_root_group, 'export')
 cli_util.rename_command(dts_service_cli, applianceexportjob_cli.appliance_export_job_root_group, applianceexportjob_cli.get_appliance_export_job, 'show')
@@ -402,6 +402,16 @@ def request_appliance_export_job_extended(ctx, **kwargs):
     ctx.invoke(applianceexportjob_cli.update_appliance_export_job, **kwargs_update)
 
 
+def get_appliance_export_job_helper(ctx, from_json, id):
+    client = cli_util.build_client('dts', 'appliance_export_job', ctx)
+    kwargs_request = {'opc_request_id': cli_util.use_or_generate_request_id(ctx.obj['request_id'])}
+    result = client.get_appliance_export_job(
+        appliance_export_job_id=id,
+        **kwargs_request
+    )
+    return result
+
+
 def appliance_state_update(appliance_lifecycle_state, appliance_lifecycle_state_details, **kwargs):
     '''
     Changes the state of the appliance if not already in IN_PROCESSING
@@ -409,21 +419,55 @@ def appliance_state_update(appliance_lifecycle_state, appliance_lifecycle_state_
     :param kwargs: appliance details
     :return: updated kwargs with target-state
     '''
-
     if appliance_lifecycle_state == UpdateApplianceExportJobDetails.LIFECYCLE_STATE_INPROGRESS:
         if appliance_lifecycle_state_details == LIFECYCLE_STATE_DETAILS_CUSTOMER_PROCESSING:
-            click.echo("Appliance lifecycle_state_details is already in {}.".format(LIFECYCLE_STATE_DETAILS_CUSTOMER_PROCESSING))
+            click.echo("Appliance lifecycle_state_details is already in {}.".format(
+                LIFECYCLE_STATE_DETAILS_CUSTOMER_PROCESSING))
             return None
         kwargs_update = {'appliance_export_job_id': kwargs['job_id']}
-        if appliance_lifecycle_state_details in [LIFECYCLE_STATE_DETAILS_ORACLE_SHIPPED, LIFECYCLE_STATE_DETAILS_CUSTOMER_RECEIVED]:
-            kwargs_update.update({'lifecycle_state': appliance_lifecycle_state, 'lifecycle_state_details': LIFECYCLE_STATE_DETAILS_CUSTOMER_PROCESSING})
-            click.echo("Updating the state of the job from {} to {}".format(appliance_lifecycle_state_details, LIFECYCLE_STATE_DETAILS_CUSTOMER_PROCESSING))
+        if appliance_lifecycle_state_details in [LIFECYCLE_STATE_DETAILS_ORACLE_SHIPPED,
+                                                 LIFECYCLE_STATE_DETAILS_CUSTOMER_RECEIVED]:
+            kwargs_update.update({'lifecycle_state': appliance_lifecycle_state,
+                                  'lifecycle_state_details': LIFECYCLE_STATE_DETAILS_CUSTOMER_PROCESSING})
+            click.echo("Updating the state of the job from {} to {}".format(appliance_lifecycle_state_details,
+                                                                            LIFECYCLE_STATE_DETAILS_CUSTOMER_PROCESSING))
             return kwargs_update
         else:
             raise click.ClickException("The Appliance is not in state for export. Contact Oracle Support")
     else:
-        click.echo("Appliance lifecycle-state is NOT {}.".format(UpdateApplianceExportJobDetails.LIFECYCLE_STATE_INPROGRESS))
+        click.echo(
+            "Appliance lifecycle-state is NOT {}.".format(UpdateApplianceExportJobDetails.LIFECYCLE_STATE_INPROGRESS))
         return None
+
+
+@applianceexportjob_cli.appliance_export_job_root_group.command(name="request-return-label", help=u"""Request return label""")
+@cli_util.option('--job-id', required=True, help=u"""OCID of the Export Job""")
+@cli_util.option('--pickup-window-start-time', type=custom_types.CLI_DATETIME, required=True, help=u"""Start time for the window to pickup the device,""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--pickup-window-end-time', type=custom_types.CLI_DATETIME, required=True, help=u"""End time for the window to pickup the device,""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dts', 'class': 'ApplianceExportJob'})
+@cli_util.wrap_exceptions
+@json_skeleton_utils.get_cli_json_input_option({})
+def request_return_shipping_label_extended(ctx, from_json, **kwargs):
+    '''
+    Request return shipping label for appliance
+    :param ctx:
+    :param kwargs: return shipping label date-time information
+    :return: Appliance status update
+    '''
+    if isinstance(kwargs['job_id'], six.string_types) and len(kwargs['job_id'].strip()) == 0:
+        raise click.UsageError('Parameter --appliance-export-job-id cannot be whitespace or empty string')
+
+    kwargs_update = {
+        'appliance_export_job_id': kwargs['job_id'],
+        'lifecycle_state': UpdateApplianceExportJobDetails.LIFECYCLE_STATE_INPROGRESS,
+        'lifecycle_state_details': LIFECYCLE_STATE_DETAILS_RETURN_LABEL_REQUESTED,
+        'pickup_window_start_time': kwargs['pickup_window_start_time'],
+        'pickup_window_end_time': kwargs['pickup_window_end_time']
+    }
+    click.echo("Changing the state of the transfer appliance to {}".format(LIFECYCLE_STATE_DETAILS_RETURN_LABEL_REQUESTED))
+    ctx.invoke(applianceexportjob_cli.update_appliance_export_job, **kwargs_update)
 
 
 def appliance_unlock(ctx, appliance_profile, passphrase, appliance_lock_status):

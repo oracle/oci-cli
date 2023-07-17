@@ -198,7 +198,7 @@ def create_user_session(region='', tenancy_name=None):
     return UserSession(user_ocid, tenancy_ocid, region, token, public_key, private_key, fingerprint)
 
 
-def persist_user_session(user_session, profile_name=None, config=None, use_passphrase=False, persist_token=False, bootstrap=False, session_auth=False):
+def persist_user_session(user_session, profile_name=None, config=None, use_passphrase=False, persist_token=False, bootstrap=False, session_auth=False, persist_only_public_key=False):
     if not profile_name:
         # prompt for location of user config
         config_location, profile_name = cli_setup.prompt_session_for_profile()
@@ -217,7 +217,8 @@ def persist_user_session(user_session, profile_name=None, config=None, use_passp
         cli_util.create_directory(session_auth_location)
 
     public_key_file_path = os.path.join(session_auth_location, DEFAULT_KEY_NAME + PUBLIC_KEY_FILENAME_SUFFIX)
-    private_key_file_path = os.path.join(session_auth_location, DEFAULT_KEY_NAME + PRIVATE_KEY_FILENAME_SUFFIX)
+    if not persist_only_public_key:
+        private_key_file_path = os.path.join(session_auth_location, DEFAULT_KEY_NAME + PRIVATE_KEY_FILENAME_SUFFIX)
     if not cli_setup.write_public_key_to_file(public_key_file_path, user_session.public_key, True, True):
         click.echo(BOOTSTRAP_PROCESS_CANCELED_MESSAGE)
         sys.exit(0)
@@ -226,9 +227,10 @@ def persist_user_session(user_session, profile_name=None, config=None, use_passp
     if bootstrap or (session_auth and use_passphrase):
         key_passphrase = prompt_for_passphrase()
 
-    if not cli_setup.write_private_key_to_file(private_key_file_path, user_session.private_key, key_passphrase, True, True):
-        click.echo(BOOTSTRAP_PROCESS_CANCELED_MESSAGE)
-        sys.exit(0)
+    if not persist_only_public_key:
+        if not cli_setup.write_private_key_to_file(private_key_file_path, user_session.private_key, key_passphrase, True, True):
+            click.echo(BOOTSTRAP_PROCESS_CANCELED_MESSAGE)
+            sys.exit(0)
 
     # write token to a file so we can refresh it without having to read / write the entire config
     if persist_token:
@@ -251,7 +253,7 @@ def persist_user_session(user_session, profile_name=None, config=None, use_passp
         filename=config_location,
         user_id=userId,
         fingerprint=user_session.fingerprint,
-        key_file=os.path.abspath(private_key_file_path),
+        key_file=os.path.abspath(private_key_file_path) if not persist_only_public_key else "Update_private_key_path",
         tenancy=user_session.tenancy_ocid,
         region=user_session.region,
         pass_phrase=key_passphrase,

@@ -6,6 +6,51 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.29.4 - 2023-07-18
+--------------------
+Added
+~~~~~
+
+* Support for no-browser authentication
+
+  * oci session authenticate --no-browser
+
+* Big Data service
+
+  * Support for new commands
+
+    * ``oci bds instance get-os-patch-details``
+    * ``oci bds instance install-os-patch``
+    * ``oci bds instance list-os-patches``
+    * ``oci bds instance master-nodes add``
+    * ``oci bds instance utility-nodes add``
+
+  * Support for new optional parameter
+
+    * ``oci bds instance list-patch-histories --patch-type``
+
+* File Storage service
+
+  * Support for new commands
+
+    * ``oci fs mount-target validate-key-tabs``
+    * ``oci fs outbound-connector``
+
+  * Support for new optional parameters for Kerberos and LDAP with NFSv3
+
+    * ``oci fs export create --is-idmap-groups-for-sys-auth``
+    * ``oci fs export update --is-idmap-groups-for-sys-auth``
+    * ``oci fs mount-target create --idmap-type --kerberos --ldap-idmap``
+    * ``oci fs mount-target update --idmap-type --kerberos --ldap-idmap``
+
+* Support for new optional parameter in the Disaster Recovery service
+
+  * ``oci disaster-recovery dr-protection-group list --role``
+
+* Support for test connectivity for connections associated with deployments in the Goldengate service
+
+  * ``oci goldengate connection-assignment test``
+
 3.29.3 - 2023-07-11
 --------------------
 Added

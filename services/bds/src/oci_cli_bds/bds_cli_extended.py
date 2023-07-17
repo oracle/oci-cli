@@ -31,6 +31,30 @@ bds_cli.bds_instance_group.add_command(bds_worker_nodes_group)
 bds_worker_nodes_group.add_command(bds_cli.add_worker_nodes)
 
 
+# oci bds bds-instance add  -> oci bds instance master-nodes add
+@click.command('master-nodes', cls=CommandGroupWithAlias, help=bds_cli.add_master_nodes.help)
+@cli_util.help_option_group
+def bds_master_nodes_group():
+    pass
+
+
+# bds_cli.bds_instance_group.commands.pop(bds_cli.add_master_nodes.name)
+bds_cli.bds_instance_group.add_command(bds_master_nodes_group)
+bds_master_nodes_group.add_command(bds_cli.add_master_nodes)
+
+
+# oci bds bds-instance add  -> oci bds instance utility-nodes add
+@click.command('utility-nodes', cls=CommandGroupWithAlias, help=bds_cli.add_utility_nodes.help)
+@cli_util.help_option_group
+def bds_utility_nodes_group():
+    pass
+
+
+# bds_cli.bds_instance_group.commands.pop(bds_cli.add_utility_nodes.name)
+bds_cli.bds_instance_group.add_command(bds_utility_nodes_group)
+bds_utility_nodes_group.add_command(bds_cli.add_utility_nodes)
+
+
 # oci bds bds-instance add  -> oci bds kafka
 # oci bds bds-instance remove  -> oci bds kafka
 @click.command('kafka', cls=CommandGroupWithAlias, help='Kafka')

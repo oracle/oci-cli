@@ -20,7 +20,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from oci_cli.formatting import render_config_errors
 
 from services.dts.src.oci_cli_dts.appliance_init_auth_spec import InitAuthSpec
-from services.dts.src.oci_cli_dts.cli_utils import error_message_wrapper
+from services.dts.src.oci_cli_dts.cli_utils import error_message_wrapper, format_dt
 
 from services.dts.src.oci_cli_dts.generated import dts_service_cli
 from services.dts.src.oci_cli_dts.appliance_init_auth import InitAuth
@@ -31,7 +31,6 @@ from services.dts.src.oci_cli_dts.physical_appliance_control_plane.client.models
 from services.dts.src.oci_cli_dts.appliance_config_manager import ApplianceConfigManager
 from services.dts.src.oci_cli_dts.appliance_constants import APPLIANCE_CONFIGS_BASE_DIR, ENDPOINT, APPLIANCE_PROFILE, \
     KEY_FILE_KEY, APPLIANCE_UPLOAD_USER_CONFIG_PATH, TEST_OBJECT, DEFAULT_PROFILE, CONFIG_DIR
-
 
 """
 physical-appliance command
@@ -294,20 +293,22 @@ def pa_show_helper(ctx, from_json, appliance_profile):
 @cli_util.option('--appliance-label', required=True, help=u"""Appliance label.""")
 @cli_util.option('--skip-upload-user-check', required=False, is_flag=True,
                  help=u"""Skip checking whether the upload user has the right credentials""")
+@cli_util.option('--skip-request-return-label', required=False, is_flag=True,
+                 help=u"""Skip prompt for request-return-label """)
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def pa_finalize(ctx, from_json, appliance_profile, job_id, appliance_label, skip_upload_user_check):
+def pa_finalize(ctx, from_json, appliance_profile, job_id, appliance_label, skip_upload_user_check, skip_request_return_label):
     click.echo("Retrieving the Upload Summary Object Name from OCI... ", nl=False)
     appliance_client = cli_util.build_client('dts', 'transfer_appliance', ctx)
     physical_appliance_client = create_appliance_client(ctx, appliance_profile)
-
-    upload_summary_obj_name = appliance_client.get_transfer_appliance(
+    result = appliance_client.get_transfer_appliance(
         id=job_id,
         transfer_appliance_label=appliance_label
-    ).data.upload_status_log_uri
+    )
+    upload_summary_obj_name = result.data.upload_status_log_uri
     click.echo("done")
 
     click.echo("Retrieving the Upload Bucket Name from OCI... ", nl=False)
@@ -338,29 +339,61 @@ def pa_finalize(ctx, from_json, appliance_profile, job_id, appliance_label, skip
     appliance_info = physical_appliance_client.get_physical_transfer_appliance()
     click.echo("done")
 
-    click.echo("The Appliance is locked after finalize. Hence the finalize status will be shown as NA. "
-               "Please unlock the Appliance again to see the correct finalize status")
+    click.echo("The transfer appliance is locked after finalize. Hence the finalize status will be shown as NA. "
+               "Please unlock the transfer appliance again to see the correct finalize status")
 
-    click.echo("Updating the State of the Appliance in OCI to FINALIZED... ", nl=False)
-    current_state = appliance_client.get_transfer_appliance(
-        id=job_id,
-        transfer_appliance_label=appliance_label
-    ).data.lifecycle_state
-    if current_state != TransferAppliance.LIFECYCLE_STATE_FINALIZED:
-        details = {
-            "lifecycleState": TransferAppliance.LIFECYCLE_STATE_FINALIZED
-        }
-        appliance_client.update_transfer_appliance(
-            id=job_id,
-            transfer_appliance_label=appliance_label,
-            update_transfer_appliance_details=details)
-    click.echo("done")
+    requested_return_label = False
+    return_label_exists = result.data.return_shipping_label_uri is not None
+    current_state = result.data.lifecycle_state
+    if current_state not in [
+        TransferAppliance.LIFECYCLE_STATE_RETURN_LABEL_REQUESTED,
+        TransferAppliance.LIFECYCLE_STATE_RETURN_LABEL_GENERATING,
+        TransferAppliance.LIFECYCLE_STATE_RETURN_LABEL_AVAILABLE
+    ]:
+        if current_state != TransferAppliance.LIFECYCLE_STATE_FINALIZED:
+            click.echo("Updating the State of the Appliance in OCI to FINALIZED... ", nl=False)
+            appliance_client.update_transfer_appliance(
+                id=job_id,
+                transfer_appliance_label=appliance_label,
+                update_transfer_appliance_details={
+                    "lifecycleState": TransferAppliance.LIFECYCLE_STATE_FINALIZED
+                }
+            )
+            click.echo("done")
+
+        confirm_prompt = "Would you like to request a return shipping label?"
+        if not skip_request_return_label \
+                and not return_label_exists \
+                and click.confirm(click.style(confirm_prompt, fg="yellow")):
+            click.echo("All following date and time inputs are expected in UTC timezone with format: 'YYYY-MM-DD HH:MM'")
+            return_start_time = format_dt(click.prompt("Please enter pickup window start time").strip("'\""))
+            return_end_time = format_dt(click.prompt("Please enter pickup window end time").strip("'\""))
+
+            click.echo("Updating the State of the Appliance in OCI to RETURN_LABEL_REQUESTED... ", nl=False)
+            appliance_client.update_transfer_appliance(
+                id=job_id,
+                transfer_appliance_label=appliance_label,
+                update_transfer_appliance_details={
+                    "lifecycleState": TransferAppliance.LIFECYCLE_STATE_RETURN_LABEL_REQUESTED,
+                    'pickupWindowStartTime': return_start_time,
+                    'pickupWindowEndTime': return_end_time
+                }
+            )
+            click.echo("done")
+            requested_return_label = True
 
     user_friendly_appliance_info = convert_to_user_friendly(appliance_info)
     cli_util.render_response(user_friendly_appliance_info, ctx)
-    click.echo("Next action(s): Shipping the Import Appliance")
-    click.echo(" 1. - Shut Down the Import Appliance -")
-    click.echo(" 2. - Packing and Shipping the Import Appliance to Oracle -")
+
+    if requested_return_label or return_label_exists:
+        click.echo("Next action(s): Shipping the Import Appliance")
+        click.echo(" 1. - Shut Down the Import Appliance -")
+        click.echo(" 2. - Packing and Shipping the Import Appliance to Oracle -")
+    else:
+        click.echo("Next action(s): Requesting a Return Shipping Label")
+        click.echo(" 1. oci dts appliance request-return-label --job-id {} --appliance-label {} "
+                   "--pickup-window-start-time <pickup_window_start_time> "
+                   "--pickup-window-end-time <pickup_window_end_time>".format(job_id, appliance_label))
 
 
 def get_upload_user_region():

@@ -170,9 +170,13 @@ def compute_capacity_report_group():
     pass
 
 
-@click.command(cli_util.override('compute.compute_cluster_group.command_name', 'compute-cluster'), cls=CommandGroupWithAlias, help="""A remote direct memory access (RDMA) network group. Compute clusters are groups of high performance computing (HPC) bare metal instances that are connected with an ultra low latency network. Compute clusters allow you to manage instances in the cluster individually. For more information, see [Compute Clusters].
+@click.command(cli_util.override('compute.compute_cluster_group.command_name', 'compute-cluster'), cls=CommandGroupWithAlias, help="""A remote direct memory access (RDMA) network group.
 
-For details about cluster networks that use intance pools to manage groups of identical instances, see [ClusterNetwork].""")
+A cluster network on a [compute cluster] is a group of high performance computing (HPC), GPU, or optimized instances that are connected with an ultra low-latency network.
+
+Use compute clusters when you want to manage instances in the cluster individually, or when you want to use different types of instances in the RDMA network group.
+
+For details about cluster networks that use instance pools to manage groups of identical instances, see [ClusterNetwork].""")
 @cli_util.help_option_group
 def compute_cluster_group():
     pass
@@ -946,10 +950,10 @@ def change_compute_capacity_reservation_compartment(ctx, from_json, wait_for_sta
     cli_util.render_response(result, ctx)
 
 
-@compute_cluster_group.command(name=cli_util.override('compute.change_compute_cluster_compartment.command_name', 'change-compartment'), help=u"""Moves a compute cluster into a different compartment within the same tenancy. A compute cluster is a remote direct memory access (RDMA) network group.
+@compute_cluster_group.command(name=cli_util.override('compute.change_compute_cluster_compartment.command_name', 'change-compartment'), help=u"""Moves a compute cluster into a different compartment within the same tenancy. A [compute cluster] is a remote direct memory access (RDMA) network group.
 
 For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeComputeClusterCompartment)""")
-@cli_util.option('--compute-cluster-id', required=True, help=u"""The [OCID] of the compute cluster. A compute cluster is a remote direct memory access (RDMA) network group. For more information, see [Compute Clusters].""")
+@cli_util.option('--compute-cluster-id', required=True, help=u"""The [OCID] of the compute cluster. A [compute cluster] is a remote direct memory access (RDMA) network group.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the compute cluster to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1321,11 +1325,17 @@ def create_compute_capacity_reservation(ctx, from_json, wait_for_state, max_wait
     cli_util.render_response(result, ctx)
 
 
-@compute_cluster_group.command(name=cli_util.override('compute.create_compute_cluster.command_name', 'create'), help=u"""Creates an empty compute cluster, which is a remote direct memory access (RDMA) network group. After the compute cluster is created, you can use the compute cluster's OCID with the [LaunchInstance] operation to create instances in the compute cluster. For more information, see [Compute Clusters].
+@compute_cluster_group.command(name=cli_util.override('compute.create_compute_cluster.command_name', 'create'), help=u"""Creates an empty [compute cluster]. A compute cluster is a remote direct memory access (RDMA) network group.
 
-To create a cluster network that uses intance pools to manage groups of identical instances, see [CreateClusterNetwork]. \n[Command Reference](createComputeCluster)""")
-@cli_util.option('--availability-domain', required=True, help=u"""The availability domain that the compute cluster is running in. Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains this compute cluster.""")
+After the compute cluster is created, you can use the compute cluster's OCID with the [LaunchInstance] operation to create instances in the compute cluster. The instances must be created in the same compartment and availability domain as the cluster.
+
+Use compute clusters when you want to manage instances in the cluster individually, or when you want to use different types of instances in the RDMA network group.
+
+If you want predictable capacity for a specific number of identical instances that are managed as a group, create a cluster network that uses instance pools by using the [CreateClusterNetwork] operation. \n[Command Reference](createComputeCluster)""")
+@cli_util.option('--availability-domain', required=True, help=u"""The availability domain to place the compute cluster in.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -1959,8 +1969,10 @@ def delete_compute_capacity_reservation(ctx, from_json, wait_for_state, max_wait
     cli_util.render_response(result, ctx)
 
 
-@compute_cluster_group.command(name=cli_util.override('compute.delete_compute_cluster.command_name', 'delete'), help=u"""Deletes the compute cluster, which is a remote direct memory access (RDMA) network group. To delete a compute cluster, all instances in the cluster must be deleted first. \n[Command Reference](deleteComputeCluster)""")
-@cli_util.option('--compute-cluster-id', required=True, help=u"""The [OCID] of the compute cluster. A compute cluster is a remote direct memory access (RDMA) network group. For more information, see [Compute Clusters].""")
+@compute_cluster_group.command(name=cli_util.override('compute.delete_compute_cluster.command_name', 'delete'), help=u"""Deletes a compute cluster. A [compute cluster] is a remote direct memory access (RDMA) network group.
+
+Before you delete a compute cluster, first delete all instances in the cluster by using the [TerminateInstance] operation. \n[Command Reference](deleteComputeCluster)""")
+@cli_util.option('--compute-cluster-id', required=True, help=u"""The [OCID] of the compute cluster. A [compute cluster] is a remote direct memory access (RDMA) network group.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2818,8 +2830,8 @@ def get_compute_capacity_reservation(ctx, from_json, capacity_reservation_id):
     cli_util.render_response(result, ctx)
 
 
-@compute_cluster_group.command(name=cli_util.override('compute.get_compute_cluster.command_name', 'get'), help=u"""Gets information about the specified compute cluster. \n[Command Reference](getComputeCluster)""")
-@cli_util.option('--compute-cluster-id', required=True, help=u"""The [OCID] of the compute cluster. A compute cluster is a remote direct memory access (RDMA) network group. For more information, see [Compute Clusters].""")
+@compute_cluster_group.command(name=cli_util.override('compute.get_compute_cluster.command_name', 'get'), help=u"""Gets information about a compute cluster. A [compute cluster] is a remote direct memory access (RDMA) network group. \n[Command Reference](getComputeCluster)""")
+@cli_util.option('--compute-cluster-id', required=True, help=u"""The [OCID] of the compute cluster. A [compute cluster] is a remote direct memory access (RDMA) network group.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -3544,9 +3556,6 @@ To determine whether capacity is available for a specific shape before you creat
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--shape', required=True, help=u"""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
-
-You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
@@ -3617,11 +3626,15 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 
  The combined size of the `metadata` and `extendedMetadata` objects can be a maximum of 32,000 bytes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--agent-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--shape', help=u"""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
+
+You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--platform-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -3630,14 +3643,13 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'platform-config': {'module': 'core', 'class': 'LaunchInstancePlatformConfig'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config):
+def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config, instance_configuration_id):
 
     kwargs = {}
 
     _details = {}
     _details['availabilityDomain'] = availability_domain
     _details['compartmentId'] = compartment_id
-    _details['shape'] = shape
 
     if capacity_reservation_id is not None:
         _details['capacityReservationId'] = capacity_reservation_id
@@ -3693,6 +3705,9 @@ def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     if agent_config is not None:
         _details['agentConfig'] = cli_util.parse_json_parameter("agent_config", agent_config)
 
+    if shape is not None:
+        _details['shape'] = shape
+
     if shape_config is not None:
         _details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
 
@@ -3707,6 +3722,9 @@ def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if platform_config is not None:
         _details['platformConfig'] = cli_util.parse_json_parameter("platform_config", platform_config)
+
+    if instance_configuration_id is not None:
+        _details['instanceConfigurationId'] = instance_configuration_id
 
     client = cli_util.build_client('core', 'compute', ctx)
     result = client.launch_instance(
@@ -3760,10 +3778,6 @@ To determine whether capacity is available for a specific shape before you creat
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--shape', required=True, help=u"""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
-
-You can enumerate all available shapes by calling [ListShapes].""")
-@cli_util.option('--source-details-image-id', required=True, help=u"""The OCID of the image used to boot the instance.""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
@@ -3834,11 +3848,16 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 
  The combined size of the `metadata` and `extendedMetadata` objects can be a maximum of 32,000 bytes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--agent-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--shape', help=u"""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
+
+You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--platform-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--source-details-boot-volume-size-in-gbs', type=click.INT, help=u"""The size of the boot volume in GBs. Minimum value is 50 GB and maximum value is 32,768 GB (32 TB).""")
+@cli_util.option('--source-details-image-id', help=u"""The OCID of the image used to boot the instance.""")
 @cli_util.option('--source-details-boot-volume-vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Performance Levels] for more information.
 
 Allowed values:
@@ -3850,15 +3869,16 @@ Allowed values:
   * `30`-`120`: Represents the Ultra High Performance option.
 
 For volumes with the auto-tuned performance feature enabled, this is set to the default (minimum) VPUs/GB.""")
+@cli_util.option('--source-details-instance-source-image-filter-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'platform-config': {'module': 'core', 'class': 'LaunchInstancePlatformConfig'}})
+@json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'platform-config': {'module': 'core', 'class': 'LaunchInstancePlatformConfig'}, 'source-details-instance-source-image-filter-details': {'module': 'core', 'class': 'InstanceSourceImageFilterDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'platform-config': {'module': 'core', 'class': 'LaunchInstancePlatformConfig'}}, output_type={'module': 'core', 'class': 'Instance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'platform-config': {'module': 'core', 'class': 'LaunchInstancePlatformConfig'}, 'source-details-instance-source-image-filter-details': {'module': 'core', 'class': 'InstanceSourceImageFilterDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_instance_source_via_image_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, source_details_image_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, subnet_id, is_pv_encryption_in_transit_enabled, platform_config, source_details_boot_volume_size_in_gbs, source_details_boot_volume_vpus_per_gb):
+def launch_instance_instance_source_via_image_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, subnet_id, is_pv_encryption_in_transit_enabled, platform_config, instance_configuration_id, source_details_boot_volume_size_in_gbs, source_details_image_id, source_details_boot_volume_vpus_per_gb, source_details_instance_source_image_filter_details):
 
     kwargs = {}
 
@@ -3866,8 +3886,6 @@ def launch_instance_instance_source_via_image_details(ctx, from_json, wait_for_s
     _details['sourceDetails'] = {}
     _details['availabilityDomain'] = availability_domain
     _details['compartmentId'] = compartment_id
-    _details['shape'] = shape
-    _details['sourceDetails']['imageId'] = source_details_image_id
 
     if capacity_reservation_id is not None:
         _details['capacityReservationId'] = capacity_reservation_id
@@ -3923,6 +3941,9 @@ def launch_instance_instance_source_via_image_details(ctx, from_json, wait_for_s
     if agent_config is not None:
         _details['agentConfig'] = cli_util.parse_json_parameter("agent_config", agent_config)
 
+    if shape is not None:
+        _details['shape'] = shape
+
     if shape_config is not None:
         _details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
 
@@ -3935,11 +3956,20 @@ def launch_instance_instance_source_via_image_details(ctx, from_json, wait_for_s
     if platform_config is not None:
         _details['platformConfig'] = cli_util.parse_json_parameter("platform_config", platform_config)
 
+    if instance_configuration_id is not None:
+        _details['instanceConfigurationId'] = instance_configuration_id
+
     if source_details_boot_volume_size_in_gbs is not None:
         _details['sourceDetails']['bootVolumeSizeInGBs'] = source_details_boot_volume_size_in_gbs
 
+    if source_details_image_id is not None:
+        _details['sourceDetails']['imageId'] = source_details_image_id
+
     if source_details_boot_volume_vpus_per_gb is not None:
         _details['sourceDetails']['bootVolumeVpusPerGB'] = source_details_boot_volume_vpus_per_gb
+
+    if source_details_instance_source_image_filter_details is not None:
+        _details['sourceDetails']['instanceSourceImageFilterDetails'] = cli_util.parse_json_parameter("source_details_instance_source_image_filter_details", source_details_instance_source_image_filter_details)
 
     _details['sourceDetails']['sourceType'] = 'image'
 
@@ -3995,9 +4025,6 @@ To determine whether capacity is available for a specific shape before you creat
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--shape', required=True, help=u"""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
-
-You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--source-details-boot-volume-id', required=True, help=u"""The OCID of the boot volume used to boot the instance.""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4069,10 +4096,14 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 
  The combined size of the `metadata` and `extendedMetadata` objects can be a maximum of 32,000 bytes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--agent-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--shape', help=u"""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
+
+You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--platform-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -4081,7 +4112,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'platform-config': {'module': 'core', 'class': 'LaunchInstancePlatformConfig'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_instance_source_via_boot_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, source_details_boot_volume_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, subnet_id, is_pv_encryption_in_transit_enabled, platform_config):
+def launch_instance_instance_source_via_boot_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_boot_volume_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, subnet_id, is_pv_encryption_in_transit_enabled, platform_config, instance_configuration_id):
 
     kwargs = {}
 
@@ -4089,7 +4120,6 @@ def launch_instance_instance_source_via_boot_volume_details(ctx, from_json, wait
     _details['sourceDetails'] = {}
     _details['availabilityDomain'] = availability_domain
     _details['compartmentId'] = compartment_id
-    _details['shape'] = shape
     _details['sourceDetails']['bootVolumeId'] = source_details_boot_volume_id
 
     if capacity_reservation_id is not None:
@@ -4146,6 +4176,9 @@ def launch_instance_instance_source_via_boot_volume_details(ctx, from_json, wait
     if agent_config is not None:
         _details['agentConfig'] = cli_util.parse_json_parameter("agent_config", agent_config)
 
+    if shape is not None:
+        _details['shape'] = shape
+
     if shape_config is not None:
         _details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
 
@@ -4157,6 +4190,9 @@ def launch_instance_instance_source_via_boot_volume_details(ctx, from_json, wait
 
     if platform_config is not None:
         _details['platformConfig'] = cli_util.parse_json_parameter("platform_config", platform_config)
+
+    if instance_configuration_id is not None:
+        _details['instanceConfigurationId'] = instance_configuration_id
 
     _details['sourceDetails']['sourceType'] = 'bootVolume'
 
@@ -4212,9 +4248,6 @@ To determine whether capacity is available for a specific shape before you creat
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--shape', required=True, help=u"""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
-
-You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
@@ -4285,10 +4318,14 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 
  The combined size of the `metadata` and `extendedMetadata` objects can be a maximum of 32,000 bytes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--agent-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--shape', help=u"""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
+
+You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
+@cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--platform-config-is-secure-boot-enabled', type=click.BOOL, help=u"""Whether Secure Boot is enabled on the instance.""")
 @cli_util.option('--platform-config-is-trusted-platform-module-enabled', type=click.BOOL, help=u"""Whether the Trusted Platform Module (TPM) is enabled on the instance.""")
 @cli_util.option('--platform-config-is-measured-boot-enabled', type=click.BOOL, help=u"""Whether the Measured Boot feature is enabled on the instance.""")
@@ -4308,7 +4345,7 @@ Intel and AMD processors have two hardware execution threads per core (OCPU). SM
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_rome_bm_gpu_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled):
+def launch_instance_amd_rome_bm_gpu_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, instance_configuration_id, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled):
 
     kwargs = {}
 
@@ -4316,7 +4353,6 @@ def launch_instance_amd_rome_bm_gpu_launch_instance_platform_config(ctx, from_js
     _details['platformConfig'] = {}
     _details['availabilityDomain'] = availability_domain
     _details['compartmentId'] = compartment_id
-    _details['shape'] = shape
 
     if capacity_reservation_id is not None:
         _details['capacityReservationId'] = capacity_reservation_id
@@ -4372,6 +4408,9 @@ def launch_instance_amd_rome_bm_gpu_launch_instance_platform_config(ctx, from_js
     if agent_config is not None:
         _details['agentConfig'] = cli_util.parse_json_parameter("agent_config", agent_config)
 
+    if shape is not None:
+        _details['shape'] = shape
+
     if shape_config is not None:
         _details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
 
@@ -4383,6 +4422,9 @@ def launch_instance_amd_rome_bm_gpu_launch_instance_platform_config(ctx, from_js
 
     if is_pv_encryption_in_transit_enabled is not None:
         _details['isPvEncryptionInTransitEnabled'] = is_pv_encryption_in_transit_enabled
+
+    if instance_configuration_id is not None:
+        _details['instanceConfigurationId'] = instance_configuration_id
 
     if platform_config_is_secure_boot_enabled is not None:
         _details['platformConfig']['isSecureBootEnabled'] = platform_config_is_secure_boot_enabled
@@ -4465,9 +4507,6 @@ To determine whether capacity is available for a specific shape before you creat
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--shape', required=True, help=u"""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
-
-You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
@@ -4538,10 +4577,14 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 
  The combined size of the `metadata` and `extendedMetadata` objects can be a maximum of 32,000 bytes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--agent-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--shape', help=u"""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
+
+You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
+@cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--platform-config-is-secure-boot-enabled', type=click.BOOL, help=u"""Whether Secure Boot is enabled on the instance.""")
 @cli_util.option('--platform-config-is-trusted-platform-module-enabled', type=click.BOOL, help=u"""Whether the Trusted Platform Module (TPM) is enabled on the instance.""")
 @cli_util.option('--platform-config-is-measured-boot-enabled', type=click.BOOL, help=u"""Whether the Measured Boot feature is enabled on the instance.""")
@@ -4564,7 +4607,7 @@ If the applications that you run on the instance use a core-based licensing mode
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_rome_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled):
+def launch_instance_amd_rome_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, instance_configuration_id, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled):
 
     kwargs = {}
 
@@ -4572,7 +4615,6 @@ def launch_instance_amd_rome_bm_launch_instance_platform_config(ctx, from_json, 
     _details['platformConfig'] = {}
     _details['availabilityDomain'] = availability_domain
     _details['compartmentId'] = compartment_id
-    _details['shape'] = shape
 
     if capacity_reservation_id is not None:
         _details['capacityReservationId'] = capacity_reservation_id
@@ -4628,6 +4670,9 @@ def launch_instance_amd_rome_bm_launch_instance_platform_config(ctx, from_json, 
     if agent_config is not None:
         _details['agentConfig'] = cli_util.parse_json_parameter("agent_config", agent_config)
 
+    if shape is not None:
+        _details['shape'] = shape
+
     if shape_config is not None:
         _details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
 
@@ -4639,6 +4684,9 @@ def launch_instance_amd_rome_bm_launch_instance_platform_config(ctx, from_json, 
 
     if is_pv_encryption_in_transit_enabled is not None:
         _details['isPvEncryptionInTransitEnabled'] = is_pv_encryption_in_transit_enabled
+
+    if instance_configuration_id is not None:
+        _details['instanceConfigurationId'] = instance_configuration_id
 
     if platform_config_is_secure_boot_enabled is not None:
         _details['platformConfig']['isSecureBootEnabled'] = platform_config_is_secure_boot_enabled
@@ -4724,9 +4772,6 @@ To determine whether capacity is available for a specific shape before you creat
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--shape', required=True, help=u"""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
-
-You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
@@ -4797,10 +4842,14 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 
  The combined size of the `metadata` and `extendedMetadata` objects can be a maximum of 32,000 bytes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--agent-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--shape', help=u"""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
+
+You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
+@cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--platform-config-is-secure-boot-enabled', type=click.BOOL, help=u"""Whether Secure Boot is enabled on the instance.""")
 @cli_util.option('--platform-config-is-trusted-platform-module-enabled', type=click.BOOL, help=u"""Whether the Trusted Platform Module (TPM) is enabled on the instance.""")
 @cli_util.option('--platform-config-is-measured-boot-enabled', type=click.BOOL, help=u"""Whether the Measured Boot feature is enabled on the instance.""")
@@ -4821,7 +4870,7 @@ If the applications that you run on the instance use a core-based licensing mode
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_intel_icelake_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled):
+def launch_instance_intel_icelake_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, instance_configuration_id, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled):
 
     kwargs = {}
 
@@ -4829,7 +4878,6 @@ def launch_instance_intel_icelake_bm_launch_instance_platform_config(ctx, from_j
     _details['platformConfig'] = {}
     _details['availabilityDomain'] = availability_domain
     _details['compartmentId'] = compartment_id
-    _details['shape'] = shape
 
     if capacity_reservation_id is not None:
         _details['capacityReservationId'] = capacity_reservation_id
@@ -4885,6 +4933,9 @@ def launch_instance_intel_icelake_bm_launch_instance_platform_config(ctx, from_j
     if agent_config is not None:
         _details['agentConfig'] = cli_util.parse_json_parameter("agent_config", agent_config)
 
+    if shape is not None:
+        _details['shape'] = shape
+
     if shape_config is not None:
         _details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
 
@@ -4896,6 +4947,9 @@ def launch_instance_intel_icelake_bm_launch_instance_platform_config(ctx, from_j
 
     if is_pv_encryption_in_transit_enabled is not None:
         _details['isPvEncryptionInTransitEnabled'] = is_pv_encryption_in_transit_enabled
+
+    if instance_configuration_id is not None:
+        _details['instanceConfigurationId'] = instance_configuration_id
 
     if platform_config_is_secure_boot_enabled is not None:
         _details['platformConfig']['isSecureBootEnabled'] = platform_config_is_secure_boot_enabled
@@ -4975,9 +5029,6 @@ To determine whether capacity is available for a specific shape before you creat
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--shape', required=True, help=u"""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
-
-You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
@@ -5048,10 +5099,14 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 
  The combined size of the `metadata` and `extendedMetadata` objects can be a maximum of 32,000 bytes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--agent-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--shape', help=u"""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
+
+You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
+@cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--platform-config-is-secure-boot-enabled', type=click.BOOL, help=u"""Whether Secure Boot is enabled on the instance.""")
 @cli_util.option('--platform-config-is-trusted-platform-module-enabled', type=click.BOOL, help=u"""Whether the Trusted Platform Module (TPM) is enabled on the instance.""")
 @cli_util.option('--platform-config-is-measured-boot-enabled', type=click.BOOL, help=u"""Whether the Measured Boot feature is enabled on the instance.""")
@@ -5064,7 +5119,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_vm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled):
+def launch_instance_amd_vm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, instance_configuration_id, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled):
 
     kwargs = {}
 
@@ -5072,7 +5127,6 @@ def launch_instance_amd_vm_launch_instance_platform_config(ctx, from_json, wait_
     _details['platformConfig'] = {}
     _details['availabilityDomain'] = availability_domain
     _details['compartmentId'] = compartment_id
-    _details['shape'] = shape
 
     if capacity_reservation_id is not None:
         _details['capacityReservationId'] = capacity_reservation_id
@@ -5128,6 +5182,9 @@ def launch_instance_amd_vm_launch_instance_platform_config(ctx, from_json, wait_
     if agent_config is not None:
         _details['agentConfig'] = cli_util.parse_json_parameter("agent_config", agent_config)
 
+    if shape is not None:
+        _details['shape'] = shape
+
     if shape_config is not None:
         _details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
 
@@ -5139,6 +5196,9 @@ def launch_instance_amd_vm_launch_instance_platform_config(ctx, from_json, wait_
 
     if is_pv_encryption_in_transit_enabled is not None:
         _details['isPvEncryptionInTransitEnabled'] = is_pv_encryption_in_transit_enabled
+
+    if instance_configuration_id is not None:
+        _details['instanceConfigurationId'] = instance_configuration_id
 
     if platform_config_is_secure_boot_enabled is not None:
         _details['platformConfig']['isSecureBootEnabled'] = platform_config_is_secure_boot_enabled
@@ -5206,9 +5266,6 @@ To determine whether capacity is available for a specific shape before you creat
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--shape', required=True, help=u"""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
-
-You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
@@ -5279,10 +5336,14 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 
  The combined size of the `metadata` and `extendedMetadata` objects can be a maximum of 32,000 bytes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--agent-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--shape', help=u"""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
+
+You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
+@cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--platform-config-is-secure-boot-enabled', type=click.BOOL, help=u"""Whether Secure Boot is enabled on the instance.""")
 @cli_util.option('--platform-config-is-trusted-platform-module-enabled', type=click.BOOL, help=u"""Whether the Trusted Platform Module (TPM) is enabled on the instance.""")
 @cli_util.option('--platform-config-is-measured-boot-enabled', type=click.BOOL, help=u"""Whether the Measured Boot feature is enabled on the instance.""")
@@ -5295,7 +5356,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_intel_vm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled):
+def launch_instance_intel_vm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, instance_configuration_id, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled):
 
     kwargs = {}
 
@@ -5303,7 +5364,6 @@ def launch_instance_intel_vm_launch_instance_platform_config(ctx, from_json, wai
     _details['platformConfig'] = {}
     _details['availabilityDomain'] = availability_domain
     _details['compartmentId'] = compartment_id
-    _details['shape'] = shape
 
     if capacity_reservation_id is not None:
         _details['capacityReservationId'] = capacity_reservation_id
@@ -5359,6 +5419,9 @@ def launch_instance_intel_vm_launch_instance_platform_config(ctx, from_json, wai
     if agent_config is not None:
         _details['agentConfig'] = cli_util.parse_json_parameter("agent_config", agent_config)
 
+    if shape is not None:
+        _details['shape'] = shape
+
     if shape_config is not None:
         _details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
 
@@ -5370,6 +5433,9 @@ def launch_instance_intel_vm_launch_instance_platform_config(ctx, from_json, wai
 
     if is_pv_encryption_in_transit_enabled is not None:
         _details['isPvEncryptionInTransitEnabled'] = is_pv_encryption_in_transit_enabled
+
+    if instance_configuration_id is not None:
+        _details['instanceConfigurationId'] = instance_configuration_id
 
     if platform_config_is_secure_boot_enabled is not None:
         _details['platformConfig']['isSecureBootEnabled'] = platform_config_is_secure_boot_enabled
@@ -5437,9 +5503,6 @@ To determine whether capacity is available for a specific shape before you creat
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--shape', required=True, help=u"""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
-
-You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
@@ -5510,10 +5573,14 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 
  The combined size of the `metadata` and `extendedMetadata` objects can be a maximum of 32,000 bytes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--agent-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--shape', help=u"""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
+
+You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
+@cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--platform-config-is-secure-boot-enabled', type=click.BOOL, help=u"""Whether Secure Boot is enabled on the instance.""")
 @cli_util.option('--platform-config-is-trusted-platform-module-enabled', type=click.BOOL, help=u"""Whether the Trusted Platform Module (TPM) is enabled on the instance.""")
 @cli_util.option('--platform-config-is-measured-boot-enabled', type=click.BOOL, help=u"""Whether the Measured Boot feature is enabled on the instance.""")
@@ -5526,7 +5593,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_intel_skylake_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled):
+def launch_instance_intel_skylake_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, instance_configuration_id, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled):
 
     kwargs = {}
 
@@ -5534,7 +5601,6 @@ def launch_instance_intel_skylake_bm_launch_instance_platform_config(ctx, from_j
     _details['platformConfig'] = {}
     _details['availabilityDomain'] = availability_domain
     _details['compartmentId'] = compartment_id
-    _details['shape'] = shape
 
     if capacity_reservation_id is not None:
         _details['capacityReservationId'] = capacity_reservation_id
@@ -5590,6 +5656,9 @@ def launch_instance_intel_skylake_bm_launch_instance_platform_config(ctx, from_j
     if agent_config is not None:
         _details['agentConfig'] = cli_util.parse_json_parameter("agent_config", agent_config)
 
+    if shape is not None:
+        _details['shape'] = shape
+
     if shape_config is not None:
         _details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
 
@@ -5601,6 +5670,9 @@ def launch_instance_intel_skylake_bm_launch_instance_platform_config(ctx, from_j
 
     if is_pv_encryption_in_transit_enabled is not None:
         _details['isPvEncryptionInTransitEnabled'] = is_pv_encryption_in_transit_enabled
+
+    if instance_configuration_id is not None:
+        _details['instanceConfigurationId'] = instance_configuration_id
 
     if platform_config_is_secure_boot_enabled is not None:
         _details['platformConfig']['isSecureBootEnabled'] = platform_config_is_secure_boot_enabled
@@ -5668,9 +5740,6 @@ To determine whether capacity is available for a specific shape before you creat
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--shape', required=True, help=u"""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
-
-You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
@@ -5741,10 +5810,14 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 
  The combined size of the `metadata` and `extendedMetadata` objects can be a maximum of 32,000 bytes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--agent-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--shape', help=u"""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
+
+You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
+@cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--platform-config-is-secure-boot-enabled', type=click.BOOL, help=u"""Whether Secure Boot is enabled on the instance.""")
 @cli_util.option('--platform-config-is-trusted-platform-module-enabled', type=click.BOOL, help=u"""Whether the Trusted Platform Module (TPM) is enabled on the instance.""")
 @cli_util.option('--platform-config-is-measured-boot-enabled', type=click.BOOL, help=u"""Whether the Measured Boot feature is enabled on the instance.""")
@@ -5767,7 +5840,7 @@ If the applications that you run on the instance use a core-based licensing mode
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_milan_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled):
+def launch_instance_amd_milan_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, instance_configuration_id, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled):
 
     kwargs = {}
 
@@ -5775,7 +5848,6 @@ def launch_instance_amd_milan_bm_launch_instance_platform_config(ctx, from_json,
     _details['platformConfig'] = {}
     _details['availabilityDomain'] = availability_domain
     _details['compartmentId'] = compartment_id
-    _details['shape'] = shape
 
     if capacity_reservation_id is not None:
         _details['capacityReservationId'] = capacity_reservation_id
@@ -5831,6 +5903,9 @@ def launch_instance_amd_milan_bm_launch_instance_platform_config(ctx, from_json,
     if agent_config is not None:
         _details['agentConfig'] = cli_util.parse_json_parameter("agent_config", agent_config)
 
+    if shape is not None:
+        _details['shape'] = shape
+
     if shape_config is not None:
         _details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
 
@@ -5842,6 +5917,9 @@ def launch_instance_amd_milan_bm_launch_instance_platform_config(ctx, from_json,
 
     if is_pv_encryption_in_transit_enabled is not None:
         _details['isPvEncryptionInTransitEnabled'] = is_pv_encryption_in_transit_enabled
+
+    if instance_configuration_id is not None:
+        _details['instanceConfigurationId'] = instance_configuration_id
 
     if platform_config_is_secure_boot_enabled is not None:
         _details['platformConfig']['isSecureBootEnabled'] = platform_config_is_secure_boot_enabled
@@ -5927,9 +6005,6 @@ To determine whether capacity is available for a specific shape before you creat
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--shape', required=True, help=u"""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
-
-You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
@@ -6000,10 +6075,14 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 
  The combined size of the `metadata` and `extendedMetadata` objects can be a maximum of 32,000 bytes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--agent-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--shape', help=u"""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
+
+You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
+@cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--platform-config-is-secure-boot-enabled', type=click.BOOL, help=u"""Whether Secure Boot is enabled on the instance.""")
 @cli_util.option('--platform-config-is-trusted-platform-module-enabled', type=click.BOOL, help=u"""Whether the Trusted Platform Module (TPM) is enabled on the instance.""")
 @cli_util.option('--platform-config-is-measured-boot-enabled', type=click.BOOL, help=u"""Whether the Measured Boot feature is enabled on the instance.""")
@@ -6023,7 +6102,7 @@ Intel and AMD processors have two hardware execution threads per core (OCPU). SM
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_milan_bm_gpu_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled):
+def launch_instance_amd_milan_bm_gpu_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, instance_configuration_id, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled):
 
     kwargs = {}
 
@@ -6031,7 +6110,6 @@ def launch_instance_amd_milan_bm_gpu_launch_instance_platform_config(ctx, from_j
     _details['platformConfig'] = {}
     _details['availabilityDomain'] = availability_domain
     _details['compartmentId'] = compartment_id
-    _details['shape'] = shape
 
     if capacity_reservation_id is not None:
         _details['capacityReservationId'] = capacity_reservation_id
@@ -6087,6 +6165,9 @@ def launch_instance_amd_milan_bm_gpu_launch_instance_platform_config(ctx, from_j
     if agent_config is not None:
         _details['agentConfig'] = cli_util.parse_json_parameter("agent_config", agent_config)
 
+    if shape is not None:
+        _details['shape'] = shape
+
     if shape_config is not None:
         _details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
 
@@ -6098,6 +6179,9 @@ def launch_instance_amd_milan_bm_gpu_launch_instance_platform_config(ctx, from_j
 
     if is_pv_encryption_in_transit_enabled is not None:
         _details['isPvEncryptionInTransitEnabled'] = is_pv_encryption_in_transit_enabled
+
+    if instance_configuration_id is not None:
+        _details['instanceConfigurationId'] = instance_configuration_id
 
     if platform_config_is_secure_boot_enabled is not None:
         _details['platformConfig']['isSecureBootEnabled'] = platform_config_is_secure_boot_enabled
@@ -7458,7 +7542,7 @@ def list_instance_devices(ctx, from_json, all_pages, page_size, instance_id, is_
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation.""")
-@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the compute cluster. A compute cluster is a remote direct memory access (RDMA) network group. For more information, see [Compute Clusters].""")
+@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the compute cluster. A [compute cluster] is a remote direct memory access (RDMA) network group.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -7734,7 +7818,7 @@ def remove_image_shape_compatibility_entry(ctx, from_json, image_id, shape_name)
     cli_util.render_response(result, ctx)
 
 
-@instance_group.command(name=cli_util.override('compute.terminate_instance.command_name', 'terminate'), help=u"""Terminates (deletes) the specified instance. Any attached VNICs and volumes are automatically detached when the instance terminates.
+@instance_group.command(name=cli_util.override('compute.terminate_instance.command_name', 'terminate'), help=u"""Permanently terminates (deletes) the specified instance. Any attached VNICs and volumes are automatically detached when the instance terminates.
 
 To preserve the boot volume associated with the instance, specify `true` for `PreserveBootVolumeQueryParam`. To delete the boot volume when the instance is deleted, specify `false` or do not specify a value for `PreserveBootVolumeQueryParam`.
 
@@ -7900,8 +7984,12 @@ def update_compute_capacity_reservation(ctx, from_json, force, wait_for_state, m
     cli_util.render_response(result, ctx)
 
 
-@compute_cluster_group.command(name=cli_util.override('compute.update_compute_cluster.command_name', 'update'), help=u"""Updates the specified compute cluster. \n[Command Reference](updateComputeCluster)""")
-@cli_util.option('--compute-cluster-id', required=True, help=u"""The [OCID] of the compute cluster. A compute cluster is a remote direct memory access (RDMA) network group. For more information, see [Compute Clusters].""")
+@compute_cluster_group.command(name=cli_util.override('compute.update_compute_cluster.command_name', 'update'), help=u"""Updates a compute cluster. A [compute cluster] is a remote direct memory access (RDMA) network group.
+
+To create instances within a compute cluster, use the [LaunchInstance] operation.
+
+To delete instances from a compute cluster, use the [TerminateInstance] operation. \n[Command Reference](updateComputeCluster)""")
+@cli_util.option('--compute-cluster-id', required=True, help=u"""The [OCID] of the compute cluster. A [compute cluster] is a remote direct memory access (RDMA) network group.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 

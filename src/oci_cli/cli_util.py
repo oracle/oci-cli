@@ -1261,6 +1261,15 @@ def serialize_key(private_key=None, public_key=None, passphrase=None):
             format=serialization.PublicFormat.SubjectPublicKeyInfo)
 
 
+def get_public_key_from_file(public_key_file_path):
+    try:
+        with open(public_key_file_path, "rb") as public_file:
+            public_key = serialization.load_pem_public_key(public_file.read())
+        return public_key
+    except Exception as e:
+        raise e
+
+
 def copy_params_from_generated_command(generated_command, params_to_exclude=[], copy_from_json=True, copy_help=True):
     def copy_params(extended_func):
         index = 0
