@@ -15,7 +15,6 @@ class TestCompute(unittest.TestCase):
         assert 'Error: Missing option(s)' in result.output
         assert 'availability-domain' in result.output
         assert 'compartment-id' in result.output
-        assert 'shape' in result.output
         assert 'subnet-id' in result.output
 
         result = util.invoke_command(['compute', 'instance', 'launch', '--availability-domain', 'dummy', '--compartment-id', 'dummy', '--shape', 'dummy', '--subnet-id', 'dummy'])

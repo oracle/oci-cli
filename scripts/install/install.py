@@ -244,11 +244,13 @@ def upgrade_pip_wheel(tmp_dir, install_dir, dependency_dir=DEFAULT_DEPENDENCY_DI
         else:
             cmd = [path_to_pip, 'install', '--upgrade', 'pip']
     else:
-        # Upgrade pip wtih internal wheel file
+        # Upgrade pip with internal wheel file
+        py_ver = 'python' + str(sys.version_info.major) + str(sys.version_info.minor) + '.html'
         if not is_windows():
-            cmd = [path_to_pip, 'install', 'pip', '--upgrade', '--find-links', dependency_dir, '--no-index']
+            cmd = [path_to_pip, 'install', 'pip', '--upgrade', '--find-links', os.path.join(dependency_dir, py_ver), '--no-index']
         else:
-            cmd = [path_to_python, '-m', 'pip', 'install', 'pip', '--upgrade', '--find-links', dependency_dir, '--no-index']
+            cmd = [path_to_python, '-m', 'pip', 'install', 'pip', '--upgrade', '--find-links', os.path.join(dependency_dir, py_ver),
+                   '--no-index']
 
     if DRY_RUN:
         print_status('dry-run: Skipping pip upgrade, cmd=' + str(cmd))

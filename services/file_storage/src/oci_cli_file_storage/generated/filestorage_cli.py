@@ -47,6 +47,12 @@ def file_system_group():
     pass
 
 
+@click.command(cli_util.override('fs.outbound_connector_group.command_name', 'outbound-connector'), cls=CommandGroupWithAlias, help="""Outbound connectors are used to help File Storage communicate with an external server, such as an LDAP server. An outbound connector contains all the information needed to connect, authenticate, and gain authorization to perform the account's required functions.""")
+@cli_util.help_option_group
+def outbound_connector_group():
+    pass
+
+
 @click.command(cli_util.override('fs.replication_target_group.command_name', 'replication-target'), cls=CommandGroupWithAlias, help="""Replication targets are associated with a primary resource called a [`Replication`] located in another availability domain in the same or different region. The replication retrieves the delta of data between two snapshots of a source file system and sends it to the associated `ReplicationTarget`,  which applies it to the target file system. All operations (except `DELETE`) must be done using the associated replication resource. Deleting a `ReplicationTarget` allows the target file system to be exported. Deleting a `ReplicationTarget` does not delete the associated `Replication` resource, but places it in a `FAILED` state. For more information, see [File System Replication].""")
 @cli_util.help_option_group
 def replication_target_group():
@@ -96,6 +102,7 @@ def snapshot_group():
 fs_root_group.add_command(filesystem_snapshot_policy_group)
 fs_root_group.add_command(replication_group)
 fs_root_group.add_command(file_system_group)
+fs_root_group.add_command(outbound_connector_group)
 fs_root_group.add_command(replication_target_group)
 fs_root_group.add_command(export_set_group)
 fs_root_group.add_command(mount_target_group)
@@ -165,7 +172,7 @@ def change_filesystem_snapshot_policy_compartment(ctx, from_json, filesystem_sna
     cli_util.render_response(result, ctx)
 
 
-@mount_target_group.command(name=cli_util.override('fs.change_mount_target_compartment.command_name', 'change-compartment'), help=u"""Moves a mount target and its associated export set into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment] \n[Command Reference](changeMountTargetCompartment)""")
+@mount_target_group.command(name=cli_util.override('fs.change_mount_target_compartment.command_name', 'change-compartment'), help=u"""Moves a mount target and its associated export set or share set into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment] \n[Command Reference](changeMountTargetCompartment)""")
 @cli_util.option('--mount-target-id', required=True, help=u"""The [OCID] of the mount target.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the mount target to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -191,6 +198,37 @@ def change_mount_target_compartment(ctx, from_json, mount_target_id, compartment
     result = client.change_mount_target_compartment(
         mount_target_id=mount_target_id,
         change_mount_target_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@outbound_connector_group.command(name=cli_util.override('fs.change_outbound_connector_compartment.command_name', 'change-compartment'), help=u"""Moves an outbound connector into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment] \n[Command Reference](changeOutboundConnectorCompartment)""")
+@cli_util.option('--outbound-connector-id', required=True, help=u"""The [OCID] of the outbound connector.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the outbound connector to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_outbound_connector_compartment(ctx, from_json, outbound_connector_id, compartment_id, if_match):
+
+    if isinstance(outbound_connector_id, six.string_types) and len(outbound_connector_id.strip()) == 0:
+        raise click.UsageError('Parameter --outbound-connector-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.change_outbound_connector_compartment(
+        outbound_connector_id=outbound_connector_id,
+        change_outbound_connector_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -246,6 +284,7 @@ Example: `/mediafiles`""")
   The export's `exportOptions` can be changed after creation   using the `UpdateExport` operation.
 
 This option is a JSON list with items of type ClientOptions.  For documentation on ClientOptions please see our API reference: https://docs.cloud.oracle.com/api/#/en/filestorage/20171215/datatypes/ClientOptions.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-idmap-groups-for-sys-auth', type=click.BOOL, help=u"""Whether or not the export should use ID mapping for Unix groups rather than the group list provided within an NFS request's RPC header. When this flag is true the Unix UID from the RPC header is used to retrieve the list of secondary groups from a the ID mapping subsystem. The primary GID is always taken from the RPC header. If ID mapping is not configured, incorrectly configured, unavailable, or cannot be used to determine a list of secondary groups then an empty secondary group list is used for authorization. If the number of groups exceeds the limit of 256 groups, the list retrieved from LDAP is truncated to the first 256 groups read.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -254,7 +293,7 @@ This option is a JSON list with items of type ClientOptions.  For documentation 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'export-options': {'module': 'file_storage', 'class': 'list[ClientOptions]'}}, output_type={'module': 'file_storage', 'class': 'Export'})
 @cli_util.wrap_exceptions
-def create_export(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, export_set_id, file_system_id, path, export_options):
+def create_export(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, export_set_id, file_system_id, path, export_options, is_idmap_groups_for_sys_auth):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -266,6 +305,9 @@ def create_export(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     if export_options is not None:
         _details['exportOptions'] = cli_util.parse_json_parameter("export_options", export_options)
+
+    if is_idmap_groups_for_sys_auth is not None:
+        _details['isIdmapGroupsForSysAuth'] = is_idmap_groups_for_sys_auth
 
     client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.create_export(
@@ -501,18 +543,21 @@ Example: `files-1`""")
 Note: This attribute value is stored in the [PrivateIp] resource, not in the `mountTarget` resource. To update the `ipAddress`, use `GetMountTarget` to obtain the [OCIDs] of the mount target's private IPs (`privateIpIds`). Then, you can use [UpdatePrivateIp] to update the `ipAddress` value.
 
 Example: `10.0.3.3`""")
+@cli_util.option('--idmap-type', help=u"""The method used to map a Unix UID to secondary groups, if any.""")
+@cli_util.option('--ldap-idmap', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of Network Security Group [OCIDs] associated with this mount target. A maximum of 5 is allowed. Setting this to an empty array after the list is created removes the mount target from all NSGs. For more information about NSGs, see [Security Rules].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--kerberos', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'file_storage', 'class': 'list[string]'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'ldap-idmap': {'module': 'file_storage', 'class': 'CreateLdapIdmapDetails'}, 'nsg-ids': {'module': 'file_storage', 'class': 'list[string]'}, 'kerberos': {'module': 'file_storage', 'class': 'CreateKerberosDetails'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'file_storage', 'class': 'list[string]'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'MountTarget'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ldap-idmap': {'module': 'file_storage', 'class': 'CreateLdapIdmapDetails'}, 'nsg-ids': {'module': 'file_storage', 'class': 'list[string]'}, 'kerberos': {'module': 'file_storage', 'class': 'CreateKerberosDetails'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'MountTarget'})
 @cli_util.wrap_exceptions
-def create_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, subnet_id, display_name, hostname_label, ip_address, nsg_ids, freeform_tags, defined_tags):
+def create_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, subnet_id, display_name, hostname_label, ip_address, idmap_type, ldap_idmap, nsg_ids, kerberos, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -531,8 +576,17 @@ def create_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     if ip_address is not None:
         _details['ipAddress'] = ip_address
 
+    if idmap_type is not None:
+        _details['idmapType'] = idmap_type
+
+    if ldap_idmap is not None:
+        _details['ldapIdmap'] = cli_util.parse_json_parameter("ldap_idmap", ldap_idmap)
+
     if nsg_ids is not None:
         _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if kerberos is not None:
+        _details['kerberos'] = cli_util.parse_json_parameter("kerberos", kerberos)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -557,6 +611,168 @@ def create_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_mount_target(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@outbound_connector_group.command(name=cli_util.override('fs.create_outbound_connector.command_name', 'create'), help=u"""Creates a new outbound connector in the specified compartment. You can associate an outbound connector with a mount target only when they exist in the same availability domain.
+
+For information about access control and compartments, see [Overview of the IAM Service].
+
+For information about availability domains, see [Regions and Availability Domains]. To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
+
+All Oracle Cloud Infrastructure Services resources, including outbound connectors, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier ([OCID]). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. \n[Command Reference](createOutboundConnector)""")
+@cli_util.option('--availability-domain', required=True, help=u"""The availability domain the outbound connector is in. May be unset as a blank or NULL value.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the outbound connector.""")
+@cli_util.option('--connector-type', required=True, help=u"""The account type of this outbound connector.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.
+
+Example: `My outbound connector`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'OutboundConnector'})
+@cli_util.wrap_exceptions
+def create_outbound_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, connector_type, display_name, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['compartmentId'] = compartment_id
+    _details['connectorType'] = connector_type
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.create_outbound_connector(
+        create_outbound_connector_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_outbound_connector') and callable(getattr(client, 'get_outbound_connector')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_outbound_connector(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@outbound_connector_group.command(name=cli_util.override('fs.create_outbound_connector_create_ldap_bind_account_details.command_name', 'create-outbound-connector-create-ldap-bind-account-details'), help=u"""Creates a new outbound connector in the specified compartment. You can associate an outbound connector with a mount target only when they exist in the same availability domain.
+
+For information about access control and compartments, see [Overview of the IAM Service].
+
+For information about availability domains, see [Regions and Availability Domains]. To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
+
+All Oracle Cloud Infrastructure Services resources, including outbound connectors, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier ([OCID]). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. \n[Command Reference](createOutboundConnector)""")
+@cli_util.option('--availability-domain', required=True, help=u"""The availability domain the outbound connector is in. May be unset as a blank or NULL value.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the outbound connector.""")
+@cli_util.option('--endpoints', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of server endpoints to use when connecting with the LDAP bind account.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--bind-distinguished-name', required=True, help=u"""The LDAP Distinguished Name of the bind account.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.
+
+Example: `My outbound connector`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the password for the LDAP bind account in the Vault.""")
+@cli_util.option('--password-secret-version', type=click.INT, help=u"""Version of the password secret in the Vault to use.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}, 'endpoints': {'module': 'file_storage', 'class': 'list[Endpoint]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}, 'endpoints': {'module': 'file_storage', 'class': 'list[Endpoint]'}}, output_type={'module': 'file_storage', 'class': 'OutboundConnector'})
+@cli_util.wrap_exceptions
+def create_outbound_connector_create_ldap_bind_account_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, endpoints, bind_distinguished_name, display_name, freeform_tags, defined_tags, password_secret_id, password_secret_version):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['compartmentId'] = compartment_id
+    _details['endpoints'] = cli_util.parse_json_parameter("endpoints", endpoints)
+    _details['bindDistinguishedName'] = bind_distinguished_name
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
+
+    if password_secret_version is not None:
+        _details['passwordSecretVersion'] = password_secret_version
+
+    _details['connectorType'] = 'LDAPBIND'
+
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.create_outbound_connector(
+        create_outbound_connector_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_outbound_connector') and callable(getattr(client, 'get_outbound_connector')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_outbound_connector(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -969,6 +1185,70 @@ def delete_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
+@outbound_connector_group.command(name=cli_util.override('fs.delete_outbound_connector.command_name', 'delete'), help=u"""Deletes the specified outbound connector. \n[Command Reference](deleteOutboundConnector)""")
+@cli_util.option('--outbound-connector-id', required=True, help=u"""The [OCID] of the outbound connector.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_outbound_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, outbound_connector_id, if_match):
+
+    if isinstance(outbound_connector_id, six.string_types) and len(outbound_connector_id.strip()) == 0:
+        raise click.UsageError('Parameter --outbound-connector-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.delete_outbound_connector(
+        outbound_connector_id=outbound_connector_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_outbound_connector') and callable(getattr(client, 'get_outbound_connector')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_outbound_connector(outbound_connector_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @replication_group.command(name=cli_util.override('fs.delete_replication.command_name', 'delete'), help=u"""Deletes the specified replication and the the associated replication target. \n[Command Reference](deleteReplication)""")
 @cli_util.option('--replication-id', required=True, help=u"""The [OCID] of the replication.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1297,6 +1577,28 @@ def get_mount_target(ctx, from_json, mount_target_id):
     client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.get_mount_target(
         mount_target_id=mount_target_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@outbound_connector_group.command(name=cli_util.override('fs.get_outbound_connector.command_name', 'get'), help=u"""Gets the specified outbound connector's information. \n[Command Reference](getOutboundConnector)""")
+@cli_util.option('--outbound-connector-id', required=True, help=u"""The [OCID] of the outbound connector.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'file_storage', 'class': 'OutboundConnector'})
+@cli_util.wrap_exceptions
+def get_outbound_connector(ctx, from_json, outbound_connector_id):
+
+    if isinstance(outbound_connector_id, six.string_types) and len(outbound_connector_id.strip()) == 0:
+        raise click.UsageError('Parameter --outbound-connector-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.get_outbound_connector(
+        outbound_connector_id=outbound_connector_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1767,6 +2069,85 @@ def list_mount_targets(ctx, from_json, all_pages, page_size, compartment_id, ava
     cli_util.render_response(result, ctx)
 
 
+@outbound_connector_group.command(name=cli_util.override('fs.list_outbound_connectors.command_name', 'list'), help=u"""Lists the outbound connector resources in the specified compartment. \n[Command Reference](listOutboundConnectors)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
+
+For important details about how pagination works, see [List Pagination].
+
+Example: `500`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable.
+
+Example: `My resource`""")
+@cli_util.option('--id', help=u"""Filter results by [OCID]. Must be an OCID of the correct type for the resouce type.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can choose either value, but not both. By default, when you sort by time created, results are shown in descending order. When you sort by display name, results are shown in ascending order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending. The default order is 'desc' except for numeric values.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'file_storage', 'class': 'list[OutboundConnectorSummary]'})
+@cli_util.wrap_exceptions
+def list_outbound_connectors(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, limit, page, lifecycle_state, display_name, id, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    if sort_by and not availability_domain and not all_pages:
+        raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if id is not None:
+        kwargs['id'] = id
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_outbound_connectors,
+            compartment_id=compartment_id,
+            availability_domain=availability_domain,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_outbound_connectors,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            availability_domain=availability_domain,
+            **kwargs
+        )
+    else:
+        result = client.list_outbound_connectors(
+            compartment_id=compartment_id,
+            availability_domain=availability_domain,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @replication_target_group.command(name=cli_util.override('fs.list_replication_targets.command_name', 'list'), help=u"""Lists the replication target resources in the specified compartment. \n[Command Reference](listReplicationTargets)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
@@ -1930,7 +2311,9 @@ def list_replications(ctx, from_json, all_pages, page_size, compartment_id, avai
 
 @snapshot_group.command(name=cli_util.override('fs.list_snapshots.command_name', 'list'), help=u"""Lists snapshots of the specified file system, or by file system snapshot policy and compartment, or by file system snapshot policy and file system.
 
-If file system ID is not specified, a file system snapshot policy ID and compartment ID must be specified. \n[Command Reference](listSnapshots)""")
+If file system ID is not specified, a file system snapshot policy ID and compartment ID must be specified.
+
+Users can only sort by time created when listing snapshots by file system snapshot policy ID and compartment ID (sort by name is NOT supported for listing snapshots by policy and compartment). \n[Command Reference](listSnapshots)""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum.
 
 For important details about how pagination works, see [List Pagination].
@@ -2106,6 +2489,7 @@ def unpause_filesystem_snapshot_policy(ctx, from_json, wait_for_state, max_wait_
 
 @export_group.command(name=cli_util.override('fs.update_export.command_name', 'update'), help=u"""Updates the specified export's information. \n[Command Reference](updateExport)""")
 @cli_util.option('--export-id', required=True, help=u"""The [OCID] of the export.""")
+@cli_util.option('--is-idmap-groups-for-sys-auth', type=click.BOOL, help=u"""Whether or not the export should use ID mapping for Unix groups rather than the group list provided within an NFS request's RPC header. When this flag is true the Unix UID from the RPC header is used to retrieve the list of secondary groups from a the ID mapping subsystem. The primary GID is always taken from the RPC header. If ID mapping is not configured, incorrectly configured, unavailable, or cannot be used to determine a list of secondary groups then an empty secondary group list is used for authorization. If the number of groups exceeds the limit of 256 groups, the list retrieved from LDAP is truncated to the first 256 groups read.""")
 @cli_util.option('--export-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""New export options for the export.
 
 **Setting to the empty array will make the export invisible to all clients.**
@@ -2123,7 +2507,7 @@ This option is a JSON list with items of type ClientOptions.  For documentation 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'export-options': {'module': 'file_storage', 'class': 'list[ClientOptions]'}}, output_type={'module': 'file_storage', 'class': 'Export'})
 @cli_util.wrap_exceptions
-def update_export(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, export_id, export_options, if_match):
+def update_export(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, export_id, is_idmap_groups_for_sys_auth, export_options, if_match):
 
     if isinstance(export_id, six.string_types) and len(export_id.strip()) == 0:
         raise click.UsageError('Parameter --export-id cannot be whitespace or empty string')
@@ -2138,6 +2522,9 @@ def update_export(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
+
+    if is_idmap_groups_for_sys_auth is not None:
+        _details['isIdmapGroupsForSysAuth'] = is_idmap_groups_for_sys_auth
 
     if export_options is not None:
         _details['exportOptions'] = cli_util.parse_json_parameter("export_options", export_options)
@@ -2422,7 +2809,10 @@ def update_filesystem_snapshot_policy(ctx, from_json, force, wait_for_state, max
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it is changeable. Avoid entering confidential information.
 
 Example: `My mount target`""")
+@cli_util.option('--idmap-type', help=u"""The method used to map a Unix UID to secondary groups, if any.""")
+@cli_util.option('--ldap-idmap', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of Network Security Group [OCIDs] associated with this mount target. A maximum of 5 is allowed. Setting this to an empty array after the list is created removes the mount target from all NSGs. For more information about NSGs, see [Security Rules].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--kerberos', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2430,18 +2820,18 @@ Example: `My mount target`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'file_storage', 'class': 'list[string]'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'ldap-idmap': {'module': 'file_storage', 'class': 'UpdateLdapIdmapDetails'}, 'nsg-ids': {'module': 'file_storage', 'class': 'list[string]'}, 'kerberos': {'module': 'file_storage', 'class': 'UpdateKerberosDetails'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'file_storage', 'class': 'list[string]'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'MountTarget'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ldap-idmap': {'module': 'file_storage', 'class': 'UpdateLdapIdmapDetails'}, 'nsg-ids': {'module': 'file_storage', 'class': 'list[string]'}, 'kerberos': {'module': 'file_storage', 'class': 'UpdateKerberosDetails'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'MountTarget'})
 @cli_util.wrap_exceptions
-def update_mount_target(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, mount_target_id, display_name, nsg_ids, freeform_tags, defined_tags, if_match):
+def update_mount_target(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, mount_target_id, display_name, idmap_type, ldap_idmap, nsg_ids, kerberos, freeform_tags, defined_tags, if_match):
 
     if isinstance(mount_target_id, six.string_types) and len(mount_target_id.strip()) == 0:
         raise click.UsageError('Parameter --mount-target-id cannot be whitespace or empty string')
     if not force:
-        if nsg_ids or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to nsg-ids and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if ldap_idmap or nsg_ids or kerberos or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to ldap-idmap and nsg-ids and kerberos and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -2454,8 +2844,17 @@ def update_mount_target(ctx, from_json, force, wait_for_state, max_wait_seconds,
     if display_name is not None:
         _details['displayName'] = display_name
 
+    if idmap_type is not None:
+        _details['idmapType'] = idmap_type
+
+    if ldap_idmap is not None:
+        _details['ldapIdmap'] = cli_util.parse_json_parameter("ldap_idmap", ldap_idmap)
+
     if nsg_ids is not None:
         _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if kerberos is not None:
+        _details['kerberos'] = cli_util.parse_json_parameter("kerberos", kerberos)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -2481,6 +2880,80 @@ def update_mount_target(ctx, from_json, force, wait_for_state, max_wait_seconds,
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_mount_target(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@outbound_connector_group.command(name=cli_util.override('fs.update_outbound_connector.command_name', 'update'), help=u"""Updates the specified outbound connector's information. \n[Command Reference](updateOutboundConnector)""")
+@cli_util.option('--outbound-connector-id', required=True, help=u"""The [OCID] of the outbound connector.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it is changeable. Avoid entering confidential information.
+
+Example: `My Outbound Connector`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'OutboundConnector'})
+@cli_util.wrap_exceptions
+def update_outbound_connector(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, outbound_connector_id, display_name, freeform_tags, defined_tags, if_match):
+
+    if isinstance(outbound_connector_id, six.string_types) and len(outbound_connector_id.strip()) == 0:
+        raise click.UsageError('Parameter --outbound-connector-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.update_outbound_connector(
+        outbound_connector_id=outbound_connector_id,
+        update_outbound_connector_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_outbound_connector') and callable(getattr(client, 'get_outbound_connector')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_outbound_connector(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -2642,4 +3115,33 @@ def update_snapshot(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@mount_target_group.command(name=cli_util.override('fs.validate_key_tabs.command_name', 'validate-key-tabs'), help=u"""Validates keytab contents for the secret details passed on the request or validte keytab contents associated with the mount target passed in the request. The keytabs are deserialized, the contents are validated for compatibility and the principal, key version number and encryption type of each entry is provided as part of the response. \n[Command Reference](validateKeyTabs)""")
+@cli_util.option('--mount-target-id', help=u"""The [OCID] of the mount target whose keytabs are to be validated.""")
+@cli_util.option('--key-tab-secret-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'key-tab-secret-details': {'module': 'file_storage', 'class': 'KeyTabSecretDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'key-tab-secret-details': {'module': 'file_storage', 'class': 'KeyTabSecretDetails'}}, output_type={'module': 'file_storage', 'class': 'ValidateKeyTabsResponseDetails'})
+@cli_util.wrap_exceptions
+def validate_key_tabs(ctx, from_json, mount_target_id, key_tab_secret_details):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if mount_target_id is not None:
+        _details['mountTargetId'] = mount_target_id
+
+    if key_tab_secret_details is not None:
+        _details['keyTabSecretDetails'] = cli_util.parse_json_parameter("key_tab_secret_details", key_tab_secret_details)
+
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.validate_key_tabs(
+        validate_key_tabs_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)

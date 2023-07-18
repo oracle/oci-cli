@@ -8,6 +8,7 @@ from oci_cli import cli_constants
 from oci_cli import cli_setup
 from oci_cli import cli_setup_bootstrap
 from oci_cli import cli_util
+from pathlib import Path
 
 import click
 import configparser
@@ -21,6 +22,7 @@ import sys
 import tempfile
 import zipfile
 import datetime
+import oci._vendor.jwt as jwt
 
 CONFIG_KEY_FILE_SUFFIX = "_file"
 TOKEN_FILE_SUFFIX = "_token"
@@ -37,22 +39,75 @@ def session_group():
 @session_group.command('authenticate', help="""Creates a CLI session using a browser based login flow. --region is a [required] argument""")
 @click.option('--region', help=','.join(oci.regions.REGIONS))
 @click.option('--tenancy-name', help='Name of the tenancy')
+@click.option('--no-browser', is_flag=True, help="""Triggers user authentication without requiring interactive browser login""")
+@cli_util.option('--public-key-file-path', type=click.Path(), help="""Full path of the public key PEM file that corresponds to the RSA key pair used for signing requests""")
+@click.option('--session-expiration-in-minutes', default=cli_constants.OCI_CLI_UPST_TOKEN_MAX_TTL, help="""User session expiration in minutes to which the requested user principal session token (UPST) is bounded. Valid values are from 5 to 60 for all realms. If not provided, a default value of 60 minutes if set.""")
+@cli_util.option('--token-location', default=cli_setup.DEFAULT_TOKEN_DIRECTORY, help=u"""Provide the directory where you would like to store token and private/public key. Default is ~/.oci/sessions""")
 @click.option('--profile-name', help='Name of the profile you are creating')
 @click.option('--config-location', help='Path to the config for the new session')
 @click.option('--use-passphrase', is_flag=True, help='Provide a passphrase to be used to encrypt the private key from the generated key pair')
 @cli_util.help_option
 @click.pass_context
 @cli_util.wrap_exceptions
-def authenticate(ctx, region, tenancy_name, profile_name, config_location, use_passphrase):
+def authenticate(ctx, region, tenancy_name, profile_name, config_location, use_passphrase, no_browser, public_key_file_path, session_expiration_in_minutes, token_location):
     region = ctx.obj['region']
     if region is None:
         region = cli_setup.prompt_for_region()
+    persist_only_public_key = False
+    if no_browser:
+        if int(session_expiration_in_minutes) > int(cli_constants.OCI_CLI_UPST_TOKEN_MAX_TTL):
+            click.echo("""Session expiration cannot be longer than 60 minutes""")
+            sys.exit(1)
 
-    # create a user session through the browser login flow
-    user_session = cli_setup_bootstrap.create_user_session(region, tenancy_name)
+        if int(session_expiration_in_minutes) < int(cli_constants.OCI_CLI_UPST_TOKEN_MIN_TTL):
+            click.echo("""Session expiration cannot be shorter than 5 minutes""")
+            sys.exit(1)
+
+        # check if user is able to access identity_data_plane
+        client = cli_util.build_client('identity_data_plane', 'dataplane', ctx)
+
+        token_path = os.path.normpath(os.path.expanduser(token_location))
+        Path(token_path).mkdir(parents=True, exist_ok=True)
+
+        # If public key is provided, use it
+        if public_key_file_path:
+            persist_only_public_key = True
+            try:
+                public_key = cli_util.get_public_key_from_file(public_key_file_path)
+            except Exception as e:
+                click.echo("""Could not load public key from public-key-file-path provided""")
+                sys.exit(1)
+            private_key = None
+
+        # If public key is not provided, create a new private/public key pair
+        else:
+            private_key = cli_util.generate_key()
+            public_key = private_key.public_key()
+
+        fingerprint = cli_setup.public_key_to_fingerprint(public_key)
+        public_key_serialized = cli_util.serialize_key(public_key=public_key).decode('UTF-8')
+
+        # Call API
+        kwargs = {'opc_request_id': cli_util.use_or_generate_request_id(ctx.obj['request_id'])}
+        _details = {'publicKey': public_key_serialized, 'sessionExpirationInMinutes': session_expiration_in_minutes}
+        result = client.generate_user_security_token(
+            generate_user_security_token_details=_details,
+            **kwargs
+        )
+
+        response = cli_util.to_dict(result.data)
+        token = response['token']
+        # get user / tenant info out of token
+        token_data = jwt.decode(token, verify=False)
+        user_ocid = token_data['sub']
+        tenancy_ocid = token_data['tenant']
+        user_session = cli_setup_bootstrap.UserSession(user_ocid, tenancy_ocid, region, token, public_key, private_key, fingerprint)
+    else:
+        # create a user session through the browser login flow
+        user_session = cli_setup_bootstrap.create_user_session(region, tenancy_name)
 
     # persist the session to a config (including the token value)
-    profile, config = cli_setup_bootstrap.persist_user_session(user_session, profile_name=profile_name, config=config_location, use_passphrase=use_passphrase, persist_token=True, session_auth=True)
+    profile, config = cli_setup_bootstrap.persist_user_session(user_session, profile_name=profile_name, config=config_location, use_passphrase=use_passphrase, persist_token=True, session_auth=True, persist_only_public_key=persist_only_public_key)
 
     click.echo('Config written to: {}'.format(config))
 

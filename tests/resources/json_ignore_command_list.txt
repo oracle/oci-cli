@@ -3,6 +3,8 @@ bv, volume, create
 compute, instance, launch
 db, database, patch
 dts, export, get-passphrase
+dts, appliance, request-return-label
+dts, export, request-return-label
 iam, user, api-key, upload
 network, public-ip, get
 network, vnic, assign-private-ip
@@ -112,3 +114,20 @@ fs, filesystem-snapshot-policy, update
 fs, snapshot, list
 bds, kafka, add
 bds, kafka, remove
+bds, instance, get-os-patch-details
+bds, instance, install-os-patch
+bds, instance, list-os-patches
+bds, instance, list-patch-histories
+bds, instance, master-nodes, add
+bds, instance, utility-nodes, add
+disaster-recovery, dr-protection-group, list
+fs, mount-target, create
+fs, mount-target, update
+fs, mount-target, validate-key-tabs
+fs, outbound-connector, change-compartment
+fs, outbound-connector, create_ldap_bind_connector
+fs, outbound-connector, delete
+fs, outbound-connector, get
+fs, outbound-connector, list
+fs, outbound-connector, update
+goldengate, connection-assignment, test

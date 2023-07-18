@@ -8,13 +8,12 @@ import oci
 import six
 import sys
 
-from oci_cli import cli_util
-from oci_cli import custom_types
+from oci_cli import cli_util, custom_types
 from oci_cli import json_skeleton_utils
+from oci.dts.models.transfer_appliance import TransferAppliance
 from services.dts.src.oci_cli_dts.generated import dts_service_cli
 from services.dts.src.oci_cli_transfer_appliance.generated import transferappliance_cli
 from services.dts.src.oci_cli_dts.cli_utils import setup_notifications_helper
-
 
 customer_address_options = {
     'addressee': 'addressee',
@@ -259,6 +258,33 @@ def update_shipping_address_transfer_appliance(ctx, **kwargs):
             kwargs['customer_shipping_address'][value] = kwargs[option]
             kwargs.pop(option)
     ctx.invoke(transferappliance_cli.update_transfer_appliance, **kwargs)
+
+
+@transferappliance_cli.transfer_appliance_root_group.command(name='request-return-label', help="""Request return label""")
+@cli_util.option('--job-id', required=True, help=u"""OCID of the Transfer Job""")
+@cli_util.option('--appliance-label', required=True, help=u"""Appliance label""")
+@cli_util.option('--pickup-window-start-time', type=custom_types.CLI_DATETIME, required=True, help=u"""Start time for the window to pickup the device,""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--pickup-window-end-time', type=custom_types.CLI_DATETIME, required=True, help=u"""End time for the window to pickup the device,""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dts', 'class': 'TransferAppliance'})
+@cli_util.wrap_exceptions
+@json_skeleton_utils.get_cli_json_input_option({})
+def request_return_shipping_label_transfer_appliance(ctx, **kwargs):
+    if isinstance(kwargs['job_id'], six.string_types) and len(kwargs['job_id'].strip()) == 0:
+        raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
+    kwargs_update = {
+        'id': kwargs['job_id'],
+        'transfer_appliance_label': kwargs['appliance_label'],
+        'lifecycle_state': TransferAppliance.LIFECYCLE_STATE_RETURN_LABEL_REQUESTED,
+        'pickup_window_start_time': kwargs['pickup_window_start_time'],
+        'pickup_window_end_time': kwargs['pickup_window_end_time']
+    }
+    click.echo("Changing the state of the transfer appliance to {}".format(TransferAppliance.LIFECYCLE_STATE_RETURN_LABEL_REQUESTED))
+    ctx.invoke(transferappliance_cli.update_transfer_appliance, **kwargs_update)
+    click.echo("Next action(s): Shipping the Import Appliance")
+    click.echo(" 1. - Shut Down the Import Appliance -")
+    click.echo(" 2. - Packing and Shipping the Import Appliance to Oracle -")
 
 
 @cli_util.copy_params_from_generated_command(transferappliance_cli.get_transfer_appliance_encryption_passphrase, params_to_exclude=['id', 'transfer_appliance_label'])

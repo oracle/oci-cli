@@ -54,7 +54,11 @@ def instance_configuration_group():
     pass
 
 
-@click.command(cli_util.override('compute_management.cluster_network_group.command_name', 'cluster-network'), cls=CommandGroupWithAlias, help="""A cluster network is a group of high performance computing (HPC) bare metal instances that are connected with an ultra low latency network. For more information about cluster networks, see [Managing Cluster Networks].""")
+@click.command(cli_util.override('compute_management.cluster_network_group.command_name', 'cluster-network'), cls=CommandGroupWithAlias, help="""A cluster network is a group of high performance computing (HPC), GPU, or optimized bare metal instances that are connected with an ultra low-latency remote direct memory access (RDMA) network. [Cluster networks with instance pools] use instance pools to manage groups of identical instances.
+
+Use cluster networks with instance pools when you want predictable capacity for a specific number of identical instances that are managed as a group.
+
+If you want to manage instances in the RDMA network independently of each other or use different types of instances in the network group, use compute clusters instead. For details, see [ComputeCluster].""")
 @cli_util.help_option_group
 def cluster_network_group():
     pass
@@ -196,7 +200,7 @@ def attach_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@cluster_network_group.command(name=cli_util.override('compute_management.change_cluster_network_compartment.command_name', 'change-compartment'), help=u"""Moves a cluster network into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].
+@cluster_network_group.command(name=cli_util.override('compute_management.change_cluster_network_compartment.command_name', 'change-compartment'), help=u"""Moves a [cluster network with instance pools] into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].
 
 When you move a cluster network to a different compartment, associated resources such as the instances in the cluster network, boot volumes, and VNICs are not moved. \n[Command Reference](changeClusterNetworkCompartment)""")
 @cli_util.option('--cluster-network-id', required=True, help=u"""The [OCID] of the cluster network.""")
@@ -297,7 +301,11 @@ def change_instance_pool_compartment(ctx, from_json, instance_pool_id, compartme
     cli_util.render_response(result, ctx)
 
 
-@cluster_network_group.command(name=cli_util.override('compute_management.create_cluster_network.command_name', 'create'), help=u"""Creates a cluster network. For more information about cluster networks, see [Managing Cluster Networks].
+@cluster_network_group.command(name=cli_util.override('compute_management.create_cluster_network.command_name', 'create'), help=u"""Creates a [cluster network with instance pools]. A cluster network is a group of high performance computing (HPC), GPU, or optimized bare metal instances that are connected with an ultra low-latency remote direct memory access (RDMA) network. Cluster networks with instance pools use instance pools to manage groups of identical instances.
+
+Use cluster networks with instance pools when you want predictable capacity for a specific number of identical instances that are managed as a group.
+
+If you want to manage instances in the RDMA network independently of each other or use different types of instances in the network group, create a compute cluster by using the [CreateComputeCluster] operation.
 
 To determine whether capacity is available for a specific shape before you create a cluster network, use the [CreateComputeCapacityReport] operation. \n[Command Reference](createClusterNetwork)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the cluster network.""")
@@ -737,7 +745,7 @@ def detach_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@cluster_network_group.command(name=cli_util.override('compute_management.get_cluster_network.command_name', 'get'), help=u"""Gets information about the specified cluster network. \n[Command Reference](getClusterNetwork)""")
+@cluster_network_group.command(name=cli_util.override('compute_management.get_cluster_network.command_name', 'get'), help=u"""Gets information about a [cluster network with instance pools]. \n[Command Reference](getClusterNetwork)""")
 @cli_util.option('--cluster-network-id', required=True, help=u"""The [OCID] of the cluster network.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -883,6 +891,43 @@ def launch_instance_configuration(ctx, from_json, instance_configuration_id, ins
     cli_util.render_response(result, ctx)
 
 
+@instance_group.command(name=cli_util.override('compute_management.launch_instance_configuration_compute_instance_options.command_name', 'launch-instance-configuration-compute-instance-options'), help=u"""Creates an instance from an instance configuration.
+
+If the instance configuration does not include all of the parameters that are required to create an instance, such as the availability domain and subnet ID, you must provide these parameters when you create an instance from the instance configuration. For more information, see the [InstanceConfiguration] resource.
+
+To determine whether capacity is available for a specific shape before you create an instance, use the [CreateComputeCapacityReport] operation. \n[Command Reference](launchInstanceConfiguration)""")
+@cli_util.option('--instance-configuration-id', required=True, help=u"""The OCID of the instance configuration.""")
+@cli_util.option('--options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The Compute Instance Configuration parameters.
+
+This option is a JSON list with items of type ComputeInstanceDetails.  For documentation on ComputeInstanceDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/ComputeInstanceDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'options': {'module': 'core', 'class': 'list[ComputeInstanceDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'options': {'module': 'core', 'class': 'list[ComputeInstanceDetails]'}}, output_type={'module': 'core', 'class': 'Instance'})
+@cli_util.wrap_exceptions
+def launch_instance_configuration_compute_instance_options(ctx, from_json, instance_configuration_id, options):
+
+    if isinstance(instance_configuration_id, six.string_types) and len(instance_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-configuration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+
+    _details = {}
+
+    if options is not None:
+        _details['options'] = cli_util.parse_json_parameter("options", options)
+
+    _details['instanceType'] = 'instance_options'
+
+    client = cli_util.build_client('core', 'compute_management', ctx)
+    result = client.launch_instance_configuration(
+        instance_configuration_id=instance_configuration_id,
+        instance_configuration=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @instance_group.command(name=cli_util.override('compute_management.launch_instance_configuration_compute_instance_details.command_name', 'launch-instance-configuration-compute-instance-details'), help=u"""Creates an instance from an instance configuration.
 
 If the instance configuration does not include all of the parameters that are required to create an instance, such as the availability domain and subnet ID, you must provide these parameters when you create an instance from the instance configuration. For more information, see the [InstanceConfiguration] resource.
@@ -930,7 +975,7 @@ def launch_instance_configuration_compute_instance_details(ctx, from_json, insta
     cli_util.render_response(result, ctx)
 
 
-@cluster_network_group.command(name=cli_util.override('compute_management.list_cluster_network_instances.command_name', 'list-cluster-network-instances'), help=u"""Lists the instances in the specified cluster network. \n[Command Reference](listClusterNetworkInstances)""")
+@cluster_network_group.command(name=cli_util.override('compute_management.list_cluster_network_instances.command_name', 'list-cluster-network-instances'), help=u"""Lists the instances in a [cluster network with instance pools]. \n[Command Reference](listClusterNetworkInstances)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--cluster-network-id', required=True, help=u"""The [OCID] of the cluster network.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
@@ -997,7 +1042,7 @@ def list_cluster_network_instances(ctx, from_json, all_pages, page_size, compart
     cli_util.render_response(result, ctx)
 
 
-@cluster_network_group.command(name=cli_util.override('compute_management.list_cluster_networks.command_name', 'list'), help=u"""Lists the cluster networks in the specified compartment. \n[Command Reference](listClusterNetworks)""")
+@cluster_network_group.command(name=cli_util.override('compute_management.list_cluster_networks.command_name', 'list'), help=u"""Lists the [cluster networks with instance pools] in the specified compartment. \n[Command Reference](listClusterNetworks)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -1501,7 +1546,7 @@ def stop_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@cluster_network_group.command(name=cli_util.override('compute_management.terminate_cluster_network.command_name', 'terminate'), help=u"""Terminates the specified cluster network.
+@cluster_network_group.command(name=cli_util.override('compute_management.terminate_cluster_network.command_name', 'terminate'), help=u"""Deletes (terminates) a [cluster network with instance pools].
 
 When you delete a cluster network, all of its resources are permanently deleted, including associated instances and instance pools. \n[Command Reference](terminateClusterNetwork)""")
 @cli_util.option('--cluster-network-id', required=True, help=u"""The [OCID] of the cluster network.""")
@@ -1622,7 +1667,7 @@ def terminate_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@cluster_network_group.command(name=cli_util.override('compute_management.update_cluster_network.command_name', 'update'), help=u"""Updates the specified cluster network. The OCID of the cluster network remains the same. \n[Command Reference](updateClusterNetwork)""")
+@cluster_network_group.command(name=cli_util.override('compute_management.update_cluster_network.command_name', 'update'), help=u"""Updates a [cluster network with instance pools]. The OCID of the cluster network remains the same. \n[Command Reference](updateClusterNetwork)""")
 @cli_util.option('--cluster-network-id', required=True, help=u"""The [OCID] of the cluster network.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 

@@ -688,10 +688,10 @@ class UnitTestDTS(unittest.TestCase):
         def mock_get_transfer_appliance_helper(ctx, from_json, id, appliance_lbl):
             if appliance_lbl == 'XA-test-1':
                 return Response(200, {}, TransferAppliance(transfer_job_id='test-job-id', label='XA-test-1', serial_number='test-serial-no-1',
-                                                           lifecycle_state='PREPARING', upload_status_log_uri='fakepath/upload_summary1.txt'), Request("mock.method", "mock.url"))
+                                                           lifecycle_state='PREPARING', upload_status_log_uri='fakepath/upload_summary1.txt', return_shipping_label_uri='fakepath/return_label1.pdf'), Request("mock.method", "mock.url"))
             else:
                 return Response(200, {}, TransferAppliance(transfer_job_id='test-job-id', label='XA-test-2', serial_number='test-serial-no-2',
-                                                           lifecycle_state='PREPARING', upload_status_log_uri='fakepath/upload_summary2.txt'), Request("mock.method", "mock.url"))
+                                                           lifecycle_state='PREPARING', upload_status_log_uri='fakepath/upload_summary2.txt', return_shipping_label_uri='fakepath/return_label2.pdf'), Request("mock.method", "mock.url"))
 
         mock_context = get_mock_context()
 
@@ -700,8 +700,8 @@ class UnitTestDTS(unittest.TestCase):
 
         result = show_transfer_job_with_details(mock_context, **{"id": 'test-job-id', 'from_json': None})
 
-        appliance_details_1 = {'label': 'XA-test-1', 'serialNumber': 'test-serial-no-1', 'status': 'PREPARING', 'uploadStatusLogURL': 'fakepath/upload_summary1.txt'}
-        appliance_details_2 = {'label': 'XA_test-2', 'serialNumber': 'test-serial-no-2', 'status': 'PREPARING', 'uploadStatusLogURL': 'fakepath/upload_summary2.txt'}
+        appliance_details_1 = {'label': 'XA-test-1', 'serialNumber': 'test-serial-no-1', 'status': 'PREPARING', 'uploadStatusLogURL': 'fakepath/upload_summary1.txt', 'returnShippingLabelUri': 'fakepath/return_label1.pdf'}
+        appliance_details_2 = {'label': 'XA_test-2', 'serialNumber': 'test-serial-no-2', 'status': 'PREPARING', 'uploadStatusLogURL': 'fakepath/upload_summary2.txt', 'returnShippingLabelUri': 'fakepath/return_label2.pdf'}
         assert result.data.id == 'test-job-id'
         assert len(result.data.attached_transfer_appliance_labels) == 2
         assert appliance_details_1 in result.data.attached_transfer_appliance_labels

@@ -1,8 +1,8 @@
 # coding: utf-8
 # Copyright (c) 2016, 2021, Oracle and/or its affiliates.  All rights reserved.
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
+import datetime
 import sys
-
 import click
 from oci_cli import cli_util
 
@@ -110,3 +110,22 @@ def create_rule_helper(ctx, create_rule_kwargs):
 def error_message_wrapper(msg):
     click.echo(click.style("Error: {}", fg="red").format(msg), err=True)
     sys.exit(1)
+
+
+def format_dt(date_str):
+    '''
+    Validates datetime string format by converting string to datetime obj
+    :param: datetime string
+    :return: datetime string
+    '''
+    date_obj = None
+    try:
+        date_obj = datetime.datetime.strptime(date_str, '%Y-%m-%d %H:%M')
+    except ValueError:
+        date_obj = datetime.datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S.000Z')
+    finally:
+        if date_obj:
+            date_str = datetime.datetime.strftime(date_obj, "%Y-%m-%dT%H:%M:%S.000Z")
+            return date_str
+        else:
+            error_message_wrapper("Invalid format. Expected UTC timezone date-time with format: 'YYYY-MM-DD HH:MM'")

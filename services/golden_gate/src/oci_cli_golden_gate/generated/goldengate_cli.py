@@ -4841,6 +4841,68 @@ def stop_deployment_default_stop_deployment_details(ctx, from_json, wait_for_sta
     cli_util.render_response(result, ctx)
 
 
+@connection_assignment_group.command(name=cli_util.override('goldengate.test_connection_assignment.command_name', 'test'), help=u"""Tests the connectivity between given GoldenGate deployment and one of the associated database / service. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](testConnectionAssignment)""")
+@cli_util.option('--connection-assignment-id', required=True, help=u"""The [OCID] of the Connection Assignment.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DEFAULT"]), help=u"""The type of the test of the assigned connection.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'golden_gate', 'class': 'TestConnectionAssignmentResult'})
+@cli_util.wrap_exceptions
+def test_connection_assignment(ctx, from_json, connection_assignment_id, type, if_match):
+
+    if isinstance(connection_assignment_id, six.string_types) and len(connection_assignment_id.strip()) == 0:
+        raise click.UsageError('Parameter --connection-assignment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.test_connection_assignment(
+        connection_assignment_id=connection_assignment_id,
+        test_connection_assignment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_assignment_group.command(name=cli_util.override('goldengate.test_connection_assignment_default_test_connection_assignment_details.command_name', 'test-connection-assignment-default-test-connection-assignment-details'), help=u"""Tests the connectivity between given GoldenGate deployment and one of the associated database / service. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](testConnectionAssignment)""")
+@cli_util.option('--connection-assignment-id', required=True, help=u"""The [OCID] of the Connection Assignment.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'golden_gate', 'class': 'TestConnectionAssignmentResult'})
+@cli_util.wrap_exceptions
+def test_connection_assignment_default_test_connection_assignment_details(ctx, from_json, connection_assignment_id, if_match):
+
+    if isinstance(connection_assignment_id, six.string_types) and len(connection_assignment_id.strip()) == 0:
+        raise click.UsageError('Parameter --connection-assignment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    _details['type'] = 'DEFAULT'
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.test_connection_assignment(
+        connection_assignment_id=connection_assignment_id,
+        test_connection_assignment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @connection_group.command(name=cli_util.override('goldengate.update_connection.command_name', 'update'), help=u"""Updates the Connection. \n[Command Reference](updateConnection)""")
 @cli_util.option('--connection-id', required=True, help=u"""The [OCID] of a Connection.""")
 @cli_util.option('--connection-type', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_NOSQL", "MONGODB"]), help=u"""The connection type.""")

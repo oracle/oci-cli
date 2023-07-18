@@ -22,7 +22,7 @@ if getattr(sys, "frozen", False):
     libdir = path.dirname(datadir)
     if "build" in libdir:
         this_file_path = path.join(libdir, 'lib', 'oci_cli', 'dynamic_loader.py')
-    if "AppData" in datadir:
+    else:
         this_file_path = path.join(datadir, 'Lib', 'site-packages', 'oci_cli', 'dynamic_loader.py')
 else:
     this_file_path = path.abspath(getsourcefile(lambda: 0))

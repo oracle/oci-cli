@@ -486,3 +486,7 @@ cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldeng
 
 # oci goldengate connection update-connection-update-java-message-service-connection-details -> oci goldengate connection update-jms-connection
 cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_java_message_service_connection_details, "update-jms-connection")
+
+
+# oci goldengate connection-assignment test-connection-assignment-default-test-connection-assignment-details -> oci goldengate connection-assignment test
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_assignment_group, goldengate_cli.test_connection_assignment_default_test_connection_assignment_details, "test")

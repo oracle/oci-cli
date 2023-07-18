@@ -106,11 +106,11 @@ def validate_commands_limit(filename):
 def print_suggestion_message():
     value = 0
     # read value from txt file
-    path = os.path.join(os.path.dirname(__file__), file_name)
+    path = os.path.expanduser(os.path.join("~", file_name))
     if os.path.exists(path):
         # if the file exists, read the value from the file
         with open(path, "r") as f:
-            value = int(f.read())
+            value = f.read()
     # print for 1st time
     if value == 0:
         print(MESSAGE)
