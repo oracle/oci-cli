@@ -343,13 +343,13 @@ def change_project_compartment(ctx, from_json, project_id, compartment_id, if_ma
 @model_group.command(name=cli_util.override('ai_document.create_model.command_name', 'create'), help=u"""Create a new model. \n[Command Reference](createModel)""")
 @cli_util.option('--model-type', required=True, help=u"""The type of the Document model.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment identifier.""")
-@cli_util.option('--training-dataset', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project that contains the model.""")
 @cli_util.option('--display-name', help=u"""A human-friendly name for the model, which can be changed.""")
 @cli_util.option('--description', help=u"""An optional description of the model.""")
 @cli_util.option('--model-version', help=u"""The model version""")
 @cli_util.option('--is-quick-mode', type=click.BOOL, help=u"""Set to true when experimenting with a new model type or dataset, so the model training is quick, with a predefined low number of passes through the training data.""")
 @cli_util.option('--max-training-time-in-hours', help=u"""The maximum model training time in hours, expressed as a decimal fraction.""")
+@cli_util.option('--training-dataset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--testing-dataset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--validation-dataset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--component-models', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The [OCID] list of active custom Key Value models that need to be composed.
@@ -366,7 +366,7 @@ This option is a JSON list with items of type ComponentModel.  For documentation
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'training-dataset': {'module': 'ai_document', 'class': 'Dataset'}, 'testing-dataset': {'module': 'ai_document', 'class': 'Dataset'}, 'validation-dataset': {'module': 'ai_document', 'class': 'Dataset'}, 'component-models': {'module': 'ai_document', 'class': 'list[ComponentModel]'}, 'freeform-tags': {'module': 'ai_document', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_document', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ai_document', 'class': 'Model'})
 @cli_util.wrap_exceptions
-def create_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_type, compartment_id, training_dataset, project_id, display_name, description, model_version, is_quick_mode, max_training_time_in_hours, testing_dataset, validation_dataset, component_models, alias_name, freeform_tags, defined_tags):
+def create_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_type, compartment_id, project_id, display_name, description, model_version, is_quick_mode, max_training_time_in_hours, training_dataset, testing_dataset, validation_dataset, component_models, alias_name, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -374,7 +374,6 @@ def create_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     _details = {}
     _details['modelType'] = model_type
     _details['compartmentId'] = compartment_id
-    _details['trainingDataset'] = cli_util.parse_json_parameter("training_dataset", training_dataset)
     _details['projectId'] = project_id
 
     if display_name is not None:
@@ -391,6 +390,9 @@ def create_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
     if max_training_time_in_hours is not None:
         _details['maxTrainingTimeInHours'] = max_training_time_in_hours
+
+    if training_dataset is not None:
+        _details['trainingDataset'] = cli_util.parse_json_parameter("training_dataset", training_dataset)
 
     if testing_dataset is not None:
         _details['testingDataset'] = cli_util.parse_json_parameter("testing_dataset", testing_dataset)

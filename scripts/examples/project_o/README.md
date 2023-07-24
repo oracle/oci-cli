@@ -38,11 +38,22 @@ robotics     VM.Standard.E2.1    1.0   RUNNING
 
 **Important:** `oci` must *installed* and *configured*.  `o` does not replace `oci`, but helps you *use* `oci`.
 
+#### Linux or Mac
 To install, get **``o``** from github, place it in your PATH (perhaps in the same place as ``oci``), and make it executable.  Use these commands to download ``o`` and install it next to ``oci``.
 ```
 o_src=https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/examples/project_o/o
 where=$(which oci) && to=${where%ci} && curl -so $to $o_src && chmod +x $to
 ```
+
+#### CloudShell
+The Linux install above will work, but it installs `o` in a place that is overwritten when CloudShell is updated.  This will install `o` into your $HOME, which is preserved during CloudShell updates:
+```
+mkdir -p $HOME/bin $HOME/.oci
+o_src=https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/examples/project_o/o
+to=$HOME/bin/o && curl -so $to $o_src && chmod +x $to
+echo 'PATH=$HOME/bin:$PATH' >> $HOME/.bashrc
+```
+
 #### Windows
 **`o`** version 1.6 and later runs in Windows PowerShell or Command shell, but installation not automated.  To try it, use this curl command to get **`o`**.  Then copy it to somewhere in your PATH.
 ```
