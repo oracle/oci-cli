@@ -39,7 +39,7 @@ vcrpy==4.2.1; python_version >= '3.10'
 virtualenv==20.13.0
 pytest-xdist==1.22.2
 pytest-forked==1.0.2
-PyYAML>=5.4,<=6
+PyYAML>=5.4,<=6.0
 docutils==0.15.2
 prompt-toolkit==3.0.29
 setuptools>65.5.1; python_version > '3.6'
