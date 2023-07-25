@@ -22,7 +22,7 @@ if (sys.platform != "win32"):
 import errno
 import datetime
 VERSION = "1.9"
-UPDATED = "2023-07-05"
+UPDATED = "2023-07-18"
 
 # ==============================================================================
 # Global variables
@@ -449,6 +449,10 @@ def get_new_ocids_from_returned_items(items):
             region_list = [{'key': i['region-key'], 'name': i['region-name']} for i in items]
         else:
             region_list = items
+        # Add existing regions to new region list
+        if 'regionlist' in ocid:
+            newkeys = [r['key'] for r in region_list]
+            region_list.extend([r for r in ocid['regionlist']['data'] if r['key'] not in newkeys])
         return {'regionlist': {
                 'type': 'regionlist',
                 'alias': 'regionlist',
@@ -543,11 +547,8 @@ def get_new_ocids_from_returned_items(items):
                              'access-uri']))})
             if 'created-by' in item and '/' in item['created-by']:
                 collected[ID]['created-by'] = item['created-by'].split('/')[1]
-            if 'time-created' in item:
+            if 'time-created' in item and item['time-created']:
                 collected[ID]['time-created'] = item['time-created'][:19]
-            # Retain access-uri.
-            if type == 'par' and ID in ocid and 'access-uri' in ocid[ID]:
-                collected[ID]['access-uri'] = ocid[ID]['access-uri']
     except BaseException:
         print(bold('Unable to collect ocids of type ' + type
               + '. Please provide this data with your problem report:\n')
@@ -1005,7 +1006,7 @@ def value_parameter(option, value):
 
     # Special help with structured-search --search-query "where compartmentId = ocid"
     if option == '--query-text':
-        match = re.findall(r"(\b[cl]\w*) *!*= *('*\"*[-_/\w]+'*\"*)", value, flags=re.IGNORECASE)
+        match = re.findall(r"(\b[cl]\w*) *!*= *('*\"*[-_./\w]+'*\"*)", value, flags=re.IGNORECASE)
         for (m, spec) in match:
             if m.lower() == 'compartmentid'[:len(m)]:
                 if m.lower() != 'compartmentid':
@@ -1163,9 +1164,8 @@ def show_column_headers(out_fields, sep, reg=False):
         return
     if sep == '|':
         for k in out_fields:
-            # print(bold(column[k]['format'].format(k)), end=' ', file=sys.stderr)
             try:
-                if reg and k == 'id' and user_out_spec == default_out_spec:
+                if reg and k == 'id' and user_out_spec.startswith(default_out_spec):
                     print(bold(' reg'), end=' ', file=sys.stderr)
                 print(bold(column[k]['format'].format(k.split(".")[-1])),
                       end=' ', file=sys.stderr)
@@ -1242,8 +1242,14 @@ def show_item(item, fields, sep, reg=False):
             else:
                 out.append(value)
         else:
-            if reg and field == 'id' and sep == '|' and user_out_spec == default_out_spec and 'ocid' in value:
-                out.append(' ' + (value.split('.')[3]))
+            if reg and field == 'id' and sep == '|' and user_out_spec.startswith(default_out_spec) and 'ocid' in value:
+                rk = value.split('.')[3]
+                if len(rk) == 3:
+                    rk = rk.upper()
+                elif len(rk) > 3 and 'regionlist' in ocid:
+                    rkl = [r['key'] for r in ocid['regionlist']['data'] if r['name'] == rk]
+                    rk = rkl[0] if rkl else '   '
+                out.append(' ' + rk)
             out.append(column[field]['format'].format(re.sub(r'[{}\'[\]\n]', '', value)[
                        column[field]['offset']:]))
 

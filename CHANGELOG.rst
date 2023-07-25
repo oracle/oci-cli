@@ -6,6 +6,43 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.30.0 - 2023-07-25
+--------------------
+Added
+~~~~~
+* Goldengate Service
+
+  * Support for Automatic Backup Download
+
+    * ``oci golden-gate deployment-backup copy --bucket-name --namespace-name``
+
+* Budgets Service
+
+  * Support for creating single use (non-recurring) budgets
+
+    * ``oci budgets budget create``
+    * ``oci budgets budget update``
+
+* AI Document Service
+
+  * Support for composing two or more Document Service custom key value models into one single model.
+
+    * ``oci ai-document model create``
+
+* Core Service
+
+  * Support for Custom hostname
+
+    * ``oci compute-management instance-pool create``
+    * ``oci compute-management instance-pool update``
+
+Changed
+~~~~~~~
+* [BREAKING] Subscriptions and AssignedSubscription resources are now polymorphic in Organizations service
+
+    * ``oci organizations subscription list --entity-version``
+    * ``oci organizations assigned-subscription list --entity-version``
+
 3.29.4 - 2023-07-18
 --------------------
 Added

@@ -16,7 +16,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('budgets.budgets_root_group.command_name', 'budgets'), cls=CommandGroupWithAlias, help=cli_util.override('budgets.budgets_root_group.help', """Use the Budgets API to manage budgets and budget alerts."""), short_help=cli_util.override('budgets.budgets_root_group.short_help', """Budgets API"""))
+@cli.command(cli_util.override('budgets.budgets_root_group.command_name', 'budgets'), cls=CommandGroupWithAlias, help=cli_util.override('budgets.budgets_root_group.help', """Use the Budgets API to manage budgets and budget alerts. For more information, see [Budgets Overview]."""), short_help=cli_util.override('budgets.budgets_root_group.short_help', """Budgets API"""))
 @cli_util.help_option_group
 def budgets_root_group():
     pass
@@ -132,7 +132,9 @@ def create_alert_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--display-name', help=u"""The displayName of the budget. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""The description of the budget.""")
 @cli_util.option('--budget-processing-period-start-offset', type=click.INT, help=u"""The number of days offset from the first day of the month, at which the budget processing period starts. In months that have fewer days than this value, processing will begin on the last day of that month. For example, for a value of 12, processing starts every month on the 12th at midnight.""")
-@cli_util.option('--processing-period-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "MONTH"]), help=u"""The type of the budget processing period. Valid values are INVOICE and MONTH.""")
+@cli_util.option('--processing-period-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "MONTH", "SINGLE_USE"]), help=u"""The type of the budget processing period. Valid values are INVOICE, MONTH, and SINGLE_USE.""")
+@cli_util.option('--start-date', type=custom_types.CLI_DATETIME, help=u"""The date when the one-time budget begins. For example, `2023-03-23`. The date-time format conforms to RFC 3339, and will be truncated to the starting point of the date provided after being converted to UTC time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--end-date', type=custom_types.CLI_DATETIME, help=u"""The date when the one-time budget concludes. For example, `2023-03-23`. The date-time format conforms to RFC 3339, and will be truncated to the starting point of the date provided after being converted to UTC time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--target-type', type=custom_types.CliCaseInsensitiveChoice(["COMPARTMENT", "TAG"]), help=u"""The type of target on which the budget is applied.""")
 @cli_util.option('--targets', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of targets on which the budget is applied.   If targetType is \"COMPARTMENT\", the targets contain the list of compartment OCIDs.   If targetType is \"TAG\", the targets contain the list of cost tracking tag identifiers in the form of \"{tagNamespace}.{tagKey}.{tagValue}\". Curerntly, the array should contain exactly one item.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -149,7 +151,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'targets': {'module': 'budget', 'class': 'list[string]'}, 'freeform-tags': {'module': 'budget', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'budget', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'budget', 'class': 'Budget'})
 @cli_util.wrap_exceptions
-def create_budget(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, amount, reset_period, target_compartment_id, display_name, description, budget_processing_period_start_offset, processing_period_type, target_type, targets, freeform_tags, defined_tags):
+def create_budget(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, amount, reset_period, target_compartment_id, display_name, description, budget_processing_period_start_offset, processing_period_type, start_date, end_date, target_type, targets, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -173,6 +175,12 @@ def create_budget(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     if processing_period_type is not None:
         _details['processingPeriodType'] = processing_period_type
+
+    if start_date is not None:
+        _details['startDate'] = start_date
+
+    if end_date is not None:
+        _details['endDate'] = end_date
 
     if target_type is not None:
         _details['targetType'] = target_type
@@ -432,7 +440,7 @@ By default, ListBudgets returns budgets of the 'COMPARTMENT' target type, and th
 
 To list all budgets, set the targetType query parameter to ALL (for example: 'targetType=ALL').
 
-Additional targetTypes would be available in future releases. Clients should ignore new targetTypes, or upgrade to the latest version of the client SDK to handle new targetTypes. \n[Command Reference](listBudgets)""")
+Clients should ignore new targetTypes, or upgrade to the latest version of the client SDK to handle new targetTypes. \n[Command Reference](listBudgets)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -608,7 +616,9 @@ def update_alert_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 @cli_util.option('--description', help=u"""The description of the budget.""")
 @cli_util.option('--amount', type=click.FLOAT, help=u"""The amount of the budget expressed as a whole number in the currency of the customer's rate card.""")
 @cli_util.option('--budget-processing-period-start-offset', type=click.INT, help=u"""The number of days offset from the first day of the month, at which the budget processing period starts. In months that have fewer days than this value, processing will begin on the last day of that month. For example, for a value of 12, processing starts every month on the 12th at midnight.""")
-@cli_util.option('--processing-period-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "MONTH"]), help=u"""The type of the budget processing period. Valid values are INVOICE and MONTH.""")
+@cli_util.option('--processing-period-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "MONTH", "SINGLE_USE"]), help=u"""The type of the budget processing period. Valid values are INVOICE, MONTH, and SINGLE_USE.""")
+@cli_util.option('--start-date', type=custom_types.CLI_DATETIME, help=u"""The date when the one-time budget begins. For example, `2023-03-23`. The date-time format conforms to RFC 3339, and will be truncated to the starting point of the date provided after being converted to UTC time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--end-date', type=custom_types.CLI_DATETIME, help=u"""The time when the one-time budget concludes. For example, `2023-03-23`. The date-time format conforms to RFC 3339, and will be truncated to the starting point of the date provided after being converted to UTC time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--reset-period', type=custom_types.CliCaseInsensitiveChoice(["MONTHLY"]), help=u"""The reset period for the budget.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -626,7 +636,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'budget', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'budget', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'budget', 'class': 'Budget'})
 @cli_util.wrap_exceptions
-def update_budget(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, budget_id, display_name, description, amount, budget_processing_period_start_offset, processing_period_type, reset_period, freeform_tags, defined_tags, if_match):
+def update_budget(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, budget_id, display_name, description, amount, budget_processing_period_start_offset, processing_period_type, start_date, end_date, reset_period, freeform_tags, defined_tags, if_match):
 
     if isinstance(budget_id, six.string_types) and len(budget_id.strip()) == 0:
         raise click.UsageError('Parameter --budget-id cannot be whitespace or empty string')
@@ -656,6 +666,12 @@ def update_budget(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 
     if processing_period_type is not None:
         _details['processingPeriodType'] = processing_period_type
+
+    if start_date is not None:
+        _details['startDate'] = start_date
+
+    if end_date is not None:
+        _details['endDate'] = end_date
 
     if reset_period is not None:
         _details['resetPeriod'] = reset_period
