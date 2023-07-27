@@ -62,7 +62,7 @@ Mac OS X
 
 Linux
 -----
-::
+.. code-block:: bash
 
     bash -c "$(curl -L https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh)"
 
@@ -76,7 +76,7 @@ Oracle Linux 7
 
 Windows
 -------
-::
+.. code-block:: powershell
 
     powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.ps1'))"
 
