@@ -26,7 +26,7 @@ Try the interactive features anytime with the ``-i`` option:
 
     oci -i
 
-.. image:: images/animation.png
+.. image:: https://github.com/oracle/oci-cli/blob/master/images/animation.png?raw=true
   :width: 1000
   :alt: Alternative text
 

@@ -1015,3 +1015,19 @@ def recall_archived_data_extended(ctx, **kwargs):
         kwargs.pop('query_string')
 
     ctx.invoke(loganalytics_cli.recall_archived_data, **kwargs)
+
+
+# oci log-analytics log-analytics-property -> oci log-analytics property
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.log_analytics_property_group, "property")
+
+
+# oci log-analytics source validate-endpoint-log-list-type-endpoint -> oci log-analytics source validate-loglist-endpoint
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_source_group, loganalytics_cli.validate_endpoint_log_list_type_endpoint, "validate-loglist-endpoint")
+
+
+# oci log-analytics source validate-endpoint-log-type-endpoint -> oci log-analytics source validate-log-endpoint
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_source_group, loganalytics_cli.validate_endpoint_log_type_endpoint, "validate-log-endpoint")
+
+
+# Remove validate-endpoint from oci log-analytics source
+loganalytics_cli.log_analytics_source_group.commands.pop(loganalytics_cli.validate_endpoint.name)

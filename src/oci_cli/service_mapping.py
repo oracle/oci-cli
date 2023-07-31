@@ -258,6 +258,11 @@ service_mapping = {
         "Events",
         "Observability & Management"
     ],
+    "fleet-software-update": [
+        "fleet_software_update",
+        "Exadata Fleet Update service",
+        "Others"
+    ],
     "fn": [
         "functions",
         "Functions Service",

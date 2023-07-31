@@ -563,6 +563,10 @@ def build_client(spec_name, service_name, ctx):
             if ctx.obj['read_timeout']:
                 client.base_client.timeout = (client.base_client.timeout[0], ctx.obj['read_timeout'])
 
+        lowered_endpoint = lowered_endpoint = client.base_client.endpoint.lower()
+        uses_ssl = lowered_endpoint.startswith('https://')
+        set_request_session_properties_from_context(client.base_client.session, ctx, uses_ssl=uses_ssl)
+
         cert_bundle = ctx.obj['cert_bundle']
         if cert_bundle:
             cert_bundle = os.path.expanduser(cert_bundle)

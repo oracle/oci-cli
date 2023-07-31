@@ -200,6 +200,13 @@ IGNORED_COMMANDS = [
     ['os-management-hub', 'managed-instance-group', 'list-available-software-sources'],
     ['os-management-hub', 'managed-instance-group', 'list-installed-packages'],
     ['os-management-hub', 'profile', 'list'],
+    ['rover', 'device', 'diagnostics', 'bundle', 'cancel'],
+    ['rover', 'device', 'diagnostics', 'bundle', 'create'],
+    ['rover', 'device', 'diagnostics', 'bundle', 'get'],
+    ['rover', 'device', 'diagnostics', 'bundle', 'list'],
+    ['rover', 'device', 'diagnostics', 'bundle', 'view-summary'],
+    ['rover', 'device', 'system-upgrade', 'import-bundle']
+
 ]
 
 IGNORED_COMMANDS_DOCS = [

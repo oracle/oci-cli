@@ -42,6 +42,30 @@ def exadata_insights_group():
     pass
 
 
+@click.command(cli_util.override('opsi.awr_hubs_group.command_name', 'awr-hubs'), cls=CommandGroupWithAlias, help="""Logical grouping used for Awr Hub operations.""")
+@cli_util.help_option_group
+def awr_hubs_group():
+    pass
+
+
+@click.command(cli_util.override('opsi.news_reports_group.command_name', 'news-reports'), cls=CommandGroupWithAlias, help="""Logical grouping used for Operations Insights news reports related operations.""")
+@cli_util.help_option_group
+def news_reports_group():
+    pass
+
+
+@click.command(cli_util.override('opsi.operations_insights_warehouse_users_group.command_name', 'operations-insights-warehouse-users'), cls=CommandGroupWithAlias, help="""Logical grouping used for Operations Insights Warehouse User operations.""")
+@cli_util.help_option_group
+def operations_insights_warehouse_users_group():
+    pass
+
+
+@click.command(cli_util.override('opsi.news_report_group.command_name', 'news-report'), cls=CommandGroupWithAlias, help="""News report resource.""")
+@cli_util.help_option_group
+def news_report_group():
+    pass
+
+
 @click.command(cli_util.override('opsi.operations_insights_warehouses_group.command_name', 'operations-insights-warehouses'), cls=CommandGroupWithAlias, help="""Logical grouping used for Operations Insights Warehouse operations.""")
 @cli_util.help_option_group
 def operations_insights_warehouses_group():
@@ -64,12 +88,6 @@ def database_insights_group():
     pass
 
 
-@click.command(cli_util.override('opsi.awr_hubs_group.command_name', 'awr-hubs'), cls=CommandGroupWithAlias, help="""Logical grouping used for Awr Hub operations.""")
-@cli_util.help_option_group
-def awr_hubs_group():
-    pass
-
-
 @click.command(cli_util.override('opsi.host_insights_group.command_name', 'host-insights'), cls=CommandGroupWithAlias, help="""Logical grouping used for Operations Insights host related operations.""")
 @cli_util.help_option_group
 def host_insights_group():
@@ -82,12 +100,6 @@ def operations_insights_private_endpoint_group():
     pass
 
 
-@click.command(cli_util.override('opsi.operations_insights_warehouse_users_group.command_name', 'operations-insights-warehouse-users'), cls=CommandGroupWithAlias, help="""Logical grouping used for Operations Insights Warehouse User operations.""")
-@cli_util.help_option_group
-def operations_insights_warehouse_users_group():
-    pass
-
-
 @click.command(cli_util.override('opsi.work_requests_group.command_name', 'work-requests'), cls=CommandGroupWithAlias, help="""Logical grouping used for Operations Insights Work Request operations.""")
 @cli_util.help_option_group
 def work_requests_group():
@@ -97,13 +109,15 @@ def work_requests_group():
 opsi_root_group.add_command(enterprise_manager_bridges_group)
 opsi_root_group.add_command(opsi_data_objects_group)
 opsi_root_group.add_command(exadata_insights_group)
+opsi_root_group.add_command(awr_hubs_group)
+opsi_root_group.add_command(news_reports_group)
+opsi_root_group.add_command(operations_insights_warehouse_users_group)
+opsi_root_group.add_command(news_report_group)
 opsi_root_group.add_command(operations_insights_warehouses_group)
 opsi_root_group.add_command(opsi_configurations_group)
 opsi_root_group.add_command(database_insights_group)
-opsi_root_group.add_command(awr_hubs_group)
 opsi_root_group.add_command(host_insights_group)
 opsi_root_group.add_command(operations_insights_private_endpoint_group)
-opsi_root_group.add_command(operations_insights_warehouse_users_group)
 opsi_root_group.add_command(work_requests_group)
 
 
@@ -701,6 +715,63 @@ def change_host_insight_compartment(ctx, from_json, wait_for_state, max_wait_sec
     result = client.change_host_insight_compartment(
         host_insight_id=host_insight_id,
         change_host_insight_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@news_reports_group.command(name=cli_util.override('opsi.change_news_report_compartment.command_name', 'change'), help=u"""Moves a news report resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeNewsReportCompartment)""")
+@cli_util.option('--news-report-id', required=True, help=u"""Unique news report identifier.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment into which the resource will be moved.""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_news_report_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, news_report_id, compartment_id, if_match):
+
+    if isinstance(news_report_id, six.string_types) and len(news_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --news-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.change_news_report_compartment(
+        news_report_id=news_report_id,
+        change_news_report_compartment_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -1854,6 +1925,79 @@ def create_host_insight_create_em_managed_external_host_insight_details(ctx, fro
     cli_util.render_response(result, ctx)
 
 
+@news_reports_group.command(name=cli_util.override('opsi.create_news_report.command_name', 'create'), help=u"""Create a news report in Operations Insights. The report will be enabled in Operations Insights. Insights will be emailed as per selected frequency. \n[Command Reference](createNewsReport)""")
+@cli_util.option('--name', required=True, help=u"""The news report name.""")
+@cli_util.option('--news-frequency', required=True, type=custom_types.CliCaseInsensitiveChoice(["WEEKLY"]), help=u"""News report frequency.""")
+@cli_util.option('--description', required=True, help=u"""The description of the news report.""")
+@cli_util.option('--ons-topic-id', required=True, help=u"""The [OCID] of the ONS topic.""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier where the news report will be created.""")
+@cli_util.option('--content-types', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locale', required=True, type=custom_types.CliCaseInsensitiveChoice(["EN"]), help=u"""Language of the news report.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), help=u"""Defines if the news report will be enabled or disabled.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'content-types': {'module': 'opsi', 'class': 'NewsContentTypes'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'content-types': {'module': 'opsi', 'class': 'NewsContentTypes'}}, output_type={'module': 'opsi', 'class': 'NewsReport'})
+@cli_util.wrap_exceptions
+def create_news_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, news_frequency, description, ons_topic_id, compartment_id, content_types, locale, freeform_tags, defined_tags, status):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['newsFrequency'] = news_frequency
+    _details['description'] = description
+    _details['onsTopicId'] = ons_topic_id
+    _details['compartmentId'] = compartment_id
+    _details['contentTypes'] = cli_util.parse_json_parameter("content_types", content_types)
+    _details['locale'] = locale
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if status is not None:
+        _details['status'] = status
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.create_news_report(
+        create_news_report_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @operations_insights_private_endpoint_group.command(name=cli_util.override('opsi.create_operations_insights_private_endpoint.command_name', 'create'), help=u"""Create a private endpoint resource for the tenant in Operations Insights. This resource will be created in customer compartment. \n[Command Reference](createOperationsInsightsPrivateEndpoint)""")
 @cli_util.option('--display-name', required=True, help=u"""The display name for the private endpoint. It is changeable.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID] of the Private service accessed database.""")
@@ -2479,6 +2623,58 @@ def delete_host_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.delete_host_insight(
         host_insight_id=host_insight_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@news_reports_group.command(name=cli_util.override('opsi.delete_news_report.command_name', 'delete'), help=u"""Deletes a news report. The news report will be deleted and cannot be enabled again. \n[Command Reference](deleteNewsReport)""")
+@cli_util.option('--news-report-id', required=True, help=u"""Unique news report identifier.""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_news_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, news_report_id, if_match):
+
+    if isinstance(news_report_id, six.string_types) and len(news_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --news-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.delete_news_report(
+        news_report_id=news_report_id,
         **kwargs
     )
     if wait_for_state:
@@ -4011,6 +4207,28 @@ def get_host_insight(ctx, from_json, host_insight_id):
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.get_host_insight(
         host_insight_id=host_insight_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@news_reports_group.command(name=cli_util.override('opsi.get_news_report.command_name', 'get'), help=u"""Gets details of a news report. \n[Command Reference](getNewsReport)""")
+@cli_util.option('--news-report-id', required=True, help=u"""Unique news report identifier.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'NewsReport'})
+@cli_util.wrap_exceptions
+def get_news_report(ctx, from_json, news_report_id):
+
+    if isinstance(news_report_id, six.string_types) and len(news_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --news-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.get_news_report(
+        news_report_id=news_report_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -5992,6 +6210,71 @@ def list_importable_enterprise_manager_entities(ctx, from_json, all_pages, page_
     else:
         result = client.list_importable_enterprise_manager_entities(
             enterprise_manager_bridge_id=enterprise_manager_bridge_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@news_report_group.command(name=cli_util.override('opsi.list_news_reports.command_name', 'list'), help=u"""Gets a list of news reports based on the query parameters specified. Either compartmentId or id query parameter must be specified. \n[Command Reference](listNewsReports)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--news-report-id', help=u"""Unique Operations Insights news report identifier""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help=u"""Lifecycle states""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name", "newsFrequency"]), help=u"""News report list sort options. If `fields` parameter is selected, the `sortBy` parameter must be one of the fields specified.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""A flag to search all resources within a given compartment and all sub-compartments.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'NewsReportCollection'})
+@cli_util.wrap_exceptions
+def list_news_reports(ctx, from_json, all_pages, page_size, compartment_id, news_report_id, status, lifecycle_state, limit, page, sort_order, sort_by, compartment_id_in_subtree):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if news_report_id is not None:
+        kwargs['news_report_id'] = news_report_id
+    if status is not None and len(status) > 0:
+        kwargs['status'] = status
+    if lifecycle_state is not None and len(lifecycle_state) > 0:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_news_reports,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_news_reports,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_news_reports(
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -10837,6 +11120,94 @@ def update_host_insight_update_macs_managed_cloud_host_insight_details(ctx, from
     result = client.update_host_insight(
         host_insight_id=host_insight_id,
         update_host_insight_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@news_reports_group.command(name=cli_util.override('opsi.update_news_report.command_name', 'update'), help=u"""Updates the  configuration of a news report. \n[Command Reference](updateNewsReport)""")
+@cli_util.option('--news-report-id', required=True, help=u"""Unique news report identifier.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), help=u"""Defines if the news report will be enabled or disabled.""")
+@cli_util.option('--news-frequency', type=custom_types.CliCaseInsensitiveChoice(["WEEKLY"]), help=u"""News report frequency.""")
+@cli_util.option('--locale', type=custom_types.CliCaseInsensitiveChoice(["EN"]), help=u"""Language of the news report.""")
+@cli_util.option('--content-types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--ons-topic-id', help=u"""The [OCID] of the ONS topic.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'content-types': {'module': 'opsi', 'class': 'NewsContentTypes'}, 'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'content-types': {'module': 'opsi', 'class': 'NewsContentTypes'}, 'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_news_report(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, news_report_id, status, news_frequency, locale, content_types, ons_topic_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(news_report_id, six.string_types) and len(news_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --news-report-id cannot be whitespace or empty string')
+    if not force:
+        if content_types or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to content-types and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if status is not None:
+        _details['status'] = status
+
+    if news_frequency is not None:
+        _details['newsFrequency'] = news_frequency
+
+    if locale is not None:
+        _details['locale'] = locale
+
+    if content_types is not None:
+        _details['contentTypes'] = cli_util.parse_json_parameter("content_types", content_types)
+
+    if ons_topic_id is not None:
+        _details['onsTopicId'] = ons_topic_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.update_news_report(
+        news_report_id=news_report_id,
+        update_news_report_details=_details,
         **kwargs
     )
     if wait_for_state:

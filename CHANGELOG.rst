@@ -6,6 +6,72 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.30.1 - 2023-08-01
+--------------------
+Added
+~~~~~
+* Loganalytics
+
+  * Support for Log Source Validations
+
+    * ``oci log-analytics source validate-loglist-endpoint``
+    * ``oci log-analytics source validate-log-endpoint``
+    * ``oci log-analytics source validate-label-condition``
+
+  * Support for listing properties
+
+    * ``oci log-analytics property list-effective-properties``
+    * ``oci log-analytics property list-properties-metadata``
+
+  * Support for getting recalls statistics
+
+    * ``oci log-analytics storage get-recalled-data-size``
+    * ``oci log-analytics storage get-recall-count``
+    * ``oci log-analytics storage list-overlapping-recalls``
+
+  * Support for getting rules summary
+
+    * ``oci log-analytics rule get-rules-summary``
+
+  * Support for new optional parameter
+
+    * ``oci log-analytics source upsert-source --endpoints, --source-properties``
+    * ``oci log-analytics source validate-source --endpoints, --source-properties``
+    * ``oci log-analytics source validate-source-extfield-details --endpoints, --source-properties``
+    * ``oci log-analytics storage recall-archived-data --is-recall-new-data-only, --purpose``
+    * ``oci log-analytics storage estimate-recall-data-size --is-recall-new-data-only, --log-sets``
+    * ``oci log-analytics em-bridge delete --is-delete-entities``
+
+* Exadata Fleet Update Service
+
+  * Support for the Exadata Fleet Update service
+
+    * ``oci fleet-software-update``
+
+* Container Engine For Kubernetes
+
+  * Support for OKE cluster credential rotation feature
+
+    * ``oci ce cluster start-credential-rotation``
+    * ``oci ce cluster complete-credential-rotation``
+    * ``oci ce credential-rotation-status get``
+
+* Fusion Applications Environment Management
+
+  * Support for new scheduled activity response properties
+
+    * ``oci fusion-apps scheduled-activity list --scheduled-activity-association-id, --scheduled-activity-phase``
+
+* Operations Insights
+
+  * Support for OPSI news reports
+
+    * ``oci opsi news-report list``
+    * ``oci opsi news-reports change``
+    * ``oci opsi news-reports delete``
+    * ``oci opsi news-reports get``
+    * ``oci opsi news-reports update``
+
 3.30.0 - 2023-07-25
 --------------------
 Added

@@ -131,3 +131,13 @@ fs, outbound-connector, get
 fs, outbound-connector, list
 fs, outbound-connector, update
 goldengate, connection-assignment, test
+log-analytics, source, upsert-source
+log-analytics, source, upsert-source
+log-analytics, source, validate-source
+log-analytics, source, validate-source
+log-analytics, source, validate-source-extfield-details
+log-analytics, source, validate-source-extfield-details
+data-integration, connection, create
+log-analytics, scheduled-task, list
+
+
