@@ -896,6 +896,32 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
         result = util.invoke_command(['log-analytics', 'ingest-time-rule', 'update-ingest-time-rule-ingest-time-rule-field-condition'])
         assert 'No such command' in result.output
 
+    def test_property_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'log-analytics-property', 'list-properties-metadata'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'property', 'list-properties-metadata'])
+        assert """Usage: oci log-analytics property list-properties-metadata""" in result.output
+
+    def test_validate_endpoint_removed_command(self):
+        result = util.invoke_command(['log-analytics', 'source', 'validate-endpoint'])
+        assert 'No such command' in result.output
+
+    def test_validate_loglist_endpoint_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'source', 'validate-endpoint-log-list-type-endpoint'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'source', 'validate-loglist-endpoint'])
+        assert """Usage: oci log-analytics source validate-loglist-endpoint""" in result.output
+
+    # Validate log endpoint changed command
+    def test_validate_log_endpoint_changed_command(self):
+        result = util.invoke_command(['log-analytics', 'source', 'validate-endpoint-log-type-endpoint'])
+        assert 'No such command' in result.output
+
+        result = util.invoke_command(['log-analytics', 'source', 'validate-log-endpoint'])
+        assert """Usage: oci log-analytics source validate-log-endpoint""" in result.output
+
     # Recall archived data test renamed param
     def test_recall_archived_data_renamed_params(self):
         result = util.invoke_command(['log-analytics', 'storage', 'recall-archived-data', '--query-parameterconflict'])

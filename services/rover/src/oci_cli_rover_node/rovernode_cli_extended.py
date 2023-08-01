@@ -16,7 +16,7 @@ from services.rover.src.constants import ROVER_WORKLOAD_TYPE_IMAGE
 from services.rover.src.oci_cli_rover.generated import rover_service_cli
 from services.rover.src.oci_cli_rover.rover_utils import export_compute_image_helper, \
     prompt_for_secrets, prompt_for_workload_delete, export_compute_image_status_helper, \
-    validate_bucket, validate_get_image, prepare_image_workload_data, prepare_bucket_workload_data, \
+    validate_get_image, prepare_image_workload_data, prepare_bucket_workload_data, \
     create_master_key_policy_rover_resource, remove_additional_params_after_policy
 from services.rover.src.oci_cli_rover_bundle.generated import roverbundle_cli
 from services.rover.src.oci_cli_rover_node.generated import rovernode_cli
@@ -476,9 +476,10 @@ def add_workload(ctx, **kwargs):
     result = get_rover_node_helper(ctx, kwargs['node_id'])
 
     if kwargs['type'].lower() == "bucket":
-        result_bucket = validate_bucket(result.data.compartment_id, ctx, **kwargs)
-        workload_id = result_bucket.data.name
-        workload_data = prepare_bucket_workload_data(result_bucket, **kwargs)
+        if not ('bucket_name' in kwargs and kwargs['bucket_name']):
+            raise click.UsageError('Parameter bucket-name cannot be whitespace or empty string')
+        workload_id = kwargs['bucket_name']
+        workload_data = prepare_bucket_workload_data(result.data.compartment_id, **kwargs)
 
     elif kwargs['type'].lower() == "image":
         compute_image_obj = validate_get_image(ctx, **kwargs)

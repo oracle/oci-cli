@@ -412,13 +412,18 @@ For more information, see the Using Queries section at {cli_constants.INPUT_OUTP
 @click.option('--generate-param-json-input', is_eager=True, help=GENERATE_PARAM_JSON_HELP)
 @click.option('--no-retry', is_flag=True, help='Disable retry logic for calls to services.')
 @click.option('--max-retries', type=click.INT, help='Maximum number of retry calls to be made to the service. For most commands, 5 attempts will be made. For operations with binary bodies, retries are disabled')
+@click.option('--proxy', help="""If the environment the CLI runs in requires use of a proxy server for HTTP requests, the details of the proxy server to use. Examples:
+
+http://proxy.example.org:3128/ (uses proxy.example.org on port 3128)
+\b
+http://user:pass@proxy.example.org:3128/ (if your proxy requires a username and password to authenticate)""")
 @click.option('-d', '--debug', is_flag=True, help='Show additional debug information.')
 @click.option('-i', '--cli-auto-prompt', is_flag=True, help=f'''Use the interactive features for autocompletion and quick view of command reference.
 
 For information on interactive features, see {cli_constants.INTERACTIVE_CLI_DOCUMENTATION}.''')
 @click.option('-?', '-h', '--help', is_flag=True, help='For detailed help on the individual OCI CLI command, enter <command> --help.')
 @click.pass_context
-def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, realm_specific_endpoint, cert_bundle, output, query, raw_output, auth, auth_purpose, no_retry, max_retries, generate_full_command_json_input, generate_param_json_input, debug, cli_auto_prompt, connection_timeout, read_timeout, help):
+def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, realm_specific_endpoint, cert_bundle, output, query, raw_output, auth, auth_purpose, no_retry, max_retries, generate_full_command_json_input, generate_param_json_input, proxy, debug, cli_auto_prompt, connection_timeout, read_timeout, help):
 
     click.exceptions.UsageError.show = cli_util.update_click_help_message
     if max_retries and no_retry:
@@ -469,6 +474,7 @@ def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, re
         'raw_output': raw_output,
         'generate_full_command_json_input': generate_full_command_json_input,
         'generate_param_json_input': generate_param_json_input,
+        'proxy': proxy,
         'debug': debug,
         'no_retry': no_retry,
         'auth': auth,

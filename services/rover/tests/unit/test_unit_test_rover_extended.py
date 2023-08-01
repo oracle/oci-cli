@@ -218,8 +218,6 @@ class UnitTestRover(unittest.TestCase):
     #       - CLI errors when any of the Required params is not supplied.
     #       - CLI accepts all Required params
     #       - CLI accepts all Optional params
-    @mock.patch('services.rover.src.oci_cli_rover_cluster.rovercluster_utils.validate_bucket', return_value=mock_object_storage_obj)
-    @mock.patch('services.rover.src.oci_cli_rover_node.rovernode_cli_extended.validate_bucket', return_value=mock_object_storage_obj)
     @mock.patch('services.rover.src.oci_cli_rover_cluster.rovercluster_utils.validate_get_image', return_value=mock_compute_img_obj)
     @mock.patch('services.rover.src.oci_cli_rover_node.rovernode_cli_extended.validate_get_image', return_value=mock_compute_img_obj)
     @mock.patch('services.rover.src.oci_cli_rover_cluster.rovercluster_utils.export_compute_image_helper')
@@ -229,8 +227,7 @@ class UnitTestRover(unittest.TestCase):
     @mock.patch('oci_cli.cli_util.build_client')
     @mock.patch('oci_cli.cli_util.render_response')
     def test_rover(self, mock_client_render_response, mock_client, mock_prompt, mock_prompt_for_secrets, mock_node_export_compute_image,
-                   mock_cluster_export_compute_image, mock_node_validate_image, mock_cluster_validate_image, mock_node_validate_bucket,
-                   mock_cluster_validate_bucket):
+                   mock_cluster_export_compute_image, mock_node_validate_image, mock_cluster_validate_image):
         for command_def in self.command_defs:
             command = command_def["command"]
             specific_sub_command_set = self._sub_command_list_in_specific_test_set(command)

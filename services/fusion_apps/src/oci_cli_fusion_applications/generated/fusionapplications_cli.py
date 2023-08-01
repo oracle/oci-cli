@@ -1420,6 +1420,8 @@ def list_refresh_activities(ctx, from_json, all_pages, page_size, fusion_environ
 @cli_util.option('--time-expected-finish-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter that returns all resources that end before this date""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--run-cycle', type=custom_types.CliCaseInsensitiveChoice(["QUARTERLY", "MONTHLY", "ONEOFF", "VERTEX"]), help=u"""A filter that returns all resources that match the specified run cycle.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), help=u"""A filter that returns all resources that match the specified status""")
+@cli_util.option('--scheduled-activity-association-id', help=u"""A filter that returns all resources that match the specified scheduledActivityAssociationId.""")
+@cli_util.option('--scheduled-activity-phase', type=custom_types.CliCaseInsensitiveChoice(["PRE_MAINTENANCE", "MAINTENANCE", "POST_MAINTENANCE"]), help=u"""A filter that returns all resources that match the specified scheduledActivityPhase.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -1431,7 +1433,7 @@ def list_refresh_activities(ctx, from_json, all_pages, page_size, fusion_environ
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fusion_apps', 'class': 'ScheduledActivityCollection'})
 @cli_util.wrap_exceptions
-def list_scheduled_activities(ctx, from_json, all_pages, page_size, fusion_environment_id, display_name, time_scheduled_start_greater_than_or_equal_to, time_expected_finish_less_than_or_equal_to, run_cycle, lifecycle_state, limit, page, sort_order, sort_by):
+def list_scheduled_activities(ctx, from_json, all_pages, page_size, fusion_environment_id, display_name, time_scheduled_start_greater_than_or_equal_to, time_expected_finish_less_than_or_equal_to, run_cycle, lifecycle_state, scheduled_activity_association_id, scheduled_activity_phase, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1450,6 +1452,10 @@ def list_scheduled_activities(ctx, from_json, all_pages, page_size, fusion_envir
         kwargs['run_cycle'] = run_cycle
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
+    if scheduled_activity_association_id is not None:
+        kwargs['scheduled_activity_association_id'] = scheduled_activity_association_id
+    if scheduled_activity_phase is not None:
+        kwargs['scheduled_activity_phase'] = scheduled_activity_phase
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
