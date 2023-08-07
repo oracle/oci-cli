@@ -6,6 +6,56 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.30.2 - 2023-08-08
+--------------------
+Added
+~~~~~
+* Database Service
+
+  * Support for adding backup retention in days for create operations
+
+    * ``oci db autonomous-database create --backup-retention-period-in-days``
+    * ``oci db autonomous-database create-adb-cross-region-data-guard-details --backup-retention-period-in-days``
+    * ``oci db autonomous-database create-autonomous-database-create-cross-region-disaster-recovery-details --backup-retention-period-in-days``
+    * ``oci db autonomous-database create-from-backup-id --backup-retention-period-in-days``
+    * ``oci db autonomous-database create-from-backup-timestamp --backup-retention-period-in-days``
+    * ``oci db autonomous-database create-from-clone --backup-retention-period-in-days``
+    * ``oci db autonomous-database create-refreshable-clone --backup-retention-period-in-days``
+    * ``oci db autonomous-database create-virtual-clone --backup-retention-period-in-days``
+    * ``oci db autonomous-database update --backup-retention-period-in-days, --compute-model``
+
+  * Support for adding and updating localAdgAutoFailoverMaxDataLossLimit for local autonomous data guard
+
+    * ``oci db autonomous-database update --local-adg-auto-failover-max-data-loss-limit``
+
+* Identity Domains Service
+
+  * Support for new commands
+
+    * ``oci identity-domains app``
+    * ``oci identity-domains app-role``
+    * ``oci identity-domains app-status-changer``
+    * ``oci identity-domains apps search``
+
+* Goldengate Service
+
+  * Support for new operations for deployment upgrade entity
+
+    * ``oci goldengate deployment-upgrade cancel``
+    * ``oci goldengate deployment-upgrade reschedule``
+
+* The AI Language service
+
+  * Support to get information on model type and other details of models
+
+  * ``oci ai language model-type-info get``
+
+* Operator Access Control service
+
+  * Support for Compute Cloud at Customer (C3) resource type
+
+    * ``oci opctl operator-control-assignment create``
+
 3.30.1 - 2023-08-01
 --------------------
 Added

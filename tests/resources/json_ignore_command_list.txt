@@ -139,5 +139,28 @@ log-analytics, source, validate-source-extfield-details
 log-analytics, source, validate-source-extfield-details
 data-integration, connection, create
 log-analytics, scheduled-task, list
-
-
+data-integration, connection, update
+identity-domains, app, create
+identity-domains, app, put
+identity-domains, identity-provider, create
+identity-domains, identity-provider, put
+identity-domains, account-mgmt-infos, search
+identity-domains, account-recovery-setting, put
+identity-domains, app-role, create
+identity-domains, app-roles, search
+identity-domains, app-status-changer, put
+identity-domains, apps, search
+identity-domains, grant, create
+identity-domains, grants, search
+identity-domains, identity-setting, put
+identity-domains, identity-settings, search
+identity-domains, my-apps, search
+identity-domains, my-request, create
+identity-domains, my-requestable-groups, search
+identity-domains, my-requests, search
+identity-domains, resource-type-schema-attributes, search
+identity-domains, security-question, create
+identity-domains, security-question-setting, put
+identity-domains, security-question-settings, search
+identity-domains, security-questions, search
+identity-domains, user-attributes-settings, search

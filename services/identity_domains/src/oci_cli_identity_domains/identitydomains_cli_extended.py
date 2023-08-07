@@ -664,8 +664,13 @@ def put_me_extended(ctx, **kwargs):
     ctx.invoke(identitydomains_cli.put_me, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(identitydomains_cli.create_group, params_to_exclude=['urnietfparamsscimschemasoracleidcsextensiondbcs_group', 'urnietfparamsscimschemasoracleidcsextensiondynamic_group', 'urnietfparamsscimschemasoracleidcsextensiongroup_group', 'urnietfparamsscimschemasoracleidcsextensionposix_group', 'urnietfparamsscimschemasoracleidcsextensionrequestable_group'])
+@cli_util.copy_params_from_generated_command(identitydomains_cli.create_group, params_to_exclude=['urnietfparamsscimschemasoracleidcsextensiondbcs_group', 'urnietfparamsscimschemasoracleidcsextensiondynamic_group', 'urnietfparamsscimschemasoracleidcsextensiongroup_group', 'urnietfparamsscimschemasoracleidcsextensionposix_group', 'urnietfparamsscimschemasoracleidcsextensionrequestable_group', 'urnietfparamsscimschemasoracleidcsextension_oci_tags'])
 @identitydomains_cli.group_group.command(name=identitydomains_cli.create_group.name, help=identitydomains_cli.create_group.help)
+@cli_util.option('--ext-oci-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @cli_util.option('--ext-dbcs-group', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
@@ -696,6 +701,10 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.wrap_exceptions
 def create_group_extended(ctx, **kwargs):
 
+    if 'ext_oci_tags' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextension_oci_tags'] = kwargs['ext_oci_tags']
+        kwargs.pop('ext_oci_tags')
+
     if 'ext_dbcs_group' in kwargs:
         kwargs['urnietfparamsscimschemasoracleidcsextensiondbcs_group'] = kwargs['ext_dbcs_group']
         kwargs.pop('ext_dbcs_group')
@@ -719,8 +728,13 @@ def create_group_extended(ctx, **kwargs):
     ctx.invoke(identitydomains_cli.create_group, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(identitydomains_cli.put_group, params_to_exclude=['urnietfparamsscimschemasoracleidcsextensiondbcs_group', 'urnietfparamsscimschemasoracleidcsextensiondynamic_group', 'urnietfparamsscimschemasoracleidcsextensiongroup_group', 'urnietfparamsscimschemasoracleidcsextensionposix_group', 'urnietfparamsscimschemasoracleidcsextensionrequestable_group'])
+@cli_util.copy_params_from_generated_command(identitydomains_cli.put_group, params_to_exclude=['urnietfparamsscimschemasoracleidcsextensiondbcs_group', 'urnietfparamsscimschemasoracleidcsextensiondynamic_group', 'urnietfparamsscimschemasoracleidcsextensiongroup_group', 'urnietfparamsscimschemasoracleidcsextensionposix_group', 'urnietfparamsscimschemasoracleidcsextensionrequestable_group', 'urnietfparamsscimschemasoracleidcsextension_oci_tags'])
 @identitydomains_cli.group_group.command(name=identitydomains_cli.put_group.name, help=identitydomains_cli.put_group.help)
+@cli_util.option('--ext-oci-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @cli_util.option('--ext-dbcs-group', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
@@ -750,6 +764,10 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'members': {'module': 'identity_domains', 'class': 'list[GroupMembers]'}, 'urnietfparamsscimschemasoracleidcsextensiongroup-group': {'module': 'identity_domains', 'class': 'ExtensionGroupGroup'}, 'urnietfparamsscimschemasoracleidcsextensionposix-group': {'module': 'identity_domains', 'class': 'ExtensionPosixGroup'}, 'urnietfparamsscimschemasoracleidcsextensionrequestable-group': {'module': 'identity_domains', 'class': 'ExtensionRequestableGroup'}, 'urnietfparamsscimschemasoracleidcsextensiondbcs-group': {'module': 'identity_domains', 'class': 'ExtensionDbcsGroup'}, 'urnietfparamsscimschemasoracleidcsextensiondynamic-group': {'module': 'identity_domains', 'class': 'ExtensionDynamicGroup'}, 'urnietfparamsscimschemasoracleidcsextension-oci-tags': {'module': 'identity_domains', 'class': 'ExtensionOCITags'}}, output_type={'module': 'identity_domains', 'class': 'Group'})
 @cli_util.wrap_exceptions
 def put_group_extended(ctx, **kwargs):
+
+    if 'ext_oci_tags' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextension_oci_tags'] = kwargs['ext_oci_tags']
+        kwargs.pop('ext_oci_tags')
 
     if 'ext_dbcs_group' in kwargs:
         kwargs['urnietfparamsscimschemasoracleidcsextensiondbcs_group'] = kwargs['ext_dbcs_group']
@@ -894,3 +912,423 @@ def put_authentication_factor_setting_extended(ctx, **kwargs):
         kwargs.pop('ext_fido_authentication_factor_settings')
 
     ctx.invoke(identitydomains_cli.put_authentication_factor_setting, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(identitydomains_cli.create_app, params_to_exclude=['urnietfparamsscimschemasoracleidcsextensionform_fill_app_template_app_template', 'urnietfparamsscimschemasoracleidcsextension_oci_tags', 'urnietfparamsscimschemasoracleidcsextensiondbcs_app', 'urnietfparamsscimschemasoracleidcsextensionenterprise_app_app', 'urnietfparamsscimschemasoracleidcsextensionform_fill_app_app', 'urnietfparamsscimschemasoracleidcsextensionkerberos_realm_app', 'urnietfparamsscimschemasoracleidcsextensionmanagedapp_app', 'urnietfparamsscimschemasoracleidcsextensionmulticloud_service_app_app', 'urnietfparamsscimschemasoracleidcsextensionopc_service_app', 'urnietfparamsscimschemasoracleidcsextensionradius_app_app', 'urnietfparamsscimschemasoracleidcsextensionrequestable_app', 'urnietfparamsscimschemasoracleidcsextensionsaml_service_provider_app', 'urnietfparamsscimschemasoracleidcsextensionweb_tier_policy_app'])
+@identitydomains_cli.app_group.command(name=identitydomains_cli.create_app.name, help=identitydomains_cli.create_app.help)
+@cli_util.option('--ext-form-fill-app-template-app-template', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--ext-oci-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--ext-dbcs-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--ext-enterprise-app-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--ext-form-fill-app-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--ext-kerberos-realm-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--ext-managedapp-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--ext-multicloud-service-app-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--ext-opc-service-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--ext-radius-app-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--ext-requestable-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--ext-saml-service-provider-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--ext-web-tier-policy-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'delegated-service-names': {'module': 'identity_domains', 'class': 'list[string]'}, 'redirect-uris': {'module': 'identity_domains', 'class': 'list[string]'}, 'post-logout-redirect-uris': {'module': 'identity_domains', 'class': 'list[string]'}, 'allowed-grants': {'module': 'identity_domains', 'class': 'list[string]'}, 'secondary-audiences': {'module': 'identity_domains', 'class': 'list[string]'}, 'radius-policy': {'module': 'identity_domains', 'class': 'AppRadiusPolicy'}, 'apps-network-perimeters': {'module': 'identity_domains', 'class': 'list[AppAppsNetworkPerimeters]'}, 'cloud-control-properties': {'module': 'identity_domains', 'class': 'list[AppCloudControlProperties]'}, 'editable-attributes': {'module': 'identity_domains', 'class': 'list[AppEditableAttributes]'}, 'terms-of-use': {'module': 'identity_domains', 'class': 'AppTermsOfUse'}, 'protectable-secondary-audiences': {'module': 'identity_domains', 'class': 'list[AppProtectableSecondaryAudiences]'}, 'idp-policy': {'module': 'identity_domains', 'class': 'AppIdpPolicy'}, 'allowed-tags': {'module': 'identity_domains', 'class': 'list[AppAllowedTags]'}, 'app-signon-policy': {'module': 'identity_domains', 'class': 'AppAppSignonPolicy'}, 'trust-policies': {'module': 'identity_domains', 'class': 'list[AppTrustPolicies]'}, 'signon-policy': {'module': 'identity_domains', 'class': 'AppSignonPolicy'}, 'identity-providers': {'module': 'identity_domains', 'class': 'list[AppIdentityProviders]'}, 'accounts': {'module': 'identity_domains', 'class': 'list[AppAccounts]'}, 'grants': {'module': 'identity_domains', 'class': 'list[AppGrants]'}, 'service-params': {'module': 'identity_domains', 'class': 'list[AppServiceParams]'}, 'attr-rendering-metadata': {'module': 'identity_domains', 'class': 'list[AppAttrRenderingMetadata]'}, 'based-on-template': {'module': 'identity_domains', 'class': 'AppBasedOnTemplate'}, 'granted-app-roles': {'module': 'identity_domains', 'class': 'list[AppGrantedAppRoles]'}, 'saml-service-provider': {'module': 'identity_domains', 'class': 'AppSamlServiceProvider'}, 'allowed-scopes': {'module': 'identity_domains', 'class': 'list[AppAllowedScopes]'}, 'certificates': {'module': 'identity_domains', 'class': 'list[AppCertificates]'}, 'alias-apps': {'module': 'identity_domains', 'class': 'list[AppAliasApps]'}, 'as-opc-service': {'module': 'identity_domains', 'class': 'AppAsOPCService'}, 'admin-roles': {'module': 'identity_domains', 'class': 'list[AppAdminRoles]'}, 'user-roles': {'module': 'identity_domains', 'class': 'list[AppUserRoles]'}, 'scopes': {'module': 'identity_domains', 'class': 'list[AppScopes]'}, 'urnietfparamsscimschemasoracleidcsextensionradius-app-app': {'module': 'identity_domains', 'class': 'AppExtensionRadiusAppApp'}, 'urnietfparamsscimschemasoracleidcsextensionsaml-service-provider-app': {'module': 'identity_domains', 'class': 'AppExtensionSamlServiceProviderApp'}, 'urnietfparamsscimschemasoracleidcsextensionweb-tier-policy-app': {'module': 'identity_domains', 'class': 'AppExtensionWebTierPolicyApp'}, 'urnietfparamsscimschemasoracleidcsextensionmanagedapp-app': {'module': 'identity_domains', 'class': 'AppExtensionManagedappApp'}, 'urnietfparamsscimschemasoracleidcsextensionform-fill-app-template-app-template': {'module': 'identity_domains', 'class': 'AppExtensionFormFillAppTemplateAppTemplate'}, 'urnietfparamsscimschemasoracleidcsextensionopc-service-app': {'module': 'identity_domains', 'class': 'AppExtensionOpcServiceApp'}, 'urnietfparamsscimschemasoracleidcsextensionkerberos-realm-app': {'module': 'identity_domains', 'class': 'AppExtensionKerberosRealmApp'}, 'urnietfparamsscimschemasoracleidcsextensionrequestable-app': {'module': 'identity_domains', 'class': 'AppExtensionRequestableApp'}, 'urnietfparamsscimschemasoracleidcsextensionform-fill-app-app': {'module': 'identity_domains', 'class': 'AppExtensionFormFillAppApp'}, 'urnietfparamsscimschemasoracleidcsextensiondbcs-app': {'module': 'identity_domains', 'class': 'AppExtensionDbcsApp'}, 'urnietfparamsscimschemasoracleidcsextensionenterprise-app-app': {'module': 'identity_domains', 'class': 'AppExtensionEnterpriseAppApp'}, 'urnietfparamsscimschemasoracleidcsextension-oci-tags': {'module': 'identity_domains', 'class': 'ExtensionOCITags'}, 'urnietfparamsscimschemasoracleidcsextensionmulticloud-service-app-app': {'module': 'identity_domains', 'class': 'AppExtensionMulticloudServiceAppApp'}}, output_type={'module': 'identity_domains', 'class': 'App'})
+@cli_util.wrap_exceptions
+def create_app_extended(ctx, **kwargs):
+
+    if 'ext_form_fill_app_template_app_template' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionform_fill_app_template_app_template'] = kwargs['ext_form_fill_app_template_app_template']
+        kwargs.pop('ext_form_fill_app_template_app_template')
+    if 'ext_oci_tags' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextension_oci_tags'] = kwargs['ext_oci_tags']
+        kwargs.pop('ext_oci_tags')
+    if 'ext_dbcs_app' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensiondbcs_app'] = kwargs['ext_dbcs_app']
+        kwargs.pop('ext_dbcs_app')
+    if 'ext_enterprise_app_app' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionenterprise_app_app'] = kwargs['ext_enterprise_app_app']
+        kwargs.pop('ext_enterprise_app_app')
+    if 'ext_form_fill_app_app' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionform_fill_app_app'] = kwargs['ext_form_fill_app_app']
+        kwargs.pop('ext_form_fill_app_app')
+    if 'ext_kerberos_realm_app' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionkerberos_realm_app'] = kwargs['ext_kerberos_realm_app']
+        kwargs.pop('ext_kerberos_realm_app')
+    if 'ext_managedapp_app' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionmanagedapp_app'] = kwargs['ext_managedapp_app']
+        kwargs.pop('ext_managedapp_app')
+    if 'ext_multicloud_service_app_app' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionmulticloud_service_app_app'] = kwargs['ext_multicloud_service_app_app']
+        kwargs.pop('ext_multicloud_service_app_app')
+    if 'ext_opc_service_app' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionopc_service_app'] = kwargs['ext_opc_service_app']
+        kwargs.pop('ext_opc_service_app')
+    if 'ext_radius_app_app' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionradius_app_app'] = kwargs['ext_radius_app_app']
+        kwargs.pop('ext_radius_app_app')
+    if 'ext_requestable_app' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionrequestable_app'] = kwargs['ext_requestable_app']
+        kwargs.pop('ext_requestable_app')
+    if 'ext_saml_service_provider_app' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionsaml_service_provider_app'] = kwargs['ext_saml_service_provider_app']
+        kwargs.pop('ext_saml_service_provider_app')
+    if 'ext_web_tier_policy_app' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionweb_tier_policy_app'] = kwargs['ext_web_tier_policy_app']
+        kwargs.pop('ext_web_tier_policy_app')
+
+    ctx.invoke(identitydomains_cli.create_app, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(identitydomains_cli.put_app, params_to_exclude=['urnietfparamsscimschemasoracleidcsextensionform_fill_app_template_app_template', 'urnietfparamsscimschemasoracleidcsextension_oci_tags', 'urnietfparamsscimschemasoracleidcsextensiondbcs_app', 'urnietfparamsscimschemasoracleidcsextensionenterprise_app_app', 'urnietfparamsscimschemasoracleidcsextensionform_fill_app_app', 'urnietfparamsscimschemasoracleidcsextensionkerberos_realm_app', 'urnietfparamsscimschemasoracleidcsextensionmanagedapp_app', 'urnietfparamsscimschemasoracleidcsextensionmulticloud_service_app_app', 'urnietfparamsscimschemasoracleidcsextensionopc_service_app', 'urnietfparamsscimschemasoracleidcsextensionradius_app_app', 'urnietfparamsscimschemasoracleidcsextensionrequestable_app', 'urnietfparamsscimschemasoracleidcsextensionsaml_service_provider_app', 'urnietfparamsscimschemasoracleidcsextensionweb_tier_policy_app'])
+@identitydomains_cli.app_group.command(name=identitydomains_cli.put_app.name, help=identitydomains_cli.put_app.help)
+@cli_util.option('--ext-form-fill-app-template-app-template', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--ext-oci-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--ext-dbcs-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--ext-enterprise-app-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--ext-form-fill-app-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--ext-kerberos-realm-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--ext-managedapp-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--ext-multicloud-service-app-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--ext-opc-service-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--ext-radius-app-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--ext-requestable-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--ext-saml-service-provider-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--ext-web-tier-policy-app', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'delegated-service-names': {'module': 'identity_domains', 'class': 'list[string]'}, 'redirect-uris': {'module': 'identity_domains', 'class': 'list[string]'}, 'post-logout-redirect-uris': {'module': 'identity_domains', 'class': 'list[string]'}, 'allowed-grants': {'module': 'identity_domains', 'class': 'list[string]'}, 'secondary-audiences': {'module': 'identity_domains', 'class': 'list[string]'}, 'radius-policy': {'module': 'identity_domains', 'class': 'AppRadiusPolicy'}, 'apps-network-perimeters': {'module': 'identity_domains', 'class': 'list[AppAppsNetworkPerimeters]'}, 'cloud-control-properties': {'module': 'identity_domains', 'class': 'list[AppCloudControlProperties]'}, 'editable-attributes': {'module': 'identity_domains', 'class': 'list[AppEditableAttributes]'}, 'terms-of-use': {'module': 'identity_domains', 'class': 'AppTermsOfUse'}, 'protectable-secondary-audiences': {'module': 'identity_domains', 'class': 'list[AppProtectableSecondaryAudiences]'}, 'idp-policy': {'module': 'identity_domains', 'class': 'AppIdpPolicy'}, 'allowed-tags': {'module': 'identity_domains', 'class': 'list[AppAllowedTags]'}, 'app-signon-policy': {'module': 'identity_domains', 'class': 'AppAppSignonPolicy'}, 'trust-policies': {'module': 'identity_domains', 'class': 'list[AppTrustPolicies]'}, 'signon-policy': {'module': 'identity_domains', 'class': 'AppSignonPolicy'}, 'identity-providers': {'module': 'identity_domains', 'class': 'list[AppIdentityProviders]'}, 'accounts': {'module': 'identity_domains', 'class': 'list[AppAccounts]'}, 'grants': {'module': 'identity_domains', 'class': 'list[AppGrants]'}, 'service-params': {'module': 'identity_domains', 'class': 'list[AppServiceParams]'}, 'attr-rendering-metadata': {'module': 'identity_domains', 'class': 'list[AppAttrRenderingMetadata]'}, 'based-on-template': {'module': 'identity_domains', 'class': 'AppBasedOnTemplate'}, 'granted-app-roles': {'module': 'identity_domains', 'class': 'list[AppGrantedAppRoles]'}, 'saml-service-provider': {'module': 'identity_domains', 'class': 'AppSamlServiceProvider'}, 'allowed-scopes': {'module': 'identity_domains', 'class': 'list[AppAllowedScopes]'}, 'certificates': {'module': 'identity_domains', 'class': 'list[AppCertificates]'}, 'alias-apps': {'module': 'identity_domains', 'class': 'list[AppAliasApps]'}, 'as-opc-service': {'module': 'identity_domains', 'class': 'AppAsOPCService'}, 'admin-roles': {'module': 'identity_domains', 'class': 'list[AppAdminRoles]'}, 'user-roles': {'module': 'identity_domains', 'class': 'list[AppUserRoles]'}, 'scopes': {'module': 'identity_domains', 'class': 'list[AppScopes]'}, 'urnietfparamsscimschemasoracleidcsextensionradius-app-app': {'module': 'identity_domains', 'class': 'AppExtensionRadiusAppApp'}, 'urnietfparamsscimschemasoracleidcsextensionsaml-service-provider-app': {'module': 'identity_domains', 'class': 'AppExtensionSamlServiceProviderApp'}, 'urnietfparamsscimschemasoracleidcsextensionweb-tier-policy-app': {'module': 'identity_domains', 'class': 'AppExtensionWebTierPolicyApp'}, 'urnietfparamsscimschemasoracleidcsextensionmanagedapp-app': {'module': 'identity_domains', 'class': 'AppExtensionManagedappApp'}, 'urnietfparamsscimschemasoracleidcsextensionform-fill-app-template-app-template': {'module': 'identity_domains', 'class': 'AppExtensionFormFillAppTemplateAppTemplate'}, 'urnietfparamsscimschemasoracleidcsextensionopc-service-app': {'module': 'identity_domains', 'class': 'AppExtensionOpcServiceApp'}, 'urnietfparamsscimschemasoracleidcsextensionkerberos-realm-app': {'module': 'identity_domains', 'class': 'AppExtensionKerberosRealmApp'}, 'urnietfparamsscimschemasoracleidcsextensionrequestable-app': {'module': 'identity_domains', 'class': 'AppExtensionRequestableApp'}, 'urnietfparamsscimschemasoracleidcsextensionform-fill-app-app': {'module': 'identity_domains', 'class': 'AppExtensionFormFillAppApp'}, 'urnietfparamsscimschemasoracleidcsextensiondbcs-app': {'module': 'identity_domains', 'class': 'AppExtensionDbcsApp'}, 'urnietfparamsscimschemasoracleidcsextensionenterprise-app-app': {'module': 'identity_domains', 'class': 'AppExtensionEnterpriseAppApp'}, 'urnietfparamsscimschemasoracleidcsextension-oci-tags': {'module': 'identity_domains', 'class': 'ExtensionOCITags'}, 'urnietfparamsscimschemasoracleidcsextensionmulticloud-service-app-app': {'module': 'identity_domains', 'class': 'AppExtensionMulticloudServiceAppApp'}}, output_type={'module': 'identity_domains', 'class': 'App'})
+@cli_util.wrap_exceptions
+def put_app_extended(ctx, **kwargs):
+
+    if 'ext_form_fill_app_template_app_template' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionform_fill_app_template_app_template'] = kwargs['ext_form_fill_app_template_app_template']
+        kwargs.pop('ext_form_fill_app_template_app_template')
+    if 'ext_oci_tags' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextension_oci_tags'] = kwargs['ext_oci_tags']
+        kwargs.pop('ext_oci_tags')
+    if 'ext_dbcs_app' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensiondbcs_app'] = kwargs['ext_dbcs_app']
+        kwargs.pop('ext_dbcs_app')
+    if 'ext_enterprise_app_app' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionenterprise_app_app'] = kwargs['ext_enterprise_app_app']
+        kwargs.pop('ext_enterprise_app_app')
+    if 'ext_form_fill_app_app' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionform_fill_app_app'] = kwargs['ext_form_fill_app_app']
+        kwargs.pop('ext_form_fill_app_app')
+    if 'ext_kerberos_realm_app' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionkerberos_realm_app'] = kwargs['ext_kerberos_realm_app']
+        kwargs.pop('ext_kerberos_realm_app')
+    if 'ext_managedapp_app' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionmanagedapp_app'] = kwargs['ext_managedapp_app']
+        kwargs.pop('ext_managedapp_app')
+    if 'ext_multicloud_service_app_app' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionmulticloud_service_app_app'] = kwargs['ext_multicloud_service_app_app']
+        kwargs.pop('ext_multicloud_service_app_app')
+    if 'ext_opc_service_app' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionopc_service_app'] = kwargs['ext_opc_service_app']
+        kwargs.pop('ext_opc_service_app')
+    if 'ext_radius_app_app' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionradius_app_app'] = kwargs['ext_radius_app_app']
+        kwargs.pop('ext_radius_app_app')
+    if 'ext_requestable_app' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionrequestable_app'] = kwargs['ext_requestable_app']
+        kwargs.pop('ext_requestable_app')
+    if 'ext_saml_service_provider_app' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionsaml_service_provider_app'] = kwargs['ext_saml_service_provider_app']
+        kwargs.pop('ext_saml_service_provider_app')
+    if 'ext_web_tier_policy_app' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionweb_tier_policy_app'] = kwargs['ext_web_tier_policy_app']
+        kwargs.pop('ext_web_tier_policy_app')
+
+    ctx.invoke(identitydomains_cli.put_app, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(identitydomains_cli.create_api_key, params_to_exclude=['urnietfparamsscimschemasoracleidcsextensionself_change_user'])
+@identitydomains_cli.api_key_group.command(name=identitydomains_cli.create_api_key.name, help=identitydomains_cli.create_api_key.help)
+@cli_util.option('--ext-self-change-user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'user': {'module': 'identity_domains', 'class': 'ApiKeyUser'}, 'urnietfparamsscimschemasoracleidcsextensionself-change-user': {'module': 'identity_domains', 'class': 'ExtensionSelfChangeUser'}}, output_type={'module': 'identity_domains', 'class': 'ApiKey'})
+@cli_util.wrap_exceptions
+def create_api_key_extended(ctx, **kwargs):
+
+    if 'ext_self_change_user' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionself_change_user'] = kwargs['ext_self_change_user']
+        kwargs.pop('ext_self_change_user')
+
+    ctx.invoke(identitydomains_cli.create_api_key, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(identitydomains_cli.create_auth_token, params_to_exclude=['urnietfparamsscimschemasoracleidcsextensionself_change_user'])
+@identitydomains_cli.auth_token_group.command(name=identitydomains_cli.create_auth_token.name, help=identitydomains_cli.create_auth_token.help)
+@cli_util.option('--ext-self-change-user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'user': {'module': 'identity_domains', 'class': 'AuthTokenUser'}, 'urnietfparamsscimschemasoracleidcsextensionself-change-user': {'module': 'identity_domains', 'class': 'ExtensionSelfChangeUser'}}, output_type={'module': 'identity_domains', 'class': 'AuthToken'})
+@cli_util.wrap_exceptions
+def create_auth_token_extended(ctx, **kwargs):
+
+    if 'ext_self_change_user' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionself_change_user'] = kwargs['ext_self_change_user']
+        kwargs.pop('ext_self_change_user')
+
+    ctx.invoke(identitydomains_cli.create_auth_token, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(identitydomains_cli.create_customer_secret_key, params_to_exclude=['urnietfparamsscimschemasoracleidcsextensionself_change_user'])
+@identitydomains_cli.customer_secret_key_group.command(name=identitydomains_cli.create_customer_secret_key.name, help=identitydomains_cli.create_customer_secret_key.help)
+@cli_util.option('--ext-self-change-user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'user': {'module': 'identity_domains', 'class': 'CustomerSecretKeyUser'}, 'urnietfparamsscimschemasoracleidcsextensionself-change-user': {'module': 'identity_domains', 'class': 'ExtensionSelfChangeUser'}}, output_type={'module': 'identity_domains', 'class': 'CustomerSecretKey'})
+@cli_util.wrap_exceptions
+def create_customer_secret_key_extended(ctx, **kwargs):
+
+    if 'ext_self_change_user' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionself_change_user'] = kwargs['ext_self_change_user']
+        kwargs.pop('ext_self_change_user')
+
+    ctx.invoke(identitydomains_cli.create_customer_secret_key, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(identitydomains_cli.create_o_auth2_client_credential, params_to_exclude=['urnietfparamsscimschemasoracleidcsextensionself_change_user'])
+@identitydomains_cli.o_auth2_client_credential_group.command(name=identitydomains_cli.create_o_auth2_client_credential.name, help=identitydomains_cli.create_o_auth2_client_credential.help)
+@cli_util.option('--ext-self-change-user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'scopes': {'module': 'identity_domains', 'class': 'list[OAuth2ClientCredentialScopes]'}, 'user': {'module': 'identity_domains', 'class': 'OAuth2ClientCredentialUser'}, 'urnietfparamsscimschemasoracleidcsextensionself-change-user': {'module': 'identity_domains', 'class': 'ExtensionSelfChangeUser'}}, output_type={'module': 'identity_domains', 'class': 'OAuth2ClientCredential'})
+@cli_util.wrap_exceptions
+def create_o_auth2_client_credential_extended(ctx, **kwargs):
+
+    if 'ext_self_change_user' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionself_change_user'] = kwargs['ext_self_change_user']
+        kwargs.pop('ext_self_change_user')
+
+    ctx.invoke(identitydomains_cli.create_o_auth2_client_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(identitydomains_cli.create_smtp_credential, params_to_exclude=['urnietfparamsscimschemasoracleidcsextensionself_change_user'])
+@identitydomains_cli.smtp_credential_group.command(name=identitydomains_cli.create_smtp_credential.name, help=identitydomains_cli.create_smtp_credential.help)
+@cli_util.option('--ext-self-change-user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'user': {'module': 'identity_domains', 'class': 'SmtpCredentialUser'}, 'urnietfparamsscimschemasoracleidcsextensionself-change-user': {'module': 'identity_domains', 'class': 'ExtensionSelfChangeUser'}}, output_type={'module': 'identity_domains', 'class': 'SmtpCredential'})
+@cli_util.wrap_exceptions
+def create_smtp_credential_extended(ctx, **kwargs):
+
+    if 'ext_self_change_user' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionself_change_user'] = kwargs['ext_self_change_user']
+        kwargs.pop('ext_self_change_user')
+
+    ctx.invoke(identitydomains_cli.create_smtp_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(identitydomains_cli.put_user_capabilities_changer, params_to_exclude=['urnietfparamsscimschemasoracleidcsextensionself_change_user'])
+@identitydomains_cli.user_capabilities_changer_group.command(name=identitydomains_cli.put_user_capabilities_changer.name, help=identitydomains_cli.put_user_capabilities_changer.help)
+@cli_util.option('--ext-self-change-user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'urnietfparamsscimschemasoracleidcsextensionself-change-user': {'module': 'identity_domains', 'class': 'ExtensionSelfChangeUser'}}, output_type={'module': 'identity_domains', 'class': 'UserCapabilitiesChanger'})
+@cli_util.wrap_exceptions
+def put_user_capabilities_changer_extended(ctx, **kwargs):
+
+    if 'ext_self_change_user' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionself_change_user'] = kwargs['ext_self_change_user']
+        kwargs.pop('ext_self_change_user')
+
+    ctx.invoke(identitydomains_cli.put_user_capabilities_changer, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(identitydomains_cli.create_user_db_credential, params_to_exclude=['urnietfparamsscimschemasoracleidcsextensionself_change_user'])
+@identitydomains_cli.user_db_credential_group.command(name=identitydomains_cli.create_user_db_credential.name, help=identitydomains_cli.create_user_db_credential.help)
+@cli_util.option('--ext-self-change-user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'user': {'module': 'identity_domains', 'class': 'UserDbCredentialsUser'}, 'urnietfparamsscimschemasoracleidcsextensionself-change-user': {'module': 'identity_domains', 'class': 'ExtensionSelfChangeUser'}}, output_type={'module': 'identity_domains', 'class': 'UserDbCredential'})
+@cli_util.wrap_exceptions
+def create_user_db_credential_extended(ctx, **kwargs):
+
+    if 'ext_self_change_user' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionself_change_user'] = kwargs['ext_self_change_user']
+        kwargs.pop('ext_self_change_user')
+
+    ctx.invoke(identitydomains_cli.create_user_db_credential, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(identitydomains_cli.put_user_password_changer, params_to_exclude=['urnietfparamsscimschemasoracleidcsextensionself_change_user'])
+@identitydomains_cli.user_password_changer_group.command(name=identitydomains_cli.put_user_password_changer.name, help=identitydomains_cli.put_user_password_changer.help)
+@cli_util.option('--ext-self-change-user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'urnietfparamsscimschemasoracleidcsextensionself-change-user': {'module': 'identity_domains', 'class': 'ExtensionSelfChangeUser'}}, output_type={'module': 'identity_domains', 'class': 'UserPasswordChanger'})
+@cli_util.wrap_exceptions
+def put_user_password_changer_extended(ctx, **kwargs):
+
+    if 'ext_self_change_user' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionself_change_user'] = kwargs['ext_self_change_user']
+        kwargs.pop('ext_self_change_user')
+
+    ctx.invoke(identitydomains_cli.put_user_password_changer, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(identitydomains_cli.put_user_password_resetter, params_to_exclude=['urnietfparamsscimschemasoracleidcsextensionself_change_user'])
+@identitydomains_cli.user_password_resetter_group.command(name=identitydomains_cli.put_user_password_resetter.name, help=identitydomains_cli.put_user_password_resetter.help)
+@cli_util.option('--ext-self-change-user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'user-token': {'module': 'identity_domains', 'class': 'UserPasswordResetterUserToken'}, 'urnietfparamsscimschemasoracleidcsextensionself-change-user': {'module': 'identity_domains', 'class': 'ExtensionSelfChangeUser'}}, output_type={'module': 'identity_domains', 'class': 'UserPasswordResetter'})
+@cli_util.wrap_exceptions
+def put_user_password_resetter_extended(ctx, **kwargs):
+
+    if 'ext_self_change_user' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionself_change_user'] = kwargs['ext_self_change_user']
+        kwargs.pop('ext_self_change_user')
+
+    ctx.invoke(identitydomains_cli.put_user_password_resetter, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(identitydomains_cli.put_user_status_changer, params_to_exclude=['urnietfparamsscimschemasoracleidcsextensionself_change_user'])
+@identitydomains_cli.user_status_changer_group.command(name=identitydomains_cli.put_user_status_changer.name, help=identitydomains_cli.put_user_status_changer.help)
+@cli_util.option('--ext-self-change-user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'urnietfparamsscimschemasoracleidcsextensionself-change-user': {'module': 'identity_domains', 'class': 'ExtensionSelfChangeUser'}}, output_type={'module': 'identity_domains', 'class': 'UserStatusChanger'})
+@cli_util.wrap_exceptions
+def put_user_status_changer_extended(ctx, **kwargs):
+
+    if 'ext_self_change_user' in kwargs:
+        kwargs['urnietfparamsscimschemasoracleidcsextensionself_change_user'] = kwargs['ext_self_change_user']
+        kwargs.pop('ext_self_change_user')
+
+    ctx.invoke(identitydomains_cli.put_user_status_changer, **kwargs)

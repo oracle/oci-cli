@@ -2981,7 +2981,7 @@ def retrying_list_call(func_ref, request_id, namespace, bucket_name, limit, pref
             all_responses.append(response)
             page = response.headers.get('opc-next-page')
             if page:
-                limit -= len(response.data.items)
+                limit -= len(response.data)
             else:
                 limit = 0
     return all_responses
@@ -3048,8 +3048,28 @@ def retrying_list_objects(client, request_id, namespace, bucket_name, prefix, st
 # This method can retrieve all matching object versions or only up to a given limit. The default is only to retrieve up to the given limit
 def retrying_list_object_versions(client, request_id, namespace, bucket_name, prefix, start, end, limit, delimiter,
                                   fields, page=None, retrieve_all=False):
-    return retrying_list_call(client.list_object_versions, request_id, namespace, bucket_name, limit, prefix, start, end,
-                              delimiter, page, fields, retrieve_all)
+    all_responses = list()
+    if retrieve_all:
+        response = retrying_list_call_single_page(client.list_object_versions, request_id, namespace, bucket_name, prefix, start, end,
+                                                  limit, delimiter, page, fields)
+        all_responses.append(response)
+        page = response.headers.get('opc-next-page')
+        while page:
+            response = retrying_list_call_single_page(client.list_object_versions, request_id, namespace, bucket_name, prefix, start, end,
+                                                      limit, delimiter, page, fields)
+            all_responses.append(response)
+            page = response.headers.get('opc-next-page')
+    else:
+        while limit > 0:
+            response = retrying_list_call_single_page(client.list_object_versions, request_id, namespace, bucket_name, prefix, start, end,
+                                                      limit, delimiter, page, fields)
+            all_responses.append(response)
+            page = response.headers.get('opc-next-page')
+            if page:
+                limit -= len(response.data.items)
+            else:
+                limit = 0
+    return all_responses
 
 
 # Normalizes the object name path of an object we're going to upload to object storage (e.g. a/b/c/object.txt) so that
