@@ -68,7 +68,7 @@ and 1 special character. Special characters such as ‘$’, ‘^’, or ‘?’
 @cli_util.option('--maintenance-window-start-hour', help=u"""Start hour for maintenance period. Hour is in UTC.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'maintenance-window': {'module': 'golden_gate', 'class': 'CreateMaintenanceWindowDetails'}}, output_type={'module': 'golden_gate', 'class': 'Deployment'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'maintenance-window': {'module': 'golden_gate', 'class': 'CreateMaintenanceWindowDetails'}, 'maintenance-configuration': {'module': 'golden_gate', 'class': 'CreateMaintenanceConfigurationDetails'}}, output_type={'module': 'golden_gate', 'class': 'Deployment'})
 @cli_util.wrap_exceptions
 def create_deployment_extended(ctx, **kwargs):
     if kwargs.get('deployment_type') is None:
@@ -154,7 +154,7 @@ and 1 special character. Special characters such as ‘$’, ‘^’, or ‘?’
 @cli_util.option('--maintenance-window-start-hour', help=u"""Start hour for maintenance period. Hour is in UTC.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'maintenance-window': {'module': 'golden_gate', 'class': 'UpdateMaintenanceWindowDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'maintenance-window': {'module': 'golden_gate', 'class': 'UpdateMaintenanceWindowDetails'}, 'maintenance-configuration': {'module': 'golden_gate', 'class': 'UpdateMaintenanceConfigurationDetails'}})
 @cli_util.wrap_exceptions
 def update_deployment_extended(ctx, **kwargs):
     if kwargs.get('ogg_data') is None:
@@ -490,3 +490,11 @@ cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldeng
 
 # oci goldengate connection-assignment test-connection-assignment-default-test-connection-assignment-details -> oci goldengate connection-assignment test
 cli_util.rename_command(goldengate_cli, goldengate_cli.connection_assignment_group, goldengate_cli.test_connection_assignment_default_test_connection_assignment_details, "test")
+
+
+# oci goldengate deployment-upgrade cancel-deployment-upgrade-default-cancel-deployment-upgrade-details -> oci goldengate deployment-upgrade cancel
+cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_upgrade_group, goldengate_cli.cancel_deployment_upgrade_default_cancel_deployment_upgrade_details, "cancel")
+
+
+# oci goldengate deployment-upgrade reschedule-deployment-upgrade-reschedule-deployment-upgrade-to-date-details -> oci goldengate deployment-upgrade reschedule
+cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_upgrade_group, goldengate_cli.reschedule_deployment_upgrade_reschedule_deployment_upgrade_to_date_details, "reschedule")
