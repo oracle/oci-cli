@@ -36,32 +36,35 @@ robotics     VM.Standard.E2.1    1.0   RUNNING
 <a name="install"></a>
 ## Installation
 
-**Important:** `oci` must *installed* and *configured*.  `o` does not replace `oci`, but helps you *use* `oci`.
+**Important:** `oci` must *installed* and *configured* in order to use `o`.  `o` does not replace `oci`, but helps you *use* `oci`.
 
-#### Linux or Mac
-To install, get **``o``** from github, place it in your PATH (perhaps in the same place as ``oci``), and make it executable.  Use these commands to download ``o`` and install it next to ``oci``.
+### Linux, CloudShell, Mac
+To install, get **`o`** from github, make it executable, and place it in your PATH (perhaps in the same place as ``oci``).<br>
+Paste these commands into your bash shell to download `o` and install it in your `~/bin` or next to `oci`.
 ```
-o_src=https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/examples/project_o/o
-where=$(which oci) && to=${where%ci} && curl -so $to $o_src && chmod +x $to
+src=https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/examples/project_o && curl -so o $src/o && chmod +x o && curl -so $HOME/.oci/oci_commands $src/oci_commands
+[ -d $HOME/bin ] && ( mv o $HOME/bin && printf "\no installed in $HOME/bin/o\n" ) || ( where=$(which oci) && to=${where%ci} && [ -w $to ] && ( mv o $to && printf "\no installed in $to\n" ) || printf "\n$to: not writable\nTry:\n    sudo mv o $to\nor\n    mkdir $HOME/bin && mv o $HOME/bin\n" )
 ```
 
-#### CloudShell
-The Linux install above will work, but it installs `o` in a place that is overwritten when CloudShell is updated.  This will install `o` into your $HOME, which is preserved during CloudShell updates:
+#### CloudShell Note
+If you do not have a `$HOME/bin`, `o` will be installed in a location that is overwritten when CloudShell is updated. If this happens, it's easy to reinstall.<br>
+Or you can install `o` into your ``$HOME/bin``, which is preserved during CloudShell updates.  First:
 ```
 mkdir -p $HOME/bin $HOME/.oci
-o_src=https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/examples/project_o/o
-to=$HOME/bin/o && curl -so $to $o_src && chmod +x $to
 echo 'PATH=$HOME/bin:$PATH' >> $HOME/.bashrc
 ```
+Then run (or re-run) the Linux installation commands.
 
-#### Windows
-**`o`** version 1.6 and later runs in Windows PowerShell or Command shell, but installation not automated.  To try it, use this curl command to get **`o`**.  Then copy it to somewhere in your PATH.
+### Windows
+**`o`** version 1.6 was tested and runs in Windows PowerShell or Command shell, but installation not automated. **`o`** is not tested on Windows with each release, so please report an issue if it stops working.
+
+Use this curl command to get **`o`**.  Then copy it to somewhere in your PATH.
 ```
-curl -o o.py https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/examples/project_o/o
+curl -so o.py https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/examples/project_o/o
 ```
 Update your PATHEXT to make it execute as `o` instead of `o.py`.
 
-#### Setup
+### Setup
 
 When you first run `o` it will tell you run `o oci_commands` to create the commands file *$HOME/.oci/oci_commands*.  This collects a list of all possible `oci` commands with usage details.  This should take about two minutes.  If it doesn't work (in Windows) or runs slowly (python 3.6), copy `oci_commands` from another source to *$HOME/.oci/oci_commands*.
 
@@ -182,6 +185,18 @@ This will get a fresh list of all compartments in the tenancy, which is a great 
 - More shortcuts for `o structured-search --query-text` where clauses:
    - Use `c` or `l` for "compartment" or "lifeCycleState", followed by `=` or `!=` and the name of a compartment or lifeCycleState.  Don't worry about quotation marks around terms. E.g.
       - `query all resources where (c = sales || c = kevco) && l != terminated`
+
+#### New in version 1.10 (2023-08-08)
+- Improved selection of availability domain for users with multiple regions and tenancies. `-ad 1` will choose the right AD for the active tenancy and region.
+- `o` can work with identity-domains.<br>
+  First, `o iam domain list` to list your identity-domains.<br>
+  Then
+  - Get a list of users: `o id list users -end <domain-name>.`
+  - Get a list of groups: `o id list groups -end <domain-name>.`
+  - Get a list of users with group memberships of each user:<br>
+  `o -o display/user-name/groups.display id user list --attributes displayName,name,groups -end <domain-name>.`
+  - Get a list of groups with user members for each group:<br>
+  `o -o display-name/member.name id list groups --attributes name,members -end <domain-name>.`
 
 ## How **``o``** works  
  - **``o``** compares your input with thousands of ``oci`` commands, and uses an fuzzy matching to find the command you want.

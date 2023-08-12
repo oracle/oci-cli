@@ -1,6 +1,7 @@
 # coding: utf-8
 # Copyright (c) 2016, 2021, Oracle and/or its affiliates.  All rights reserved.
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
+import json
 import random
 import re
 import string
@@ -32,6 +33,7 @@ from cryptography.hazmat.primitives.ciphers import (
     algorithms,
     modes)
 from timeit import default_timer as timer
+from pathlib import Path
 
 
 missing = Sentinel("Missing")
@@ -568,26 +570,27 @@ def monitor_import_progress(ctx, endpoint, task_id):
         return status
 
 
-def get_diag_endpoint(ctx):
+def get_service_endpoint(ctx, endpoint_param_name):
     """
     parse the endpoint that will be used for all diag API requests
     """
     endpoint = None
     if ctx.obj['default_values_from_file'] is not None and \
-            ctx.obj['default_values_from_file'].get('diagnostics.endpoint') is not None:
-        endpoint = ctx.obj['default_values_from_file'].get('diagnostics.endpoint')
+            ctx.obj['default_values_from_file'].get(endpoint_param_name) is not None:
+        endpoint = ctx.obj['default_values_from_file'].get(endpoint_param_name)
     if ctx.obj['endpoint']:
         endpoint = ctx.obj['endpoint']
     if endpoint is None:
-        raise click.UsageError('Error: Missing option --endpoint. Set diagnostics.endpoint in oci_cli_rc file or add command line option --endpoint')
+        raise click.UsageError(
+            f'Error: Missing option --endpoint.\nINFO: set {endpoint_param_name} in oci_cli_rc file or add command line option --endpoint')
     return endpoint
 
 
 def parse_basic_auth_creds(ctx):
+    if ctx.obj["config"].get("basic_auth_file") is None:
+        raise click.UsageError("Basic Auth File Location Missing\n INFO: set basic_auth_file in oci config file")
     if ctx.obj["debug"]:
         click.echo("DEBUG: Rover Diagnostics Basic Auth File:" + ctx.obj["config"].get("basic_auth_file"))
-    if ctx.obj["config"].get("basic_auth_file") is None:
-        raise click.UsageError("Basic Auth File Location Missing\n INFO: set basic_auth_file in oci_cli_rc file")
     auth_creds = cli_util.load_file_contents(f"file://{ctx.obj['config'].get('basic_auth_file')}")
     user = None
     password = None
@@ -599,7 +602,7 @@ def parse_basic_auth_creds(ctx):
         if pass_test:
             password = pass_test.group(1)
     if user is None or password is None:
-        raise click.UsageError("Diagnostic Service Basic Auth Credentials Not Found in basic_auth_file: {ctx.obj['config'].get('basic_auth_file')}")
+        raise click.UsageError(f"Diagnostic Service Basic Auth Credentials Not Found in basic_auth_file: {ctx.obj['config'].get('basic_auth_file')}")
     return (user, password)
 
 
@@ -623,7 +626,7 @@ def _print_debug_info(**kwargs):
         debug_info["headers"] = dict(kwargs.get("session").headers)
         debug_info["method"] = kwargs.get("method")
         debug_info["url"] = kwargs.get("url", "").split("?")[0]
-        debug_info["queryParams"] = kwargs.get("params", dict())
+        debug_info["queryParams"] = kwargs.get("params", {})
 
     elif kwargs.get("type") == "response":
         click.echo("Receiving response......")
@@ -635,15 +638,15 @@ def _print_debug_info(**kwargs):
     click.echo(cli_util.pretty_print_format((debug_info)))
 
 
-def _make_diagnostic_api_call(requests_session, http_method, url, params=None, data=None, stream=False, debug=False):
+def _make_rover_service_api_call(requests_session, http_method, url, params=None, data=None, stream=False, debug=False):
     if debug:
         _print_debug_info(type="request", session=requests_session, url=url, method=http_method,
                           params=params, data=data)
 
     start = timer()
-    diag_api_strategy = RetryStrategyBuilder(total_elapsed_time_seconds=120).get_retry_strategy()
+    service_api_strategy = RetryStrategyBuilder(total_elapsed_time_seconds=120).get_retry_strategy()
     try:
-        response = diag_api_strategy.make_retrying_call(
+        response = service_api_strategy.make_retrying_call(
             requests_session.request,
             method=http_method,
             url=url,
@@ -651,7 +654,7 @@ def _make_diagnostic_api_call(requests_session, http_method, url, params=None, d
             stream=stream
         )
     except Exception as e:
-        click.echo(f"ERROR: Diagnostics API Error: {str(e)}")
+        click.echo(f"ERROR: Rover Service API Error: {(e)}")
         if debug:
             raise e
 
@@ -660,14 +663,14 @@ def _make_diagnostic_api_call(requests_session, http_method, url, params=None, d
         response.raise_for_status()
         if debug:
             _print_debug_info(type="response", url=url, response=response)
-            click.echo(('DEBUG: Rover Diagnostics: time elapsed for request: {:.2f} secs'.format((end - start))))
+            click.echo(('DEBUG: Rover Service: time elapsed for request: {:.2f} secs'.format((end - start))))
         return response
 
     except Exception as e:
-        click.echo(f"ERROR: Diagnostics API Error: {cli_util.pretty_print_format(response.json())}")
+        click.echo(f"ERROR: Rover Service API Error: {cli_util.pretty_print_format(response.json())}")
         if debug:
-            click.echo(f"DEBUG: Diagnostic: REQUEST URL: {response.request.url}")
-            click.echo(f"DEBUG: Diagnostic: REQUEST HEADERS: {response.request.headers}")
+            click.echo(f"DEBUG: Rover Service: REQUEST URL: {response.request.url}")
+            click.echo(f"DEBUG: Rover Service: REQUEST HEADERS: {response.request.headers}")
             raise e
 
 
@@ -675,7 +678,7 @@ def monitor_bundle_state(requests_session, wait, url, params=None, debug=False):
     start_time = time.time()
     count = 1
     while True:
-        response = _make_diagnostic_api_call(requests_session, "POST", url, params=params, data={}, debug=debug)
+        response = _make_rover_service_api_call(requests_session, "POST", url, params=params, data={}, debug=debug)
         current_state = response.json()["nodes"][0]["lifecycleState"]
         if current_state in wait["state"]:
             return response.json()
@@ -683,7 +686,8 @@ def monitor_bundle_state(requests_session, wait, url, params=None, debug=False):
         elapsed_seconds = (time.time() - start_time)
 
         if elapsed_seconds > wait["max_wait_seconds"]:
-            click.echo("Maximum wait time has been exceeded for diagnostic bundle. Currently in state:{current_state}, waiting for state: {wait['state'].upper()}")
+            click.echo("Maximum wait time has been exceeded for diagnostic bundle. Currently in state:{current_state}, waiting for state(s): {wait['state']}")
+            sys.exit(-1)
 
         if debug:
             result_dict = {
@@ -705,7 +709,8 @@ def monitor_bundle_state(requests_session, wait, url, params=None, debug=False):
 def dispatch_diag_request(ctx, additional_url_path="", params=None, basic_auth=False,
                           http_method=None, data=None, stream=False,
                           stream_file_location=None, wait=None):
-    url = get_diag_endpoint(ctx) + ROVER_DIAGNOSTIC_BUNDLE_API_BASE_PATH + "/" + additional_url_path
+    url = get_service_endpoint(ctx,
+                               'diagnostics.endpoint') + ROVER_DIAGNOSTIC_BUNDLE_API_BASE_PATH + "/" + additional_url_path
 
     with cli_util.build_raw_requests_session(ctx) as requests_session:
         # if basic_auth is needed we need to obtain the user/pass information from file
@@ -715,13 +720,14 @@ def dispatch_diag_request(ctx, additional_url_path="", params=None, basic_auth=F
         if basic_auth:
             requests_session.auth = parse_basic_auth_creds(ctx)
 
-        response = _make_diagnostic_api_call(requests_session, http_method, url, params,
-                                             data, stream, ctx.obj["debug"])
+        response = _make_rover_service_api_call(requests_session, http_method, url, params,
+                                                data, stream, ctx.obj["debug"])
 
-        result_dict = {
-            'status': '{} {}'.format(response.status_code, response.reason),
-            'headers': {key: value for (key, value) in response.headers.items()}
-        }
+        if response:
+            result_dict = {
+                'status': '{} {}'.format(response.status_code, response.reason),
+                'headers': {key: value for (key, value) in response.headers.items()}
+            }
         if not stream:
             try:
                 dict_from_response_body = response.json()
@@ -737,11 +743,8 @@ def dispatch_diag_request(ctx, additional_url_path="", params=None, basic_auth=F
                     else:
                         bundle_id = dict_from_response_body["id"]
 
-                    monitor_url = get_diag_endpoint(ctx) + \
-                        ROVER_DIAGNOSTIC_BUNDLE_API_BASE_PATH + \
-                        "/" + \
-                        bundle_id + \
-                        "/actions/viewSummary"
+                    monitor_url = get_service_endpoint(ctx,
+                                                       'diagnostics.endpoint') + ROVER_DIAGNOSTIC_BUNDLE_API_BASE_PATH + "/" + bundle_id + "/actions/viewSummary"
 
                     click.echo(cli_util.pretty_print_format(monitor_bundle_state(requests_session,
                                                                                  wait,
@@ -758,13 +761,53 @@ def dispatch_diag_request(ctx, additional_url_path="", params=None, basic_auth=F
 
         else:
             save_stream(response, stream_file_location)
-    return
+
+
+def dispatch_datasync_request(ctx, base_path, additional_url_path="", params=None, http_method=None, data=None,
+                              print_response=True):
+    url = get_service_endpoint(ctx, 'data-sync.endpoint') + base_path + "/" + additional_url_path
+
+    with cli_util.build_raw_requests_session(ctx) as requests_session:
+        if params:
+            requests_session.params.update(params)
+
+        response = _make_rover_service_api_call(requests_session, http_method, url, params,
+                                                data, False, ctx.obj["debug"])
+
+        result_dict = {}
+        if response is not None:
+            result_dict['status'] = '{} {}'.format(response.status_code, response.reason)
+            result_dict['headers'] = {key: value for (key, value) in response.headers.items()}
+
+            try:
+                dict_from_response_body = response.json()
+                result_dict['data'] = dict_from_response_body
+            except ValueError:
+                # We may not have gotten valid JSON. In that case, do our best and just display something
+                result_dict['data'] = response.text
+
+            if print_response:
+                cli_util.render_response(RoverDiagAPI(data=result_dict["data"], headers=result_dict["headers"]), ctx)
+
+            return result_dict["data"]
+        return None
+
+
+def read_json_file(filepath):
+    with open(filepath, 'r') as jsonfile:
+        data = jsonfile.read()
+
+    # parse file
+    return json.loads(data)
+
+
+def read_json_string(json_string):
+    return json.loads(json_string)
 
 
 def bundle_decrypt(in_file, out_file, key):
     bkey = bytes.fromhex(key.ljust(32, '0'))
-    with open(in_file, 'rb') as f:
-        enc_data = f.read()
+    enc_data = Path(in_file).read_bytes()
     alg = algorithms.AES(bkey)
     mode = modes.CBC(bkey)
     cipher = Cipher(alg, mode, backend=default_backend())
@@ -772,8 +815,7 @@ def bundle_decrypt(in_file, out_file, key):
     pad_dec_data = decryptor.update(enc_data) + decryptor.finalize()
     unpadder = padding.PKCS7(128).unpadder()
     dec_data = unpadder.update(pad_dec_data) + unpadder.finalize()
-    with open(out_file, 'wb') as f:
-        f.write(dec_data)
+    Path(out_file).write_bytes(dec_data)
 
 
 def construct_request_headers(object_name):

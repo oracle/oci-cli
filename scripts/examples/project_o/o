@@ -21,8 +21,8 @@ if (sys.platform != "win32"):
     import fcntl
 import errno
 import datetime
-VERSION = "1.9"
-UPDATED = "2023-07-18"
+VERSION = "1.10"
+UPDATED = "2023-08-08"
 
 # ==============================================================================
 # Global variables
@@ -37,9 +37,10 @@ go = False               # execute the oci cli command
 nogo = False             # don't execute due to error in ocid substitutions
 quiet = 0                # quiet mode - 1: don't show command; 2: don't show headers
 debug = False            # Debug output
-region = ''              # region
-region_code = ''         # 3-letter region code
 ocids_in_output = False  # substitute names for ocids in output
+region_code = ''         # 3-letter region code
+# Values from command line or ENV vars, needed globally:
+oci = {'region': '', 'config-file': '', 'profile': ''}
 
 # Universally useful fields as default output, if no "-o" on command line.
 # This leverages the fact that fields not found in data are quietly ignored.
@@ -225,35 +226,26 @@ def run_command(command):
 def get_from_oci_config(key):
     """Look in config file for key = value"""
 
-    s = oci_command_line
-    if '--profile' in s:
-        profile = s.split()[s.split().index('--profile') + 1]
-    elif os.getenv('OCI_CLI_PROFILE'):
-        profile = os.getenv('OCI_CLI_PROFILE')
-    else:
-        profile = 'DEFAULT'
+    if not oci['config-file']:
+        oci['config-file'] = os.path.expanduser('~/.oci/config')
 
-    config_file = os.path.expanduser('~/.oci/config')
-    if '--config' in oci_command_line:
-        config_file = s.split()[s.split().index('--config') + 1]
-
-    if not os.path.exists(config_file) and os.path.exists('/etc/oci/config'):
-        config_file = '/etc/oci/config'
+    if not os.path.exists(oci['config-file']) and os.path.exists('/etc/oci/config'):
+        oci['config-file'] = '/etc/oci/config'
 
     try:
         value = None
         this_profile = ''
-        with open(config_file, 'r') as f:
+        with open(oci['config-file'], 'r') as f:
             for line in f:
                 m = re.search(r'^\[(.+)\]', line)
                 if m:
                     this_profile = m.group(1)
 
-                if this_profile in ('DEFAULT', profile):
+                if this_profile in ('DEFAULT', oci['profile']):
                     m = re.search(r'[^#]*' + key, line)
                     if m and not line.startswith('#'):
                         value = line.split('=')[1].strip()
-                        if this_profile == profile:
+                        if this_profile == oci['profile']:
                             return value
         return value
 
@@ -294,7 +286,8 @@ and I'll do this for you:
             oci_config_file = '/etc/oci/config'
 
         t = get_from_oci_config('tenancy')
-        print('Try:\n', bold('  o ' + t))
+        if t:
+            print('Try:\n', bold('  o ' + t))
 
     else:
         # <tenancy-ocid> provided... Let's roll!
@@ -312,7 +305,7 @@ and I'll do this for you:
         print(bold('\nGetting availability domains...'), end='')
         run_command(ocmd + ' -o name iam ad list -c ' + sys.argv[1] + ' .')
         print(bold('\nGetting regions...'), end='')
-        run_command(ocmd + ' -o name iam region-subscription list .')
+        run_command(ocmd + ' -o name iam region-subscription list -t ' + sys.argv[1] + '.')
         print(bold('\nGetting tenancy name from root compartment...'), end='')
         if run_command(ocmd + ' -o name iam compartment get -c ' + sys.argv[1] + ' .'):
             # compartment get on tenancy failed; try saving a stub for tenancy
@@ -468,6 +461,8 @@ def get_new_ocids_from_returned_items(items):
     try:
         for item in [i for i in items if 'id' in i]:
             type = item['id'].split('.')[1] if '.' in item['id'] else ''
+            if type == '' and 'ocid' in item:
+                type = item['ocid'].split('.')[1] if '.' in item['ocid'] else ''
             # Special case: save AD-name:n because commands use name, not ocid
             ID = item['id']
             if 'availability' in item['id']:
@@ -501,7 +496,7 @@ def get_new_ocids_from_returned_items(items):
                 alias = str(item['provider-name']) + ' ' + str(item['provider-service-name'])
             elif 'instanceconsoleconnection' in type:
                 alias = ocid[item['instance-id']]['alias']
-            elif 'name' in item:
+            elif 'name' in item and isinstance(item['name'], str):
                 alias = item['name']
             elif 'display-name' in item:
                 alias = item['display-name']
@@ -522,8 +517,8 @@ def get_new_ocids_from_returned_items(items):
             collected[ID].update({k: item[k] for k in item.keys() if (
                 item[k] and (
                     k.endswith('-id')
-                    or k.endswith('-tags')
-                    or k.endswith('name')
+                    or (k.endswith('-tags') and 'idcs' not in k)
+                    or (k.endswith('name') and isinstance(item[k], str))
                     or k.startswith('size')
                     or k in ['lifecycle-state',
                              'availability-domain',
@@ -541,6 +536,7 @@ def get_new_ocids_from_returned_items(items):
                              'public-ip',
                              'is-primary',
                              'subnet-ids',
+                             'url',
                              'access-type',
                              'created-by',
                              'time-expires',
@@ -550,9 +546,7 @@ def get_new_ocids_from_returned_items(items):
             if 'time-created' in item and item['time-created']:
                 collected[ID]['time-created'] = item['time-created'][:19]
     except BaseException:
-        print(bold('Unable to collect ocids of type ' + type
-              + '. Please provide this data with your problem report:\n')
-              + json.dumps(item, indent=4), file=sys.stderr)
+        print(bold('Unable to collect ocids of type "' + type + '"'), file=sys.stderr)
 
     return collected
 
@@ -627,6 +621,8 @@ def option_parameter(arg):
         - Replace partial opt with full option name
         --rlon ==> --really-long-option-name
     """
+    if not arg.startswith('-'):
+        return ''
     a = arg.lstrip('-')
     if not a:
         return arg
@@ -764,6 +760,7 @@ def type_match(option, item_type):
             or (option == 'function' and item_type == 'fnfunc')
             or (option == 'asset' and item_type in ('volume', 'bootvolume', 'volumegroup'))
             or (option == 'sddc' and item_type == 'vmwaresddc')
+            or (option == 'publicip' and item_type == 'floatingip')
             or (option == 'avail' and len(item_type) == 1)):
         return True
     return False
@@ -834,30 +831,19 @@ def datetime_parameter(dt):
 # ==============================================================================
 
 
-def get_region(r=''):
-    """Determine the region in this order of precedence:
-        r passed in - from command line
-        OCI_CLI_REGION in env
-        --profile on cmd line
-        OCI_CLI_PROFILE in env
-    Return key.lower,name  E.g.: "iad","us-ashburn-1"
+def get_region(reg=''):
+    """Determine the region, region_code
+    Return: key.lower,name  E.g.: "iad","us-ashburn-1"
     """
 
-    if 'regionlist' not in ocid:
-        return '', ''
+    # If region not passed in (from cmd line or env), get it from config file
+    if not reg:
+        reg = get_from_oci_config('region')
 
-    if not r:
-        r = os.getenv('OCI_CLI_REGION')
-
-    # If region not set, get it from config file
-    if not r:
-        r = get_from_oci_config('region')
-    if not r:
-        return None, None
-
-    rmatch = [i for i in ocid['regionlist']['data'] if r.upper() == i['key'] or r in i['name']]
-    if rmatch:
-        return rmatch[0]['key'].lower(), rmatch[0]['name']
+    if reg and 'regionlist' in ocid:
+        rmatch = [i for i in ocid['regionlist']['data'] if reg.upper() == i['key'] or reg in i['name']]
+        if rmatch:
+            return rmatch[0]['key'].lower(), rmatch[0]['name']
     return None, None
 
 # ==============================================================================
@@ -869,7 +855,7 @@ def region_match(id):
     if not region_code \
             or region_from_id == '' \
             or region_from_id == region_code \
-            or region_from_id == region:
+            or region_from_id == oci['region']:
         return True
     return False
 
@@ -910,6 +896,8 @@ def get_matching_ocid(option, value):
             opt_type = 'drgroutedistribution'
         elif opt_type == 'session':
             opt_type = 'bastionsession'
+        elif opt_type == 'view':
+            opt_type = 'dnsview'
         # Add new idtypes to the above when the --whatever-id does not match ocid1.whatevs...
 
     matches = [item for k, item in ocid.items() if
@@ -925,19 +913,20 @@ def get_matching_ocid(option, value):
                   + matches[0]['id'].split('.')[3].upper() + ' region,'
                   + ' but you are working in ' + region_code.upper()))
     matches = sorted(matches, key=lambda i: i['score'], reverse=True)
-
-    if option == 'bucket' and '/' not in value:
-        return value
+    if opt_type == 'availabilitydomain' and oci['region'] and region_code:
+        tenancy = get_from_oci_config('tenancy')
+        root = ocid[tenancy]['alias']
+        matches = [m for m in matches if (oci['region'][:-2] in m['name'].lower() or region_code in m['name'].lower())
+                   and m['name'].endswith(value) and m['parents'][0] == root]
 
     if not matches:
-        if option != 'bucket':
-            print(opt_type, bold(value), 'not found.', file=sys.stderr)
-            nogo = True
+        print(opt_type, bold(value), 'not found.', file=sys.stderr)
+        nogo = True
         return value
 
     # Is this match unique, or is it strong relative to other matches?
     if len(matches) == 1 or matches[0]['score'] > 5 + matches[1]['score']:
-        if matches[0]['type'] in ('availabilitydomain', 'bucket'):
+        if matches[0]['type'] == 'availabilitydomain':
             if 'name' in matches[0]:
                 return matches[0]['name']
             if 'display-name' in matches[0]:
@@ -966,10 +955,11 @@ def value_parameter(option, value):
         match = get_matching_ocid(option, value)
         return match
 
-    # Match "bucket-name" with bucket IDs
-    if option == '--bucket-name':
-        match = get_matching_ocid('bucket', value)
-        return match
+    if ('identity-domains' in oci_command_line and option == '--endpoint'
+            and not value.startswith('https:')):
+        match = get_matching_ocid('domain', value)
+        if match in ocid and 'url' in ocid[match]:
+            return(ocid[match]['url'])
 
     # Provide opc-next-page if --page next
     if option in ('--page', '--start') and 'next' in value:
@@ -1121,19 +1111,16 @@ def get_fields_from(spec, keynames):
 def set_column_widths(fields, out_sep, item_list):
     global maxkeylen
     for k in fields:
-        if ocids_in_output:
-            maxwidth = max([len(str(f[k])) for f in item_list])
-        else:
-            maxwidth = 3
-            for i in item_list:
-                if k in i:
-                    width = len(str(i[k]))
-                    if k != 'id' and str(i[k]) in ocid:
-                        width = len(ocid[i[k]]['alias'])
-                    maxwidth = max([maxwidth, width])
-                else:
-                    width = len(get_field_from_item(k, i))
-                    maxwidth = max([maxwidth, width])
+        maxwidth = 3
+        for i in item_list:
+            if k in i:
+                width = len(str(i[k]))
+                if k != 'id' and not ocids_in_output and str(i[k]) in ocid:
+                    width = len(ocid[i[k]]['alias'])
+                maxwidth = max([maxwidth, width])
+            else:
+                width = len(get_field_from_item(k, i))
+                maxwidth = max([maxwidth, width])
         maxwidth = max([maxwidth, column[k]['minwidth']])
         column[k]['maxwidth'] = maxwidth
 
@@ -1206,7 +1193,9 @@ def get_field_from_item(field, item):
             value = str(item[field])
     else:
         f = field.split('.')
-        if f[-1] in item[f[0]]:
+        if not item[f[0]]:
+            value = jdump_item(item[f[0]])
+        elif f[-1] in item[f[0]]:
             value = jdump_item(item[f[0]][f[1]])
         else:
             if type(item[f[0]]) is list and len(item[f[0]]) > 0:
@@ -1216,7 +1205,7 @@ def get_field_from_item(field, item):
             if type(subitem) is dict and f[-1] in subitem:
                 value = jdump_item(subitem[f[-1]])
             if type(subitem) is list and f[-1] in subitem[0]:
-                s = ['    ' + v[f[-1]] for v in subitem if f[-1] in v]
+                s = [v[f[-1]] for v in subitem if f[-1] in v]
                 value = jdump_item(s)
     return(value.strip())
 
@@ -1238,7 +1227,10 @@ def show_item(item, fields, sep, reg=False):
 
         if column[field]['format'] == '{}' and sep != '|':
             if field in item:
-                out.append(jdump_item(item[field]))
+                if type(item[field]) is list:
+                    out.append(jdump_item(item[field], 1))
+                else:
+                    out.append(jdump_item(item[field]))
             else:
                 out.append(value)
         else:
@@ -1321,6 +1313,7 @@ def output(jsonOut):
        list:  {'data': [{'compartment-id': 'ocid1.compartment.oc1..aaid7...
        ns get:  { "data": "mytenancyname" }
        service-connector list:  {'data': { 'items': [ ]}}
+       identity-domains: data { resources [ data ] }}
     The useful payload usually is in "data", but could be a string, dict,
     list of dicts, etc.
 
@@ -1340,6 +1333,8 @@ def output(jsonOut):
                 elif 'results' in jsonOut['data'] and type(jsonOut['data']['results']) is list\
                         and 'logContent' in jsonOut['data']['results'][0]['data']:
                     results = [i['data']['logContent']['data'] for i in jsonOut['data']['results']]
+                elif 'resources' in jsonOut['data'] and jsonOut['data']['resources']:
+                    results = jsonOut['data']['resources']
                 else:
                     results = [jsonOut['data']]
             except (KeyError, IndexError):
@@ -1384,7 +1379,7 @@ def output(jsonOut):
         if debug: print("USER_SPEC:", user_out_spec)     # noqa: E701
         if debug: print("OUT_FIELDS:", out_fields)       # noqa: E701
         set_column_widths(out_fields, out_sep, results)
-        if debug > 1: print("COLUMN:", column)             # noqa: E701
+        if debug > 1: print("COLUMN:", column)           # noqa: E701
         # Then output header and requested fields from item_list
         show_column_headers(out_fields, out_sep, reg=reg_in_ocid)
         for item in results:
@@ -1972,7 +1967,10 @@ if 'user_in_spec' in locals():
         else:
             jsonIn = json.loads(open(user_in_spec).read())
     except:    # noqa: E722
-        print(bold(user_in_spec) + ": trouble with input", file=sys.stderr)
+        if user_in_spec.endswith('.otmp'):
+            print(bold('touch ' + user_in_spec), 'to activate "save last result" feature')
+        else:
+            print(bold(user_in_spec) + ": trouble with input", file=sys.stderr)
         exit(1)
 
     output(jsonIn)
@@ -2067,20 +2065,23 @@ remaining_options = all_options_for_this_cmd
 while CLI_params and CLI_params[0][0] != '-':
     CLI_params.pop(0)
 
-# Determine the target region for this command up front, so that we can filter
-# ocids by region.  See if region or profile is on command line...
-for i in reversed(range(len(CLI_params))):
-    a = CLI_params[i]
-    if len(a) == 0 or not a.startswith('-'):
-        continue
-    if option_parameter(a) in ('--region', '--profile'):
-        options_out.append(option_parameter(a))
-        if option_parameter(a) == '--region':
-            region_code, region = get_region(CLI_params[i + 1])
-            options_out.append(region)
-        else:
-            options_out.append(CLI_params[i + 1])
-        del CLI_params[i:i + 2]
+# Determine the target region for this command up front.
+# We need this so that we can match ocids by region in user params.
+
+# Look on command line for: --region, --config-file, --profile
+for key in oci.keys():
+    for i, param in enumerate(CLI_params[:-1]):
+        if option_parameter(param) == '--' + key:
+            oci[key] = CLI_params[i + 1]
+            if key == 'region':
+                region_code, oci[key] = get_region(oci[key])
+            options_out.extend(['--' + key, oci[key]])
+            del CLI_params[i:i + 2]
+            break
+    if not oci[key]:
+        oci[key] = os.getenv('OCI_CLI_' + key.upper().replace('-', '_'))
+
+region_code, oci['region'] = get_region(oci['region'])
 
 # Interpret remaining command line arguments based on command:
 last_option = ''
@@ -2152,12 +2153,11 @@ if (sys.platform != "win32"):
 
 # Read output from cli - show non-JSON on stdout
 JSONstdout = ''
+errlines = []
 while True:
     if (sys.platform != "win32"):
-        stderr = cli.stderr.readline()
+        errlines.append(cli.stderr.readline())
         returncode = cli.poll()
-        if stderr:
-            print(bold(stderr), end='', flush=True)
 
     stdout = cli.stdout.readline()
     returncode = cli.poll()
@@ -2171,7 +2171,8 @@ while True:
     else:
         time.sleep(0.05)
 
-stderr = cli.stderr.read()
+errlines.append(cli.stderr.read())
+stderr = ''.join(errlines)
 
 # Interpret output as JSON
 try:
@@ -2180,7 +2181,7 @@ except ValueError:
     # json.loads failed, show us what you got
     if JSONstdout != '':
         print(JSONstdout)
-    if stderr is not None:
+    if stderr:
         error_out(stderr)
     exit(1)
 
@@ -2198,7 +2199,7 @@ if results == 1:
     print(JSONstdout)
 
 # report stderr from oci cli, if any, AFTER results
-if stderr != '':
+if stderr:
     error_out(stderr)
 
 if type(jsonOut) is dict and 'data' in jsonOut:

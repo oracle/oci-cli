@@ -23,6 +23,15 @@ rover, station-cluster, set-secrets
 rover, standalone-cluster, set-secrets
 rover, node, set-secrets
 rover, create-master-key-policy
+rover, device, data-sync, task, cancel
+rover, device, data-sync, task, get
+rover, device, data-sync, task, list
+rover, device, data-sync, task, start
+rover, device, data-sync, task-definition, create
+rover, device, data-sync, task-definition, delete
+rover, device, data-sync, task-definition, get
+rover, device, data-sync, task-definition, list
+rover, device, data-sync, task-definition, update
 waas, protection-settings, update
 waas, certificate, list
 waas, custom-protection-rule, list

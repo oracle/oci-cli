@@ -78,7 +78,7 @@ def virtual_circuit_public_prefix_group():
     pass
 
 
-@click.command(cli_util.override('virtual_network.subnet_topology_group.command_name', 'subnet-topology'), cls=CommandGroupWithAlias, help="""Defines the visualization of a subnet in a VCN.""")
+@click.command(cli_util.override('virtual_network.subnet_topology_group.command_name', 'subnet-topology'), cls=CommandGroupWithAlias, help="""Defines the visualization of a subnet in a VCN. See [Network Visualizer Documentation] for more information, including conventions and pictures of symbols.""")
 @cli_util.help_option_group
 def subnet_topology_group():
     pass
@@ -136,7 +136,7 @@ def security_rule_group():
     pass
 
 
-@click.command(cli_util.override('virtual_network.vcn_topology_group.command_name', 'vcn-topology'), cls=CommandGroupWithAlias, help="""Defines the representation of a virtual network topology for a VCN.""")
+@click.command(cli_util.override('virtual_network.vcn_topology_group.command_name', 'vcn-topology'), cls=CommandGroupWithAlias, help="""Defines the representation of a virtual network topology for a VCN. See [Network Visualizer Documentation] for more information, including conventions and pictures of symbols.""")
 @cli_util.help_option_group
 def vcn_topology_group():
     pass
@@ -286,7 +286,7 @@ def drg_attachment_group():
     pass
 
 
-@click.command(cli_util.override('virtual_network.networking_topology_group.command_name', 'networking-topology'), cls=CommandGroupWithAlias, help="""Defines the representation of a virtual network topology for a region.""")
+@click.command(cli_util.override('virtual_network.networking_topology_group.command_name', 'networking-topology'), cls=CommandGroupWithAlias, help="""Defines the representation of a virtual network topology for a region. See [Network Visualizer Documentation] for more information, including conventions and pictures of symbols.""")
 @cli_util.help_option_group
 def networking_topology_group():
     pass
@@ -651,9 +651,9 @@ def add_drg_route_rules(ctx, from_json, drg_route_table_id, route_rules):
     cli_util.render_response(result, ctx)
 
 
-@subnet_group.command(name=cli_util.override('virtual_network.add_ipv6_subnet_cidr.command_name', 'add'), help=u"""Add an IPv6 CIDR to a subnet. \n[Command Reference](addIpv6SubnetCidr)""")
+@subnet_group.command(name=cli_util.override('virtual_network.add_ipv6_subnet_cidr.command_name', 'add'), help=u"""Add an IPv6 prefix to a subnet. \n[Command Reference](addIpv6SubnetCidr)""")
 @cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet.""")
-@cli_util.option('--ipv6-cidr-block', required=True, help=u"""This field is not required and should only be specified when adding an IPv6 CIDR to a subnet's IPv6 address space. See[IPv6 Addresses].
+@cli_util.option('--ipv6-cidr-block', required=True, help=u"""This field is not required and should only be specified when adding an IPv6 prefix to a subnet's IPv6 address space. See[IPv6 Addresses].
 
 Example: `2001:0db8:0123::/64`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -718,7 +718,7 @@ def add_ipv6_subnet_cidr(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@vcn_group.command(name=cli_util.override('virtual_network.add_ipv6_vcn_cidr.command_name', 'add'), help=u"""Add an IPv6 CIDR to a VCN. The VCN size is always /56 and assigned by Oracle. Once added the IPv6 CIDR block cannot be removed or modified. \n[Command Reference](addIpv6VcnCidr)""")
+@vcn_group.command(name=cli_util.override('virtual_network.add_ipv6_vcn_cidr.command_name', 'add'), help=u"""Add an IPv6 prefix to a VCN. The VCN size is always /56 and assigned by Oracle. Once added the IPv6 prefix cannot be removed or modified. \n[Command Reference](addIpv6VcnCidr)""")
 @cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--ipv6-private-cidr-block', help=u"""This field is not required and should only be specified if a ULA or private IPv6 prefix is desired for VCN's private IP address space. See[IPv6 Addresses].
@@ -2011,7 +2011,7 @@ def connect_remote_peering_connections(ctx, from_json, remote_peering_connection
 @byoip_range_group.command(name=cli_util.override('virtual_network.create_byoip_range.command_name', 'create'), help=u"""Creates a subrange of the BYOIP CIDR block. \n[Command Reference](createByoipRange)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the BYOIP CIDR block.""")
 @cli_util.option('--cidr-block', help=u"""The BYOIP CIDR block. You can assign some or all of it to a public IP pool after it is validated. Example: `10.0.1.0/24`""")
-@cli_util.option('--ipv6-cidr-block', help=u"""The BYOIPv6 CIDR block. You can assign some or all of it to a VCN after it is validated.""")
+@cli_util.option('--ipv6-cidr-block', help=u"""The BYOIPv6 prefix. You can assign some or all of it to a VCN after it is validated.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3067,7 +3067,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--ip-address', help=u"""An IPv6 address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value, Oracle automatically assigns an IPv6 address from the subnet. The subnet is the one that contains the VNIC you specify in `vnicId`.
 
 Example: `2001:DB8::`""")
-@cli_util.option('--ipv6-subnet-cidr', help=u"""The IPv6 CIDR allocated to the subnet. This is required if more than one IPv6 CIDR exists on the subnet.""")
+@cli_util.option('--ipv6-subnet-cidr', help=u"""The IPv6 prefix allocated to the subnet. This is required if more than one IPv6 prefix exists on the subnet.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -3904,7 +3904,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 For important details about IPv6 addressing in a VCN, see [IPv6 Addresses].
 
 Example: `2001:0db8:0123:1111::/64`""")
-@cli_util.option('--ipv6-cidr-blocks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of all IPv6 CIDR blocks (Oracle allocated IPv6 GUA, ULA or private IPv6 CIDR blocks, BYOIPv6 CIDR blocks) for the subnet that meets the following criteria: - The CIDR blocks must be valid. - Multiple CIDR blocks must not overlap each other or the on-premises network CIDR block. - The number of CIDR blocks must not exceed the limit of IPv6 CIDR blocks allowed to a subnet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--ipv6-cidr-blocks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of all IPv6 prefixes (Oracle allocated IPv6 GUA, ULA or private IPv6 prefixes, BYOIPv6 prefixes) for the subnet that meets the following criteria: - The prefixes must be valid. - Multiple prefixes must not overlap each other or the on-premises network prefix. - The number of prefixes must not exceed the limit of IPv6 prefixes allowed to a subnet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--prohibit-internet-ingress', type=click.BOOL, help=u"""Whether to disallow ingress internet traffic to VNICs within this subnet. Defaults to false.
 
 For IPv6, if `prohibitInternetIngress` is set to `true`, internet access is not allowed for any IPv6s assigned to VNICs in the subnet. Otherwise, ingress internet traffic is allowed by default.
@@ -3914,7 +3914,7 @@ For IPv6, if `prohibitInternetIngress` is set to `true`, internet access is not 
 Example: `true`""")
 @cli_util.option('--prohibit-public-ip-on-vnic', type=click.BOOL, help=u"""Whether VNICs within this subnet can have public IP addresses. Defaults to false, which means VNICs created in this subnet will automatically be assigned public IP addresses unless specified otherwise during instance launch or VNIC creation (with the `assignPublicIp` flag in [CreateVnicDetails]). If `prohibitPublicIpOnVnic` is set to true, VNICs created in this subnet cannot have public IP addresses (that is, it's a private subnet).
 
-If you intend to use an IPv6 CIDR block, you should use the flag `prohibitInternetIngress` to specify ingress internet traffic behavior of the subnet.
+If you intend to use an IPv6 prefix, you should use the flag `prohibitInternetIngress` to specify ingress internet traffic behavior of the subnet.
 
 Example: `true`""")
 @cli_util.option('--route-table-id', help=u"""The [OCID] of the route table the subnet will use. If you don't provide a value, the subnet uses the VCN's default route table.""")
@@ -4025,11 +4025,11 @@ The VCN and subnets you create are not accessible until you attach an internet g
 @cli_util.option('--cidr-blocks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of one or more IPv4 CIDR blocks for the VCN that meet the following criteria: - The CIDR blocks must be valid. - They must not overlap with each other or with the on-premises network CIDR block. - The number of CIDR blocks must not exceed the limit of CIDR blocks allowed per VCN.
 
 **Important:** Do *not* specify a value for `cidrBlock`. Use this parameter instead.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--ipv6-private-cidr-blocks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of one or more ULA or Private IPv6 CIDR blocks for the vcn that meets the following criteria: - The CIDR blocks must be valid. - Multiple CIDR blocks must not overlap each other or the on-premises network CIDR block. - The number of CIDR blocks must not exceed the limit of IPv6 CIDR blocks allowed to a vcn.
+@cli_util.option('--ipv6-private-cidr-blocks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of one or more ULA or Private IPv6 prefixes for the VCN that meets the following criteria: - The CIDR blocks must be valid. - Multiple CIDR blocks must not overlap each other or the on-premises network prefix. - The number of CIDR blocks must not exceed the limit of IPv6 prefixes allowed to a VCN.
 
 **Important:** Do *not* specify a value for `ipv6CidrBlock`. Use this parameter instead.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-oracle-gua-allocation-enabled', type=click.BOOL, help=u"""Specifies whether to skip Oracle allocated IPv6 GUA. By default, Oracle will allocate one GUA of /56 size for an IPv6 enabled VCN.""")
-@cli_util.option('--byoipv6-cidr-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of BYOIPv6 OCIDs and BYOIPv6 CIDR blocks required to create a VCN that uses BYOIPv6 ranges.
+@cli_util.option('--byoipv6-cidr-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of BYOIPv6 OCIDs and BYOIPv6 prefixes required to create a VCN that uses BYOIPv6 address ranges.
 
 This option is a JSON list with items of type Byoipv6CidrDetails.  For documentation on Byoipv6CidrDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/Byoipv6CidrDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -10476,9 +10476,9 @@ def remove_import_drg_route_distribution(ctx, from_json, wait_for_state, max_wai
     cli_util.render_response(result, ctx)
 
 
-@subnet_group.command(name=cli_util.override('virtual_network.remove_ipv6_subnet_cidr.command_name', 'remove'), help=u"""Remove an IPv6 CIDR from a subnet. At least one IPv6 CIDR should remain. \n[Command Reference](removeIpv6SubnetCidr)""")
+@subnet_group.command(name=cli_util.override('virtual_network.remove_ipv6_subnet_cidr.command_name', 'remove'), help=u"""Remove an IPv6 prefix from a subnet. At least one IPv6 CIDR should remain. \n[Command Reference](removeIpv6SubnetCidr)""")
 @cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet.""")
-@cli_util.option('--ipv6-cidr-block', required=True, help=u"""This field is not required and should only be specified when removing an IPv6 CIDR from a subnet's IPv6 address space. See[IPv6 Addresses].
+@cli_util.option('--ipv6-cidr-block', required=True, help=u"""This field is not required and should only be specified when removing an IPv6 prefix from a subnet's IPv6 address space. See[IPv6 Addresses].
 
 Example: `2001:0db8:0123::/64`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -10543,7 +10543,7 @@ def remove_ipv6_subnet_cidr(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@vcn_group.command(name=cli_util.override('virtual_network.remove_ipv6_vcn_cidr.command_name', 'remove'), help=u"""Removing an existing IPv6 CIDR from a VCN. \n[Command Reference](removeIpv6VcnCidr)""")
+@vcn_group.command(name=cli_util.override('virtual_network.remove_ipv6_vcn_cidr.command_name', 'remove'), help=u"""Removing an existing IPv6 prefix from a VCN. \n[Command Reference](removeIpv6VcnCidr)""")
 @cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--ipv6-cidr-block', help=u"""This field is not required and should only be specified when removing ULA or private IPv6 prefix or an IPv6 GUA assigned by Oracle or BYOIPv6 prefix from a VCN's IPv6 address space. See[IPv6 Addresses].
@@ -13037,12 +13037,12 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 **Note:** If you are changing the CIDR block, you cannot create VNICs or private IPs for this resource while the update is in progress.
 
 Example: `172.16.0.0/16`""")
-@cli_util.option('--ipv6-cidr-block', help=u"""This is the IPv6 CIDR block for the subnet's IP address space. The subnet size is always /64. See [IPv6 Addresses]. The provided CIDR must maintain the following rules -
+@cli_util.option('--ipv6-cidr-block', help=u"""This is the IPv6 prefix for the subnet's IP address space. The subnet size is always /64. See [IPv6 Addresses]. The provided prefix must maintain the following rules -
 
-a. The IPv6 CIDR block is valid and correctly formatted. b. The IPv6 CIDR is within the parent VCN IPv6 range.
+a. The IPv6 prefix is valid and correctly formatted. b. The IPv6 prefix is within the parent VCN IPv6 range.
 
 Example: `2001:0db8:0123:1111::/64`""")
-@cli_util.option('--ipv6-cidr-blocks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of all IPv6 CIDR blocks (Oracle allocated IPv6 GUA, ULA or private IPv6 CIDR blocks, BYOIPv6 CIDR blocks) for the subnet that meets the following criteria: - The CIDR blocks must be valid. - Multiple CIDR blocks must not overlap each other or the on-premises network CIDR block. - The number of CIDR blocks must not exceed the limit of IPv6 CIDR blocks allowed to a subnet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--ipv6-cidr-blocks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of all IPv6 prefixes (Oracle allocated IPv6 GUA, ULA or private IPv6 prefix, BYOIPv6 prefixes) for the subnet that meets the following criteria: - The prefixes must be valid. - Multiple prefixes must not overlap each other or the on-premises network prefix. - The number of prefixes must not exceed the limit of IPv6 prefixes allowed to a subnet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")

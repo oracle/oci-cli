@@ -57,10 +57,14 @@ cli_util.rename_command(goldengate_cli,
 @goldengate_cli.deployment_group.command(name='create', help=goldengate_cli.create_deployment.help)
 @cli_util.option('--deployment-name', help=u"""The name given to the GoldenGate service deployment.
 The name must be 1 to 32 characters long, must contain only alphanumeric characters and must start with a letter.""")
+@cli_util.option('--credential-store', type=click.Choice(['IAM', 'GOLDENGATE'], case_sensitive=True), help="""The type of credential store for OGG.""")
+@cli_util.option('--identity-domain-id', help="""The [OCID] of the Identity Domain when IAM credential store is used.""")
 @cli_util.option('--admin-username', help=u"""The GoldenGate deployment console username.""")
 @cli_util.option('--admin-password', help=u"""The password associated with the GoldenGate deployment console username.
 The password must be 8 to 30 characters long and must contain at least 1 uppercase, 1 lowercase, 1 numeric,
-and 1 special character. Special characters such as ‘$’, ‘^’, or ‘?’ are not allowed.""")
+and 1 special character. Special characters such as '$', '^', or '?' are not allowed.
+This field will be deprecated and replaced by 'password-secret-id'.""")
+@cli_util.option('--password-secret-id', help="""The [OCID] of the Secret where the deployment password is stored.""")
 @cli_util.option('--certificate-file', type=click.File('r'), help=u"""The SSL certificate for this deployment in PEM format.""")
 @cli_util.option('--private-key-file', type=click.File('r'), help=u"""The private key for your certificate in PEM format.""")
 @cli_util.option('--ogg-version', help=u"""Version of OGG.""")
@@ -83,24 +87,33 @@ def create_deployment_extended(ctx, **kwargs):
             _ogg_details['deploymentName'] = kwargs.get('deployment_name')
         del kwargs['deployment_name']
 
-        if kwargs.get('admin_username') is None:
-            _missing_params.append("admin-username")
-        else:
-            _ogg_details['adminUsername'] = kwargs.get('admin_username')
-        del kwargs['admin_username']
-
         if len(_missing_params) != 0:
             raise cli_exceptions.RequiredValueNotInDefaultOrUserInputError('Missing option(s) --{}.'
                                                                            .format(', --'.join(_missing_params)))
 
-        if kwargs.get('admin_password') is None:
-            _ogg_details['adminPassword'] = click.prompt(text='Enter admin password', default=None,
-                                                         hide_input=True, show_default=False, confirmation_prompt=True)
-            if not _ogg_details['adminPassword']:
-                raise click.UsageError('Password cannot be whitespace or empty string')
+        if kwargs.get('credential_store') is not None:
+            _ogg_details['credentialStore'] = kwargs.get('credential_store')
+        if kwargs.get('credential_store') == 'IAM':
+            if kwargs.get('identity_domain_id') is None:
+                raise click.UsageError('--identity-domain-id is required if using IAM credential store.')
+            else:
+                _ogg_details['identityDomainId'] = kwargs.get('identity_domain_id')
         else:
-            _ogg_details['adminPassword'] = kwargs.get('admin_password')
+            if kwargs.get('admin_username') is None:
+                raise click.UsageError('--admin-username is required if using GOLDENGATE credential store.')
+            elif kwargs.get('admin_password') is None and kwargs.get('password_secret_id') is None:
+                raise click.UsageError('Either --password-secret-id or --admin-password is required if using GOLDENGATE credential store.')
+            else:
+                _ogg_details['adminUsername'] = kwargs.get('admin_username')
+                if kwargs.get('password_secret_id') is not None:
+                    _ogg_details['passwordSecretId'] = kwargs.get('password_secret_id')
+                else:
+                    _ogg_details['adminPassword'] = kwargs.get('admin_password')
+        del kwargs['admin_username']
+        del kwargs['password_secret_id']
         del kwargs['admin_password']
+        del kwargs['identity_domain_id']
+        del kwargs['credential_store']
 
         if kwargs.get('certificate_file') is not None:
             _ogg_details['certificate'] = kwargs.get('certificate_file').read()
@@ -144,10 +157,14 @@ def create_deployment_extended(ctx, **kwargs):
                                              params_to_exclude=['ogg_data', 'maintenance_window'],
                                              copy_from_json=False)
 @goldengate_cli.deployment_group.command(name='update', help=goldengate_cli.update_deployment.help)
+@cli_util.option('--credential-store', type=click.Choice(['IAM', 'GOLDENGATE'], case_sensitive=True), help="""The type of credential store for OGG.""")
+@cli_util.option('--identity-domain-id', help="""The [OCID] of the Identity Domain when IAM credential store is used.""")
 @cli_util.option('--admin-username', help=u"""The GoldenGate deployment console username.""")
 @cli_util.option('--admin-password', help=u"""The password associated with the GoldenGate deployment console username.
 The password must be 8 to 30 characters long and must contain at least 1 uppercase, 1 lowercase, 1 numeric,
-and 1 special character. Special characters such as ‘$’, ‘^’, or ‘?’ are not allowed.""")
+and 1 special character. Special characters such as '$', '^', or '?' are not allowed.
+This field will be deprecated and replaced by 'password-secret-id'.""")
+@cli_util.option('--password-secret-id', help="""The [OCID] of the Secret where the deployment password is stored.""")
 @cli_util.option('--certificate-file', type=click.File('r'), help=u"""The SSL certificate for this deployment in PEM format.""")
 @cli_util.option('--private-key-file', type=click.File('r'), help=u"""The private key for your certificate in PEM format.""")
 @cli_util.option('--maintenance-window-day', help=u"""Day of week for the maintenance.""")
@@ -160,23 +177,30 @@ def update_deployment_extended(ctx, **kwargs):
     if kwargs.get('ogg_data') is None:
         _ogg_details = {}
 
-        if kwargs.get('admin_username') is not None:
-            _ogg_details['adminUsername'] = kwargs.get('admin_username')
-            if kwargs.get('admin_password') is None:
-                _ogg_details['adminPassword'] = click.prompt(text='Enter admin password', default=None,
-                                                             hide_input=True, show_default=False,
-                                                             confirmation_prompt=True)
-                if not _ogg_details['adminPassword']:
-                    raise click.UsageError('Password cannot be whitespace or empty string')
+        if kwargs.get('credential_store') is None:
+            if kwargs.get('admin_username') is not None or kwargs.get('password_secret_id') is not None or kwargs.get('admin_password') is not None or kwargs.get('identity_domain_id') is not None:
+                raise click.UsageError('--credential-store is required if changing admin username, password secret ID, admin password or identity domain ID.')
+        elif kwargs.get('credential_store') == 'GOLDENGATE':
+            if kwargs.get('admin_username') is None:
+                raise click.UsageError('--admin-username is required if using GOLDENGATE credential store.')
+            elif kwargs.get('admin_password') is None and kwargs.get('password_secret_id') is None:
+                raise click.UsageError('Either --password-secret-id or --admin-password is required if using GOLDENGATE credential store.')
             else:
-                _ogg_details['adminPassword'] = kwargs.get('admin_password')
-            del kwargs['admin_password']
+                _ogg_details['adminUsername'] = kwargs.get('admin_username')
+                if kwargs.get('password_secret_id') is not None:
+                    _ogg_details['passwordSecretId'] = kwargs.get('password_secret_id')
+                else:
+                    _ogg_details['adminPassword'] = kwargs.get('admin_password')
+        elif kwargs.get('credential_store') == 'IAM':
+            if kwargs.get('identity_domain_id') is None:
+                raise click.UsageError('--identity-domain-id is required if using IAM credential store.')
+            else:
+                _ogg_details['identityDomainId'] = kwargs.get('identity_domain_id')
+        del kwargs['credential_store']
         del kwargs['admin_username']
-
-        if 'admin_password' in kwargs:
-            if kwargs.get('admin_password') is not None:
-                raise cli_exceptions.RequiredValueNotInDefaultOrUserInputError('Missing option(s) --admin-username.')
-            del kwargs['admin_password']
+        del kwargs['admin_password']
+        del kwargs['password_secret_id']
+        del kwargs['identity_domain_id']
 
         if kwargs.get('certificate_file') is not None:
             _ogg_details['certificate'] = kwargs.get('certificate_file').read()

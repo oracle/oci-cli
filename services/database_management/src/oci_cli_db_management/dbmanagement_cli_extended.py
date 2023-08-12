@@ -1315,3 +1315,23 @@ cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.preferred_credential_
 
 # oci database-management preferred-credential update-preferred-credential-update-basic-preferred-credential-details -> oci database-management preferred-credential update-basic-preferred-credential-details
 cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.preferred_credential_group, dbmanagement_cli.update_preferred_credential_update_basic_preferred_credential_details, "update-basic-preferred-credential-details")
+
+
+# oci database-management external-db-system-connector create-external-db-system-connector-create-external-db-system-macs-connector-details -> oci database-management external-db-system-connector create-macs-connector
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.external_db_system_connector_group, dbmanagement_cli.create_external_db_system_connector_create_external_db_system_macs_connector_details, "create-macs-connector")
+
+
+# oci database-management external-db-system-connector update-external-db-system-connector-update-external-db-system-macs-connector-details -> oci database-management external-db-system-connector update-macs-connector
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.external_db_system_connector_group, dbmanagement_cli.update_external_db_system_connector_update_external_db_system_macs_connector_details, "update-macs-connector")
+
+
+# oci database-management external-db-system-connector check-external-db-system-connector-connection-status -> oci database-management external-db-system-connector check-connection-status
+cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.external_db_system_connector_group, dbmanagement_cli.check_external_db_system_connector_connection_status, "check-connection-status")
+
+
+# Remove create from oci database-management external-db-system-connector
+dbmanagement_cli.external_db_system_connector_group.commands.pop(dbmanagement_cli.create_external_db_system_connector.name)
+
+
+# Remove update from oci database-management external-db-system-connector
+dbmanagement_cli.external_db_system_connector_group.commands.pop(dbmanagement_cli.update_external_db_system_connector.name)
