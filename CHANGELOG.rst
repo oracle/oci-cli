@@ -6,6 +6,36 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.31.0 - 2023-08-15
+--------------------
+Added
+~~~~~
+* Support for new data sync commands in the Rover service
+
+  * ``oci rover device data-sync``
+
+* Support for new parameters including Single Sign-On support in the Golden Gate service
+
+  * ``oci goldengate deployment create --credential-store --identity-domain-id --password-secret-id``
+  * ``oci goldengate deployment create --credential-store --identity-domain-id --password-secret-id``
+
+* Support for the placement constraint and cluster configuration feature for the Cluster networks in the Compute Management service
+
+  * ``oci compute-management cluster-network create --cluster-configuration``
+
+Changed
+~~~~~~~
+* Required parameters is now optional for below diagnostics bundle commands in the Rover service
+
+  * ``oci rover device diagnostics bundle create --display-name``
+  * ``oci rover device diagnostics bundle get --encryption-key-file``
+
+* [BREAKING] Renamed commands for below external-db-system-connector commands in the Database Management service
+
+  * ``oci database-management external-db-system-connector check-connection-status``
+  * ``oci database-management external-db-system-connector create-macs-connector``
+  * ``oci database-management external-db-system-connector update-macs-connector``
+
 3.30.2 - 2023-08-08
 --------------------
 Added

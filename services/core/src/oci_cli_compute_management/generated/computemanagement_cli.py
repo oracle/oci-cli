@@ -320,15 +320,16 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--cluster-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'instance-pools': {'module': 'core', 'class': 'list[CreateClusterNetworkInstancePoolDetails]'}, 'placement-configuration': {'module': 'core', 'class': 'ClusterNetworkPlacementConfigurationDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'instance-pools': {'module': 'core', 'class': 'list[CreateClusterNetworkInstancePoolDetails]'}, 'placement-configuration': {'module': 'core', 'class': 'ClusterNetworkPlacementConfigurationDetails'}, 'cluster-configuration': {'module': 'core', 'class': 'ClusterConfigurationDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'instance-pools': {'module': 'core', 'class': 'list[CreateClusterNetworkInstancePoolDetails]'}, 'placement-configuration': {'module': 'core', 'class': 'ClusterNetworkPlacementConfigurationDetails'}}, output_type={'module': 'core', 'class': 'ClusterNetwork'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'instance-pools': {'module': 'core', 'class': 'list[CreateClusterNetworkInstancePoolDetails]'}, 'placement-configuration': {'module': 'core', 'class': 'ClusterNetworkPlacementConfigurationDetails'}, 'cluster-configuration': {'module': 'core', 'class': 'ClusterConfigurationDetails'}}, output_type={'module': 'core', 'class': 'ClusterNetwork'})
 @cli_util.wrap_exceptions
-def create_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, instance_pools, placement_configuration, defined_tags, display_name, freeform_tags):
+def create_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, instance_pools, placement_configuration, defined_tags, display_name, freeform_tags, cluster_configuration):
 
     kwargs = {}
 
@@ -345,6 +346,9 @@ def create_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if cluster_configuration is not None:
+        _details['clusterConfiguration'] = cli_util.parse_json_parameter("cluster_configuration", cluster_configuration)
 
     client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.create_cluster_network(

@@ -11,6 +11,8 @@ from services.rover.src.oci_cli_rover.generated import rover_service_cli
 from services.rover.src.oci_cli_rover.rover_utils import setup_master_key_policy, \
     validate_policy_parameters, upload_bundle_for_upgrade, check_import_history, import_bundle_for_upgrade, \
     check_status, dispatch_diag_request, bundle_decrypt
+from services.rover.src.oci_cli_rover.datasync_task import rover_datasync_task_group
+from services.rover.src.oci_cli_rover.datasync_task_definition import rover_datasync_task_definition_group
 
 
 @click.command('device', cls=CommandGroupWithAlias, help="""Rover Physical Device.""")
@@ -40,7 +42,20 @@ def rover_diagnostics_bundle_group():
     pass
 
 
+@click.command('data-sync', cls=CommandGroupWithAlias, help="""Data Sync Service CLI.""")
+@cli_util.help_option_group
+def rover_datasync_group():
+    pass
+
+
 rover_device_group.add_command(rover_system_upgrade_group)
+
+# add all data-sync CLIs
+rover_device_group.add_command(rover_datasync_group)
+rover_datasync_group.add_command(rover_datasync_task_definition_group)
+rover_datasync_group.add_command(rover_datasync_task_group)
+# end of data-sync CLIs
+
 rover_device_group.add_command(rover_diagnostics_group)
 rover_diagnostics_group.add_command(rover_diagnostics_bundle_group)
 
@@ -136,18 +151,19 @@ def check_imports(ctx, **kwargs):
 @rover_diagnostics_bundle_group.command(name="create", help=u"""Create a diag bundle""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler()
-@cli_util.option('--display-name', type=str, required=True, help=u"""Displayed name of diagnostic bundle""")
+@cli_util.option('--display-name', type=str, help=u"""Displayed name of diagnostic bundle""")
 @cli_util.option('--node-name', type=str, help=u"""Rover Node Name""")
 @cli_util.option('--wait-for-state', type=click.Choice(["ACCEPTED", "IN_PROGRESS", "COMPLETED", "FAILED"],
                  case_sensitive=True), multiple=True,
-                 help=u"""Wait for a diagnostic bundle to reach a specific state Specify this option to perform the
-                                  action and then wait until the resource
-                                  reaches a given lifecycle state. Multiple
-                                  states can be specified, returning on the
-                                  first state. For example, --wait-for-state
-                                  COMPLETED --wait-for-state FAILED would
-                                  return on whichever lifecycle state is
-                                  reached first.""")
+                 help=u"""Wait for a diagnostic bundle to reach a
+                          specific state Specify this option to perform the
+                          action and then wait until the resource
+                          reaches a given lifecycle state. Multiple
+                          states can be specified, returning on the
+                          first state. For example, --wait-for-state
+                          COMPLETED --wait-for-state FAILED would
+                          return on whichever lifecycle state is
+                          reached first.""")
 @cli_util.option('--wait-interval-seconds', default=5, type=int, help=u"""Frequency to poll the state of a diagnostic bundle (seconds)""")
 @cli_util.option('--max-wait-seconds', default=1800, type=int, help=u"""Wait for a diagnostic bundle to reach a specific state (seconds)""")
 @cli_util.option('--use-basic-auth', is_flag=True, type=click.BOOL, default=False, help=u"""Use Basic Authentication for Diagnostic Requets - Retrieved from Serial Console""")
@@ -159,7 +175,8 @@ def create_diag_bundle(ctx, **kwargs):
     ctx.obj['config'] = config
     data = {}
     wait = None
-    data["displayName"] = kwargs.get("display_name")
+    if "display_name" in kwargs and kwargs.get("display_name") is not None:
+        data["displayName"] = kwargs.get("display_name")
     if "node_name" in kwargs and kwargs.get("node_name") is not None:
         data["nodeName"] = kwargs.get("node_name")
     state = kwargs.get("wait_for_state")
@@ -236,7 +253,7 @@ def cancel_diag_bundle(ctx, **kwargs):
 @json_skeleton_utils.json_skeleton_generation_handler()
 @cli_util.option('--bundle-id', required=True, help=u"""Bundle Identifier (OCID)""")
 @cli_util.option('--file', required=True, help=u"""Filename for the downloaded diagnostics bundle archive""")
-@cli_util.option('--encryption-key-file', required=True, help=u"""Encryption Key File for the Bundle. Encryption Key must be retrieved from Serial Console, then stored in this file""")
+@cli_util.option('--encryption-key-file', help=u"""Encryption Key File for the Bundle. Encryption Key must be retrieved from Serial Console, then stored in this file""")
 @cli_util.option('--node-name', type=str, help=u"""Rover Node Name""")
 @cli_util.option('--use-basic-auth', is_flag=True, type=click.BOOL, default=False, help=u"""Use Basic Authentication for Diagnostic Requets - Retrieved from Serial Console""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -251,9 +268,12 @@ def get_bundle(ctx, **kwargs):
     temp_file = '/tmp/diag_encrypted_' + filename
     encryption_key_file = kwargs.get("encryption_key_file")
     dispatch_diag_request(ctx, additional_url_path=kwargs.get('bundle_id'), basic_auth=kwargs.get("use_basic_auth"), data=data, http_method="GET", stream=True, stream_file_location=temp_file)
-    with open(encryption_key_file) as f:
-        bundle_key = f.readline().strip('\n')
-    bundle_decrypt(temp_file, filename, bundle_key)
+    if "encryption_key_file" in kwargs and kwargs["encryption_key_file"] is not None:
+        with open(encryption_key_file) as f:
+            bundle_key = f.readline().strip('\n')
+        bundle_decrypt(temp_file, filename, bundle_key)
+    else:
+        click.echo("Diagnostic Bundle has been downloaded successfully. Refer to serial console Diagnostics->Help menu to decrypt the downloaded bundle")
 
 
 @rover_diagnostics_bundle_group.command(name="list", help=u"""Returns a list of DiagBundles""")

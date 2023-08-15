@@ -296,7 +296,7 @@ def assign_ipv6(ctx, from_json, vnic_id, defined_tags, display_name, freeform_ta
     if ip_address is not None:
         # Try and see whether the IP is already in use by calling ListIpv6s with the IP address and subnet. In this case, we don't
         # worry about pagination because we expect at most 1 entry
-        list_ips_response = networking_client.list_ipv6s(ip_address=ip_address, subnet_id=subnet_id, vnic_id=vnic_id)
+        list_ips_response = networking_client.list_ipv6s(ip_address=ip_address, subnet_id=subnet_id)
         list_ips_response_data = list_ips_response.data
 
         if list_ips_response_data is not None:
@@ -365,7 +365,7 @@ def assign_ipv6(ctx, from_json, vnic_id, defined_tags, display_name, freeform_ta
 def unassign_ipv6(ctx, from_json, vnic_id, ip_address):
     networking_client = cli_util.build_client('core', 'virtual_network', ctx)
 
-    list_ips_response = networking_client.list_ipv6s(ip_address=ip_address, vnic_id=vnic_id)
+    list_ips_response = networking_client.list_ipv6s(vnic_id=vnic_id)
 
     if list_ips_response.data is None:
         sys.exit('No IP addresses found for VNIC {}'.format(vnic_id))
