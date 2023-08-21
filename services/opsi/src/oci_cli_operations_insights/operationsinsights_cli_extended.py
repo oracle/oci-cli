@@ -588,3 +588,63 @@ def enable_autonomous_database_insight_advanced_features_credential_by_vault_ext
         kwargs.pop('user_name')
 
     ctx.invoke(operationsinsights_cli.enable_autonomous_database_insight_advanced_features_credential_by_vault, **kwargs)
+
+
+# oci opsi opsi-data-objects query-opsi-data-object-data-data-object-standard-query -> oci opsi opsi-data-objects query-data-standard-query
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.opsi_data_objects_group, operationsinsights_cli.query_opsi_data_object_data_data_object_standard_query, "query-data-standard-query")
+
+
+# oci opsi opsi-warehouse-data-objects list-warehouse-data-objects -> oci opsi opsi-warehouse-data-objects list
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.opsi_warehouse_data_objects_group, operationsinsights_cli.list_warehouse_data_objects, "list")
+
+
+# oci opsi opsi-warehouse-data-objects query-warehouse-data-object-data-data-object-standard-query -> oci opsi opsi-warehouse-data-objects query-warehouse-data-standard-query
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.opsi_warehouse_data_objects_group, operationsinsights_cli.query_warehouse_data_object_data_data_object_standard_query, "query-warehouse-data-standard-query")
+
+
+# oci opsi opsi-warehouse-data-objects query-warehouse-data-object-data-data-object-templatized-query -> oci opsi opsi-warehouse-data-objects query-warehouse-data-templatized-query
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.opsi_warehouse_data_objects_group, operationsinsights_cli.query_warehouse_data_object_data_data_object_templatized_query, "query-warehouse-data-templatized-query")
+
+
+# Remove query-warehouse-data-object-data from oci opsi opsi-warehouse-data-objects
+operationsinsights_cli.opsi_warehouse_data_objects_group.commands.pop(operationsinsights_cli.query_warehouse_data_object_data.name)
+
+
+# Fixing auto generated tests by python cli, which was prefixing parameterconflict in many parameters
+@cli_util.copy_params_from_generated_command(operationsinsights_cli.query_opsi_data_object_data_data_object_templatized_query)
+@operationsinsights_cli.opsi_data_objects_group.command(name=cli_util.override('opsi.query_opsi_data_object_data_data_object_templatized_query.command_name', 'query-opsi-data-object-data-data-object-templatized-query'), help=u"""Queries an OPSI data object with the inputs provided and sends the result set back. Either analysisTimeInterval or timeIntervalStart and timeIntervalEnd parameters need to be passed as well. \n[Command Reference](queryOpsiDataObjectData)""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'query-bind-params': {'module': 'operationsinsights', 'class': 'list[DataObjectBindParameter]'}, 'query-select-list': {'module': 'operationsinsights', 'class': 'list[string]'}, 'query-where-conditions-list': {'module': 'operationsinsights', 'class': 'list[string]'}, 'query-group-by-list': {'module': 'operationsinsights', 'class': 'list[string]'}, 'query-having-conditions-list': {'module': 'operationsinsights', 'class': 'list[string]'}, 'query-order-by-list': {'module': 'operationsinsights', 'class': 'list[string]'}, 'resource-filters': {'module': 'operationsinsights', 'class': 'ResourceFilters'}, 'data-objects': {'module': 'operationsinsights', 'class': 'list[OpsiDataObjectDetailsInQuery]'}, 'query-time-filters': {'module': 'operationsinsights', 'class': 'DataObjectQueryTimeFilters'}}, output_type={'module': 'operationsinsights', 'class': 'QueryDataObjectResultSetRowsCollection'})
+@cli_util.wrap_exceptions
+def query_opsi_data_object_data_data_object_templatized_query_extended(ctx, **kwargs):
+    ctx.invoke(operationsinsights_cli.query_opsi_data_object_data_data_object_templatized_query, **kwargs)
+
+
+# Fixing auto generated tests by python cli, which was prefixing parameterconflict in many parameters
+@cli_util.copy_params_from_generated_command(operationsinsights_cli.query_opsi_data_object_data_data_object_standard_query)
+@operationsinsights_cli.opsi_data_objects_group.command(name=cli_util.override('opsi.query_opsi_data_object_data_data_object_standard_query.command_name', 'query-opsi-data-object-data-data-object-standard-query'), help=u"""Queries an OPSI data object with the inputs provided and sends the result set back. Either analysisTimeInterval or timeIntervalStart and timeIntervalEnd parameters need to be passed as well. \n[Command Reference](queryOpsiDataObjectData)""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'query-bind-params': {'module': 'operationsinsights', 'class': 'list[DataObjectBindParameter]'}, 'resource-filters': {'module': 'operationsinsights', 'class': 'ResourceFilters'}, 'data-objects': {'module': 'operationsinsights', 'class': 'list[OpsiDataObjectDetailsInQuery]'}, 'query-time-filters': {'module': 'operationsinsights', 'class': 'DataObjectQueryTimeFilters'}}, output_type={'module': 'operationsinsights', 'class': 'QueryDataObjectResultSetRowsCollection'})
+@cli_util.wrap_exceptions
+def query_opsi_data_object_data_data_object_standard_query_extended(ctx, **kwargs):
+    ctx.invoke(operationsinsights_cli.query_opsi_data_object_data_data_object_standard_query, **kwargs)
+
+
+# Fixing auto generated tests by python cli, which was prefixing parameterconflict in many parameters
+@cli_util.copy_params_from_generated_command(operationsinsights_cli.query_warehouse_data_object_data_data_object_templatized_query)
+@operationsinsights_cli.opsi_warehouse_data_objects_group.command(name=cli_util.override('opsi.query_warehouse_data_object_data_data_object_templatized_query.command_name', 'query-warehouse-data-object-data-data-object-templatized-query'), help=u"""Queries Warehouse data objects (e.g: views, tables) with the inputs provided and sends the result set back. Any data to which an OperationsInsightsWarehouseUser with a permission to the corresponding Warehouse can be queried. \n[Command Reference](queryWarehouseDataObjectData)""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'query-bind-params': {'module': 'operationsinsights', 'class': 'list[DataObjectBindParameter]'}, 'query-select-list': {'module': 'operationsinsights', 'class': 'list[string]'}, 'query-where-conditions-list': {'module': 'operationsinsights', 'class': 'list[string]'}, 'query-group-by-list': {'module': 'operationsinsights', 'class': 'list[string]'}, 'query-having-conditions-list': {'module': 'operationsinsights', 'class': 'list[string]'}, 'query-order-by-list': {'module': 'operationsinsights', 'class': 'list[string]'}, 'query-time-filters': {'module': 'operationsinsights', 'class': 'DataObjectQueryTimeFilters'}}, output_type={'module': 'operationsinsights', 'class': 'QueryDataObjectResultSetRowsCollection'})
+@cli_util.wrap_exceptions
+def query_warehouse_data_object_data_data_object_templatized_query_extended(ctx, **kwargs):
+    ctx.invoke(operationsinsights_cli.query_warehouse_data_object_data_data_object_templatized_query, **kwargs)
+
+
+# Fixing auto generated tests by python cli, which was prefixing parameterconflict in many parameters
+@cli_util.copy_params_from_generated_command(operationsinsights_cli.query_warehouse_data_object_data_data_object_standard_query)
+@operationsinsights_cli.opsi_warehouse_data_objects_group.command(name=cli_util.override('opsi.query_warehouse_data_object_data_data_object_standard_query.command_name', 'query-warehouse-data-object-data-data-object-standard-query'), help=u"""Queries Warehouse data objects (e.g: views, tables) with the inputs provided and sends the result set back. Any data to which an OperationsInsightsWarehouseUser with a permission to the corresponding Warehouse can be queried. \n[Command Reference](queryWarehouseDataObjectData)""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'query-bind-params': {'module': 'operationsinsights', 'class': 'list[DataObjectBindParameter]'}, 'query-time-filters': {'module': 'operationsinsights', 'class': 'DataObjectQueryTimeFilters'}}, output_type={'module': 'operationsinsights', 'class': 'QueryDataObjectResultSetRowsCollection'})
+@cli_util.wrap_exceptions
+def query_warehouse_data_object_data_data_object_standard_query_extended(ctx, **kwargs):
+    ctx.invoke(operationsinsights_cli.query_warehouse_data_object_data_data_object_standard_query, **kwargs)

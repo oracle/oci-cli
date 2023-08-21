@@ -60,6 +60,12 @@ def operations_insights_warehouse_users_group():
     pass
 
 
+@click.command(cli_util.override('opsi.opsi_warehouse_data_objects_group.command_name', 'opsi-warehouse-data-objects'), cls=CommandGroupWithAlias, help="""Logical grouping used for Operations Insights Warehouse data objects operations.""")
+@cli_util.help_option_group
+def opsi_warehouse_data_objects_group():
+    pass
+
+
 @click.command(cli_util.override('opsi.news_report_group.command_name', 'news-report'), cls=CommandGroupWithAlias, help="""News report resource.""")
 @cli_util.help_option_group
 def news_report_group():
@@ -112,6 +118,7 @@ opsi_root_group.add_command(exadata_insights_group)
 opsi_root_group.add_command(awr_hubs_group)
 opsi_root_group.add_command(news_reports_group)
 opsi_root_group.add_command(operations_insights_warehouse_users_group)
+opsi_root_group.add_command(opsi_warehouse_data_objects_group)
 opsi_root_group.add_command(news_report_group)
 opsi_root_group.add_command(operations_insights_warehouses_group)
 opsi_root_group.add_command(opsi_configurations_group)
@@ -6549,7 +6556,9 @@ def list_opsi_configurations(ctx, from_json, all_pages, page_size, compartment_i
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "dataObjectType"]), help=u"""OPSI data object list sort options.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "dataObjectType", "name"]), help=u"""OPSI data object list sort options.""")
+@cli_util.option('--group-name', help=u"""A filter to return only data objects that belongs to the group of the given group name. By default, no filtering will be applied on group name.""")
+@cli_util.option('--name', help=u"""A filter to return only data objects that match the entire data object name. By default, no filtering will be applied on data object name.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -6557,7 +6566,7 @@ def list_opsi_configurations(ctx, from_json, all_pages, page_size, compartment_i
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'OpsiDataObjectsCollection'})
 @cli_util.wrap_exceptions
-def list_opsi_data_objects(ctx, from_json, all_pages, page_size, compartment_id, data_object_type, display_name, limit, page, sort_order, sort_by):
+def list_opsi_data_objects(ctx, from_json, all_pages, page_size, compartment_id, data_object_type, display_name, limit, page, sort_order, sort_by, group_name, name):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -6575,6 +6584,10 @@ def list_opsi_data_objects(ctx, from_json, all_pages, page_size, compartment_id,
         kwargs['sort_order'] = sort_order
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
+    if group_name is not None:
+        kwargs['group_name'] = group_name
+    if name is not None:
+        kwargs['name'] = name
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     if all_pages:
@@ -6750,6 +6763,82 @@ def list_sql_texts(ctx, from_json, all_pages, compartment_id, sql_identifier, da
         result = client.list_sql_texts(
             compartment_id=compartment_id,
             sql_identifier=sql_identifier,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@opsi_warehouse_data_objects_group.command(name=cli_util.override('opsi.list_warehouse_data_objects.command_name', 'list-warehouse-data-objects'), help=u"""Gets a list of Warehouse data objects (e.g: views, tables), based on the query parameters specified. \n[Command Reference](listWarehouseDataObjects)""")
+@cli_util.option('--warehouse-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["awrHubs"]), help=u"""Type of the Warehouse.""")
+@cli_util.option('--warehouse-id', required=True, help=u"""The [OCID] of a Warehouse.""")
+@cli_util.option('--data-object-type', type=custom_types.CliCaseInsensitiveChoice(["VIEW", "TABLE"]), multiple=True, help=u"""A filter to return only data objects that match the data object type. By default, no filtering will be applied on data object type.""")
+@cli_util.option('--name', help=u"""A filter to return only data objects that match the entire data object name. By default, no filtering will be applied on data object name.""")
+@cli_util.option('--owner', help=u"""A filter to return only data objects that match the entire data object owner name.  By default, no filtering will be applied on data object owner name.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["dataObjectType", "name", "owner"]), help=u"""Sort options for Warehouse data objects list.""")
+@cli_util.option('--summary-field', type=custom_types.CliCaseInsensitiveChoice(["details"]), multiple=True, help=u"""Specifies the optional fields to return in a WarehouseDataObjectSummary. Unless requested, these fields are not returned by default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'WarehouseDataObjectCollection'})
+@cli_util.wrap_exceptions
+def list_warehouse_data_objects(ctx, from_json, all_pages, page_size, warehouse_type, warehouse_id, data_object_type, name, owner, limit, page, sort_order, sort_by, summary_field):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(warehouse_type, six.string_types) and len(warehouse_type.strip()) == 0:
+        raise click.UsageError('Parameter --warehouse-type cannot be whitespace or empty string')
+
+    if isinstance(warehouse_id, six.string_types) and len(warehouse_id.strip()) == 0:
+        raise click.UsageError('Parameter --warehouse-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if data_object_type is not None and len(data_object_type) > 0:
+        kwargs['data_object_type'] = data_object_type
+    if name is not None:
+        kwargs['name'] = name
+    if owner is not None:
+        kwargs['owner'] = owner
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if summary_field is not None and len(summary_field) > 0:
+        kwargs['summary_field'] = summary_field
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_warehouse_data_objects,
+            warehouse_type=warehouse_type,
+            warehouse_id=warehouse_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_warehouse_data_objects,
+            limit,
+            page_size,
+            warehouse_type=warehouse_type,
+            warehouse_id=warehouse_id,
+            **kwargs
+        )
+    else:
+        result = client.list_warehouse_data_objects(
+            warehouse_type=warehouse_type,
+            warehouse_id=warehouse_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -6938,15 +7027,18 @@ def list_work_requests(ctx, from_json, all_pages, page_size, page, limit, compar
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--query-parameterconflict', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-object-identifier', help=u"""Unique OPSI data object identifier.""")
+@cli_util.option('--data-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details of OPSI data objects used in the query.
+
+This option is a JSON list with items of type OpsiDataObjectDetailsInQuery.  For documentation on OpsiDataObjectDetailsInQuery please see our API reference: https://docs.cloud.oracle.com/api/#/en/operationsinsights/20200630/datatypes/OpsiDataObjectDetailsInQuery.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--resource-filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@json_skeleton_utils.get_cli_json_input_option({'query-parameterconflict': {'module': 'opsi', 'class': 'DataObjectQuery'}, 'resource-filters': {'module': 'opsi', 'class': 'ResourceFilters'}})
+@json_skeleton_utils.get_cli_json_input_option({'data-objects': {'module': 'opsi', 'class': 'list[OpsiDataObjectDetailsInQuery]'}, 'query-parameterconflict': {'module': 'opsi', 'class': 'DataObjectQuery'}, 'resource-filters': {'module': 'opsi', 'class': 'ResourceFilters'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'query-parameterconflict': {'module': 'opsi', 'class': 'DataObjectQuery'}, 'resource-filters': {'module': 'opsi', 'class': 'ResourceFilters'}}, output_type={'module': 'opsi', 'class': 'QueryDataObjectResultSetRowsCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-objects': {'module': 'opsi', 'class': 'list[OpsiDataObjectDetailsInQuery]'}, 'query-parameterconflict': {'module': 'opsi', 'class': 'DataObjectQuery'}, 'resource-filters': {'module': 'opsi', 'class': 'ResourceFilters'}}, output_type={'module': 'opsi', 'class': 'QueryDataObjectResultSetRowsCollection'})
 @cli_util.wrap_exceptions
-def query_opsi_data_object_data(ctx, from_json, compartment_id, query_parameterconflict, data_object_identifier, resource_filters, limit, page):
+def query_opsi_data_object_data(ctx, from_json, compartment_id, query_parameterconflict, data_object_identifier, data_objects, resource_filters, limit, page):
 
     kwargs = {}
     if limit is not None:
@@ -6961,6 +7053,9 @@ def query_opsi_data_object_data(ctx, from_json, compartment_id, query_parameterc
     if data_object_identifier is not None:
         _details['dataObjectIdentifier'] = data_object_identifier
 
+    if data_objects is not None:
+        _details['dataObjects'] = cli_util.parse_json_parameter("data_objects", data_objects)
+
     if resource_filters is not None:
         _details['resourceFilters'] = cli_util.parse_json_parameter("resource_filters", resource_filters)
 
@@ -6973,24 +7068,27 @@ def query_opsi_data_object_data(ctx, from_json, compartment_id, query_parameterc
     cli_util.render_response(result, ctx)
 
 
-@opsi_data_objects_group.command(name=cli_util.override('opsi.query_opsi_data_object_data_data_object_templatized_query.command_name', 'query-opsi-data-object-data-data-object-templatized-query'), help=u"""Queries an OPSI data object with the inputs provided and sends the result set back. Either analysisTimeInterval or timeIntervalStart and timeIntervalEnd parameters need to be passed as well. \n[Command Reference](queryOpsiDataObjectData)""")
+@opsi_data_objects_group.command(name=cli_util.override('opsi.query_opsi_data_object_data_data_object_standard_query.command_name', 'query-opsi-data-object-data-data-object-standard-query'), help=u"""Queries an OPSI data object with the inputs provided and sends the result set back. Either analysisTimeInterval or timeIntervalStart and timeIntervalEnd parameters need to be passed as well. \n[Command Reference](queryOpsiDataObjectData)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--data-object-identifier', help=u"""Unique OPSI data object identifier.""")
+@cli_util.option('--data-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details of OPSI data objects used in the query.
+
+This option is a JSON list with items of type OpsiDataObjectDetailsInQuery.  For documentation on OpsiDataObjectDetailsInQuery please see our API reference: https://docs.cloud.oracle.com/api/#/en/operationsinsights/20200630/datatypes/OpsiDataObjectDetailsInQuery.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--resource-filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--query-select-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of items to be added into the SELECT clause of the query; items will be added with comma separation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--query-where-conditions-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of items to be added into the WHERE clause of the query; items will be added with AND separation. Item can contain a single condition or multiple conditions. Single condition e.g:  \"optimizer_mode='mode1'\" Multiple conditions e.g: (module='module1' OR module='module2')""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--query-group-by-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of items to be added into the GROUP BY clause of the query; items will be added with comma separation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--query-having-conditions-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of items to be added into the HAVING clause of the query; items will be added with AND separation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--query-order-by-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of items to be added into the ORDER BY clause of the query; items will be added with comma separation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--query-bind-params', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of bind parameters to be applied in the query.
+
+This option is a JSON list with items of type DataObjectBindParameter.  For documentation on DataObjectBindParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/operationsinsights/20200630/datatypes/DataObjectBindParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--query-query-execution-timeout-in-seconds', help=u"""Timeout (in seconds) to be set for the data object query execution.""")
+@cli_util.option('--query-statement', help=u"""SQL query statement with standard Oracle supported SQL syntax. - When Warehouse (e.g: Awr hub) data objects are queried, use the actual names of underlying data objects (e.g: tables, views) in the query. The same query that works through JDBC connection with the OperationsInsightsWarehouseUsers credentials will work here and vice-versa. SCHEMA.VIEW syntax can also be used here. - When OPSI data objects are queried, use name of the respective OPSI data object, just like how views are used in a query. Identifier of the OPSI data object cannot be used in the query.""")
 @cli_util.option('--query-time-filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'resource-filters': {'module': 'opsi', 'class': 'ResourceFilters'}, 'query-parameterconflict-select-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-where-conditions-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-group-by-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-having-conditions-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-order-by-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-time-filters': {'module': 'opsi', 'class': 'DataObjectQueryTimeFilters'}})
+@json_skeleton_utils.get_cli_json_input_option({'data-objects': {'module': 'opsi', 'class': 'list[OpsiDataObjectDetailsInQuery]'}, 'resource-filters': {'module': 'opsi', 'class': 'ResourceFilters'}, 'query-parameterconflict-bind-params': {'module': 'opsi', 'class': 'list[DataObjectBindParameter]'}, 'query-parameterconflict-time-filters': {'module': 'opsi', 'class': 'DataObjectQueryTimeFilters'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resource-filters': {'module': 'opsi', 'class': 'ResourceFilters'}, 'query-parameterconflict-select-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-where-conditions-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-group-by-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-having-conditions-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-order-by-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-time-filters': {'module': 'opsi', 'class': 'DataObjectQueryTimeFilters'}}, output_type={'module': 'opsi', 'class': 'QueryDataObjectResultSetRowsCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-objects': {'module': 'opsi', 'class': 'list[OpsiDataObjectDetailsInQuery]'}, 'resource-filters': {'module': 'opsi', 'class': 'ResourceFilters'}, 'query-parameterconflict-bind-params': {'module': 'opsi', 'class': 'list[DataObjectBindParameter]'}, 'query-parameterconflict-time-filters': {'module': 'opsi', 'class': 'DataObjectQueryTimeFilters'}}, output_type={'module': 'opsi', 'class': 'QueryDataObjectResultSetRowsCollection'})
 @cli_util.wrap_exceptions
-def query_opsi_data_object_data_data_object_templatized_query(ctx, from_json, compartment_id, data_object_identifier, resource_filters, limit, page, query_select_list, query_where_conditions_list, query_group_by_list, query_having_conditions_list, query_order_by_list, query_time_filters):
+def query_opsi_data_object_data_data_object_standard_query(ctx, from_json, compartment_id, data_object_identifier, data_objects, resource_filters, limit, page, query_bind_params, query_query_execution_timeout_in_seconds, query_statement, query_time_filters):
 
     kwargs = {}
     if limit is not None:
@@ -7005,11 +7103,92 @@ def query_opsi_data_object_data_data_object_templatized_query(ctx, from_json, co
     if data_object_identifier is not None:
         _details['dataObjectIdentifier'] = data_object_identifier
 
+    if data_objects is not None:
+        _details['dataObjects'] = cli_util.parse_json_parameter("data_objects", data_objects)
+
     if resource_filters is not None:
         _details['resourceFilters'] = cli_util.parse_json_parameter("resource_filters", resource_filters)
 
+    if query_bind_params is not None:
+        _details['query']['bindParams'] = cli_util.parse_json_parameter("query_bind_params", query_bind_params)
+
+    if query_query_execution_timeout_in_seconds is not None:
+        _details['query']['queryExecutionTimeoutInSeconds'] = query_query_execution_timeout_in_seconds
+
+    if query_statement is not None:
+        _details['query']['statement'] = query_statement
+
+    if query_time_filters is not None:
+        _details['query']['timeFilters'] = cli_util.parse_json_parameter("query_time_filters", query_time_filters)
+
+    _details['query']['queryType'] = 'STANDARD_QUERY'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.query_opsi_data_object_data(
+        compartment_id=compartment_id,
+        query_opsi_data_object_data_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@opsi_data_objects_group.command(name=cli_util.override('opsi.query_opsi_data_object_data_data_object_templatized_query.command_name', 'query-opsi-data-object-data-data-object-templatized-query'), help=u"""Queries an OPSI data object with the inputs provided and sends the result set back. Either analysisTimeInterval or timeIntervalStart and timeIntervalEnd parameters need to be passed as well. \n[Command Reference](queryOpsiDataObjectData)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--data-object-identifier', help=u"""Unique OPSI data object identifier.""")
+@cli_util.option('--data-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details of OPSI data objects used in the query.
+
+This option is a JSON list with items of type OpsiDataObjectDetailsInQuery.  For documentation on OpsiDataObjectDetailsInQuery please see our API reference: https://docs.cloud.oracle.com/api/#/en/operationsinsights/20200630/datatypes/OpsiDataObjectDetailsInQuery.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--resource-filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--query-bind-params', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of bind parameters to be applied in the query.
+
+This option is a JSON list with items of type DataObjectBindParameter.  For documentation on DataObjectBindParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/operationsinsights/20200630/datatypes/DataObjectBindParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--query-query-execution-timeout-in-seconds', help=u"""Timeout (in seconds) to be set for the data object query execution.""")
+@cli_util.option('--query-select-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of items to be added into the SELECT clause of the query; items will be added with comma separation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--query-from-clause', help=u"""Unique data object name that will be added into the FROM clause of the query, just like a view name in FROM clause. - Use actual name of the data objects (e.g: tables, views) in case of Warehouse (e.g: Awr hub) data objects query. SCHEMA.VIEW name syntax can also be used here. e.g: SYS.DBA_HIST_SNAPSHOT or DBA_HIST_SNAPSHOT - Use name of the data object (e.g: SQL_STATS_DO) in case of OPSI data objects. Identifier of the OPSI data object cannot be used here.""")
+@cli_util.option('--query-where-conditions-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of items to be added into the WHERE clause of the query; items will be added with AND separation. Item can contain a single condition or multiple conditions. Single condition e.g:  \"optimizer_mode='mode1'\" Multiple conditions e.g: (module='module1' OR module='module2')""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--query-group-by-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of items to be added into the GROUP BY clause of the query; items will be added with comma separation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--query-having-conditions-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of items to be added into the HAVING clause of the query; items will be added with AND separation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--query-order-by-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of items to be added into the ORDER BY clause of the query; items will be added with comma separation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--query-time-filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'data-objects': {'module': 'opsi', 'class': 'list[OpsiDataObjectDetailsInQuery]'}, 'resource-filters': {'module': 'opsi', 'class': 'ResourceFilters'}, 'query-parameterconflict-bind-params': {'module': 'opsi', 'class': 'list[DataObjectBindParameter]'}, 'query-parameterconflict-select-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-where-conditions-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-group-by-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-having-conditions-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-order-by-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-time-filters': {'module': 'opsi', 'class': 'DataObjectQueryTimeFilters'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-objects': {'module': 'opsi', 'class': 'list[OpsiDataObjectDetailsInQuery]'}, 'resource-filters': {'module': 'opsi', 'class': 'ResourceFilters'}, 'query-parameterconflict-bind-params': {'module': 'opsi', 'class': 'list[DataObjectBindParameter]'}, 'query-parameterconflict-select-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-where-conditions-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-group-by-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-having-conditions-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-order-by-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-time-filters': {'module': 'opsi', 'class': 'DataObjectQueryTimeFilters'}}, output_type={'module': 'opsi', 'class': 'QueryDataObjectResultSetRowsCollection'})
+@cli_util.wrap_exceptions
+def query_opsi_data_object_data_data_object_templatized_query(ctx, from_json, compartment_id, data_object_identifier, data_objects, resource_filters, limit, page, query_bind_params, query_query_execution_timeout_in_seconds, query_select_list, query_from_clause, query_where_conditions_list, query_group_by_list, query_having_conditions_list, query_order_by_list, query_time_filters):
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['query'] = {}
+
+    if data_object_identifier is not None:
+        _details['dataObjectIdentifier'] = data_object_identifier
+
+    if data_objects is not None:
+        _details['dataObjects'] = cli_util.parse_json_parameter("data_objects", data_objects)
+
+    if resource_filters is not None:
+        _details['resourceFilters'] = cli_util.parse_json_parameter("resource_filters", resource_filters)
+
+    if query_bind_params is not None:
+        _details['query']['bindParams'] = cli_util.parse_json_parameter("query_bind_params", query_bind_params)
+
+    if query_query_execution_timeout_in_seconds is not None:
+        _details['query']['queryExecutionTimeoutInSeconds'] = query_query_execution_timeout_in_seconds
+
     if query_select_list is not None:
         _details['query']['selectList'] = cli_util.parse_json_parameter("query_select_list", query_select_list)
+
+    if query_from_clause is not None:
+        _details['query']['fromClause'] = query_from_clause
 
     if query_where_conditions_list is not None:
         _details['query']['whereConditionsList'] = cli_util.parse_json_parameter("query_where_conditions_list", query_where_conditions_list)
@@ -7032,6 +7211,181 @@ def query_opsi_data_object_data_data_object_templatized_query(ctx, from_json, co
     result = client.query_opsi_data_object_data(
         compartment_id=compartment_id,
         query_opsi_data_object_data_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@opsi_warehouse_data_objects_group.command(name=cli_util.override('opsi.query_warehouse_data_object_data.command_name', 'query-warehouse-data-object-data'), help=u"""Queries Warehouse data objects (e.g: views, tables) with the inputs provided and sends the result set back. Any data to which an OperationsInsightsWarehouseUser with a permission to the corresponding Warehouse can be queried. \n[Command Reference](queryWarehouseDataObjectData)""")
+@cli_util.option('--warehouse-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["awrHubs"]), help=u"""Type of the Warehouse.""")
+@cli_util.option('--warehouse-id', required=True, help=u"""The [OCID] of a Warehouse.""")
+@cli_util.option('--query-parameterconflict', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@json_skeleton_utils.get_cli_json_input_option({'query-parameterconflict': {'module': 'opsi', 'class': 'DataObjectQuery'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'query-parameterconflict': {'module': 'opsi', 'class': 'DataObjectQuery'}}, output_type={'module': 'opsi', 'class': 'QueryDataObjectResultSetRowsCollection'})
+@cli_util.wrap_exceptions
+def query_warehouse_data_object_data(ctx, from_json, warehouse_type, warehouse_id, query_parameterconflict, limit, page):
+
+    if isinstance(warehouse_type, six.string_types) and len(warehouse_type.strip()) == 0:
+        raise click.UsageError('Parameter --warehouse-type cannot be whitespace or empty string')
+
+    if isinstance(warehouse_id, six.string_types) and len(warehouse_id.strip()) == 0:
+        raise click.UsageError('Parameter --warehouse-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['query'] = cli_util.parse_json_parameter("query_parameterconflict", query_parameterconflict)
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.query_warehouse_data_object_data(
+        warehouse_type=warehouse_type,
+        warehouse_id=warehouse_id,
+        query_warehouse_data_object_data_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@opsi_warehouse_data_objects_group.command(name=cli_util.override('opsi.query_warehouse_data_object_data_data_object_standard_query.command_name', 'query-warehouse-data-object-data-data-object-standard-query'), help=u"""Queries Warehouse data objects (e.g: views, tables) with the inputs provided and sends the result set back. Any data to which an OperationsInsightsWarehouseUser with a permission to the corresponding Warehouse can be queried. \n[Command Reference](queryWarehouseDataObjectData)""")
+@cli_util.option('--warehouse-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["awrHubs"]), help=u"""Type of the Warehouse.""")
+@cli_util.option('--warehouse-id', required=True, help=u"""The [OCID] of a Warehouse.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--query-bind-params', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of bind parameters to be applied in the query.
+
+This option is a JSON list with items of type DataObjectBindParameter.  For documentation on DataObjectBindParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/operationsinsights/20200630/datatypes/DataObjectBindParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--query-query-execution-timeout-in-seconds', help=u"""Timeout (in seconds) to be set for the data object query execution.""")
+@cli_util.option('--query-statement', help=u"""SQL query statement with standard Oracle supported SQL syntax. - When Warehouse (e.g: Awr hub) data objects are queried, use the actual names of underlying data objects (e.g: tables, views) in the query. The same query that works through JDBC connection with the OperationsInsightsWarehouseUsers credentials will work here and vice-versa. SCHEMA.VIEW syntax can also be used here. - When OPSI data objects are queried, use name of the respective OPSI data object, just like how views are used in a query. Identifier of the OPSI data object cannot be used in the query.""")
+@cli_util.option('--query-time-filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'query-parameterconflict-bind-params': {'module': 'opsi', 'class': 'list[DataObjectBindParameter]'}, 'query-parameterconflict-time-filters': {'module': 'opsi', 'class': 'DataObjectQueryTimeFilters'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'query-parameterconflict-bind-params': {'module': 'opsi', 'class': 'list[DataObjectBindParameter]'}, 'query-parameterconflict-time-filters': {'module': 'opsi', 'class': 'DataObjectQueryTimeFilters'}}, output_type={'module': 'opsi', 'class': 'QueryDataObjectResultSetRowsCollection'})
+@cli_util.wrap_exceptions
+def query_warehouse_data_object_data_data_object_standard_query(ctx, from_json, warehouse_type, warehouse_id, limit, page, query_bind_params, query_query_execution_timeout_in_seconds, query_statement, query_time_filters):
+
+    if isinstance(warehouse_type, six.string_types) and len(warehouse_type.strip()) == 0:
+        raise click.UsageError('Parameter --warehouse-type cannot be whitespace or empty string')
+
+    if isinstance(warehouse_id, six.string_types) and len(warehouse_id.strip()) == 0:
+        raise click.UsageError('Parameter --warehouse-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['query'] = {}
+
+    if query_bind_params is not None:
+        _details['query']['bindParams'] = cli_util.parse_json_parameter("query_bind_params", query_bind_params)
+
+    if query_query_execution_timeout_in_seconds is not None:
+        _details['query']['queryExecutionTimeoutInSeconds'] = query_query_execution_timeout_in_seconds
+
+    if query_statement is not None:
+        _details['query']['statement'] = query_statement
+
+    if query_time_filters is not None:
+        _details['query']['timeFilters'] = cli_util.parse_json_parameter("query_time_filters", query_time_filters)
+
+    _details['query']['queryType'] = 'STANDARD_QUERY'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.query_warehouse_data_object_data(
+        warehouse_type=warehouse_type,
+        warehouse_id=warehouse_id,
+        query_warehouse_data_object_data_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@opsi_warehouse_data_objects_group.command(name=cli_util.override('opsi.query_warehouse_data_object_data_data_object_templatized_query.command_name', 'query-warehouse-data-object-data-data-object-templatized-query'), help=u"""Queries Warehouse data objects (e.g: views, tables) with the inputs provided and sends the result set back. Any data to which an OperationsInsightsWarehouseUser with a permission to the corresponding Warehouse can be queried. \n[Command Reference](queryWarehouseDataObjectData)""")
+@cli_util.option('--warehouse-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["awrHubs"]), help=u"""Type of the Warehouse.""")
+@cli_util.option('--warehouse-id', required=True, help=u"""The [OCID] of a Warehouse.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--query-bind-params', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of bind parameters to be applied in the query.
+
+This option is a JSON list with items of type DataObjectBindParameter.  For documentation on DataObjectBindParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/operationsinsights/20200630/datatypes/DataObjectBindParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--query-query-execution-timeout-in-seconds', help=u"""Timeout (in seconds) to be set for the data object query execution.""")
+@cli_util.option('--query-select-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of items to be added into the SELECT clause of the query; items will be added with comma separation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--query-from-clause', help=u"""Unique data object name that will be added into the FROM clause of the query, just like a view name in FROM clause. - Use actual name of the data objects (e.g: tables, views) in case of Warehouse (e.g: Awr hub) data objects query. SCHEMA.VIEW name syntax can also be used here. e.g: SYS.DBA_HIST_SNAPSHOT or DBA_HIST_SNAPSHOT - Use name of the data object (e.g: SQL_STATS_DO) in case of OPSI data objects. Identifier of the OPSI data object cannot be used here.""")
+@cli_util.option('--query-where-conditions-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of items to be added into the WHERE clause of the query; items will be added with AND separation. Item can contain a single condition or multiple conditions. Single condition e.g:  \"optimizer_mode='mode1'\" Multiple conditions e.g: (module='module1' OR module='module2')""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--query-group-by-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of items to be added into the GROUP BY clause of the query; items will be added with comma separation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--query-having-conditions-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of items to be added into the HAVING clause of the query; items will be added with AND separation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--query-order-by-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of items to be added into the ORDER BY clause of the query; items will be added with comma separation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--query-time-filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'query-parameterconflict-bind-params': {'module': 'opsi', 'class': 'list[DataObjectBindParameter]'}, 'query-parameterconflict-select-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-where-conditions-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-group-by-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-having-conditions-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-order-by-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-time-filters': {'module': 'opsi', 'class': 'DataObjectQueryTimeFilters'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'query-parameterconflict-bind-params': {'module': 'opsi', 'class': 'list[DataObjectBindParameter]'}, 'query-parameterconflict-select-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-where-conditions-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-group-by-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-having-conditions-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-order-by-list': {'module': 'opsi', 'class': 'list[string]'}, 'query-parameterconflict-time-filters': {'module': 'opsi', 'class': 'DataObjectQueryTimeFilters'}}, output_type={'module': 'opsi', 'class': 'QueryDataObjectResultSetRowsCollection'})
+@cli_util.wrap_exceptions
+def query_warehouse_data_object_data_data_object_templatized_query(ctx, from_json, warehouse_type, warehouse_id, limit, page, query_bind_params, query_query_execution_timeout_in_seconds, query_select_list, query_from_clause, query_where_conditions_list, query_group_by_list, query_having_conditions_list, query_order_by_list, query_time_filters):
+
+    if isinstance(warehouse_type, six.string_types) and len(warehouse_type.strip()) == 0:
+        raise click.UsageError('Parameter --warehouse-type cannot be whitespace or empty string')
+
+    if isinstance(warehouse_id, six.string_types) and len(warehouse_id.strip()) == 0:
+        raise click.UsageError('Parameter --warehouse-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['query'] = {}
+
+    if query_bind_params is not None:
+        _details['query']['bindParams'] = cli_util.parse_json_parameter("query_bind_params", query_bind_params)
+
+    if query_query_execution_timeout_in_seconds is not None:
+        _details['query']['queryExecutionTimeoutInSeconds'] = query_query_execution_timeout_in_seconds
+
+    if query_select_list is not None:
+        _details['query']['selectList'] = cli_util.parse_json_parameter("query_select_list", query_select_list)
+
+    if query_from_clause is not None:
+        _details['query']['fromClause'] = query_from_clause
+
+    if query_where_conditions_list is not None:
+        _details['query']['whereConditionsList'] = cli_util.parse_json_parameter("query_where_conditions_list", query_where_conditions_list)
+
+    if query_group_by_list is not None:
+        _details['query']['groupByList'] = cli_util.parse_json_parameter("query_group_by_list", query_group_by_list)
+
+    if query_having_conditions_list is not None:
+        _details['query']['havingConditionsList'] = cli_util.parse_json_parameter("query_having_conditions_list", query_having_conditions_list)
+
+    if query_order_by_list is not None:
+        _details['query']['orderByList'] = cli_util.parse_json_parameter("query_order_by_list", query_order_by_list)
+
+    if query_time_filters is not None:
+        _details['query']['timeFilters'] = cli_util.parse_json_parameter("query_time_filters", query_time_filters)
+
+    _details['query']['queryType'] = 'TEMPLATIZED_QUERY'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.query_warehouse_data_object_data(
+        warehouse_type=warehouse_type,
+        warehouse_id=warehouse_id,
+        query_warehouse_data_object_data_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)

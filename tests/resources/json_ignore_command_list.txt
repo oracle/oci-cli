@@ -173,3 +173,11 @@ identity-domains, security-question-setting, put
 identity-domains, security-question-settings, search
 identity-domains, security-questions, search
 identity-domains, user-attributes-settings, search
+ccc, infrastructure, create
+ccc, infrastructure, list
+ccc, infrastructure, update
+ccc, upgrade-schedule, list
+opsi, opsi-data-objects, query-data-standard-query
+opsi, opsi-data-objects, query-data-standard-query
+opsi, opsi-warehouse-data-objects, query-warehouse-data-templatized-query
+opsi, opsi-warehouse-data-objects, query-warehouse-data-standard-query
