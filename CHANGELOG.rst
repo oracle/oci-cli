@@ -6,6 +6,40 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.31.1 - 2023-08-22
+--------------------
+Added
+~~~~~
+* Support for Warehouse data objects in the Operations Insights service
+
+  * ``oci opsi opsi-warehouse-data-objects list``
+  * ``oci opsi opsi-warehouse-data-objects query-warehouse-data-standard-query``
+  * ``oci opsi opsi-warehouse-data-objects query-warehouse-data-templatized-query``
+
+* Support standard queries for Operations Insights data objects in the Operations Insights service
+
+  * ``oci opsi opsi-data-objects query-data-standard-query``
+
+* Support for new parameter in the Operations Insights service
+
+  * ``oci opsi opsi-data-objects list --group-name --name``
+  * ``oci opsi opsi-data-objects query-data-templatized-query --data-objects --query-bind-params --query-from-clause --query-query-execution-timeout-in-seconds``
+
+* Support for the Compute Cloud at Customer service
+
+  * ``oci ccc``
+
+* Support for Database In-Memory for autonomous databases in the Database service
+
+  * ``oci db autonomous-database create --in-memory-percentage``
+  * ``oci db autonomous-database create-adb-cross-region-data-guard-details --in-memory-percentage``
+  * ``oci db autonomous-database create-autonomous-database-create-cross-region-disaster-recovery-details --in-memory-percentage``
+  * ``oci db autonomous-database create-from-backup-id --in-memory-percentage``
+  * ``oci db autonomous-database create-from-backup-timestamp --in-memory-percentage``
+  * ``oci db autonomous-database create-from-clone --in-memory-percentage``
+  * ``oci db autonomous-database create-refreshable-clone --in-memory-percentage``
+  * ``oci db autonomous-database update --in-memory-percentage``
+
 3.31.0 - 2023-08-15
 --------------------
 Added
