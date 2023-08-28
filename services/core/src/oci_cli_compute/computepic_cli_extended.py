@@ -144,3 +144,7 @@ compute_cli.instance_group.commands.pop(compute_cli.instance_action_reboot_migra
 
 # Remove launch-instance-amd-milan-bm-gpu-launch-instance-platform-config from oci compute instance
 compute_cli.instance_group.commands.pop(compute_cli.launch_instance_amd_milan_bm_gpu_launch_instance_platform_config.name)
+
+
+# Remove launch-instance-generic-bm-launch-instance-platform-config from oci compute instance
+compute_cli.instance_group.commands.pop(compute_cli.launch_instance_generic_bm_launch_instance_platform_config.name)

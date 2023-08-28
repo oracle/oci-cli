@@ -209,14 +209,14 @@ def create_dedicated_vantage_point_oracle_rm_stack(ctx, from_json, apm_domain_id
 @monitor_group.command(name=cli_util.override('apm_synthetics.create_monitor.command_name', 'create'), help=u"""Creates a new monitor. \n[Command Reference](createMonitor)""")
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--display-name', required=True, help=u"""Unique name that can be edited. The name should not contain any confidential information.""")
-@cli_util.option('--monitor-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SCRIPTED_BROWSER", "BROWSER", "SCRIPTED_REST", "REST"]), help=u"""Type of monitor.""")
+@cli_util.option('--monitor-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SCRIPTED_BROWSER", "BROWSER", "SCRIPTED_REST", "REST", "NETWORK"]), help=u"""Type of monitor.""")
 @cli_util.option('--vantage-points', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of public and dedicated vantage points from which to execute the monitor. Use /publicVantagePoints to fetch public vantage points, and /dedicatedVantagePoints to fetch dedicated vantage points.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--repeat-interval-in-seconds', required=True, type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds for Scripted REST, Scripted Browser and Browser monitors, and 60 seconds for REST monitor.""")
 @cli_util.option('--script-id', help=u"""The [OCID] of the script. scriptId is mandatory for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""Enables or disables the monitor.""")
 @cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. If isFailureRetried is true, then timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. If isFailureRetried is false, then timeout cannot be more than 50% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60 for Scripted REST, Scripted Browser and Browser monitors. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
-@cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
+@cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is. For NETWORK monitor with TCP protocol, a port needs to be provided along with target. Example: 192.168.0.1:80""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
 
 This option is a JSON list with items of type MonitorScriptParameter.  For documentation on MonitorScriptParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/MonitorScriptParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -298,14 +298,14 @@ def create_monitor(ctx, from_json, apm_domain_id, display_name, monitor_type, va
 @monitor_group.command(name=cli_util.override('apm_synthetics.create_monitor_scripted_rest_monitor_configuration.command_name', 'create-monitor-scripted-rest-monitor-configuration'), help=u"""Creates a new monitor. \n[Command Reference](createMonitor)""")
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--display-name', required=True, help=u"""Unique name that can be edited. The name should not contain any confidential information.""")
-@cli_util.option('--monitor-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SCRIPTED_BROWSER", "BROWSER", "SCRIPTED_REST", "REST"]), help=u"""Type of monitor.""")
+@cli_util.option('--monitor-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SCRIPTED_BROWSER", "BROWSER", "SCRIPTED_REST", "REST", "NETWORK"]), help=u"""Type of monitor.""")
 @cli_util.option('--vantage-points', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of public and dedicated vantage points from which to execute the monitor. Use /publicVantagePoints to fetch public vantage points, and /dedicatedVantagePoints to fetch dedicated vantage points.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--repeat-interval-in-seconds', required=True, type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds for Scripted REST, Scripted Browser and Browser monitors, and 60 seconds for REST monitor.""")
 @cli_util.option('--script-id', help=u"""The [OCID] of the script. scriptId is mandatory for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""Enables or disables the monitor.""")
 @cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. If isFailureRetried is true, then timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. If isFailureRetried is false, then timeout cannot be more than 50% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60 for Scripted REST, Scripted Browser and Browser monitors. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
-@cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
+@cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is. For NETWORK monitor with TCP protocol, a port needs to be provided along with target. Example: 192.168.0.1:80""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
 
 This option is a JSON list with items of type MonitorScriptParameter.  For documentation on MonitorScriptParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/MonitorScriptParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -406,14 +406,14 @@ def create_monitor_scripted_rest_monitor_configuration(ctx, from_json, apm_domai
 @monitor_group.command(name=cli_util.override('apm_synthetics.create_monitor_scripted_browser_monitor_configuration.command_name', 'create-monitor-scripted-browser-monitor-configuration'), help=u"""Creates a new monitor. \n[Command Reference](createMonitor)""")
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--display-name', required=True, help=u"""Unique name that can be edited. The name should not contain any confidential information.""")
-@cli_util.option('--monitor-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SCRIPTED_BROWSER", "BROWSER", "SCRIPTED_REST", "REST"]), help=u"""Type of monitor.""")
+@cli_util.option('--monitor-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SCRIPTED_BROWSER", "BROWSER", "SCRIPTED_REST", "REST", "NETWORK"]), help=u"""Type of monitor.""")
 @cli_util.option('--vantage-points', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of public and dedicated vantage points from which to execute the monitor. Use /publicVantagePoints to fetch public vantage points, and /dedicatedVantagePoints to fetch dedicated vantage points.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--repeat-interval-in-seconds', required=True, type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds for Scripted REST, Scripted Browser and Browser monitors, and 60 seconds for REST monitor.""")
 @cli_util.option('--script-id', help=u"""The [OCID] of the script. scriptId is mandatory for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""Enables or disables the monitor.""")
 @cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. If isFailureRetried is true, then timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. If isFailureRetried is false, then timeout cannot be more than 50% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60 for Scripted REST, Scripted Browser and Browser monitors. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
-@cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
+@cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is. For NETWORK monitor with TCP protocol, a port needs to be provided along with target. Example: 192.168.0.1:80""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
 
 This option is a JSON list with items of type MonitorScriptParameter.  For documentation on MonitorScriptParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/MonitorScriptParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -427,7 +427,7 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @cli_util.option('--configuration-is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
 @cli_util.option('--configuration-dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-is-certificate-validation-enabled', type=click.BOOL, help=u"""If certificate validation is enabled, then the call will fail in case of certification errors.""")
-@cli_util.option('--configuration-is-default-snapshot-enabled', type=click.BOOL, help=u"""If disabled then auto snapshots are not collected.""")
+@cli_util.option('--configuration-is-default-snapshot-enabled', type=click.BOOL, help=u"""If disabled, auto snapshots are not collected.""")
 @cli_util.option('--configuration-network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
 @cli_util.help_option
@@ -514,14 +514,14 @@ def create_monitor_scripted_browser_monitor_configuration(ctx, from_json, apm_do
 @monitor_group.command(name=cli_util.override('apm_synthetics.create_monitor_rest_monitor_configuration.command_name', 'create-monitor-rest-monitor-configuration'), help=u"""Creates a new monitor. \n[Command Reference](createMonitor)""")
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--display-name', required=True, help=u"""Unique name that can be edited. The name should not contain any confidential information.""")
-@cli_util.option('--monitor-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SCRIPTED_BROWSER", "BROWSER", "SCRIPTED_REST", "REST"]), help=u"""Type of monitor.""")
+@cli_util.option('--monitor-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SCRIPTED_BROWSER", "BROWSER", "SCRIPTED_REST", "REST", "NETWORK"]), help=u"""Type of monitor.""")
 @cli_util.option('--vantage-points', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of public and dedicated vantage points from which to execute the monitor. Use /publicVantagePoints to fetch public vantage points, and /dedicatedVantagePoints to fetch dedicated vantage points.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--repeat-interval-in-seconds', required=True, type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds for Scripted REST, Scripted Browser and Browser monitors, and 60 seconds for REST monitor.""")
 @cli_util.option('--script-id', help=u"""The [OCID] of the script. scriptId is mandatory for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""Enables or disables the monitor.""")
 @cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. If isFailureRetried is true, then timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. If isFailureRetried is false, then timeout cannot be more than 50% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60 for Scripted REST, Scripted Browser and Browser monitors. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
-@cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
+@cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is. For NETWORK monitor with TCP protocol, a port needs to be provided along with target. Example: 192.168.0.1:80""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
 
 This option is a JSON list with items of type MonitorScriptParameter.  For documentation on MonitorScriptParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/MonitorScriptParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -662,14 +662,14 @@ def create_monitor_rest_monitor_configuration(ctx, from_json, apm_domain_id, dis
 @monitor_group.command(name=cli_util.override('apm_synthetics.create_monitor_browser_monitor_configuration.command_name', 'create-monitor-browser-monitor-configuration'), help=u"""Creates a new monitor. \n[Command Reference](createMonitor)""")
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--display-name', required=True, help=u"""Unique name that can be edited. The name should not contain any confidential information.""")
-@cli_util.option('--monitor-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SCRIPTED_BROWSER", "BROWSER", "SCRIPTED_REST", "REST"]), help=u"""Type of monitor.""")
+@cli_util.option('--monitor-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SCRIPTED_BROWSER", "BROWSER", "SCRIPTED_REST", "REST", "NETWORK"]), help=u"""Type of monitor.""")
 @cli_util.option('--vantage-points', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of public and dedicated vantage points from which to execute the monitor. Use /publicVantagePoints to fetch public vantage points, and /dedicatedVantagePoints to fetch dedicated vantage points.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--repeat-interval-in-seconds', required=True, type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds for Scripted REST, Scripted Browser and Browser monitors, and 60 seconds for REST monitor.""")
 @cli_util.option('--script-id', help=u"""The [OCID] of the script. scriptId is mandatory for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""Enables or disables the monitor.""")
 @cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. If isFailureRetried is true, then timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. If isFailureRetried is false, then timeout cannot be more than 50% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60 for Scripted REST, Scripted Browser and Browser monitors. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
-@cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
+@cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is. For NETWORK monitor with TCP protocol, a port needs to be provided along with target. Example: 192.168.0.1:80""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
 
 This option is a JSON list with items of type MonitorScriptParameter.  For documentation on MonitorScriptParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/MonitorScriptParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -683,7 +683,7 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @cli_util.option('--configuration-is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
 @cli_util.option('--configuration-dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-is-certificate-validation-enabled', type=click.BOOL, help=u"""If certificate validation is enabled, then the call will fail in case of certification errors.""")
-@cli_util.option('--configuration-is-default-snapshot-enabled', type=click.BOOL, help=u"""If disabled then auto snapshots are not collected.""")
+@cli_util.option('--configuration-is-default-snapshot-enabled', type=click.BOOL, help=u"""If disabled, auto snapshots are not collected.""")
 @cli_util.option('--configuration-verify-texts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Verifies all the search strings present in the response. If any search string is not present in the response, then it will be considered as a failure.
 
 This option is a JSON list with items of type VerifyText.  For documentation on VerifyText please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/VerifyText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -767,6 +767,104 @@ def create_monitor_browser_monitor_configuration(ctx, from_json, apm_domain_id, 
         _details['configuration']['networkConfiguration'] = cli_util.parse_json_parameter("configuration_network_configuration", configuration_network_configuration)
 
     _details['configuration']['configType'] = 'BROWSER_CONFIG'
+
+    client = cli_util.build_client('apm_synthetics', 'apm_synthetic', ctx)
+    result = client.create_monitor(
+        apm_domain_id=apm_domain_id,
+        create_monitor_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@monitor_group.command(name=cli_util.override('apm_synthetics.create_monitor_network_monitor_configuration.command_name', 'create-monitor-network-monitor-configuration'), help=u"""Creates a new monitor. \n[Command Reference](createMonitor)""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
+@cli_util.option('--display-name', required=True, help=u"""Unique name that can be edited. The name should not contain any confidential information.""")
+@cli_util.option('--monitor-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SCRIPTED_BROWSER", "BROWSER", "SCRIPTED_REST", "REST", "NETWORK"]), help=u"""Type of monitor.""")
+@cli_util.option('--vantage-points', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of public and dedicated vantage points from which to execute the monitor. Use /publicVantagePoints to fetch public vantage points, and /dedicatedVantagePoints to fetch dedicated vantage points.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--repeat-interval-in-seconds', required=True, type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds for Scripted REST, Scripted Browser and Browser monitors, and 60 seconds for REST monitor.""")
+@cli_util.option('--configuration-network-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--script-id', help=u"""The [OCID] of the script. scriptId is mandatory for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""Enables or disables the monitor.""")
+@cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. If isFailureRetried is true, then timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. If isFailureRetried is false, then timeout cannot be more than 50% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60 for Scripted REST, Scripted Browser and Browser monitors. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
+@cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is. For NETWORK monitor with TCP protocol, a port needs to be provided along with target. Example: 192.168.0.1:80""")
+@cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
+
+This option is a JSON list with items of type MonitorScriptParameter.  For documentation on MonitorScriptParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/MonitorScriptParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--availability-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--maintenance-window-schedule', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-run-now', type=click.BOOL, help=u"""If isRunNow is enabled, then the monitor will run immediately.""")
+@cli_util.option('--scheduling-policy', type=custom_types.CliCaseInsensitiveChoice(["ALL", "ROUND_ROBIN", "BATCHED_ROUND_ROBIN"]), help=u"""Scheduling policy to decide the distribution of monitor executions on vantage points.""")
+@cli_util.option('--batch-interval-in-seconds', type=click.INT, help=u"""Time interval between two runs in round robin batch mode (SchedulingPolicy - BATCHED_ROUND_ROBIN).""")
+@cli_util.option('--configuration-is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
+@cli_util.option('--configuration-dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@cli_util.wrap_exceptions
+def create_monitor_network_monitor_configuration(ctx, from_json, apm_domain_id, display_name, monitor_type, vantage_points, repeat_interval_in_seconds, configuration_network_configuration, script_id, status, is_run_once, timeout_in_seconds, target, script_parameters, availability_configuration, maintenance_window_schedule, freeform_tags, defined_tags, is_run_now, scheduling_policy, batch_interval_in_seconds, configuration_is_failure_retried, configuration_dns_configuration):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['configuration'] = {}
+    _details['displayName'] = display_name
+    _details['monitorType'] = monitor_type
+    _details['vantagePoints'] = cli_util.parse_json_parameter("vantage_points", vantage_points)
+    _details['repeatIntervalInSeconds'] = repeat_interval_in_seconds
+    _details['configuration']['networkConfiguration'] = cli_util.parse_json_parameter("configuration_network_configuration", configuration_network_configuration)
+
+    if script_id is not None:
+        _details['scriptId'] = script_id
+
+    if status is not None:
+        _details['status'] = status
+
+    if is_run_once is not None:
+        _details['isRunOnce'] = is_run_once
+
+    if timeout_in_seconds is not None:
+        _details['timeoutInSeconds'] = timeout_in_seconds
+
+    if target is not None:
+        _details['target'] = target
+
+    if script_parameters is not None:
+        _details['scriptParameters'] = cli_util.parse_json_parameter("script_parameters", script_parameters)
+
+    if availability_configuration is not None:
+        _details['availabilityConfiguration'] = cli_util.parse_json_parameter("availability_configuration", availability_configuration)
+
+    if maintenance_window_schedule is not None:
+        _details['maintenanceWindowSchedule'] = cli_util.parse_json_parameter("maintenance_window_schedule", maintenance_window_schedule)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if is_run_now is not None:
+        _details['isRunNow'] = is_run_now
+
+    if scheduling_policy is not None:
+        _details['schedulingPolicy'] = scheduling_policy
+
+    if batch_interval_in_seconds is not None:
+        _details['batchIntervalInSeconds'] = batch_interval_in_seconds
+
+    if configuration_is_failure_retried is not None:
+        _details['configuration']['isFailureRetried'] = configuration_is_failure_retried
+
+    if configuration_dns_configuration is not None:
+        _details['configuration']['dnsConfiguration'] = cli_util.parse_json_parameter("configuration_dns_configuration", configuration_dns_configuration)
+
+    _details['configuration']['configType'] = 'NETWORK_CONFIG'
 
     client = cli_util.build_client('apm_synthetics', 'apm_synthetic', ctx)
     result = client.create_monitor(
@@ -1408,7 +1506,7 @@ def update_dedicated_vantage_point_oracle_rm_stack(ctx, from_json, force, apm_do
 @cli_util.option('--repeat-interval-in-seconds', type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds for Scripted REST, Scripted Browser and Browser monitors, and 60 seconds for REST monitor.""")
 @cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. If isFailureRetried is true, then timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. If isFailureRetried is false, then timeout cannot be more than 50% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60 for Scripted REST, Scripted Browser and Browser monitors. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
-@cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
+@cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is. For NETWORK monitor with TCP protocol, a port needs to be provided along with target. Example: 192.168.0.1:80""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
 
 This option is a JSON list with items of type MonitorScriptParameter.  For documentation on MonitorScriptParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/MonitorScriptParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1514,7 +1612,7 @@ def update_monitor(ctx, from_json, force, apm_domain_id, monitor_id, display_nam
 @cli_util.option('--repeat-interval-in-seconds', type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds for Scripted REST, Scripted Browser and Browser monitors, and 60 seconds for REST monitor.""")
 @cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. If isFailureRetried is true, then timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. If isFailureRetried is false, then timeout cannot be more than 50% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60 for Scripted REST, Scripted Browser and Browser monitors. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
-@cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
+@cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is. For NETWORK monitor with TCP protocol, a port needs to be provided along with target. Example: 192.168.0.1:80""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
 
 This option is a JSON list with items of type MonitorScriptParameter.  For documentation on MonitorScriptParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/MonitorScriptParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1639,7 +1737,7 @@ def update_monitor_scripted_rest_monitor_configuration(ctx, from_json, force, ap
 @cli_util.option('--repeat-interval-in-seconds', type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds for Scripted REST, Scripted Browser and Browser monitors, and 60 seconds for REST monitor.""")
 @cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. If isFailureRetried is true, then timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. If isFailureRetried is false, then timeout cannot be more than 50% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60 for Scripted REST, Scripted Browser and Browser monitors. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
-@cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
+@cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is. For NETWORK monitor with TCP protocol, a port needs to be provided along with target. Example: 192.168.0.1:80""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
 
 This option is a JSON list with items of type MonitorScriptParameter.  For documentation on MonitorScriptParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/MonitorScriptParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1654,7 +1752,7 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @cli_util.option('--configuration-is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
 @cli_util.option('--configuration-dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-is-certificate-validation-enabled', type=click.BOOL, help=u"""If certificate validation is enabled, then the call will fail in case of certification errors.""")
-@cli_util.option('--configuration-is-default-snapshot-enabled', type=click.BOOL, help=u"""If disabled then auto snapshots are not collected.""")
+@cli_util.option('--configuration-is-default-snapshot-enabled', type=click.BOOL, help=u"""If disabled, auto snapshots are not collected.""")
 @cli_util.option('--configuration-network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
@@ -1764,7 +1862,7 @@ def update_monitor_scripted_browser_monitor_configuration(ctx, from_json, force,
 @cli_util.option('--repeat-interval-in-seconds', type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds for Scripted REST, Scripted Browser and Browser monitors, and 60 seconds for REST monitor.""")
 @cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. If isFailureRetried is true, then timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. If isFailureRetried is false, then timeout cannot be more than 50% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60 for Scripted REST, Scripted Browser and Browser monitors. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
-@cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
+@cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is. For NETWORK monitor with TCP protocol, a port needs to be provided along with target. Example: 192.168.0.1:80""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
 
 This option is a JSON list with items of type MonitorScriptParameter.  For documentation on MonitorScriptParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/MonitorScriptParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1929,7 +2027,7 @@ def update_monitor_rest_monitor_configuration(ctx, from_json, force, apm_domain_
 @cli_util.option('--repeat-interval-in-seconds', type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds for Scripted REST, Scripted Browser and Browser monitors, and 60 seconds for REST monitor.""")
 @cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. If isFailureRetried is true, then timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. If isFailureRetried is false, then timeout cannot be more than 50% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60 for Scripted REST, Scripted Browser and Browser monitors. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
-@cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is.""")
+@cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is. For NETWORK monitor with TCP protocol, a port needs to be provided along with target. Example: 192.168.0.1:80""")
 @cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
 
 This option is a JSON list with items of type MonitorScriptParameter.  For documentation on MonitorScriptParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/MonitorScriptParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1944,7 +2042,7 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @cli_util.option('--configuration-is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
 @cli_util.option('--configuration-dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-is-certificate-validation-enabled', type=click.BOOL, help=u"""If certificate validation is enabled, then the call will fail in case of certification errors.""")
-@cli_util.option('--configuration-is-default-snapshot-enabled', type=click.BOOL, help=u"""If disabled then auto snapshots are not collected.""")
+@cli_util.option('--configuration-is-default-snapshot-enabled', type=click.BOOL, help=u"""If disabled, auto snapshots are not collected.""")
 @cli_util.option('--configuration-verify-texts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Verifies all the search strings present in the response. If any search string is not present in the response, then it will be considered as a failure.
 
 This option is a JSON list with items of type VerifyText.  For documentation on VerifyText please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/VerifyText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2043,6 +2141,121 @@ def update_monitor_browser_monitor_configuration(ctx, from_json, force, apm_doma
         _details['configuration']['networkConfiguration'] = cli_util.parse_json_parameter("configuration_network_configuration", configuration_network_configuration)
 
     _details['configuration']['configType'] = 'BROWSER_CONFIG'
+
+    client = cli_util.build_client('apm_synthetics', 'apm_synthetic', ctx)
+    result = client.update_monitor(
+        apm_domain_id=apm_domain_id,
+        monitor_id=monitor_id,
+        update_monitor_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@monitor_group.command(name=cli_util.override('apm_synthetics.update_monitor_network_monitor_configuration.command_name', 'update-monitor-network-monitor-configuration'), help=u"""Updates the monitor. \n[Command Reference](updateMonitor)""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
+@cli_util.option('--monitor-id', required=True, help=u"""The OCID of the monitor.""")
+@cli_util.option('--configuration-network-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""Unique name that can be edited. The name should not contain any confidential information.""")
+@cli_util.option('--vantage-points', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of public and dedicated vantage points from which to execute the monitor. Use /publicVantagePoints to fetch public vantage points, and /dedicatedVantagePoints to fetch dedicated vantage points.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--script-id', help=u"""The [OCID] of the script. scriptId is mandatory for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "INVALID"]), help=u"""Enables or disables the monitor.""")
+@cli_util.option('--repeat-interval-in-seconds', type=click.INT, help=u"""Interval in seconds after the start time when the job should be repeated. Minimum repeatIntervalInSeconds should be 300 seconds for Scripted REST, Scripted Browser and Browser monitors, and 60 seconds for REST monitor.""")
+@cli_util.option('--is-run-once', type=click.BOOL, help=u"""If runOnce is enabled, then the monitor will run once.""")
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout in seconds. If isFailureRetried is true, then timeout cannot be more than 30% of repeatIntervalInSeconds time for monitors. If isFailureRetried is false, then timeout cannot be more than 50% of repeatIntervalInSeconds time for monitors. Also, timeoutInSeconds should be a multiple of 60 for Scripted REST, Scripted Browser and Browser monitors. Monitor will be allowed to run only for timeoutInSeconds time. It would be terminated after that.""")
+@cli_util.option('--target', help=u"""Specify the endpoint on which to run the monitor. For BROWSER and REST monitor types, target is mandatory. If target is specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script (specified by scriptId in monitor) against the specified target endpoint. If target is not specified in the SCRIPTED_BROWSER monitor type, then the monitor will run the selected script as it is. For NETWORK monitor with TCP protocol, a port needs to be provided along with target. Example: 192.168.0.1:80""")
+@cli_util.option('--script-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters in the monitor. This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor types. For other monitor types, it should be set to null. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\"}]`
+
+This option is a JSON list with items of type MonitorScriptParameter.  For documentation on MonitorScriptParameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/apmsynthetic/20200630/datatypes/MonitorScriptParameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--availability-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--maintenance-window-schedule', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-run-now', type=click.BOOL, help=u"""If isRunNow is enabled, then the monitor will run immediately.""")
+@cli_util.option('--scheduling-policy', type=custom_types.CliCaseInsensitiveChoice(["ALL", "ROUND_ROBIN", "BATCHED_ROUND_ROBIN"]), help=u"""Scheduling policy to decide the distribution of monitor executions on vantage points.""")
+@cli_util.option('--batch-interval-in-seconds', type=click.INT, help=u"""Time interval between two runs in round robin batch mode (SchedulingPolicy - BATCHED_ROUND_ROBIN).""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--configuration-is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
+@cli_util.option('--configuration-dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@cli_util.wrap_exceptions
+def update_monitor_network_monitor_configuration(ctx, from_json, force, apm_domain_id, monitor_id, configuration_network_configuration, display_name, vantage_points, script_id, status, repeat_interval_in_seconds, is_run_once, timeout_in_seconds, target, script_parameters, availability_configuration, maintenance_window_schedule, freeform_tags, defined_tags, is_run_now, scheduling_policy, batch_interval_in_seconds, if_match, configuration_is_failure_retried, configuration_dns_configuration):
+
+    if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
+        raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
+    if not force:
+        if vantage_points or script_parameters or availability_configuration or maintenance_window_schedule or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to vantage-points and script-parameters and availability-configuration and maintenance-window-schedule and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['configuration'] = {}
+    _details['configuration']['networkConfiguration'] = cli_util.parse_json_parameter("configuration_network_configuration", configuration_network_configuration)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if vantage_points is not None:
+        _details['vantagePoints'] = cli_util.parse_json_parameter("vantage_points", vantage_points)
+
+    if script_id is not None:
+        _details['scriptId'] = script_id
+
+    if status is not None:
+        _details['status'] = status
+
+    if repeat_interval_in_seconds is not None:
+        _details['repeatIntervalInSeconds'] = repeat_interval_in_seconds
+
+    if is_run_once is not None:
+        _details['isRunOnce'] = is_run_once
+
+    if timeout_in_seconds is not None:
+        _details['timeoutInSeconds'] = timeout_in_seconds
+
+    if target is not None:
+        _details['target'] = target
+
+    if script_parameters is not None:
+        _details['scriptParameters'] = cli_util.parse_json_parameter("script_parameters", script_parameters)
+
+    if availability_configuration is not None:
+        _details['availabilityConfiguration'] = cli_util.parse_json_parameter("availability_configuration", availability_configuration)
+
+    if maintenance_window_schedule is not None:
+        _details['maintenanceWindowSchedule'] = cli_util.parse_json_parameter("maintenance_window_schedule", maintenance_window_schedule)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if is_run_now is not None:
+        _details['isRunNow'] = is_run_now
+
+    if scheduling_policy is not None:
+        _details['schedulingPolicy'] = scheduling_policy
+
+    if batch_interval_in_seconds is not None:
+        _details['batchIntervalInSeconds'] = batch_interval_in_seconds
+
+    if configuration_is_failure_retried is not None:
+        _details['configuration']['isFailureRetried'] = configuration_is_failure_retried
+
+    if configuration_dns_configuration is not None:
+        _details['configuration']['dnsConfiguration'] = cli_util.parse_json_parameter("configuration_dns_configuration", configuration_dns_configuration)
+
+    _details['configuration']['configType'] = 'NETWORK_CONFIG'
 
     client = cli_util.build_client('apm_synthetics', 'apm_synthetic', ctx)
     result = client.update_monitor(

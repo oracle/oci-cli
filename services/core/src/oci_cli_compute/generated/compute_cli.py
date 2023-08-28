@@ -4337,15 +4337,16 @@ Intel and AMD processors have two hardware execution threads per core (OCPU). SM
 @cli_util.option('--platform-config-is-access-control-service-enabled', type=click.BOOL, help=u"""Whether the Access Control Service is enabled on the instance. When enabled, the platform can enforce PCIe device isolation, required for VFIO device pass-through.""")
 @cli_util.option('--platform-config-are-virtual-instructions-enabled', type=click.BOOL, help=u"""Whether virtualization instructions are available. For example, Secure Virtual Machine for AMD shapes or VT-x for Intel shapes.""")
 @cli_util.option('--platform-config-is-input-output-memory-management-unit-enabled', type=click.BOOL, help=u"""Whether the input-output memory management unit is enabled.""")
+@cli_util.option('--platform-config-config-map', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Instance Platform Configuration Configuration Map for flexible setting input.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_rome_bm_gpu_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, instance_configuration_id, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled):
+def launch_instance_amd_rome_bm_gpu_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, instance_configuration_id, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_config_map):
 
     kwargs = {}
 
@@ -4452,6 +4453,9 @@ def launch_instance_amd_rome_bm_gpu_launch_instance_platform_config(ctx, from_js
 
     if platform_config_is_input_output_memory_management_unit_enabled is not None:
         _details['platformConfig']['isInputOutputMemoryManagementUnitEnabled'] = platform_config_is_input_output_memory_management_unit_enabled
+
+    if platform_config_config_map is not None:
+        _details['platformConfig']['configMap'] = cli_util.parse_json_parameter("platform_config_config_map", platform_config_config_map)
 
     _details['platformConfig']['type'] = 'AMD_ROME_BM_GPU'
 
@@ -4599,15 +4603,16 @@ Intel and AMD processors have two hardware execution threads per core (OCPU). SM
 @cli_util.option('--platform-config-percentage-of-cores-enabled', type=click.INT, help=u"""The percentage of cores enabled. Value must be a multiple of 25%. If the requested percentage results in a fractional number of cores, the system rounds up the number of cores across processors and provisions an instance with a whole number of cores.
 
 If the applications that you run on the instance use a core-based licensing model and need fewer cores than the full size of the shape, you can disable cores to reduce your licensing costs. The instance itself is billed for the full shape, regardless of whether all cores are enabled.""")
+@cli_util.option('--platform-config-config-map', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Instance Platform Configuration Configuration Map for flexible setting input.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_rome_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, instance_configuration_id, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled):
+def launch_instance_amd_rome_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, instance_configuration_id, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled, platform_config_config_map):
 
     kwargs = {}
 
@@ -4717,6 +4722,9 @@ def launch_instance_amd_rome_bm_launch_instance_platform_config(ctx, from_json, 
 
     if platform_config_percentage_of_cores_enabled is not None:
         _details['platformConfig']['percentageOfCoresEnabled'] = platform_config_percentage_of_cores_enabled
+
+    if platform_config_config_map is not None:
+        _details['platformConfig']['configMap'] = cli_util.parse_json_parameter("platform_config_config_map", platform_config_config_map)
 
     _details['platformConfig']['type'] = 'AMD_ROME_BM'
 
@@ -4862,15 +4870,16 @@ Intel and AMD processors have two hardware execution threads per core (OCPU). SM
 @cli_util.option('--platform-config-percentage-of-cores-enabled', type=click.INT, help=u"""The percentage of cores enabled. Value must be a multiple of 25%. If the requested percentage results in a fractional number of cores, the system rounds up the number of cores across processors and provisions an instance with a whole number of cores.
 
 If the applications that you run on the instance use a core-based licensing model and need fewer cores than the full size of the shape, you can disable cores to reduce your licensing costs. The instance itself is billed for the full shape, regardless of whether all cores are enabled.""")
+@cli_util.option('--platform-config-config-map', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Instance Platform Configuration Configuration Map for flexible setting input.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_intel_icelake_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, instance_configuration_id, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled):
+def launch_instance_intel_icelake_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, instance_configuration_id, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled, platform_config_config_map):
 
     kwargs = {}
 
@@ -4974,6 +4983,9 @@ def launch_instance_intel_icelake_bm_launch_instance_platform_config(ctx, from_j
 
     if platform_config_percentage_of_cores_enabled is not None:
         _details['platformConfig']['percentageOfCoresEnabled'] = platform_config_percentage_of_cores_enabled
+
+    if platform_config_config_map is not None:
+        _details['platformConfig']['configMap'] = cli_util.parse_json_parameter("platform_config_config_map", platform_config_config_map)
 
     _details['platformConfig']['type'] = 'INTEL_ICELAKE_BM'
 
@@ -5585,15 +5597,24 @@ You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--platform-config-is-trusted-platform-module-enabled', type=click.BOOL, help=u"""Whether the Trusted Platform Module (TPM) is enabled on the instance.""")
 @cli_util.option('--platform-config-is-measured-boot-enabled', type=click.BOOL, help=u"""Whether the Measured Boot feature is enabled on the instance.""")
 @cli_util.option('--platform-config-is-memory-encryption-enabled', type=click.BOOL, help=u"""Whether the instance is a confidential instance. If this value is `true`, the instance is a confidential instance. The default value is `false`.""")
+@cli_util.option('--platform-config-numa-nodes-per-socket', type=custom_types.CliCaseInsensitiveChoice(["NPS1", "NPS2"]), help=u"""The number of NUMA nodes per socket (NPS).""")
+@cli_util.option('--platform-config-is-symmetric-multi-threading-enabled', type=click.BOOL, help=u"""Whether symmetric multithreading is enabled on the instance. Symmetric multithreading is also called simultaneous multithreading (SMT) or Intel Hyper-Threading.
+
+Intel and AMD processors have two hardware execution threads per core (OCPU). SMT permits multiple independent threads of execution, to better use the resources and increase the efficiency of the CPU. When multithreading is disabled, only one thread is permitted to run on each core, which can provide higher or more predictable performance for some workloads.""")
+@cli_util.option('--platform-config-is-input-output-memory-management-unit-enabled', type=click.BOOL, help=u"""Whether the input-output memory management unit is enabled.""")
+@cli_util.option('--platform-config-percentage-of-cores-enabled', type=click.INT, help=u"""The percentage of cores enabled. Value must be a multiple of 25%. If the requested percentage results in a fractional number of cores, the system rounds up the number of cores across processors and provisions an instance with a whole number of cores.
+
+If the applications that you run on the instance use a core-based licensing model and need fewer cores than the full size of the shape, you can disable cores to reduce your licensing costs. The instance itself is billed for the full shape, regardless of whether all cores are enabled.""")
+@cli_util.option('--platform-config-config-map', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Instance Platform Configuration Configuration Map for flexible setting input.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_intel_skylake_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, instance_configuration_id, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled):
+def launch_instance_intel_skylake_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, instance_configuration_id, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled, platform_config_config_map):
 
     kwargs = {}
 
@@ -5685,6 +5706,21 @@ def launch_instance_intel_skylake_bm_launch_instance_platform_config(ctx, from_j
 
     if platform_config_is_memory_encryption_enabled is not None:
         _details['platformConfig']['isMemoryEncryptionEnabled'] = platform_config_is_memory_encryption_enabled
+
+    if platform_config_numa_nodes_per_socket is not None:
+        _details['platformConfig']['numaNodesPerSocket'] = platform_config_numa_nodes_per_socket
+
+    if platform_config_is_symmetric_multi_threading_enabled is not None:
+        _details['platformConfig']['isSymmetricMultiThreadingEnabled'] = platform_config_is_symmetric_multi_threading_enabled
+
+    if platform_config_is_input_output_memory_management_unit_enabled is not None:
+        _details['platformConfig']['isInputOutputMemoryManagementUnitEnabled'] = platform_config_is_input_output_memory_management_unit_enabled
+
+    if platform_config_percentage_of_cores_enabled is not None:
+        _details['platformConfig']['percentageOfCoresEnabled'] = platform_config_percentage_of_cores_enabled
+
+    if platform_config_config_map is not None:
+        _details['platformConfig']['configMap'] = cli_util.parse_json_parameter("platform_config_config_map", platform_config_config_map)
 
     _details['platformConfig']['type'] = 'INTEL_SKYLAKE_BM'
 
@@ -5832,15 +5868,16 @@ Intel and AMD processors have two hardware execution threads per core (OCPU). SM
 @cli_util.option('--platform-config-percentage-of-cores-enabled', type=click.INT, help=u"""The percentage of cores enabled. Value must be a multiple of 25%. If the requested percentage results in a fractional number of cores, the system rounds up the number of cores across processors and provisions an instance with a whole number of cores.
 
 If the applications that you run on the instance use a core-based licensing model and need fewer cores than the full size of the shape, you can disable cores to reduce your licensing costs. The instance itself is billed for the full shape, regardless of whether all cores are enabled.""")
+@cli_util.option('--platform-config-config-map', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Instance Platform Configuration Configuration Map for flexible setting input.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_milan_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, instance_configuration_id, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled):
+def launch_instance_amd_milan_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, instance_configuration_id, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled, platform_config_config_map):
 
     kwargs = {}
 
@@ -5951,7 +5988,279 @@ def launch_instance_amd_milan_bm_launch_instance_platform_config(ctx, from_json,
     if platform_config_percentage_of_cores_enabled is not None:
         _details['platformConfig']['percentageOfCoresEnabled'] = platform_config_percentage_of_cores_enabled
 
+    if platform_config_config_map is not None:
+        _details['platformConfig']['configMap'] = cli_util.parse_json_parameter("platform_config_config_map", platform_config_config_map)
+
     _details['platformConfig']['type'] = 'AMD_MILAN_BM'
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.launch_instance(
+        launch_instance_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_instance') and callable(getattr(client, 'get_instance')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_instance(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@instance_group.command(name=cli_util.override('compute.launch_instance_generic_bm_launch_instance_platform_config.command_name', 'launch-instance-generic-bm-launch-instance-platform-config'), help=u"""Creates a new instance in the specified compartment and the specified availability domain. For general information about instances, see [Overview of the Compute Service].
+
+For information about access control and compartments, see [Overview of the IAM Service].
+
+For information about availability domains, see [Regions and Availability Domains]. To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
+
+All Oracle Cloud Infrastructure resources, including instances, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console.
+
+To launch an instance using an image or a boot volume use the `sourceDetails` parameter in [LaunchInstanceDetails].
+
+When you launch an instance, it is automatically attached to a virtual network interface card (VNIC), called the *primary VNIC*. The VNIC has a private IP address from the subnet's CIDR. You can either assign a private IP address of your choice or let Oracle automatically assign one. You can choose whether the instance has a public IP address. To retrieve the addresses, use the [ListVnicAttachments] operation to get the VNIC ID for the instance, and then call [GetVnic] with the VNIC ID.
+
+You can later add secondary VNICs to an instance. For more information, see [Virtual Network Interface Cards (VNICs)].
+
+To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion].
+
+To determine whether capacity is available for a specific shape before you create an instance, use the [CreateComputeCapacityReport] operation. \n[Command Reference](launchInstance)""")
+@cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
+@cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--extended-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata key/value pairs that you provide. They serve the same purpose and functionality as fields in the `metadata` object.
+
+They are distinguished from `metadata` fields in that these can be nested JSON objects (whereas `metadata` fields are string/string maps only).
+
+The combined size of the `metadata` and `extendedMetadata` objects can be a maximum of 32,000 bytes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--fault-domain', help=u"""A fault domain is a grouping of hardware and infrastructure within an availability domain. Each availability domain contains three fault domains. Fault domains let you distribute your instances so that they are not on the same physical hardware within a single availability domain. A hardware failure or Compute hardware maintenance that affects one fault domain does not affect instances in other fault domains.
+
+If you do not specify the fault domain, the system selects one for you.
+
+ To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
+
+Example: `FAULT-DOMAIN-1`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
+@cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
+@cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
+@cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
+
+When a bare metal or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
+
+If you want more control over the boot process, you can provide your own custom iPXE script that will run when the instance boots. Be aware that the same iPXE script will run every time an instance boots, not only after the initial LaunchInstance call.
+
+The default iPXE script connects to the instance's local boot volume over iSCSI and performs a network boot. If you use a custom iPXE script and want to network-boot from the instance's local boot volume over iSCSI the same way as the default iPXE script, use the following iSCSI IP address: 169.254.0.2, and boot volume IQN: iqn.2015-02.oracle.boot.
+
+If your instance boot volume type is paravirtualized, the boot volume is attached to the instance through virtio-scsi and no iPXE script is used. If your instance boot volume type is paravirtualized and you use custom iPXE to network boot into your instance, the primary boot volume is attached as a data volume through virtio-scsi drive.
+
+For more information about the Bring Your Own Image feature of Oracle Cloud Infrastructure, see [Bring Your Own Image].
+
+For more information about iPXE, see http://ipxe.org.""")
+@cli_util.option('--launch-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--instance-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--availability-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--preemptible-instance-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Custom metadata key/value pairs that you provide, such as the SSH public key required to connect to the instance.
+
+A metadata service runs on every launched instance. The service is an HTTP endpoint listening on 169.254.169.254. You can use the service to:
+
+* Provide information to [Cloud-Init]   to be used for various system initialization tasks.
+
+* Get information about the instance, including the custom metadata that you   provide when you launch the instance.
+
+ **Providing Cloud-Init Metadata**
+
+ You can use the following metadata key names to provide information to  Cloud-Init:
+
+ **\"ssh_authorized_keys\"** - Provide one or more public SSH keys to be  included in the `~/.ssh/authorized_keys` file for the default user on the  instance. Use a newline character to separate multiple keys. The SSH  keys must be in the format necessary for the `authorized_keys` file, as shown  in the example below.
+
+ **\"user_data\"** - Provide your own base64-encoded data to be used by  Cloud-Init to run custom scripts or provide custom Cloud-Init configuration. For  information about how to take advantage of user data, see the  [Cloud-Init Documentation].
+
+ **Metadata Example**
+
+      \"metadata\" : {          \"quake_bot_level\" : \"Severe\",          \"ssh_authorized_keys\" : \"ssh-rsa <your_public_SSH_key>== rsa-key-20160227\",          \"user_data\" : \"<your_public_SSH_key>==\"       }  **Getting Metadata on the Instance**
+
+ To get information about your instance, connect to the instance using SSH and issue any of the  following GET requests:
+
+     curl -H \"Authorization: Bearer Oracle\" http://169.254.169.254/opc/v2/instance/      curl -H \"Authorization: Bearer Oracle\" http://169.254.169.254/opc/v2/instance/metadata/      curl -H \"Authorization: Bearer Oracle\" http://169.254.169.254/opc/v2/instance/metadata/<any-key-name>
+
+ You'll get back a response that includes all the instance information; only the metadata information; or  the metadata information for the specified key name, respectively.
+
+ The combined size of the `metadata` and `extendedMetadata` objects can be a maximum of 32,000 bytes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--agent-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--shape', help=u"""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
+
+You can enumerate all available shapes by calling [ListShapes].""")
+@cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
+@cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
+@cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
+@cli_util.option('--platform-config-is-secure-boot-enabled', type=click.BOOL, help=u"""Whether Secure Boot is enabled on the instance.""")
+@cli_util.option('--platform-config-is-trusted-platform-module-enabled', type=click.BOOL, help=u"""Whether the Trusted Platform Module (TPM) is enabled on the instance.""")
+@cli_util.option('--platform-config-is-measured-boot-enabled', type=click.BOOL, help=u"""Whether the Measured Boot feature is enabled on the instance.""")
+@cli_util.option('--platform-config-is-memory-encryption-enabled', type=click.BOOL, help=u"""Whether the instance is a confidential instance. If this value is `true`, the instance is a confidential instance. The default value is `false`.""")
+@cli_util.option('--platform-config-numa-nodes-per-socket', type=custom_types.CliCaseInsensitiveChoice(["NPS0", "NPS1", "NPS2", "NPS4"]), help=u"""The number of NUMA nodes per socket (NPS).""")
+@cli_util.option('--platform-config-is-symmetric-multi-threading-enabled', type=click.BOOL, help=u"""Whether symmetric multithreading is enabled on the instance. Symmetric multithreading is also called simultaneous multithreading (SMT) or Intel Hyper-Threading.
+
+Intel and AMD processors have two hardware execution threads per core (OCPU). SMT permits multiple independent threads of execution, to better use the resources and increase the efficiency of the CPU. When multithreading is disabled, only one thread is permitted to run on each core, which can provide higher or more predictable performance for some workloads.""")
+@cli_util.option('--platform-config-is-access-control-service-enabled', type=click.BOOL, help=u"""Whether the Access Control Service is enabled on the instance. When enabled, the platform can enforce PCIe device isolation, required for VFIO device pass-through.""")
+@cli_util.option('--platform-config-are-virtual-instructions-enabled', type=click.BOOL, help=u"""Whether virtualization instructions are available. For example, Secure Virtual Machine for AMD shapes or VT-x for Intel shapes.""")
+@cli_util.option('--platform-config-is-input-output-memory-management-unit-enabled', type=click.BOOL, help=u"""Whether the input-output memory management unit is enabled.""")
+@cli_util.option('--platform-config-percentage-of-cores-enabled', type=click.INT, help=u"""The percentage of cores enabled. Value must be a multiple of 25%. If the requested percentage results in a fractional number of cores, the system rounds up the number of cores across processors and provisions an instance with a whole number of cores.
+
+If the applications that you run on the instance use a core-based licensing model and need fewer cores than the full size of the shape, you can disable cores to reduce your licensing costs. The instance itself is billed for the full shape, regardless of whether all cores are enabled.""")
+@cli_util.option('--platform-config-config-map', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Instance Platform Configuration Configuration Map for flexible setting input.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Instance'})
+@cli_util.wrap_exceptions
+def launch_instance_generic_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, instance_configuration_id, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled, platform_config_config_map):
+
+    kwargs = {}
+
+    _details = {}
+    _details['platformConfig'] = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['compartmentId'] = compartment_id
+
+    if capacity_reservation_id is not None:
+        _details['capacityReservationId'] = capacity_reservation_id
+
+    if create_vnic_details is not None:
+        _details['createVnicDetails'] = cli_util.parse_json_parameter("create_vnic_details", create_vnic_details)
+
+    if dedicated_vm_host_id is not None:
+        _details['dedicatedVmHostId'] = dedicated_vm_host_id
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if extended_metadata is not None:
+        _details['extendedMetadata'] = cli_util.parse_json_parameter("extended_metadata", extended_metadata)
+
+    if fault_domain is not None:
+        _details['faultDomain'] = fault_domain
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if compute_cluster_id is not None:
+        _details['computeClusterId'] = compute_cluster_id
+
+    if hostname_label is not None:
+        _details['hostnameLabel'] = hostname_label
+
+    if image_id is not None:
+        _details['imageId'] = image_id
+
+    if ipxe_script_file is not None:
+        _details['ipxeScript'] = ipxe_script_file.read()
+
+    if launch_options is not None:
+        _details['launchOptions'] = cli_util.parse_json_parameter("launch_options", launch_options)
+
+    if instance_options is not None:
+        _details['instanceOptions'] = cli_util.parse_json_parameter("instance_options", instance_options)
+
+    if availability_config is not None:
+        _details['availabilityConfig'] = cli_util.parse_json_parameter("availability_config", availability_config)
+
+    if preemptible_instance_config is not None:
+        _details['preemptibleInstanceConfig'] = cli_util.parse_json_parameter("preemptible_instance_config", preemptible_instance_config)
+
+    if metadata is not None:
+        _details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
+
+    if agent_config is not None:
+        _details['agentConfig'] = cli_util.parse_json_parameter("agent_config", agent_config)
+
+    if shape is not None:
+        _details['shape'] = shape
+
+    if shape_config is not None:
+        _details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
+
+    if source_details is not None:
+        _details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
+
+    if subnet_id is not None:
+        _details['subnetId'] = subnet_id
+
+    if is_pv_encryption_in_transit_enabled is not None:
+        _details['isPvEncryptionInTransitEnabled'] = is_pv_encryption_in_transit_enabled
+
+    if instance_configuration_id is not None:
+        _details['instanceConfigurationId'] = instance_configuration_id
+
+    if platform_config_is_secure_boot_enabled is not None:
+        _details['platformConfig']['isSecureBootEnabled'] = platform_config_is_secure_boot_enabled
+
+    if platform_config_is_trusted_platform_module_enabled is not None:
+        _details['platformConfig']['isTrustedPlatformModuleEnabled'] = platform_config_is_trusted_platform_module_enabled
+
+    if platform_config_is_measured_boot_enabled is not None:
+        _details['platformConfig']['isMeasuredBootEnabled'] = platform_config_is_measured_boot_enabled
+
+    if platform_config_is_memory_encryption_enabled is not None:
+        _details['platformConfig']['isMemoryEncryptionEnabled'] = platform_config_is_memory_encryption_enabled
+
+    if platform_config_numa_nodes_per_socket is not None:
+        _details['platformConfig']['numaNodesPerSocket'] = platform_config_numa_nodes_per_socket
+
+    if platform_config_is_symmetric_multi_threading_enabled is not None:
+        _details['platformConfig']['isSymmetricMultiThreadingEnabled'] = platform_config_is_symmetric_multi_threading_enabled
+
+    if platform_config_is_access_control_service_enabled is not None:
+        _details['platformConfig']['isAccessControlServiceEnabled'] = platform_config_is_access_control_service_enabled
+
+    if platform_config_are_virtual_instructions_enabled is not None:
+        _details['platformConfig']['areVirtualInstructionsEnabled'] = platform_config_are_virtual_instructions_enabled
+
+    if platform_config_is_input_output_memory_management_unit_enabled is not None:
+        _details['platformConfig']['isInputOutputMemoryManagementUnitEnabled'] = platform_config_is_input_output_memory_management_unit_enabled
+
+    if platform_config_percentage_of_cores_enabled is not None:
+        _details['platformConfig']['percentageOfCoresEnabled'] = platform_config_percentage_of_cores_enabled
+
+    if platform_config_config_map is not None:
+        _details['platformConfig']['configMap'] = cli_util.parse_json_parameter("platform_config_config_map", platform_config_config_map)
+
+    _details['platformConfig']['type'] = 'GENERIC_BM'
 
     client = cli_util.build_client('core', 'compute', ctx)
     result = client.launch_instance(
@@ -6094,15 +6403,16 @@ Intel and AMD processors have two hardware execution threads per core (OCPU). SM
 @cli_util.option('--platform-config-is-access-control-service-enabled', type=click.BOOL, help=u"""Whether the Access Control Service is enabled on the instance. When enabled, the platform can enforce PCIe device isolation, required for VFIO device pass-through.""")
 @cli_util.option('--platform-config-are-virtual-instructions-enabled', type=click.BOOL, help=u"""Whether virtualization instructions are available. For example, Secure Virtual Machine for AMD shapes or VT-x for Intel shapes.""")
 @cli_util.option('--platform-config-is-input-output-memory-management-unit-enabled', type=click.BOOL, help=u"""Whether the input-output memory management unit is enabled.""")
+@cli_util.option('--platform-config-config-map', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Instance Platform Configuration Configuration Map for flexible setting input.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_milan_bm_gpu_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, instance_configuration_id, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled):
+def launch_instance_amd_milan_bm_gpu_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled, instance_configuration_id, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_config_map):
 
     kwargs = {}
 
@@ -6209,6 +6519,9 @@ def launch_instance_amd_milan_bm_gpu_launch_instance_platform_config(ctx, from_j
 
     if platform_config_is_input_output_memory_management_unit_enabled is not None:
         _details['platformConfig']['isInputOutputMemoryManagementUnitEnabled'] = platform_config_is_input_output_memory_management_unit_enabled
+
+    if platform_config_config_map is not None:
+        _details['platformConfig']['configMap'] = cli_util.parse_json_parameter("platform_config_config_map", platform_config_config_map)
 
     _details['platformConfig']['type'] = 'AMD_MILAN_BM_GPU'
 

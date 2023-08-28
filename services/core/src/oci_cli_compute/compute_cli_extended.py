@@ -539,13 +539,15 @@ def list_vnics(ctx, from_json, compartment_id, availability_domain, instance_id,
 @cli_util.option('--private-ip', help="""A private IP address of your choice to assign to the default VNIC attached to this instance. Must be an available IP address within the subnet's CIDR. If no value is specified, a private IP address from the subnet will be automatically assigned.""")
 @cli_util.option('--skip-source-dest-check', type=click.BOOL, help="""Indicates whether Source/Destination check is disabled on the VNIC. Defaults to `false`, in which case we enable Source/Destination check on the VNIC.""")
 @cli_util.option('--assign-private-dns-record', type=click.BOOL, help="""Whether the VNIC should be assigned a DNS record. If set to false, no DNS record registion for the VNIC; if set to true, DNS record will be registered. The default value is `true`.""")
+@cli_util.option("--assign-ipv6-ip", type=click.BOOL, help="""Assign an IPv6 address to the instance at launch time. The subnet must support IPv6.""")
+@cli_util.option('--ipv6-address-subnet-cidr-pairs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of IPv6 addresses and subnet CIDR blocks (prefixes) to specify how IPv6 addresses are to be assigned.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--user-data-file', type=click.File('rb'), help="""A file containing data that Cloud-Init can use to run custom scripts or provide custom Cloud-Init configuration. This parameter is a convenience wrapper around the 'user_data' field of the --metadata parameter.  Populating both values in the same call will result in an error. For more info see Cloud-Init documentation: https://cloudinit.readthedocs.org/en/latest/topics/format.html.""")
 @cli_util.option('--ssh-authorized-keys-file', type=click.File('r'), help="""A file containing one or more public SSH keys to be included in the ~/.ssh/authorized_keys file for the default user on the instance. Use a newline character to separate multiple keys. The SSH keys must be in the format necessary for the authorized_keys file. This parameter is a convenience wrapper around the 'ssh_authorized_keys' field of the --metadata parameter. Populating both values in the same call will result in an error. For more info see documentation: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/requests/LaunchInstanceDetails.""")
 @cli_util.option('--source-boot-volume-id', help="""The OCID of the boot volume used to boot the instance. This is a shortcut for specifying a boot volume source via the --source-details complex JSON parameter. If this parameter is provided, you cannot provide the --source-details or --image-id parameters.""")
 @cli_util.option('--boot-volume-size-in-gbs', type=click.INT, help="""The size of the boot volume in GBs. Minimum value is 50 GB and maximum value is 16384 GB (16TB). This is a shortcut for specifying a boot volume size via the --source-details complex JSON parameter. If this parameter is provided, you cannot provide the --source-details or --source-boot-volume-id parameters.""")
 @cli_util.option('--subnet-id', required=True, help=u"""The OCID of the subnet where the VNIC attached to this instance will be created.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'platform-config': {'module': 'core', 'class': 'LaunchInstancePlatformConfig'}, 'nsg-ids': {'module': 'core', 'class': 'list[string]'}}, output_type={'module': 'core', 'class': 'Instance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'platform-config': {'module': 'core', 'class': 'LaunchInstancePlatformConfig'}, 'nsg-ids': {'module': 'core', 'class': 'list[string]'}, 'ipv6-address-subnet-cidr-pairs': {'module': 'core', 'class': 'list[Ipv6AddressIpv6SubnetCidrPairDetails]'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
 def launch_instance_extended(ctx, **kwargs):
     metadata = {}
@@ -592,6 +594,12 @@ def launch_instance_extended(ctx, **kwargs):
     if 'assign_public_ip' in kwargs and kwargs['assign_public_ip'] is not None:
         create_vnic_details['assignPublicIp'] = kwargs['assign_public_ip']
 
+    if 'assign_ipv6_ip' in kwargs and kwargs['assign_ipv6_ip'] is not None:
+        create_vnic_details['assignIpv6Ip'] = kwargs['assign_ipv6_ip']
+
+    if 'ipv6_address_subnet_cidr_pairs' in kwargs and kwargs['ipv6_address_subnet_cidr_pairs'] is not None:
+        create_vnic_details['ipv6AddressIpv6SubnetCidrPairDetails'] = cli_util.parse_json_parameter("ipv6_address_subnet_cidr_pairs", kwargs['ipv6_address_subnet_cidr_pairs'])
+
     if 'skip_source_dest_check' in kwargs and kwargs['skip_source_dest_check'] is not None:
         create_vnic_details['skipSourceDestCheck'] = kwargs['skip_source_dest_check']
 
@@ -636,6 +644,8 @@ def launch_instance_extended(ctx, **kwargs):
     del kwargs['skip_source_dest_check']
     del kwargs['assign_private_dns_record']
     del kwargs['nsg_ids']
+    del kwargs['assign_ipv6_ip']
+    del kwargs['ipv6_address_subnet_cidr_pairs']
 
     # Remove the source_boot_volume_id and boot_volume_size_in_gbs parameters. image_id is an existing parameter so the underlying
     # CLI operation will accept it
@@ -654,6 +664,8 @@ def launch_instance_extended(ctx, **kwargs):
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the [OCIDs] of the network security groups (NSGs) to add the VNIC to..""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vnic-display-name', help="""A user-friendly name for the VNIC. Does not have to be unique.""")
 @cli_util.option('--assign-public-ip', type=click.BOOL, help="""Whether the VNIC should be assigned a public IP address. Defaults to whether the subnet is public or private. If not set and the VNIC is being created in a private subnet (i.e., where prohibitPublicIpOnVnic=true in the Subnet), then no public IP address is assigned. If not set and the subnet is public (prohibitPublicIpOnVnic=false), then a public IP address is assigned. If set to true and prohibitPublicIpOnVnic=true, an error is returned.""")
+@cli_util.option("--assign-ipv6-ip", type=click.BOOL, help="""Assign an IPv6 address to the instance at launch time. The subnet must support IPv6.""")
+@cli_util.option('--ipv6-address-subnet-cidr-pairs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of IPv6 addresses and subnet CIDR blocks (prefixes) to specify how IPv6 addresses are to be assigned.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--skip-source-dest-check', type=click.BOOL, help="""Indicates whether Source/Destination check is disabled on the VNIC. Defaults to `false`, in which case we enable Source/Destination check on the VNIC.""")
 @cli_util.option('--private-ip', help="""A private IP address of your choice to assign to the VNIC. Must be an available IP address within the subnet's CIDR. If no value is specified, a private IP address from the subnet will be automatically assigned.""")
 @cli_util.option('--assign-private-dns-record', type=click.BOOL, help="""Whether the VNIC should be assigned a DNS record. If set to false, no DNS record registion for the VNIC; if set to true, DNS record will be registered. The default value is `true`.""")
@@ -662,12 +674,12 @@ def launch_instance_extended(ctx, **kwargs):
 @cli_util.option('--wait', is_flag=True, default=False, help="""If set, then wait for the attachment to complete and return the newly attached VNIC. If not set, then the command will not wait and will return nothing on success.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'ipv6-address-subnet-cidr-pairs': {'module': 'core', 'class': 'list[Ipv6AddressIpv6SubnetCidrPairDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'nsg-ids': {'module': 'core', 'class': 'list[string]'}}, output_type={'module': 'core', 'class': 'Vnic'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'nsg-ids': {'module': 'core', 'class': 'list[string]'}, 'ipv6-address-subnet-cidr-pairs': {'module': 'core', 'class': 'list[Ipv6AddressIpv6SubnetCidrPairDetails]'}}, output_type={'module': 'core', 'class': 'Vnic'})
 @cli_util.wrap_exceptions
-def attach_vnic(ctx, from_json, instance_id, subnet_id, vlan_id, nsg_ids, vnic_display_name, assign_public_ip, private_ip, assign_private_dns_record, skip_source_dest_check, hostname_label, nic_index, wait, freeform_tags, defined_tags):
+def attach_vnic(ctx, from_json, instance_id, subnet_id, vlan_id, nsg_ids, vnic_display_name, assign_public_ip, assign_ipv6_ip, ipv6_address_subnet_cidr_pairs, private_ip, assign_private_dns_record, skip_source_dest_check, hostname_label, nic_index, wait, freeform_tags, defined_tags):
     kwargs = {}
 
     if subnet_id is None and vlan_id is None:
@@ -704,6 +716,12 @@ def attach_vnic(ctx, from_json, instance_id, subnet_id, vlan_id, nsg_ids, vnic_d
 
     if assign_private_dns_record is not None:
         vnic_details['assignPrivateDnsRecord'] = assign_private_dns_record
+
+    if assign_ipv6_ip is not None:
+        vnic_details['assignIpv6Ip'] = assign_ipv6_ip
+
+    if ipv6_address_subnet_cidr_pairs is not None:
+        vnic_details['ipv6AddressIpv6SubnetCidrPairDetails'] = cli_util.parse_json_parameter("ipv6_address_subnet_cidr_pairs", ipv6_address_subnet_cidr_pairs)
 
     attachment_details = {}
     attachment_details['createVnicDetails'] = vnic_details

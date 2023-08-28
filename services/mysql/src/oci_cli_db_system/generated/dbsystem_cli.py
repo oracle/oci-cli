@@ -28,18 +28,6 @@ def heat_wave_cluster_group():
     pass
 
 
-@click.command(cli_util.override('db_system.analytics_cluster_memory_estimate_group.command_name', 'analytics-cluster-memory-estimate'), cls=CommandGroupWithAlias, help="""DEPRECATED -- please use HeatWave API instead. Analytics Cluster memory estimate that can be used to determine a suitable Analytics Cluster size. For each MySQL user table the estimated memory footprint when the table is loaded to the Analytics Cluster memory is returned.""")
-@cli_util.help_option_group
-def analytics_cluster_memory_estimate_group():
-    pass
-
-
-@click.command(cli_util.override('db_system.analytics_cluster_group.command_name', 'analytics-cluster'), cls=CommandGroupWithAlias, help="""DEPRECATED -- please use HeatWave API instead. An Analytics Cluster is a database accelerator for a DB System.""")
-@cli_util.help_option_group
-def analytics_cluster_group():
-    pass
-
-
 @click.command(cli_util.override('db_system.heat_wave_cluster_memory_estimate_group.command_name', 'heat-wave-cluster-memory-estimate'), cls=CommandGroupWithAlias, help="""HeatWave cluster memory estimate that can be used to determine a suitable HeatWave cluster size. For each MySQL user table the estimated memory footprint when the table is loaded to the HeatWave cluster memory is returned.""")
 @cli_util.help_option_group
 def heat_wave_cluster_memory_estimate_group():
@@ -54,71 +42,8 @@ def db_system_group():
 
 mysql_service_cli.mysql_service_group.add_command(db_system_root_group)
 db_system_root_group.add_command(heat_wave_cluster_group)
-db_system_root_group.add_command(analytics_cluster_memory_estimate_group)
-db_system_root_group.add_command(analytics_cluster_group)
 db_system_root_group.add_command(heat_wave_cluster_memory_estimate_group)
 db_system_root_group.add_command(db_system_group)
-
-
-@analytics_cluster_group.command(name=cli_util.override('db_system.add_analytics_cluster.command_name', 'add'), help=u"""DEPRECATED -- please use HeatWave API instead. Adds an Analytics Cluster to the DB System. \n[Command Reference](addAnalyticsCluster)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
-@cli_util.option('--shape-name', required=True, help=u"""The shape determines resources to allocate to the Analytics Cluster nodes - CPU cores, memory.""")
-@cli_util.option('--cluster-size', required=True, type=click.INT, help=u"""The number of analytics-processing nodes provisioned for the Analytics Cluster.""")
-@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
-@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'mysql', 'class': 'AnalyticsCluster'})
-@cli_util.wrap_exceptions
-def add_analytics_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, shape_name, cluster_size, if_match):
-
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
-        raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    if if_match is not None:
-        kwargs['if_match'] = if_match
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['shapeName'] = shape_name
-    _details['clusterSize'] = cluster_size
-
-    client = cli_util.build_client('mysql', 'db_system', ctx)
-    result = client.add_analytics_cluster(
-        db_system_id=db_system_id,
-        add_analytics_cluster_details=_details,
-        **kwargs
-    )
-    if wait_for_state:
-
-        client = cli_util.build_client('mysql', 'work_requests', ctx)
-
-        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
-            try:
-                wait_period_kwargs = {}
-                if max_wait_seconds is not None:
-                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds is not None:
-                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-
-                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
-            except oci.exceptions.MaximumWaitTimeExceeded as e:
-                # If we fail, we should show an error, but we should still provide the information to the customer
-                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                sys.exit(2)
-            except Exception:
-                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                raise
-        else:
-            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
-    cli_util.render_response(result, ctx)
 
 
 @heat_wave_cluster_group.command(name=cli_util.override('db_system.add_heat_wave_cluster.command_name', 'add'), help=u"""Adds a HeatWave cluster to the DB System. \n[Command Reference](addHeatWaveCluster)""")
@@ -957,60 +882,6 @@ def create_db_system_create_db_system_source_from_pitr_details(ctx, from_json, w
     cli_util.render_response(result, ctx)
 
 
-@analytics_cluster_group.command(name=cli_util.override('db_system.delete_analytics_cluster.command_name', 'delete'), help=u"""DEPRECATED -- please use HeatWave API instead. Deletes the Analytics Cluster including terminating, detaching, removing, finalizing and otherwise deleting all related resources. \n[Command Reference](deleteAnalyticsCluster)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
-@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
-@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
-@cli_util.wrap_exceptions
-def delete_analytics_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, if_match):
-
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
-        raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    if if_match is not None:
-        kwargs['if_match'] = if_match
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('mysql', 'db_system', ctx)
-    result = client.delete_analytics_cluster(
-        db_system_id=db_system_id,
-        **kwargs
-    )
-    if wait_for_state:
-
-        client = cli_util.build_client('mysql', 'work_requests', ctx)
-
-        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
-            try:
-                wait_period_kwargs = {}
-                if max_wait_seconds is not None:
-                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds is not None:
-                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-
-                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
-            except oci.exceptions.MaximumWaitTimeExceeded as e:
-                # If we fail, we should show an error, but we should still provide the information to the customer
-                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                sys.exit(2)
-            except Exception:
-                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                raise
-        else:
-            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
-    cli_util.render_response(result, ctx)
-
-
 @db_system_group.command(name=cli_util.override('db_system.delete_db_system.command_name', 'delete'), help=u"""Delete a DB System, including terminating, detaching, removing, finalizing and otherwise deleting all related resources. \n[Command Reference](deleteDbSystem)""")
 @cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1119,56 +990,6 @@ def delete_heat_wave_cluster(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@analytics_cluster_memory_estimate_group.command(name=cli_util.override('db_system.generate_analytics_cluster_memory_estimate.command_name', 'generate'), help=u"""DEPRECATED -- please use HeatWave API instead. Sends a request to estimate the memory footprints of user tables when loaded to Analytics Cluster memory. \n[Command Reference](generateAnalyticsClusterMemoryEstimate)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
-@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'mysql', 'class': 'AnalyticsClusterMemoryEstimate'})
-@cli_util.wrap_exceptions
-def generate_analytics_cluster_memory_estimate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id):
-
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
-        raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('mysql', 'db_system', ctx)
-    result = client.generate_analytics_cluster_memory_estimate(
-        db_system_id=db_system_id,
-        **kwargs
-    )
-    if wait_for_state:
-
-        client = cli_util.build_client('mysql', 'work_requests', ctx)
-
-        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
-            try:
-                wait_period_kwargs = {}
-                if max_wait_seconds is not None:
-                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds is not None:
-                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-
-                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
-            except oci.exceptions.MaximumWaitTimeExceeded as e:
-                # If we fail, we should show an error, but we should still provide the information to the customer
-                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                sys.exit(2)
-            except Exception:
-                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                raise
-        else:
-            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
-    cli_util.render_response(result, ctx)
-
-
 @heat_wave_cluster_memory_estimate_group.command(name=cli_util.override('db_system.generate_heat_wave_cluster_memory_estimate.command_name', 'generate'), help=u"""Sends a request to estimate the memory footprints of user tables when loaded to HeatWave cluster memory. \n[Command Reference](generateHeatWaveClusterMemoryEstimate)""")
 @cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1216,53 +1037,6 @@ def generate_heat_wave_cluster_memory_estimate(ctx, from_json, wait_for_state, m
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
-    cli_util.render_response(result, ctx)
-
-
-@analytics_cluster_group.command(name=cli_util.override('db_system.get_analytics_cluster.command_name', 'get'), help=u"""DEPRECATED -- please use HeatWave API instead. Gets information about the Analytics Cluster. \n[Command Reference](getAnalyticsCluster)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
-@cli_util.option('--if-none-match', help=u"""For conditional requests. In the GET call for a resource, set the `If-None-Match` header to the value of the ETag from a previous GET (or POST or PUT) response for that resource. The server will return with either a 304 Not Modified response if the resource has not changed, or a 200 OK response with the updated representation.""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'mysql', 'class': 'AnalyticsCluster'})
-@cli_util.wrap_exceptions
-def get_analytics_cluster(ctx, from_json, db_system_id, if_none_match):
-
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
-        raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    if if_none_match is not None:
-        kwargs['if_none_match'] = if_none_match
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('mysql', 'db_system', ctx)
-    result = client.get_analytics_cluster(
-        db_system_id=db_system_id,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
-@analytics_cluster_memory_estimate_group.command(name=cli_util.override('db_system.get_analytics_cluster_memory_estimate.command_name', 'get'), help=u"""DEPRECATED -- please use HeatWave API instead. Gets the most recent Analytics Cluster memory estimate that can be used to determine a suitable Analytics Cluster size. \n[Command Reference](getAnalyticsClusterMemoryEstimate)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'mysql', 'class': 'AnalyticsClusterMemoryEstimate'})
-@cli_util.wrap_exceptions
-def get_analytics_cluster_memory_estimate(ctx, from_json, db_system_id):
-
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
-        raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('mysql', 'db_system', ctx)
-    result = client.get_analytics_cluster_memory_estimate(
-        db_system_id=db_system_id,
-        **kwargs
-    )
     cli_util.render_response(result, ctx)
 
 
@@ -1340,7 +1114,6 @@ def get_heat_wave_cluster_memory_estimate(ctx, from_json, db_system_id):
 
 @db_system_group.command(name=cli_util.override('db_system.list_db_systems.command_name', 'list'), help=u"""Get a list of DB Systems in the specified compartment. The default sort order is by timeUpdated, descending. \n[Command Reference](listDbSystems)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
-@cli_util.option('--is-analytics-cluster-attached', type=click.BOOL, help=u"""DEPRECATED -- please use HeatWave API instead. If true, return only DB Systems with an Analytics Cluster attached, if false return only DB Systems with no Analytics Cluster attached. If not present, return all DB Systems.""")
 @cli_util.option('--is-heat-wave-cluster-attached', type=click.BOOL, help=u"""If true, return only DB Systems with a HeatWave cluster attached, if false return only DB Systems with no HeatWave cluster attached. If not present, return all DB Systems.""")
 @cli_util.option('--db-system-id', help=u"""The DB System [OCID].""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resource matching the given display name exactly.""")
@@ -1358,14 +1131,12 @@ def get_heat_wave_cluster_memory_estimate(ctx, from_json, db_system_id):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'mysql', 'class': 'list[DbSystemSummary]'})
 @cli_util.wrap_exceptions
-def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, is_analytics_cluster_attached, is_heat_wave_cluster_attached, db_system_id, display_name, lifecycle_state, configuration_id, is_up_to_date, sort_by, sort_order, limit, page):
+def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, is_heat_wave_cluster_attached, db_system_id, display_name, lifecycle_state, configuration_id, is_up_to_date, sort_by, sort_order, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
-    if is_analytics_cluster_attached is not None:
-        kwargs['is_analytics_cluster_attached'] = is_analytics_cluster_attached
     if is_heat_wave_cluster_attached is not None:
         kwargs['is_heat_wave_cluster_attached'] = is_heat_wave_cluster_attached
     if db_system_id is not None:
@@ -1410,59 +1181,6 @@ def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, is_ana
             compartment_id=compartment_id,
             **kwargs
         )
-    cli_util.render_response(result, ctx)
-
-
-@analytics_cluster_group.command(name=cli_util.override('db_system.restart_analytics_cluster.command_name', 'restart'), help=u"""DEPRECATED -- please use HeatWave API instead. Restarts the Analytics Cluster. \n[Command Reference](restartAnalyticsCluster)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
-@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
-@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
-@cli_util.wrap_exceptions
-def restart_analytics_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, if_match):
-
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
-        raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    if if_match is not None:
-        kwargs['if_match'] = if_match
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('mysql', 'db_system', ctx)
-    result = client.restart_analytics_cluster(
-        db_system_id=db_system_id,
-        **kwargs
-    )
-    if wait_for_state:
-
-        client = cli_util.build_client('mysql', 'work_requests', ctx)
-
-        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
-            try:
-                wait_period_kwargs = {}
-                if max_wait_seconds is not None:
-                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds is not None:
-                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-
-                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
-            except oci.exceptions.MaximumWaitTimeExceeded as e:
-                # If we fail, we should show an error, but we should still provide the information to the customer
-                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                sys.exit(2)
-            except Exception:
-                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                raise
-        else:
-            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -1547,59 +1265,6 @@ def restart_heat_wave_cluster(ctx, from_json, wait_for_state, max_wait_seconds, 
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('mysql', 'db_system', ctx)
     result = client.restart_heat_wave_cluster(
-        db_system_id=db_system_id,
-        **kwargs
-    )
-    if wait_for_state:
-
-        client = cli_util.build_client('mysql', 'work_requests', ctx)
-
-        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
-            try:
-                wait_period_kwargs = {}
-                if max_wait_seconds is not None:
-                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds is not None:
-                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-
-                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
-            except oci.exceptions.MaximumWaitTimeExceeded as e:
-                # If we fail, we should show an error, but we should still provide the information to the customer
-                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                sys.exit(2)
-            except Exception:
-                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                raise
-        else:
-            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
-    cli_util.render_response(result, ctx)
-
-
-@analytics_cluster_group.command(name=cli_util.override('db_system.start_analytics_cluster.command_name', 'start'), help=u"""DEPRECATED -- please use HeatWave API instead. Starts the Analytics Cluster. \n[Command Reference](startAnalyticsCluster)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
-@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
-@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
-@cli_util.wrap_exceptions
-def start_analytics_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, if_match):
-
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
-        raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    if if_match is not None:
-        kwargs['if_match'] = if_match
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('mysql', 'db_system', ctx)
-    result = client.start_analytics_cluster(
         db_system_id=db_system_id,
         **kwargs
     )
@@ -1737,59 +1402,6 @@ def start_heat_wave_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@analytics_cluster_group.command(name=cli_util.override('db_system.stop_analytics_cluster.command_name', 'stop'), help=u"""DEPRECATED -- please use HeatWave API instead. Stops the Analytics Cluster. \n[Command Reference](stopAnalyticsCluster)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
-@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
-@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
-@cli_util.wrap_exceptions
-def stop_analytics_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, if_match):
-
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
-        raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    if if_match is not None:
-        kwargs['if_match'] = if_match
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('mysql', 'db_system', ctx)
-    result = client.stop_analytics_cluster(
-        db_system_id=db_system_id,
-        **kwargs
-    )
-    if wait_for_state:
-
-        client = cli_util.build_client('mysql', 'work_requests', ctx)
-
-        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
-            try:
-                wait_period_kwargs = {}
-                if max_wait_seconds is not None:
-                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds is not None:
-                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-
-                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
-            except oci.exceptions.MaximumWaitTimeExceeded as e:
-                # If we fail, we should show an error, but we should still provide the information to the customer
-                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                sys.exit(2)
-            except Exception:
-                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                raise
-        else:
-            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
-    cli_util.render_response(result, ctx)
-
-
 @db_system_group.command(name=cli_util.override('db_system.stop_db_system.command_name', 'stop'), help=u"""Stops the specified DB System.
 
 A stopped DB System is not billed. \n[Command Reference](stopDbSystem)""")
@@ -1874,71 +1486,6 @@ def stop_heat_wave_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wai
     client = cli_util.build_client('mysql', 'db_system', ctx)
     result = client.stop_heat_wave_cluster(
         db_system_id=db_system_id,
-        **kwargs
-    )
-    if wait_for_state:
-
-        client = cli_util.build_client('mysql', 'work_requests', ctx)
-
-        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
-            try:
-                wait_period_kwargs = {}
-                if max_wait_seconds is not None:
-                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds is not None:
-                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-
-                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
-            except oci.exceptions.MaximumWaitTimeExceeded as e:
-                # If we fail, we should show an error, but we should still provide the information to the customer
-                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                sys.exit(2)
-            except Exception:
-                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                raise
-        else:
-            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
-    cli_util.render_response(result, ctx)
-
-
-@analytics_cluster_group.command(name=cli_util.override('db_system.update_analytics_cluster.command_name', 'update'), help=u"""DEPRECATED -- please use HeatWave API instead. Updates the Analytics Cluster. \n[Command Reference](updateAnalyticsCluster)""")
-@cli_util.option('--db-system-id', required=True, help=u"""The DB System [OCID].""")
-@cli_util.option('--shape-name', help=u"""A change to the shape of the nodes in the Analytics Cluster will result in the entire cluster being torn down and re-created with Compute instances of the new Shape. This may result in significant downtime for the analytics capability while the Analytics Cluster is re-provisioned.""")
-@cli_util.option('--cluster-size', type=click.INT, help=u"""A change to the number of nodes in the Analytics Cluster will result in the entire cluster being torn down and re-created with the new cluster of nodes. This may result in a significant downtime for the analytics capability while the Analytics Cluster is re-provisioned.""")
-@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
-@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
-@cli_util.wrap_exceptions
-def update_analytics_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, shape_name, cluster_size, if_match):
-
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
-        raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    if if_match is not None:
-        kwargs['if_match'] = if_match
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-
-    if shape_name is not None:
-        _details['shapeName'] = shape_name
-
-    if cluster_size is not None:
-        _details['clusterSize'] = cluster_size
-
-    client = cli_util.build_client('mysql', 'db_system', ctx)
-    result = client.update_analytics_cluster(
-        db_system_id=db_system_id,
-        update_analytics_cluster_details=_details,
         **kwargs
     )
     if wait_for_state:

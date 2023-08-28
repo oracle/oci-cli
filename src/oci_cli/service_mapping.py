@@ -5,7 +5,7 @@
 service_mapping = {
     "access-governance-cp": [
         "access_governance_cp",
-        "Oracle Access Governance Cloud Service CP",
+        "Access Governance",
         "Others"
     ],
     "adm": [
@@ -21,11 +21,6 @@ service_mapping = {
     "ai-document": [
         "ai_document",
         "Document Understanding",
-        "Analytics & AI"
-    ],
-    "ai-forecasting": [
-        "ai_forecasting",
-        "Forecasting",
         "Analytics & AI"
     ],
     "ai-vision": [
@@ -45,7 +40,7 @@ service_mapping = {
     ],
     "anomaly-detection": [
         "ai_anomaly_detection",
-        "Oracle Cloud AI Services",
+        "Anomaly Detection",
         "Analytics & AI"
     ],
     "api-gateway": [
@@ -73,24 +68,9 @@ service_mapping = {
         "Application Performance Monitoring Trace Explorer",
         "Observability & Management"
     ],
-    "app-configuration": [
-        "app_configuration",
-        "Application Configuration Service Data Plane",
-        "Others"
-    ],
-    "app-configuration-meta": [
-        "app_configuration_meta",
-        "Application Configuration Service Control Plane",
-        "Others"
-    ],
     "application-migration": [
         "application_migration",
         "Application Migration",
-        "Others"
-    ],
-    "appmgmt": [
-        "appmgmt",
-        "AppMgmt",
         "Others"
     ],
     "appmgmt-control": [
@@ -102,11 +82,6 @@ service_mapping = {
         "artifacts",
         "Artifacts and Container Images",
         "Developer Services"
-    ],
-    "atat": [
-        "atat",
-        "ATAT  Service",
-        "Others"
     ],
     "audit": [
         "audit",
@@ -122,11 +97,6 @@ service_mapping = {
         "bastion",
         "Bastion",
         "Identity & Security"
-    ],
-    "batch": [
-        "batch",
-        "Oracle Batch Service",
-        "Others"
     ],
     "bds": [
         "bds",
@@ -148,24 +118,9 @@ service_mapping = {
         "Block Volume Service",
         "Storage"
     ],
-    "cache": [
-        "cache",
-        "OraCache Public",
-        "Others"
-    ],
     "ccc": [
         "compute_cloud_at_customer",
-        "Compute Cloud at Customer Control Plane",
-        "Others"
-    ],
-    "cdn": [
-        "cdn",
-        "Content Delivery Network",
-        "Others"
-    ],
-    "cdn-partner": [
-        "cdn_partner",
-        "Content Delivery Network",
+        "Compute Cloud@Customer",
         "Others"
     ],
     "ce": [
@@ -198,21 +153,6 @@ service_mapping = {
         "Oracle Cloud Migrations",
         "Others"
     ],
-    "cloudbridge-api": [
-        "cloudbridge_api",
-        "CloudBridge",
-        "Others"
-    ],
-    "cloudmigration": [
-        "ocm_migration_api",
-        "OcmMigration",
-        "Others"
-    ],
-    "compdocs-api": [
-        "compdocs_api",
-        "Compliance Documents Service",
-        "Others"
-    ],
     "compute": [
         "core",
         "Compute Service",
@@ -237,11 +177,6 @@ service_mapping = {
         "data_catalog",
         "Data Catalog",
         "Analytics & AI"
-    ],
-    "data-connectivity": [
-        "data_connectivity",
-        "Data Connectivity Management",
-        "Others"
     ],
     "data-flow": [
         "data_flow",
@@ -280,18 +215,8 @@ service_mapping = {
     ],
     "database-migration": [
         "database_migration",
-        "Database Migration",
+        "Oracle Database Migration Service",
         "Migration"
-    ],
-    "database-recovery-system": [
-        "database_recovery_system",
-        "Oracle Database Autonomous Recovery Service",
-        "Databases"
-    ],
-    "dataflow-interactive": [
-        "dataflow_interactive",
-        "Data Flow SQL Clusters and Roles",
-        "Analytics & AI"
     ],
     "db": [
         "database",
@@ -302,11 +227,6 @@ service_mapping = {
         "database_tools",
         "Database Tools",
         "Developer Services"
-    ],
-    "desktops": [
-        "desktops",
-        "Secure Desktops",
-        "Others"
     ],
     "devops": [
         "devops",
@@ -322,11 +242,6 @@ service_mapping = {
         "dns",
         "DNS",
         "Networking"
-    ],
-    "document-service": [
-        "document_service",
-        "Document",
-        "Others"
     ],
     "dts": [
         "dts",
@@ -348,15 +263,10 @@ service_mapping = {
         "Events",
         "Observability & Management"
     ],
-    "exascale": [
-        "exascale",
-        "Exascale Service",
-        "Hybrid"
-    ],
-    "faaas": [
-        "faaas",
-        "Fusion Applications Environment Management .",
-        "Developer Services"
+    "fleet-software-update": [
+        "fleet_software_update",
+        "Exadata Fleet Update service",
+        "Others"
     ],
     "fn": [
         "functions",
@@ -395,12 +305,12 @@ service_mapping = {
     ],
     "identity-domains": [
         "identity_domains",
-        "IDCS",
+        "Identity Domains",
         "Others"
     ],
     "instance-agent": [
         "compute_instance_agent",
-        "Oracle Cloud Agent",
+        "Compute Instance Agent Service",
         "Others"
     ],
     "integration": [
@@ -408,30 +318,15 @@ service_mapping = {
         "Oracle Integration",
         "Others"
     ],
-    "internal-container-instances": [
-        "internal_container_instances",
-        "Container Instance",
-        "Others"
-    ],
     "jms": [
         "jms",
         "Java Management Service",
         "Observability & Management"
     ],
-    "kam": [
-        "kam",
-        "KAM",
-        "Others"
-    ],
     "kms": [
         "key_management",
         "Key Management",
         "Observability & Management"
-    ],
-    "lakehouse": [
-        "lakehouse",
-        "Lakehouse",
-        "Others"
     ],
     "lb": [
         "load_balancer",
@@ -518,19 +413,9 @@ service_mapping = {
         "NoSQL Database",
         "Databases"
     ],
-    "ocb": [
-        "ocb",
-        "AgentSvcControlPlane",
-        "Others"
-    ],
-    "ocbdis": [
-        "ocmdis",
-        "OCB Discovery",
-        "Others"
-    ],
-    "ocbinv": [
-        "ocminv",
-        "OcmInventory",
+    "occ": [
+        "oci_control_center",
+        "OCI Control Center",
         "Others"
     ],
     "oce": [
@@ -565,7 +450,7 @@ service_mapping = {
     ],
     "opa": [
         "opa",
-        "OracleProcessAutomation",
+        "Process Automation",
         "Others"
     ],
     "opctl": [
@@ -579,7 +464,7 @@ service_mapping = {
         "Others"
     ],
     "opsi": [
-        "operationsinsights",
+        "opsi",
         "Operations Insights",
         "Observability & Management"
     ],
@@ -602,6 +487,11 @@ service_mapping = {
         "os_management",
         "OS Management",
         "Compute"
+    ],
+    "os-management-hub": [
+        "os_management_hub",
+        "OS Management Hub",
+        "Others"
     ],
     "osp-gateway": [
         "osp_gateway",
@@ -627,21 +517,6 @@ service_mapping = {
         "osub_usage",
         "OneSubscription  Usage Computation",
         "Billing & Cost Management"
-    ],
-    "product-catalog": [
-        "product_catalog",
-        "Service control policies",
-        "Others"
-    ],
-    "query": [
-        "query",
-        "Query Service Retrieval",
-        "Others"
-    ],
-    "query-admin": [
-        "query_admin",
-        "Query Management",
-        "Others"
     ],
     "queue": [
         "queue",
@@ -678,11 +553,6 @@ service_mapping = {
         "Vault Secret Retrieval",
         "Others"
     ],
-    "security-zones": [
-        "security_zones",
-        "Security Zones",
-        "Identity & Security"
-    ],
     "service-catalog": [
         "service_catalog",
         "Service Catalog",
@@ -707,11 +577,6 @@ service_mapping = {
         "stack_monitoring",
         "Stack Monitoring",
         "Developer Services"
-    ],
-    "storage-gateway": [
-        "storage_gateway",
-        "Storage Gateway",
-        "Others"
     ],
     "streaming": [
         "streaming",
@@ -782,10 +647,5 @@ service_mapping = {
         "work_requests",
         "Work Requests",
         "Governance & Administration"
-    ],
-    "workflow-management": [
-        "workflow_management",
-        "Logic Flow Management",
-        "Others"
     ]
 }

@@ -66,7 +66,7 @@ def fast_connect_provider_service_group():
     pass
 
 
-@click.command(cli_util.override('virtual_network.capture_filter_group.command_name', 'capture-filter'), cls=CommandGroupWithAlias, help="""A capture filter contains a set of *[rules]* governing what traffic a *[VTAP]* mirrors. The capture filter is created with no rules defined, and it must have at least one rule for the VTAP to start mirroring traffic.""")
+@click.command(cli_util.override('virtual_network.capture_filter_group.command_name', 'capture-filter'), cls=CommandGroupWithAlias, help="""A capture filter contains a set of *[rules]* governing what traffic is mirrored for a *[VTAP]* or captured for a *[VCN Flow Log]*. The capture filter is created with no rules defined, and it must have at least one rule to mirror traffic for the VTAP or collect VCN flow logs.""")
 @cli_util.help_option_group
 def capture_filter_group():
     pass
@@ -516,6 +516,12 @@ def cross_connect_group_group():
     pass
 
 
+@click.command(cli_util.override('virtual_network.virtual_circuit_associated_tunnel_details_group.command_name', 'virtual-circuit-associated-tunnel-details'), cls=CommandGroupWithAlias, help="""Detailed private tunnel info associated with the virtual circuit.""")
+@cli_util.help_option_group
+def virtual_circuit_associated_tunnel_details_group():
+    pass
+
+
 @click.command(cli_util.override('virtual_network.drg_redundancy_status_group.command_name', 'drg-redundancy-status'), cls=CommandGroupWithAlias, help="""The redundancy status of the DRG. For more information, see [Redundancy Remedies].""")
 @cli_util.help_option_group
 def drg_redundancy_status_group():
@@ -589,6 +595,7 @@ virtual_network_root_group.add_command(drg_route_distribution_group)
 virtual_network_root_group.add_command(service_gateway_group)
 virtual_network_root_group.add_command(service_group)
 virtual_network_root_group.add_command(cross_connect_group_group)
+virtual_network_root_group.add_command(virtual_circuit_associated_tunnel_details_group)
 virtual_network_root_group.add_command(drg_redundancy_status_group)
 virtual_network_root_group.add_command(internal_public_ip_group)
 
@@ -2181,12 +2188,13 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 For more information about generating CPE device configuration content, see:
 
   * [GetCpeDeviceConfigContent]   * [GetIpsecCpeDeviceConfigContent]   * [GetTunnelCpeDeviceConfigContent]   * [GetTunnelCpeDeviceConfig]""")
+@cli_util.option('--is-private', type=click.BOOL, help=u"""Indicates whether this CPE is of type `private` or not.""")
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Cpe'})
 @cli_util.wrap_exceptions
-def create_cpe(ctx, from_json, compartment_id, ip_address, defined_tags, display_name, freeform_tags, cpe_device_shape_id):
+def create_cpe(ctx, from_json, compartment_id, ip_address, defined_tags, display_name, freeform_tags, cpe_device_shape_id, is_private):
 
     kwargs = {}
 
@@ -2205,6 +2213,9 @@ def create_cpe(ctx, from_json, compartment_id, ip_address, defined_tags, display
 
     if cpe_device_shape_id is not None:
         _details['cpeDeviceShapeId'] = cpe_device_shape_id
+
+    if is_private is not None:
+        _details['isPrivate'] = is_private
 
     client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_cpe(
@@ -2628,7 +2639,6 @@ You may optionally specify a *display name* for the attachment, otherwise a defa
 
 For the purposes of access control, the DRG attachment is automatically placed into the currently selected compartment. For more information about compartments and access control, see [Overview of the IAM Service]. \n[Command Reference](createDrgAttachment)""")
 @cli_util.option('--drg-id', required=True, help=u"""The [OCID] of the DRG.""")
-@cli_util.option('--network-details-id', required=True, help=u"""The [OCID] of the network attached to the DRG.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--drg-route-table-id', help=u"""The [OCID] of the DRG route table that is assigned to this attachment.
 
@@ -2645,6 +2655,7 @@ If you don't specify a route table here, the DRG attachment is created without a
 
   * [Transit Routing: Access to Multiple VCNs in Same Region]   * [Transit Routing: Private Access to Oracle Services] This field is deprecated. Instead, use the networkDetails field to specify the VCN route table for this attachment.""")
 @cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN. This field is deprecated. Instead, use the `networkDetails` field to specify the [OCID] of the attached resource.""")
+@cli_util.option('--network-details-id', help=u"""The [OCID] of the network attached to the DRG.""")
 @cli_util.option('--network-details-route-table-id', help=u"""This is the [OCID] of the route table that is used to route the traffic as it enters a VCN through this attachment.
 
 For information about why you would associate a route table with a DRG attachment, see [Advanced Scenario: Transit Routing]. For information about why you would associate a route table with a DRG attachment, see:
@@ -2659,14 +2670,13 @@ For information about why you would associate a route table with a DRG attachmen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'DrgAttachment'})
 @cli_util.wrap_exceptions
-def create_drg_attachment_vcn_drg_attachment_network_create_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_id, network_details_id, display_name, drg_route_table_id, defined_tags, freeform_tags, route_table_id, vcn_id, network_details_route_table_id, network_details_vcn_route_type):
+def create_drg_attachment_vcn_drg_attachment_network_create_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_id, display_name, drg_route_table_id, defined_tags, freeform_tags, route_table_id, vcn_id, network_details_id, network_details_route_table_id, network_details_vcn_route_type):
 
     kwargs = {}
 
     _details = {}
     _details['networkDetails'] = {}
     _details['drgId'] = drg_id
-    _details['networkDetails']['id'] = network_details_id
 
     if display_name is not None:
         _details['displayName'] = display_name
@@ -2685,6 +2695,9 @@ def create_drg_attachment_vcn_drg_attachment_network_create_details(ctx, from_js
 
     if vcn_id is not None:
         _details['vcnId'] = vcn_id
+
+    if network_details_id is not None:
+        _details['networkDetails']['id'] = network_details_id
 
     if network_details_route_table_id is not None:
         _details['networkDetails']['routeTableId'] = network_details_route_table_id
@@ -4143,6 +4156,7 @@ This option is a JSON list with items of type CrossConnectMapping.  For document
 @cli_util.option('--routing-policy', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_SERVICE_NETWORK", "REGIONAL", "MARKET_LEVEL", "GLOBAL"]), help=u"""The routing policy sets how routing information about the Oracle cloud is shared over a public virtual circuit. Policies available are: `ORACLE_SERVICE_NETWORK`, `REGIONAL`, `MARKET_LEVEL`, and `GLOBAL`. See [Route Filtering] for details. By default, routing information is shared for all routes in the same market.""")
 @cli_util.option('--bgp-admin-state', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Set to `ENABLED` (the default) to activate the BGP session of the virtual circuit, set to `DISABLED` to deactivate the virtual circuit.""")
 @cli_util.option('--is-bfd-enabled', type=click.BOOL, help=u"""Set to `true` to enable BFD for IPv4 BGP peering, or set to `false` to disable BFD. If this is not set, the default is `false`.""")
+@cli_util.option('--is-transport-mode', type=click.BOOL, help=u"""Set to `true` for the virtual circuit to carry only encrypted traffic, or set to `false` for the virtual circuit to carry unencrypted traffic. If this is not set, the default is `false`.""")
 @cli_util.option('--customer-bgp-asn', type=click.INT, help=u"""Deprecated. Instead use `customerAsn`. If you specify values for both, the request will be rejected.""")
 @cli_util.option('--customer-asn', type=click.INT, help=u"""Your BGP ASN (either public or private). Provide this value only if there's a BGP session that goes from your edge router to Oracle. Otherwise, leave this empty or null. Can be a 2-byte or 4-byte ASN. Uses \"asplain\" format.
 
@@ -4172,7 +4186,7 @@ This option is a JSON list with items of type CreateVirtualCircuitPublicPrefixDe
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'cross-connect-mappings': {'module': 'core', 'class': 'list[CrossConnectMapping]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'public-prefixes': {'module': 'core', 'class': 'list[CreateVirtualCircuitPublicPrefixDetails]'}}, output_type={'module': 'core', 'class': 'VirtualCircuit'})
 @cli_util.wrap_exceptions
-def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, bandwidth_shape_name, cross_connect_mappings, routing_policy, bgp_admin_state, is_bfd_enabled, customer_bgp_asn, customer_asn, defined_tags, display_name, freeform_tags, gateway_id, provider_name, provider_service_id, provider_service_key_name, provider_service_name, public_prefixes, region_parameterconflict, ip_mtu):
+def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, bandwidth_shape_name, cross_connect_mappings, routing_policy, bgp_admin_state, is_bfd_enabled, is_transport_mode, customer_bgp_asn, customer_asn, defined_tags, display_name, freeform_tags, gateway_id, provider_name, provider_service_id, provider_service_key_name, provider_service_name, public_prefixes, region_parameterconflict, ip_mtu):
 
     kwargs = {}
 
@@ -4194,6 +4208,9 @@ def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
     if is_bfd_enabled is not None:
         _details['isBfdEnabled'] = is_bfd_enabled
+
+    if is_transport_mode is not None:
+        _details['isTransportMode'] = is_transport_mode
 
     if customer_bgp_asn is not None:
         _details['customerBgpAsn'] = customer_bgp_asn
@@ -9958,6 +9975,58 @@ def list_vcns(ctx, from_json, all_pages, page_size, compartment_id, limit, page,
     cli_util.render_response(result, ctx)
 
 
+@virtual_circuit_associated_tunnel_details_group.command(name=cli_util.override('virtual_network.list_virtual_circuit_associated_tunnels.command_name', 'list-virtual-circuit-associated-tunnels'), help=u"""Gets the specified virtual circuit's associatedTunnelsInfo. \n[Command Reference](listVirtualCircuitAssociatedTunnels)""")
+@cli_util.option('--virtual-circuit-id', required=True, help=u"""The [OCID] of the virtual circuit.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[VirtualCircuitAssociatedTunnelDetails]'})
+@cli_util.wrap_exceptions
+def list_virtual_circuit_associated_tunnels(ctx, from_json, all_pages, page_size, virtual_circuit_id, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
+        raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_virtual_circuit_associated_tunnels,
+            virtual_circuit_id=virtual_circuit_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_virtual_circuit_associated_tunnels,
+            limit,
+            page_size,
+            virtual_circuit_id=virtual_circuit_id,
+            **kwargs
+        )
+    else:
+        result = client.list_virtual_circuit_associated_tunnels(
+            virtual_circuit_id=virtual_circuit_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @virtual_circuit_bandwidth_shape_group.command(name=cli_util.override('virtual_network.list_virtual_circuit_bandwidth_shapes.command_name', 'list'), help=u"""The deprecated operation lists available bandwidth levels for virtual circuits. For the compartment ID, provide the [OCID] of your tenancy (the root compartment). \n[Command Reference](listVirtualCircuitBandwidthShapes)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -13262,6 +13331,7 @@ This option is a JSON list with items of type CrossConnectMapping.  For document
 @cli_util.option('--routing-policy', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_SERVICE_NETWORK", "REGIONAL", "MARKET_LEVEL", "GLOBAL"]), help=u"""The routing policy sets how routing information about the Oracle cloud is shared over a public virtual circuit. Policies available are: `ORACLE_SERVICE_NETWORK`, `REGIONAL`, `MARKET_LEVEL`, and `GLOBAL`. See [Route Filtering] for details. By default, routing information is shared for all routes in the same market.""")
 @cli_util.option('--bgp-admin-state', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Set to `ENABLED` (the default) to activate the BGP session of the virtual circuit, set to `DISABLED` to deactivate the virtual circuit.""")
 @cli_util.option('--is-bfd-enabled', type=click.BOOL, help=u"""Set to `true` to enable BFD for IPv4 BGP peering, or set to `false` to disable BFD. If this is not set, the default is `false`.""")
+@cli_util.option('--is-transport-mode', type=click.BOOL, help=u"""Set to `true` for the virtual circuit to carry only encrypted traffic, or set to `false` for the virtual circuit to carry unencrypted traffic. If this is not set, the default is `false`.""")
 @cli_util.option('--customer-bgp-asn', type=click.INT, help=u"""Deprecated. Instead use `customerAsn`. If you specify values for both, the request will be rejected.""")
 @cli_util.option('--customer-asn', type=click.INT, help=u"""The BGP ASN of the network at the other end of the BGP session from Oracle.
 
@@ -13298,7 +13368,7 @@ To be updated only by the provider.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'cross-connect-mappings': {'module': 'core', 'class': 'list[CrossConnectMapping]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'VirtualCircuit'})
 @cli_util.wrap_exceptions
-def update_virtual_circuit(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, virtual_circuit_id, bandwidth_shape_name, cross_connect_mappings, routing_policy, bgp_admin_state, is_bfd_enabled, customer_bgp_asn, customer_asn, defined_tags, display_name, freeform_tags, gateway_id, provider_state, provider_service_key_name, reference_comment, ip_mtu, if_match):
+def update_virtual_circuit(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, virtual_circuit_id, bandwidth_shape_name, cross_connect_mappings, routing_policy, bgp_admin_state, is_bfd_enabled, is_transport_mode, customer_bgp_asn, customer_asn, defined_tags, display_name, freeform_tags, gateway_id, provider_state, provider_service_key_name, reference_comment, ip_mtu, if_match):
 
     if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
         raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
@@ -13327,6 +13397,9 @@ def update_virtual_circuit(ctx, from_json, force, wait_for_state, max_wait_secon
 
     if is_bfd_enabled is not None:
         _details['isBfdEnabled'] = is_bfd_enabled
+
+    if is_transport_mode is not None:
+        _details['isTransportMode'] = is_transport_mode
 
     if customer_bgp_asn is not None:
         _details['customerBgpAsn'] = customer_bgp_asn

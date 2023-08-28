@@ -38,13 +38,14 @@ class TestGoldenGate(unittest.TestCase):
         assert 'subnet-id' in result.output
         assert 'cpu-core-count' in result.output
         assert 'is-auto-scaling-enabled' in result.output
+        assert 'deployment-type' in result.output
 
     def test_deployment_create_req_params1(self):
         result = util.invoke_command(['goldengate', 'deployment', 'create', '--deployment-name'])
         assert 'Error: Option \'--deployment-name\' requires an argument' in result.output
 
     def test_deployment_create_req_params2(self):
-        result = util.invoke_command(['goldengate', 'deployment', 'create', '--license-model', 'LICENSE_INCLUDED', '--display-name', 'aa', '--compartment-id', 'bb', '--subnet-id', 'cc', '--cpu-core-count', '1', '--is-auto-scaling-enabled', 'true'])
+        result = util.invoke_command(['goldengate', 'deployment', 'create', '--deployment-type', 'DATABASE_ORACLE', '--license-model', 'LICENSE_INCLUDED', '--display-name', 'aa', '--compartment-id', 'bb', '--subnet-id', 'cc', '--cpu-core-count', '1', '--is-auto-scaling-enabled', 'true'])
         assert 'Error: Missing option(s)' in result.output
         assert '--deployment-name' in result.output
 
