@@ -694,3 +694,79 @@ apmsynthetic_cli.dedicated_vantage_point_group.commands.pop(apmsynthetic_cli.cre
 
 # Remove update from oci apm-synthetics dedicated-vantage-point
 apmsynthetic_cli.dedicated_vantage_point_group.commands.pop(apmsynthetic_cli.update_dedicated_vantage_point.name)
+
+
+# oci apm-synthetics monitor create-monitor-network-monitor-configuration -> oci apm-synthetics monitor create-network-monitor
+cli_util.rename_command(apmsynthetic_cli, apmsynthetic_cli.monitor_group, apmsynthetic_cli.create_monitor_network_monitor_configuration, "create-network-monitor")
+
+
+# oci apm-synthetics monitor update-monitor-network-monitor-configuration -> oci apm-synthetics monitor update-network-monitor
+cli_util.rename_command(apmsynthetic_cli, apmsynthetic_cli.monitor_group, apmsynthetic_cli.update_monitor_network_monitor_configuration, "update-network-monitor")
+
+
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_network_monitor_configuration, params_to_exclude=['configuration_network_configuration', 'configuration_dns_configuration', 'configuration_is_failure_retried'])
+@apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.create_monitor_network_monitor_configuration.name, help=apmsynthetic_cli.create_monitor_network_monitor_configuration.help)
+@cli_util.option('--network-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.
+ [required]""")
+@cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@cli_util.wrap_exceptions
+def create_monitor_network_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'network_configuration' in kwargs:
+        kwargs['configuration_network_configuration'] = kwargs['network_configuration']
+        kwargs.pop('network_configuration')
+
+    if 'dns_configuration' in kwargs:
+        kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
+        kwargs.pop('dns_configuration')
+
+    if 'is_failure_retried' in kwargs:
+        kwargs['configuration_is_failure_retried'] = kwargs['is_failure_retried']
+        kwargs.pop('is_failure_retried')
+
+    ctx.invoke(apmsynthetic_cli.create_monitor_network_monitor_configuration, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_network_monitor_configuration, params_to_exclude=['configuration_network_configuration', 'configuration_dns_configuration', 'configuration_is_failure_retried'])
+@apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.update_monitor_network_monitor_configuration.name, help=apmsynthetic_cli.update_monitor_network_monitor_configuration.help)
+@cli_util.option('--network-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.
+ [required]""")
+@cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@cli_util.wrap_exceptions
+def update_monitor_network_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'network_configuration' in kwargs:
+        kwargs['configuration_network_configuration'] = kwargs['network_configuration']
+        kwargs.pop('network_configuration')
+
+    if 'dns_configuration' in kwargs:
+        kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
+        kwargs.pop('dns_configuration')
+
+    if 'is_failure_retried' in kwargs:
+        kwargs['configuration_is_failure_retried'] = kwargs['is_failure_retried']
+        kwargs.pop('is_failure_retried')
+
+    ctx.invoke(apmsynthetic_cli.update_monitor_network_monitor_configuration, **kwargs)

@@ -99,6 +99,7 @@ oci goldengate database-registration delete \
 
 print_header "Deployment Operations"
 echo "Creating Deployment"
+export DEPLOYMENT_TYPE="DATABASE_ORACLE"
 export DISPLAY_NAME="Deployment_1"
 export SUBNET_ID="ocid1.subnet.oc1.phx.aaaaaaaarspo574lwnih7zgjzk4fcdqttxfh2ih3n7gfwcyjwadazyd6lb2q"
 export LICENSE_MODEL="LICENSE_INCLUDED"
@@ -116,6 +117,7 @@ openssl req -newkey rsa:2048 -nodes -sha256 -keyout ${PRIVATE_KEY_FILE} -x509 -d
 
 echo "Create Deployment"
 RESPONSE=$(oci goldengate deployment create \
+         --deployment-type ${DEPLOYMENT_TYPE} \
          --config-file ${OCI_CLI_CONFIG_FILE} \
          -c ${COMPARTMENT_ID} \
          --display-name ${DISPLAY_NAME} \

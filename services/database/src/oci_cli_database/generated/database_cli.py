@@ -5152,8 +5152,8 @@ def create_autonomous_database_backup(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Autonomous VM cluster. The default is BRING_YOUR_OWN_LICENSE.""")
 @cli_util.option('--total-container-databases', type=click.INT, help=u"""The total number of Autonomous Container Databases that can be created.""")
 @cli_util.option('--cpu-core-count-per-node', type=click.INT, help=u"""The number of CPU cores to enable per VM cluster node.""")
-@cli_util.option('--compute-model', type=custom_types.CliCaseInsensitiveChoice(["ECPU", "OCPU"]), help=u"""The compute model of the Autonomous VM Cluster. See [Compute Models in Autonomous Database on Dedicated Exadata Infrastructure] for more details.""")
-@cli_util.option('--memory-per-oracle-compute-unit-in-gbs', type=click.INT, help=u"""The amount of memory (in GBs) to be enabled per OCPU or ECPU. See [Compute Models in Autonomous Database on Dedicated Exadata Infrastructure] for more details.""")
+@cli_util.option('--compute-model', type=custom_types.CliCaseInsensitiveChoice(["ECPU", "OCPU"]), help=u"""The compute model of the Autonomous VM Cluster.""")
+@cli_util.option('--memory-per-oracle-compute-unit-in-gbs', type=click.INT, help=u"""The amount of memory (in GBs) to be enabled per OCPU or ECPU.""")
 @cli_util.option('--autonomous-data-storage-size-in-tbs', help=u"""The data disk group size to be allocated for Autonomous Databases, in TBs.""")
 @cli_util.option('--maintenance-window-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--db-servers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of [OCIDs] of the Db servers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5518,10 +5518,10 @@ def create_backup_destination_create_recovery_appliance_backup_destination_detai
 @cli_util.option('--description', help=u"""User defined description of the cloud Autonomous VM cluster.""")
 @cli_util.option('--total-container-databases', type=click.INT, help=u"""The total number of Autonomous Container Databases that can be created.""")
 @cli_util.option('--cpu-core-count-per-node', type=click.INT, help=u"""The number of CPU cores to be enabled per VM cluster node.""")
-@cli_util.option('--memory-per-oracle-compute-unit-in-gbs', type=click.INT, help=u"""The amount of memory (in GBs) to be enabled per OCPU or ECPU. See [Compute Models in Autonomous Database on Dedicated Exadata Infrastructure] for more details.""")
+@cli_util.option('--memory-per-oracle-compute-unit-in-gbs', type=click.INT, help=u"""The amount of memory (in GBs) to be enabled per OCPU or ECPU.""")
 @cli_util.option('--autonomous-data-storage-size-in-tbs', help=u"""The data disk group size to be allocated for Autonomous Databases, in TBs.""")
 @cli_util.option('--cluster-time-zone', help=u"""The time zone to use for the Cloud Autonomous VM cluster. For details, see [DB System Time Zones].""")
-@cli_util.option('--compute-model', type=custom_types.CliCaseInsensitiveChoice(["ECPU", "OCPU"]), help=u"""The compute model of the Cloud Autonomous VM Cluster. See [Compute Models in Autonomous Database on Dedicated Exadata Infrastructure] for more details.""")
+@cli_util.option('--compute-model', type=custom_types.CliCaseInsensitiveChoice(["ECPU", "OCPU"]), help=u"""The compute model of the Cloud Autonomous VM Cluster.""")
 @cli_util.option('--is-mtls-enabled-vm-cluster', type=click.BOOL, help=u"""Enable mutual TLS(mTLS) authentication for database at time of provisioning a VMCluster. This is applicable to database TLS Certificates only. Default is TLS""")
 @cli_util.option('--db-servers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of database servers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--maintenance-window-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -11593,6 +11593,28 @@ def get_autonomous_container_database_dataguard_association(ctx, from_json, auto
     cli_util.render_response(result, ctx)
 
 
+@autonomous_container_database_group.command(name=cli_util.override('db.get_autonomous_container_database_resource_usage.command_name', 'get-autonomous-container-database-resource-usage'), help=u"""Get resource usage details for the specified Autonomous Container Database. \n[Command Reference](getAutonomousContainerDatabaseResourceUsage)""")
+@cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'AutonomousContainerDatabaseResourceUsage'})
+@cli_util.wrap_exceptions
+def get_autonomous_container_database_resource_usage(ctx, from_json, autonomous_container_database_id):
+
+    if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.get_autonomous_container_database_resource_usage(
+        autonomous_container_database_id=autonomous_container_database_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @autonomous_database_group.command(name=cli_util.override('db.get_autonomous_database.command_name', 'get'), help=u"""Gets the details of the specified Autonomous Database. \n[Command Reference](getAutonomousDatabase)""")
 @cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -11848,6 +11870,28 @@ def get_cloud_autonomous_vm_cluster(ctx, from_json, cloud_autonomous_vm_cluster_
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database', 'database', ctx)
     result = client.get_cloud_autonomous_vm_cluster(
+        cloud_autonomous_vm_cluster_id=cloud_autonomous_vm_cluster_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.get_cloud_autonomous_vm_cluster_resource_usage.command_name', 'get-cloud-autonomous-vm-cluster-resource-usage'), help=u"""Get the resource usage details for the specified Cloud Autonomous Exadata VM cluster. \n[Command Reference](getCloudAutonomousVmClusterResourceUsage)""")
+@cli_util.option('--cloud-autonomous-vm-cluster-id', required=True, help=u"""The Cloud VM cluster [OCID].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'CloudAutonomousVmClusterResourceUsage'})
+@cli_util.wrap_exceptions
+def get_cloud_autonomous_vm_cluster_resource_usage(ctx, from_json, cloud_autonomous_vm_cluster_id):
+
+    if isinstance(cloud_autonomous_vm_cluster_id, six.string_types) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-autonomous-vm-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.get_cloud_autonomous_vm_cluster_resource_usage(
         cloud_autonomous_vm_cluster_id=cloud_autonomous_vm_cluster_id,
         **kwargs
     )
@@ -14920,6 +14964,60 @@ def list_backups(ctx, from_json, all_pages, page_size, database_id, compartment_
         )
     else:
         result = client.list_backups(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_autonomous_vm_cluster_group.command(name=cli_util.override('db.list_cloud_autonomous_vm_cluster_acd_resource_usage.command_name', 'list-cloud-autonomous-vm-cluster-acd-resource-usage'), help=u"""Gets the list of resource usage details for all the Cloud Autonomous Container Database in the specified Cloud Autonomous Exadata VM cluster. \n[Command Reference](listCloudAutonomousVmClusterAcdResourceUsage)""")
+@cli_util.option('--cloud-autonomous-vm-cluster-id', required=True, help=u"""The Cloud VM cluster [OCID].""")
+@cli_util.option('--compartment-id', help=u"""The compartment [OCID].""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[AutonomousContainerDatabaseResourceUsage]'})
+@cli_util.wrap_exceptions
+def list_cloud_autonomous_vm_cluster_acd_resource_usage(ctx, from_json, all_pages, page_size, cloud_autonomous_vm_cluster_id, compartment_id, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(cloud_autonomous_vm_cluster_id, six.string_types) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-autonomous-vm-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_cloud_autonomous_vm_cluster_acd_resource_usage,
+            cloud_autonomous_vm_cluster_id=cloud_autonomous_vm_cluster_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_cloud_autonomous_vm_cluster_acd_resource_usage,
+            limit,
+            page_size,
+            cloud_autonomous_vm_cluster_id=cloud_autonomous_vm_cluster_id,
+            **kwargs
+        )
+    else:
+        result = client.list_cloud_autonomous_vm_cluster_acd_resource_usage(
+            cloud_autonomous_vm_cluster_id=cloud_autonomous_vm_cluster_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -19834,7 +19932,7 @@ def update_autonomous_container_database_dataguard_association(ctx, from_json, w
 @cli_util.option('--compute-model', type=custom_types.CliCaseInsensitiveChoice(["ECPU", "OCPU"]), help=u"""The compute model of the Autonomous Database. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value.""")
 @cli_util.option('--in-memory-percentage', type=click.INT, help=u"""The percentage of the System Global Area(SGA) assigned to In-Memory tables in Autonomous Database.""")
 @cli_util.option('--local-adg-auto-failover-max-data-loss-limit', type=click.INT, help=u"""Parameter that allows users to select an acceptable maximum data loss limit in seconds, up to which Automatic Failover will be triggered when necessary for a Local Autonomous Data Guard""")
-@cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of CPUs to be made available to the Autonomous Database.<br> For Autonomous Databases on Dedicated Exadata Infrastructure: - The CPU type (OCPUs or ECPUs) is determined by the parent Autonomous Exadata VM Cluster's compute model. See [Compute Models in Autonomous Database on Dedicated Exadata Infrastructure] for more details. - It is suggested to use 'computeCount' parameter if you want to use fractional value to provision less than 1 core.
+@cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of CPUs to be made available to the Autonomous Database.<br> For Autonomous Databases on Dedicated Exadata Infrastructure: - The CPU type (OCPUs or ECPUs) is determined by the parent Autonomous Exadata VM Cluster's compute model. - It is suggested to use 'computeCount' parameter if you want to use fractional value to provision less than 1 core.
 
 **Note:** This parameter cannot be used with the `ocpuCount` or `computeCount` parameter.
 

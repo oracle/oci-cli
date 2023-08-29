@@ -52,7 +52,7 @@ cli_util.rename_command(goldengate_cli,
 
 
 @cli_util.copy_params_from_generated_command(goldengate_cli.create_deployment,
-                                             params_to_exclude=['deployment_type', 'ogg_data', 'maintenance_window'],
+                                             params_to_exclude=['ogg_data', 'maintenance_window'],
                                              copy_from_json=False)
 @goldengate_cli.deployment_group.command(name='create', help=goldengate_cli.create_deployment.help)
 @cli_util.option('--deployment-name', help=u"""The name given to the GoldenGate service deployment.
@@ -75,9 +75,6 @@ This field will be deprecated and replaced by 'password-secret-id'.""")
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'maintenance-window': {'module': 'golden_gate', 'class': 'CreateMaintenanceWindowDetails'}, 'maintenance-configuration': {'module': 'golden_gate', 'class': 'CreateMaintenanceConfigurationDetails'}}, output_type={'module': 'golden_gate', 'class': 'Deployment'})
 @cli_util.wrap_exceptions
 def create_deployment_extended(ctx, **kwargs):
-    if kwargs.get('deployment_type') is None:
-        kwargs['deployment_type'] = "DATABASE_ORACLE"
-
     if kwargs.get('ogg_data') is None:
         _ogg_details = {}
         _missing_params = []

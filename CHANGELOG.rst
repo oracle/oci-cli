@@ -6,6 +6,81 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.32.0 - 2023-08-29
+--------------------
+Added
+~~~~~
+* Database Service
+
+  * Support for displaying resource usage information on autonomous container database get operations
+
+    * ``oci db autonomous-container-database get-autonomous-container-database-resource-usage --autonomous-container-database-id``
+
+  * Support for displaying resource usage information on cloud autonomous vm cluster get operations
+
+    * ``oci db cloud-autonomous-vm-cluster get-cloud-autonomous-vm-cluster-resource-usage --cloud-autonomous-vm-cluster-id``
+
+  * Support for displaying resource usage information for list of autonomous container databases on cloud autonomous vm cluster get operations
+
+    * ``oci db cloud-autonomous-vm-cluster list-cloud-autonomous-vm-cluster-acd-resource-usage --cloud-autonomous-vm-cluster-id``
+
+* APM Synthetic Monitoring Service
+
+  * Support for the network monitor creation and updation
+
+    * ``oci apm-synthetics monitor create-network-monitor``
+    * ``oci apm-synthetics monitor update-network-monitor``
+
+* Database Migration Service
+
+  * Support for new parameters for GoldenGate Service integration in DMS
+
+    * ``oci database-migration connection create --replication-credentials``
+    * ``oci database-migration connection update --replication-credentials``
+
+  * Support for new parameters for GoldenGate service integration in DMS
+
+    * ``oci database-migration migration create --golden-gate-service-details``
+    * ``oci database-migration migration update --golden-gate-service-details``
+
+* Networking Services
+
+  * Support for new parameters is-private, is-transport-mode
+
+    * ``oci network cpe create --is-private``
+    * ``oci network virtual-circuit create --is-transport-mode``
+    * ``oci network virtual-circuit update --is-transport-mode``
+
+  * Support for virtual circuit associated tunnels
+
+    * ``oci network virtual-circuit-associated-tunnel-details list-virtual-circuit-associated-tunnels --virtual-circuit-id``
+
+  * Support for new parameters transportAttachmentId, transportOnlyMode in the Dynamic Routing Gateway
+
+    * ``oci network drg-attachment create-drg-attachment-loop-back-drg-attachment-network-create-details --network-details-ids``
+    * ``oci network drg-attachment create-vcn-drg-attachment-loop-back-drg-attachment-network-create-details --network-details-ids``
+    * ``oci network drg-attachment update-drg-attachment-loopback-drg-attachment-network-update-details --network-details-ids``
+    * ``oci network drg-attachment update-vcn-drg-attachment-loopback-drg-attachment-network-update-details --network-details-ids``
+
+  * Support for Encrypted Fastconnect
+
+* Compute Service
+
+  * Support for assigning an IPv6 address to a compute instance during instance launch or secondary VNIC attach
+    * ``oci compute instance launch --assign-ipv6-ip true``
+
+
+Changed
+~~~~~~~
+* [BREAKING] Removal of Analytics Cluster in MySQL Database Service
+
+  * ``oci mysql db-system analytics-cluster``
+  * ``oci mysql db-system analytics-cluster-memory-estimate``
+
+* [BREAKING] New required parameter in Networking Services
+
+  * ``oci network virtual-circuit update --virtual-circuit-id``
+
 3.31.1 - 2023-08-22
 --------------------
 Added
