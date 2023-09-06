@@ -9,6 +9,7 @@ from oci_cli.cli_constants import CLI_RC_CANNED_QUERIES_SECTION_NAME, CLI_RC_COM
 from oci_cli import cli_util
 from services.identity.src.oci_cli_identity.generated import identity_cli
 from oci_cli.util import pymd5
+# from alloy import alloy_util
 
 import base64
 
@@ -1031,3 +1032,11 @@ def find_cli_installations(ctx):
     click.echo(click.wrap_text(text=find_install_note, preserve_paragraphs=True))
 
     ctx.exit()
+
+
+# @setup_group.command('service-config', help='Load subscribed services from service config file, which should reside in the same compartment as the config file.')
+# @cli_util.help_option
+# @click.pass_context
+# @cli_util.wrap_exceptions
+# def setup_service_config(ctx):
+#     alloy_util.write_subscribed_services(ctx)

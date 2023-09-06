@@ -704,10 +704,10 @@ def create_database(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds
         create_database_details.pdb_name = kwargs['pdb_name']
 
     if 'defined_tags' in kwargs and kwargs['defined_tags']:
-        create_database_details.defined_tags = kwargs['defined_tags']
+        create_database_details.defined_tags = cli_util.parse_json_parameter("defined_tags", kwargs['defined_tags'])
 
     if 'freeform_tags' in kwargs and kwargs['freeform_tags']:
-        create_database_details.freeform_tags = kwargs['freeform_tags']
+        create_database_details.freeform_tags = cli_util.parse_json_parameter("freeform_tags", kwargs['freeform_tags'])
 
     if 'vault_id' in kwargs and kwargs['vault_id']:
         create_database_details['vaultId'] = kwargs['vault_id']

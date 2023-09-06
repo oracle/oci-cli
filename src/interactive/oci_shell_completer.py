@@ -3,6 +3,7 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from prompt_toolkit.completion import Completer, Completion
+from alloy import alloy_util
 from interactive.oci_resources_completions import get_oci_resources
 import collections
 import shlex
@@ -44,8 +45,13 @@ class OciShellCompleter(Completer):
         for cmd_name, cmd_object in initial_oci_commands.items():
             top_level_commands[cmd_name] = cmd_object.help
 
-        for service in service_mapping:
-            top_level_commands[service] = service_mapping[service][1]
+        # Updated service mapping for an alloy user
+        service_map = service_mapping
+        if alloy_util.get_service_config_path(self.ctx) is not None:
+            service_map = alloy_util.read_subscribed_services(self.ctx)
+
+        for service in service_map:
+            top_level_commands[service] = service_map[service][1]
 
         top_level_commands = collections.OrderedDict(sorted(top_level_commands.items()))
         return top_level_commands
