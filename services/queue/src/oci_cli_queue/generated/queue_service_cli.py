@@ -8,7 +8,7 @@ from oci_cli import cli_util
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('queue_admin.queue_service_group.command_name', 'queue'), cls=CommandGroupWithAlias, help=cli_util.override('queue_admin.queue_service_group.help', """A description of the Queue API"""), short_help=cli_util.override('queue_admin.queue_service_group.short_help', """Queue API"""))
+@cli.command(cli_util.override('queue_admin.queue_service_group.command_name', 'queue'), cls=CommandGroupWithAlias, help=cli_util.override('queue_admin.queue_service_group.help', """Use the Queue API to produce and consume messages, create queues, and manage related items. For more information, see [Queue]."""), short_help=cli_util.override('queue_admin.queue_service_group.short_help', """Queue API"""))
 @cli_util.help_option_group
 def queue_service_group():
     pass

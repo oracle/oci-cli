@@ -16,7 +16,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.queue.src.oci_cli_queue.generated import queue_service_cli
 
 
-@click.command(cli_util.override('queue_admin.queue_admin_root_group.command_name', 'queue-admin'), cls=CommandGroupWithAlias, help=cli_util.override('queue_admin.queue_admin_root_group.help', """A description of the Queue API"""), short_help=cli_util.override('queue_admin.queue_admin_root_group.short_help', """Queue API"""))
+@click.command(cli_util.override('queue_admin.queue_admin_root_group.command_name', 'queue-admin'), cls=CommandGroupWithAlias, help=cli_util.override('queue_admin.queue_admin_root_group.help', """Use the Queue API to produce and consume messages, create queues, and manage related items. For more information, see [Queue]."""), short_help=cli_util.override('queue_admin.queue_admin_root_group.short_help', """Queue API"""))
 @cli_util.help_option_group
 def queue_admin_root_group():
     pass
@@ -46,7 +46,7 @@ def work_request_group():
     pass
 
 
-@click.command(cli_util.override('queue_admin.queue_group.command_name', 'queue'), cls=CommandGroupWithAlias, help="""Description of Queue.""")
+@click.command(cli_util.override('queue_admin.queue_group.command_name', 'queue'), cls=CommandGroupWithAlias, help="""A detailed representation of a queue and its configuration.""")
 @cli_util.help_option_group
 def queue_group():
     pass
@@ -67,8 +67,8 @@ queue_admin_root_group.add_command(queue_group)
 queue_admin_root_group.add_command(work_request_log_entry_collection_group)
 
 
-@queue_group.command(name=cli_util.override('queue_admin.change_queue_compartment.command_name', 'change-compartment'), help=u"""Moves a Queue resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeQueueCompartment)""")
-@cli_util.option('--queue-id', required=True, help=u"""unique Queue identifier""")
+@queue_group.command(name=cli_util.override('queue_admin.change_queue_compartment.command_name', 'change-compartment'), help=u"""Moves a queue from one compartment to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeQueueCompartment)""")
+@cli_util.option('--queue-id', required=True, help=u"""The unique queue identifier.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -124,14 +124,15 @@ def change_queue_compartment(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@queue_group.command(name=cli_util.override('queue_admin.create_queue.command_name', 'create'), help=u"""Creates a new Queue. \n[Command Reference](createQueue)""")
-@cli_util.option('--display-name', required=True, help=u"""Queue Identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier""")
-@cli_util.option('--retention-in-seconds', type=click.INT, help=u"""The retention period of the messages in the queue, in seconds.""")
-@cli_util.option('--visibility-in-seconds', type=click.INT, help=u"""The default visibility of the messages consumed from the queue.""")
+@queue_group.command(name=cli_util.override('queue_admin.create_queue.command_name', 'create'), help=u"""Creates a new queue. \n[Command Reference](createQueue)""")
+@cli_util.option('--display-name', required=True, help=u"""The user-friendly name of the queue.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the queue.""")
+@cli_util.option('--retention-in-seconds', type=click.INT, help=u"""The retention period of messages in the queue, in seconds.""")
+@cli_util.option('--visibility-in-seconds', type=click.INT, help=u"""The default visibility timeout of the messages consumed from the queue, in seconds.""")
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""The default polling timeout of the messages in the queue, in seconds.""")
+@cli_util.option('--channel-consumption-limit', type=click.INT, help=u"""The percentage of allocated queue resources that can be consumed by a single channel. For example, if a queue has a storage limit of 2Gb, and a single channel consumption limit is 0.1 (10%), that means data size of a single channel  can't exceed 200Mb. Consumption limit of 100% (default) means that a single channel can consume up-to all allocated queue's resources.""")
 @cli_util.option('--dead-letter-queue-delivery-count', type=click.INT, help=u"""The number of times a message can be delivered to a consumer before being moved to the dead letter queue. A value of 0 indicates that the DLQ is not used.""")
-@cli_util.option('--custom-encryption-key-id', help=u"""Id of the custom master encryption key which will be used to encrypt messages content""")
+@cli_util.option('--custom-encryption-key-id', help=u"""The [OCID] of the custom encryption key to be used to encrypt messages content.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -142,7 +143,7 @@ def change_queue_compartment(ctx, from_json, wait_for_state, max_wait_seconds, w
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'queue', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'queue', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_queue(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, retention_in_seconds, visibility_in_seconds, timeout_in_seconds, dead_letter_queue_delivery_count, custom_encryption_key_id, freeform_tags, defined_tags):
+def create_queue(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, retention_in_seconds, visibility_in_seconds, timeout_in_seconds, channel_consumption_limit, dead_letter_queue_delivery_count, custom_encryption_key_id, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -159,6 +160,9 @@ def create_queue(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
     if timeout_in_seconds is not None:
         _details['timeoutInSeconds'] = timeout_in_seconds
+
+    if channel_consumption_limit is not None:
+        _details['channelConsumptionLimit'] = channel_consumption_limit
 
     if dead_letter_queue_delivery_count is not None:
         _details['deadLetterQueueDeliveryCount'] = dead_letter_queue_delivery_count
@@ -203,8 +207,8 @@ def create_queue(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@queue_group.command(name=cli_util.override('queue_admin.delete_queue.command_name', 'delete'), help=u"""Deletes a Queue resource by identifier \n[Command Reference](deleteQueue)""")
-@cli_util.option('--queue-id', required=True, help=u"""unique Queue identifier""")
+@queue_group.command(name=cli_util.override('queue_admin.delete_queue.command_name', 'delete'), help=u"""Deletes a queue resource by identifier. \n[Command Reference](deleteQueue)""")
+@cli_util.option('--queue-id', required=True, help=u"""The unique queue identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -255,8 +259,8 @@ def delete_queue(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@queue_group.command(name=cli_util.override('queue_admin.get_queue.command_name', 'get'), help=u"""Gets a Queue by identifier \n[Command Reference](getQueue)""")
-@cli_util.option('--queue-id', required=True, help=u"""unique Queue identifier""")
+@queue_group.command(name=cli_util.override('queue_admin.get_queue.command_name', 'get'), help=u"""Gets a queue by identifier. \n[Command Reference](getQueue)""")
+@cli_util.option('--queue-id', required=True, help=u"""The unique queue identifier.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -299,13 +303,13 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@queue_collection_group.command(name=cli_util.override('queue_admin.list_queues.command_name', 'list-queues'), help=u"""Returns a list of Queues. \n[Command Reference](listQueues)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@queue_collection_group.command(name=cli_util.override('queue_admin.list_queues.command_name', 'list-queues'), help=u"""Returns a list of queues. \n[Command Reference](listQueues)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--id', help=u"""unique Queue identifier""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
-@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--id', help=u"""The unique queue identifier.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -363,8 +367,8 @@ def list_queues(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_
 
 @work_request_error_collection_group.command(name=cli_util.override('queue_admin.list_work_request_errors.command_name', 'list-work-request-errors'), help=u"""Return a (paginated) list of errors for a given work request. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
-@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -414,8 +418,8 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
 
 @work_request_log_entry_collection_group.command(name=cli_util.override('queue_admin.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Return a (paginated) list of logs for a given work request. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
-@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -464,10 +468,10 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_summary_collection_group.command(name=cli_util.override('queue_admin.list_work_requests.command_name', 'list-work-requests'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
-@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -513,19 +517,20 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
     cli_util.render_response(result, ctx)
 
 
-@queue_group.command(name=cli_util.override('queue_admin.purge_queue.command_name', 'purge'), help=u"""Deletes all messages present in the queue at the time of invocation. Only one concurrent purge operation is supported for any given queue. However multiple concurrent purge operations are supported for different queues. \n[Command Reference](purgeQueue)""")
-@cli_util.option('--queue-id', required=True, help=u"""unique Queue identifier""")
-@cli_util.option('--purge-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "DLQ", "BOTH"]), help=u"""Type of the purge to perform: - NORMAL - purge only normal queue - DLQ - purge only DLQ - BOTH - purge both normal queue and DLQ""")
+@queue_group.command(name=cli_util.override('queue_admin.purge_queue.command_name', 'purge'), help=u"""Deletes all messages present in the queue, or deletes all the messages in the specific channel at the time of invocation. Only one concurrent purge operation is supported for any given queue. However multiple concurrent purge operations are supported for different queues. Purge request without specification of target channels will clean up all messages in the queue and in the child channels. \n[Command Reference](purgeQueue)""")
+@cli_util.option('--queue-id', required=True, help=u"""The unique queue identifier.""")
+@cli_util.option('--purge-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "DLQ", "BOTH"]), help=u"""Type of the purge to perform: - NORMAL - purge only the normal queue - DLQ - purge only the dead letter queue - BOTH - purge both the normal queue and the dead letter queue""")
+@cli_util.option('--channel-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Optional parameter to specify the destination of purge operation. If the channel ID is specified, the purge operation will delete all the messages in the specific channels. If the channel ID is not specified, the purge operation will delete all the messages in the queue and in the child channels.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'channel-ids': {'module': 'queue', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'channel-ids': {'module': 'queue', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def purge_queue(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, queue_id, purge_type, if_match):
+def purge_queue(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, queue_id, purge_type, channel_ids, if_match):
 
     if isinstance(queue_id, six.string_types) and len(queue_id.strip()) == 0:
         raise click.UsageError('Parameter --queue-id cannot be whitespace or empty string')
@@ -537,6 +542,9 @@ def purge_queue(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
     _details = {}
     _details['purgeType'] = purge_type
+
+    if channel_ids is not None:
+        _details['channelIds'] = cli_util.parse_json_parameter("channel_ids", channel_ids)
 
     client = cli_util.build_client('queue', 'queue_admin', ctx)
     result = client.purge_queue(
@@ -570,13 +578,14 @@ def purge_queue(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@queue_group.command(name=cli_util.override('queue_admin.update_queue.command_name', 'update'), help=u"""Updates the Queue \n[Command Reference](updateQueue)""")
-@cli_util.option('--queue-id', required=True, help=u"""unique Queue identifier""")
-@cli_util.option('--display-name', help=u"""Queue Identifier""")
-@cli_util.option('--visibility-in-seconds', type=click.INT, help=u"""The default visibility of the messages consumed from the queue.""")
+@queue_group.command(name=cli_util.override('queue_admin.update_queue.command_name', 'update'), help=u"""Updates the specified queue. \n[Command Reference](updateQueue)""")
+@cli_util.option('--queue-id', required=True, help=u"""The unique queue identifier.""")
+@cli_util.option('--display-name', help=u"""The [OCID] of the queue.""")
+@cli_util.option('--visibility-in-seconds', type=click.INT, help=u"""The default visibility timeout of the messages consumed from the queue, in seconds.""")
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""The default polling timeout of the messages in the queue, in seconds.""")
-@cli_util.option('--dead-letter-queue-delivery-count', type=click.INT, help=u"""The number of times a message can be delivered to a consumer before being moved to the dead letter queue. A value of 0 indicates that the DLQ is not used. Changing that value to a lower threshold does not retro-actively move in-flight messages in the dead letter queue.""")
-@cli_util.option('--custom-encryption-key-id', help=u"""Id of the custom master encryption key which will be used to encrypt messages content. String of length 0 means the custom key should be removed from queue""")
+@cli_util.option('--channel-consumption-limit', type=click.INT, help=u"""The percentage of allocated queue resources that can be consumed by a single channel. For example, if a queue has a storage limit of 2Gb, and a single channel consumption limit is 0.1 (10%), that means data size of a single channel  can't exceed 200Mb. Consumption limit of 100% (default) means that a single channel can consume up-to all allocated queue's resources.""")
+@cli_util.option('--dead-letter-queue-delivery-count', type=click.INT, help=u"""The number of times a message can be delivered to a consumer before being moved to the dead letter queue. A value of 0 indicates that the DLQ is not used. Changing that value to a lower threshold does not retroactively move in-flight messages in the dead letter queue.""")
+@cli_util.option('--custom-encryption-key-id', help=u"""The [OCID] of the custom encryption key to be used to encrypt messages content. A string with a length of 0 means the custom key should be removed from queue.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -589,7 +598,7 @@ def purge_queue(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'queue', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'queue', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_queue(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, queue_id, display_name, visibility_in_seconds, timeout_in_seconds, dead_letter_queue_delivery_count, custom_encryption_key_id, freeform_tags, defined_tags, if_match):
+def update_queue(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, queue_id, display_name, visibility_in_seconds, timeout_in_seconds, channel_consumption_limit, dead_letter_queue_delivery_count, custom_encryption_key_id, freeform_tags, defined_tags, if_match):
 
     if isinstance(queue_id, six.string_types) and len(queue_id.strip()) == 0:
         raise click.UsageError('Parameter --queue-id cannot be whitespace or empty string')
@@ -613,6 +622,9 @@ def update_queue(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 
     if timeout_in_seconds is not None:
         _details['timeoutInSeconds'] = timeout_in_seconds
+
+    if channel_consumption_limit is not None:
+        _details['channelConsumptionLimit'] = channel_consumption_limit
 
     if dead_letter_queue_delivery_count is not None:
         _details['deadLetterQueueDeliveryCount'] = dead_letter_queue_delivery_count

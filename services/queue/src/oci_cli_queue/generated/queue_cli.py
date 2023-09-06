@@ -16,7 +16,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.queue.src.oci_cli_queue.generated import queue_service_cli
 
 
-@click.command(cli_util.override('queue.queue_root_group.command_name', 'queue'), cls=CommandGroupWithAlias, help=cli_util.override('queue.queue_root_group.help', """A description of the Queue API"""), short_help=cli_util.override('queue.queue_root_group.short_help', """Queue API"""))
+@click.command(cli_util.override('queue.queue_root_group.command_name', 'queue'), cls=CommandGroupWithAlias, help=cli_util.override('queue.queue_root_group.help', """Use the Queue API to produce and consume messages, create queues, and manage related items. For more information, see [Queue]."""), short_help=cli_util.override('queue.queue_root_group.short_help', """Queue API"""))
 @cli_util.help_option_group
 def queue_root_group():
     pass
@@ -28,13 +28,19 @@ def get_message_group():
     pass
 
 
-@click.command(cli_util.override('queue.queue_stats_group.command_name', 'queue-stats'), cls=CommandGroupWithAlias, help="""The stats for a queue and its dead letter queue.""")
+@click.command(cli_util.override('queue.channel_collection_group.command_name', 'channel-collection'), cls=CommandGroupWithAlias, help="""List of IDs of non-empty channels.""")
+@cli_util.help_option_group
+def channel_collection_group():
+    pass
+
+
+@click.command(cli_util.override('queue.queue_stats_group.command_name', 'queue-stats'), cls=CommandGroupWithAlias, help="""The stats for a queue and its dead letter queue. If channelId is specified in request field, it will return channel specific stats response.""")
 @cli_util.help_option_group
 def queue_stats_group():
     pass
 
 
-@click.command(cli_util.override('queue.put_message_group.command_name', 'put-message'), cls=CommandGroupWithAlias, help="""A message that has been published in a queue.""")
+@click.command(cli_util.override('queue.put_message_group.command_name', 'put-message'), cls=CommandGroupWithAlias, help="""A message that has been published to a queue.""")
 @cli_util.help_option_group
 def put_message_group():
     pass
@@ -48,19 +54,21 @@ def updated_message_group():
 
 queue_service_cli.queue_service_group.add_command(queue_root_group)
 queue_root_group.add_command(get_message_group)
+queue_root_group.add_command(channel_collection_group)
 queue_root_group.add_command(queue_stats_group)
 queue_root_group.add_command(put_message_group)
 queue_root_group.add_command(updated_message_group)
 # oci queue queue --> oci queue
 queue_service_cli.queue_service_group.commands.pop(queue_root_group.name)
 queue_service_cli.queue_service_group.add_command(get_message_group)
+queue_service_cli.queue_service_group.add_command(channel_collection_group)
 queue_service_cli.queue_service_group.add_command(queue_stats_group)
 queue_service_cli.queue_service_group.add_command(put_message_group)
 queue_service_cli.queue_service_group.add_command(updated_message_group)
 
 
-@get_message_group.command(name=cli_util.override('queue.delete_message.command_name', 'delete-message'), help=u"""Deletes from the queue the message represented by the receipt. \n[Command Reference](deleteMessage)""")
-@cli_util.option('--queue-id', required=True, help=u"""unique Queue identifier""")
+@get_message_group.command(name=cli_util.override('queue.delete_message.command_name', 'delete-message'), help=u"""Deletes the message represented by the receipt from the queue. You must use the [messages endpoint] to delete messages. The messages endpoint may be different for different queues. Use [`GetQueue`] to find the queue's `messagesEndpoint`. \n[Command Reference](deleteMessage)""")
+@cli_util.option('--queue-id', required=True, help=u"""The unique queue identifier.""")
 @cli_util.option('--message-receipt', required=True, help=u"""The receipt of the message retrieved from a GetMessages call.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -87,8 +95,8 @@ def delete_message(ctx, from_json, queue_id, message_receipt):
     cli_util.render_response(result, ctx)
 
 
-@get_message_group.command(name=cli_util.override('queue.delete_messages.command_name', 'delete-messages'), help=u"""Deletes multiple messages from the queue. \n[Command Reference](deleteMessages)""")
-@cli_util.option('--queue-id', required=True, help=u"""unique Queue identifier""")
+@get_message_group.command(name=cli_util.override('queue.delete_messages.command_name', 'delete-messages'), help=u"""Deletes multiple messages from the queue. You must use the [messages endpoint] to delete messages. The messages endpoint may be different for different queues. Use [`GetQueue`] to find the queue's `messagesEndpoint`. \n[Command Reference](deleteMessages)""")
+@cli_util.option('--queue-id', required=True, help=u"""The unique queue identifier.""")
 @cli_util.option('--entries', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The array of messages to delete from a queue.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'entries': {'module': 'queue', 'class': 'list[DeleteMessagesDetailsEntry]'}})
 @cli_util.help_option
@@ -115,17 +123,22 @@ def delete_messages(ctx, from_json, queue_id, entries):
     cli_util.render_response(result, ctx)
 
 
-@get_message_group.command(name=cli_util.override('queue.get_messages.command_name', 'get-messages'), help=u"""Consumes message from the queue. \n[Command Reference](getMessages)""")
-@cli_util.option('--queue-id', required=True, help=u"""unique Queue identifier""")
-@cli_util.option('--visibility-in-seconds', type=click.INT, help=u"""If the visibilityInSeconds parameter is set, messages will be hidden for visibilityInSeconds seconds and won't be consumable by other consumers during that time. If it isn't set it defaults to the value set at the queue level. The minimum is 0 and the maximum is 43,200 (12 hours). Using a visibilityInSeconds of 0, effectively acts as a peek functionality. Messages retrieved that way, aren't meant to be deleted because they will most likely be delivered to another consumer as their visibility won't change, but will still increase the delivery count by one.""")
-@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""If the timeoutInSeconds parameter isn't set or set to a value greater than zero, the request is using the long-polling mode and will only return when a message is available for consumption (it does not wait for limit messages but still only returns at-most limit messages) or after timeoutInSeconds seconds (in which case it will return an empty response) whichever comes first. If the parameter is set to zero, the request is using the short-polling mode and immediately returns whether messages have been retrieved or not. In same rare-cases a long-polling request could be interrupted (returned with empty response) before the end of the timeout. The minimum is 0 (long polling disabled), the maximum is 30 seconds and default is 30 seconds.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The limit parameter controls how many messages is returned at-most. The default is 1, the minimum is 1 and the maximum is 32.""")
+@get_message_group.command(name=cli_util.override('queue.get_messages.command_name', 'get-messages'), help=u"""Consumes messages from the queue. You must use the [messages endpoint] to consume messages. The messages endpoint may be different for different queues. Use [`GetQueue`] to find the queue's `messagesEndpoint`. GetMessages accepts optional channelFilter query parameter that can filter source channels of the messages. When channelFilter is present, service will return available messages from the channel which ID exactly matched the filter. When filter is not specified, messages will be returned from a random non-empty channel within a queue. \n[Command Reference](getMessages)""")
+@cli_util.option('--queue-id', required=True, help=u"""The unique queue identifier.""")
+@cli_util.option('--visibility-in-seconds', type=click.INT, help=u"""If the `visibilityInSeconds` parameter is set, messages will be hidden for `visibilityInSeconds` seconds and won't be consumable by other consumers during that time. If it isn't set it defaults to the value set at the queue level.
+
+Using a `visibilityInSeconds` value of 0 effectively acts as a peek functionality. Messages retrieved that way aren't meant to be deleted because they will most likely be delivered to another consumer as their visibility won't change, but will still increase the delivery count by one.""")
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""If the `timeoutInSeconds parameter` isn't set or it is set to a value greater than 0, the request is using the long-polling mode and will only return when a message is available for consumption (it does not wait for limit messages but still only returns at-most limit messages) or after `timeoutInSeconds` seconds (in which case it will return an empty response), whichever comes first.
+
+If the parameter is set to 0, the request is using the short-polling mode and immediately returns whether messages have been retrieved or not. In same rare-cases a long-polling request could be interrupted (returned with empty response) before the end of the timeout.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The limit parameter controls how many messages is returned at-most.""")
+@cli_util.option('--channel-filter', help=u"""Optional parameter to filter the channels.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'queue', 'class': 'GetMessages'})
 @cli_util.wrap_exceptions
-def get_messages(ctx, from_json, queue_id, visibility_in_seconds, timeout_in_seconds, limit):
+def get_messages(ctx, from_json, queue_id, visibility_in_seconds, timeout_in_seconds, limit, channel_filter):
 
     if isinstance(queue_id, six.string_types) and len(queue_id.strip()) == 0:
         raise click.UsageError('Parameter --queue-id cannot be whitespace or empty string')
@@ -137,6 +150,8 @@ def get_messages(ctx, from_json, queue_id, visibility_in_seconds, timeout_in_sec
         kwargs['timeout_in_seconds'] = timeout_in_seconds
     if limit is not None:
         kwargs['limit'] = limit
+    if channel_filter is not None:
+        kwargs['channel_filter'] = channel_filter
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('queue', 'queue', ctx)
     result = client.get_messages(
@@ -146,19 +161,22 @@ def get_messages(ctx, from_json, queue_id, visibility_in_seconds, timeout_in_sec
     cli_util.render_response(result, ctx)
 
 
-@queue_stats_group.command(name=cli_util.override('queue.get_stats.command_name', 'get-stats'), help=u"""Gets the statistics for the queue and its dead letter queue. \n[Command Reference](getStats)""")
-@cli_util.option('--queue-id', required=True, help=u"""unique Queue identifier""")
+@queue_stats_group.command(name=cli_util.override('queue.get_stats.command_name', 'get-stats'), help=u"""Gets the statistics for the queue and its dead letter queue. You must use the [messages endpoint] to get a queue's statistics. The messages endpoint may be different for different queues. Use [`GetQueue`] to find the queue's `messagesEndpoint`. \n[Command Reference](getStats)""")
+@cli_util.option('--queue-id', required=True, help=u"""The unique queue identifier.""")
+@cli_util.option('--channel-id', help=u"""Id to specify channel.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'queue', 'class': 'QueueStats'})
 @cli_util.wrap_exceptions
-def get_stats(ctx, from_json, queue_id):
+def get_stats(ctx, from_json, queue_id, channel_id):
 
     if isinstance(queue_id, six.string_types) and len(queue_id.strip()) == 0:
         raise click.UsageError('Parameter --queue-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if channel_id is not None:
+        kwargs['channel_id'] = channel_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('queue', 'queue', ctx)
     result = client.get_stats(
@@ -168,8 +186,62 @@ def get_stats(ctx, from_json, queue_id):
     cli_util.render_response(result, ctx)
 
 
-@put_message_group.command(name=cli_util.override('queue.put_messages.command_name', 'put-messages'), help=u"""Puts messages in the queue \n[Command Reference](putMessages)""")
-@cli_util.option('--queue-id', required=True, help=u"""unique Queue identifier""")
+@channel_collection_group.command(name=cli_util.override('queue.list_channels.command_name', 'list-channels'), help=u"""Gets the list of IDs of non-empty channels. It will return an approximate list of IDs of non-empty channels. That information is based on the queue level statistics. API supports optional channelFilter parameter which will filter the returned results according to the specified filter. List of channel IDs is approximate, because statistics is refreshed once per-second, and that list represents a snapshot of the past information. API is paginated. \n[Command Reference](listChannels)""")
+@cli_util.option('--queue-id', required=True, help=u"""The unique queue identifier.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--channel-filter', help=u"""Optional parameter to filter the channels.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'queue', 'class': 'ChannelCollection'})
+@cli_util.wrap_exceptions
+def list_channels(ctx, from_json, all_pages, page_size, queue_id, limit, page, channel_filter):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(queue_id, six.string_types) and len(queue_id.strip()) == 0:
+        raise click.UsageError('Parameter --queue-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if channel_filter is not None:
+        kwargs['channel_filter'] = channel_filter
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('queue', 'queue', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_channels,
+            queue_id=queue_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_channels,
+            limit,
+            page_size,
+            queue_id=queue_id,
+            **kwargs
+        )
+    else:
+        result = client.list_channels(
+            queue_id=queue_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@put_message_group.command(name=cli_util.override('queue.put_messages.command_name', 'put-messages'), help=u"""Puts messages into the queue. You must use the [messages endpoint] to produce messages. The messages endpoint may be different for different queues. Use [`GetQueue`] to find the queue's `messagesEndpoint`. \n[Command Reference](putMessages)""")
+@cli_util.option('--queue-id', required=True, help=u"""The unique queue identifier.""")
 @cli_util.option('--messages', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The array of messages to put into a queue.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'messages': {'module': 'queue', 'class': 'list[PutMessagesDetailsEntry]'}})
 @cli_util.help_option
@@ -196,8 +268,8 @@ def put_messages(ctx, from_json, queue_id, messages):
     cli_util.render_response(result, ctx)
 
 
-@updated_message_group.command(name=cli_util.override('queue.update_message.command_name', 'update-message'), help=u"""Updates the visibility of the message represented by the receipt. \n[Command Reference](updateMessage)""")
-@cli_util.option('--queue-id', required=True, help=u"""unique Queue identifier""")
+@updated_message_group.command(name=cli_util.override('queue.update_message.command_name', 'update-message'), help=u"""Updates the visibility of the message represented by the receipt. You must use the [messages endpoint] to update messages. The messages endpoint may be different for different queues. Use [`GetQueue`] to find the queue's `messagesEndpoint`. \n[Command Reference](updateMessage)""")
+@cli_util.option('--queue-id', required=True, help=u"""The unique queue identifier.""")
 @cli_util.option('--message-receipt', required=True, help=u"""The receipt of the message retrieved from a GetMessages call.""")
 @cli_util.option('--visibility-in-seconds', required=True, type=click.INT, help=u"""The new visibility of the message relative to the current time (as-per the clock of the server receiving the request).""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -229,8 +301,8 @@ def update_message(ctx, from_json, queue_id, message_receipt, visibility_in_seco
     cli_util.render_response(result, ctx)
 
 
-@get_message_group.command(name=cli_util.override('queue.update_messages.command_name', 'update-messages'), help=u"""Updates multiple messages in the queue. \n[Command Reference](updateMessages)""")
-@cli_util.option('--queue-id', required=True, help=u"""unique Queue identifier""")
+@get_message_group.command(name=cli_util.override('queue.update_messages.command_name', 'update-messages'), help=u"""Updates multiple messages in the queue. You must use the [messages endpoint] to update messages. The messages endpoint may be different for different queues. Use [`GetQueue`] to find the queue's `messagesEndpoint`. \n[Command Reference](updateMessages)""")
+@cli_util.option('--queue-id', required=True, help=u"""The unique queue identifier.""")
 @cli_util.option('--entries', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The array of messages to update in a queue.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'entries': {'module': 'queue', 'class': 'list[UpdateMessagesDetailsEntry]'}})
 @cli_util.help_option

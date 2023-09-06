@@ -463,6 +463,41 @@ def associate_custom_property(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
+@glossary_group.command(name=cli_util.override('data_catalog.asynchronous_export_glossary.command_name', 'asynchronous-export'), help=u"""Exports the contents of a glossary in Excel format. Returns details about the job which actually performs the export. \n[Command Reference](asynchronousExportGlossary)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--glossary-key', required=True, help=u"""Unique glossary key.""")
+@cli_util.option('--object-storage-target', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'object-storage-target': {'module': 'data_catalog', 'class': 'ObjectStorageObjectReference'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'object-storage-target': {'module': 'data_catalog', 'class': 'ObjectStorageObjectReference'}}, output_type={'module': 'data_catalog', 'class': 'AsynchronousExportGlossaryResult'})
+@cli_util.wrap_exceptions
+def asynchronous_export_glossary(ctx, from_json, catalog_id, glossary_key, object_storage_target):
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    if isinstance(glossary_key, six.string_types) and len(glossary_key.strip()) == 0:
+        raise click.UsageError('Parameter --glossary-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if object_storage_target is not None:
+        _details['objectStorageTarget'] = cli_util.parse_json_parameter("object_storage_target", object_storage_target)
+
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.asynchronous_export_glossary(
+        catalog_id=catalog_id,
+        glossary_key=glossary_key,
+        asynchronous_export_glossary_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @catalog_group.command(name=cli_util.override('data_catalog.attach_catalog_private_endpoint.command_name', 'attach'), help=u"""Attaches a private reverse connection endpoint resource to a data catalog resource. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](attachCatalogPrivateEndpoint)""")
 @cli_util.option('--catalog-private-endpoint-id', required=True, help=u"""The identifier of the private endpoint to be attached to the catalog resource.""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
@@ -1768,7 +1803,7 @@ def create_glossary(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--job-definition-key', required=True, help=u"""The unique key of the job definition that defined the scope of this job.""")
 @cli_util.option('--description', help=u"""Detailed description of the job.""")
-@cli_util.option('--schedule-cron-expression', help=u"""Interval on which the job will be run. Value is specified as a cron-supported time specification \"nickname\". The following subset of those is supported: @monthly, @weekly, @daily, @hourly.""")
+@cli_util.option('--schedule-cron-expression', help=u"""Interval on which the job will be run. Value is specified as a cron-supported time specification \"nickname\". The following subset of those is supported: @monthly, @weekly, @daily, @hourly. For metastore sync, an additional option @default is supported, which will schedule jobs at a more granular frequency.""")
 @cli_util.option('--time-schedule-begin', type=custom_types.CLI_DATETIME, help=u"""Date that the schedule should be operational. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-schedule-end', type=custom_types.CLI_DATETIME, help=u"""Date that the schedule should end from being operational. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--connection-key', help=u"""The key of the connection used by the job. This connection will override the default connection specified in the associated job definition. All executions will use this connection.""")
@@ -1842,10 +1877,11 @@ def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @job_definition_group.command(name=cli_util.override('data_catalog.create_job_definition.command_name', 'create'), help=u"""Creates a new job definition. \n[Command Reference](createJobDefinition)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--job-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE", "IMPORT_DATA_ASSET"]), help=u"""Type of the job definition.""")
+@cli_util.option('--job-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE", "IMPORT_DATA_ASSET", "CREATE_SCAN_PROXY", "ASYNC_EXPORT_GLOSSARY"]), help=u"""Type of the job definition.""")
 @cli_util.option('--description', help=u"""Detailed description of the job definition.""")
 @cli_util.option('--is-incremental', type=click.BOOL, help=u"""Specifies if the job definition is incremental or full.""")
 @cli_util.option('--data-asset-key', help=u"""The key of the data asset for which the job is defined.""")
+@cli_util.option('--glossary-key', help=u"""Unique key of the glossary to which this job applies.""")
 @cli_util.option('--connection-key', help=u"""The key of the connection resource to be used for the job.""")
 @cli_util.option('--is-sample-data-extracted', type=click.BOOL, help=u"""Specify if sample data to be extracted as part of this harvest.""")
 @cli_util.option('--sample-data-size-in-mbs', type=click.INT, help=u"""Specify the sample data size in MB, specified as number of rows, for this metadata harvest.""")
@@ -1858,7 +1894,7 @@ def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'JobDefinition'})
 @cli_util.wrap_exceptions
-def create_job_definition(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, display_name, job_type, description, is_incremental, data_asset_key, connection_key, is_sample_data_extracted, sample_data_size_in_mbs, properties):
+def create_job_definition(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, display_name, job_type, description, is_incremental, data_asset_key, glossary_key, connection_key, is_sample_data_extracted, sample_data_size_in_mbs, properties):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -1878,6 +1914,9 @@ def create_job_definition(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
     if data_asset_key is not None:
         _details['dataAssetKey'] = data_asset_key
+
+    if glossary_key is not None:
+        _details['glossaryKey'] = glossary_key
 
     if connection_key is not None:
         _details['connectionKey'] = connection_key
@@ -1927,7 +1966,7 @@ def create_job_definition(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--job-key', required=True, help=u"""Unique job key.""")
 @cli_util.option('--sub-type', help=u"""Sub-type of this job execution.""")
-@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE", "IMPORT_DATA_ASSET"]), help=u"""Type of the job execution.""")
+@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE", "IMPORT_DATA_ASSET", "CREATE_SCAN_PROXY", "ASYNC_EXPORT_GLOSSARY"]), help=u"""Type of the job execution.""")
 @cli_util.option('--parent-key', help=u"""The unique key of the parent execution or null if this job execution has no parent.""")
 @cli_util.option('--time-started', type=custom_types.CLI_DATETIME, help=u"""Time that job execution started. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-ended', type=custom_types.CLI_DATETIME, help=u"""Time that the job execution ended or null if it hasn't yet completed. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -3350,6 +3389,67 @@ def export_glossary(ctx, from_json, catalog_id, glossary_key, is_relationship_ex
     cli_util.render_response(result, ctx)
 
 
+@entity_group.command(name=cli_util.override('data_catalog.fetch_entity_lineage.command_name', 'fetch-entity-lineage'), help=u"""Returns lineage for a given entity object. \n[Command Reference](fetchEntityLineage)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
+@cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
+@cli_util.option('--level', type=click.INT, help=u"""Object level at which the lineage is returned.""")
+@cli_util.option('--direction', type=custom_types.CliCaseInsensitiveChoice(["UPSTREAM", "BOTH", "DOWNSTREAM"]), help=u"""Direction of the lineage returned.""")
+@cli_util.option('--is-intra-lineage', type=click.BOOL, help=u"""Intra-lineages are drill down lineages. This field indicates whether all intra-lineages need to be expanded inline in the lineage returned.""")
+@cli_util.option('--intra-lineage-object-key', help=u"""Unique object key for which intra-lineage needs to be fetched. Only drill-down lineage corresponding to the object whose object key is passed is returned.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'EntityLineage'})
+@cli_util.wrap_exceptions
+def fetch_entity_lineage(ctx, from_json, catalog_id, data_asset_key, entity_key, level, direction, is_intra_lineage, intra_lineage_object_key, limit, page, if_match):
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+        raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
+
+    if isinstance(entity_key, six.string_types) and len(entity_key.strip()) == 0:
+        raise click.UsageError('Parameter --entity-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if level is not None:
+        _details['level'] = level
+
+    if direction is not None:
+        _details['direction'] = direction
+
+    if is_intra_lineage is not None:
+        _details['isIntraLineage'] = is_intra_lineage
+
+    if intra_lineage_object_key is not None:
+        _details['intraLineageObjectKey'] = intra_lineage_object_key
+
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.fetch_entity_lineage(
+        catalog_id=catalog_id,
+        data_asset_key=data_asset_key,
+        entity_key=entity_key,
+        fetch_entity_lineage_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @attribute_group.command(name=cli_util.override('data_catalog.get_attribute.command_name', 'get'), help=u"""Gets a specific entity attribute by key. \n[Command Reference](getAttribute)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
@@ -4505,7 +4605,7 @@ def list_attribute_tags(ctx, from_json, all_pages, page_size, catalog_id, data_a
 @cli_util.option('--precision', type=click.INT, help=u"""Precision of the attribute value usually applies to float data type.""")
 @cli_util.option('--scale', type=click.INT, help=u"""Scale of the attribute value usually applies to float data type.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "entityKey", "lifecycleState", "timeCreated", "externalDataType", "externalKey", "length", "precision", "scale", "isNullable", "uri", "path", "minCollectionCount", "maxCollectionCount", "datatypeEntityKey", "externalDatatypeEntityKey", "parentAttributeKey", "externalParentAttributeKey", "position", "typeKey"]), multiple=True, help=u"""Specifies the fields to return in an entity attribute summary response.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME", "POSITION"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. Default order for POSITION is ascending. If no value is specified POSITION is default.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME", "POSITION", "DISPLAYORBUSINESSNAME"]), help=u"""The field to sort by. Only one sort order may be provided. DISPLAYORBUSINESSNAME considers businessName of a given object if set, else its displayName is used. Default sort order for TIMECREATED is descending and default sort order for DISPLAYNAME, POSITION and DISPLAYORBUSINESSNAME is ascending. If no order is specified, POSITION is the default.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -5187,7 +5287,7 @@ def list_derived_logical_entities(ctx, from_json, all_pages, page_size, catalog_
 @cli_util.option('--harvest-status', type=custom_types.CliCaseInsensitiveChoice(["COMPLETE", "ERROR", "IN_PROGRESS", "DEFERRED"]), help=u"""Harvest status of the harvestable resource as updated by the harvest process.""")
 @cli_util.option('--last-job-key', help=u"""Key of the last harvest process to update this resource.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "dataAssetKey", "timeCreated", "timeUpdated", "updatedById", "lifecycleState", "folderKey", "folderName", "externalKey", "path", "uri"]), multiple=True, help=u"""Specifies the fields to return in an entity summary response.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME", "DISPLAYORBUSINESSNAME"]), help=u"""The field to sort by. Only one sort order may be provided. DISPLAYORBUSINESSNAME considers businessName of a given object if set, else its displayName is used. Default sort order for TIMECREATED is descending and default sort order for DISPLAYNAME and DISPLAYORBUSINESSNAME is ascending. If no order is specified, TIMECREATED is the default.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -5492,7 +5592,8 @@ def list_folder_tags(ctx, from_json, all_pages, page_size, catalog_id, data_asse
 @cli_util.option('--harvest-status', type=custom_types.CliCaseInsensitiveChoice(["COMPLETE", "ERROR", "IN_PROGRESS", "DEFERRED"]), help=u"""Harvest status of the harvestable resource as updated by the harvest process.""")
 @cli_util.option('--last-job-key', help=u"""Key of the last harvest process to update this resource.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "parentFolderKey", "path", "dataAssetKey", "externalKey", "timeExternal", "timeCreated", "lifecycleState", "uri"]), multiple=True, help=u"""Specifies the fields to return in a folder summary response.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
+@cli_util.option('--type-key', help=u"""The key of the object type.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME", "DISPLAYORBUSINESSNAME"]), help=u"""The field to sort by. Only one sort order may be provided. DISPLAYORBUSINESSNAME considers businessName of a given object if set, else its displayName is used. Default sort order for TIMECREATED is descending and default sort order for DISPLAYNAME and DISPLAYORBUSINESSNAME is ascending. If no order is specified, TIMECREATED is the default.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -5503,7 +5604,7 @@ def list_folder_tags(ctx, from_json, all_pages, page_size, catalog_id, data_asse
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'FolderCollection'})
 @cli_util.wrap_exceptions
-def list_folders(ctx, from_json, all_pages, page_size, catalog_id, data_asset_key, display_name, business_name, display_or_business_name_contains, display_name_contains, lifecycle_state, parent_folder_key, path, external_key, time_created, time_updated, created_by_id, updated_by_id, harvest_status, last_job_key, fields, sort_by, sort_order, limit, page):
+def list_folders(ctx, from_json, all_pages, page_size, catalog_id, data_asset_key, display_name, business_name, display_or_business_name_contains, display_name_contains, lifecycle_state, parent_folder_key, path, external_key, time_created, time_updated, created_by_id, updated_by_id, harvest_status, last_job_key, fields, type_key, sort_by, sort_order, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -5545,6 +5646,8 @@ def list_folders(ctx, from_json, all_pages, page_size, catalog_id, data_asset_ke
         kwargs['last_job_key'] = last_job_key
     if fields is not None and len(fields) > 0:
         kwargs['fields'] = fields
+    if type_key is not None:
+        kwargs['type_key'] = type_key
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
@@ -5670,9 +5773,10 @@ def list_glossaries(ctx, from_json, all_pages, page_size, catalog_id, display_na
 @cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\" or has the pattern \"Cu\" anywhere in between.""")
 @cli_util.option('--job-execution-state', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "IN_PROGRESS", "INACTIVE", "FAILED", "SUCCEEDED", "CANCELED", "SUCCEEDED_WITH_WARNINGS"]), help=u"""Job execution state.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
-@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE", "IMPORT_DATA_ASSET"]), help=u"""Job type.""")
+@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE", "IMPORT_DATA_ASSET", "CREATE_SCAN_PROXY", "ASYNC_EXPORT_GLOSSARY"]), help=u"""Job type.""")
 @cli_util.option('--is-incremental', type=click.BOOL, help=u"""Whether job definition is an incremental harvest (true) or a full harvest (false).""")
 @cli_util.option('--data-asset-key', help=u"""Unique data asset key.""")
+@cli_util.option('--glossary-key', help=u"""Unique glossary key.""")
 @cli_util.option('--connection-key', help=u"""Unique connection key.""")
 @cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was created. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -5691,7 +5795,7 @@ def list_glossaries(ctx, from_json, all_pages, page_size, catalog_id, display_na
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'JobDefinitionCollection'})
 @cli_util.wrap_exceptions
-def list_job_definitions(ctx, from_json, all_pages, page_size, catalog_id, display_name, display_name_contains, job_execution_state, lifecycle_state, job_type, is_incremental, data_asset_key, connection_key, time_created, time_updated, created_by_id, updated_by_id, sample_data_size_in_mbs, fields, sort_by, sort_order, limit, page):
+def list_job_definitions(ctx, from_json, all_pages, page_size, catalog_id, display_name, display_name_contains, job_execution_state, lifecycle_state, job_type, is_incremental, data_asset_key, glossary_key, connection_key, time_created, time_updated, created_by_id, updated_by_id, sample_data_size_in_mbs, fields, sort_by, sort_order, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -5714,6 +5818,8 @@ def list_job_definitions(ctx, from_json, all_pages, page_size, catalog_id, displ
         kwargs['is_incremental'] = is_incremental
     if data_asset_key is not None:
         kwargs['data_asset_key'] = data_asset_key
+    if glossary_key is not None:
+        kwargs['glossary_key'] = glossary_key
     if connection_key is not None:
         kwargs['connection_key'] = connection_key
     if time_created is not None:
@@ -5771,7 +5877,7 @@ def list_job_definitions(ctx, from_json, all_pages, page_size, catalog_id, displ
 @cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--created-by-id', help=u"""OCID of the user who created the resource.""")
 @cli_util.option('--updated-by-id', help=u"""OCID of the user who updated the resource.""")
-@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE", "IMPORT_DATA_ASSET"]), help=u"""Job type.""")
+@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE", "IMPORT_DATA_ASSET", "CREATE_SCAN_PROXY", "ASYNC_EXPORT_GLOSSARY"]), help=u"""Job type.""")
 @cli_util.option('--sub-type', help=u"""Sub-type of this job execution.""")
 @cli_util.option('--parent-key', help=u"""The unique key of the parent execution or null if this job execution has no parent.""")
 @cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""Time that the job execution was started or in the case of a future time, the time when the job will start. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -6089,10 +6195,11 @@ def list_job_metrics(ctx, from_json, all_pages, page_size, catalog_id, job_key, 
 @cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--created-by-id', help=u"""OCID of the user who created the resource.""")
 @cli_util.option('--updated-by-id', help=u"""OCID of the user who updated the resource.""")
-@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE", "IMPORT_DATA_ASSET"]), help=u"""Job type.""")
+@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE", "IMPORT_DATA_ASSET", "CREATE_SCAN_PROXY", "ASYNC_EXPORT_GLOSSARY"]), help=u"""Job type.""")
 @cli_util.option('--job-definition-key', help=u"""Unique job definition key.""")
 @cli_util.option('--data-asset-key', help=u"""Unique data asset key.""")
-@cli_util.option('--schedule-cron-expression', help=u"""Interval on which the job will be run. Value is specified as a cron-supported time specification \"nickname\". The following subset of those is supported: @monthly, @weekly, @daily, @hourly.""")
+@cli_util.option('--glossary-key', help=u"""Unique glossary key.""")
+@cli_util.option('--schedule-cron-expression', help=u"""Interval on which the job will be run. Value is specified as a cron-supported time specification \"nickname\". The following subset of those is supported: @monthly, @weekly, @daily, @hourly. For metastore sync, an additional option @default is supported, which will schedule jobs at a more granular frequency.""")
 @cli_util.option('--time-schedule-begin', type=custom_types.CLI_DATETIME, help=u"""Date that the schedule should be operational. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-schedule-end', type=custom_types.CLI_DATETIME, help=u"""Date that the schedule should end from being operational. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--schedule-type', type=custom_types.CliCaseInsensitiveChoice(["SCHEDULED", "IMMEDIATE"]), help=u"""Type of the job schedule.""")
@@ -6111,7 +6218,7 @@ def list_job_metrics(ctx, from_json, all_pages, page_size, catalog_id, job_key, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'JobCollection'})
 @cli_util.wrap_exceptions
-def list_jobs(ctx, from_json, all_pages, page_size, catalog_id, display_name, display_name_contains, lifecycle_state, time_created, time_updated, created_by_id, updated_by_id, job_type, job_definition_key, data_asset_key, schedule_cron_expression, time_schedule_begin, time_schedule_end, schedule_type, connection_key, fields, execution_count, time_of_latest_execution, sort_by, sort_order, limit, page):
+def list_jobs(ctx, from_json, all_pages, page_size, catalog_id, display_name, display_name_contains, lifecycle_state, time_created, time_updated, created_by_id, updated_by_id, job_type, job_definition_key, data_asset_key, glossary_key, schedule_cron_expression, time_schedule_begin, time_schedule_end, schedule_type, connection_key, fields, execution_count, time_of_latest_execution, sort_by, sort_order, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -6140,6 +6247,8 @@ def list_jobs(ctx, from_json, all_pages, page_size, catalog_id, display_name, di
         kwargs['job_definition_key'] = job_definition_key
     if data_asset_key is not None:
         kwargs['data_asset_key'] = data_asset_key
+    if glossary_key is not None:
+        kwargs['glossary_key'] = glossary_key
     if schedule_cron_expression is not None:
         kwargs['schedule_cron_expression'] = schedule_cron_expression
     if time_schedule_begin is not None:
@@ -8324,7 +8433,7 @@ def update_glossary(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 @cli_util.option('--job-key', required=True, help=u"""Unique job key.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Detailed description of the job.""")
-@cli_util.option('--schedule-cron-expression', help=u"""Interval on which the job will be run. Value is specified as a cron-supported time specification \"nickname\". The following subset of those is supported: @monthly, @weekly, @daily, @hourly.""")
+@cli_util.option('--schedule-cron-expression', help=u"""Interval on which the job will be run. Value is specified as a cron-supported time specification \"nickname\". The following subset of those is supported: @monthly, @weekly, @daily, @hourly. For metastore sync, an additional option @default is supported, which will schedule jobs at a more granular frequency.""")
 @cli_util.option('--time-schedule-begin', type=custom_types.CLI_DATETIME, help=u"""Date that the schedule should be operational. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-schedule-end', type=custom_types.CLI_DATETIME, help=u"""Date that the schedule should end from being operational. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--connection-key', help=u"""The key of the connection resource that is used for the harvest by this job.""")
@@ -8409,6 +8518,7 @@ def update_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.option('--display-name', help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--is-incremental', type=click.BOOL, help=u"""Specifies if the job definition is incremental or full.""")
 @cli_util.option('--data-asset-key', help=u"""The key of the data asset for which the job is defined.""")
+@cli_util.option('--glossary-key', help=u"""Unique key of the glossary to which this job applies.""")
 @cli_util.option('--description', help=u"""Detailed description of the job definition.""")
 @cli_util.option('--connection-key', help=u"""The key of the connection resource to be used for harvest, sampling, profiling jobs.""")
 @cli_util.option('--is-sample-data-extracted', type=click.BOOL, help=u"""Specify if sample data to be extracted as part of this harvest.""")
@@ -8424,7 +8534,7 @@ def update_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'JobDefinition'})
 @cli_util.wrap_exceptions
-def update_job_definition(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, job_definition_key, display_name, is_incremental, data_asset_key, description, connection_key, is_sample_data_extracted, sample_data_size_in_mbs, properties, if_match):
+def update_job_definition(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, job_definition_key, display_name, is_incremental, data_asset_key, glossary_key, description, connection_key, is_sample_data_extracted, sample_data_size_in_mbs, properties, if_match):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -8451,6 +8561,9 @@ def update_job_definition(ctx, from_json, force, wait_for_state, max_wait_second
 
     if data_asset_key is not None:
         _details['dataAssetKey'] = data_asset_key
+
+    if glossary_key is not None:
+        _details['glossaryKey'] = glossary_key
 
     if description is not None:
         _details['description'] = description

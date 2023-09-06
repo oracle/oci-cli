@@ -6,6 +6,64 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.33.0 - 2023-09-05
+--------------------
+Added
+~~~~~
+* Support for filtering and sorting work requests in the Container Instances service
+
+  * ``oci container-instances work-request list --availability-domain --sort-by --sort-order --status``
+  * ``oci container-instances work-request list-errors --sort-by --sort-order``
+  * ``oci container-instances work-request list-logs --sort-by --sort-order``
+
+* Queue Service
+
+  * Support for queue channels
+
+    * ``oci queue channels list-channels``
+
+  * Support for new optional parameters
+
+    * ``oci queue messages get-messages --channel-filter``
+    * ``oci queue messages get-stats --channel-id``
+    * ``oci queue queue-admin queue create --channel-consumption-limit``
+    * ``oci queue queue-admin queue purge --channel-ids``
+    * ``oci queue queue-admin queue update --channel-consumption-limit``
+
+* Data Catalog Service
+
+  * Support for new entity lineage retrieval and asynchronous glossary export commands in the Data Catalog service
+
+    * ``oci data-catalog entity fetch-entity-lineage``
+    * ``oci data-catalog glossary asynchronous-export``
+
+  * Support for new optional parameters on folders and jobs in the Data Catalog service
+
+    * ``oci data-catalog folder list --type-key``
+    * ``oci data-catalog job list --glossary-key``
+    * ``oci data-catalog job-definition create --glossary-key``
+    * ``oci data-catalog job-definition list --glossary-key``
+    * ``oci data-catalog job-definition update --glossary-key``
+
+Changed
+~~~~~~~
+* [BREAKING] Customer Incident Management Service
+
+  * Endoint changed from https://incidentmanagement.{region}.{domainAndTopLevelDomain} to https://incidentmanagement.{region}.oci.{domainAndTopLevelDomain} (e.g. https://incidentmanagement.us-phoenix-1.oraclecloud.com to https://incidentmanagement.us-phoenix-1.oci.oraclecloud.com)
+
+  * Incident commands moved to parent group
+
+    * ``oci support incident create``
+    * ``oci support incident get``
+    * ``oci support incident list``
+    * ``oci support incident update``
+    * ``oci support incident-resource-type list``
+    * ``oci support validation-response validate-user``
+
+  * Command removed
+
+    * ``oci support user user create``
+
 3.32.0 - 2023-08-29
 --------------------
 Added

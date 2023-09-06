@@ -80,3 +80,5 @@ GITHUB_CHANGELOG = 'https://github.com/oracle/oci-cli/blob/master/CHANGELOG.rst'
 
 INTERACTIVE_CLI_SUGGESTION_MESSAGE = 'For OCI CLI commands and parameters suggestion, auto completion and ' \
                                      'other useful features, try the Interactive mode by typing `oci -i`.'
+
+NO_SUCH_COMMAND_ERROR_STRING = "{}\n\nError: No such command {}"

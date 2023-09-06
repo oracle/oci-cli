@@ -22,6 +22,7 @@ from oci_cli import help_text_producer    # noqa: E402
 from oci_cli import cli_util  # noqa: E402
 
 from oci_cli import cli_constants     # noqa: E402
+from alloy import alloy_util   # noqa: E402
 from collections import OrderedDict     # noqa: E402
 from oci._vendor import requests    # noqa: E402
 from oci_cli import cli_metrics    # noqa: E402
@@ -43,6 +44,38 @@ from oci_cli.service_mapping import service_mapping    # noqa: E402
 logging.basicConfig(level=logging.WARN)
 
 OCI_CLI_AUTH_CHOICES = [cli_constants.OCI_CLI_AUTH_API_KEY, cli_constants.OCI_CLI_AUTH_INSTANCE_PRINCIPAL, cli_constants.OCI_CLI_AUTH_SESSION_TOKEN, cli_constants.OCI_CLI_AUTH_INSTANCE_OBO_USER, cli_constants.OCI_CLI_AUTH_RESOURCE_PRINCIPAL]
+
+OCI_HELP = 'Oracle Cloud Infrastructure command line interface'
+
+OCI_USER_HELP = f'''Oracle Cloud Infrastructure command line interface, with support for Audit, Block Volume,
+Compute, Database, IAM, Load Balancing, Networking, DNS, File Storage, Email Delivery and Object Storage Services.
+
+Most commands must specify a service, followed by a resource type and then an action. For example, to list users (where
+$T contains the OCID of the current tenant):
+
+  oci iam user list --compartment-id $T
+
+Output is in JSON format.
+
+For information on configuration, see {cli_constants.OCI_CONFIG_DOCUMENTATION}.
+
+Enable our interactive features to guide you through command usage:
+
+  oci -i
+
+For information on interactive features, see {cli_constants.INTERACTIVE_CLI_DOCUMENTATION}.'''
+
+OCI_ALLOY_USER_HELP = '''Oracle Cloud Infrastructure command line interface, with support for subscribed services.
+
+Most commands requires specification of a service, a resource type, and an action.
+While built-in commands don't require those information, it may have other required parameters. For example, to send
+a raw request (where $method is an HTTP method and $uri is a service endpoint):
+
+  oci raw-request --http-method $method --target-uri $uri
+
+Output is in JSON format.
+
+For information on configuration, see https://docs.cloud.oracle.com/Content/API/Concepts/sdkconfig.htm.'''
 
 REALM_SPECIFIC_ENDPOINT_HELP = """Use a realm-specific endpoint, instead of the default region-wide endpoint.
 
@@ -352,24 +385,7 @@ def find_latest_release_version(ctx, param, value):
 
 
 @click.command(name='oci', cls=CommandGroupWithAlias, invoke_without_command=True,
-               context_settings=dict(allow_interspersed_args=True, ignore_unknown_options=True),
-               help=f"""Oracle Cloud Infrastructure command line interface, with support for Audit, Block Volume,
-Compute, Database, IAM, Load Balancing, Networking, DNS, File Storage, Email Delivery and Object Storage Services.
-
-Most commands must specify a service, followed by a resource type and then an action. For example, to list users (where
-$T contains the OCID of the current tenant):
-
-  oci iam user list --compartment-id $T
-
-Output is in JSON format.
-
-For information on configuration, see {cli_constants.OCI_CONFIG_DOCUMENTATION}.
-
-Enable our interactive features to guide you through command usage:
-
-  oci -i
-
-For information on interactive features, see {cli_constants.INTERACTIVE_CLI_DOCUMENTATION}.""")
+               context_settings=dict(allow_interspersed_args=True, ignore_unknown_options=True), help=OCI_HELP)
 @click.version_option(__version__, '-v', '--version', message='%(version)s')
 @click.option('--release-info', is_flag=True, show_default=False, callback=find_latest_release_info,
               expose_value=False, is_eager=True, help='Prints ChangeLog difference between current installed version and '
@@ -429,12 +445,6 @@ def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, re
     if max_retries and no_retry:
         raise click.UsageError('The option --max-retries is not applicable when using the --no-retry flag.')
 
-    # Show help in any case if there are no subcommands, or if the help option
-    # is used but there are subcommands, then set a flag for user later.
-    if not ctx.invoked_subcommand and not (cli_constants.OCI_CLI_AUTO_PROMPT_ENV_VAR in os.environ or cli_auto_prompt):
-        echo_help(ctx)
-        sys.exit()
-
     if str(profile) == str(Sentinel(DEFAULT_PROFILE)):
         # if --profile is not supplied, fallback accordingly:
         #   - if OCI_CLI_PROFILE exists, use that
@@ -489,9 +499,18 @@ def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, re
 
     load_default_values(ctx, cli_rc_file, profile)
 
+    # Show help in any case if there are no subcommands, or if the help option
+    # is used but there are subcommands, then set a flag for user later.
+    if not ctx.invoked_subcommand and not (cli_constants.OCI_CLI_AUTO_PROMPT_ENV_VAR in os.environ or cli_auto_prompt):
+        echo_help(ctx)
+        ctx.exit()
+
     if help:
         ctx.obj['help'] = True
         if is_top_level_help(ctx) and not cli_util.parse_boolean(ctx.obj.get('settings', {}).get(cli_constants.CLI_RC_GENERIC_SETTINGS_USE_CLICK_HELP, False)):
+            # check if customer is trying to access a service that they have not subscribed
+            if not cli_util.is_service_accessible(ctx, ctx.invoked_subcommand):
+                ctx.exit()
             help_text_producer.render_help_text(ctx, [sys.argv[1]])
 
     cli_metrics.Metrics.update_metric("NUM_INVOCATIONS", ctx.obj['debug'])
@@ -511,6 +530,9 @@ def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, re
 
     # Show auto prompt mode for the user
     if cli_auto_prompt_env() or cli_auto_prompt:
+        # do not show auto prompt if customer is trying to access a service that they have not subscribed
+        if ctx.invoked_subcommand and not cli_util.is_service_accessible(ctx, ctx.invoked_subcommand):
+            ctx.exit()
         cli_interactive.start_interactive_shell(ctx)
         ctx.exit()
 
@@ -558,12 +580,19 @@ def load_default_values(ctx, cli_rc_file, profile):
             ctx.obj['default_values_from_file'] = dict(parser.items(profile))
 
 
+def generate_oci_help(ctx):
+    if alloy_util.get_service_config_path(ctx) is None:
+        return click.wrap_text(OCI_USER_HELP, initial_indent='  ', subsequent_indent='  ', preserve_paragraphs=True).lstrip()
+    return click.wrap_text(OCI_ALLOY_USER_HELP, initial_indent='  ', subsequent_indent='  ', preserve_paragraphs=True).lstrip()
+
+
 # Need to remove help for commands under root to re-add with all the service commands
 # in order to keep formatting consistent.
 def echo_help(ctx):
     help_text = ctx.get_help()
     help_text = re.split('(Commands:\n)', help_text, maxsplit=1)
     help_text_commands = help_text[2].split("\n")
+    help_text[0] = help_text[0].replace(OCI_HELP, generate_oci_help(ctx), 1)
     help_text = help_text[0] + help_text[1]
     command_list = []
     # populate a dict of group and corresponding commands as key & value.
@@ -577,17 +606,28 @@ def echo_help(ctx):
             command_list.append(tuple(command.strip().split(None, 1)))
     # holds value of group name currently being processed. Initialise with empty string.
     current_group = ""
-    # fetch entries from service_mapping{} sorted by group name
-    for (service_key, service_value) in sorted(service_mapping.items(), key=lambda item: item[1][2]):
+
+    # use the imported service_mapping if this is an oci customer
+    # find the service_mapping.json if this is an Alloy customer
+    service_map = service_mapping
+
+    if alloy_util.get_service_config_path(ctx) is not None:
+        service_map = alloy_util.read_subscribed_services(ctx)
+
+    # fetch entries from service_map{} sorted by group name
+    for (service_key, service_value) in sorted(service_map.items(), key=lambda item: item[1][2]):
         if current_group != service_value[2]:
             if command_list:
+
                 # encountered new group, so dump the so far command_list and re-init it for new group
                 group_dict.update({current_group: command_list})
                 # empty command_list
                 command_list = []
             current_group = service_value[2]
-        # update command_list with tuple of command name and desc, fetched from service_mapping
-        command_list.append((service_key, service_mapping[service_key][1]))
+
+        # update command_list with tuple of command name and desc, fetched from service_map
+        command_list.append((service_key, service_map[service_key][1]))
+
     # Update group_dict for the last entry of above for-loop
     group_dict.update({current_group: command_list})
     click.echo(help_text, color=ctx.color)

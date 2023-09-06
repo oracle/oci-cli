@@ -40,3 +40,7 @@ queue_cli.get_message_group.add_command(queue_cli.get_stats)
 # oci queue updated-message update-message -> oci queue get-message
 queue_cli.updated_message_group.commands.pop(queue_cli.update_message.name)
 queue_cli.get_message_group.add_command(queue_cli.update_message)
+
+
+# oci queue channel-collection -> oci queue channels
+cli_util.rename_command(queue_service_cli, queue_service_cli.queue_service_group, queue_cli.channel_collection_group, "channels")
