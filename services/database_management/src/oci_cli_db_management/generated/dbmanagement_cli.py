@@ -10160,7 +10160,7 @@ def update_external_db_system_connector(ctx, from_json, wait_for_state, max_wait
 
 @external_db_system_connector_group.command(name=cli_util.override('db_management.update_external_db_system_connector_update_external_db_system_macs_connector_details.command_name', 'update-external-db-system-connector-update-external-db-system-macs-connector-details'), help=u"""Updates the external connector specified by `externalDbSystemConnectorId`. \n[Command Reference](updateExternalDbSystemConnector)""")
 @cli_util.option('--external-db-system-connector-id', required=True, help=u"""The [OCID] of the external connector.""")
-@cli_util.option('--connection-info', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-info', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -10186,7 +10186,9 @@ def update_external_db_system_connector_update_external_db_system_macs_connector
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['connectionInfo'] = cli_util.parse_json_parameter("connection_info", connection_info)
+
+    if connection_info is not None:
+        _details['connectionInfo'] = cli_util.parse_json_parameter("connection_info", connection_info)
 
     _details['connectorType'] = 'MACS'
 

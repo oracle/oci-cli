@@ -111,6 +111,8 @@ This call is subject to an Announcements limit that applies to the total number 
 @cli_util.option('--service', help=u"""A filter to return only announcements affecting a specific service.""")
 @cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["IAAS", "SAAS"]), help=u"""A filter to return only announcements affecting a specific platform.""")
 @cli_util.option('--exclude-announcement-types', multiple=True, help=u"""Exclude The type of announcement.""")
+@cli_util.option('--should-show-only-latest-in-chain', type=click.BOOL, help=u"""A filter to display only the latest announcement in a chain.""")
+@cli_util.option('--chain-id', help=u"""A filter to return only announcements belonging to the specified announcement chain ID.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({'exclude-announcement-types': {'module': 'announcements_service', 'class': 'list[string]'}})
@@ -118,7 +120,7 @@ This call is subject to an Announcements limit that applies to the total number 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'exclude-announcement-types': {'module': 'announcements_service', 'class': 'list[string]'}}, output_type={'module': 'announcements_service', 'class': 'AnnouncementsCollection'})
 @cli_util.wrap_exceptions
-def list_announcements(ctx, from_json, all_pages, page_size, compartment_id, limit, page, announcement_type, lifecycle_state, is_banner, sort_by, sort_order, time_one_earliest_time, time_one_latest_time, environment_name, service, platform_type, exclude_announcement_types):
+def list_announcements(ctx, from_json, all_pages, page_size, compartment_id, limit, page, announcement_type, lifecycle_state, is_banner, sort_by, sort_order, time_one_earliest_time, time_one_latest_time, environment_name, service, platform_type, exclude_announcement_types, should_show_only_latest_in_chain, chain_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -150,6 +152,10 @@ def list_announcements(ctx, from_json, all_pages, page_size, compartment_id, lim
         kwargs['platform_type'] = platform_type
     if exclude_announcement_types is not None and len(exclude_announcement_types) > 0:
         kwargs['exclude_announcement_types'] = exclude_announcement_types
+    if should_show_only_latest_in_chain is not None:
+        kwargs['should_show_only_latest_in_chain'] = should_show_only_latest_in_chain
+    if chain_id is not None:
+        kwargs['chain_id'] = chain_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('announcements_service', 'announcement', ctx)
     if all_pages:
