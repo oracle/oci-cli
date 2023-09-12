@@ -16,8 +16,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.os_management_hub.src.oci_cli_os_management_hub.generated import os_management_hub_service_cli
 
 
-@click.command(cli_util.override('reporting_managed_instance.reporting_managed_instance_root_group.command_name', 'reporting-managed-instance'), cls=CommandGroupWithAlias, help=cli_util.override('reporting_managed_instance.reporting_managed_instance_root_group.help', """Use the OS Management Hub API to manage and monitor updates and patches for the operating system environments in your private data centers through a single management console. For more information, see [Overview of OS Management Hub].
-Use the table of contents and search tool to explore the  OS Management Hub API."""), short_help=cli_util.override('reporting_managed_instance.reporting_managed_instance_root_group.short_help', """OS Management Hub API"""))
+@click.command(cli_util.override('reporting_managed_instance.reporting_managed_instance_root_group.command_name', 'reporting-managed-instance'), cls=CommandGroupWithAlias, help=cli_util.override('reporting_managed_instance.reporting_managed_instance_root_group.help', """Use the OS Management Hub API to manage and monitor updates and patches for the operating system environments in your private data centers through a single management console. For more information, see [Overview of OS Management Hub]."""), short_help=cli_util.override('reporting_managed_instance.reporting_managed_instance_root_group.short_help', """OS Management Hub API"""))
 @cli_util.help_option_group
 def reporting_managed_instance_root_group():
     pass

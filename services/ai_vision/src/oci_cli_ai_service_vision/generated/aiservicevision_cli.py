@@ -332,7 +332,7 @@ def analyze_image_inline_image_details(ctx, from_json, features, image_data, com
 
 
 @document_job_group.command(name=cli_util.override('ai_vision.cancel_document_job.command_name', 'cancel'), help=u"""Cancel a document batch job. \n[Command Reference](cancelDocumentJob)""")
-@cli_util.option('--document-job-id', required=True, help=u"""Document job id.""")
+@cli_util.option('--document-job-id', required=True, help=u"""The document job ID.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -357,7 +357,7 @@ def cancel_document_job(ctx, from_json, document_job_id, if_match):
 
 
 @image_job_group.command(name=cli_util.override('ai_vision.cancel_image_job.command_name', 'cancel'), help=u"""Cancel an image batch job. \n[Command Reference](cancelImageJob)""")
-@cli_util.option('--image-job-id', required=True, help=u"""Image job id.""")
+@cli_util.option('--image-job-id', required=True, help=u"""The image job ID.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1012,7 +1012,7 @@ def delete_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
 
 @document_job_group.command(name=cli_util.override('ai_vision.get_document_job.command_name', 'get'), help=u"""Get details of a document batch job. \n[Command Reference](getDocumentJob)""")
-@cli_util.option('--document-job-id', required=True, help=u"""Document job id.""")
+@cli_util.option('--document-job-id', required=True, help=u"""The document job ID.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1034,7 +1034,7 @@ def get_document_job(ctx, from_json, document_job_id):
 
 
 @image_job_group.command(name=cli_util.override('ai_vision.get_image_job.command_name', 'get'), help=u"""Get details of an image batch job. \n[Command Reference](getImageJob)""")
-@cli_util.option('--image-job-id', required=True, help=u"""Image job id.""")
+@cli_util.option('--image-job-id', required=True, help=u"""The image job ID.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context

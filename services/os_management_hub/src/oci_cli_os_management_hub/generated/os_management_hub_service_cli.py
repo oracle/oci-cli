@@ -8,8 +8,7 @@ from oci_cli import cli_util
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('work_request.os_management_hub_service_group.command_name', 'os-management-hub'), cls=CommandGroupWithAlias, help=cli_util.override('work_request.os_management_hub_service_group.help', """Use the OS Management Hub API to manage and monitor updates and patches for the operating system environments in your private data centers through a single management console. For more information, see [Overview of OS Management Hub].
-Use the table of contents and search tool to explore the  OS Management Hub API."""), short_help=cli_util.override('work_request.os_management_hub_service_group.short_help', """OS Management Hub API"""))
+@cli.command(cli_util.override('work_request.os_management_hub_service_group.command_name', 'os-management-hub'), cls=CommandGroupWithAlias, help=cli_util.override('work_request.os_management_hub_service_group.help', """Use the OS Management Hub API to manage and monitor updates and patches for the operating system environments in your private data centers through a single management console. For more information, see [Overview of OS Management Hub]."""), short_help=cli_util.override('work_request.os_management_hub_service_group.short_help', """OS Management Hub API"""))
 @cli_util.help_option_group
 def os_management_hub_service_group():
     pass

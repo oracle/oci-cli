@@ -220,3 +220,24 @@ def search_monitored_resource_members_extended(ctx, **kwargs):
         kwargs.pop('resource_id')
 
     ctx.invoke(stackmonitoring_cli.search_monitored_resource_members, **kwargs)
+
+
+# oci stack-monitoring config create-config-create-auto-promote-config-details -> oci stack-monitoring config create-auto-promote-config
+cli_util.rename_command(stackmonitoring_cli, stackmonitoring_cli.config_group, stackmonitoring_cli.create_config_create_auto_promote_config_details, "create-auto-promote-config")
+
+
+# oci stack-monitoring config update-config-update-auto-promote-config-details -> oci stack-monitoring config update-auto-promote-config
+cli_util.rename_command(stackmonitoring_cli, stackmonitoring_cli.config_group, stackmonitoring_cli.update_config_update_auto_promote_config_details, "update-auto-promote-config")
+
+
+# oci stack-monitoring config-collection list-configs -> oci stack-monitoring config-collection list
+cli_util.rename_command(stackmonitoring_cli, stackmonitoring_cli.config_collection_group, stackmonitoring_cli.list_configs, "list")
+
+
+# Remove config-collection from oci stack-monitoring
+stackmonitoring_cli.stack_monitoring_root_group.commands.pop(stackmonitoring_cli.config_collection_group.name)
+
+
+# oci stack-monitoring config-collection list-configs -> oci stack-monitoring config
+stackmonitoring_cli.config_collection_group.commands.pop(stackmonitoring_cli.list_configs.name)
+stackmonitoring_cli.config_group.add_command(stackmonitoring_cli.list_configs)

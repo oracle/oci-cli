@@ -6,6 +6,45 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.33.1 - 2023-09-12
+--------------------
+Added
+~~~~~
+* Support for --is-dedicated optional param for listCharactersSets api in the Database service
+
+  * ``oci db autonomous-database-character-sets list --is-dedicated``
+
+* Support for face detection feature in Vision Service ("featureType":"FACE_DETECTION")
+
+  * ``oci ai-vision image-job create --features``
+
+* Stack Monitoring
+
+    * New api for stack-monitoring config
+
+      * ``oci stack-monitoring config change-compartment``
+      * ``oci stack-monitoring config create``
+      * ``oci stack-monitoring config create-auto-promote-config``
+      * ``oci stack-monitoring config delete``
+      * ``oci stack-monitoring config get``
+      * ``oci stack-monitoring config update``
+      * ``oci stack-monitoring config update-auto-promote-config``
+      * ``oci stack-monitoring config list``
+
+* Support for Announcement Chaining in Announcements Service, adding two new optional parameters
+
+    * ``oci announce announcements list --chain-id --should-show-only-latest-in-chain``
+
+* Database Management Service
+
+    * Support for SQL tuning set
+
+      * ``oci database-management perfhub managed-database modify-snapshot-settings``
+
+  * Existing parameter connection-info is now an optional parameter
+
+    * ``oci database-management external-db-system-connector update-macs-connector --connection-info``
+
 3.33.0 - 2023-09-05
 --------------------
 Added
