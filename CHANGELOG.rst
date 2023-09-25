@@ -6,6 +6,28 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.33.2 - 2023-09-26
+--------------------
+Added
+~~~~~
+* Support for Private Endpoints for External Key Manager in Key Management Service
+
+  * ``oci kms ekm ekms-private-endpoint create --ca-bundle, --compartment-id , --display-name, --external-key-manager-ip, --subnet-id, --defined-tags, --freeform-tags, --port``
+  * ``oci kms ekm ekms-private-endpoint get --ekms-private-endpoint-id``
+  * ``oci kms ekm ekms-private-endpoint list --compartment-id``
+  * ``oci kms ekm ekms-private-endpoint delete --ekms-private-endpoint-id``
+  * ``oci kms ekm ekms-private-endpoint update --ekms-private-endpoint-id, --defined-tags, --display-name, --freeform-tags``
+
+* Support for new optional parameters in Vaults and Keys for External Key Manager in Key Management Service
+
+  * ``oci kms management vault create --vault-type, --external-key-manager-metadata``
+  * ``oci kms management key create --external-key-reference, --protection-mode``
+  * ``oci kms management key-version create --external-key-version-id``
+
+* Support for FAaas Self Service with Henosis for Oracle Integration Cloud
+
+  * ``oci integration integration-instance create --domain-id``
+
 3.33.1 - 2023-09-12
 --------------------
 Added

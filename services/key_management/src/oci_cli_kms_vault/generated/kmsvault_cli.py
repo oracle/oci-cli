@@ -16,20 +16,19 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.key_management.src.oci_cli_key_management.generated import kms_service_cli
 
 
-@click.command(cli_util.override('kms_vault.kms_vault_root_group.command_name', 'kms-vault'), cls=CommandGroupWithAlias, help=cli_util.override('kms_vault.kms_vault_root_group.help', """API for managing and performing operations with keys and vaults. (For the API for managing secrets, see the Vault Service
-Secret Management API. For the API for retrieving secrets, see the Vault Service Secret Retrieval API.)"""), short_help=cli_util.override('kms_vault.kms_vault_root_group.short_help', """Vault Service Key Management API"""))
+@click.command(cli_util.override('kms_vault.kms_vault_root_group.command_name', 'kms-vault'), cls=CommandGroupWithAlias, help=cli_util.override('kms_vault.kms_vault_root_group.help', """Use the Key Management API to manage vaults and keys. For more information, see [Managing Vaults] and [Managing Keys]."""), short_help=cli_util.override('kms_vault.kms_vault_root_group.short_help', """Vault Key Management API"""))
 @cli_util.help_option_group
 def kms_vault_root_group():
     pass
 
 
-@click.command(cli_util.override('kms_vault.vault_usage_group.command_name', 'vault-usage'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('kms_vault.vault_usage_group.command_name', 'vault-usage'), cls=CommandGroupWithAlias, help="""The details of the number of Keys and KeyVersions usage in a Vault.""")
 @cli_util.help_option_group
 def vault_usage_group():
     pass
 
 
-@click.command(cli_util.override('kms_vault.vault_group.command_name', 'vault'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('kms_vault.vault_group.command_name', 'vault'), cls=CommandGroupWithAlias, help="""The logical entity where the Vault service creates and durably stores keys.""")
 @cli_util.help_option_group
 def vault_group():
     pass
@@ -44,7 +43,7 @@ kms_vault_root_group.add_command(vault_group)
 @cli_util.option('--vault-id', required=True, help=u"""The OCID of the vault.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--backup-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-include-keys', type=click.BOOL, help=u"""""")
+@cli_util.option('--is-include-keys', type=click.BOOL, help=u"""A Boolean value that indicates whether the Keys should be included during backing up the Vault.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION", "UPDATING", "BACKUP_IN_PROGRESS", "RESTORING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -109,7 +108,7 @@ def backup_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.option('--backup-location-bucket-name', required=True, help=u"""""")
 @cli_util.option('--backup-location-object-name', required=True, help=u"""""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--is-include-keys', type=click.BOOL, help=u"""""")
+@cli_util.option('--is-include-keys', type=click.BOOL, help=u"""A Boolean value that indicates whether the Keys should be included during backing up the Vault.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION", "UPDATING", "BACKUP_IN_PROGRESS", "RESTORING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -175,7 +174,7 @@ def backup_vault_backup_location_bucket(ctx, from_json, wait_for_state, max_wait
 @cli_util.option('--vault-id', required=True, help=u"""The OCID of the vault.""")
 @cli_util.option('--backup-location-uri', required=True, help=u"""""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--is-include-keys', type=click.BOOL, help=u"""""")
+@cli_util.option('--is-include-keys', type=click.BOOL, help=u"""A Boolean value that indicates whether the Keys should be included during backing up the Vault.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION", "UPDATING", "BACKUP_IN_PROGRESS", "RESTORING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -328,18 +327,19 @@ def change_vault_compartment(ctx, from_json, vault_id, compartment_id, if_match)
 As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning write operations exceeds 10 requests per second for a given tenancy. \n[Command Reference](createVault)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to create this vault.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the vault. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
-@cli_util.option('--vault-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VIRTUAL_PRIVATE", "DEFAULT"]), help=u"""The type of vault to create. Each type of vault stores the key with different degrees of isolation and has different options and pricing.""")
+@cli_util.option('--vault-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VIRTUAL_PRIVATE", "DEFAULT", "EXTERNAL"]), help=u"""The type of vault to create. Each type of vault stores the key with different degrees of isolation and has different options and pricing.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--external-key-manager-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION", "UPDATING", "BACKUP_IN_PROGRESS", "RESTORING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'key_management', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'key_management', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'key_management', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'key_management', 'class': 'dict(str, string)'}, 'external-key-manager-metadata': {'module': 'key_management', 'class': 'ExternalKeyManagerMetadata'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'key_management', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'key_management', 'class': 'dict(str, string)'}}, output_type={'module': 'key_management', 'class': 'Vault'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'key_management', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'key_management', 'class': 'dict(str, string)'}, 'external-key-manager-metadata': {'module': 'key_management', 'class': 'ExternalKeyManagerMetadata'}}, output_type={'module': 'key_management', 'class': 'Vault'})
 @cli_util.wrap_exceptions
-def create_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, vault_type, defined_tags, freeform_tags):
+def create_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, vault_type, defined_tags, freeform_tags, external_key_manager_metadata):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -354,6 +354,9 @@ def create_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if external_key_manager_metadata is not None:
+        _details['externalKeyManagerMetadata'] = cli_util.parse_json_parameter("external_key_manager_metadata", external_key_manager_metadata)
 
     client = cli_util.build_client('key_management', 'kms_vault', ctx)
     result = client.create_vault(

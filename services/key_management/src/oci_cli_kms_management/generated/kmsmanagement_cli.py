@@ -16,26 +16,25 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.key_management.src.oci_cli_key_management.generated import kms_service_cli
 
 
-@click.command(cli_util.override('kms_management.kms_management_root_group.command_name', 'kms-management'), cls=CommandGroupWithAlias, help=cli_util.override('kms_management.kms_management_root_group.help', """API for managing and performing operations with keys and vaults. (For the API for managing secrets, see the Vault Service
-Secret Management API. For the API for retrieving secrets, see the Vault Service Secret Retrieval API.)"""), short_help=cli_util.override('kms_management.kms_management_root_group.short_help', """Vault Service Key Management API"""))
+@click.command(cli_util.override('kms_management.kms_management_root_group.command_name', 'kms-management'), cls=CommandGroupWithAlias, help=cli_util.override('kms_management.kms_management_root_group.help', """Use the Key Management API to manage vaults and keys. For more information, see [Managing Vaults] and [Managing Keys]."""), short_help=cli_util.override('kms_management.kms_management_root_group.short_help', """Vault Key Management API"""))
 @cli_util.help_option_group
 def kms_management_root_group():
     pass
 
 
-@click.command(cli_util.override('kms_management.wrapping_key_group.command_name', 'wrapping-key'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('kms_management.wrapping_key_group.command_name', 'wrapping-key'), cls=CommandGroupWithAlias, help="""The public RSA wrapping key associated with the vault""")
 @cli_util.help_option_group
 def wrapping_key_group():
     pass
 
 
-@click.command(cli_util.override('kms_management.key_version_group.command_name', 'key-version'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('kms_management.key_version_group.command_name', 'key-version'), cls=CommandGroupWithAlias, help="""The details of the KeyVersion associated with the Key.""")
 @cli_util.help_option_group
 def key_version_group():
     pass
 
 
-@click.command(cli_util.override('kms_management.key_group.command_name', 'key'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('kms_management.key_group.command_name', 'key'), cls=CommandGroupWithAlias, help="""The logical entities that represent one or more key versions, each of which contains cryptographic material.""")
 @cli_util.help_option_group
 def key_group():
     pass
@@ -405,16 +404,17 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.option('--key-shape', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--protection-mode', type=custom_types.CliCaseInsensitiveChoice(["HSM", "SOFTWARE"]), help=u"""The key's protection mode indicates how the key persists and where cryptographic operations that use the key are performed. A protection mode of `HSM` means that the key persists on a hardware security module (HSM) and all cryptographic operations are performed inside the HSM. A protection mode of `SOFTWARE` means that the key persists on the server, protected by the vault's RSA wrapping key which persists on the HSM. All cryptographic operations that use a key with a protection mode of `SOFTWARE` are performed on the server. By default, a key's protection mode is set to `HSM`. You can't change a key's protection mode after the key is created or imported.""")
+@cli_util.option('--protection-mode', type=custom_types.CliCaseInsensitiveChoice(["HSM", "SOFTWARE", "EXTERNAL"]), help=u"""The key's protection mode indicates how the key persists and where cryptographic operations that use the key are performed. A protection mode of `HSM` means that the key persists on a hardware security module (HSM) and all cryptographic operations are performed inside the HSM. A protection mode of `SOFTWARE` means that the key persists on the server, protected by the vault's RSA wrapping key which persists on the HSM. All cryptographic operations that use a key with a protection mode of `SOFTWARE` are performed on the server. By default, a key's protection mode is set to `HSM`. You can't change a key's protection mode after the key is created or imported. A protection mode of `EXTERNAL` mean that the key persists on the customer's external key manager which is hosted externally outside of oracle. Oracle only hold a reference to that key. All cryptographic operations that use a key with a protection mode of `EXTERNAL` are performed by external key manager.""")
+@cli_util.option('--external-key-reference', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION", "UPDATING", "BACKUP_IN_PROGRESS", "RESTORING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'key_management', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'key_management', 'class': 'dict(str, string)'}, 'key-shape': {'module': 'key_management', 'class': 'KeyShape'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'key_management', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'key_management', 'class': 'dict(str, string)'}, 'key-shape': {'module': 'key_management', 'class': 'KeyShape'}, 'external-key-reference': {'module': 'key_management', 'class': 'ExternalKeyReference'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'key_management', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'key_management', 'class': 'dict(str, string)'}, 'key-shape': {'module': 'key_management', 'class': 'KeyShape'}}, output_type={'module': 'key_management', 'class': 'Key'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'key_management', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'key_management', 'class': 'dict(str, string)'}, 'key-shape': {'module': 'key_management', 'class': 'KeyShape'}, 'external-key-reference': {'module': 'key_management', 'class': 'ExternalKeyReference'}}, output_type={'module': 'key_management', 'class': 'Key'})
 @cli_util.wrap_exceptions
-def create_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, key_shape, defined_tags, freeform_tags, protection_mode):
+def create_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, key_shape, defined_tags, freeform_tags, protection_mode, external_key_reference):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -432,6 +432,9 @@ def create_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
     if protection_mode is not None:
         _details['protectionMode'] = protection_mode
+
+    if external_key_reference is not None:
+        _details['externalKeyReference'] = cli_util.parse_json_parameter("external_key_reference", external_key_reference)
 
     client = cli_util.build_client('key_management', 'kms_management', ctx)
     result = client.create_key(
@@ -470,6 +473,7 @@ As a management operation, this call is subject to a Key Management limit that a
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](createKeyVersion)""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
+@cli_util.option('--external-key-version-id', help=u"""Key version ID associated with the external key.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -478,16 +482,23 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'key_management', 'class': 'KeyVersion'})
 @cli_util.wrap_exceptions
-def create_key_version(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, key_id):
+def create_key_version(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, key_id, external_key_version_id):
 
     if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if external_key_version_id is not None:
+        _details['externalKeyVersionId'] = external_key_version_id
+
     client = cli_util.build_client('key_management', 'kms_management', ctx)
     result = client.create_key_version(
         key_id=key_id,
+        create_key_metadata_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -726,7 +737,7 @@ def get_wrapping_key(ctx, from_json, ):
     cli_util.render_response(result, ctx)
 
 
-@key_group.command(name=cli_util.override('kms_management.import_key.command_name', 'import'), help=u"""Imports AES key material to create a new key with. The key material must be base64-encoded and wrapped by the vault's public RSA wrapping key before you can import it. Key Management supports AES symmetric keys that are exactly 16, 24, or 32 bytes. Furthermore, the key length must match what you specify at the time of import.
+@key_group.command(name=cli_util.override('kms_management.import_key.command_name', 'import'), help=u"""Imports AES and RSA keys to create a new key. The key material must be base64-encoded and wrapped by the vault's public RSA wrapping key before you can import it. Key Management supports both RSA and AES keys. The AES keys are symmetric keys of length 128 bits (16 bytes), 192 bits (24 bytes), or 256 bits (32 bytes), and the RSA keys are asymmetric keys of length 2048 bits (256 bytes), 3072 bits (384 bytes), and 4096 bits (512 bytes). Furthermore, the key length must match what you specify at the time of import. When importing an asymmetric key, only private key must be wrapped in PKCS8 format while the corresponding public key is generated internally by KMS.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](importKey)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains this key.""")
@@ -769,7 +780,7 @@ def import_key(ctx, from_json, compartment_id, display_name, key_shape, wrapped_
     cli_util.render_response(result, ctx)
 
 
-@key_version_group.command(name=cli_util.override('kms_management.import_key_version.command_name', 'import'), help=u"""Imports AES key material to create a new key version with, and then rotates the key to begin using the new key version. The key material must be base64-encoded and wrapped by the vault's public RSA wrapping key before you can import it. Key Management supports AES symmetric keys that are exactly 16, 24, or 32 bytes. Furthermore, the key length must match the length of the specified key and what you specify as the length at the time of import.
+@key_version_group.command(name=cli_util.override('kms_management.import_key_version.command_name', 'import'), help=u"""Imports AES key material to create a new key version and then rotate the key to begin using the new key version. The key material must be base64-encoded and wrapped by the vault's public RSA wrapping key before you can import it. Key Management supports AES symmetric keys that are exactly 16, 24, or 32 bytes. Furthermore, the key length must match the length of the specified key and what you specify as the length at the time of import. When importing an asymmetric key, only the private key must be wrapped in PKCS8 format while the corresponding public key is generated internally by KMS.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](importKeyVersion)""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
@@ -878,7 +889,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can specify only one sort order. The default order for `TIMECREATED` is descending. The default order for `DISPLAYNAME` is ascending.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
-@cli_util.option('--protection-mode', type=custom_types.CliCaseInsensitiveChoice(["HSM", "SOFTWARE"]), help=u"""A key's protection mode indicates how the key persists and where cryptographic operations that use the key are performed. A protection mode of `HSM` means that the key persists on a hardware security module (HSM) and all cryptographic operations are performed inside the HSM. A protection mode of `SOFTWARE` means that the key persists on the server, protected by the vault's RSA wrapping key which persists on the HSM. All cryptographic operations that use a key with a protection mode of `SOFTWARE` are performed on the server.""")
+@cli_util.option('--protection-mode', type=custom_types.CliCaseInsensitiveChoice(["HSM", "SOFTWARE", "EXTERNAL"]), help=u"""A key's protection mode indicates how the key persists and where cryptographic operations that use the key are performed. A protection mode of `HSM` means that the key persists on a hardware security module (HSM) and all cryptographic operations are performed inside the HSM. A protection mode of `SOFTWARE` means that the key persists on the server, protected by the vault's RSA wrapping key which persists on the HSM. All cryptographic operations that use a key with a protection mode of `SOFTWARE` are performed on the server. A protection mode of `EXTERNAL` mean that the key persists on the customer's external key manager which is hosted externally outside of oracle. Oracle only hold a reference to that key. All cryptographic operations that use a key with a protection mode of `EXTERNAL` are performed by external key manager.""")
 @cli_util.option('--algorithm', type=custom_types.CliCaseInsensitiveChoice(["AES", "RSA", "ECDSA"]), help=u"""The algorithm used by a key's key versions to encrypt or decrypt data. Currently, support includes AES, RSA, and ECDSA algorithms.""")
 @cli_util.option('--length', type=click.INT, help=u"""The length of the key in bytes, expressed as an integer. Supported values include 16, 24, or 32.""")
 @cli_util.option('--curve-id', type=custom_types.CliCaseInsensitiveChoice(["NIST_P256", "NIST_P384", "NIST_P521"]), help=u"""The curve ID of the keys. (This pertains only to ECDSA keys.)""")

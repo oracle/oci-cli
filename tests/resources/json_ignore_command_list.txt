@@ -200,3 +200,4 @@ support, incident, update
 support, incident-resource-type, list
 support, validation-response, validate-user
 data-catalog, entity, list
+kms, management, key-version, create
