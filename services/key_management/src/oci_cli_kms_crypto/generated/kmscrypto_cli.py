@@ -16,20 +16,19 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.key_management.src.oci_cli_key_management.generated import kms_service_cli
 
 
-@click.command(cli_util.override('kms_crypto.kms_crypto_root_group.command_name', 'kms-crypto'), cls=CommandGroupWithAlias, help=cli_util.override('kms_crypto.kms_crypto_root_group.help', """API for managing and performing operations with keys and vaults. (For the API for managing secrets, see the Vault Service
-Secret Management API. For the API for retrieving secrets, see the Vault Service Secret Retrieval API.)"""), short_help=cli_util.override('kms_crypto.kms_crypto_root_group.short_help', """Vault Service Key Management API"""))
+@click.command(cli_util.override('kms_crypto.kms_crypto_root_group.command_name', 'kms-crypto'), cls=CommandGroupWithAlias, help=cli_util.override('kms_crypto.kms_crypto_root_group.help', """Use the Key Management API to manage vaults and keys. For more information, see [Managing Vaults] and [Managing Keys]."""), short_help=cli_util.override('kms_crypto.kms_crypto_root_group.short_help', """Vault Key Management API"""))
 @cli_util.help_option_group
 def kms_crypto_root_group():
     pass
 
 
-@click.command(cli_util.override('kms_crypto.signed_data_group.command_name', 'signed-data'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('kms_crypto.signed_data_group.command_name', 'signed-data'), cls=CommandGroupWithAlias, help="""The response to a request to sign the message.""")
 @cli_util.help_option_group
 def signed_data_group():
     pass
 
 
-@click.command(cli_util.override('kms_crypto.verified_data_group.command_name', 'verified-data'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('kms_crypto.verified_data_group.command_name', 'verified-data'), cls=CommandGroupWithAlias, help="""The response to a request to verify the message.""")
 @cli_util.help_option_group
 def verified_data_group():
     pass
@@ -41,19 +40,19 @@ def exported_key_data_group():
     pass
 
 
-@click.command(cli_util.override('kms_crypto.decrypted_data_group.command_name', 'decrypted-data'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('kms_crypto.decrypted_data_group.command_name', 'decrypted-data'), cls=CommandGroupWithAlias, help="""The response to a request to decrypt the encrypted data.""")
 @cli_util.help_option_group
 def decrypted_data_group():
     pass
 
 
-@click.command(cli_util.override('kms_crypto.generated_key_group.command_name', 'generated-key'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('kms_crypto.generated_key_group.command_name', 'generated-key'), cls=CommandGroupWithAlias, help="""The reponse to the regeuest to generate the key to encrypt or decrypt the data.""")
 @cli_util.help_option_group
 def generated_key_group():
     pass
 
 
-@click.command(cli_util.override('kms_crypto.encrypted_data_group.command_name', 'encrypted-data'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('kms_crypto.encrypted_data_group.command_name', 'encrypted-data'), cls=CommandGroupWithAlias, help="""The response to a request to encrypt the plaintext data.""")
 @cli_util.help_option_group
 def encrypted_data_group():
     pass
@@ -154,7 +153,7 @@ def encrypt(ctx, from_json, key_id, plaintext, associated_data, logging_context,
     cli_util.render_response(result, ctx)
 
 
-@exported_key_data_group.command(name=cli_util.override('kms_crypto.export_key.command_name', 'export-key'), help=u"""Exports a specific version of a master encryption key according to the details of the request. For their protection, keys that you create and store on a hardware security module (HSM) can never leave the HSM. You can only export keys stored on the server. For export, the key version is encrypted by an RSA public key that you provide.
+@exported_key_data_group.command(name=cli_util.override('kms_crypto.export_key.command_name', 'export-key'), help=u"""Exports a specific version of a master encryption key according to the details of the request. For their protection, keys that you create and store on a hardware security module (HSM) can never leave the HSM. You can only export keys stored on the server. For export, the key version is encrypted by an RSA public key that you provide. This operation is not supported for keys having protection mode `EXTERNAL`.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](exportKey)""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the master encryption key associated with the key version you want to export.""")
@@ -227,7 +226,7 @@ def generate_data_encryption_key(ctx, from_json, include_plaintext_key, key_id, 
     cli_util.render_response(result, ctx)
 
 
-@signed_data_group.command(name=cli_util.override('kms_crypto.sign.command_name', 'sign'), help=u"""Creates a digital signature for a message or message digest by using the private key of a public-private key pair, also known as an asymmetric key. To verify the generated signature, you can use the [Verify] operation. Or, if you want to validate the signature outside of the service, you can do so by using the public key of the same asymmetric key.
+@signed_data_group.command(name=cli_util.override('kms_crypto.sign.command_name', 'sign'), help=u"""Creates a digital signature for a message or message digest by using the private key of a public-private key pair, also known as an asymmetric key. To verify the generated signature, you can use the [Verify] operation. Or, if you want to validate the signature outside of the service, you can do so by using the public key of the same asymmetric key. This operation is not supported for keys having protection mode `EXTERNAL`.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](sign)""")
 @cli_util.option('--message', required=True, help=u"""The base64-encoded binary data object denoting the message or message digest to sign. You can have a message up to 4096 bytes in size. To sign a larger message, provide the message digest.""")
@@ -264,7 +263,7 @@ def sign(ctx, from_json, message, key_id, signing_algorithm, key_version_id, mes
     cli_util.render_response(result, ctx)
 
 
-@verified_data_group.command(name=cli_util.override('kms_crypto.verify.command_name', 'verify'), help=u"""Verifies a digital signature that was generated by the [Sign] operation by using the public key of the same asymmetric key that was used to sign the data. If you want to validate the digital signature outside of the service, you can do so by using the public key of the asymmetric key.
+@verified_data_group.command(name=cli_util.override('kms_crypto.verify.command_name', 'verify'), help=u"""Verifies a digital signature that was generated by the [Sign] operation by using the public key of the same asymmetric key that was used to sign the data. If you want to validate the digital signature outside of the service, you can do so by using the public key of the asymmetric key. This operation is not supported for keys having protection mode `EXTERNAL`.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](verify)""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key used to sign the message.""")
