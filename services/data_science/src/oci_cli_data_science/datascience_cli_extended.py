@@ -471,3 +471,97 @@ datascience_cli.pipeline_group.commands.pop(datascience_cli.update_pipeline_pipe
 
 # Remove create-pipeline-run-pipeline-default-configuration-details from oci data-science pipeline-run
 datascience_cli.pipeline_run_group.commands.pop(datascience_cli.create_pipeline_run_pipeline_default_configuration_details.name)
+
+
+# oci data-science data-science-private-endpoint -> oci data-science ds-private-endpoint
+cli_util.rename_command(datascience_cli, datascience_cli.data_science_root_group, datascience_cli.data_science_private_endpoint_group, "ds-private-endpoint")
+
+
+@cli_util.copy_params_from_generated_command(datascience_cli.change_data_science_private_endpoint_compartment, params_to_exclude=['data_science_private_endpoint_id'])
+@datascience_cli.data_science_private_endpoint_group.command(name=datascience_cli.change_data_science_private_endpoint_compartment.name, help=datascience_cli.change_data_science_private_endpoint_compartment.help)
+@cli_util.option('--ds-private-endpoint-id', required=True, help=u"""The unique ID for a Data Science private endpoint. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_data_science_private_endpoint_compartment_extended(ctx, **kwargs):
+
+    if 'ds_private_endpoint_id' in kwargs:
+        kwargs['data_science_private_endpoint_id'] = kwargs['ds_private_endpoint_id']
+        kwargs.pop('ds_private_endpoint_id')
+
+    ctx.invoke(datascience_cli.change_data_science_private_endpoint_compartment, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(datascience_cli.create_data_science_private_endpoint, params_to_exclude=['data_science_resource_type'])
+@datascience_cli.data_science_private_endpoint_group.command(name=datascience_cli.create_data_science_private_endpoint.name, help=datascience_cli.create_data_science_private_endpoint.help)
+@cli_util.option('--ds-resource-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION"]), help=u"""Data Science resource type. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'data_science', 'class': 'list[string]'}}, output_type={'module': 'data_science', 'class': 'DataSciencePrivateEndpoint'})
+@cli_util.wrap_exceptions
+def create_data_science_private_endpoint_extended(ctx, **kwargs):
+
+    if 'ds_resource_type' in kwargs:
+        kwargs['data_science_resource_type'] = kwargs['ds_resource_type']
+        kwargs.pop('ds_resource_type')
+
+    ctx.invoke(datascience_cli.create_data_science_private_endpoint, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(datascience_cli.delete_data_science_private_endpoint, params_to_exclude=['data_science_private_endpoint_id'])
+@datascience_cli.data_science_private_endpoint_group.command(name=datascience_cli.delete_data_science_private_endpoint.name, help=datascience_cli.delete_data_science_private_endpoint.help)
+@cli_util.option('--ds-private-endpoint-id', required=True, help=u"""The unique ID for a Data Science private endpoint. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_data_science_private_endpoint_extended(ctx, **kwargs):
+
+    if 'ds_private_endpoint_id' in kwargs:
+        kwargs['data_science_private_endpoint_id'] = kwargs['ds_private_endpoint_id']
+        kwargs.pop('ds_private_endpoint_id')
+
+    ctx.invoke(datascience_cli.delete_data_science_private_endpoint, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(datascience_cli.get_data_science_private_endpoint, params_to_exclude=['data_science_private_endpoint_id'])
+@datascience_cli.data_science_private_endpoint_group.command(name=datascience_cli.get_data_science_private_endpoint.name, help=datascience_cli.get_data_science_private_endpoint.help)
+@cli_util.option('--ds-private-endpoint-id', required=True, help=u"""The unique ID for a Data Science private endpoint. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'DataSciencePrivateEndpoint'})
+@cli_util.wrap_exceptions
+def get_data_science_private_endpoint_extended(ctx, **kwargs):
+
+    if 'ds_private_endpoint_id' in kwargs:
+        kwargs['data_science_private_endpoint_id'] = kwargs['ds_private_endpoint_id']
+        kwargs.pop('ds_private_endpoint_id')
+
+    ctx.invoke(datascience_cli.get_data_science_private_endpoint, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(datascience_cli.list_data_science_private_endpoints, params_to_exclude=['data_science_resource_type'])
+@datascience_cli.data_science_private_endpoint_group.command(name=datascience_cli.list_data_science_private_endpoints.name, help=datascience_cli.list_data_science_private_endpoints.help)
+@cli_util.option('--ds-resource-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION"]), help=u"""Resource types in the Data Science service such as notebooks.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'list[DataSciencePrivateEndpointSummary]'})
+@cli_util.wrap_exceptions
+def list_data_science_private_endpoints_extended(ctx, **kwargs):
+
+    if 'ds_resource_type' in kwargs:
+        kwargs['data_science_resource_type'] = kwargs['ds_resource_type']
+        kwargs.pop('ds_resource_type')
+
+    ctx.invoke(datascience_cli.list_data_science_private_endpoints, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(datascience_cli.update_data_science_private_endpoint, params_to_exclude=['data_science_private_endpoint_id'])
+@datascience_cli.data_science_private_endpoint_group.command(name=datascience_cli.update_data_science_private_endpoint.name, help=datascience_cli.update_data_science_private_endpoint.help)
+@cli_util.option('--ds-private-endpoint-id', required=True, help=u"""The unique ID for a Data Science private endpoint. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'data_science', 'class': 'list[string]'}}, output_type={'module': 'data_science', 'class': 'DataSciencePrivateEndpoint'})
+@cli_util.wrap_exceptions
+def update_data_science_private_endpoint_extended(ctx, **kwargs):
+
+    if 'ds_private_endpoint_id' in kwargs:
+        kwargs['data_science_private_endpoint_id'] = kwargs['ds_private_endpoint_id']
+        kwargs.pop('ds_private_endpoint_id')
+
+    ctx.invoke(datascience_cli.update_data_science_private_endpoint, **kwargs)

@@ -6,6 +6,49 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.33.3 - 2023-10-03
+--------------------
+Added
+~~~~~
+* Database Service
+
+  * Support for resource-pool-shapes for autonomous databases
+
+    * ``oci db autonomous-database resource-pool-shapes``
+
+  * Support for Elastic Resource Pools for autonomous databases, adding two optional parameter
+
+    * ``oci db autonomous-database create --resource-pool-leader-id --resource-pool-summary``
+    * ``oci db autonomous-database create-adb-cross-region-data-guard-details --resource-pool-leader-id --resource-pool-summary``
+    * ``oci db autonomous-database create-autonomous-database-create-cross-region-disaster-recovery-details --resource-pool-leader-id --resource-pool-summary``
+    * ``oci db autonomous-database create-from-backup-id --resource-pool-leader-id --resource-pool-summary``
+    * ``oci db autonomous-database create-from-backup-timestamp --resource-pool-leader-id --resource-pool-summary``
+    * ``oci db autonomous-database create-from-clone --resource-pool-leader-id --resource-pool-summary``
+    * ``oci db autonomous-database create-refreshable-clone --resource-pool-leader-id --resource-pool-summary``
+    * ``oci db autonomous-database update --resource-pool-leader-id --resource-pool-summary``
+    * ``oci db autonomous-database list --is-resource-pool-leader --resource-pool-leader-id``
+
+* Support for Private Endpoints in Data Science Service
+
+  * ``oci data-science ds-private-endpoint``
+
+* Support for File System Service (FSS) as transfer medium for Datapump export/import in the Database Migration Service (DMS)
+
+  * Support for new optional parameter
+
+    * ``oci database-migration migration create --data-transfer-medium-details``
+    * ``oci database-migration migration update --data-transfer-medium-details``
+    * ``oci database-migration migration create --dump-transfer-details``
+    * ``oci database-migration migration update --dump-transfer-details``
+    * ``oci database-migration migration create --data-transfer-medium-details-v2``
+    * ``oci database-migration migration update --data-transfer-medium-details-v2``
+
+* Support for new optional parameters for Replica in the MySQL Heatwave Service
+
+  * ``oci mysql replica create --replica-overrides``
+  * ``oci mysql replica update --replica-overrides``
+  * ``oci mysql replica list --configuration-id --is-up-to-date``
+
 3.33.2 - 2023-09-26
 --------------------
 Added

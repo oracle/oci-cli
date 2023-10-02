@@ -561,6 +561,129 @@ def create_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--display-name', help=u"""Migration Display Name""")
 @cli_util.option('--agent-id', help=u"""The OCID of the registered ODMS Agent. Only valid for Offline Logical Migrations.""")
 @cli_util.option('--source-container-database-connection-id', help=u"""The OCID of the Source Container Database Connection. Only used for Online migrations. Only Connections of type Non-Autonomous can be used as source container databases.""")
+@cli_util.option('--data-transfer-medium-details-v2', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-transfer-medium-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--dump-transfer-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--datapump-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--advisor-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--exclude-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to exclude from migration, cannot be specified alongside 'includeObjects'
+
+This option is a JSON list with items of type DatabaseObject.  For documentation on DatabaseObject please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20210929/datatypes/DatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--include-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to include from migration, cannot be specified alongside 'excludeObjects'
+
+This option is a JSON list with items of type DatabaseObject.  For documentation on DatabaseObject please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20210929/datatypes/DatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--csv-text', help=u"""Database objects to exclude/include from migration in CSV format. The excludeObjects and includeObjects fields will be ignored if this field is not null.""")
+@cli_util.option('--golden-gate-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--golden-gate-service-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vault-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'data-transfer-medium-details-v2': {'module': 'database_migration', 'class': 'DataTransferMediumDetailsV2'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'CreateDataTransferMediumDetails'}, 'dump-transfer-details': {'module': 'database_migration', 'class': 'CreateDumpTransferDetails'}, 'datapump-settings': {'module': 'database_migration', 'class': 'CreateDataPumpSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'CreateAdvisorSettings'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'golden-gate-details': {'module': 'database_migration', 'class': 'CreateGoldenGateDetails'}, 'golden-gate-service-details': {'module': 'database_migration', 'class': 'CreateGoldenGateServiceDetails'}, 'vault-details': {'module': 'database_migration', 'class': 'CreateVaultDetails'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-transfer-medium-details-v2': {'module': 'database_migration', 'class': 'DataTransferMediumDetailsV2'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'CreateDataTransferMediumDetails'}, 'dump-transfer-details': {'module': 'database_migration', 'class': 'CreateDumpTransferDetails'}, 'datapump-settings': {'module': 'database_migration', 'class': 'CreateDataPumpSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'CreateAdvisorSettings'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'golden-gate-details': {'module': 'database_migration', 'class': 'CreateGoldenGateDetails'}, 'golden-gate-service-details': {'module': 'database_migration', 'class': 'CreateGoldenGateServiceDetails'}, 'vault-details': {'module': 'database_migration', 'class': 'CreateVaultDetails'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_migration', 'class': 'Migration'})
+@cli_util.wrap_exceptions
+def create_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, source_database_connection_id, target_database_connection_id, display_name, agent_id, source_container_database_connection_id, data_transfer_medium_details_v2, data_transfer_medium_details, dump_transfer_details, datapump_settings, advisor_settings, exclude_objects, include_objects, csv_text, golden_gate_details, golden_gate_service_details, vault_details, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+    _details['compartmentId'] = compartment_id
+    _details['sourceDatabaseConnectionId'] = source_database_connection_id
+    _details['targetDatabaseConnectionId'] = target_database_connection_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if agent_id is not None:
+        _details['agentId'] = agent_id
+
+    if source_container_database_connection_id is not None:
+        _details['sourceContainerDatabaseConnectionId'] = source_container_database_connection_id
+
+    if data_transfer_medium_details_v2 is not None:
+        _details['dataTransferMediumDetailsV2'] = cli_util.parse_json_parameter("data_transfer_medium_details_v2", data_transfer_medium_details_v2)
+
+    if data_transfer_medium_details is not None:
+        _details['dataTransferMediumDetails'] = cli_util.parse_json_parameter("data_transfer_medium_details", data_transfer_medium_details)
+
+    if dump_transfer_details is not None:
+        _details['dumpTransferDetails'] = cli_util.parse_json_parameter("dump_transfer_details", dump_transfer_details)
+
+    if datapump_settings is not None:
+        _details['datapumpSettings'] = cli_util.parse_json_parameter("datapump_settings", datapump_settings)
+
+    if advisor_settings is not None:
+        _details['advisorSettings'] = cli_util.parse_json_parameter("advisor_settings", advisor_settings)
+
+    if exclude_objects is not None:
+        _details['excludeObjects'] = cli_util.parse_json_parameter("exclude_objects", exclude_objects)
+
+    if include_objects is not None:
+        _details['includeObjects'] = cli_util.parse_json_parameter("include_objects", include_objects)
+
+    if csv_text is not None:
+        _details['csvText'] = csv_text
+
+    if golden_gate_details is not None:
+        _details['goldenGateDetails'] = cli_util.parse_json_parameter("golden_gate_details", golden_gate_details)
+
+    if golden_gate_service_details is not None:
+        _details['goldenGateServiceDetails'] = cli_util.parse_json_parameter("golden_gate_service_details", golden_gate_service_details)
+
+    if vault_details is not None:
+        _details['vaultDetails'] = cli_util.parse_json_parameter("vault_details", vault_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.create_migration(
+        create_migration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@migration_group.command(name=cli_util.override('database_migration.create_migration_nfs_data_transfer_medium_details.command_name', 'create-migration-nfs-data-transfer-medium-details'), help=u"""Create a Migration resource that contains all the details to perform the database migration operation, such as source and destination database details, credentials, etc. \n[Command Reference](createMigration)""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ONLINE", "OFFLINE"]), help=u"""Migration type.""")
+@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment""")
+@cli_util.option('--source-database-connection-id', required=True, help=u"""The OCID of the Source Database Connection.""")
+@cli_util.option('--target-database-connection-id', required=True, help=u"""The OCID of the Target Database Connection.""")
+@cli_util.option('--display-name', help=u"""Migration Display Name""")
+@cli_util.option('--agent-id', help=u"""The OCID of the registered ODMS Agent. Only valid for Offline Logical Migrations.""")
+@cli_util.option('--source-container-database-connection-id', help=u"""The OCID of the Source Container Database Connection. Only used for Online migrations. Only Connections of type Non-Autonomous can be used as source container databases.""")
 @cli_util.option('--data-transfer-medium-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dump-transfer-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--datapump-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -585,12 +708,13 @@ This option is a JSON list with items of type DatabaseObject.  For documentation
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-transfer-medium-details': {'module': 'database_migration', 'class': 'CreateDataTransferMediumDetails'}, 'dump-transfer-details': {'module': 'database_migration', 'class': 'CreateDumpTransferDetails'}, 'datapump-settings': {'module': 'database_migration', 'class': 'CreateDataPumpSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'CreateAdvisorSettings'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'golden-gate-details': {'module': 'database_migration', 'class': 'CreateGoldenGateDetails'}, 'golden-gate-service-details': {'module': 'database_migration', 'class': 'CreateGoldenGateServiceDetails'}, 'vault-details': {'module': 'database_migration', 'class': 'CreateVaultDetails'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_migration', 'class': 'Migration'})
 @cli_util.wrap_exceptions
-def create_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, source_database_connection_id, target_database_connection_id, display_name, agent_id, source_container_database_connection_id, data_transfer_medium_details, dump_transfer_details, datapump_settings, advisor_settings, exclude_objects, include_objects, csv_text, golden_gate_details, golden_gate_service_details, vault_details, freeform_tags, defined_tags):
+def create_migration_nfs_data_transfer_medium_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, source_database_connection_id, target_database_connection_id, display_name, agent_id, source_container_database_connection_id, data_transfer_medium_details, dump_transfer_details, datapump_settings, advisor_settings, exclude_objects, include_objects, csv_text, golden_gate_details, golden_gate_service_details, vault_details, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
+    _details['dataTransferMediumDetailsV2'] = {}
     _details['type'] = type
     _details['compartmentId'] = compartment_id
     _details['sourceDatabaseConnectionId'] = source_database_connection_id
@@ -640,6 +764,402 @@ def create_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['dataTransferMediumDetailsV2']['type'] = 'NFS'
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.create_migration(
+        create_migration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@migration_group.command(name=cli_util.override('database_migration.create_migration_object_storage_data_transfer_medium_details.command_name', 'create-migration-object-storage-data-transfer-medium-details'), help=u"""Create a Migration resource that contains all the details to perform the database migration operation, such as source and destination database details, credentials, etc. \n[Command Reference](createMigration)""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ONLINE", "OFFLINE"]), help=u"""Migration type.""")
+@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment""")
+@cli_util.option('--source-database-connection-id', required=True, help=u"""The OCID of the Source Database Connection.""")
+@cli_util.option('--target-database-connection-id', required=True, help=u"""The OCID of the Target Database Connection.""")
+@cli_util.option('--display-name', help=u"""Migration Display Name""")
+@cli_util.option('--agent-id', help=u"""The OCID of the registered ODMS Agent. Only valid for Offline Logical Migrations.""")
+@cli_util.option('--source-container-database-connection-id', help=u"""The OCID of the Source Container Database Connection. Only used for Online migrations. Only Connections of type Non-Autonomous can be used as source container databases.""")
+@cli_util.option('--data-transfer-medium-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--dump-transfer-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--datapump-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--advisor-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--exclude-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to exclude from migration, cannot be specified alongside 'includeObjects'
+
+This option is a JSON list with items of type DatabaseObject.  For documentation on DatabaseObject please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20210929/datatypes/DatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--include-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to include from migration, cannot be specified alongside 'excludeObjects'
+
+This option is a JSON list with items of type DatabaseObject.  For documentation on DatabaseObject please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20210929/datatypes/DatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--csv-text', help=u"""Database objects to exclude/include from migration in CSV format. The excludeObjects and includeObjects fields will be ignored if this field is not null.""")
+@cli_util.option('--golden-gate-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--golden-gate-service-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vault-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-transfer-medium-details-v2-object-storage-bucket', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'data-transfer-medium-details': {'module': 'database_migration', 'class': 'CreateDataTransferMediumDetails'}, 'dump-transfer-details': {'module': 'database_migration', 'class': 'CreateDumpTransferDetails'}, 'datapump-settings': {'module': 'database_migration', 'class': 'CreateDataPumpSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'CreateAdvisorSettings'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'golden-gate-details': {'module': 'database_migration', 'class': 'CreateGoldenGateDetails'}, 'golden-gate-service-details': {'module': 'database_migration', 'class': 'CreateGoldenGateServiceDetails'}, 'vault-details': {'module': 'database_migration', 'class': 'CreateVaultDetails'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details-v2-object-storage-bucket': {'module': 'database_migration', 'class': 'ObjectStoreBucket'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-transfer-medium-details': {'module': 'database_migration', 'class': 'CreateDataTransferMediumDetails'}, 'dump-transfer-details': {'module': 'database_migration', 'class': 'CreateDumpTransferDetails'}, 'datapump-settings': {'module': 'database_migration', 'class': 'CreateDataPumpSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'CreateAdvisorSettings'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'golden-gate-details': {'module': 'database_migration', 'class': 'CreateGoldenGateDetails'}, 'golden-gate-service-details': {'module': 'database_migration', 'class': 'CreateGoldenGateServiceDetails'}, 'vault-details': {'module': 'database_migration', 'class': 'CreateVaultDetails'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details-v2-object-storage-bucket': {'module': 'database_migration', 'class': 'ObjectStoreBucket'}}, output_type={'module': 'database_migration', 'class': 'Migration'})
+@cli_util.wrap_exceptions
+def create_migration_object_storage_data_transfer_medium_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, source_database_connection_id, target_database_connection_id, display_name, agent_id, source_container_database_connection_id, data_transfer_medium_details, dump_transfer_details, datapump_settings, advisor_settings, exclude_objects, include_objects, csv_text, golden_gate_details, golden_gate_service_details, vault_details, freeform_tags, defined_tags, data_transfer_medium_details_v2_object_storage_bucket):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dataTransferMediumDetailsV2'] = {}
+    _details['type'] = type
+    _details['compartmentId'] = compartment_id
+    _details['sourceDatabaseConnectionId'] = source_database_connection_id
+    _details['targetDatabaseConnectionId'] = target_database_connection_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if agent_id is not None:
+        _details['agentId'] = agent_id
+
+    if source_container_database_connection_id is not None:
+        _details['sourceContainerDatabaseConnectionId'] = source_container_database_connection_id
+
+    if data_transfer_medium_details is not None:
+        _details['dataTransferMediumDetails'] = cli_util.parse_json_parameter("data_transfer_medium_details", data_transfer_medium_details)
+
+    if dump_transfer_details is not None:
+        _details['dumpTransferDetails'] = cli_util.parse_json_parameter("dump_transfer_details", dump_transfer_details)
+
+    if datapump_settings is not None:
+        _details['datapumpSettings'] = cli_util.parse_json_parameter("datapump_settings", datapump_settings)
+
+    if advisor_settings is not None:
+        _details['advisorSettings'] = cli_util.parse_json_parameter("advisor_settings", advisor_settings)
+
+    if exclude_objects is not None:
+        _details['excludeObjects'] = cli_util.parse_json_parameter("exclude_objects", exclude_objects)
+
+    if include_objects is not None:
+        _details['includeObjects'] = cli_util.parse_json_parameter("include_objects", include_objects)
+
+    if csv_text is not None:
+        _details['csvText'] = csv_text
+
+    if golden_gate_details is not None:
+        _details['goldenGateDetails'] = cli_util.parse_json_parameter("golden_gate_details", golden_gate_details)
+
+    if golden_gate_service_details is not None:
+        _details['goldenGateServiceDetails'] = cli_util.parse_json_parameter("golden_gate_service_details", golden_gate_service_details)
+
+    if vault_details is not None:
+        _details['vaultDetails'] = cli_util.parse_json_parameter("vault_details", vault_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if data_transfer_medium_details_v2_object_storage_bucket is not None:
+        _details['dataTransferMediumDetailsV2']['objectStorageBucket'] = cli_util.parse_json_parameter("data_transfer_medium_details_v2_object_storage_bucket", data_transfer_medium_details_v2_object_storage_bucket)
+
+    _details['dataTransferMediumDetailsV2']['type'] = 'OBJECT_STORAGE'
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.create_migration(
+        create_migration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@migration_group.command(name=cli_util.override('database_migration.create_migration_db_link_data_transfer_medium_details.command_name', 'create-migration-db-link-data-transfer-medium-details'), help=u"""Create a Migration resource that contains all the details to perform the database migration operation, such as source and destination database details, credentials, etc. \n[Command Reference](createMigration)""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ONLINE", "OFFLINE"]), help=u"""Migration type.""")
+@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment""")
+@cli_util.option('--source-database-connection-id', required=True, help=u"""The OCID of the Source Database Connection.""")
+@cli_util.option('--target-database-connection-id', required=True, help=u"""The OCID of the Target Database Connection.""")
+@cli_util.option('--display-name', help=u"""Migration Display Name""")
+@cli_util.option('--agent-id', help=u"""The OCID of the registered ODMS Agent. Only valid for Offline Logical Migrations.""")
+@cli_util.option('--source-container-database-connection-id', help=u"""The OCID of the Source Container Database Connection. Only used for Online migrations. Only Connections of type Non-Autonomous can be used as source container databases.""")
+@cli_util.option('--data-transfer-medium-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--dump-transfer-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--datapump-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--advisor-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--exclude-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to exclude from migration, cannot be specified alongside 'includeObjects'
+
+This option is a JSON list with items of type DatabaseObject.  For documentation on DatabaseObject please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20210929/datatypes/DatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--include-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to include from migration, cannot be specified alongside 'excludeObjects'
+
+This option is a JSON list with items of type DatabaseObject.  For documentation on DatabaseObject please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20210929/datatypes/DatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--csv-text', help=u"""Database objects to exclude/include from migration in CSV format. The excludeObjects and includeObjects fields will be ignored if this field is not null.""")
+@cli_util.option('--golden-gate-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--golden-gate-service-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vault-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-transfer-medium-details-v2-object-storage-bucket', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-transfer-medium-details-v2-name', help=u"""Name of database link from OCI database to on-premise database. ODMS will create link, if the link does not already exist.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'data-transfer-medium-details': {'module': 'database_migration', 'class': 'CreateDataTransferMediumDetails'}, 'dump-transfer-details': {'module': 'database_migration', 'class': 'CreateDumpTransferDetails'}, 'datapump-settings': {'module': 'database_migration', 'class': 'CreateDataPumpSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'CreateAdvisorSettings'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'golden-gate-details': {'module': 'database_migration', 'class': 'CreateGoldenGateDetails'}, 'golden-gate-service-details': {'module': 'database_migration', 'class': 'CreateGoldenGateServiceDetails'}, 'vault-details': {'module': 'database_migration', 'class': 'CreateVaultDetails'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details-v2-object-storage-bucket': {'module': 'database_migration', 'class': 'ObjectStoreBucket'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-transfer-medium-details': {'module': 'database_migration', 'class': 'CreateDataTransferMediumDetails'}, 'dump-transfer-details': {'module': 'database_migration', 'class': 'CreateDumpTransferDetails'}, 'datapump-settings': {'module': 'database_migration', 'class': 'CreateDataPumpSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'CreateAdvisorSettings'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'golden-gate-details': {'module': 'database_migration', 'class': 'CreateGoldenGateDetails'}, 'golden-gate-service-details': {'module': 'database_migration', 'class': 'CreateGoldenGateServiceDetails'}, 'vault-details': {'module': 'database_migration', 'class': 'CreateVaultDetails'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details-v2-object-storage-bucket': {'module': 'database_migration', 'class': 'ObjectStoreBucket'}}, output_type={'module': 'database_migration', 'class': 'Migration'})
+@cli_util.wrap_exceptions
+def create_migration_db_link_data_transfer_medium_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, source_database_connection_id, target_database_connection_id, display_name, agent_id, source_container_database_connection_id, data_transfer_medium_details, dump_transfer_details, datapump_settings, advisor_settings, exclude_objects, include_objects, csv_text, golden_gate_details, golden_gate_service_details, vault_details, freeform_tags, defined_tags, data_transfer_medium_details_v2_object_storage_bucket, data_transfer_medium_details_v2_name):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dataTransferMediumDetailsV2'] = {}
+    _details['type'] = type
+    _details['compartmentId'] = compartment_id
+    _details['sourceDatabaseConnectionId'] = source_database_connection_id
+    _details['targetDatabaseConnectionId'] = target_database_connection_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if agent_id is not None:
+        _details['agentId'] = agent_id
+
+    if source_container_database_connection_id is not None:
+        _details['sourceContainerDatabaseConnectionId'] = source_container_database_connection_id
+
+    if data_transfer_medium_details is not None:
+        _details['dataTransferMediumDetails'] = cli_util.parse_json_parameter("data_transfer_medium_details", data_transfer_medium_details)
+
+    if dump_transfer_details is not None:
+        _details['dumpTransferDetails'] = cli_util.parse_json_parameter("dump_transfer_details", dump_transfer_details)
+
+    if datapump_settings is not None:
+        _details['datapumpSettings'] = cli_util.parse_json_parameter("datapump_settings", datapump_settings)
+
+    if advisor_settings is not None:
+        _details['advisorSettings'] = cli_util.parse_json_parameter("advisor_settings", advisor_settings)
+
+    if exclude_objects is not None:
+        _details['excludeObjects'] = cli_util.parse_json_parameter("exclude_objects", exclude_objects)
+
+    if include_objects is not None:
+        _details['includeObjects'] = cli_util.parse_json_parameter("include_objects", include_objects)
+
+    if csv_text is not None:
+        _details['csvText'] = csv_text
+
+    if golden_gate_details is not None:
+        _details['goldenGateDetails'] = cli_util.parse_json_parameter("golden_gate_details", golden_gate_details)
+
+    if golden_gate_service_details is not None:
+        _details['goldenGateServiceDetails'] = cli_util.parse_json_parameter("golden_gate_service_details", golden_gate_service_details)
+
+    if vault_details is not None:
+        _details['vaultDetails'] = cli_util.parse_json_parameter("vault_details", vault_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if data_transfer_medium_details_v2_object_storage_bucket is not None:
+        _details['dataTransferMediumDetailsV2']['objectStorageBucket'] = cli_util.parse_json_parameter("data_transfer_medium_details_v2_object_storage_bucket", data_transfer_medium_details_v2_object_storage_bucket)
+
+    if data_transfer_medium_details_v2_name is not None:
+        _details['dataTransferMediumDetailsV2']['name'] = data_transfer_medium_details_v2_name
+
+    _details['dataTransferMediumDetailsV2']['type'] = 'DBLINK'
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.create_migration(
+        create_migration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@migration_group.command(name=cli_util.override('database_migration.create_migration_aws_s3_data_transfer_medium_details.command_name', 'create-migration-aws-s3-data-transfer-medium-details'), help=u"""Create a Migration resource that contains all the details to perform the database migration operation, such as source and destination database details, credentials, etc. \n[Command Reference](createMigration)""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ONLINE", "OFFLINE"]), help=u"""Migration type.""")
+@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment""")
+@cli_util.option('--source-database-connection-id', required=True, help=u"""The OCID of the Source Database Connection.""")
+@cli_util.option('--target-database-connection-id', required=True, help=u"""The OCID of the Target Database Connection.""")
+@cli_util.option('--display-name', help=u"""Migration Display Name""")
+@cli_util.option('--agent-id', help=u"""The OCID of the registered ODMS Agent. Only valid for Offline Logical Migrations.""")
+@cli_util.option('--source-container-database-connection-id', help=u"""The OCID of the Source Container Database Connection. Only used for Online migrations. Only Connections of type Non-Autonomous can be used as source container databases.""")
+@cli_util.option('--data-transfer-medium-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--dump-transfer-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--datapump-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--advisor-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--exclude-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to exclude from migration, cannot be specified alongside 'includeObjects'
+
+This option is a JSON list with items of type DatabaseObject.  For documentation on DatabaseObject please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20210929/datatypes/DatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--include-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to include from migration, cannot be specified alongside 'excludeObjects'
+
+This option is a JSON list with items of type DatabaseObject.  For documentation on DatabaseObject please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20210929/datatypes/DatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--csv-text', help=u"""Database objects to exclude/include from migration in CSV format. The excludeObjects and includeObjects fields will be ignored if this field is not null.""")
+@cli_util.option('--golden-gate-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--golden-gate-service-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vault-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-transfer-medium-details-v2-name', help=u"""S3 bucket name.""")
+@cli_util.option('--data-transfer-medium-details-v2-region', help=u"""AWS region code where the S3 bucket is located. Region code should match the documented available regions: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions""")
+@cli_util.option('--data-transfer-medium-details-v2-access-key-id', help=u"""AWS access key credentials identifier Details: https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys""")
+@cli_util.option('--data-transfer-medium-details-v2-secret-access-key', help=u"""AWS secret access key credentials Details: https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'data-transfer-medium-details': {'module': 'database_migration', 'class': 'CreateDataTransferMediumDetails'}, 'dump-transfer-details': {'module': 'database_migration', 'class': 'CreateDumpTransferDetails'}, 'datapump-settings': {'module': 'database_migration', 'class': 'CreateDataPumpSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'CreateAdvisorSettings'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'golden-gate-details': {'module': 'database_migration', 'class': 'CreateGoldenGateDetails'}, 'golden-gate-service-details': {'module': 'database_migration', 'class': 'CreateGoldenGateServiceDetails'}, 'vault-details': {'module': 'database_migration', 'class': 'CreateVaultDetails'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-transfer-medium-details': {'module': 'database_migration', 'class': 'CreateDataTransferMediumDetails'}, 'dump-transfer-details': {'module': 'database_migration', 'class': 'CreateDumpTransferDetails'}, 'datapump-settings': {'module': 'database_migration', 'class': 'CreateDataPumpSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'CreateAdvisorSettings'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'golden-gate-details': {'module': 'database_migration', 'class': 'CreateGoldenGateDetails'}, 'golden-gate-service-details': {'module': 'database_migration', 'class': 'CreateGoldenGateServiceDetails'}, 'vault-details': {'module': 'database_migration', 'class': 'CreateVaultDetails'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_migration', 'class': 'Migration'})
+@cli_util.wrap_exceptions
+def create_migration_aws_s3_data_transfer_medium_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, source_database_connection_id, target_database_connection_id, display_name, agent_id, source_container_database_connection_id, data_transfer_medium_details, dump_transfer_details, datapump_settings, advisor_settings, exclude_objects, include_objects, csv_text, golden_gate_details, golden_gate_service_details, vault_details, freeform_tags, defined_tags, data_transfer_medium_details_v2_name, data_transfer_medium_details_v2_region, data_transfer_medium_details_v2_access_key_id, data_transfer_medium_details_v2_secret_access_key):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dataTransferMediumDetailsV2'] = {}
+    _details['type'] = type
+    _details['compartmentId'] = compartment_id
+    _details['sourceDatabaseConnectionId'] = source_database_connection_id
+    _details['targetDatabaseConnectionId'] = target_database_connection_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if agent_id is not None:
+        _details['agentId'] = agent_id
+
+    if source_container_database_connection_id is not None:
+        _details['sourceContainerDatabaseConnectionId'] = source_container_database_connection_id
+
+    if data_transfer_medium_details is not None:
+        _details['dataTransferMediumDetails'] = cli_util.parse_json_parameter("data_transfer_medium_details", data_transfer_medium_details)
+
+    if dump_transfer_details is not None:
+        _details['dumpTransferDetails'] = cli_util.parse_json_parameter("dump_transfer_details", dump_transfer_details)
+
+    if datapump_settings is not None:
+        _details['datapumpSettings'] = cli_util.parse_json_parameter("datapump_settings", datapump_settings)
+
+    if advisor_settings is not None:
+        _details['advisorSettings'] = cli_util.parse_json_parameter("advisor_settings", advisor_settings)
+
+    if exclude_objects is not None:
+        _details['excludeObjects'] = cli_util.parse_json_parameter("exclude_objects", exclude_objects)
+
+    if include_objects is not None:
+        _details['includeObjects'] = cli_util.parse_json_parameter("include_objects", include_objects)
+
+    if csv_text is not None:
+        _details['csvText'] = csv_text
+
+    if golden_gate_details is not None:
+        _details['goldenGateDetails'] = cli_util.parse_json_parameter("golden_gate_details", golden_gate_details)
+
+    if golden_gate_service_details is not None:
+        _details['goldenGateServiceDetails'] = cli_util.parse_json_parameter("golden_gate_service_details", golden_gate_service_details)
+
+    if vault_details is not None:
+        _details['vaultDetails'] = cli_util.parse_json_parameter("vault_details", vault_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if data_transfer_medium_details_v2_name is not None:
+        _details['dataTransferMediumDetailsV2']['name'] = data_transfer_medium_details_v2_name
+
+    if data_transfer_medium_details_v2_region is not None:
+        _details['dataTransferMediumDetailsV2']['region'] = data_transfer_medium_details_v2_region
+
+    if data_transfer_medium_details_v2_access_key_id is not None:
+        _details['dataTransferMediumDetailsV2']['accessKeyId'] = data_transfer_medium_details_v2_access_key_id
+
+    if data_transfer_medium_details_v2_secret_access_key is not None:
+        _details['dataTransferMediumDetailsV2']['secretAccessKey'] = data_transfer_medium_details_v2_secret_access_key
+
+    _details['dataTransferMediumDetailsV2']['type'] = 'AWS_S3'
 
     client = cli_util.build_client('database_migration', 'database_migration', ctx)
     result = client.create_migration(
@@ -2275,6 +2795,142 @@ def update_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--source-database-connection-id', help=u"""The OCID of the Source Database Connection.""")
 @cli_util.option('--source-container-database-connection-id', help=u"""The OCID of the Source Container Database Connection. Only used for Online migrations. Only Connections of type Non-Autonomous can be used as source container databases. An empty value would remove the stored Connection ID.""")
 @cli_util.option('--target-database-connection-id', help=u"""The OCID of the Target Database Connection.""")
+@cli_util.option('--data-transfer-medium-details-v2', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-transfer-medium-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--dump-transfer-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--datapump-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--advisor-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--exclude-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to exclude from migration, cannot be specified alongside 'includeObjects'. If specified, the list will be replaced entirely. Empty list will remove stored excludeObjects details.
+
+This option is a JSON list with items of type DatabaseObject.  For documentation on DatabaseObject please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20210929/datatypes/DatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--include-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to include from migration, cannot be specified alongside 'excludeObjects'. If specified, the list will be replaced entirely. Empty list will remove stored includeObjects details.
+
+This option is a JSON list with items of type DatabaseObject.  For documentation on DatabaseObject please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20210929/datatypes/DatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--golden-gate-service-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--golden-gate-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vault-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'data-transfer-medium-details-v2': {'module': 'database_migration', 'class': 'DataTransferMediumDetailsV2'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'UpdateDataTransferMediumDetails'}, 'dump-transfer-details': {'module': 'database_migration', 'class': 'UpdateDumpTransferDetails'}, 'datapump-settings': {'module': 'database_migration', 'class': 'UpdateDataPumpSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'UpdateAdvisorSettings'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'golden-gate-service-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateServiceDetails'}, 'golden-gate-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateDetails'}, 'vault-details': {'module': 'database_migration', 'class': 'UpdateVaultDetails'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-transfer-medium-details-v2': {'module': 'database_migration', 'class': 'DataTransferMediumDetailsV2'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'UpdateDataTransferMediumDetails'}, 'dump-transfer-details': {'module': 'database_migration', 'class': 'UpdateDumpTransferDetails'}, 'datapump-settings': {'module': 'database_migration', 'class': 'UpdateDataPumpSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'UpdateAdvisorSettings'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'golden-gate-service-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateServiceDetails'}, 'golden-gate-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateDetails'}, 'vault-details': {'module': 'database_migration', 'class': 'UpdateVaultDetails'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_migration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, type, display_name, agent_id, source_database_connection_id, source_container_database_connection_id, target_database_connection_id, data_transfer_medium_details_v2, data_transfer_medium_details, dump_transfer_details, datapump_settings, advisor_settings, exclude_objects, include_objects, golden_gate_service_details, golden_gate_details, vault_details, freeform_tags, defined_tags, if_match):
+
+    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+        raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
+    if not force:
+        if data_transfer_medium_details_v2 or data_transfer_medium_details or dump_transfer_details or datapump_settings or advisor_settings or exclude_objects or include_objects or golden_gate_service_details or golden_gate_details or vault_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to data-transfer-medium-details-v2 and data-transfer-medium-details and dump-transfer-details and datapump-settings and advisor-settings and exclude-objects and include-objects and golden-gate-service-details and golden-gate-details and vault-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if type is not None:
+        _details['type'] = type
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if agent_id is not None:
+        _details['agentId'] = agent_id
+
+    if source_database_connection_id is not None:
+        _details['sourceDatabaseConnectionId'] = source_database_connection_id
+
+    if source_container_database_connection_id is not None:
+        _details['sourceContainerDatabaseConnectionId'] = source_container_database_connection_id
+
+    if target_database_connection_id is not None:
+        _details['targetDatabaseConnectionId'] = target_database_connection_id
+
+    if data_transfer_medium_details_v2 is not None:
+        _details['dataTransferMediumDetailsV2'] = cli_util.parse_json_parameter("data_transfer_medium_details_v2", data_transfer_medium_details_v2)
+
+    if data_transfer_medium_details is not None:
+        _details['dataTransferMediumDetails'] = cli_util.parse_json_parameter("data_transfer_medium_details", data_transfer_medium_details)
+
+    if dump_transfer_details is not None:
+        _details['dumpTransferDetails'] = cli_util.parse_json_parameter("dump_transfer_details", dump_transfer_details)
+
+    if datapump_settings is not None:
+        _details['datapumpSettings'] = cli_util.parse_json_parameter("datapump_settings", datapump_settings)
+
+    if advisor_settings is not None:
+        _details['advisorSettings'] = cli_util.parse_json_parameter("advisor_settings", advisor_settings)
+
+    if exclude_objects is not None:
+        _details['excludeObjects'] = cli_util.parse_json_parameter("exclude_objects", exclude_objects)
+
+    if include_objects is not None:
+        _details['includeObjects'] = cli_util.parse_json_parameter("include_objects", include_objects)
+
+    if golden_gate_service_details is not None:
+        _details['goldenGateServiceDetails'] = cli_util.parse_json_parameter("golden_gate_service_details", golden_gate_service_details)
+
+    if golden_gate_details is not None:
+        _details['goldenGateDetails'] = cli_util.parse_json_parameter("golden_gate_details", golden_gate_details)
+
+    if vault_details is not None:
+        _details['vaultDetails'] = cli_util.parse_json_parameter("vault_details", vault_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.update_migration(
+        migration_id=migration_id,
+        update_migration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@migration_group.command(name=cli_util.override('database_migration.update_migration_nfs_data_transfer_medium_details.command_name', 'update-migration-nfs-data-transfer-medium-details'), help=u"""Update Migration resource details. \n[Command Reference](updateMigration)""")
+@cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["ONLINE", "OFFLINE"]), help=u"""Migration type.""")
+@cli_util.option('--display-name', help=u"""Migration Display Name""")
+@cli_util.option('--agent-id', help=u"""The OCID of the registered ODMS Agent.""")
+@cli_util.option('--source-database-connection-id', help=u"""The OCID of the Source Database Connection.""")
+@cli_util.option('--source-container-database-connection-id', help=u"""The OCID of the Source Container Database Connection. Only used for Online migrations. Only Connections of type Non-Autonomous can be used as source container databases. An empty value would remove the stored Connection ID.""")
+@cli_util.option('--target-database-connection-id', help=u"""The OCID of the Target Database Connection.""")
 @cli_util.option('--data-transfer-medium-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dump-transfer-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--datapump-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2300,7 +2956,7 @@ This option is a JSON list with items of type DatabaseObject.  For documentation
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-transfer-medium-details': {'module': 'database_migration', 'class': 'UpdateDataTransferMediumDetails'}, 'dump-transfer-details': {'module': 'database_migration', 'class': 'UpdateDumpTransferDetails'}, 'datapump-settings': {'module': 'database_migration', 'class': 'UpdateDataPumpSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'UpdateAdvisorSettings'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'golden-gate-service-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateServiceDetails'}, 'golden-gate-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateDetails'}, 'vault-details': {'module': 'database_migration', 'class': 'UpdateVaultDetails'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_migration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, type, display_name, agent_id, source_database_connection_id, source_container_database_connection_id, target_database_connection_id, data_transfer_medium_details, dump_transfer_details, datapump_settings, advisor_settings, exclude_objects, include_objects, golden_gate_service_details, golden_gate_details, vault_details, freeform_tags, defined_tags, if_match):
+def update_migration_nfs_data_transfer_medium_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, type, display_name, agent_id, source_database_connection_id, source_container_database_connection_id, target_database_connection_id, data_transfer_medium_details, dump_transfer_details, datapump_settings, advisor_settings, exclude_objects, include_objects, golden_gate_service_details, golden_gate_details, vault_details, freeform_tags, defined_tags, if_match):
 
     if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
@@ -2315,6 +2971,7 @@ def update_migration(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
+    _details['dataTransferMediumDetailsV2'] = {}
 
     if type is not None:
         _details['type'] = type
@@ -2366,6 +3023,441 @@ def update_migration(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['dataTransferMediumDetailsV2']['type'] = 'NFS'
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.update_migration(
+        migration_id=migration_id,
+        update_migration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@migration_group.command(name=cli_util.override('database_migration.update_migration_object_storage_data_transfer_medium_details.command_name', 'update-migration-object-storage-data-transfer-medium-details'), help=u"""Update Migration resource details. \n[Command Reference](updateMigration)""")
+@cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["ONLINE", "OFFLINE"]), help=u"""Migration type.""")
+@cli_util.option('--display-name', help=u"""Migration Display Name""")
+@cli_util.option('--agent-id', help=u"""The OCID of the registered ODMS Agent.""")
+@cli_util.option('--source-database-connection-id', help=u"""The OCID of the Source Database Connection.""")
+@cli_util.option('--source-container-database-connection-id', help=u"""The OCID of the Source Container Database Connection. Only used for Online migrations. Only Connections of type Non-Autonomous can be used as source container databases. An empty value would remove the stored Connection ID.""")
+@cli_util.option('--target-database-connection-id', help=u"""The OCID of the Target Database Connection.""")
+@cli_util.option('--data-transfer-medium-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--dump-transfer-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--datapump-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--advisor-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--exclude-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to exclude from migration, cannot be specified alongside 'includeObjects'. If specified, the list will be replaced entirely. Empty list will remove stored excludeObjects details.
+
+This option is a JSON list with items of type DatabaseObject.  For documentation on DatabaseObject please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20210929/datatypes/DatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--include-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to include from migration, cannot be specified alongside 'excludeObjects'. If specified, the list will be replaced entirely. Empty list will remove stored includeObjects details.
+
+This option is a JSON list with items of type DatabaseObject.  For documentation on DatabaseObject please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20210929/datatypes/DatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--golden-gate-service-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--golden-gate-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vault-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--data-transfer-medium-details-v2-object-storage-bucket', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'data-transfer-medium-details': {'module': 'database_migration', 'class': 'UpdateDataTransferMediumDetails'}, 'dump-transfer-details': {'module': 'database_migration', 'class': 'UpdateDumpTransferDetails'}, 'datapump-settings': {'module': 'database_migration', 'class': 'UpdateDataPumpSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'UpdateAdvisorSettings'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'golden-gate-service-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateServiceDetails'}, 'golden-gate-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateDetails'}, 'vault-details': {'module': 'database_migration', 'class': 'UpdateVaultDetails'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details-v2-object-storage-bucket': {'module': 'database_migration', 'class': 'ObjectStoreBucket'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-transfer-medium-details': {'module': 'database_migration', 'class': 'UpdateDataTransferMediumDetails'}, 'dump-transfer-details': {'module': 'database_migration', 'class': 'UpdateDumpTransferDetails'}, 'datapump-settings': {'module': 'database_migration', 'class': 'UpdateDataPumpSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'UpdateAdvisorSettings'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'golden-gate-service-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateServiceDetails'}, 'golden-gate-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateDetails'}, 'vault-details': {'module': 'database_migration', 'class': 'UpdateVaultDetails'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details-v2-object-storage-bucket': {'module': 'database_migration', 'class': 'ObjectStoreBucket'}})
+@cli_util.wrap_exceptions
+def update_migration_object_storage_data_transfer_medium_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, type, display_name, agent_id, source_database_connection_id, source_container_database_connection_id, target_database_connection_id, data_transfer_medium_details, dump_transfer_details, datapump_settings, advisor_settings, exclude_objects, include_objects, golden_gate_service_details, golden_gate_details, vault_details, freeform_tags, defined_tags, if_match, data_transfer_medium_details_v2_object_storage_bucket):
+
+    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+        raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
+    if not force:
+        if data_transfer_medium_details or dump_transfer_details or datapump_settings or advisor_settings or exclude_objects or include_objects or golden_gate_service_details or golden_gate_details or vault_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to data-transfer-medium-details and dump-transfer-details and datapump-settings and advisor-settings and exclude-objects and include-objects and golden-gate-service-details and golden-gate-details and vault-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dataTransferMediumDetailsV2'] = {}
+
+    if type is not None:
+        _details['type'] = type
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if agent_id is not None:
+        _details['agentId'] = agent_id
+
+    if source_database_connection_id is not None:
+        _details['sourceDatabaseConnectionId'] = source_database_connection_id
+
+    if source_container_database_connection_id is not None:
+        _details['sourceContainerDatabaseConnectionId'] = source_container_database_connection_id
+
+    if target_database_connection_id is not None:
+        _details['targetDatabaseConnectionId'] = target_database_connection_id
+
+    if data_transfer_medium_details is not None:
+        _details['dataTransferMediumDetails'] = cli_util.parse_json_parameter("data_transfer_medium_details", data_transfer_medium_details)
+
+    if dump_transfer_details is not None:
+        _details['dumpTransferDetails'] = cli_util.parse_json_parameter("dump_transfer_details", dump_transfer_details)
+
+    if datapump_settings is not None:
+        _details['datapumpSettings'] = cli_util.parse_json_parameter("datapump_settings", datapump_settings)
+
+    if advisor_settings is not None:
+        _details['advisorSettings'] = cli_util.parse_json_parameter("advisor_settings", advisor_settings)
+
+    if exclude_objects is not None:
+        _details['excludeObjects'] = cli_util.parse_json_parameter("exclude_objects", exclude_objects)
+
+    if include_objects is not None:
+        _details['includeObjects'] = cli_util.parse_json_parameter("include_objects", include_objects)
+
+    if golden_gate_service_details is not None:
+        _details['goldenGateServiceDetails'] = cli_util.parse_json_parameter("golden_gate_service_details", golden_gate_service_details)
+
+    if golden_gate_details is not None:
+        _details['goldenGateDetails'] = cli_util.parse_json_parameter("golden_gate_details", golden_gate_details)
+
+    if vault_details is not None:
+        _details['vaultDetails'] = cli_util.parse_json_parameter("vault_details", vault_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if data_transfer_medium_details_v2_object_storage_bucket is not None:
+        _details['dataTransferMediumDetailsV2']['objectStorageBucket'] = cli_util.parse_json_parameter("data_transfer_medium_details_v2_object_storage_bucket", data_transfer_medium_details_v2_object_storage_bucket)
+
+    _details['dataTransferMediumDetailsV2']['type'] = 'OBJECT_STORAGE'
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.update_migration(
+        migration_id=migration_id,
+        update_migration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@migration_group.command(name=cli_util.override('database_migration.update_migration_db_link_data_transfer_medium_details.command_name', 'update-migration-db-link-data-transfer-medium-details'), help=u"""Update Migration resource details. \n[Command Reference](updateMigration)""")
+@cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["ONLINE", "OFFLINE"]), help=u"""Migration type.""")
+@cli_util.option('--display-name', help=u"""Migration Display Name""")
+@cli_util.option('--agent-id', help=u"""The OCID of the registered ODMS Agent.""")
+@cli_util.option('--source-database-connection-id', help=u"""The OCID of the Source Database Connection.""")
+@cli_util.option('--source-container-database-connection-id', help=u"""The OCID of the Source Container Database Connection. Only used for Online migrations. Only Connections of type Non-Autonomous can be used as source container databases. An empty value would remove the stored Connection ID.""")
+@cli_util.option('--target-database-connection-id', help=u"""The OCID of the Target Database Connection.""")
+@cli_util.option('--data-transfer-medium-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--dump-transfer-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--datapump-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--advisor-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--exclude-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to exclude from migration, cannot be specified alongside 'includeObjects'. If specified, the list will be replaced entirely. Empty list will remove stored excludeObjects details.
+
+This option is a JSON list with items of type DatabaseObject.  For documentation on DatabaseObject please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20210929/datatypes/DatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--include-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to include from migration, cannot be specified alongside 'excludeObjects'. If specified, the list will be replaced entirely. Empty list will remove stored includeObjects details.
+
+This option is a JSON list with items of type DatabaseObject.  For documentation on DatabaseObject please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20210929/datatypes/DatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--golden-gate-service-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--golden-gate-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vault-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--data-transfer-medium-details-v2-object-storage-bucket', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-transfer-medium-details-v2-name', help=u"""Name of database link from OCI database to on-premise database. ODMS will create link, if the link does not already exist.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'data-transfer-medium-details': {'module': 'database_migration', 'class': 'UpdateDataTransferMediumDetails'}, 'dump-transfer-details': {'module': 'database_migration', 'class': 'UpdateDumpTransferDetails'}, 'datapump-settings': {'module': 'database_migration', 'class': 'UpdateDataPumpSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'UpdateAdvisorSettings'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'golden-gate-service-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateServiceDetails'}, 'golden-gate-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateDetails'}, 'vault-details': {'module': 'database_migration', 'class': 'UpdateVaultDetails'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details-v2-object-storage-bucket': {'module': 'database_migration', 'class': 'ObjectStoreBucket'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-transfer-medium-details': {'module': 'database_migration', 'class': 'UpdateDataTransferMediumDetails'}, 'dump-transfer-details': {'module': 'database_migration', 'class': 'UpdateDumpTransferDetails'}, 'datapump-settings': {'module': 'database_migration', 'class': 'UpdateDataPumpSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'UpdateAdvisorSettings'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'golden-gate-service-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateServiceDetails'}, 'golden-gate-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateDetails'}, 'vault-details': {'module': 'database_migration', 'class': 'UpdateVaultDetails'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details-v2-object-storage-bucket': {'module': 'database_migration', 'class': 'ObjectStoreBucket'}})
+@cli_util.wrap_exceptions
+def update_migration_db_link_data_transfer_medium_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, type, display_name, agent_id, source_database_connection_id, source_container_database_connection_id, target_database_connection_id, data_transfer_medium_details, dump_transfer_details, datapump_settings, advisor_settings, exclude_objects, include_objects, golden_gate_service_details, golden_gate_details, vault_details, freeform_tags, defined_tags, if_match, data_transfer_medium_details_v2_object_storage_bucket, data_transfer_medium_details_v2_name):
+
+    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+        raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
+    if not force:
+        if data_transfer_medium_details or dump_transfer_details or datapump_settings or advisor_settings or exclude_objects or include_objects or golden_gate_service_details or golden_gate_details or vault_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to data-transfer-medium-details and dump-transfer-details and datapump-settings and advisor-settings and exclude-objects and include-objects and golden-gate-service-details and golden-gate-details and vault-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dataTransferMediumDetailsV2'] = {}
+
+    if type is not None:
+        _details['type'] = type
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if agent_id is not None:
+        _details['agentId'] = agent_id
+
+    if source_database_connection_id is not None:
+        _details['sourceDatabaseConnectionId'] = source_database_connection_id
+
+    if source_container_database_connection_id is not None:
+        _details['sourceContainerDatabaseConnectionId'] = source_container_database_connection_id
+
+    if target_database_connection_id is not None:
+        _details['targetDatabaseConnectionId'] = target_database_connection_id
+
+    if data_transfer_medium_details is not None:
+        _details['dataTransferMediumDetails'] = cli_util.parse_json_parameter("data_transfer_medium_details", data_transfer_medium_details)
+
+    if dump_transfer_details is not None:
+        _details['dumpTransferDetails'] = cli_util.parse_json_parameter("dump_transfer_details", dump_transfer_details)
+
+    if datapump_settings is not None:
+        _details['datapumpSettings'] = cli_util.parse_json_parameter("datapump_settings", datapump_settings)
+
+    if advisor_settings is not None:
+        _details['advisorSettings'] = cli_util.parse_json_parameter("advisor_settings", advisor_settings)
+
+    if exclude_objects is not None:
+        _details['excludeObjects'] = cli_util.parse_json_parameter("exclude_objects", exclude_objects)
+
+    if include_objects is not None:
+        _details['includeObjects'] = cli_util.parse_json_parameter("include_objects", include_objects)
+
+    if golden_gate_service_details is not None:
+        _details['goldenGateServiceDetails'] = cli_util.parse_json_parameter("golden_gate_service_details", golden_gate_service_details)
+
+    if golden_gate_details is not None:
+        _details['goldenGateDetails'] = cli_util.parse_json_parameter("golden_gate_details", golden_gate_details)
+
+    if vault_details is not None:
+        _details['vaultDetails'] = cli_util.parse_json_parameter("vault_details", vault_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if data_transfer_medium_details_v2_object_storage_bucket is not None:
+        _details['dataTransferMediumDetailsV2']['objectStorageBucket'] = cli_util.parse_json_parameter("data_transfer_medium_details_v2_object_storage_bucket", data_transfer_medium_details_v2_object_storage_bucket)
+
+    if data_transfer_medium_details_v2_name is not None:
+        _details['dataTransferMediumDetailsV2']['name'] = data_transfer_medium_details_v2_name
+
+    _details['dataTransferMediumDetailsV2']['type'] = 'DBLINK'
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.update_migration(
+        migration_id=migration_id,
+        update_migration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@migration_group.command(name=cli_util.override('database_migration.update_migration_aws_s3_data_transfer_medium_details.command_name', 'update-migration-aws-s3-data-transfer-medium-details'), help=u"""Update Migration resource details. \n[Command Reference](updateMigration)""")
+@cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["ONLINE", "OFFLINE"]), help=u"""Migration type.""")
+@cli_util.option('--display-name', help=u"""Migration Display Name""")
+@cli_util.option('--agent-id', help=u"""The OCID of the registered ODMS Agent.""")
+@cli_util.option('--source-database-connection-id', help=u"""The OCID of the Source Database Connection.""")
+@cli_util.option('--source-container-database-connection-id', help=u"""The OCID of the Source Container Database Connection. Only used for Online migrations. Only Connections of type Non-Autonomous can be used as source container databases. An empty value would remove the stored Connection ID.""")
+@cli_util.option('--target-database-connection-id', help=u"""The OCID of the Target Database Connection.""")
+@cli_util.option('--data-transfer-medium-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--dump-transfer-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--datapump-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--advisor-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--exclude-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to exclude from migration, cannot be specified alongside 'includeObjects'. If specified, the list will be replaced entirely. Empty list will remove stored excludeObjects details.
+
+This option is a JSON list with items of type DatabaseObject.  For documentation on DatabaseObject please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20210929/datatypes/DatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--include-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to include from migration, cannot be specified alongside 'excludeObjects'. If specified, the list will be replaced entirely. Empty list will remove stored includeObjects details.
+
+This option is a JSON list with items of type DatabaseObject.  For documentation on DatabaseObject please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20210929/datatypes/DatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--golden-gate-service-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--golden-gate-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vault-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--data-transfer-medium-details-v2-name', help=u"""S3 bucket name.""")
+@cli_util.option('--data-transfer-medium-details-v2-region', help=u"""AWS region code where the S3 bucket is located. Region code should match the documented available regions: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions""")
+@cli_util.option('--data-transfer-medium-details-v2-access-key-id', help=u"""AWS access key credentials identifier Details: https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys""")
+@cli_util.option('--data-transfer-medium-details-v2-secret-access-key', help=u"""AWS secret access key credentials Details: https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'data-transfer-medium-details': {'module': 'database_migration', 'class': 'UpdateDataTransferMediumDetails'}, 'dump-transfer-details': {'module': 'database_migration', 'class': 'UpdateDumpTransferDetails'}, 'datapump-settings': {'module': 'database_migration', 'class': 'UpdateDataPumpSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'UpdateAdvisorSettings'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'golden-gate-service-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateServiceDetails'}, 'golden-gate-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateDetails'}, 'vault-details': {'module': 'database_migration', 'class': 'UpdateVaultDetails'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-transfer-medium-details': {'module': 'database_migration', 'class': 'UpdateDataTransferMediumDetails'}, 'dump-transfer-details': {'module': 'database_migration', 'class': 'UpdateDumpTransferDetails'}, 'datapump-settings': {'module': 'database_migration', 'class': 'UpdateDataPumpSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'UpdateAdvisorSettings'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[DatabaseObject]'}, 'golden-gate-service-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateServiceDetails'}, 'golden-gate-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateDetails'}, 'vault-details': {'module': 'database_migration', 'class': 'UpdateVaultDetails'}, 'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_migration_aws_s3_data_transfer_medium_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, type, display_name, agent_id, source_database_connection_id, source_container_database_connection_id, target_database_connection_id, data_transfer_medium_details, dump_transfer_details, datapump_settings, advisor_settings, exclude_objects, include_objects, golden_gate_service_details, golden_gate_details, vault_details, freeform_tags, defined_tags, if_match, data_transfer_medium_details_v2_name, data_transfer_medium_details_v2_region, data_transfer_medium_details_v2_access_key_id, data_transfer_medium_details_v2_secret_access_key):
+
+    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+        raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
+    if not force:
+        if data_transfer_medium_details or dump_transfer_details or datapump_settings or advisor_settings or exclude_objects or include_objects or golden_gate_service_details or golden_gate_details or vault_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to data-transfer-medium-details and dump-transfer-details and datapump-settings and advisor-settings and exclude-objects and include-objects and golden-gate-service-details and golden-gate-details and vault-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dataTransferMediumDetailsV2'] = {}
+
+    if type is not None:
+        _details['type'] = type
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if agent_id is not None:
+        _details['agentId'] = agent_id
+
+    if source_database_connection_id is not None:
+        _details['sourceDatabaseConnectionId'] = source_database_connection_id
+
+    if source_container_database_connection_id is not None:
+        _details['sourceContainerDatabaseConnectionId'] = source_container_database_connection_id
+
+    if target_database_connection_id is not None:
+        _details['targetDatabaseConnectionId'] = target_database_connection_id
+
+    if data_transfer_medium_details is not None:
+        _details['dataTransferMediumDetails'] = cli_util.parse_json_parameter("data_transfer_medium_details", data_transfer_medium_details)
+
+    if dump_transfer_details is not None:
+        _details['dumpTransferDetails'] = cli_util.parse_json_parameter("dump_transfer_details", dump_transfer_details)
+
+    if datapump_settings is not None:
+        _details['datapumpSettings'] = cli_util.parse_json_parameter("datapump_settings", datapump_settings)
+
+    if advisor_settings is not None:
+        _details['advisorSettings'] = cli_util.parse_json_parameter("advisor_settings", advisor_settings)
+
+    if exclude_objects is not None:
+        _details['excludeObjects'] = cli_util.parse_json_parameter("exclude_objects", exclude_objects)
+
+    if include_objects is not None:
+        _details['includeObjects'] = cli_util.parse_json_parameter("include_objects", include_objects)
+
+    if golden_gate_service_details is not None:
+        _details['goldenGateServiceDetails'] = cli_util.parse_json_parameter("golden_gate_service_details", golden_gate_service_details)
+
+    if golden_gate_details is not None:
+        _details['goldenGateDetails'] = cli_util.parse_json_parameter("golden_gate_details", golden_gate_details)
+
+    if vault_details is not None:
+        _details['vaultDetails'] = cli_util.parse_json_parameter("vault_details", vault_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if data_transfer_medium_details_v2_name is not None:
+        _details['dataTransferMediumDetailsV2']['name'] = data_transfer_medium_details_v2_name
+
+    if data_transfer_medium_details_v2_region is not None:
+        _details['dataTransferMediumDetailsV2']['region'] = data_transfer_medium_details_v2_region
+
+    if data_transfer_medium_details_v2_access_key_id is not None:
+        _details['dataTransferMediumDetailsV2']['accessKeyId'] = data_transfer_medium_details_v2_access_key_id
+
+    if data_transfer_medium_details_v2_secret_access_key is not None:
+        _details['dataTransferMediumDetailsV2']['secretAccessKey'] = data_transfer_medium_details_v2_secret_access_key
+
+    _details['dataTransferMediumDetailsV2']['type'] = 'AWS_S3'
 
     client = cli_util.build_client('database_migration', 'database_migration', ctx)
     result = client.update_migration(

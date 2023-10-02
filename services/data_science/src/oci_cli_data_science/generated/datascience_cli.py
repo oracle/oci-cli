@@ -106,6 +106,12 @@ def notebook_session_shape_group():
     pass
 
 
+@click.command(cli_util.override('data_science.data_science_private_endpoint_group.command_name', 'data-science-private-endpoint'), cls=CommandGroupWithAlias, help="""Data Science private endpoint.""")
+@cli_util.help_option_group
+def data_science_private_endpoint_group():
+    pass
+
+
 data_science_root_group.add_command(model_deployment_shape_group)
 data_science_root_group.add_command(job_shape_group)
 data_science_root_group.add_command(model_deployment_group)
@@ -120,6 +126,7 @@ data_science_root_group.add_command(fast_launch_job_config_group)
 data_science_root_group.add_command(model_group)
 data_science_root_group.add_command(job_group)
 data_science_root_group.add_command(notebook_session_shape_group)
+data_science_root_group.add_command(data_science_private_endpoint_group)
 
 
 @model_group.command(name=cli_util.override('data_science.activate_model.command_name', 'activate'), help=u"""Activates the model. \n[Command Reference](activateModel)""")
@@ -348,6 +355,63 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
         work_request_id=work_request_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@data_science_private_endpoint_group.command(name=cli_util.override('data_science.change_data_science_private_endpoint_compartment.command_name', 'change-compartment'), help=u"""Moves a private endpoint into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeDataSciencePrivateEndpointCompartment)""")
+@cli_util.option('--data-science-private-endpoint-id', required=True, help=u"""The unique ID for a Data Science private endpoint.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create private endpoint.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_data_science_private_endpoint_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, data_science_private_endpoint_id, compartment_id, if_match):
+
+    if isinstance(data_science_private_endpoint_id, six.string_types) and len(data_science_private_endpoint_id.strip()) == 0:
+        raise click.UsageError('Parameter --data-science-private-endpoint-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.change_data_science_private_endpoint_compartment(
+        data_science_private_endpoint_id=data_science_private_endpoint_id,
+        change_data_science_private_endpoint_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -653,6 +717,83 @@ def change_project_compartment(ctx, from_json, project_id, compartment_id, if_ma
         change_project_compartment_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@data_science_private_endpoint_group.command(name=cli_util.override('data_science.create_data_science_private_endpoint.command_name', 'create'), help=u"""Creates a Data Science private endpoint to be used by a Data Science resource. \n[Command Reference](createDataSciencePrivateEndpoint)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the private endpoint.""")
+@cli_util.option('--subnet-id', required=True, help=u"""The OCID of the subnet.""")
+@cli_util.option('--data-science-resource-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION"]), help=u"""Data Science resource type.""")
+@cli_util.option('--description', help=u"""A user friendly description. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user friendly name. It doesn't have to be unique. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of network security group OCIDs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--sub-domain', help=u"""Subdomain for a private endpoint FQDN.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'data_science', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'data_science', 'class': 'list[string]'}}, output_type={'module': 'data_science', 'class': 'DataSciencePrivateEndpoint'})
+@cli_util.wrap_exceptions
+def create_data_science_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, data_science_resource_type, description, display_name, freeform_tags, defined_tags, nsg_ids, sub_domain):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['subnetId'] = subnet_id
+    _details['dataScienceResourceType'] = data_science_resource_type
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if nsg_ids is not None:
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if sub_domain is not None:
+        _details['subDomain'] = sub_domain
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.create_data_science_private_endpoint(
+        create_data_science_private_endpoint_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -2266,6 +2407,58 @@ def deactivate_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
+@data_science_private_endpoint_group.command(name=cli_util.override('data_science.delete_data_science_private_endpoint.command_name', 'delete'), help=u"""Deletes a private endpoint using `privateEndpointId`. \n[Command Reference](deleteDataSciencePrivateEndpoint)""")
+@cli_util.option('--data-science-private-endpoint-id', required=True, help=u"""The unique ID for a Data Science private endpoint.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_data_science_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, data_science_private_endpoint_id, if_match):
+
+    if isinstance(data_science_private_endpoint_id, six.string_types) and len(data_science_private_endpoint_id.strip()) == 0:
+        raise click.UsageError('Parameter --data-science-private-endpoint-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.delete_data_science_private_endpoint(
+        data_science_private_endpoint_id=data_science_private_endpoint_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @job_group.command(name=cli_util.override('data_science.delete_job.command_name', 'delete'), help=u"""Deletes a job. \n[Command Reference](deleteJob)""")
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
@@ -2916,6 +3109,28 @@ def export_model_artifact_artifact_export_details_object_storage(ctx, from_json,
     cli_util.render_response(result, ctx)
 
 
+@data_science_private_endpoint_group.command(name=cli_util.override('data_science.get_data_science_private_endpoint.command_name', 'get'), help=u"""Retrieves an private endpoint using a `privateEndpointId`. \n[Command Reference](getDataSciencePrivateEndpoint)""")
+@cli_util.option('--data-science-private-endpoint-id', required=True, help=u"""The unique ID for a Data Science private endpoint.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'DataSciencePrivateEndpoint'})
+@cli_util.wrap_exceptions
+def get_data_science_private_endpoint(ctx, from_json, data_science_private_endpoint_id):
+
+    if isinstance(data_science_private_endpoint_id, six.string_types) and len(data_science_private_endpoint_id.strip()) == 0:
+        raise click.UsageError('Parameter --data-science-private-endpoint-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.get_data_science_private_endpoint(
+        data_science_private_endpoint_id=data_science_private_endpoint_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @job_group.command(name=cli_util.override('data_science.get_job.command_name', 'get'), help=u"""Gets a job. \n[Command Reference](getJob)""")
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3506,6 +3721,76 @@ def import_model_artifact_artifact_import_details_object_storage(ctx, from_json,
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@data_science_private_endpoint_group.command(name=cli_util.override('data_science.list_data_science_private_endpoints.command_name', 'list'), help=u"""Lists all Data Science private endpoints in the specified compartment. The query must include compartmentId. The query can also include one other parameter. If the query doesn't include compartmentId, or includes compartmentId with two or more other parameters, then an error is returned. \n[Command Reference](listDataSciencePrivateEndpoints)""")
+@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
+
+Example: `500`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+See [List Pagination].""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), help=u"""The lifecycle state of the private endpoint.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated"]), help=u"""The field used to sort the results. Multiple fields aren't supported.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
+@cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
+@cli_util.option('--created-by', help=u"""<b>Filter</b> results by the [OCID] of the user who created the resource.""")
+@cli_util.option('--data-science-resource-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION"]), help=u"""Resource types in the Data Science service such as notebooks.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'list[DataSciencePrivateEndpointSummary]'})
+@cli_util.wrap_exceptions
+def list_data_science_private_endpoints(ctx, from_json, all_pages, page_size, compartment_id, limit, page, lifecycle_state, sort_by, sort_order, display_name, created_by, data_science_resource_type):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if created_by is not None:
+        kwargs['created_by'] = created_by
+    if data_science_resource_type is not None:
+        kwargs['data_science_resource_type'] = data_science_resource_type
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_data_science_private_endpoints,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_data_science_private_endpoints,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_data_science_private_endpoints(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -4379,54 +4664,118 @@ def list_projects(ctx, from_json, all_pages, page_size, compartment_id, id, disp
 
 @work_request_group.command(name=cli_util.override('data_science.list_work_request_errors.command_name', 'list-work-request-errors'), help=u"""Lists work request errors for the specified work request. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
-@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
+
+Example: `500`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+See [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'list[WorkRequestError]'})
 @cli_util.wrap_exceptions
-def list_work_request_errors(ctx, from_json, all_pages, work_request_id):
+def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_id, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('data_science', 'data_science', ctx)
-    result = client.list_work_request_errors(
-        work_request_id=work_request_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_work_request_errors,
+            work_request_id=work_request_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_work_request_errors,
+            limit,
+            page_size,
+            work_request_id=work_request_id,
+            **kwargs
+        )
+    else:
+        result = client.list_work_request_errors(
+            work_request_id=work_request_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
 @work_request_group.command(name=cli_util.override('data_science.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Lists work request logs for the specified work request. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
-@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
+
+Example: `500`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+See [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'list[WorkRequestLogEntry]'})
 @cli_util.wrap_exceptions
-def list_work_request_logs(ctx, from_json, all_pages, work_request_id):
+def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('data_science', 'data_science', ctx)
-    result = client.list_work_request_logs(
-        work_request_id=work_request_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_work_request_logs,
+            work_request_id=work_request_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_work_request_logs,
+            limit,
+            page_size,
+            work_request_id=work_request_id,
+            **kwargs
+        )
+    else:
+        result = client.list_work_request_logs(
+            work_request_id=work_request_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
 @work_request_group.command(name=cli_util.override('data_science.list_work_requests.command_name', 'list'), help=u"""Lists work requests in the specified compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
-@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION_CREATE", "NOTEBOOK_SESSION_DELETE", "NOTEBOOK_SESSION_ACTIVATE", "NOTEBOOK_SESSION_DEACTIVATE", "MODELVERSIONSET_DELETE", "EXPORT_MODEL_ARTIFACT", "IMPORT_MODEL_ARTIFACT", "MODEL_DEPLOYMENT_CREATE", "MODEL_DEPLOYMENT_DELETE", "MODEL_DEPLOYMENT_ACTIVATE", "MODEL_DEPLOYMENT_DEACTIVATE", "MODEL_DEPLOYMENT_UPDATE", "PROJECT_DELETE", "WORKREQUEST_CANCEL", "JOB_DELETE", "PIPELINE_CREATE", "PIPELINE_DELETE", "PIPELINE_RUN_CREATE", "PIPELINE_RUN_CANCEL", "PIPELINE_RUN_DELETE"]), help=u"""<b>Filter</b> results by the type of the operation associated with the work request.""")
+@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION_CREATE", "NOTEBOOK_SESSION_DELETE", "NOTEBOOK_SESSION_ACTIVATE", "NOTEBOOK_SESSION_DEACTIVATE", "MODELVERSIONSET_DELETE", "EXPORT_MODEL_ARTIFACT", "IMPORT_MODEL_ARTIFACT", "MODEL_DEPLOYMENT_CREATE", "MODEL_DEPLOYMENT_DELETE", "MODEL_DEPLOYMENT_ACTIVATE", "MODEL_DEPLOYMENT_DEACTIVATE", "MODEL_DEPLOYMENT_UPDATE", "PROJECT_DELETE", "WORKREQUEST_CANCEL", "JOB_DELETE", "PIPELINE_CREATE", "PIPELINE_DELETE", "PIPELINE_RUN_CREATE", "PIPELINE_RUN_CANCEL", "PIPELINE_RUN_DELETE", "PRIVATE_ENDPOINT_CREATE", "PRIVATE_ENDPOINT_DELETE", "PRIVATE_ENDPOINT_MOVE", "PRIVATE_ENDPOINT_UPDATE"]), help=u"""<b>Filter</b> results by the type of the operation associated with the work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""<b>Filter</b> results by work request status.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
 
@@ -4487,6 +4836,86 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, id,
             compartment_id=compartment_id,
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@data_science_private_endpoint_group.command(name=cli_util.override('data_science.update_data_science_private_endpoint.command_name', 'update'), help=u"""Updates a private endpoint using a `privateEndpointId`.  If changes to a private endpoint match a previously defined private endpoint, then a 409 status code is returned.  This indicates that a conflict has been detected. \n[Command Reference](updateDataSciencePrivateEndpoint)""")
+@cli_util.option('--data-science-private-endpoint-id', required=True, help=u"""The unique ID for a Data Science private endpoint.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""A user friendly description. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A user friendly name. It doesn't have to be unique. Avoid entering confidential information.""")
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of network security group OCIDs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'data_science', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'data_science', 'class': 'list[string]'}}, output_type={'module': 'data_science', 'class': 'DataSciencePrivateEndpoint'})
+@cli_util.wrap_exceptions
+def update_data_science_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_science_private_endpoint_id, freeform_tags, defined_tags, description, display_name, nsg_ids, if_match):
+
+    if isinstance(data_science_private_endpoint_id, six.string_types) and len(data_science_private_endpoint_id.strip()) == 0:
+        raise click.UsageError('Parameter --data-science-private-endpoint-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags or nsg_ids:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and nsg-ids will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if nsg_ids is not None:
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.update_data_science_private_endpoint(
+        data_science_private_endpoint_id=data_science_private_endpoint_id,
+        update_data_science_private_endpoint_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

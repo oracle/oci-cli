@@ -201,3 +201,9 @@ support, incident-resource-type, list
 support, validation-response, validate-user
 data-catalog, entity, list
 kms, management, key-version, create
+db, autonomous-database, create-from-clone
+db, autonomous-database, create
+db, autonomous-database, create-from-backup-id
+db, autonomous-database, create-from-backup-timestamp
+db, autonomous-database, create-refreshable-clone
+db, autonomous-database, create-adb-cross-region-data-guard-details
