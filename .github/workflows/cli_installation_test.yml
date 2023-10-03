@@ -1,41 +1,62 @@
-# This workflow triggers when a new release has been made.
+# Sanity test OCI CLI installer
 
-name: OCI CLI Installation Testing
+name: OCI CLI Install Test
 
-# Controls when the action will run.
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
   release:
     types: [released]
 
-  # Allows you to run this workflow manually from the Actions tab.
   workflow_dispatch:
     inputs:
-      release:
-        description: 'Release version number ("latest" or "v1.35.0")'
+      cli-release:
+        description: 'Release tag to test, e.g. "v3.33.3"'
         required: true
-        default: latest
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # NOTE: If this runs in an environment, set this value (where "MC-Action" is the environment name)
-    # environment: MC-Action
 
-    # The type of runner that the job will run on
-    runs-on: macos-11
+  sanity-test:
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ["3.6", "3.7", "3.8", "3.9", "3.10", "3.11"]
+        arch: ["x64", "arm64"]
+        exclude:
+          - os: ubuntu-latest
+            python-version: "3.6"
+          - os: ubuntu-latest
+            arch: "arm64"
+          - os: windows-latest
+            arch: "arm64"
+        include:
+          - os: ubuntu-20.04
+            python-version: "3.6"
+
     steps:
-      - name: Get Latest Release with Tag
-        id: latestrelease
-        run: |
-          echo "::set-output name=releasetag::$(curl -s https://api.github.com/repos/oracle/oci-cli/releases/latest | jq '.tag_name' | sed 's/\"//g')"
-      - name: Confirm Release Tag
-        run: |
-          echo ${{ steps.latestrelease.outputs.releasetag }}
-      - name: Tag Checkout
-        uses: actions/checkout@v2
+
+      - name: Check out release
+        uses: actions/checkout@v4
         with:
-          ref: ${{ steps.latestrelease.outputs.releasetag }}
-      - name: Run MacOS Installation Tests
-        run: ./scripts/github_actions/mac_installation_tests.sh
+          ref: ${{ github.event.release.tag_name || github.event.inputs.cli-release }}
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Install CLI using install.sh
+        run: |
+          ./scripts/install/install.sh --accept-all-defaults
+
+      - name: Check basic CLI commands
+        run: |
+          oci --version
+          oci compute instance launch --generate-full-command-json-input
