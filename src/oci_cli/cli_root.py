@@ -82,7 +82,7 @@ REALM_SPECIFIC_ENDPOINT_HELP = """Use a realm-specific endpoint, instead of the 
 Example::
     oci os ns get --realm-specific-endpoint
 
-With this flag, your request will be made to a realm-specific service endpoint, such as, "https://myNamespace.objectstorage.us-phoenix-1.oci.oraclecloud.com". Use the --debug option to identify which endpoint is used for your request.
+With this flag, your request will be made to a realm-specific service endpoint, such as, "https://mynamespace.objectstorage.us-phoenix-1.oci.customer-oci.com". Use the --debug option to identify which endpoint is used for your request.
 
 This flag has priority over the environment variable OCI_REALM_SPECIFIC_SERVICE_ENDPOINT_TEMPLATE_ENABLED.
 
