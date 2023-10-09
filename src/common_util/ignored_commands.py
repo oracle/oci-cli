@@ -81,6 +81,8 @@ IGNORED_COMMANDS = [
     ['ce', 'node-pool', 'update'],
     ['db', 'system', 'launch'],
     ['db', 'system', 'update'],
+    ['db', 'pluggable-database', 'convert-to-regular'],
+    ['db', 'pluggable-database', 'refresh'],
     ['lb', 'load-balancer', 'create'],
     ['network', 'private-endpoint', 'enable-reverse-connections'],
     ['os', 'object', 'reencrypt'],

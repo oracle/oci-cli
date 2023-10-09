@@ -1,0 +1,31 @@
+# coding: utf-8
+# Copyright (c) 2016, 2023, Oracle and/or its affiliates. All rights reserved.
+
+SDK_client_map = {
+    "optimizer.bulk_apply_recommendations": "oci.optimizer.OptimizerClient.bulk_apply_recommendations",
+    "optimizer.create_profile": "oci.optimizer.OptimizerClient.create_profile",
+    "optimizer.delete_profile": "oci.optimizer.OptimizerClient.delete_profile",
+    "optimizer.filter_resource_actions": "oci.optimizer.OptimizerClient.filter_resource_actions",
+    "optimizer.get_category": "oci.optimizer.OptimizerClient.get_category",
+    "optimizer.get_enrollment_status": "oci.optimizer.OptimizerClient.get_enrollment_status",
+    "optimizer.get_profile": "oci.optimizer.OptimizerClient.get_profile",
+    "optimizer.get_recommendation": "oci.optimizer.OptimizerClient.get_recommendation",
+    "optimizer.get_resource_action": "oci.optimizer.OptimizerClient.get_resource_action",
+    "optimizer.get_work_request": "oci.optimizer.OptimizerClient.get_work_request",
+    "optimizer.list_categories": "oci.optimizer.OptimizerClient.list_categories",
+    "optimizer.list_enrollment_statuses": "oci.optimizer.OptimizerClient.list_enrollment_statuses",
+    "optimizer.list_histories": "oci.optimizer.OptimizerClient.list_histories",
+    "optimizer.list_profile_levels": "oci.optimizer.OptimizerClient.list_profile_levels",
+    "optimizer.list_profiles": "oci.optimizer.OptimizerClient.list_profiles",
+    "optimizer.list_recommendation_strategies": "oci.optimizer.OptimizerClient.list_recommendation_strategies",
+    "optimizer.list_recommendations": "oci.optimizer.OptimizerClient.list_recommendations",
+    "optimizer.list_resource_action_queryable_fields": "oci.optimizer.OptimizerClient.list_resource_action_queryable_fields",
+    "optimizer.list_resource_actions": "oci.optimizer.OptimizerClient.list_resource_actions",
+    "optimizer.list_work_request_errors": "oci.optimizer.OptimizerClient.list_work_request_errors",
+    "optimizer.list_work_request_logs": "oci.optimizer.OptimizerClient.list_work_request_logs",
+    "optimizer.list_work_requests": "oci.optimizer.OptimizerClient.list_work_requests",
+    "optimizer.update_enrollment_status": "oci.optimizer.OptimizerClient.update_enrollment_status",
+    "optimizer.update_profile": "oci.optimizer.OptimizerClient.update_profile",
+    "optimizer.update_recommendation": "oci.optimizer.OptimizerClient.update_recommendation",
+    "optimizer.update_resource_action": "oci.optimizer.OptimizerClient.update_resource_action",
+}

@@ -208,13 +208,22 @@ def get_database_upgrade_history_entry_extended(ctx, **kwargs):
 
 
 # Renaming the parameter should-pdb-admin-account-be-locked to is-pdb-admin-acc-locked
-@cli_util.copy_params_from_generated_command(database_cli.create_pluggable_database, params_to_exclude=['should_pdb_admin_account_be_locked'])
+@cli_util.copy_params_from_generated_command(database_cli.create_pluggable_database, params_to_exclude=['should_pdb_admin_account_be_locked', 'should_create_pdb_backup', 'container_database_admin_password', 'pdb_creation_type_details'])
+@cli_util.option('--create-pdb-backup', type=click.BOOL, help="""Indicates whether to take Pluggable Database Backup after the operation.""")
+@cli_util.option('--cdb-admin-password', help="""The DB system administrator password of the Container Database.""")
 @cli_util.option('--is-pdb-admin-acc-locked', type=click.BOOL, help=u"""The locked mode of the pluggable database admin account. If false, the user needs to provide the PDB Admin Password to connect to it. If true, the pluggable database will be locked and user cannot login to it.""")
 @database_cli.pluggable_database_group.command(name='create', help=database_cli.database_group.help)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'PluggableDatabase'})
 @cli_util.wrap_exceptions
 def create_pluggable_database_extended(ctx, **kwargs):
+
+    if 'create_pdb_backup' in kwargs:
+        kwargs['should_create_pdb_backup'] = kwargs['create_pdb_backup']
+        kwargs.pop('create_pdb_backup')
+    if 'cdb_admin_password' in kwargs:
+        kwargs['container_database_admin_password'] = kwargs['cdb_admin_password']
+        kwargs.pop('cdb_admin_password')
     if 'is_pdb_admin_acc_locked' in kwargs and kwargs['is_pdb_admin_acc_locked']:
         kwargs['should_pdb_admin_account_be_locked'] = kwargs['is_pdb_admin_acc_locked']
 
@@ -3322,3 +3331,214 @@ def change_disaster_recovery_configuration_extended(ctx, **kwargs):
 
 # Rename command: oci db pluggable-database rotate-pluggable-database-encryption-key -> oci db pluggable-database rotate-encryption-key
 cli_util.rename_command(database_cli, database_cli.pluggable_database_group, database_cli.rotate_pluggable_database_encryption_key, "rotate-encryption-key")
+
+
+# oci db pluggable-database create-pluggable-database-create-pluggable-database-from-local-clone-details -> oci db pluggable-database create-local-clone
+cli_util.rename_command(database_cli, database_cli.pluggable_database_group, database_cli.create_pluggable_database_create_pluggable_database_from_local_clone_details, "create-local-clone")
+
+
+# oci db pluggable-database create-pluggable-database-create-pluggable-database-from-relocate-details -> oci db pluggable-database relocate-pdb
+cli_util.rename_command(database_cli, database_cli.pluggable_database_group, database_cli.create_pluggable_database_create_pluggable_database_from_relocate_details, "relocate-pdb")
+
+
+# oci db pluggable-database create-pluggable-database-create-pluggable-database-from-remote-clone-details -> oci db pluggable-database create-remote-clone
+cli_util.rename_command(database_cli, database_cli.pluggable_database_group, database_cli.create_pluggable_database_create_pluggable_database_from_remote_clone_details, "create-remote-clone")
+
+
+@cli_util.copy_params_from_generated_command(database_cli.restore_database, params_to_exclude=['pluggable_database_name'])
+@database_cli.database_group.command(name=database_cli.restore_database.name, help=database_cli.restore_database.help)
+@cli_util.option('--pdb-name', help=u"""Restores only the Pluggable Database (if specified) using the inputs provided in request.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
+@cli_util.wrap_exceptions
+def restore_database_extended(ctx, **kwargs):
+
+    if 'pdb_name' in kwargs:
+        kwargs['pluggable_database_name'] = kwargs['pdb_name']
+        kwargs.pop('pdb_name')
+
+    ctx.invoke(database_cli.restore_database, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.refresh_pluggable_database, params_to_exclude=['pluggable_database_id'])
+@database_cli.pluggable_database_group.command(name=database_cli.refresh_pluggable_database.name, help=database_cli.refresh_pluggable_database.help)
+@cli_util.option('--pdb-id', required=True, help=u"""The database [OCID]. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'PluggableDatabase'})
+@cli_util.wrap_exceptions
+def refresh_pluggable_database_extended(ctx, **kwargs):
+
+    if 'pdb_id' in kwargs:
+        kwargs['pluggable_database_id'] = kwargs['pdb_id']
+        kwargs.pop('pdb_id')
+
+    ctx.invoke(database_cli.refresh_pluggable_database, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.convert_to_regular_pluggable_database, params_to_exclude=['pluggable_database_id', 'should_create_pdb_backup', 'container_database_admin_password'])
+@database_cli.pluggable_database_group.command(name=database_cli.convert_to_regular_pluggable_database.name, help=database_cli.convert_to_regular_pluggable_database.help)
+@cli_util.option('--pdb-id', required=True, help=u"""The database [OCID]. [required]""")
+@cli_util.option('--create-pdb-backup', type=click.BOOL, help=u"""Indicates whether to take Pluggable Database Backup after the operation.""")
+@cli_util.option('--cdb-admin-password', help=u"""The DB system administrator password of the Container Database.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'PluggableDatabase'})
+@cli_util.wrap_exceptions
+def convert_to_regular_pluggable_database_extended(ctx, **kwargs):
+
+    if 'pdb_id' in kwargs:
+        kwargs['pluggable_database_id'] = kwargs['pdb_id']
+        kwargs.pop('pdb_id')
+
+    if 'create_pdb_backup' in kwargs:
+        kwargs['should_create_pdb_backup'] = kwargs['create_pdb_backup']
+        kwargs.pop('create_pdb_backup')
+
+    if 'cdb_admin_password' in kwargs:
+        kwargs['container_database_admin_password'] = kwargs['cdb_admin_password']
+        kwargs.pop('cdb_admin_password')
+
+    ctx.invoke(database_cli.convert_to_regular_pluggable_database, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.create_pluggable_database, params_to_exclude=['container_database_id', 'pdb_creation_type_details_source_pluggable_database_id', 'should_create_pdb_backup', 'should_pdb_admin_account_be_locked', 'container_database_admin_password', 'pdb_creation_type_details'])
+@database_cli.pluggable_database_group.command(name=database_cli.create_pluggable_database_create_pluggable_database_from_local_clone_details.name, help=database_cli.create_pluggable_database_create_pluggable_database_from_local_clone_details.help)
+@cli_util.option('--cdb-id', required=True, help=u"""The [OCID] of the CDB [required]""")
+@cli_util.option('--source-pdb-id', required=True, help=u"""The OCID of the Source Pluggable Database. [required]""")
+@cli_util.option('--create-pdb-backup', type=click.BOOL, help=u"""Indicates whether to take Pluggable Database Backup after the operation.""")
+@cli_util.option('--lock-pdb-admin-account', type=click.BOOL, help=u"""The locked mode of the pluggable database admin account. If false, the user needs to provide the PDB Admin Password to connect to it. If true, the pluggable database will be locked and user cannot login to it.""")
+@cli_util.option('--cdb-admin-password', help=u"""The DB system administrator password of the Container Database.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'PluggableDatabase'})
+@cli_util.wrap_exceptions
+def create_pluggable_database_create_pluggable_database_from_local_clone_details_extended(ctx, **kwargs):
+
+    if 'cdb_id' in kwargs:
+        kwargs['container_database_id'] = kwargs['cdb_id']
+        kwargs.pop('cdb_id')
+
+    if 'source_pdb_id' in kwargs:
+        kwargs['pdb_creation_type_details_source_pluggable_database_id'] = kwargs['source_pdb_id']
+        kwargs.pop('source_pdb_id')
+
+    if 'create_pdb_backup' in kwargs:
+        kwargs['should_create_pdb_backup'] = kwargs['create_pdb_backup']
+        kwargs.pop('create_pdb_backup')
+
+    if 'lock_pdb_admin_account' in kwargs:
+        kwargs['should_pdb_admin_account_be_locked'] = kwargs['lock_pdb_admin_account']
+        kwargs.pop('lock_pdb_admin_account')
+
+    if 'cdb_admin_password' in kwargs:
+        kwargs['container_database_admin_password'] = kwargs['cdb_admin_password']
+        kwargs.pop('cdb_admin_password')
+
+    ctx.invoke(database_cli.create_pluggable_database_create_pluggable_database_from_local_clone_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.create_pluggable_database, params_to_exclude=['container_database_id', 'pdb_creation_type_details_source_container_database_admin_password', 'pdb_creation_type_details_source_pluggable_database_id', 'pdb_creation_type_details_dblink_user_password', 'pdb_creation_type_details_dblink_username', 'should_create_pdb_backup', 'should_pdb_admin_account_be_locked', 'container_database_admin_password', 'pdb_creation_type_details'])
+@database_cli.pluggable_database_group.command(name=database_cli.create_pluggable_database_create_pluggable_database_from_relocate_details.name, help=database_cli.create_pluggable_database_create_pluggable_database_from_relocate_details.help)
+@cli_util.option('--cdb-id', required=True, help=u"""The [OCID] of the CDB [required]""")
+@cli_util.option('--source-cdb-admin-password', required=True, help=u"""The DB system administrator password of the source Container Database. [required]""")
+@cli_util.option('--source-pdb-id', required=True, help=u"""The OCID of the Source Pluggable Database. [required]""")
+@cli_util.option('--dblink-user-password', help=u"""The DB link user password.""")
+@cli_util.option('--dblink-username', help=u"""The name of the DB link user.""")
+@cli_util.option('--create-pdb-backup', type=click.BOOL, help=u"""Indicates whether to take Pluggable Database Backup after the operation.""")
+@cli_util.option('--lock-pdb-admin-account', type=click.BOOL, help=u"""The locked mode of the pluggable database admin account. If false, the user needs to provide the PDB Admin Password to connect to it. If true, the pluggable database will be locked and user cannot login to it.""")
+@cli_util.option('--cdb-admin-password', help=u"""The DB system administrator password of the Container Database.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'PluggableDatabase'})
+@cli_util.wrap_exceptions
+def create_pluggable_database_create_pluggable_database_from_relocate_details_extended(ctx, **kwargs):
+
+    if 'cdb_id' in kwargs:
+        kwargs['container_database_id'] = kwargs['cdb_id']
+        kwargs.pop('cdb_id')
+
+    if 'source_cdb_admin_password' in kwargs:
+        kwargs['pdb_creation_type_details_source_container_database_admin_password'] = kwargs['source_cdb_admin_password']
+        kwargs.pop('source_cdb_admin_password')
+
+    if 'source_pdb_id' in kwargs:
+        kwargs['pdb_creation_type_details_source_pluggable_database_id'] = kwargs['source_pdb_id']
+        kwargs.pop('source_pdb_id')
+
+    if 'dblink_user_password' in kwargs:
+        kwargs['pdb_creation_type_details_dblink_user_password'] = kwargs['dblink_user_password']
+        kwargs.pop('dblink_user_password')
+
+    if 'dblink_username' in kwargs:
+        kwargs['pdb_creation_type_details_dblink_username'] = kwargs['dblink_username']
+        kwargs.pop('dblink_username')
+
+    if 'create_pdb_backup' in kwargs:
+        kwargs['should_create_pdb_backup'] = kwargs['create_pdb_backup']
+        kwargs.pop('create_pdb_backup')
+
+    if 'lock_pdb_admin_account' in kwargs:
+        kwargs['should_pdb_admin_account_be_locked'] = kwargs['lock_pdb_admin_account']
+        kwargs.pop('lock_pdb_admin_account')
+
+    if 'cdb_admin_password' in kwargs:
+        kwargs['container_database_admin_password'] = kwargs['cdb_admin_password']
+        kwargs.pop('cdb_admin_password')
+
+    ctx.invoke(database_cli.create_pluggable_database_create_pluggable_database_from_relocate_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.create_pluggable_database, params_to_exclude=['container_database_id', 'pdb_creation_type_details_source_container_database_admin_password', 'pdb_creation_type_details_source_pluggable_database_id', 'pdb_creation_type_details_dblink_user_password', 'pdb_creation_type_details_dblink_username', 'pdb_creation_type_details_refreshable_clone_details', 'should_create_pdb_backup', 'should_pdb_admin_account_be_locked', 'container_database_admin_password', 'pdb_creation_type_details'])
+@database_cli.pluggable_database_group.command(name=database_cli.create_pluggable_database_create_pluggable_database_from_remote_clone_details.name, help=database_cli.create_pluggable_database_create_pluggable_database_from_remote_clone_details.help)
+@cli_util.option('--cdb-id', required=True, help=u"""The [OCID] of the CDB [required]""")
+@cli_util.option('--source-cdb-admin-password', required=True, help=u"""The DB system administrator password of the source Container Database. [required]""")
+@cli_util.option('--source-pdb-id', required=True, help=u"""The OCID of the Source Pluggable Database. [required]""")
+@cli_util.option('--dblink-user-password', help=u"""The DB link user password.""")
+@cli_util.option('--dblink-username', help=u"""The name of the DB link user.""")
+@cli_util.option('--is-refreshable-clone', type=click.BOOL, help=u"""Indicates whether Pluggable Database will be refreshable. If false, pluggable database will not be created as refreshable. If true, the pluggable database will be created as refreshable.""")
+@cli_util.option('--create-pdb-backup', type=click.BOOL, help=u"""Indicates whether to take Pluggable Database Backup after the operation.""")
+@cli_util.option('--lock-pdb-admin-account', type=click.BOOL, help=u"""The locked mode of the pluggable database admin account. If false, the user needs to provide the PDB Admin Password to connect to it. If true, the pluggable database will be locked and user cannot login to it.""")
+@cli_util.option('--cdb-admin-password', help=u"""The DB system administrator password of the Container Database.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'PluggableDatabase'})
+@cli_util.wrap_exceptions
+def create_pluggable_database_create_pluggable_database_from_remote_clone_details_extended(ctx, **kwargs):
+
+    if 'cdb_id' in kwargs:
+        kwargs['container_database_id'] = kwargs['cdb_id']
+        kwargs.pop('cdb_id')
+
+    if 'source_cdb_admin_password' in kwargs:
+        kwargs['pdb_creation_type_details_source_container_database_admin_password'] = kwargs['source_cdb_admin_password']
+        kwargs.pop('source_cdb_admin_password')
+
+    if 'source_pdb_id' in kwargs:
+        kwargs['pdb_creation_type_details_source_pluggable_database_id'] = kwargs['source_pdb_id']
+        kwargs.pop('source_pdb_id')
+
+    if 'dblink_user_password' in kwargs:
+        kwargs['pdb_creation_type_details_dblink_user_password'] = kwargs['dblink_user_password']
+        kwargs.pop('dblink_user_password')
+
+    if 'dblink_username' in kwargs:
+        kwargs['pdb_creation_type_details_dblink_username'] = kwargs['dblink_username']
+        kwargs.pop('dblink_username')
+
+    if 'create_pdb_backup' in kwargs:
+        kwargs['should_create_pdb_backup'] = kwargs['create_pdb_backup']
+        kwargs.pop('create_pdb_backup')
+
+    if 'lock_pdb_admin_account' in kwargs:
+        kwargs['should_pdb_admin_account_be_locked'] = kwargs['lock_pdb_admin_account']
+        kwargs.pop('lock_pdb_admin_account')
+
+    if 'cdb_admin_password' in kwargs:
+        kwargs['container_database_admin_password'] = kwargs['cdb_admin_password']
+        kwargs.pop('cdb_admin_password')
+
+    pdb_creation_type_details_refreshable_clone_details = {}
+    if 'is_refreshable_clone' in kwargs:
+        pdb_creation_type_details_refreshable_clone_details['isRefreshableClone'] = kwargs['is_refreshable_clone']
+        kwargs.pop('is_refreshable_clone')
+
+    if len(pdb_creation_type_details_refreshable_clone_details) > 0:
+        kwargs['pdb_creation_type_details_refreshable_clone_details'] = json.dumps(pdb_creation_type_details_refreshable_clone_details)
+
+    ctx.invoke(database_cli.create_pluggable_database_create_pluggable_database_from_remote_clone_details, **kwargs)

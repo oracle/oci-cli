@@ -6,6 +6,46 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.33.4 - 2023-10-10
+--------------------
+Added
+~~~~~
+* Database Service
+
+  * Support for new command
+
+    * ``oci db pluggable-database relocate-pdb``
+    * ``oci db pluggable-database create-local-clone``
+    * ``oci db pluggable-database create-remote-clone``
+    * ``oci db pluggable-database convert-to-regular``
+    * ``oci db pluggable-database refresh``
+    
+  * Support for new optional parameter
+
+    * ``oci db database restore --pdb-name``
+    * ``oci db pluggable-database create --create-pdb-backup --cdb-admin-password``
+
+  * Support for displaying resource usage information on autonomous vm cluster
+
+    * ``oci db autonomous-vm-cluster get-autonomous-vm-cluster-resource-usage --autonomous-vm-cluster-id``
+    * ``oci db autonomous-vm-cluster list-autonomous-vm-cluster-acd-resource-usage --autonomous-vm-cluster-id``
+
+* Marketplace Service
+
+  * Support for export Container and Kubernetes app listings
+
+    * ``oci marketplace listing export``
+
+  * Support for work request status for export Container and Kubernetes app listings
+
+    * ``oci marketplace work-request``
+
+* Support for creating a Flow Log type Capture filter in Virtual Cloud Network service
+
+  * ``oci network capture-filter create --flow-log-capture-filter-rules``
+  * ``oci network capture-filter list --filter-type``
+  * ``oci network capture-filter update --flow-log-capture-filter-rules``
+
 3.33.3 - 2023-10-03
 --------------------
 Added

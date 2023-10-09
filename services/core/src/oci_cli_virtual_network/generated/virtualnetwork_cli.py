@@ -2094,7 +2094,7 @@ For the purposes of access control, you must provide the [OCID] of the compartme
 
 You may optionally specify a *display name* for the VTAP, otherwise a default is provided. It does not have to be unique, and you can change it. \n[Command Reference](createCaptureFilter)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the capture filter.""")
-@cli_util.option('--filter-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VTAP"]), help=u"""Indicates which service will use this capture filter""")
+@cli_util.option('--filter-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VTAP", "FLOWLOG"]), help=u"""Indicates which service will use this capture filter""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2105,15 +2105,18 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--vtap-capture-filter-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The set of rules governing what traffic a VTAP mirrors.
 
 This option is a JSON list with items of type VtapCaptureFilterRuleDetails.  For documentation on VtapCaptureFilterRuleDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VtapCaptureFilterRuleDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--flow-log-capture-filter-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The set of rules governing what traffic the VCN flow log collects.
+
+This option is a JSON list with items of type FlowLogCaptureFilterRuleDetails.  For documentation on FlowLogCaptureFilterRuleDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/FlowLogCaptureFilterRuleDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'vtap-capture-filter-rules': {'module': 'core', 'class': 'list[VtapCaptureFilterRuleDetails]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'vtap-capture-filter-rules': {'module': 'core', 'class': 'list[VtapCaptureFilterRuleDetails]'}, 'flow-log-capture-filter-rules': {'module': 'core', 'class': 'list[FlowLogCaptureFilterRuleDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'vtap-capture-filter-rules': {'module': 'core', 'class': 'list[VtapCaptureFilterRuleDetails]'}}, output_type={'module': 'core', 'class': 'CaptureFilter'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'vtap-capture-filter-rules': {'module': 'core', 'class': 'list[VtapCaptureFilterRuleDetails]'}, 'flow-log-capture-filter-rules': {'module': 'core', 'class': 'list[FlowLogCaptureFilterRuleDetails]'}}, output_type={'module': 'core', 'class': 'CaptureFilter'})
 @cli_util.wrap_exceptions
-def create_capture_filter(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, filter_type, defined_tags, display_name, freeform_tags, vtap_capture_filter_rules):
+def create_capture_filter(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, filter_type, defined_tags, display_name, freeform_tags, vtap_capture_filter_rules, flow_log_capture_filter_rules):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2133,6 +2136,9 @@ def create_capture_filter(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
     if vtap_capture_filter_rules is not None:
         _details['vtapCaptureFilterRules'] = cli_util.parse_json_parameter("vtap_capture_filter_rules", vtap_capture_filter_rules)
+
+    if flow_log_capture_filter_rules is not None:
+        _details['flowLogCaptureFilterRules'] = cli_util.parse_json_parameter("flow_log_capture_filter_rules", flow_log_capture_filter_rules)
 
     client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_capture_filter(
@@ -7744,6 +7750,7 @@ Example: `50`""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED"]), help=u"""A filter to return only resources that match the given capture filter lifecycle state. The state value is case-insensitive.""")
+@cli_util.option('--filter-type', type=custom_types.CliCaseInsensitiveChoice(["VTAP", "FLOWLOG"]), help=u"""A filter to only return resources that match the given capture `filterType`. The `filterType` value is the string representation of enum - `VTAP`, `FLOWLOG`.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -7751,7 +7758,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[CaptureFilter]'})
 @cli_util.wrap_exceptions
-def list_capture_filters(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, display_name, lifecycle_state):
+def list_capture_filters(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, display_name, lifecycle_state, filter_type):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -7769,6 +7776,8 @@ def list_capture_filters(ctx, from_json, all_pages, page_size, compartment_id, l
         kwargs['display_name'] = display_name
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
+    if filter_type is not None:
+        kwargs['filter_type'] = filter_type
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
@@ -10916,6 +10925,9 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--vtap-capture-filter-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The set of rules governing what traffic a VTAP mirrors.
 
 This option is a JSON list with items of type VtapCaptureFilterRuleDetails.  For documentation on VtapCaptureFilterRuleDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VtapCaptureFilterRuleDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--flow-log-capture-filter-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The set of rules governing what traffic the VCN flow log collects.
+
+This option is a JSON list with items of type FlowLogCaptureFilterRuleDetails.  For documentation on FlowLogCaptureFilterRuleDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/FlowLogCaptureFilterRuleDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -10924,18 +10936,18 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'vtap-capture-filter-rules': {'module': 'core', 'class': 'list[VtapCaptureFilterRuleDetails]'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'vtap-capture-filter-rules': {'module': 'core', 'class': 'list[VtapCaptureFilterRuleDetails]'}, 'flow-log-capture-filter-rules': {'module': 'core', 'class': 'list[FlowLogCaptureFilterRuleDetails]'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'vtap-capture-filter-rules': {'module': 'core', 'class': 'list[VtapCaptureFilterRuleDetails]'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'CaptureFilter'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'vtap-capture-filter-rules': {'module': 'core', 'class': 'list[VtapCaptureFilterRuleDetails]'}, 'flow-log-capture-filter-rules': {'module': 'core', 'class': 'list[FlowLogCaptureFilterRuleDetails]'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'CaptureFilter'})
 @cli_util.wrap_exceptions
-def update_capture_filter(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, capture_filter_id, defined_tags, display_name, vtap_capture_filter_rules, freeform_tags, if_match):
+def update_capture_filter(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, capture_filter_id, defined_tags, display_name, vtap_capture_filter_rules, flow_log_capture_filter_rules, freeform_tags, if_match):
 
     if isinstance(capture_filter_id, six.string_types) and len(capture_filter_id.strip()) == 0:
         raise click.UsageError('Parameter --capture-filter-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or vtap_capture_filter_rules or freeform_tags:
-            if not click.confirm("WARNING: Updates to defined-tags and vtap-capture-filter-rules and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or vtap_capture_filter_rules or flow_log_capture_filter_rules or freeform_tags:
+            if not click.confirm("WARNING: Updates to defined-tags and vtap-capture-filter-rules and flow-log-capture-filter-rules and freeform-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -10953,6 +10965,9 @@ def update_capture_filter(ctx, from_json, force, wait_for_state, max_wait_second
 
     if vtap_capture_filter_rules is not None:
         _details['vtapCaptureFilterRules'] = cli_util.parse_json_parameter("vtap_capture_filter_rules", vtap_capture_filter_rules)
+
+    if flow_log_capture_filter_rules is not None:
+        _details['flowLogCaptureFilterRules'] = cli_util.parse_json_parameter("flow_log_capture_filter_rules", flow_log_capture_filter_rules)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

@@ -52,6 +52,12 @@ def listing_package_summary_group():
     pass
 
 
+@click.command(cli_util.override('marketplace.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""A description of workrequest""")
+@cli_util.help_option_group
+def work_request_group():
+    pass
+
+
 @click.command(cli_util.override('marketplace.tax_summary_group.command_name', 'tax-summary'), cls=CommandGroupWithAlias, help="""Tax implication that current tenant may be eligible while using specific listing""")
 @cli_util.help_option_group
 def tax_summary_group():
@@ -112,6 +118,7 @@ marketplace_root_group.add_command(publication_package_group)
 marketplace_root_group.add_command(agreement_group)
 marketplace_root_group.add_command(category_summary_group)
 marketplace_root_group.add_command(listing_package_summary_group)
+marketplace_root_group.add_command(work_request_group)
 marketplace_root_group.add_command(tax_summary_group)
 marketplace_root_group.add_command(report_collection_group)
 marketplace_root_group.add_command(listing_summary_group)
@@ -128,6 +135,7 @@ marketplace_service_cli.marketplace_service_group.add_command(publication_packag
 marketplace_service_cli.marketplace_service_group.add_command(agreement_group)
 marketplace_service_cli.marketplace_service_group.add_command(category_summary_group)
 marketplace_service_cli.marketplace_service_group.add_command(listing_package_summary_group)
+marketplace_service_cli.marketplace_service_group.add_command(work_request_group)
 marketplace_service_cli.marketplace_service_group.add_command(tax_summary_group)
 marketplace_service_cli.marketplace_service_group.add_command(report_collection_group)
 marketplace_service_cli.marketplace_service_group.add_command(listing_summary_group)
@@ -465,6 +473,67 @@ def delete_publication(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
+@listing_group.command(name=cli_util.override('marketplace.export_listing.command_name', 'export'), help=u"""Exports container images or helm chart from marketplace to customer's registry. \n[Command Reference](exportListing)""")
+@cli_util.option('--listing-id', required=True, help=u"""The unique identifier for the listing.""")
+@cli_util.option('--package-version', required=True, help=u"""The version of the package. Package versions are unique within a listing.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to export container image or helm chart.""")
+@cli_util.option('--container-repository-path', required=True, help=u"""The repository path (/Content/General/Concepts/identifiers.htm) of the container reposistory where the container image or helm chart should be exported.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'marketplace', 'class': 'WorkRequest'})
+@cli_util.wrap_exceptions
+def export_listing(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_id, package_version, compartment_id, container_repository_path):
+
+    if isinstance(listing_id, six.string_types) and len(listing_id.strip()) == 0:
+        raise click.UsageError('Parameter --listing-id cannot be whitespace or empty string')
+
+    if isinstance(package_version, six.string_types) and len(package_version.strip()) == 0:
+        raise click.UsageError('Parameter --package-version cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['containerRepositoryPath'] = container_repository_path
+
+    client = cli_util.build_client('marketplace', 'marketplace', ctx)
+    result = client.export_listing(
+        listing_id=listing_id,
+        package_version=package_version,
+        export_package_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @accepted_agreement_group.command(name=cli_util.override('marketplace.get_accepted_agreement.command_name', 'get'), help=u"""Gets the details of a specific, previously accepted terms of use agreement. \n[Command Reference](getAcceptedAgreement)""")
 @cli_util.option('--accepted-agreement-id', required=True, help=u"""The unique identifier for the accepted terms of use agreement.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -633,6 +702,28 @@ def get_publication_package(ctx, from_json, publication_id, package_version):
     result = client.get_publication_package(
         publication_id=publication_id,
         package_version=package_version,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@work_request_group.command(name=cli_util.override('marketplace.get_work_request.command_name', 'get'), help=u"""Gets the details of the specified work request \n[Command Reference](getWorkRequest)""")
+@cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'marketplace', 'class': 'WorkRequest'})
+@cli_util.wrap_exceptions
+def get_work_request(ctx, from_json, work_request_id):
+
+    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('marketplace', 'marketplace', ctx)
+    result = client.get_work_request(
+        work_request_id=work_request_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1242,6 +1333,180 @@ def list_taxes(ctx, from_json, all_pages, listing_id, compartment_id):
         listing_id=listing_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@work_request_group.command(name=cli_util.override('marketplace.list_work_request_errors.command_name', 'list-work-request-errors'), help=u"""List all errors for a work request \n[Command Reference](listWorkRequestErrors)""")
+@cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""How many records to return. Specify a value greater than zero and less than or equal to 1000. The default is 30.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either `ASC` or `DESC`.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'marketplace', 'class': 'WorkRequestErrorCollection'})
+@cli_util.wrap_exceptions
+def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_id, page, limit, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('marketplace', 'marketplace', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_work_request_errors,
+            work_request_id=work_request_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_work_request_errors,
+            limit,
+            page_size,
+            work_request_id=work_request_id,
+            **kwargs
+        )
+    else:
+        result = client.list_work_request_errors(
+            work_request_id=work_request_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@work_request_group.command(name=cli_util.override('marketplace.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""List all logs for a work request \n[Command Reference](listWorkRequestLogs)""")
+@cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""How many records to return. Specify a value greater than zero and less than or equal to 1000. The default is 30.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either `ASC` or `DESC`.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'marketplace', 'class': 'WorkRequestLogEntryCollection'})
+@cli_util.wrap_exceptions
+def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id, page, limit, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('marketplace', 'marketplace', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_work_request_logs,
+            work_request_id=work_request_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_work_request_logs,
+            limit,
+            page_size,
+            work_request_id=work_request_id,
+            **kwargs
+        )
+    else:
+        result = client.list_work_request_logs(
+            work_request_id=work_request_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@work_request_group.command(name=cli_util.override('marketplace.list_work_requests.command_name', 'list'), help=u"""List all work requests in a compartment \n[Command Reference](listWorkRequests)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--work-request-id', help=u"""The OCID of the work request.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help=u"""A filter to return only resources whose status matches the given OperationStatus.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""How many records to return. Specify a value greater than zero and less than or equal to 1000. The default is 30.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either `ASC` or `DESC`.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeAccepted"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeAccepted is descending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'marketplace', 'class': 'WorkRequestCollection'})
+@cli_util.wrap_exceptions
+def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, work_request_id, status, page, limit, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if work_request_id is not None:
+        kwargs['work_request_id'] = work_request_id
+    if status is not None:
+        kwargs['status'] = status
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('marketplace', 'marketplace', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_work_requests,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_work_requests,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_work_requests(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
