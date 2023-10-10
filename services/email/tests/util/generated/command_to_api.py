@@ -1,0 +1,30 @@
+# coding: utf-8
+# Copyright (c) 2016, 2023, Oracle and/or its affiliates. All rights reserved.
+
+SDK_client_map = {
+    "email.change_email_domain_compartment": "oci.email.EmailClient.change_email_domain_compartment",
+    "email.change_sender_compartment": "oci.email.EmailClient.change_sender_compartment",
+    "email.create_dkim": "oci.email.EmailClient.create_dkim",
+    "email.create_email_domain": "oci.email.EmailClient.create_email_domain",
+    "email.create_sender": "oci.email.EmailClient.create_sender",
+    "email.create_suppression": "oci.email.EmailClient.create_suppression",
+    "email.delete_dkim": "oci.email.EmailClient.delete_dkim",
+    "email.delete_email_domain": "oci.email.EmailClient.delete_email_domain",
+    "email.delete_sender": "oci.email.EmailClient.delete_sender",
+    "email.delete_suppression": "oci.email.EmailClient.delete_suppression",
+    "email.get_dkim": "oci.email.EmailClient.get_dkim",
+    "email.get_email_domain": "oci.email.EmailClient.get_email_domain",
+    "email.get_sender": "oci.email.EmailClient.get_sender",
+    "email.get_suppression": "oci.email.EmailClient.get_suppression",
+    "email.get_work_request": "oci.email.EmailClient.get_work_request",
+    "email.list_dkims": "oci.email.EmailClient.list_dkims",
+    "email.list_email_domains": "oci.email.EmailClient.list_email_domains",
+    "email.list_senders": "oci.email.EmailClient.list_senders",
+    "email.list_suppressions": "oci.email.EmailClient.list_suppressions",
+    "email.list_work_request_errors": "oci.email.EmailClient.list_work_request_errors",
+    "email.list_work_request_logs": "oci.email.EmailClient.list_work_request_logs",
+    "email.list_work_requests": "oci.email.EmailClient.list_work_requests",
+    "email.update_dkim": "oci.email.EmailClient.update_dkim",
+    "email.update_email_domain": "oci.email.EmailClient.update_email_domain",
+    "email.update_sender": "oci.email.EmailClient.update_sender",
+}

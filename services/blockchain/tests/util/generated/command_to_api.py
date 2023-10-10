@@ -1,0 +1,32 @@
+# coding: utf-8
+# Copyright (c) 2016, 2023, Oracle and/or its affiliates. All rights reserved.
+
+SDK_client_map = {
+    "blockchain.change_blockchain_platform_compartment": "oci.blockchain.BlockchainPlatformClient.change_blockchain_platform_compartment",
+    "blockchain.create_blockchain_platform": "oci.blockchain.BlockchainPlatformClient.create_blockchain_platform",
+    "blockchain.create_osn": "oci.blockchain.BlockchainPlatformClient.create_osn",
+    "blockchain.create_peer": "oci.blockchain.BlockchainPlatformClient.create_peer",
+    "blockchain.delete_blockchain_platform": "oci.blockchain.BlockchainPlatformClient.delete_blockchain_platform",
+    "blockchain.delete_osn": "oci.blockchain.BlockchainPlatformClient.delete_osn",
+    "blockchain.delete_peer": "oci.blockchain.BlockchainPlatformClient.delete_peer",
+    "blockchain.delete_work_request": "oci.blockchain.BlockchainPlatformClient.delete_work_request",
+    "blockchain.get_blockchain_platform": "oci.blockchain.BlockchainPlatformClient.get_blockchain_platform",
+    "blockchain.get_osn": "oci.blockchain.BlockchainPlatformClient.get_osn",
+    "blockchain.get_peer": "oci.blockchain.BlockchainPlatformClient.get_peer",
+    "blockchain.get_work_request": "oci.blockchain.BlockchainPlatformClient.get_work_request",
+    "blockchain.list_blockchain_platform_patches": "oci.blockchain.BlockchainPlatformClient.list_blockchain_platform_patches",
+    "blockchain.list_blockchain_platforms": "oci.blockchain.BlockchainPlatformClient.list_blockchain_platforms",
+    "blockchain.list_osns": "oci.blockchain.BlockchainPlatformClient.list_osns",
+    "blockchain.list_peers": "oci.blockchain.BlockchainPlatformClient.list_peers",
+    "blockchain.list_work_request_errors": "oci.blockchain.BlockchainPlatformClient.list_work_request_errors",
+    "blockchain.list_work_request_logs": "oci.blockchain.BlockchainPlatformClient.list_work_request_logs",
+    "blockchain.list_work_requests": "oci.blockchain.BlockchainPlatformClient.list_work_requests",
+    "blockchain.preview_scale_blockchain_platform": "oci.blockchain.BlockchainPlatformClient.preview_scale_blockchain_platform",
+    "blockchain.scale_blockchain_platform": "oci.blockchain.BlockchainPlatformClient.scale_blockchain_platform",
+    "blockchain.start_blockchain_platform": "oci.blockchain.BlockchainPlatformClient.start_blockchain_platform",
+    "blockchain.stop_blockchain_platform": "oci.blockchain.BlockchainPlatformClient.stop_blockchain_platform",
+    "blockchain.update_blockchain_platform": "oci.blockchain.BlockchainPlatformClient.update_blockchain_platform",
+    "blockchain.update_osn": "oci.blockchain.BlockchainPlatformClient.update_osn",
+    "blockchain.update_peer": "oci.blockchain.BlockchainPlatformClient.update_peer",
+    "blockchain.upgrade_blockchain_platform": "oci.blockchain.BlockchainPlatformClient.upgrade_blockchain_platform",
+}

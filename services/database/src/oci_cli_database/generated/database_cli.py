@@ -2488,6 +2488,73 @@ def convert_to_pdb_pdb_conversion_to_new_database_details(ctx, from_json, wait_f
     cli_util.render_response(result, ctx)
 
 
+@pluggable_database_group.command(name=cli_util.override('db.convert_to_regular_pluggable_database.command_name', 'convert-to-regular'), help=u"""Converts a Refreshable clone to Regular pluggable database (PDB). Pluggable Database will be in `READ_WRITE` openmode after conversion. \n[Command Reference](convertToRegularPluggableDatabase)""")
+@cli_util.option('--pluggable-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--should-create-pdb-backup', type=click.BOOL, help=u"""Indicates whether to take Pluggable Database Backup after the operation.""")
+@cli_util.option('--container-database-admin-password', help=u"""The DB system administrator password of the Container Database.""")
+@cli_util.option('--tde-wallet-password', help=u"""The existing TDE wallet password of the Container Database.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED", "RELOCATING", "RELOCATED", "REFRESHING", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "DISABLED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'PluggableDatabase'})
+@cli_util.wrap_exceptions
+def convert_to_regular_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, should_create_pdb_backup, container_database_admin_password, tde_wallet_password, if_match):
+
+    if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if should_create_pdb_backup is not None:
+        _details['shouldCreatePdbBackup'] = should_create_pdb_backup
+
+    if container_database_admin_password is not None:
+        _details['containerDatabaseAdminPassword'] = container_database_admin_password
+
+    if tde_wallet_password is not None:
+        _details['tdeWalletPassword'] = tde_wallet_password
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.convert_to_regular_pluggable_database(
+        pluggable_database_id=pluggable_database_id,
+        convert_to_regular_pluggable_database_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_pluggable_database') and callable(getattr(client, 'get_pluggable_database')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_pluggable_database(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @application_vip_group.command(name=cli_util.override('db.create_application_vip.command_name', 'create'), help=u"""Creates a new application virtual IP (VIP) address in the specified cloud VM cluster based on the request parameters you provide. \n[Command Reference](createApplicationVip)""")
 @cli_util.option('--hostname-label', required=True, help=u"""The hostname of the application virtual IP (VIP) address.""")
 @cli_util.option('--cloud-vm-cluster-id', required=True, help=u"""The [OCID] of the cloud VM cluster associated with the application virtual IP (VIP) address.""")
@@ -8015,25 +8082,28 @@ def create_oneoff_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@pluggable_database_group.command(name=cli_util.override('db.create_pluggable_database.command_name', 'create'), help=u"""Creates and starts a pluggable database in the specified container database. Use the [StartPluggableDatabase] and [StopPluggableDatabase] APIs to start and stop the pluggable database. \n[Command Reference](createPluggableDatabase)""")
+@pluggable_database_group.command(name=cli_util.override('db.create_pluggable_database.command_name', 'create'), help=u"""Creates and starts a pluggable database in the specified container database. Pluggable Database can be created using different operations (e.g. LocalClone, RemoteClone, Relocate ) with this API. Use the [StartPluggableDatabase] and [StopPluggableDatabase] APIs to start and stop the pluggable database. \n[Command Reference](createPluggableDatabase)""")
 @cli_util.option('--pdb-name', required=True, help=u"""The name for the pluggable database (PDB). The name is unique in the context of a [container database]. The name must begin with an alphabetic character and can contain a maximum of thirty alphanumeric characters. Special characters are not permitted. The pluggable database name should not be same as the container database name.""")
 @cli_util.option('--container-database-id', required=True, help=u"""The [OCID] of the CDB""")
 @cli_util.option('--pdb-admin-password', help=u"""A strong password for PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, \\#, or -.""")
 @cli_util.option('--tde-wallet-password', help=u"""The existing TDE wallet password of the CDB.""")
 @cli_util.option('--should-pdb-admin-account-be-locked', type=click.BOOL, help=u"""The locked mode of the pluggable database admin account. If false, the user needs to provide the PDB Admin Password to connect to it. If true, the pluggable database will be locked and user cannot login to it.""")
+@cli_util.option('--container-database-admin-password', help=u"""The DB system administrator password of the Container Database.""")
+@cli_util.option('--should-create-pdb-backup', type=click.BOOL, help=u"""Indicates whether to take Pluggable Database Backup after the operation.""")
+@cli_util.option('--pdb-creation-type-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED", "RELOCATING", "RELOCATED", "REFRESHING", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "DISABLED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'pdb-creation-type-details': {'module': 'database', 'class': 'CreatePluggableDatabaseCreationTypeDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'PluggableDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'pdb-creation-type-details': {'module': 'database', 'class': 'CreatePluggableDatabaseCreationTypeDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'PluggableDatabase'})
 @cli_util.wrap_exceptions
-def create_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pdb_name, container_database_id, pdb_admin_password, tde_wallet_password, should_pdb_admin_account_be_locked, freeform_tags, defined_tags):
+def create_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pdb_name, container_database_id, pdb_admin_password, tde_wallet_password, should_pdb_admin_account_be_locked, container_database_admin_password, should_create_pdb_backup, pdb_creation_type_details, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -8051,11 +8121,302 @@ def create_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, 
     if should_pdb_admin_account_be_locked is not None:
         _details['shouldPdbAdminAccountBeLocked'] = should_pdb_admin_account_be_locked
 
+    if container_database_admin_password is not None:
+        _details['containerDatabaseAdminPassword'] = container_database_admin_password
+
+    if should_create_pdb_backup is not None:
+        _details['shouldCreatePdbBackup'] = should_create_pdb_backup
+
+    if pdb_creation_type_details is not None:
+        _details['pdbCreationTypeDetails'] = cli_util.parse_json_parameter("pdb_creation_type_details", pdb_creation_type_details)
+
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.create_pluggable_database(
+        create_pluggable_database_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_pluggable_database') and callable(getattr(client, 'get_pluggable_database')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_pluggable_database(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pluggable_database_group.command(name=cli_util.override('db.create_pluggable_database_create_pluggable_database_from_relocate_details.command_name', 'create-pluggable-database-create-pluggable-database-from-relocate-details'), help=u"""Creates and starts a pluggable database in the specified container database. Pluggable Database can be created using different operations (e.g. LocalClone, RemoteClone, Relocate ) with this API. Use the [StartPluggableDatabase] and [StopPluggableDatabase] APIs to start and stop the pluggable database. \n[Command Reference](createPluggableDatabase)""")
+@cli_util.option('--pdb-name', required=True, help=u"""The name for the pluggable database (PDB). The name is unique in the context of a [container database]. The name must begin with an alphabetic character and can contain a maximum of thirty alphanumeric characters. Special characters are not permitted. The pluggable database name should not be same as the container database name.""")
+@cli_util.option('--container-database-id', required=True, help=u"""The [OCID] of the CDB""")
+@cli_util.option('--pdb-creation-type-details-source-pluggable-database-id', required=True, help=u"""The OCID of the Source Pluggable Database.""")
+@cli_util.option('--pdb-creation-type-details-source-container-database-admin-password', required=True, help=u"""The DB system administrator password of the source Container Database.""")
+@cli_util.option('--pdb-admin-password', help=u"""A strong password for PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, \\#, or -.""")
+@cli_util.option('--tde-wallet-password', help=u"""The existing TDE wallet password of the CDB.""")
+@cli_util.option('--should-pdb-admin-account-be-locked', type=click.BOOL, help=u"""The locked mode of the pluggable database admin account. If false, the user needs to provide the PDB Admin Password to connect to it. If true, the pluggable database will be locked and user cannot login to it.""")
+@cli_util.option('--container-database-admin-password', help=u"""The DB system administrator password of the Container Database.""")
+@cli_util.option('--should-create-pdb-backup', type=click.BOOL, help=u"""Indicates whether to take Pluggable Database Backup after the operation.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--pdb-creation-type-details-dblink-username', help=u"""The name of the DB link user.""")
+@cli_util.option('--pdb-creation-type-details-dblink-user-password', help=u"""The DB link user password.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED", "RELOCATING", "RELOCATED", "REFRESHING", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "DISABLED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'PluggableDatabase'})
+@cli_util.wrap_exceptions
+def create_pluggable_database_create_pluggable_database_from_relocate_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pdb_name, container_database_id, pdb_creation_type_details_source_pluggable_database_id, pdb_creation_type_details_source_container_database_admin_password, pdb_admin_password, tde_wallet_password, should_pdb_admin_account_be_locked, container_database_admin_password, should_create_pdb_backup, freeform_tags, defined_tags, pdb_creation_type_details_dblink_username, pdb_creation_type_details_dblink_user_password):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['pdbCreationTypeDetails'] = {}
+    _details['pdbName'] = pdb_name
+    _details['containerDatabaseId'] = container_database_id
+    _details['pdbCreationTypeDetails']['sourcePluggableDatabaseId'] = pdb_creation_type_details_source_pluggable_database_id
+    _details['pdbCreationTypeDetails']['sourceContainerDatabaseAdminPassword'] = pdb_creation_type_details_source_container_database_admin_password
+
+    if pdb_admin_password is not None:
+        _details['pdbAdminPassword'] = pdb_admin_password
+
+    if tde_wallet_password is not None:
+        _details['tdeWalletPassword'] = tde_wallet_password
+
+    if should_pdb_admin_account_be_locked is not None:
+        _details['shouldPdbAdminAccountBeLocked'] = should_pdb_admin_account_be_locked
+
+    if container_database_admin_password is not None:
+        _details['containerDatabaseAdminPassword'] = container_database_admin_password
+
+    if should_create_pdb_backup is not None:
+        _details['shouldCreatePdbBackup'] = should_create_pdb_backup
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if pdb_creation_type_details_dblink_username is not None:
+        _details['pdbCreationTypeDetails']['dblinkUsername'] = pdb_creation_type_details_dblink_username
+
+    if pdb_creation_type_details_dblink_user_password is not None:
+        _details['pdbCreationTypeDetails']['dblinkUserPassword'] = pdb_creation_type_details_dblink_user_password
+
+    _details['pdbCreationTypeDetails']['creationType'] = 'RELOCATE_PDB'
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.create_pluggable_database(
+        create_pluggable_database_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_pluggable_database') and callable(getattr(client, 'get_pluggable_database')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_pluggable_database(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pluggable_database_group.command(name=cli_util.override('db.create_pluggable_database_create_pluggable_database_from_remote_clone_details.command_name', 'create-pluggable-database-create-pluggable-database-from-remote-clone-details'), help=u"""Creates and starts a pluggable database in the specified container database. Pluggable Database can be created using different operations (e.g. LocalClone, RemoteClone, Relocate ) with this API. Use the [StartPluggableDatabase] and [StopPluggableDatabase] APIs to start and stop the pluggable database. \n[Command Reference](createPluggableDatabase)""")
+@cli_util.option('--pdb-name', required=True, help=u"""The name for the pluggable database (PDB). The name is unique in the context of a [container database]. The name must begin with an alphabetic character and can contain a maximum of thirty alphanumeric characters. Special characters are not permitted. The pluggable database name should not be same as the container database name.""")
+@cli_util.option('--container-database-id', required=True, help=u"""The [OCID] of the CDB""")
+@cli_util.option('--pdb-creation-type-details-source-pluggable-database-id', required=True, help=u"""The OCID of the Source Pluggable Database.""")
+@cli_util.option('--pdb-creation-type-details-source-container-database-admin-password', required=True, help=u"""The DB system administrator password of the source Container Database.""")
+@cli_util.option('--pdb-admin-password', help=u"""A strong password for PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, \\#, or -.""")
+@cli_util.option('--tde-wallet-password', help=u"""The existing TDE wallet password of the CDB.""")
+@cli_util.option('--should-pdb-admin-account-be-locked', type=click.BOOL, help=u"""The locked mode of the pluggable database admin account. If false, the user needs to provide the PDB Admin Password to connect to it. If true, the pluggable database will be locked and user cannot login to it.""")
+@cli_util.option('--container-database-admin-password', help=u"""The DB system administrator password of the Container Database.""")
+@cli_util.option('--should-create-pdb-backup', type=click.BOOL, help=u"""Indicates whether to take Pluggable Database Backup after the operation.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--pdb-creation-type-details-dblink-username', help=u"""The name of the DB link user.""")
+@cli_util.option('--pdb-creation-type-details-dblink-user-password', help=u"""The DB link user password.""")
+@cli_util.option('--pdb-creation-type-details-refreshable-clone-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED", "RELOCATING", "RELOCATED", "REFRESHING", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "DISABLED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'pdb-creation-type-details-refreshable-clone-details': {'module': 'database', 'class': 'CreatePluggableDatabaseRefreshableCloneDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'pdb-creation-type-details-refreshable-clone-details': {'module': 'database', 'class': 'CreatePluggableDatabaseRefreshableCloneDetails'}}, output_type={'module': 'database', 'class': 'PluggableDatabase'})
+@cli_util.wrap_exceptions
+def create_pluggable_database_create_pluggable_database_from_remote_clone_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pdb_name, container_database_id, pdb_creation_type_details_source_pluggable_database_id, pdb_creation_type_details_source_container_database_admin_password, pdb_admin_password, tde_wallet_password, should_pdb_admin_account_be_locked, container_database_admin_password, should_create_pdb_backup, freeform_tags, defined_tags, pdb_creation_type_details_dblink_username, pdb_creation_type_details_dblink_user_password, pdb_creation_type_details_refreshable_clone_details):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['pdbCreationTypeDetails'] = {}
+    _details['pdbName'] = pdb_name
+    _details['containerDatabaseId'] = container_database_id
+    _details['pdbCreationTypeDetails']['sourcePluggableDatabaseId'] = pdb_creation_type_details_source_pluggable_database_id
+    _details['pdbCreationTypeDetails']['sourceContainerDatabaseAdminPassword'] = pdb_creation_type_details_source_container_database_admin_password
+
+    if pdb_admin_password is not None:
+        _details['pdbAdminPassword'] = pdb_admin_password
+
+    if tde_wallet_password is not None:
+        _details['tdeWalletPassword'] = tde_wallet_password
+
+    if should_pdb_admin_account_be_locked is not None:
+        _details['shouldPdbAdminAccountBeLocked'] = should_pdb_admin_account_be_locked
+
+    if container_database_admin_password is not None:
+        _details['containerDatabaseAdminPassword'] = container_database_admin_password
+
+    if should_create_pdb_backup is not None:
+        _details['shouldCreatePdbBackup'] = should_create_pdb_backup
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if pdb_creation_type_details_dblink_username is not None:
+        _details['pdbCreationTypeDetails']['dblinkUsername'] = pdb_creation_type_details_dblink_username
+
+    if pdb_creation_type_details_dblink_user_password is not None:
+        _details['pdbCreationTypeDetails']['dblinkUserPassword'] = pdb_creation_type_details_dblink_user_password
+
+    if pdb_creation_type_details_refreshable_clone_details is not None:
+        _details['pdbCreationTypeDetails']['refreshableCloneDetails'] = cli_util.parse_json_parameter("pdb_creation_type_details_refreshable_clone_details", pdb_creation_type_details_refreshable_clone_details)
+
+    _details['pdbCreationTypeDetails']['creationType'] = 'REMOTE_CLONE_PDB'
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.create_pluggable_database(
+        create_pluggable_database_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_pluggable_database') and callable(getattr(client, 'get_pluggable_database')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_pluggable_database(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pluggable_database_group.command(name=cli_util.override('db.create_pluggable_database_create_pluggable_database_from_local_clone_details.command_name', 'create-pluggable-database-create-pluggable-database-from-local-clone-details'), help=u"""Creates and starts a pluggable database in the specified container database. Pluggable Database can be created using different operations (e.g. LocalClone, RemoteClone, Relocate ) with this API. Use the [StartPluggableDatabase] and [StopPluggableDatabase] APIs to start and stop the pluggable database. \n[Command Reference](createPluggableDatabase)""")
+@cli_util.option('--pdb-name', required=True, help=u"""The name for the pluggable database (PDB). The name is unique in the context of a [container database]. The name must begin with an alphabetic character and can contain a maximum of thirty alphanumeric characters. Special characters are not permitted. The pluggable database name should not be same as the container database name.""")
+@cli_util.option('--container-database-id', required=True, help=u"""The [OCID] of the CDB""")
+@cli_util.option('--pdb-creation-type-details-source-pluggable-database-id', required=True, help=u"""The OCID of the Source Pluggable Database.""")
+@cli_util.option('--pdb-admin-password', help=u"""A strong password for PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, \\#, or -.""")
+@cli_util.option('--tde-wallet-password', help=u"""The existing TDE wallet password of the CDB.""")
+@cli_util.option('--should-pdb-admin-account-be-locked', type=click.BOOL, help=u"""The locked mode of the pluggable database admin account. If false, the user needs to provide the PDB Admin Password to connect to it. If true, the pluggable database will be locked and user cannot login to it.""")
+@cli_util.option('--container-database-admin-password', help=u"""The DB system administrator password of the Container Database.""")
+@cli_util.option('--should-create-pdb-backup', type=click.BOOL, help=u"""Indicates whether to take Pluggable Database Backup after the operation.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED", "RELOCATING", "RELOCATED", "REFRESHING", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "DISABLED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'PluggableDatabase'})
+@cli_util.wrap_exceptions
+def create_pluggable_database_create_pluggable_database_from_local_clone_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pdb_name, container_database_id, pdb_creation_type_details_source_pluggable_database_id, pdb_admin_password, tde_wallet_password, should_pdb_admin_account_be_locked, container_database_admin_password, should_create_pdb_backup, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['pdbCreationTypeDetails'] = {}
+    _details['pdbName'] = pdb_name
+    _details['containerDatabaseId'] = container_database_id
+    _details['pdbCreationTypeDetails']['sourcePluggableDatabaseId'] = pdb_creation_type_details_source_pluggable_database_id
+
+    if pdb_admin_password is not None:
+        _details['pdbAdminPassword'] = pdb_admin_password
+
+    if tde_wallet_password is not None:
+        _details['tdeWalletPassword'] = tde_wallet_password
+
+    if should_pdb_admin_account_be_locked is not None:
+        _details['shouldPdbAdminAccountBeLocked'] = should_pdb_admin_account_be_locked
+
+    if container_database_admin_password is not None:
+        _details['containerDatabaseAdminPassword'] = container_database_admin_password
+
+    if should_create_pdb_backup is not None:
+        _details['shouldCreatePdbBackup'] = should_create_pdb_backup
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['pdbCreationTypeDetails']['creationType'] = 'LOCAL_CLONE_PDB'
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.create_pluggable_database(
@@ -10309,7 +10670,7 @@ def disable_external_pluggable_database_stack_monitoring(ctx, from_json, wait_fo
 @pluggable_database_group.command(name=cli_util.override('db.disable_pluggable_database_management.command_name', 'disable-pluggable-database-management'), help=u"""Disables the Database Management service for the pluggable database. \n[Command Reference](disablePluggableDatabaseManagement)""")
 @cli_util.option('--pluggable-database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED", "RELOCATING", "RELOCATED", "REFRESHING", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "DISABLED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -11254,7 +11615,7 @@ def enable_external_pluggable_database_stack_monitoring(ctx, from_json, wait_for
 @cli_util.option('--ssl-secret-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [secret].""")
 @cli_util.option('--role', type=custom_types.CliCaseInsensitiveChoice(["SYSDBA", "NORMAL"]), help=u"""The role of the user that will be connecting to the pluggable database.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED", "RELOCATING", "RELOCATED", "REFRESHING", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "DISABLED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database', 'class': 'DatabaseCredentialDetails'}})
@@ -11901,6 +12262,28 @@ def get_autonomous_vm_cluster(ctx, from_json, autonomous_vm_cluster_id):
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database', 'database', ctx)
     result = client.get_autonomous_vm_cluster(
+        autonomous_vm_cluster_id=autonomous_vm_cluster_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@autonomous_vm_cluster_group.command(name=cli_util.override('db.get_autonomous_vm_cluster_resource_usage.command_name', 'get-autonomous-vm-cluster-resource-usage'), help=u"""Get the resource usage details for the specified Autonomous Exadata VM cluster. \n[Command Reference](getAutonomousVmClusterResourceUsage)""")
+@cli_util.option('--autonomous-vm-cluster-id', required=True, help=u"""The autonomous VM cluster [OCID].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'AutonomousVmClusterResourceUsage'})
+@cli_util.wrap_exceptions
+def get_autonomous_vm_cluster_resource_usage(ctx, from_json, autonomous_vm_cluster_id):
+
+    if isinstance(autonomous_vm_cluster_id, six.string_types) and len(autonomous_vm_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --autonomous-vm-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.get_autonomous_vm_cluster_resource_usage(
         autonomous_vm_cluster_id=autonomous_vm_cluster_id,
         **kwargs
     )
@@ -14911,6 +15294,60 @@ def list_autonomous_virtual_machines(ctx, from_json, all_pages, page_size, compa
     cli_util.render_response(result, ctx)
 
 
+@autonomous_vm_cluster_group.command(name=cli_util.override('db.list_autonomous_vm_cluster_acd_resource_usage.command_name', 'list-autonomous-vm-cluster-acd-resource-usage'), help=u"""Gets the list of resource usage details for all the Autonomous Container Database in the specified Autonomous Exadata VM cluster. \n[Command Reference](listAutonomousVmClusterAcdResourceUsage)""")
+@cli_util.option('--autonomous-vm-cluster-id', required=True, help=u"""The autonomous VM cluster [OCID].""")
+@cli_util.option('--compartment-id', help=u"""The compartment [OCID].""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[AutonomousContainerDatabaseResourceUsage]'})
+@cli_util.wrap_exceptions
+def list_autonomous_vm_cluster_acd_resource_usage(ctx, from_json, all_pages, page_size, autonomous_vm_cluster_id, compartment_id, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(autonomous_vm_cluster_id, six.string_types) and len(autonomous_vm_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --autonomous-vm-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_autonomous_vm_cluster_acd_resource_usage,
+            autonomous_vm_cluster_id=autonomous_vm_cluster_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_autonomous_vm_cluster_acd_resource_usage,
+            limit,
+            page_size,
+            autonomous_vm_cluster_id=autonomous_vm_cluster_id,
+            **kwargs
+        )
+    else:
+        result = client.list_autonomous_vm_cluster_acd_resource_usage(
+            autonomous_vm_cluster_id=autonomous_vm_cluster_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @autonomous_vm_cluster_group.command(name=cli_util.override('db.list_autonomous_vm_clusters.command_name', 'list'), help=u"""Gets a list of Exadata Cloud@Customer Autonomous VM clusters in the specified compartment. To list Autonomous VM Clusters in the Oracle Cloud, see [ListCloudAutonomousVmClusters]. \n[Command Reference](listAutonomousVmClusters)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--exadata-infrastructure-id', help=u"""If provided, filters the results for the given Exadata Infrastructure.""")
@@ -17188,7 +17625,7 @@ def list_pdb_conversion_history_entries(ctx, from_json, all_pages, page_size, da
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["PDBNAME", "TIMECREATED"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for PDBNAME is ascending. The PDBNAME sort order is case sensitive.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED", "RELOCATING", "RELOCATED", "REFRESHING", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "DISABLED"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
 @cli_util.option('--pdb-name', help=u"""A filter to return only pluggable databases that match the entire name given. The match is not case sensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -17586,14 +18023,14 @@ def list_vm_clusters(ctx, from_json, all_pages, page_size, compartment_id, exada
     cli_util.render_response(result, ctx)
 
 
-@pluggable_database_group.command(name=cli_util.override('db.local_clone_pluggable_database.command_name', 'local-clone'), help=u"""Clones and starts a pluggable database (PDB) in the same database (CDB) as the source PDB. The source PDB must be in the `READ_WRITE` openMode to perform the clone operation. \n[Command Reference](localClonePluggableDatabase)""")
+@pluggable_database_group.command(name=cli_util.override('db.local_clone_pluggable_database.command_name', 'local-clone'), help=u"""**Deprecated.** Use [CreatePluggableDatabase] for Pluggable Database LocalClone Operation. Clones and starts a pluggable database (PDB) in the same database (CDB) as the source PDB. The source PDB must be in the `READ_WRITE` openMode to perform the clone operation. \n[Command Reference](localClonePluggableDatabase)""")
 @cli_util.option('--cloned-pdb-name', required=True, help=u"""The name for the pluggable database (PDB). The name is unique in the context of a [container database]. The name must begin with an alphabetic character and can contain a maximum of thirty alphanumeric characters. Special characters are not permitted. The pluggable database name should not be same as the container database name.""")
 @cli_util.option('--pluggable-database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--pdb-admin-password', help=u"""A strong password for PDB Admin of the newly cloned PDB. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, \\#, or -.""")
 @cli_util.option('--target-tde-wallet-password', help=u"""The existing TDE wallet password of the target CDB.""")
 @cli_util.option('--should-pdb-admin-account-be-locked', type=click.BOOL, help=u"""The locked mode of the pluggable database admin account. If false, the user needs to provide the PDB Admin Password to connect to it. If true, the pluggable database will be locked and user cannot login to it.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED", "RELOCATING", "RELOCATED", "REFRESHING", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "DISABLED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -17850,7 +18287,7 @@ def modify_database_management(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.option('--ssl-secret-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [secret].""")
 @cli_util.option('--role', type=custom_types.CliCaseInsensitiveChoice(["SYSDBA", "NORMAL"]), help=u"""The role of the user that will be connecting to the database.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED", "RELOCATING", "RELOCATED", "REFRESHING", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "DISABLED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database', 'class': 'DatabaseCredentialDetails'}})
@@ -17895,6 +18332,57 @@ def modify_pluggable_database_management(ctx, from_json, wait_for_state, max_wai
     result = client.modify_pluggable_database_management(
         pluggable_database_id=pluggable_database_id,
         modify_pluggable_database_management_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_pluggable_database') and callable(getattr(client, 'get_pluggable_database')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_pluggable_database(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pluggable_database_group.command(name=cli_util.override('db.refresh_pluggable_database.command_name', 'refresh'), help=u"""Refreshes a pluggable database (PDB) Refreshable clone. \n[Command Reference](refreshPluggableDatabase)""")
+@cli_util.option('--pluggable-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED", "RELOCATING", "RELOCATED", "REFRESHING", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "DISABLED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'PluggableDatabase'})
+@cli_util.wrap_exceptions
+def refresh_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, if_match):
+
+    if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.refresh_pluggable_database(
+        pluggable_database_id=pluggable_database_id,
         **kwargs
     )
     if wait_for_state:
@@ -18101,7 +18589,7 @@ def reinstate_data_guard_association(ctx, from_json, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
-@pluggable_database_group.command(name=cli_util.override('db.remote_clone_pluggable_database.command_name', 'remote-clone'), help=u"""Clones a pluggable database (PDB) to a different database from the source PDB. The cloned PDB will be started upon completion of the clone operation. The source PDB must be in the `READ_WRITE` openMode when performing the clone. For Exadata Cloud@Customer instances, the source pluggable database (PDB) must be on the same Exadata Infrastructure as the target container database (CDB) to create a remote clone. \n[Command Reference](remoteClonePluggableDatabase)""")
+@pluggable_database_group.command(name=cli_util.override('db.remote_clone_pluggable_database.command_name', 'remote-clone'), help=u"""**Deprecated.** Use [CreatePluggableDatabase] for Pluggable Database RemoteClone Operation. Clones a pluggable database (PDB) to a different database from the source PDB. The cloned PDB will be started upon completion of the clone operation. The source PDB must be in the `READ_WRITE` openMode when performing the clone. For Exadata Cloud@Customer instances, the source pluggable database (PDB) must be on the same Exadata Infrastructure as the target container database (CDB) to create a remote clone. \n[Command Reference](remoteClonePluggableDatabase)""")
 @cli_util.option('--target-container-database-id', required=True, help=u"""The [OCID] of the target CDB""")
 @cli_util.option('--source-container-db-admin-password', required=True, help=u"""The DB system administrator password of the source CDB.""")
 @cli_util.option('--cloned-pdb-name', required=True, help=u"""The name for the pluggable database (PDB). The name is unique in the context of a [container database]. The name must begin with an alphabetic character and can contain a maximum of thirty alphanumeric characters. Special characters are not permitted. The pluggable database name should not be same as the container database name.""")
@@ -18110,7 +18598,7 @@ def reinstate_data_guard_association(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.option('--target-tde-wallet-password', help=u"""The existing TDE wallet password of the target CDB.""")
 @cli_util.option('--should-pdb-admin-account-be-locked', type=click.BOOL, help=u"""The locked mode of the pluggable database admin account. If false, the user needs to provide the PDB Admin Password to connect to it. If true, the pluggable database will be locked and user cannot login to it.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED", "RELOCATING", "RELOCATED", "REFRESHING", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "DISABLED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -18545,9 +19033,10 @@ def restore_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds
 
 @database_group.command(name=cli_util.override('db.restore_database.command_name', 'restore'), help=u"""Restore a Database based on the request parameters you provide. \n[Command Reference](restoreDatabase)""")
 @cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
-@cli_util.option('--database-scn', help=u"""Restores using the backup with the System Change Number (SCN) specified.""")
+@cli_util.option('--database-scn', help=u"""Restores using the backup with the System Change Number (SCN) specified. This field is applicable for both use cases - Restoring Container Database or Restoring specific Pluggable Database.""")
 @cli_util.option('--timestamp', type=custom_types.CLI_DATETIME, help=u"""Restores to the timestamp specified.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--latest', type=click.BOOL, help=u"""Restores to the last known good state with the least possible data loss.""")
+@cli_util.option('--pluggable-database-name', help=u"""Restores only the Pluggable Database (if specified) using the inputs provided in request.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "CONVERTING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -18557,7 +19046,7 @@ def restore_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def restore_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_scn, timestamp, latest, if_match):
+def restore_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_scn, timestamp, latest, pluggable_database_name, if_match):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -18576,6 +19065,9 @@ def restore_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     if latest is not None:
         _details['latest'] = latest
+
+    if pluggable_database_name is not None:
+        _details['pluggableDatabaseName'] = pluggable_database_name
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.restore_database(
@@ -19408,7 +19900,7 @@ def start_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, 
 @pluggable_database_group.command(name=cli_util.override('db.start_pluggable_database.command_name', 'start'), help=u"""Starts a stopped pluggable database. The `openMode` value of the pluggable database will be `READ_WRITE` upon completion. \n[Command Reference](startPluggableDatabase)""")
 @cli_util.option('--pluggable-database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED", "RELOCATING", "RELOCATED", "REFRESHING", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "DISABLED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -19510,7 +20002,7 @@ def stop_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, w
 @pluggable_database_group.command(name=cli_util.override('db.stop_pluggable_database.command_name', 'stop'), help=u"""Stops a pluggable database. The `openMode` value of the pluggable database will be `MOUNTED` upon completion. \n[Command Reference](stopPluggableDatabase)""")
 @cli_util.option('--pluggable-database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED", "RELOCATING", "RELOCATED", "REFRESHING", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "DISABLED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -22720,7 +23212,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED", "RELOCATING", "RELOCATED", "REFRESHING", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "DISABLED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})

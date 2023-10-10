@@ -1,0 +1,30 @@
+# coding: utf-8
+# Copyright (c) 2016, 2023, Oracle and/or its affiliates. All rights reserved.
+
+SDK_client_map = {
+    "ai_vision.analyze_document": "oci.ai_vision.AIServiceVisionClient.analyze_document",
+    "ai_vision.analyze_image": "oci.ai_vision.AIServiceVisionClient.analyze_image",
+    "ai_vision.cancel_document_job": "oci.ai_vision.AIServiceVisionClient.cancel_document_job",
+    "ai_vision.cancel_image_job": "oci.ai_vision.AIServiceVisionClient.cancel_image_job",
+    "ai_vision.cancel_work_request": "oci.ai_vision.AIServiceVisionClient.cancel_work_request",
+    "ai_vision.change_model_compartment": "oci.ai_vision.AIServiceVisionClient.change_model_compartment",
+    "ai_vision.change_project_compartment": "oci.ai_vision.AIServiceVisionClient.change_project_compartment",
+    "ai_vision.create_document_job": "oci.ai_vision.AIServiceVisionClient.create_document_job",
+    "ai_vision.create_image_job": "oci.ai_vision.AIServiceVisionClient.create_image_job",
+    "ai_vision.create_model": "oci.ai_vision.AIServiceVisionClient.create_model",
+    "ai_vision.create_project": "oci.ai_vision.AIServiceVisionClient.create_project",
+    "ai_vision.delete_model": "oci.ai_vision.AIServiceVisionClient.delete_model",
+    "ai_vision.delete_project": "oci.ai_vision.AIServiceVisionClient.delete_project",
+    "ai_vision.get_document_job": "oci.ai_vision.AIServiceVisionClient.get_document_job",
+    "ai_vision.get_image_job": "oci.ai_vision.AIServiceVisionClient.get_image_job",
+    "ai_vision.get_model": "oci.ai_vision.AIServiceVisionClient.get_model",
+    "ai_vision.get_project": "oci.ai_vision.AIServiceVisionClient.get_project",
+    "ai_vision.get_work_request": "oci.ai_vision.AIServiceVisionClient.get_work_request",
+    "ai_vision.list_models": "oci.ai_vision.AIServiceVisionClient.list_models",
+    "ai_vision.list_projects": "oci.ai_vision.AIServiceVisionClient.list_projects",
+    "ai_vision.list_work_request_errors": "oci.ai_vision.AIServiceVisionClient.list_work_request_errors",
+    "ai_vision.list_work_request_logs": "oci.ai_vision.AIServiceVisionClient.list_work_request_logs",
+    "ai_vision.list_work_requests": "oci.ai_vision.AIServiceVisionClient.list_work_requests",
+    "ai_vision.update_model": "oci.ai_vision.AIServiceVisionClient.update_model",
+    "ai_vision.update_project": "oci.ai_vision.AIServiceVisionClient.update_project",
+}
