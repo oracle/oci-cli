@@ -74,6 +74,13 @@ Oracle Linux 7
 
     sudo yum install python36-oci-cli
 
+
+Fedora Linux
+------------
+::
+
+    sudo dnf install oci-cli
+
 Windows
 -------
 ::
