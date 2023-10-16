@@ -1332,3 +1332,117 @@ def put_user_status_changer_extended(ctx, **kwargs):
         kwargs.pop('ext_self_change_user')
 
     ctx.invoke(identitydomains_cli.put_user_status_changer, **kwargs)
+
+
+# Using list_call_get_up_to_limit_multiple_keys and list_call_get_all_results_multiple_keys
+@cli_util.copy_params_from_generated_command(identitydomains_cli.list_apps)
+@identitydomains_cli.apps_group.command(name=cli_util.override('list_apps.command_name', 'list'), help=identitydomains_cli.list_apps.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'Apps'})
+@cli_util.wrap_exceptions
+def list_apps_extended(ctx, from_json, all_pages, page_size, filter, sort_by, sort_order, start_index, count, attributes, attribute_sets, authorization, resource_type_schema_version, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if filter is not None:
+        kwargs['filter'] = filter
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if start_index is not None:
+        kwargs['start_index'] = start_index
+    if count is not None:
+        kwargs['count'] = count
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results_multiple_keys(
+            client.list_apps,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit_multiple_keys(
+            client.list_apps,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_apps(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+# Using list_call_get_up_to_limit_multiple_keys and list_call_get_all_results_multiple_keys
+@cli_util.copy_params_from_generated_command(identitydomains_cli.list_groups)
+@identitydomains_cli.groups_group.command(name=cli_util.override('list_groups.command_name', 'list'), help=identitydomains_cli.list_groups.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'Groups'})
+@cli_util.wrap_exceptions
+def list_groups_extended(ctx, from_json, all_pages, page_size, filter, sort_by, sort_order, start_index, count, attributes, attribute_sets, authorization, resource_type_schema_version, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if filter is not None:
+        kwargs['filter'] = filter
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if start_index is not None:
+        kwargs['start_index'] = start_index
+    if count is not None:
+        kwargs['count'] = count
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results_multiple_keys(
+            client.list_groups,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit_multiple_keys(
+            client.list_groups,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_groups(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)

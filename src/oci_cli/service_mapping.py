@@ -378,6 +378,11 @@ service_mapping = {
         "Marketplace Service",
         "Observability & Management"
     ],
+    "marketplace-publisher": [
+        "marketplace_publisher",
+        "MarketplacePublisherService",
+        "Others"
+    ],
     "media-services": [
         "media_services",
         "Media Services",
@@ -526,6 +531,11 @@ service_mapping = {
     "recovery": [
         "recovery",
         "Oracle Database Autonomous Recovery Service",
+        "Others"
+    ],
+    "redis": [
+        "redis",
+        "Redis Service",
         "Others"
     ],
     "resource-manager": [

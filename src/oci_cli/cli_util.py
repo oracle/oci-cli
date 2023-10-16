@@ -2064,7 +2064,12 @@ def list_call_get_all_results(list_func_ref, ctx=None, is_json=False, stream_out
                       call_result.request)
 
 
-def artifacts_list_call_get_up_to_limit(list_func_ref, record_limit, page_size, **func_kwargs):
+def list_call_get_up_to_limit_multiple_keys(list_func_ref, record_limit, page_size, **func_kwargs):
+    """
+    Created this utility to handle pagination where multiple keys exist in "data" key of response
+    list_call_get_up_to_limit was not capable of handling this scenario
+    If any service team has such response structure and --limit is returning TypeError: object of type 'int' has no len(), use this utility in extended file of service
+    """
     # If no limit was provided, make a single call
     if record_limit is None:
         return list_func_ref(**func_kwargs)
@@ -2133,7 +2138,12 @@ def artifacts_list_call_get_up_to_limit(list_func_ref, record_limit, page_size, 
     return final_response
 
 
-def artifacts_list_call_get_all_results(list_func_ref, ctx=None, is_json=False, stream_output=False, **func_kwargs):
+def list_call_get_all_results_multiple_keys(list_func_ref, ctx=None, is_json=False, stream_output=False, **func_kwargs):
+    """
+    Created this utility to handle pagination where multiple keys exist in "data" key of response
+    list_call_get_all_results was not capable of handling this scenario
+    If any service team has such response structure and --limit is returning TypeError: object of type 'int' has no len(), use this utility in extended file of service
+    """
     keep_paginating = True
     call_result = None
     aggregated_results = []

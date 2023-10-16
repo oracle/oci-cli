@@ -207,3 +207,5 @@ db, autonomous-database, create-from-backup-id
 db, autonomous-database, create-from-backup-timestamp
 db, autonomous-database, create-refreshable-clone
 db, autonomous-database, create-adb-cross-region-data-guard-details
+data-science, job, create
+data-science, job, update

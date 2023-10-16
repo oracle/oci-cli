@@ -805,17 +805,20 @@ def create_data_science_private_endpoint(ctx, from_json, wait_for_state, max_wai
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description of the job.""")
 @cli_util.option('--job-log-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--job-storage-mount-configuration-details-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of JobStorageMountConfigurationDetails.
+
+This option is a JSON list with items of type StorageMountConfigurationDetails.  For documentation on StorageMountConfigurationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/StorageMountConfigurationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "FAILED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'job-configuration-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-infrastructure-configuration-details': {'module': 'data_science', 'class': 'JobInfrastructureConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'job-configuration-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-infrastructure-configuration-details': {'module': 'data_science', 'class': 'JobInfrastructureConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-infrastructure-configuration-details': {'module': 'data_science', 'class': 'JobInfrastructureConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'Job'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-infrastructure-configuration-details': {'module': 'data_science', 'class': 'JobInfrastructureConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_configuration_details, job_infrastructure_configuration_details, display_name, description, job_log_configuration_details, freeform_tags, defined_tags):
+def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_configuration_details, job_infrastructure_configuration_details, display_name, description, job_log_configuration_details, job_storage_mount_configuration_details_list, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -834,6 +837,9 @@ def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
     if job_log_configuration_details is not None:
         _details['jobLogConfigurationDetails'] = cli_util.parse_json_parameter("job_log_configuration_details", job_log_configuration_details)
+
+    if job_storage_mount_configuration_details_list is not None:
+        _details['jobStorageMountConfigurationDetailsList'] = cli_util.parse_json_parameter("job_storage_mount_configuration_details_list", job_storage_mount_configuration_details_list)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -879,6 +885,9 @@ def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description of the job.""")
 @cli_util.option('--job-log-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--job-storage-mount-configuration-details-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of JobStorageMountConfigurationDetails.
+
+This option is a JSON list with items of type StorageMountConfigurationDetails.  For documentation on StorageMountConfigurationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/StorageMountConfigurationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-configuration-details-environment-variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Environment variables to set for the job.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -887,12 +896,12 @@ def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "FAILED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'job-infrastructure-configuration-details': {'module': 'data_science', 'class': 'JobInfrastructureConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-configuration-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'job-infrastructure-configuration-details': {'module': 'data_science', 'class': 'JobInfrastructureConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-configuration-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-infrastructure-configuration-details': {'module': 'data_science', 'class': 'JobInfrastructureConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-configuration-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}}, output_type={'module': 'data_science', 'class': 'Job'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-infrastructure-configuration-details': {'module': 'data_science', 'class': 'JobInfrastructureConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-configuration-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}}, output_type={'module': 'data_science', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def create_job_default_job_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_infrastructure_configuration_details, display_name, description, job_log_configuration_details, freeform_tags, defined_tags, job_configuration_details_environment_variables, job_configuration_details_command_line_arguments, job_configuration_details_maximum_runtime_in_minutes):
+def create_job_default_job_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_infrastructure_configuration_details, display_name, description, job_log_configuration_details, job_storage_mount_configuration_details_list, freeform_tags, defined_tags, job_configuration_details_environment_variables, job_configuration_details_command_line_arguments, job_configuration_details_maximum_runtime_in_minutes):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -911,6 +920,9 @@ def create_job_default_job_configuration_details(ctx, from_json, wait_for_state,
 
     if job_log_configuration_details is not None:
         _details['jobLogConfigurationDetails'] = cli_util.parse_json_parameter("job_log_configuration_details", job_log_configuration_details)
+
+    if job_storage_mount_configuration_details_list is not None:
+        _details['jobStorageMountConfigurationDetailsList'] = cli_util.parse_json_parameter("job_storage_mount_configuration_details_list", job_storage_mount_configuration_details_list)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -969,18 +981,21 @@ def create_job_default_job_configuration_details(ctx, from_json, wait_for_state,
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description of the job.""")
 @cli_util.option('--job-log-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--job-storage-mount-configuration-details-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of JobStorageMountConfigurationDetails.
+
+This option is a JSON list with items of type StorageMountConfigurationDetails.  For documentation on StorageMountConfigurationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/StorageMountConfigurationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-infrastructure-configuration-details-job-shape-config-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "FAILED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'job-configuration-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-job-shape-config-details': {'module': 'data_science', 'class': 'JobShapeConfigDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'job-configuration-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-job-shape-config-details': {'module': 'data_science', 'class': 'JobShapeConfigDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-job-shape-config-details': {'module': 'data_science', 'class': 'JobShapeConfigDetails'}}, output_type={'module': 'data_science', 'class': 'Job'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-job-shape-config-details': {'module': 'data_science', 'class': 'JobShapeConfigDetails'}}, output_type={'module': 'data_science', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def create_job_managed_egress_standalone_job_infrastructure_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_configuration_details, job_infrastructure_configuration_details_shape_name, job_infrastructure_configuration_details_block_storage_size_in_gbs, display_name, description, job_log_configuration_details, freeform_tags, defined_tags, job_infrastructure_configuration_details_job_shape_config_details):
+def create_job_managed_egress_standalone_job_infrastructure_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_configuration_details, job_infrastructure_configuration_details_shape_name, job_infrastructure_configuration_details_block_storage_size_in_gbs, display_name, description, job_log_configuration_details, job_storage_mount_configuration_details_list, freeform_tags, defined_tags, job_infrastructure_configuration_details_job_shape_config_details):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1001,6 +1016,9 @@ def create_job_managed_egress_standalone_job_infrastructure_configuration_detail
 
     if job_log_configuration_details is not None:
         _details['jobLogConfigurationDetails'] = cli_util.parse_json_parameter("job_log_configuration_details", job_log_configuration_details)
+
+    if job_storage_mount_configuration_details_list is not None:
+        _details['jobStorageMountConfigurationDetailsList'] = cli_util.parse_json_parameter("job_storage_mount_configuration_details_list", job_storage_mount_configuration_details_list)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -1054,18 +1072,21 @@ def create_job_managed_egress_standalone_job_infrastructure_configuration_detail
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description of the job.""")
 @cli_util.option('--job-log-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--job-storage-mount-configuration-details-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of JobStorageMountConfigurationDetails.
+
+This option is a JSON list with items of type StorageMountConfigurationDetails.  For documentation on StorageMountConfigurationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/StorageMountConfigurationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-infrastructure-configuration-details-job-shape-config-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "FAILED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'job-configuration-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-job-shape-config-details': {'module': 'data_science', 'class': 'JobShapeConfigDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'job-configuration-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-job-shape-config-details': {'module': 'data_science', 'class': 'JobShapeConfigDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-job-shape-config-details': {'module': 'data_science', 'class': 'JobShapeConfigDetails'}}, output_type={'module': 'data_science', 'class': 'Job'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-job-shape-config-details': {'module': 'data_science', 'class': 'JobShapeConfigDetails'}}, output_type={'module': 'data_science', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def create_job_standalone_job_infrastructure_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_configuration_details, job_infrastructure_configuration_details_shape_name, job_infrastructure_configuration_details_subnet_id, job_infrastructure_configuration_details_block_storage_size_in_gbs, display_name, description, job_log_configuration_details, freeform_tags, defined_tags, job_infrastructure_configuration_details_job_shape_config_details):
+def create_job_standalone_job_infrastructure_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_configuration_details, job_infrastructure_configuration_details_shape_name, job_infrastructure_configuration_details_subnet_id, job_infrastructure_configuration_details_block_storage_size_in_gbs, display_name, description, job_log_configuration_details, job_storage_mount_configuration_details_list, freeform_tags, defined_tags, job_infrastructure_configuration_details_job_shape_config_details):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1087,6 +1108,9 @@ def create_job_standalone_job_infrastructure_configuration_details(ctx, from_jso
 
     if job_log_configuration_details is not None:
         _details['jobLogConfigurationDetails'] = cli_util.parse_json_parameter("job_log_configuration_details", job_log_configuration_details)
+
+    if job_storage_mount_configuration_details_list is not None:
+        _details['jobStorageMountConfigurationDetailsList'] = cli_util.parse_json_parameter("job_storage_mount_configuration_details_list", job_storage_mount_configuration_details_list)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -1730,15 +1754,18 @@ def create_model_version_set(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--notebook-session-runtime-config-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--notebook-session-storage-mount-configuration-details-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of NotebookSessionStorageMountConfigurationDetails.
+
+This option is a JSON list with items of type StorageMountConfigurationDetails.  For documentation on StorageMountConfigurationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/StorageMountConfigurationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'notebook-session-configuration-details': {'module': 'data_science', 'class': 'NotebookSessionConfigurationDetails'}, 'notebook-session-config-details': {'module': 'data_science', 'class': 'NotebookSessionConfigDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'notebook-session-runtime-config-details': {'module': 'data_science', 'class': 'NotebookSessionRuntimeConfigDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'notebook-session-configuration-details': {'module': 'data_science', 'class': 'NotebookSessionConfigurationDetails'}, 'notebook-session-config-details': {'module': 'data_science', 'class': 'NotebookSessionConfigDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'notebook-session-runtime-config-details': {'module': 'data_science', 'class': 'NotebookSessionRuntimeConfigDetails'}, 'notebook-session-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'notebook-session-configuration-details': {'module': 'data_science', 'class': 'NotebookSessionConfigurationDetails'}, 'notebook-session-config-details': {'module': 'data_science', 'class': 'NotebookSessionConfigDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'notebook-session-runtime-config-details': {'module': 'data_science', 'class': 'NotebookSessionRuntimeConfigDetails'}}, output_type={'module': 'data_science', 'class': 'NotebookSession'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'notebook-session-configuration-details': {'module': 'data_science', 'class': 'NotebookSessionConfigurationDetails'}, 'notebook-session-config-details': {'module': 'data_science', 'class': 'NotebookSessionConfigDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'notebook-session-runtime-config-details': {'module': 'data_science', 'class': 'NotebookSessionRuntimeConfigDetails'}, 'notebook-session-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}}, output_type={'module': 'data_science', 'class': 'NotebookSession'})
 @cli_util.wrap_exceptions
-def create_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, display_name, notebook_session_configuration_details, notebook_session_config_details, freeform_tags, defined_tags, notebook_session_runtime_config_details):
+def create_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, display_name, notebook_session_configuration_details, notebook_session_config_details, freeform_tags, defined_tags, notebook_session_runtime_config_details, notebook_session_storage_mount_configuration_details_list):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1764,6 +1791,9 @@ def create_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
     if notebook_session_runtime_config_details is not None:
         _details['notebookSessionRuntimeConfigDetails'] = cli_util.parse_json_parameter("notebook_session_runtime_config_details", notebook_session_runtime_config_details)
+
+    if notebook_session_storage_mount_configuration_details_list is not None:
+        _details['notebookSessionStorageMountConfigurationDetailsList'] = cli_util.parse_json_parameter("notebook_session_storage_mount_configuration_details_list", notebook_session_storage_mount_configuration_details_list)
 
     client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.create_notebook_session(
@@ -3726,9 +3756,9 @@ def import_model_artifact_artifact_import_details_object_storage(ctx, from_json,
 
 @data_science_private_endpoint_group.command(name=cli_util.override('data_science.list_data_science_private_endpoints.command_name', 'list'), help=u"""Lists all Data Science private endpoints in the specified compartment. The query must include compartmentId. The query can also include one other parameter. If the query doesn't include compartmentId, or includes compartmentId with two or more other parameters, then an error is returned. \n[Command Reference](listDataSciencePrivateEndpoints)""")
 @cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
-@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
-Example: `500`""")
+Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 See [List Pagination].""")
@@ -3796,9 +3826,9 @@ def list_data_science_private_endpoints(ctx, from_json, all_pages, page_size, co
 
 @fast_launch_job_config_group.command(name=cli_util.override('data_science.list_fast_launch_job_configs.command_name', 'list'), help=u"""List fast launch capable job configs in the specified compartment. \n[Command Reference](listFastLaunchJobConfigs)""")
 @cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
-@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
-Example: `500`""")
+Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 See [List Pagination].""")
@@ -3852,9 +3882,9 @@ def list_fast_launch_job_configs(ctx, from_json, all_pages, page_size, compartme
 @cli_util.option('--job-id', help=u"""The [OCID] of the job.""")
 @cli_util.option('--created-by', help=u"""<b>Filter</b> results by the [OCID] of the user who created the resource.""")
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
-@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
-Example: `500`""")
+Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 See [List Pagination].""")
@@ -3921,9 +3951,9 @@ def list_job_runs(ctx, from_json, all_pages, page_size, compartment_id, id, job_
 
 @job_shape_group.command(name=cli_util.override('data_science.list_job_shapes.command_name', 'list'), help=u"""List job shapes available in the specified compartment. \n[Command Reference](listJobShapes)""")
 @cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
-@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
-Example: `500`""")
+Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 See [List Pagination].""")
@@ -3978,9 +4008,9 @@ def list_job_shapes(ctx, from_json, all_pages, page_size, compartment_id, limit,
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "FAILED", "DELETED"]), help=u"""<b>Filter</b> results by the specified lifecycle state. Must be a valid   state for the resource type.""")
 @cli_util.option('--created-by', help=u"""<b>Filter</b> results by the [OCID] of the user who created the resource.""")
-@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
-Example: `500`""")
+Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 See [List Pagination].""")
@@ -4046,9 +4076,9 @@ def list_jobs(ctx, from_json, all_pages, page_size, compartment_id, project_id, 
 
 @model_deployment_shape_group.command(name=cli_util.override('data_science.list_model_deployment_shapes.command_name', 'list'), help=u"""Lists the valid model deployment shapes. \n[Command Reference](listModelDeploymentShapes)""")
 @cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
-@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
-Example: `500`""")
+Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 See [List Pagination].""")
@@ -4103,9 +4133,9 @@ def list_model_deployment_shapes(ctx, from_json, all_pages, page_size, compartme
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "FAILED", "INACTIVE", "UPDATING", "DELETED", "NEEDS_ATTENTION"]), help=u"""<b>Filter</b> results by the specified lifecycle state. Must be a valid state for the resource type.""")
 @cli_util.option('--created-by', help=u"""<b>Filter</b> results by the [OCID] of the user who created the resource.""")
-@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
-Example: `500`""")
+Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 See [List Pagination].""")
@@ -4176,9 +4206,9 @@ def list_model_deployments(ctx, from_json, all_pages, page_size, compartment_id,
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name given.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""<b>Filter</b> results by the specified lifecycle state. Must be a valid state for the resource type.""")
 @cli_util.option('--created-by', help=u"""<b>Filter</b> results by the [OCID] of the user who created the resource.""")
-@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
-Example: `500`""")
+Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 See [List Pagination].""")
@@ -4251,9 +4281,9 @@ def list_model_version_sets(ctx, from_json, all_pages, page_size, compartment_id
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "INACTIVE"]), help=u"""<b>Filter</b> results by the specified lifecycle state. Must be a valid state for the resource type.""")
 @cli_util.option('--created-by', help=u"""<b>Filter</b> results by the [OCID] of the user who created the resource.""")
-@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
-Example: `500`""")
+Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 See [List Pagination].""")
@@ -4323,9 +4353,9 @@ def list_models(ctx, from_json, all_pages, page_size, compartment_id, model_vers
 
 @notebook_session_shape_group.command(name=cli_util.override('data_science.list_notebook_session_shapes.command_name', 'list'), help=u"""Lists the valid notebook session shapes. \n[Command Reference](listNotebookSessionShapes)""")
 @cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
-@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
-Example: `500`""")
+Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 See [List Pagination].""")
@@ -4380,9 +4410,9 @@ def list_notebook_session_shapes(ctx, from_json, all_pages, page_size, compartme
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "INACTIVE", "UPDATING"]), help=u"""<b>Filter</b> results by the specified lifecycle state. Must be a valid state for the resource type.""")
 @cli_util.option('--created-by', help=u"""<b>Filter</b> results by the [OCID] of the user who created the resource.""")
-@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
-Example: `500`""")
+Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 See [List Pagination].""")
@@ -4453,9 +4483,9 @@ def list_notebook_sessions(ctx, from_json, all_pages, page_size, compartment_id,
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "DELETING", "DELETED"]), help=u"""The current state of the PipelineRun.""")
 @cli_util.option('--created-by', help=u"""<b>Filter</b> results by the [OCID] of the user who created the resource.""")
-@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
-Example: `500`""")
+Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 See [List Pagination].""")
@@ -4526,9 +4556,9 @@ def list_pipeline_runs(ctx, from_json, all_pages, page_size, compartment_id, id,
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "FAILED", "DELETED"]), help=u"""The current state of the Pipeline.""")
 @cli_util.option('--created-by', help=u"""<b>Filter</b> results by the [OCID] of the user who created the resource.""")
-@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
-Example: `500`""")
+Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 See [List Pagination].""")
@@ -4598,9 +4628,9 @@ def list_pipelines(ctx, from_json, all_pages, page_size, compartment_id, project
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETING", "DELETED"]), help=u"""<b>Filter</b> results by the specified lifecycle state. Must be a valid state for the resource type.""")
 @cli_util.option('--created-by', help=u"""<b>Filter</b> results by the [OCID] of the user who created the resource.""")
-@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
-Example: `500`""")
+Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 See [List Pagination].""")
@@ -4664,9 +4694,9 @@ def list_projects(ctx, from_json, all_pages, page_size, compartment_id, id, disp
 
 @work_request_group.command(name=cli_util.override('data_science.list_work_request_errors.command_name', 'list-work-request-errors'), help=u"""Lists work request errors for the specified work request. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
-@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
-Example: `500`""")
+Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 See [List Pagination].""")
@@ -4719,9 +4749,9 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
 
 @work_request_group.command(name=cli_util.override('data_science.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Lists work request logs for the specified work request. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
-@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
-Example: `500`""")
+Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 See [List Pagination].""")
@@ -4777,9 +4807,9 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
 @cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION_CREATE", "NOTEBOOK_SESSION_DELETE", "NOTEBOOK_SESSION_ACTIVATE", "NOTEBOOK_SESSION_DEACTIVATE", "MODELVERSIONSET_DELETE", "EXPORT_MODEL_ARTIFACT", "IMPORT_MODEL_ARTIFACT", "MODEL_DEPLOYMENT_CREATE", "MODEL_DEPLOYMENT_DELETE", "MODEL_DEPLOYMENT_ACTIVATE", "MODEL_DEPLOYMENT_DEACTIVATE", "MODEL_DEPLOYMENT_UPDATE", "PROJECT_DELETE", "WORKREQUEST_CANCEL", "JOB_DELETE", "PIPELINE_CREATE", "PIPELINE_DELETE", "PIPELINE_RUN_CREATE", "PIPELINE_RUN_CANCEL", "PIPELINE_RUN_DELETE", "PRIVATE_ENDPOINT_CREATE", "PRIVATE_ENDPOINT_DELETE", "PRIVATE_ENDPOINT_MOVE", "PRIVATE_ENDPOINT_UPDATE"]), help=u"""<b>Filter</b> results by the type of the operation associated with the work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""<b>Filter</b> results by work request status.""")
-@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
-Example: `500`""")
+Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 See [List Pagination].""")
@@ -4924,6 +4954,9 @@ def update_data_science_private_endpoint(ctx, from_json, force, wait_for_state, 
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description of the job.""")
 @cli_util.option('--job-infrastructure-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--job-storage-mount-configuration-details-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of JobStorageMountConfigurationDetails.
+
+This option is a JSON list with items of type StorageMountConfigurationDetails.  For documentation on StorageMountConfigurationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/StorageMountConfigurationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
@@ -4931,18 +4964,18 @@ def update_data_science_private_endpoint(ctx, from_json, force, wait_for_state, 
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "FAILED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'job-infrastructure-configuration-details': {'module': 'data_science', 'class': 'JobInfrastructureConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'job-infrastructure-configuration-details': {'module': 'data_science', 'class': 'JobInfrastructureConfigurationDetails'}, 'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-infrastructure-configuration-details': {'module': 'data_science', 'class': 'JobInfrastructureConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'Job'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-infrastructure-configuration-details': {'module': 'data_science', 'class': 'JobInfrastructureConfigurationDetails'}, 'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def update_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, display_name, description, job_infrastructure_configuration_details, freeform_tags, defined_tags, if_match):
+def update_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, display_name, description, job_infrastructure_configuration_details, job_storage_mount_configuration_details_list, freeform_tags, defined_tags, if_match):
 
     if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
     if not force:
-        if job_infrastructure_configuration_details or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to job-infrastructure-configuration-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if job_infrastructure_configuration_details or job_storage_mount_configuration_details_list or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to job-infrastructure-configuration-details and job-storage-mount-configuration-details-list and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -4960,6 +4993,9 @@ def update_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
 
     if job_infrastructure_configuration_details is not None:
         _details['jobInfrastructureConfigurationDetails'] = cli_util.parse_json_parameter("job_infrastructure_configuration_details", job_infrastructure_configuration_details)
+
+    if job_storage_mount_configuration_details_list is not None:
+        _details['jobStorageMountConfigurationDetailsList'] = cli_util.parse_json_parameter("job_storage_mount_configuration_details_list", job_storage_mount_configuration_details_list)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -5005,6 +5041,9 @@ def update_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--job-infrastructure-configuration-details-block-storage-size-in-gbs', required=True, type=click.INT, help=u"""The size of the block storage volume to attach to the instance running the job""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description of the job.""")
+@cli_util.option('--job-storage-mount-configuration-details-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of JobStorageMountConfigurationDetails.
+
+This option is a JSON list with items of type StorageMountConfigurationDetails.  For documentation on StorageMountConfigurationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/StorageMountConfigurationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
@@ -5013,18 +5052,18 @@ def update_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "FAILED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-job-shape-config-details': {'module': 'data_science', 'class': 'JobShapeConfigDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-job-shape-config-details': {'module': 'data_science', 'class': 'JobShapeConfigDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-job-shape-config-details': {'module': 'data_science', 'class': 'JobShapeConfigDetails'}}, output_type={'module': 'data_science', 'class': 'Job'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-job-shape-config-details': {'module': 'data_science', 'class': 'JobShapeConfigDetails'}}, output_type={'module': 'data_science', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def update_job_managed_egress_standalone_job_infrastructure_configuration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, job_infrastructure_configuration_details_shape_name, job_infrastructure_configuration_details_block_storage_size_in_gbs, display_name, description, freeform_tags, defined_tags, if_match, job_infrastructure_configuration_details_job_shape_config_details):
+def update_job_managed_egress_standalone_job_infrastructure_configuration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, job_infrastructure_configuration_details_shape_name, job_infrastructure_configuration_details_block_storage_size_in_gbs, display_name, description, job_storage_mount_configuration_details_list, freeform_tags, defined_tags, if_match, job_infrastructure_configuration_details_job_shape_config_details):
 
     if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if job_storage_mount_configuration_details_list or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to job-storage-mount-configuration-details-list and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -5042,6 +5081,9 @@ def update_job_managed_egress_standalone_job_infrastructure_configuration_detail
 
     if description is not None:
         _details['description'] = description
+
+    if job_storage_mount_configuration_details_list is not None:
+        _details['jobStorageMountConfigurationDetailsList'] = cli_util.parse_json_parameter("job_storage_mount_configuration_details_list", job_storage_mount_configuration_details_list)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -5093,6 +5135,9 @@ def update_job_managed_egress_standalone_job_infrastructure_configuration_detail
 @cli_util.option('--job-infrastructure-configuration-details-block-storage-size-in-gbs', required=True, type=click.INT, help=u"""The size of the block storage volume to attach to the instance running the job""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description of the job.""")
+@cli_util.option('--job-storage-mount-configuration-details-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of JobStorageMountConfigurationDetails.
+
+This option is a JSON list with items of type StorageMountConfigurationDetails.  For documentation on StorageMountConfigurationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/StorageMountConfigurationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
@@ -5101,18 +5146,18 @@ def update_job_managed_egress_standalone_job_infrastructure_configuration_detail
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "FAILED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-job-shape-config-details': {'module': 'data_science', 'class': 'JobShapeConfigDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-job-shape-config-details': {'module': 'data_science', 'class': 'JobShapeConfigDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-job-shape-config-details': {'module': 'data_science', 'class': 'JobShapeConfigDetails'}}, output_type={'module': 'data_science', 'class': 'Job'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-job-shape-config-details': {'module': 'data_science', 'class': 'JobShapeConfigDetails'}}, output_type={'module': 'data_science', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def update_job_standalone_job_infrastructure_configuration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, job_infrastructure_configuration_details_shape_name, job_infrastructure_configuration_details_subnet_id, job_infrastructure_configuration_details_block_storage_size_in_gbs, display_name, description, freeform_tags, defined_tags, if_match, job_infrastructure_configuration_details_job_shape_config_details):
+def update_job_standalone_job_infrastructure_configuration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, job_infrastructure_configuration_details_shape_name, job_infrastructure_configuration_details_subnet_id, job_infrastructure_configuration_details_block_storage_size_in_gbs, display_name, description, job_storage_mount_configuration_details_list, freeform_tags, defined_tags, if_match, job_infrastructure_configuration_details_job_shape_config_details):
 
     if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if job_storage_mount_configuration_details_list or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to job-storage-mount-configuration-details-list and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -5131,6 +5176,9 @@ def update_job_standalone_job_infrastructure_configuration_details(ctx, from_jso
 
     if description is not None:
         _details['description'] = description
+
+    if job_storage_mount_configuration_details_list is not None:
+        _details['jobStorageMountConfigurationDetailsList'] = cli_util.parse_json_parameter("job_storage_mount_configuration_details_list", job_storage_mount_configuration_details_list)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -5650,23 +5698,26 @@ def update_model_version_set(ctx, from_json, force, wait_for_state, max_wait_sec
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--notebook-session-runtime-config-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--notebook-session-storage-mount-configuration-details-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of NotebookSessionStorageMountConfigurationDetails.
+
+This option is a JSON list with items of type StorageMountConfigurationDetails.  For documentation on StorageMountConfigurationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/StorageMountConfigurationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "INACTIVE", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'notebook-session-configuration-details': {'module': 'data_science', 'class': 'NotebookSessionConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'notebook-session-runtime-config-details': {'module': 'data_science', 'class': 'NotebookSessionRuntimeConfigDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'notebook-session-configuration-details': {'module': 'data_science', 'class': 'NotebookSessionConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'notebook-session-runtime-config-details': {'module': 'data_science', 'class': 'NotebookSessionRuntimeConfigDetails'}, 'notebook-session-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'notebook-session-configuration-details': {'module': 'data_science', 'class': 'NotebookSessionConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'notebook-session-runtime-config-details': {'module': 'data_science', 'class': 'NotebookSessionRuntimeConfigDetails'}}, output_type={'module': 'data_science', 'class': 'NotebookSession'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'notebook-session-configuration-details': {'module': 'data_science', 'class': 'NotebookSessionConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'notebook-session-runtime-config-details': {'module': 'data_science', 'class': 'NotebookSessionRuntimeConfigDetails'}, 'notebook-session-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}}, output_type={'module': 'data_science', 'class': 'NotebookSession'})
 @cli_util.wrap_exceptions
-def update_notebook_session(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, notebook_session_id, display_name, notebook_session_configuration_details, freeform_tags, defined_tags, notebook_session_runtime_config_details, if_match):
+def update_notebook_session(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, notebook_session_id, display_name, notebook_session_configuration_details, freeform_tags, defined_tags, notebook_session_runtime_config_details, notebook_session_storage_mount_configuration_details_list, if_match):
 
     if isinstance(notebook_session_id, six.string_types) and len(notebook_session_id.strip()) == 0:
         raise click.UsageError('Parameter --notebook-session-id cannot be whitespace or empty string')
     if not force:
-        if notebook_session_configuration_details or freeform_tags or defined_tags or notebook_session_runtime_config_details:
-            if not click.confirm("WARNING: Updates to notebook-session-configuration-details and freeform-tags and defined-tags and notebook-session-runtime-config-details will replace any existing values. Are you sure you want to continue?"):
+        if notebook_session_configuration_details or freeform_tags or defined_tags or notebook_session_runtime_config_details or notebook_session_storage_mount_configuration_details_list:
+            if not click.confirm("WARNING: Updates to notebook-session-configuration-details and freeform-tags and defined-tags and notebook-session-runtime-config-details and notebook-session-storage-mount-configuration-details-list will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -5690,6 +5741,9 @@ def update_notebook_session(ctx, from_json, force, wait_for_state, max_wait_seco
 
     if notebook_session_runtime_config_details is not None:
         _details['notebookSessionRuntimeConfigDetails'] = cli_util.parse_json_parameter("notebook_session_runtime_config_details", notebook_session_runtime_config_details)
+
+    if notebook_session_storage_mount_configuration_details_list is not None:
+        _details['notebookSessionStorageMountConfigurationDetailsList'] = cli_util.parse_json_parameter("notebook_session_storage_mount_configuration_details_list", notebook_session_storage_mount_configuration_details_list)
 
     client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.update_notebook_session(
