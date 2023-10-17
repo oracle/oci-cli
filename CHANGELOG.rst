@@ -6,6 +6,67 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.34.0 - 2023-10-17
+--------------------
+Added
+~~~~~
+* Support for the new Redis service
+
+  * ``oci redis``
+
+* Support for export Container and Kubernetes application listings in the Marketplace Service
+
+  * ``oci marketplace-publisher``
+
+* Support for achieving higher limits in the Network Firewall Service
+
+  * ``oci network-firewall address-list``
+  * ``oci network-firewall application``
+  * ``oci network-firewall application-group``
+  * ``oci network-firewall decryption-profile``
+  * ``oci network-firewall decryption-rule``
+  * ``oci network-firewall mapped-secret``
+  * ``oci network-firewall network-firewall-policy``
+  * ``oci network-firewall security-rule``
+  * ``oci network-firewall service``
+  * ``oci network-firewall service-list``
+  * ``oci network-firewall url-list``
+
+* Support for exporting access request reports in the Managed Access Service
+
+  * ``oci oma lockbox export-access-requests``
+
+* Support for Mount File System in Data Science Jobs and Notebooks in the Data Science Service
+
+  * ``oci data-science job create --job-storage-mount-configuration-details-list``
+  * ``oci data-science job update --job-storage-mount-configuration-details-list``
+  * ``oci data-science notebook-session create --notebook-session-storage-mount-configuration-details-list``
+  * ``oci data-science notebook-session update --notebook-session-storage-mount-configuration-details-list``
+
+* Logging Management
+
+  * Support for unified agent operational metrics for the service configuration option
+
+    * ``oci logging agent-configuration``
+
+  * Added new destination field in the option ``--service-configuration``
+
+Changed
+~~~~~~~
+* [BREAKING] Optional parameter ``--auto-approval-state`` was removed in the Managed Access Service
+
+  * ``oci oma lockbox update``
+
+* [BREAKING] Optional parameter ``--service-stage`` was removed in the Logging Management Service
+
+  * ``oci logging service list``
+
+* [BREAKING] Optional parameters ``--application-lists, --decryption-profiles, --decryption-rules, --ip-address-lists, --mapped-secrets, --security-rules, --url-lists`` were removed in the Network Firewall Service
+
+  * ``oci network-firewall network-firewall-policy create``
+
+  * ``oci network-firewall network-firewall-policy update``
+
 3.33.4 - 2023-10-10
 --------------------
 Added

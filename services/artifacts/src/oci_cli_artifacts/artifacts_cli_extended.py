@@ -245,7 +245,7 @@ artifacts_cli.artifacts_root_group.commands.pop(artifacts_cli.container_image_si
 # cli_util.rename_command(artifacts_cli, artifacts_cli.container_image_signature_group, artifacts_cli.list_container_image_signatures, 'list')
 
 
-# Using artifacts_list_call_get_all_results
+# Using list_call_get_all_results_multiple_keys
 @cli_util.copy_params_from_generated_command(artifacts_cli.list_container_image_signatures)
 @artifacts_cli.container_image_signature_group.command(name=cli_util.override('list_container_image_signatures.command_name', 'list'), help=artifacts_cli.list_container_image_signatures.help)
 @click.pass_context
@@ -288,13 +288,13 @@ def list_container_image_signatures_extended(ctx, from_json, all_pages, page_siz
         if page_size:
             kwargs['limit'] = page_size
 
-        result = cli_util.artifacts_list_call_get_all_results(
+        result = cli_util.list_call_get_all_results_multiple_keys(
             client.list_container_image_signatures,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = cli_util.artifacts_list_call_get_up_to_limit(
+        result = cli_util.list_call_get_up_to_limit_multiple_keys(
             client.list_container_image_signatures,
             limit,
             page_size,
@@ -309,7 +309,7 @@ def list_container_image_signatures_extended(ctx, from_json, all_pages, page_siz
     cli_util.render_response(result, ctx)
 
 
-# Using artifacts_list_call_get_all_results
+# Using list_call_get_all_results_multiple_keys
 @cli_util.copy_params_from_generated_command(artifacts_cli.list_repositories)
 @artifacts_cli.repository_group.command(name=cli_util.override('list_repositories.command_name', 'list'), help=artifacts_cli.list_repositories.help)
 @click.pass_context
@@ -342,13 +342,13 @@ def list_repositories_extended(ctx, from_json, all_pages, page_size, compartment
         if page_size:
             kwargs['limit'] = page_size
 
-        result = cli_util.artifacts_list_call_get_all_results(
+        result = cli_util.list_call_get_all_results_multiple_keys(
             client.list_repositories,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = cli_util.artifacts_list_call_get_up_to_limit(
+        result = cli_util.list_call_get_up_to_limit_multiple_keys(
             client.list_repositories,
             limit,
             page_size,
@@ -363,7 +363,7 @@ def list_repositories_extended(ctx, from_json, all_pages, page_size, compartment
     cli_util.render_response(result, ctx)
 
 
-# Using artifacts_artifacts_list_call_get_all_results
+# Using list_call_get_all_results_multiple_keys
 @cli_util.copy_params_from_generated_command(artifacts_cli.list_generic_artifacts, params_to_exclude=['version_parameterconflict'])
 @artifacts_cli.generic_artifact_group.command(name=cli_util.override('list_generic_artifacts.command_name', 'list'), help=artifacts_cli.list_generic_artifacts.help)
 @cli_util.option('--artifact-version', help=u"""The generic artifact version.
@@ -403,14 +403,14 @@ def list_generic_artifacts_extended(ctx, from_json, all_pages, page_size, compar
         if page_size:
             kwargs['limit'] = page_size
 
-        result = cli_util.artifacts_list_call_get_all_results(
+        result = cli_util.list_call_get_all_results_multiple_keys(
             client.list_generic_artifacts,
             compartment_id=compartment_id,
             repository_id=repository_id,
             **kwargs
         )
     elif limit is not None:
-        result = cli_util.artifacts_list_call_get_up_to_limit(
+        result = cli_util.list_call_get_up_to_limit_multiple_keys(
             client.list_generic_artifacts,
             limit,
             page_size,
@@ -427,7 +427,7 @@ def list_generic_artifacts_extended(ctx, from_json, all_pages, page_size, compar
     cli_util.render_response(result, ctx)
 
 
-# Using artifacts_list_call_get_all_results
+# Using list_call_get_all_results_multiple_keys
 @cli_util.copy_params_from_generated_command(artifacts_cli.list_container_repositories,)
 @artifacts_cli.container_repository_group.command(name=cli_util.override('list_container_repositories.command_name', 'list'), help=artifacts_cli.list_container_repositories.help)
 @click.pass_context
@@ -462,13 +462,13 @@ def list_container_repositories_extended(ctx, from_json, all_pages, page_size, c
         if page_size:
             kwargs['limit'] = page_size
 
-        result = cli_util.artifacts_list_call_get_all_results(
+        result = cli_util.list_call_get_all_results_multiple_keys(
             client.list_container_repositories,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = cli_util.artifacts_list_call_get_up_to_limit(
+        result = cli_util.list_call_get_up_to_limit_multiple_keys(
             client.list_container_repositories,
             limit,
             page_size,
@@ -485,7 +485,7 @@ def list_container_repositories_extended(ctx, from_json, all_pages, page_size, c
 
 # Rename argument: oci artifacts container image list --version-parameterconflict
 # => oci artifacts container image list --image-version
-# Using artifacts_list_call_get_all_results
+# Using list_call_get_all_results_multiple_keys
 @cli_util.copy_params_from_generated_command(artifacts_cli.list_container_images, params_to_exclude=['version_parameterconflict'])
 @artifacts_cli.container_image_group.command(name=cli_util.override('list_container_images.command_name', 'list'), help=artifacts_cli.list_container_images.help)
 @cli_util.option('--image-version', help=u"""A filter to return container images that match the version.
@@ -530,13 +530,13 @@ def list_container_images_extended(ctx, from_json, all_pages, page_size, compart
         if page_size:
             kwargs['limit'] = page_size
 
-        result = cli_util.artifacts_list_call_get_all_results(
+        result = cli_util.list_call_get_all_results_multiple_keys(
             client.list_container_images,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = cli_util.artifacts_list_call_get_up_to_limit(
+        result = cli_util.list_call_get_up_to_limit_multiple_keys(
             client.list_container_images,
             limit,
             page_size,

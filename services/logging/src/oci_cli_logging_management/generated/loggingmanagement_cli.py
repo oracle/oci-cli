@@ -17,8 +17,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 
 
 @cli.command(cli_util.override('logging.logging_root_group.command_name', 'logging'), cls=CommandGroupWithAlias, help=cli_util.override('logging.logging_root_group.help', """Use the Logging Management API to create, read, list, update, move and delete
-log groups, log objects, log saved searches, agent configurations, log data models,
-continuous queries, and managed continuous queries.
+log groups, log objects, log saved searches, and agent configurations.
 
 For more information, see [Logging Overview]."""), short_help=cli_util.override('logging.logging_root_group.short_help', """Logging Management API"""))
 @cli_util.help_option_group
@@ -1247,18 +1246,15 @@ def list_logs(ctx, from_json, all_pages, page_size, log_group_id, log_type, sour
 
 
 @service_group.command(name=cli_util.override('logging.list_services.command_name', 'list'), help=u"""Lists all services that support logging. \n[Command Reference](listServices)""")
-@cli_util.option('--service-stage', help=u"""Service stage of a service. The allowed values are \"ProductionStage\", \"DevStage\" and \"LAStage\".""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'logging', 'class': 'list[ServiceSummary]'})
 @cli_util.wrap_exceptions
-def list_services(ctx, from_json, all_pages, service_stage):
+def list_services(ctx, from_json, all_pages, ):
 
     kwargs = {}
-    if service_stage is not None:
-        kwargs['service_stage'] = service_stage
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('logging', 'logging_management', ctx)
     result = client.list_services(

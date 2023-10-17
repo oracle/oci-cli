@@ -10,6 +10,7 @@ SDK_client_map = {
     "oma.create_lockbox": "oci.lockbox.LockboxClient.create_lockbox",
     "oma.delete_approval_template": "oci.lockbox.LockboxClient.delete_approval_template",
     "oma.delete_lockbox": "oci.lockbox.LockboxClient.delete_lockbox",
+    "oma.export_access_requests": "oci.lockbox.LockboxClient.export_access_requests",
     "oma.get_access_materials": "oci.lockbox.LockboxClient.get_access_materials",
     "oma.get_access_request": "oci.lockbox.LockboxClient.get_access_request",
     "oma.get_approval_template": "oci.lockbox.LockboxClient.get_approval_template",
