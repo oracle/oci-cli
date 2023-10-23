@@ -2640,6 +2640,7 @@ def create_application_vip(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.option('--maintenance-window-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--standby-maintenance-buffer-in-days', type=click.INT, help=u"""The scheduling detail for the quarterly maintenance window of the standby Autonomous Container Database. This value represents the number of days before scheduled maintenance of the primary database.""")
 @cli_util.option('--version-preference', type=custom_types.CliCaseInsensitiveChoice(["NEXT_RELEASE_UPDATE", "LATEST_RELEASE_UPDATE"]), help=u"""The next maintenance version preference.""")
+@cli_util.option('--is-dst-file-update-enabled', type=click.BOOL, help=u"""Indicates if an automatic DST Time Zone file update is enabled for the Autonomous Container Database. If enabled along with Release Update, patching will be done in a Non-Rolling manner.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2657,7 +2658,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'peer-autonomous-container-database-backup-config': {'module': 'database', 'class': 'PeerAutonomousContainerDatabaseBackupConfig'}, 'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'backup-config': {'module': 'database', 'class': 'AutonomousContainerDatabaseBackupConfig'}}, output_type={'module': 'database', 'class': 'AutonomousContainerDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, patch_model, db_unique_name, db_name, service_level_agreement_type, autonomous_exadata_infrastructure_id, db_version, peer_autonomous_exadata_infrastructure_id, peer_autonomous_container_database_display_name, protection_mode, fast_start_fail_over_lag_limit_in_seconds, is_automatic_failover_enabled, peer_cloud_autonomous_vm_cluster_id, peer_autonomous_vm_cluster_id, peer_autonomous_container_database_compartment_id, peer_autonomous_container_database_backup_config, peer_db_unique_name, autonomous_vm_cluster_id, cloud_autonomous_vm_cluster_id, compartment_id, maintenance_window_details, standby_maintenance_buffer_in_days, version_preference, freeform_tags, defined_tags, backup_config, kms_key_id, kms_key_version_id, vault_id, key_store_id):
+def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, patch_model, db_unique_name, db_name, service_level_agreement_type, autonomous_exadata_infrastructure_id, db_version, peer_autonomous_exadata_infrastructure_id, peer_autonomous_container_database_display_name, protection_mode, fast_start_fail_over_lag_limit_in_seconds, is_automatic_failover_enabled, peer_cloud_autonomous_vm_cluster_id, peer_autonomous_vm_cluster_id, peer_autonomous_container_database_compartment_id, peer_autonomous_container_database_backup_config, peer_db_unique_name, autonomous_vm_cluster_id, cloud_autonomous_vm_cluster_id, compartment_id, maintenance_window_details, standby_maintenance_buffer_in_days, version_preference, is_dst_file_update_enabled, freeform_tags, defined_tags, backup_config, kms_key_id, kms_key_version_id, vault_id, key_store_id):
 
     kwargs = {}
 
@@ -2727,6 +2728,9 @@ def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wai
 
     if version_preference is not None:
         _details['versionPreference'] = version_preference
+
+    if is_dst_file_update_enabled is not None:
+        _details['isDstFileUpdateEnabled'] = is_dst_file_update_enabled
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -7997,6 +8001,73 @@ def create_key_store_key_store_type_from_oracle_key_vault_details(ctx, from_json
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_key_store(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@maintenance_run_group.command(name=cli_util.override('db.create_maintenance_run.command_name', 'create'), help=u"""Creates a maintenance run with one of the following: The latest available release update patch (RUP) for the Autonomous Container Database. The latest available RUP and DST time zone (TZ) file updates for the Autonomous Container Database. Creates a maintenance run to update the DST TZ file for the Autonomous Container Database. \n[Command Reference](createMaintenanceRun)""")
+@cli_util.option('--target-resource-id', required=True, help=u"""The ID of the target resource for which the maintenance run should be created.""")
+@cli_util.option('--time-scheduled', required=True, type=custom_types.CLI_DATETIME, help=u"""The date and time that update should be scheduled.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--patch-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["QUARTERLY", "TIMEZONE"]), help=u"""Patch type, either \"QUARTERLY\" or \"TIMEZONE\".""")
+@cli_util.option('--is-dst-file-update-enabled', type=click.BOOL, help=u"""Indicates if an automatic DST Time Zone file update is enabled for the Autonomous Container Database. If enabled along with Release Update, patching will be done in a Non-Rolling manner.""")
+@cli_util.option('--patching-mode', type=custom_types.CliCaseInsensitiveChoice(["ROLLING", "NONROLLING"]), help=u"""Cloud Exadata infrastructure node patching method, either \"ROLLING\" or \"NONROLLING\". Default value is ROLLING.
+
+*IMPORTANT*: Non-rolling infrastructure patching involves system down time. See [Oracle-Managed Infrastructure Maintenance Updates] for more information.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment containing the Maintenance Run.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["SCHEDULED", "IN_PROGRESS", "SUCCEEDED", "SKIPPED", "FAILED", "UPDATING", "DELETING", "DELETED", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'MaintenanceRun'})
+@cli_util.wrap_exceptions
+def create_maintenance_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_resource_id, time_scheduled, patch_type, is_dst_file_update_enabled, patching_mode, compartment_id):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['targetResourceId'] = target_resource_id
+    _details['timeScheduled'] = time_scheduled
+    _details['patchType'] = patch_type
+
+    if is_dst_file_update_enabled is not None:
+        _details['isDstFileUpdateEnabled'] = is_dst_file_update_enabled
+
+    if patching_mode is not None:
+        _details['patchingMode'] = patching_mode
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.create_maintenance_run(
+        create_maintenance_run_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_maintenance_run') and callable(getattr(client, 'get_maintenance_run')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_maintenance_run(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -15891,6 +15962,7 @@ def list_console_connections(ctx, from_json, all_pages, db_node_id):
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--autonomous-patch-type', type=custom_types.CliCaseInsensitiveChoice(["QUARTERLY", "TIMEZONE"]), help=u"""Autonomous patch type, either \"QUARTERLY\" or \"TIMEZONE\".""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -15898,7 +15970,7 @@ def list_console_connections(ctx, from_json, all_pages, db_node_id):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[AutonomousPatchSummary]'})
 @cli_util.wrap_exceptions
-def list_container_database_patches(ctx, from_json, all_pages, page_size, autonomous_container_database_id, compartment_id, limit, page):
+def list_container_database_patches(ctx, from_json, all_pages, page_size, autonomous_container_database_id, compartment_id, limit, page, autonomous_patch_type):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -15911,6 +15983,8 @@ def list_container_database_patches(ctx, from_json, all_pages, page_size, autono
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if autonomous_patch_type is not None:
+        kwargs['autonomous_patch_type'] = autonomous_patch_type
     client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
@@ -17358,7 +17432,7 @@ def list_key_stores(ctx, from_json, all_pages, page_size, compartment_id, limit,
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["SCHEDULED", "IN_PROGRESS", "SUCCEEDED", "SKIPPED", "FAILED", "UPDATING", "DELETING", "DELETED", "CANCELED"]), help=u"""The state of the maintenance run history.""")
 @cli_util.option('--availability-domain', help=u"""A filter to return only resources that match the given availability domain exactly.""")
-@cli_util.option('--maintenance-subtype', type=custom_types.CliCaseInsensitiveChoice(["QUARTERLY", "HARDWARE", "CRITICAL", "INFRASTRUCTURE", "DATABASE", "ONEOFF", "SECURITY_MONTHLY"]), help=u"""The sub-type of the maintenance run.""")
+@cli_util.option('--maintenance-subtype', type=custom_types.CliCaseInsensitiveChoice(["QUARTERLY", "HARDWARE", "CRITICAL", "INFRASTRUCTURE", "DATABASE", "ONEOFF", "SECURITY_MONTHLY", "TIMEZONE"]), help=u"""The sub-type of the maintenance run.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -17433,7 +17507,7 @@ def list_maintenance_run_history(ctx, from_json, all_pages, page_size, compartme
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["SCHEDULED", "IN_PROGRESS", "SUCCEEDED", "SKIPPED", "FAILED", "UPDATING", "DELETING", "DELETED", "CANCELED"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
 @cli_util.option('--availability-domain', help=u"""A filter to return only resources that match the given availability domain exactly.""")
-@cli_util.option('--maintenance-subtype', type=custom_types.CliCaseInsensitiveChoice(["QUARTERLY", "HARDWARE", "CRITICAL", "INFRASTRUCTURE", "DATABASE", "ONEOFF", "SECURITY_MONTHLY"]), help=u"""The sub-type of the maintenance run.""")
+@cli_util.option('--maintenance-subtype', type=custom_types.CliCaseInsensitiveChoice(["QUARTERLY", "HARDWARE", "CRITICAL", "INFRASTRUCTURE", "DATABASE", "ONEOFF", "SECURITY_MONTHLY", "TIMEZONE"]), help=u"""The sub-type of the maintenance run.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -20391,6 +20465,7 @@ def terminate_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.option('--maintenance-window-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--standby-maintenance-buffer-in-days', type=click.INT, help=u"""The scheduling detail for the quarterly maintenance window of the standby Autonomous Container Database. This value represents the number of days before schedlued maintenance of the primary database.""")
 @cli_util.option('--version-preference', type=custom_types.CliCaseInsensitiveChoice(["NEXT_RELEASE_UPDATE", "LATEST_RELEASE_UPDATE"]), help=u"""The next maintenance version preference.""")
+@cli_util.option('--is-dst-file-update-enabled', type=click.BOOL, help=u"""Indicates if an automatic DST Time Zone file update is enabled for the Autonomous Container Database. If enabled along with Release Update, patching will be done in a Non-Rolling manner.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -20406,7 +20481,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'backup-config': {'module': 'database', 'class': 'AutonomousContainerDatabaseBackupConfig'}}, output_type={'module': 'database', 'class': 'AutonomousContainerDatabase'})
 @cli_util.wrap_exceptions
-def update_autonomous_container_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, display_name, patch_model, maintenance_window_details, standby_maintenance_buffer_in_days, version_preference, freeform_tags, defined_tags, backup_config, if_match):
+def update_autonomous_container_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, display_name, patch_model, maintenance_window_details, standby_maintenance_buffer_in_days, version_preference, is_dst_file_update_enabled, freeform_tags, defined_tags, backup_config, if_match):
 
     if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
@@ -20435,6 +20510,9 @@ def update_autonomous_container_database(ctx, from_json, force, wait_for_state, 
 
     if version_preference is not None:
         _details['versionPreference'] = version_preference
+
+    if is_dst_file_update_enabled is not None:
+        _details['isDstFileUpdateEnabled'] = is_dst_file_update_enabled
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

@@ -187,6 +187,75 @@ def create_index(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
+@table_group.command(name=cli_util.override('nosql.create_replica.command_name', 'create-replica'), help=u"""Add a replica for this table \n[Command Reference](createReplica)""")
+@cli_util.option('--table-name-or-id', required=True, help=u"""A table name within the compartment, or a table OCID.""")
+@cli_util.option('--region-parameterconflict', required=True, help=u"""Name of the remote region in standard OCI format, i.e. us-ashburn-1""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the table's compartment.  Required if the tableNameOrId path parameter is a table name. Optional if tableNameOrId is an OCID.  If tableNameOrId is an OCID, and compartmentId is supplied, the latter must match the identified table's compartmentId.""")
+@cli_util.option('--max-read-units', type=click.INT, help=u"""Maximum sustained read throughput limit for the new replica table. If not specified, the local table's read limit is used.""")
+@cli_util.option('--max-write-units', type=click.INT, help=u"""Maximum sustained write throughput limit for the new replica table. If not specified, the local table's write limit is used.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def create_replica(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, table_name_or_id, region_parameterconflict, compartment_id, max_read_units, max_write_units, if_match):
+
+    if isinstance(table_name_or_id, six.string_types) and len(table_name_or_id.strip()) == 0:
+        raise click.UsageError('Parameter --table-name-or-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['region'] = region_parameterconflict
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if max_read_units is not None:
+        _details['maxReadUnits'] = max_read_units
+
+    if max_write_units is not None:
+        _details['maxWriteUnits'] = max_write_units
+
+    client = cli_util.build_client('nosql', 'nosql', ctx)
+    result = client.create_replica(
+        table_name_or_id=table_name_or_id,
+        create_replica_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @table_group.command(name=cli_util.override('nosql.create_table.command_name', 'create'), help=u"""Create a new table. \n[Command Reference](createTable)""")
 @cli_util.option('--name', required=True, help=u"""Table name.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
@@ -291,6 +360,66 @@ def delete_index(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     result = client.delete_index(
         table_name_or_id=table_name_or_id,
         index_name=index_name,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@table_group.command(name=cli_util.override('nosql.delete_replica.command_name', 'delete-replica'), help=u"""Delete the specified replica table in the remote region. \n[Command Reference](deleteReplica)""")
+@cli_util.option('--table-name-or-id', required=True, help=u"""A table name within the compartment, or a table OCID.""")
+@cli_util.option('--region-parameterconflict', required=True, help=u"""A customer-facing region identifier""")
+@cli_util.option('--compartment-id', help=u"""The ID of a table's compartment. When a table is identified by name, the compartmentId is often needed to provide context for interpreting the name.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_replica(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, table_name_or_id, region_parameterconflict, compartment_id, if_match):
+
+    if isinstance(table_name_or_id, six.string_types) and len(table_name_or_id.strip()) == 0:
+        raise click.UsageError('Parameter --table-name-or-id cannot be whitespace or empty string')
+
+    if isinstance(region_parameterconflict, six.string_types) and len(region_parameterconflict.strip()) == 0:
+        raise click.UsageError('Parameter --region-parameterconflict cannot be whitespace or empty string')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('nosql', 'nosql', ctx)
+    result = client.delete_replica(
+        table_name_or_id=table_name_or_id,
+        region=region_parameterconflict,
         **kwargs
     )
     if wait_for_state:

@@ -4,8 +4,10 @@
 SDK_client_map = {
     "nosql.change_table_compartment": "oci.nosql.NosqlClient.change_table_compartment",
     "nosql.create_index": "oci.nosql.NosqlClient.create_index",
+    "nosql.create_replica": "oci.nosql.NosqlClient.create_replica",
     "nosql.create_table": "oci.nosql.NosqlClient.create_table",
     "nosql.delete_index": "oci.nosql.NosqlClient.delete_index",
+    "nosql.delete_replica": "oci.nosql.NosqlClient.delete_replica",
     "nosql.delete_row": "oci.nosql.NosqlClient.delete_row",
     "nosql.delete_table": "oci.nosql.NosqlClient.delete_table",
     "nosql.delete_work_request": "oci.nosql.NosqlClient.delete_work_request",

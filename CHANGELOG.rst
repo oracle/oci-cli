@@ -6,6 +6,98 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.35.0 - 2023-10-24
+--------------------
+Added
+~~~~~
+* Support for new optional parameters in the list alarms status in the OCI Monitoring Service
+
+  * ``oci monitoring alarm-status list-alarms-status --entity-id, --resource-id, --service-name, --status``
+
+* Add support for creating/updating new connection types in the Goldengate service
+
+  * ``oci goldengate connection create-amazon-kinesis-connection``
+  * ``oci goldengate connection update-amazon-kinesis-connection``
+  * ``oci goldengate connection create-amazon-redshift-connection``
+  * ``oci goldengate connection update-amazon-redshift-connection``
+  * ``oci goldengate connection create-elasticsearch-connection``
+  * ``oci goldengate connection update-elasticsearch-connection``
+  * ``oci goldengate connection create-generic-connection``
+  * ``oci goldengate connection update-generic-connection``
+  * ``oci goldengate connection create-google-big-query-connection``
+  * ``oci goldengate connection update-google-big-query-connection``
+  * ``oci goldengate connection create-google-cloud-storage-connection``
+  * ``oci goldengate connection update-google-cloud-storage-connection``
+  * ``oci goldengate connection create-redis-connection``
+  * ``oci goldengate connection update-redis-connection``
+
+* Support for managing replicas in the NoSQL service
+
+  * ``oci nosql table create-replica``
+  * ``oci nosql table update-replica``
+
+* Application Dependency Management
+
+  * Adds new commands for managing ADM Remediation resources
+
+    * ``oci adm remediation-recipe``
+    * ``oci adm remediation-run``
+    * ``oci adm remediation-run-collection list-remediation-runs``
+    * ``oci adm remediation-run-stage get-stage``
+    * ``oci adm remediation-run-stage-collection list-stages``
+    * ``oci adm application-dependency-recommendation-collection list-application-dependency-recommendations``
+
+  * Fix bug where when creating a Vulnerability Audit, we now wait for the lifecycle state of the audit instead of its Work Request.
+
+* Database Service
+
+  * Support for new optional parameter in autonomous container database
+
+    * ``oci db autonomous-container-database create --is-dst-file-update-enabled``
+    * ``oci db autonomous-container-database update --is-dst-file-update-enabled``
+
+  * Newly added api for creating maintenance run for ACD resources
+
+    * ``oci db maintenance-run create``
+
+* Database Tools
+
+  * Support for the new Generic JDBC connection type
+
+    * ``oci dbtools connection create-generic-jdbc``
+    * ``oci dbtools connection update-generic-jdbc``
+
+  * Support for the new Postgresql connection type
+
+    * ``oci dbtools connection create-postgresql``
+    * ``oci dbtools connection update-postgresql``
+
+  * Support for connections without runtime support on existing connection types
+
+    * ``oci dbtools connection create-oracle-database --runtime-support unsupported``
+    * ``oci dbtools connection create-mysql-database --runtime-support unsupported``
+
+  * Support for connection list filtering using the runtime-support property
+
+    * ``oci dbtools connection list --runtime-support``
+
+  * Support for proxy authentication on Oracle connections
+
+    * ``oci dbtools connection create-oracle-database --proxy-client``
+    * ``oci dbtools connection update-oracle-database --proxy-client``
+
+  *  Support for resource locking
+
+    * ``oci dbtools private-endpoint add-lock``
+    * ``oci dbtools private-endpoint remove-lock``
+
+Changed
+~~~~~~~
+* [BREAKING] New required parameters in the Database Tools Service
+
+  * ``oci dbtools connection create-mysql-database --connection-string --user-name``
+  * ``oci dbtools connection create-oracle-database --connection-string --user-name``
+
 3.34.0 - 2023-10-17
 --------------------
 Added

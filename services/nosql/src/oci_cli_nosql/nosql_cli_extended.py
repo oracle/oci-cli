@@ -100,3 +100,33 @@ def create_index_extended(ctx, **kwargs):
     del kwargs['index_name']
 
     ctx.invoke(nosql_cli.create_index, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(nosql_cli.create_replica, params_to_exclude=['region_parameterconflict'])
+@nosql_cli.table_group.command(name=nosql_cli.create_replica.name, help=nosql_cli.create_replica.help)
+@cli_util.option('--replica-region', required=True, help=u"""Name of the remote region in standard OCI format, i.e. us-ashburn-1 [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def create_replica_extended(ctx, **kwargs):
+
+    if 'replica_region' in kwargs:
+        kwargs['region_parameterconflict'] = kwargs['replica_region']
+        kwargs.pop('replica_region')
+
+    ctx.invoke(nosql_cli.create_replica, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(nosql_cli.delete_replica, params_to_exclude=['region_parameterconflict'])
+@nosql_cli.table_group.command(name=nosql_cli.delete_replica.name, help=nosql_cli.delete_replica.help)
+@cli_util.option('--replica-region', required=True, help=u"""A customer-facing region identifier [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_replica_extended(ctx, **kwargs):
+
+    if 'replica_region' in kwargs:
+        kwargs['region_parameterconflict'] = kwargs['replica_region']
+        kwargs.pop('replica_region')
+
+    ctx.invoke(nosql_cli.delete_replica, **kwargs)

@@ -22,15 +22,57 @@ def adm_root_group():
     pass
 
 
+@click.command(cli_util.override('adm.remediation_recipe_collection_group.command_name', 'remediation-recipe-collection'), cls=CommandGroupWithAlias, help="""Collection of remediation recipe summaries.""")
+@cli_util.help_option_group
+def remediation_recipe_collection_group():
+    pass
+
+
+@click.command(cli_util.override('adm.application_dependency_recommendation_collection_group.command_name', 'application-dependency-recommendation-collection'), cls=CommandGroupWithAlias, help="""A collection of recommended application dependency changes. Each element consists of an application dependency and its recommendation.""")
+@cli_util.help_option_group
+def application_dependency_recommendation_collection_group():
+    pass
+
+
+@click.command(cli_util.override('adm.remediation_recipe_group.command_name', 'remediation-recipe'), cls=CommandGroupWithAlias, help="""An Application Dependency Management (ADM) remediation recipe contains the basic configuration and the details of each of the remediation stages (Detect, Recommend, Verify, and Apply).""")
+@cli_util.help_option_group
+def remediation_recipe_group():
+    pass
+
+
+@click.command(cli_util.override('adm.remediation_run_stage_group.command_name', 'remediation-run-stage'), cls=CommandGroupWithAlias, help="""A remediation run stage is one step of an remediation run. Each stage provides output logs and has a specific type. The stages are: DETECT, RECOMMEND, VERIFY, and APPLY.""")
+@cli_util.help_option_group
+def remediation_run_stage_group():
+    pass
+
+
+@click.command(cli_util.override('adm.remediation_run_group.command_name', 'remediation-run'), cls=CommandGroupWithAlias, help="""A remediation run represents an execution of a Remediation Recipe to detect and fix vulnerabilities based on current state of the Vulnerabilities curated in the Knowledge Base. A Run can be triggered manually or when a new CVE is discovered.""")
+@cli_util.help_option_group
+def remediation_run_group():
+    pass
+
+
 @click.command(cli_util.override('adm.work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""An error encountered while executing a work request.""")
 @cli_util.help_option_group
 def work_request_error_group():
     pass
 
 
-@click.command(cli_util.override('adm.knowledge_base_group.command_name', 'knowledge-base'), cls=CommandGroupWithAlias, help="""A Knowledge Base is a component of Application Dependency Management that contains vulnerability audits.""")
+@click.command(cli_util.override('adm.knowledge_base_group.command_name', 'knowledge-base'), cls=CommandGroupWithAlias, help="""A knowledge base is a component of Application Dependency Management (ADM) service that provides access to vulnerabilities.""")
 @cli_util.help_option_group
 def knowledge_base_group():
+    pass
+
+
+@click.command(cli_util.override('adm.remediation_run_stage_collection_group.command_name', 'remediation-run-stage-collection'), cls=CommandGroupWithAlias, help="""Collection of remediation run stage summaries.""")
+@cli_util.help_option_group
+def remediation_run_stage_collection_group():
+    pass
+
+
+@click.command(cli_util.override('adm.remediation_run_collection_group.command_name', 'remediation-run-collection'), cls=CommandGroupWithAlias, help="""Collection of remediation run summaries.""")
+@cli_util.help_option_group
+def remediation_run_collection_group():
     pass
 
 
@@ -46,17 +88,126 @@ def work_request_group():
     pass
 
 
-@click.command(cli_util.override('adm.vulnerability_audit_group.command_name', 'vulnerability-audit'), cls=CommandGroupWithAlias, help="""A Vulnerability Audit associates the Application Dependencies of a project with their associated Vulnerabilities. Each Vulnerability is associated with a score (Common Vulnerability Scoring System V2 or V3). A vulnerable Application Dependency can be ignored based on the configuration of the Vulnerability Audit. maxObservedCvssV2Score, maxObservedCvssV3Score and vulnerableArtifactsCount do not take into account non-vulnerable Application Dependency.""")
+@click.command(cli_util.override('adm.vulnerability_audit_group.command_name', 'vulnerability-audit'), cls=CommandGroupWithAlias, help="""A vulnerability audit associates the application dependencies of a project with their associated Vulnerabilities. Each Vulnerability is associated with a score (Common Vulnerability Scoring System V2 or V3). A vulnerable application dependency can be ignored based on the configuration of the vulnerability audit. maxObservedCvssV2Score, maxObservedCvssV3Score and vulnerableArtifactsCount do not take into account non-vulnerable application dependency.""")
 @cli_util.help_option_group
 def vulnerability_audit_group():
     pass
 
 
+adm_root_group.add_command(remediation_recipe_collection_group)
+adm_root_group.add_command(application_dependency_recommendation_collection_group)
+adm_root_group.add_command(remediation_recipe_group)
+adm_root_group.add_command(remediation_run_stage_group)
+adm_root_group.add_command(remediation_run_group)
 adm_root_group.add_command(work_request_error_group)
 adm_root_group.add_command(knowledge_base_group)
+adm_root_group.add_command(remediation_run_stage_collection_group)
+adm_root_group.add_command(remediation_run_collection_group)
 adm_root_group.add_command(work_request_log_entry_group)
 adm_root_group.add_command(work_request_group)
 adm_root_group.add_command(vulnerability_audit_group)
+
+
+@remediation_recipe_group.command(name=cli_util.override('adm.activate_remediation_recipe.command_name', 'activate'), help=u"""Activates the specified Remediation Recipe. \n[Command Reference](activateRemediationRecipe)""")
+@cli_util.option('--remediation-recipe-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of a Remediation Recipe, as a URL path parameter.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def activate_remediation_recipe(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_recipe_id, if_match):
+
+    if isinstance(remediation_recipe_id, six.string_types) and len(remediation_recipe_id.strip()) == 0:
+        raise click.UsageError('Parameter --remediation-recipe-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.activate_remediation_recipe(
+        remediation_recipe_id=remediation_recipe_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@remediation_run_group.command(name=cli_util.override('adm.cancel_remediation_run.command_name', 'cancel'), help=u"""Cancels the specified remediation run. \n[Command Reference](cancelRemediationRun)""")
+@cli_util.option('--remediation-run-id', required=True, help=u"""Unique Remediation Run identifier path parameter.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "CANCELED", "CANCELING", "FAILED", "IN_PROGRESS", "SUCCEEDED", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'adm', 'class': 'RemediationRun'})
+@cli_util.wrap_exceptions
+def cancel_remediation_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_run_id, if_match):
+
+    if isinstance(remediation_run_id, six.string_types) and len(remediation_run_id.strip()) == 0:
+        raise click.UsageError('Parameter --remediation-run-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.cancel_remediation_run(
+        remediation_run_id=remediation_run_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_remediation_run') and callable(getattr(client, 'get_remediation_run')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_remediation_run(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
 
 
 @work_request_group.command(name=cli_util.override('adm.cancel_work_request.command_name', 'cancel'), help=u"""Cancel work request with the given ID. \n[Command Reference](cancelWorkRequest)""")
@@ -87,7 +238,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
 @knowledge_base_group.command(name=cli_util.override('adm.change_knowledge_base_compartment.command_name', 'change-compartment'), help=u"""Moves a Knowledge Base from one compartment to another. \n[Command Reference](changeKnowledgeBaseCompartment)""")
 @cli_util.option('--knowledge-base-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of a Knowledge Base, as a URL path parameter.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to which the resource must be moved.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment Oracle Cloud Identifier ([OCID]) to which the resource must be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -142,6 +293,94 @@ def change_knowledge_base_compartment(ctx, from_json, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
+@remediation_recipe_group.command(name=cli_util.override('adm.change_remediation_recipe_compartment.command_name', 'change-compartment'), help=u"""Moves a Remediation Recipe from one compartment to another. \n[Command Reference](changeRemediationRecipeCompartment)""")
+@cli_util.option('--remediation-recipe-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of a Remediation Recipe, as a URL path parameter.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment Oracle Cloud Identifier ([OCID]) to which the resource must be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_remediation_recipe_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_recipe_id, compartment_id, if_match):
+
+    if isinstance(remediation_recipe_id, six.string_types) and len(remediation_recipe_id.strip()) == 0:
+        raise click.UsageError('Parameter --remediation-recipe-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.change_remediation_recipe_compartment(
+        remediation_recipe_id=remediation_recipe_id,
+        change_remediation_recipe_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@remediation_run_group.command(name=cli_util.override('adm.change_remediation_run_compartment.command_name', 'change-compartment'), help=u"""Moves a remediation run from one compartment to another. \n[Command Reference](changeRemediationRunCompartment)""")
+@cli_util.option('--remediation-run-id', required=True, help=u"""Unique Remediation Run identifier path parameter.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment Oracle Cloud Identifier ([OCID]) to which the resource must be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_remediation_run_compartment(ctx, from_json, remediation_run_id, compartment_id, if_match):
+
+    if isinstance(remediation_run_id, six.string_types) and len(remediation_run_id.strip()) == 0:
+        raise click.UsageError('Parameter --remediation-run-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.change_remediation_run_compartment(
+        remediation_run_id=remediation_run_id,
+        change_remediation_run_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @vulnerability_audit_group.command(name=cli_util.override('adm.change_vulnerability_audit_compartment.command_name', 'change-compartment'), help=u"""Moves a Vulnerability Audit from one compartment to another. \n[Command Reference](changeVulnerabilityAuditCompartment)""")
 @cli_util.option('--vulnerability-audit-id', required=True, help=u"""Unique Vulnerability Audit identifier path parameter.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to which the resource must be moved.""")
@@ -174,8 +413,8 @@ def change_vulnerability_audit_compartment(ctx, from_json, vulnerability_audit_i
 
 
 @knowledge_base_group.command(name=cli_util.override('adm.create_knowledge_base.command_name', 'create'), help=u"""Creates a new Knowledge Base. \n[Command Reference](createKnowledgeBase)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of the Knowledge Base's compartment.""")
-@cli_util.option('--display-name', help=u"""The name of the Knowledge Base.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment Oracle Cloud Identifier ([OCID]) of the knowledge base.""")
+@cli_util.option('--display-name', help=u"""The name of the knowledge base.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -234,15 +473,737 @@ def create_knowledge_base(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
+@remediation_recipe_group.command(name=cli_util.override('adm.create_remediation_recipe.command_name', 'create'), help=u"""Creates a new Remediation Recipe. \n[Command Reference](createRemediationRecipe)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment Oracle Cloud Identifier ([OCID]) of the remediation recipe.""")
+@cli_util.option('--scm-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--verify-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detect-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--knowledge-base-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of the knowledge base.""")
+@cli_util.option('--is-run-triggered-on-kb-change', required=True, type=click.BOOL, help=u"""Boolean indicating if a run should be automatically triggered once the knowledge base is updated.""")
+@cli_util.option('--display-name', help=u"""The name of the remediation recipe.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'scm-configuration': {'module': 'adm', 'class': 'ScmConfiguration'}, 'verify-configuration': {'module': 'adm', 'class': 'VerifyConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scm-configuration': {'module': 'adm', 'class': 'ScmConfiguration'}, 'verify-configuration': {'module': 'adm', 'class': 'VerifyConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def create_remediation_recipe(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, scm_configuration, verify_configuration, detect_configuration, network_configuration, knowledge_base_id, is_run_triggered_on_kb_change, display_name, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['scmConfiguration'] = cli_util.parse_json_parameter("scm_configuration", scm_configuration)
+    _details['verifyConfiguration'] = cli_util.parse_json_parameter("verify_configuration", verify_configuration)
+    _details['detectConfiguration'] = cli_util.parse_json_parameter("detect_configuration", detect_configuration)
+    _details['networkConfiguration'] = cli_util.parse_json_parameter("network_configuration", network_configuration)
+    _details['knowledgeBaseId'] = knowledge_base_id
+    _details['isRunTriggeredOnKbChange'] = is_run_triggered_on_kb_change
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.create_remediation_recipe(
+        create_remediation_recipe_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@remediation_recipe_group.command(name=cli_util.override('adm.create_remediation_recipe_oci_code_repository_configuration.command_name', 'create-remediation-recipe-oci-code-repository-configuration'), help=u"""Creates a new Remediation Recipe. \n[Command Reference](createRemediationRecipe)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment Oracle Cloud Identifier ([OCID]) of the remediation recipe.""")
+@cli_util.option('--verify-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detect-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--knowledge-base-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of the knowledge base.""")
+@cli_util.option('--is-run-triggered-on-kb-change', required=True, type=click.BOOL, help=u"""Boolean indicating if a run should be automatically triggered once the knowledge base is updated.""")
+@cli_util.option('--scm-configuration-branch', required=True, help=u"""The branch used by ADM to patch vulnerabilities.""")
+@cli_util.option('--scm-configuration-is-automerge-enabled', required=True, type=click.BOOL, help=u"""If true, the Pull Request (PR) will be merged after the verify stage completes successfully If false, the PR with the proposed changes must be reviewed and manually merged.""")
+@cli_util.option('--scm-configuration-oci-code-repository-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of the OCI DevOps repository.""")
+@cli_util.option('--display-name', help=u"""The name of the remediation recipe.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--scm-configuration-build-file-location', help=u"""The location of the build file relative to the root of the repository. Only Maven build files (POM) are currently supported. If this property is not specified, ADM will use the build file located at the root of the repository.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'verify-configuration': {'module': 'adm', 'class': 'VerifyConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'verify-configuration': {'module': 'adm', 'class': 'VerifyConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def create_remediation_recipe_oci_code_repository_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, verify_configuration, detect_configuration, network_configuration, knowledge_base_id, is_run_triggered_on_kb_change, scm_configuration_branch, scm_configuration_is_automerge_enabled, scm_configuration_oci_code_repository_id, display_name, freeform_tags, defined_tags, scm_configuration_build_file_location):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['scmConfiguration'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['verifyConfiguration'] = cli_util.parse_json_parameter("verify_configuration", verify_configuration)
+    _details['detectConfiguration'] = cli_util.parse_json_parameter("detect_configuration", detect_configuration)
+    _details['networkConfiguration'] = cli_util.parse_json_parameter("network_configuration", network_configuration)
+    _details['knowledgeBaseId'] = knowledge_base_id
+    _details['isRunTriggeredOnKbChange'] = is_run_triggered_on_kb_change
+    _details['scmConfiguration']['branch'] = scm_configuration_branch
+    _details['scmConfiguration']['isAutomergeEnabled'] = scm_configuration_is_automerge_enabled
+    _details['scmConfiguration']['ociCodeRepositoryId'] = scm_configuration_oci_code_repository_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if scm_configuration_build_file_location is not None:
+        _details['scmConfiguration']['buildFileLocation'] = scm_configuration_build_file_location
+
+    _details['scmConfiguration']['scmType'] = 'OCI_CODE_REPOSITORY'
+
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.create_remediation_recipe(
+        create_remediation_recipe_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@remediation_recipe_group.command(name=cli_util.override('adm.create_remediation_recipe_external_scm_configuration.command_name', 'create-remediation-recipe-external-scm-configuration'), help=u"""Creates a new Remediation Recipe. \n[Command Reference](createRemediationRecipe)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment Oracle Cloud Identifier ([OCID]) of the remediation recipe.""")
+@cli_util.option('--verify-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detect-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--knowledge-base-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of the knowledge base.""")
+@cli_util.option('--is-run-triggered-on-kb-change', required=True, type=click.BOOL, help=u"""Boolean indicating if a run should be automatically triggered once the knowledge base is updated.""")
+@cli_util.option('--scm-configuration-branch', required=True, help=u"""The branch used by ADM to patch vulnerabilities.""")
+@cli_util.option('--scm-configuration-is-automerge-enabled', required=True, type=click.BOOL, help=u"""If true, the Pull Request (PR) will be merged after the verify stage completes successfully If false, the PR with the proposed changes must be reviewed and manually merged.""")
+@cli_util.option('--scm-configuration-external-scm-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["GITHUB", "GITLAB"]), help=u"""The type of External Source Code Management.""")
+@cli_util.option('--scm-configuration-repository-url', required=True, help=u"""The repository URL for the SCM. For Non-Enterprise GitHub the expected format is https://github.com/[owner]/[repoName] For Enterprise GitHub the expected format is http(s)://[hostname]/api/v3/repos/[owner]/[repoName] For GitLab the expected format is https://gitlab.com/[groupName]/[repoName]""")
+@cli_util.option('--scm-configuration-pat-secret-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of the Private Access Token (PAT) Secret. The secret provides the credentials necessary to authenticate against the SCM.""")
+@cli_util.option('--display-name', help=u"""The name of the remediation recipe.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--scm-configuration-build-file-location', help=u"""The location of the build file relative to the root of the repository. Only Maven build files (POM) are currently supported. If this property is not specified, ADM will use the build file located at the root of the repository.""")
+@cli_util.option('--scm-configuration-username', help=u"""The username for the SCM (to perform operations such as cloning or pushing via HTTP).""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'verify-configuration': {'module': 'adm', 'class': 'VerifyConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'verify-configuration': {'module': 'adm', 'class': 'VerifyConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def create_remediation_recipe_external_scm_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, verify_configuration, detect_configuration, network_configuration, knowledge_base_id, is_run_triggered_on_kb_change, scm_configuration_branch, scm_configuration_is_automerge_enabled, scm_configuration_external_scm_type, scm_configuration_repository_url, scm_configuration_pat_secret_id, display_name, freeform_tags, defined_tags, scm_configuration_build_file_location, scm_configuration_username):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['scmConfiguration'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['verifyConfiguration'] = cli_util.parse_json_parameter("verify_configuration", verify_configuration)
+    _details['detectConfiguration'] = cli_util.parse_json_parameter("detect_configuration", detect_configuration)
+    _details['networkConfiguration'] = cli_util.parse_json_parameter("network_configuration", network_configuration)
+    _details['knowledgeBaseId'] = knowledge_base_id
+    _details['isRunTriggeredOnKbChange'] = is_run_triggered_on_kb_change
+    _details['scmConfiguration']['branch'] = scm_configuration_branch
+    _details['scmConfiguration']['isAutomergeEnabled'] = scm_configuration_is_automerge_enabled
+    _details['scmConfiguration']['externalScmType'] = scm_configuration_external_scm_type
+    _details['scmConfiguration']['repositoryUrl'] = scm_configuration_repository_url
+    _details['scmConfiguration']['patSecretId'] = scm_configuration_pat_secret_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if scm_configuration_build_file_location is not None:
+        _details['scmConfiguration']['buildFileLocation'] = scm_configuration_build_file_location
+
+    if scm_configuration_username is not None:
+        _details['scmConfiguration']['username'] = scm_configuration_username
+
+    _details['scmConfiguration']['scmType'] = 'EXTERNAL_SCM'
+
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.create_remediation_recipe(
+        create_remediation_recipe_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@remediation_recipe_group.command(name=cli_util.override('adm.create_remediation_recipe_jenkins_pipeline_configuration.command_name', 'create-remediation-recipe-jenkins-pipeline-configuration'), help=u"""Creates a new Remediation Recipe. \n[Command Reference](createRemediationRecipe)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment Oracle Cloud Identifier ([OCID]) of the remediation recipe.""")
+@cli_util.option('--scm-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detect-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--knowledge-base-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of the knowledge base.""")
+@cli_util.option('--is-run-triggered-on-kb-change', required=True, type=click.BOOL, help=u"""Boolean indicating if a run should be automatically triggered once the knowledge base is updated.""")
+@cli_util.option('--verify-configuration-username', required=True, help=u"""The username that will be used to authenticate with Jenkins.""")
+@cli_util.option('--verify-configuration-pat-secret-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of the Private Access Token (PAT) Secret. The PAT provides the credentials to access the Jenkins Pipeline.""")
+@cli_util.option('--verify-configuration-jenkins-url', required=True, help=u"""The URL that locates the Jenkins pipeline.""")
+@cli_util.option('--verify-configuration-job-name', required=True, help=u"""The name of the Jenkins pipeline job that identifies the build pipeline.""")
+@cli_util.option('--display-name', help=u"""The name of the remediation recipe.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--verify-configuration-additional-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional key-value pairs passed as parameters to the build service when running an experiment.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'scm-configuration': {'module': 'adm', 'class': 'ScmConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}, 'verify-configuration-additional-parameters': {'module': 'adm', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scm-configuration': {'module': 'adm', 'class': 'ScmConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}, 'verify-configuration-additional-parameters': {'module': 'adm', 'class': 'dict(str, string)'}})
+@cli_util.wrap_exceptions
+def create_remediation_recipe_jenkins_pipeline_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, scm_configuration, detect_configuration, network_configuration, knowledge_base_id, is_run_triggered_on_kb_change, verify_configuration_username, verify_configuration_pat_secret_id, verify_configuration_jenkins_url, verify_configuration_job_name, display_name, freeform_tags, defined_tags, verify_configuration_additional_parameters):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['verifyConfiguration'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['scmConfiguration'] = cli_util.parse_json_parameter("scm_configuration", scm_configuration)
+    _details['detectConfiguration'] = cli_util.parse_json_parameter("detect_configuration", detect_configuration)
+    _details['networkConfiguration'] = cli_util.parse_json_parameter("network_configuration", network_configuration)
+    _details['knowledgeBaseId'] = knowledge_base_id
+    _details['isRunTriggeredOnKbChange'] = is_run_triggered_on_kb_change
+    _details['verifyConfiguration']['username'] = verify_configuration_username
+    _details['verifyConfiguration']['patSecretId'] = verify_configuration_pat_secret_id
+    _details['verifyConfiguration']['jenkinsUrl'] = verify_configuration_jenkins_url
+    _details['verifyConfiguration']['jobName'] = verify_configuration_job_name
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if verify_configuration_additional_parameters is not None:
+        _details['verifyConfiguration']['additionalParameters'] = cli_util.parse_json_parameter("verify_configuration_additional_parameters", verify_configuration_additional_parameters)
+
+    _details['verifyConfiguration']['buildServiceType'] = 'JENKINS_PIPELINE'
+
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.create_remediation_recipe(
+        create_remediation_recipe_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@remediation_recipe_group.command(name=cli_util.override('adm.create_remediation_recipe_none_verify_configuration.command_name', 'create-remediation-recipe-none-verify-configuration'), help=u"""Creates a new Remediation Recipe. \n[Command Reference](createRemediationRecipe)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment Oracle Cloud Identifier ([OCID]) of the remediation recipe.""")
+@cli_util.option('--scm-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detect-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--knowledge-base-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of the knowledge base.""")
+@cli_util.option('--is-run-triggered-on-kb-change', required=True, type=click.BOOL, help=u"""Boolean indicating if a run should be automatically triggered once the knowledge base is updated.""")
+@cli_util.option('--display-name', help=u"""The name of the remediation recipe.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'scm-configuration': {'module': 'adm', 'class': 'ScmConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scm-configuration': {'module': 'adm', 'class': 'ScmConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def create_remediation_recipe_none_verify_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, scm_configuration, detect_configuration, network_configuration, knowledge_base_id, is_run_triggered_on_kb_change, display_name, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['verifyConfiguration'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['scmConfiguration'] = cli_util.parse_json_parameter("scm_configuration", scm_configuration)
+    _details['detectConfiguration'] = cli_util.parse_json_parameter("detect_configuration", detect_configuration)
+    _details['networkConfiguration'] = cli_util.parse_json_parameter("network_configuration", network_configuration)
+    _details['knowledgeBaseId'] = knowledge_base_id
+    _details['isRunTriggeredOnKbChange'] = is_run_triggered_on_kb_change
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['verifyConfiguration']['buildServiceType'] = 'NONE'
+
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.create_remediation_recipe(
+        create_remediation_recipe_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@remediation_recipe_group.command(name=cli_util.override('adm.create_remediation_recipe_oci_dev_ops_build_configuration.command_name', 'create-remediation-recipe-oci-dev-ops-build-configuration'), help=u"""Creates a new Remediation Recipe. \n[Command Reference](createRemediationRecipe)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment Oracle Cloud Identifier ([OCID]) of the remediation recipe.""")
+@cli_util.option('--scm-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detect-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--knowledge-base-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of the knowledge base.""")
+@cli_util.option('--is-run-triggered-on-kb-change', required=True, type=click.BOOL, help=u"""Boolean indicating if a run should be automatically triggered once the knowledge base is updated.""")
+@cli_util.option('--verify-configuration-pipeline-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of the user's DevOps Build Pipeline.""")
+@cli_util.option('--display-name', help=u"""The name of the remediation recipe.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--verify-configuration-additional-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional key-value pairs passed as parameters to the build service when running an experiment.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'scm-configuration': {'module': 'adm', 'class': 'ScmConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}, 'verify-configuration-additional-parameters': {'module': 'adm', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scm-configuration': {'module': 'adm', 'class': 'ScmConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}, 'verify-configuration-additional-parameters': {'module': 'adm', 'class': 'dict(str, string)'}})
+@cli_util.wrap_exceptions
+def create_remediation_recipe_oci_dev_ops_build_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, scm_configuration, detect_configuration, network_configuration, knowledge_base_id, is_run_triggered_on_kb_change, verify_configuration_pipeline_id, display_name, freeform_tags, defined_tags, verify_configuration_additional_parameters):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['verifyConfiguration'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['scmConfiguration'] = cli_util.parse_json_parameter("scm_configuration", scm_configuration)
+    _details['detectConfiguration'] = cli_util.parse_json_parameter("detect_configuration", detect_configuration)
+    _details['networkConfiguration'] = cli_util.parse_json_parameter("network_configuration", network_configuration)
+    _details['knowledgeBaseId'] = knowledge_base_id
+    _details['isRunTriggeredOnKbChange'] = is_run_triggered_on_kb_change
+    _details['verifyConfiguration']['pipelineId'] = verify_configuration_pipeline_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if verify_configuration_additional_parameters is not None:
+        _details['verifyConfiguration']['additionalParameters'] = cli_util.parse_json_parameter("verify_configuration_additional_parameters", verify_configuration_additional_parameters)
+
+    _details['verifyConfiguration']['buildServiceType'] = 'OCI_DEVOPS_BUILD'
+
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.create_remediation_recipe(
+        create_remediation_recipe_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@remediation_recipe_group.command(name=cli_util.override('adm.create_remediation_recipe_git_hub_actions_configuration.command_name', 'create-remediation-recipe-git-hub-actions-configuration'), help=u"""Creates a new Remediation Recipe. \n[Command Reference](createRemediationRecipe)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment Oracle Cloud Identifier ([OCID]) of the remediation recipe.""")
+@cli_util.option('--scm-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detect-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--knowledge-base-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of the knowledge base.""")
+@cli_util.option('--is-run-triggered-on-kb-change', required=True, type=click.BOOL, help=u"""Boolean indicating if a run should be automatically triggered once the knowledge base is updated.""")
+@cli_util.option('--verify-configuration-repository-url', required=True, help=u"""The location of the repository where the GitHub Actions is defined. For Non-Enterprise GitHub the expected format is https://github.com/[owner]/[repoName] For Enterprise GitHub the expected format is http(s)://[hostname]/api/v3/repos/[owner]/[repoName]""")
+@cli_util.option('--verify-configuration-pat-secret-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of the Private Access Token (PAT) Secret. The PAT provides the credentials to access the GitHub Action.""")
+@cli_util.option('--verify-configuration-username', required=True, help=u"""The username that will trigger the GitHub Action.""")
+@cli_util.option('--verify-configuration-workflow-name', required=True, help=u"""The name of the GitHub Actions workflow that defines the build pipeline.""")
+@cli_util.option('--display-name', help=u"""The name of the remediation recipe.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--verify-configuration-additional-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional key-value pairs passed as parameters to the build service when running an experiment.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'scm-configuration': {'module': 'adm', 'class': 'ScmConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}, 'verify-configuration-additional-parameters': {'module': 'adm', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scm-configuration': {'module': 'adm', 'class': 'ScmConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}, 'verify-configuration-additional-parameters': {'module': 'adm', 'class': 'dict(str, string)'}})
+@cli_util.wrap_exceptions
+def create_remediation_recipe_git_hub_actions_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, scm_configuration, detect_configuration, network_configuration, knowledge_base_id, is_run_triggered_on_kb_change, verify_configuration_repository_url, verify_configuration_pat_secret_id, verify_configuration_username, verify_configuration_workflow_name, display_name, freeform_tags, defined_tags, verify_configuration_additional_parameters):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['verifyConfiguration'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['scmConfiguration'] = cli_util.parse_json_parameter("scm_configuration", scm_configuration)
+    _details['detectConfiguration'] = cli_util.parse_json_parameter("detect_configuration", detect_configuration)
+    _details['networkConfiguration'] = cli_util.parse_json_parameter("network_configuration", network_configuration)
+    _details['knowledgeBaseId'] = knowledge_base_id
+    _details['isRunTriggeredOnKbChange'] = is_run_triggered_on_kb_change
+    _details['verifyConfiguration']['repositoryUrl'] = verify_configuration_repository_url
+    _details['verifyConfiguration']['patSecretId'] = verify_configuration_pat_secret_id
+    _details['verifyConfiguration']['username'] = verify_configuration_username
+    _details['verifyConfiguration']['workflowName'] = verify_configuration_workflow_name
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if verify_configuration_additional_parameters is not None:
+        _details['verifyConfiguration']['additionalParameters'] = cli_util.parse_json_parameter("verify_configuration_additional_parameters", verify_configuration_additional_parameters)
+
+    _details['verifyConfiguration']['buildServiceType'] = 'GITHUB_ACTIONS'
+
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.create_remediation_recipe(
+        create_remediation_recipe_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@remediation_recipe_group.command(name=cli_util.override('adm.create_remediation_recipe_git_lab_pipeline_configuration.command_name', 'create-remediation-recipe-git-lab-pipeline-configuration'), help=u"""Creates a new Remediation Recipe. \n[Command Reference](createRemediationRecipe)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment Oracle Cloud Identifier ([OCID]) of the remediation recipe.""")
+@cli_util.option('--scm-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detect-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--knowledge-base-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of the knowledge base.""")
+@cli_util.option('--is-run-triggered-on-kb-change', required=True, type=click.BOOL, help=u"""Boolean indicating if a run should be automatically triggered once the knowledge base is updated.""")
+@cli_util.option('--verify-configuration-repository-url', required=True, help=u"""The location of the Repository where the GitLab Pipeline will be run. The expected format is https://gitlab.com/[groupName]/[repoName]""")
+@cli_util.option('--verify-configuration-username', required=True, help=u"""The username that will trigger the GitLab Pipeline.""")
+@cli_util.option('--verify-configuration-pat-secret-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of the Private Access Token (PAT) Secret. The PAT provides the credentials to access the GitLab pipeline.""")
+@cli_util.option('--verify-configuration-trigger-secret-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of the trigger Secret. The Secret provides access to the trigger for a GitLab pipeline.""")
+@cli_util.option('--display-name', help=u"""The name of the remediation recipe.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--verify-configuration-additional-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional key-value pairs passed as parameters to the build service when running an experiment.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'scm-configuration': {'module': 'adm', 'class': 'ScmConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}, 'verify-configuration-additional-parameters': {'module': 'adm', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scm-configuration': {'module': 'adm', 'class': 'ScmConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}, 'verify-configuration-additional-parameters': {'module': 'adm', 'class': 'dict(str, string)'}})
+@cli_util.wrap_exceptions
+def create_remediation_recipe_git_lab_pipeline_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, scm_configuration, detect_configuration, network_configuration, knowledge_base_id, is_run_triggered_on_kb_change, verify_configuration_repository_url, verify_configuration_username, verify_configuration_pat_secret_id, verify_configuration_trigger_secret_id, display_name, freeform_tags, defined_tags, verify_configuration_additional_parameters):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['verifyConfiguration'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['scmConfiguration'] = cli_util.parse_json_parameter("scm_configuration", scm_configuration)
+    _details['detectConfiguration'] = cli_util.parse_json_parameter("detect_configuration", detect_configuration)
+    _details['networkConfiguration'] = cli_util.parse_json_parameter("network_configuration", network_configuration)
+    _details['knowledgeBaseId'] = knowledge_base_id
+    _details['isRunTriggeredOnKbChange'] = is_run_triggered_on_kb_change
+    _details['verifyConfiguration']['repositoryUrl'] = verify_configuration_repository_url
+    _details['verifyConfiguration']['username'] = verify_configuration_username
+    _details['verifyConfiguration']['patSecretId'] = verify_configuration_pat_secret_id
+    _details['verifyConfiguration']['triggerSecretId'] = verify_configuration_trigger_secret_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if verify_configuration_additional_parameters is not None:
+        _details['verifyConfiguration']['additionalParameters'] = cli_util.parse_json_parameter("verify_configuration_additional_parameters", verify_configuration_additional_parameters)
+
+    _details['verifyConfiguration']['buildServiceType'] = 'GITLAB_PIPELINE'
+
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.create_remediation_recipe(
+        create_remediation_recipe_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@remediation_run_group.command(name=cli_util.override('adm.create_remediation_run.command_name', 'create'), help=u"""Creates a new remediation run. \n[Command Reference](createRemediationRun)""")
+@cli_util.option('--remediation-recipe-id', required=True, help=u"""The Oracle Cloud identifier ([OCID]) of the Remediation Recipe.""")
+@cli_util.option('--display-name', help=u"""The name of the remediation run.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "CANCELED", "CANCELING", "FAILED", "IN_PROGRESS", "SUCCEEDED", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'adm', 'class': 'RemediationRun'})
+@cli_util.wrap_exceptions
+def create_remediation_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_recipe_id, display_name, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['remediationRecipeId'] = remediation_recipe_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.create_remediation_run(
+        create_remediation_run_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_remediation_run') and callable(getattr(client, 'get_remediation_run')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_remediation_run(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @vulnerability_audit_group.command(name=cli_util.override('adm.create_vulnerability_audit.command_name', 'create'), help=u"""Creates a new Vulnerability Audit by providing a tree of Application Dependencies. \n[Command Reference](createVulnerabilityAudit)""")
-@cli_util.option('--knowledge-base-id', required=True, help=u"""The Oracle Cloud identifier ([OCID]) of the Knowledge Base.""")
+@cli_util.option('--knowledge-base-id', required=True, help=u"""The Oracle Cloud identifier ([OCID]) of the knowledge base.""")
 @cli_util.option('--build-type', required=True, help=u"""The type of the build tool.""")
-@cli_util.option('--compartment-id', help=u"""The Oracle Cloud identifier ([OCID]) of the compartment associated with the Vulnerability Audit. If compartment identifier is not provided the compartment of the associated Knowledge Base will be used instead.""")
-@cli_util.option('--application-dependencies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Application Dependencies (without vulnerabilities).
+@cli_util.option('--compartment-id', help=u"""The compartment Oracle Cloud identifier ([OCID]) of the vulnerability audit. If compartment identifier is not provided the compartment of the associated knowledge base will be used instead.""")
+@cli_util.option('--application-dependencies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of application dependencies (without vulnerabilities).
 
 This option is a JSON list with items of type ApplicationDependency.  For documentation on ApplicationDependency please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationdependencymanagement/20220421/datatypes/ApplicationDependency.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""The name of the Vulnerability Audit.""")
+@cli_util.option('--display-name', help=u"""The name of the vulnerability audit.""")
 @cli_util.option('--source', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -319,14 +1280,14 @@ def create_vulnerability_audit(ctx, from_json, wait_for_state, max_wait_seconds,
 
 
 @vulnerability_audit_group.command(name=cli_util.override('adm.create_vulnerability_audit_unknown_source_vulnerability_audit_source.command_name', 'create-vulnerability-audit-unknown-source-vulnerability-audit-source'), help=u"""Creates a new Vulnerability Audit by providing a tree of Application Dependencies. \n[Command Reference](createVulnerabilityAudit)""")
-@cli_util.option('--knowledge-base-id', required=True, help=u"""The Oracle Cloud identifier ([OCID]) of the Knowledge Base.""")
+@cli_util.option('--knowledge-base-id', required=True, help=u"""The Oracle Cloud identifier ([OCID]) of the knowledge base.""")
 @cli_util.option('--build-type', required=True, help=u"""The type of the build tool.""")
-@cli_util.option('--compartment-id', help=u"""The Oracle Cloud identifier ([OCID]) of the compartment associated with the Vulnerability Audit. If compartment identifier is not provided the compartment of the associated Knowledge Base will be used instead.""")
-@cli_util.option('--application-dependencies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Application Dependencies (without vulnerabilities).
+@cli_util.option('--compartment-id', help=u"""The compartment Oracle Cloud identifier ([OCID]) of the vulnerability audit. If compartment identifier is not provided the compartment of the associated knowledge base will be used instead.""")
+@cli_util.option('--application-dependencies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of application dependencies (without vulnerabilities).
 
 This option is a JSON list with items of type ApplicationDependency.  For documentation on ApplicationDependency please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationdependencymanagement/20220421/datatypes/ApplicationDependency.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""The name of the Vulnerability Audit.""")
+@cli_util.option('--display-name', help=u"""The name of the vulnerability audit.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -402,15 +1363,15 @@ def create_vulnerability_audit_unknown_source_vulnerability_audit_source(ctx, fr
 
 
 @vulnerability_audit_group.command(name=cli_util.override('adm.create_vulnerability_audit_oci_resource_vulnerability_audit_source.command_name', 'create-vulnerability-audit-oci-resource-vulnerability-audit-source'), help=u"""Creates a new Vulnerability Audit by providing a tree of Application Dependencies. \n[Command Reference](createVulnerabilityAudit)""")
-@cli_util.option('--knowledge-base-id', required=True, help=u"""The Oracle Cloud identifier ([OCID]) of the Knowledge Base.""")
+@cli_util.option('--knowledge-base-id', required=True, help=u"""The Oracle Cloud identifier ([OCID]) of the knowledge base.""")
 @cli_util.option('--build-type', required=True, help=u"""The type of the build tool.""")
-@cli_util.option('--source-oci-resource-id', required=True, help=u"""The Oracle Cloud identifier ([OCID]) of the OCI resource that triggered the Vulnerability Audit.""")
-@cli_util.option('--compartment-id', help=u"""The Oracle Cloud identifier ([OCID]) of the compartment associated with the Vulnerability Audit. If compartment identifier is not provided the compartment of the associated Knowledge Base will be used instead.""")
-@cli_util.option('--application-dependencies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Application Dependencies (without vulnerabilities).
+@cli_util.option('--source-oci-resource-id', required=True, help=u"""The Oracle Cloud identifier ([OCID]) of the OCI resource that triggered the vulnerability audit.""")
+@cli_util.option('--compartment-id', help=u"""The compartment Oracle Cloud identifier ([OCID]) of the vulnerability audit. If compartment identifier is not provided the compartment of the associated knowledge base will be used instead.""")
+@cli_util.option('--application-dependencies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of application dependencies (without vulnerabilities).
 
 This option is a JSON list with items of type ApplicationDependency.  For documentation on ApplicationDependency please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationdependencymanagement/20220421/datatypes/ApplicationDependency.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""The name of the Vulnerability Audit.""")
+@cli_util.option('--display-name', help=u"""The name of the vulnerability audit.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -487,14 +1448,14 @@ def create_vulnerability_audit_oci_resource_vulnerability_audit_source(ctx, from
 
 
 @vulnerability_audit_group.command(name=cli_util.override('adm.create_vulnerability_audit_external_resource_vulnerability_audit_source.command_name', 'create-vulnerability-audit-external-resource-vulnerability-audit-source'), help=u"""Creates a new Vulnerability Audit by providing a tree of Application Dependencies. \n[Command Reference](createVulnerabilityAudit)""")
-@cli_util.option('--knowledge-base-id', required=True, help=u"""The Oracle Cloud identifier ([OCID]) of the Knowledge Base.""")
+@cli_util.option('--knowledge-base-id', required=True, help=u"""The Oracle Cloud identifier ([OCID]) of the knowledge base.""")
 @cli_util.option('--build-type', required=True, help=u"""The type of the build tool.""")
-@cli_util.option('--compartment-id', help=u"""The Oracle Cloud identifier ([OCID]) of the compartment associated with the Vulnerability Audit. If compartment identifier is not provided the compartment of the associated Knowledge Base will be used instead.""")
-@cli_util.option('--application-dependencies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Application Dependencies (without vulnerabilities).
+@cli_util.option('--compartment-id', help=u"""The compartment Oracle Cloud identifier ([OCID]) of the vulnerability audit. If compartment identifier is not provided the compartment of the associated knowledge base will be used instead.""")
+@cli_util.option('--application-dependencies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of application dependencies (without vulnerabilities).
 
 This option is a JSON list with items of type ApplicationDependency.  For documentation on ApplicationDependency please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationdependencymanagement/20220421/datatypes/ApplicationDependency.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""The name of the Vulnerability Audit.""")
+@cli_util.option('--display-name', help=u"""The name of the vulnerability audit.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -573,6 +1534,57 @@ def create_vulnerability_audit_external_resource_vulnerability_audit_source(ctx,
     cli_util.render_response(result, ctx)
 
 
+@remediation_recipe_group.command(name=cli_util.override('adm.deactivate_remediation_recipe.command_name', 'deactivate'), help=u"""Deactivates the specified Remediation Recipe. \n[Command Reference](deactivateRemediationRecipe)""")
+@cli_util.option('--remediation-recipe-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of a Remediation Recipe, as a URL path parameter.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def deactivate_remediation_recipe(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_recipe_id, if_match):
+
+    if isinstance(remediation_recipe_id, six.string_types) and len(remediation_recipe_id.strip()) == 0:
+        raise click.UsageError('Parameter --remediation-recipe-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.deactivate_remediation_recipe(
+        remediation_recipe_id=remediation_recipe_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @knowledge_base_group.command(name=cli_util.override('adm.delete_knowledge_base.command_name', 'delete'), help=u"""Deletes the specified Knowledge Base. \n[Command Reference](deleteKnowledgeBase)""")
 @cli_util.option('--knowledge-base-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of a Knowledge Base, as a URL path parameter.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -622,6 +1634,122 @@ def delete_knowledge_base(ctx, from_json, wait_for_state, max_wait_seconds, wait
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@remediation_recipe_group.command(name=cli_util.override('adm.delete_remediation_recipe.command_name', 'delete'), help=u"""Deletes the specified Remediation Recipe. \n[Command Reference](deleteRemediationRecipe)""")
+@cli_util.option('--remediation-recipe-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of a Remediation Recipe, as a URL path parameter.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_remediation_recipe(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_recipe_id, if_match):
+
+    if isinstance(remediation_recipe_id, six.string_types) and len(remediation_recipe_id.strip()) == 0:
+        raise click.UsageError('Parameter --remediation-recipe-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.delete_remediation_recipe(
+        remediation_recipe_id=remediation_recipe_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@remediation_run_group.command(name=cli_util.override('adm.delete_remediation_run.command_name', 'delete'), help=u"""Deletes the specified remediation run. \n[Command Reference](deleteRemediationRun)""")
+@cli_util.option('--remediation-run-id', required=True, help=u"""Unique Remediation Run identifier path parameter.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "CANCELED", "CANCELING", "FAILED", "IN_PROGRESS", "SUCCEEDED", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_remediation_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_run_id, if_match):
+
+    if isinstance(remediation_run_id, six.string_types) and len(remediation_run_id.strip()) == 0:
+        raise click.UsageError('Parameter --remediation-run-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.delete_remediation_run(
+        remediation_run_id=remediation_run_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_remediation_run') and callable(getattr(client, 'get_remediation_run')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_remediation_run(remediation_run_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -711,6 +1839,77 @@ def get_knowledge_base(ctx, from_json, knowledge_base_id):
     cli_util.render_response(result, ctx)
 
 
+@remediation_recipe_group.command(name=cli_util.override('adm.get_remediation_recipe.command_name', 'get'), help=u"""Returns the details of the specified RemediationRecipe. \n[Command Reference](getRemediationRecipe)""")
+@cli_util.option('--remediation-recipe-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of a Remediation Recipe, as a URL path parameter.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'adm', 'class': 'RemediationRecipe'})
+@cli_util.wrap_exceptions
+def get_remediation_recipe(ctx, from_json, remediation_recipe_id):
+
+    if isinstance(remediation_recipe_id, six.string_types) and len(remediation_recipe_id.strip()) == 0:
+        raise click.UsageError('Parameter --remediation-recipe-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.get_remediation_recipe(
+        remediation_recipe_id=remediation_recipe_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@remediation_run_group.command(name=cli_util.override('adm.get_remediation_run.command_name', 'get'), help=u"""Returns the details of the specified remediation run. \n[Command Reference](getRemediationRun)""")
+@cli_util.option('--remediation-run-id', required=True, help=u"""Unique Remediation Run identifier path parameter.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'adm', 'class': 'RemediationRun'})
+@cli_util.wrap_exceptions
+def get_remediation_run(ctx, from_json, remediation_run_id):
+
+    if isinstance(remediation_run_id, six.string_types) and len(remediation_run_id.strip()) == 0:
+        raise click.UsageError('Parameter --remediation-run-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.get_remediation_run(
+        remediation_run_id=remediation_run_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@remediation_run_stage_group.command(name=cli_util.override('adm.get_stage.command_name', 'get-stage'), help=u"""Returns the details of the specified Remediation Run Stage. \n[Command Reference](getStage)""")
+@cli_util.option('--remediation-run-id', required=True, help=u"""Unique Remediation Run identifier path parameter.""")
+@cli_util.option('--stage-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DETECT", "RECOMMEND", "VERIFY", "APPLY"]), help=u"""The type of Remediation Run Stage, as a URL path parameter.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'adm', 'class': 'RemediationRunStage'})
+@cli_util.wrap_exceptions
+def get_stage(ctx, from_json, remediation_run_id, stage_type):
+
+    if isinstance(remediation_run_id, six.string_types) and len(remediation_run_id.strip()) == 0:
+        raise click.UsageError('Parameter --remediation-run-id cannot be whitespace or empty string')
+
+    if isinstance(stage_type, six.string_types) and len(stage_type.strip()) == 0:
+        raise click.UsageError('Parameter --stage-type cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.get_stage(
+        remediation_run_id=remediation_run_id,
+        stage_type=stage_type,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @vulnerability_audit_group.command(name=cli_util.override('adm.get_vulnerability_audit.command_name', 'get'), help=u"""Returns the details of the specified Vulnerability Audit. \n[Command Reference](getVulnerabilityAudit)""")
 @cli_util.option('--vulnerability-audit-id', required=True, help=u"""Unique Vulnerability Audit identifier path parameter.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -752,6 +1951,66 @@ def get_work_request(ctx, from_json, work_request_id):
         work_request_id=work_request_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@application_dependency_recommendation_collection_group.command(name=cli_util.override('adm.list_application_dependency_recommendations.command_name', 'list-application-dependency-recommendations'), help=u"""Returns a list of application dependency with their associated recommendations. \n[Command Reference](listApplicationDependencyRecommendations)""")
+@cli_util.option('--remediation-run-id', required=True, help=u"""Unique Remediation Run identifier path parameter.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--gav', help=u"""A filter to return only resources that match the entire GAV (Group Artifact Version) identifier given.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["gav", "nodeId", "dfs", "bfs"]), help=u"""The field to sort by. Only one sort order may be provided. If sort order is dfs, the nodes are returned by going through the application dependency tree in a depth-first manner. Children are sorted based on their GAV property alphabetically (either ascending or descending, depending on the order parameter). Default order is ascending. If sort order is bfs, the nodes are returned by going through the application dependency tree in a breadth-first manner. Children are sorted based on their GAV property alphabetically (either ascending or descending, depending on the order parameter). Default order is ascending. Default order for gav is ascending where ascending corresponds to alphanumerical order. Default order for nodeId is ascending where ascending corresponds to alphanumerical order. Sorting by DFS or BFS cannot be used in conjunction with the following query parameters: \"gav\", \"cvssV2GreaterThanOrEqual\", \"cvssV3GreaterThanOrEqual\" and \"vulnerabilityId\".""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'adm', 'class': 'ApplicationDependencyRecommendationCollection'})
+@cli_util.wrap_exceptions
+def list_application_dependency_recommendations(ctx, from_json, all_pages, page_size, remediation_run_id, limit, page, sort_order, gav, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(remediation_run_id, six.string_types) and len(remediation_run_id.strip()) == 0:
+        raise click.UsageError('Parameter --remediation-run-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if gav is not None:
+        kwargs['gav'] = gav
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_application_dependency_recommendations,
+            remediation_run_id=remediation_run_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_application_dependency_recommendations,
+            limit,
+            page_size,
+            remediation_run_id=remediation_run_id,
+            **kwargs
+        )
+    else:
+        result = client.list_application_dependency_recommendations(
+            remediation_run_id=remediation_run_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -831,14 +2090,14 @@ def list_application_dependency_vulnerabilities(ctx, from_json, all_pages, page_
 
 
 @knowledge_base_group.command(name=cli_util.override('adm.list_knowledge_bases.command_name', 'list'), help=u"""Returns a list of KnowledgeBases based on the specified query parameters. At least id or compartmentId query parameter must be provided. \n[Command Reference](listKnowledgeBases)""")
-@cli_util.option('--id', help=u"""A filter to return only resources that match the specified identifier.""")
+@cli_util.option('--id', help=u"""A filter to return only resources that match the specified identifier. Required only if the compartmentId query parameter is not specified.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["DISPLAY_NAME", "LIFECYCLE_STATE", "TIME_CREATED", "TIME_UPDATED"]), help=u"""The field used to sort Knowledge Bases. Only one sort order is allowed. Default order for _displayName_ is **ascending alphabetical order**. Default order for _lifecyleState_ is the following sequence: **CREATING, ACTIVE, UPDATING, FAILED, DELETING, and DELETED**.Default order for _timeCreated_ is **descending**. Default order for _timeUpdated_ is **descending**.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "FAILED", "DELETING", "DELETED"]), help=u"""A filter to return only Knowledge Bases that match the specified lifecycleState.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
-@cli_util.option('--compartment-id', help=u"""A filter to return only resources that belong to the specified compartment identifier.""")
+@cli_util.option('--compartment-id', help=u"""A filter to return only resources that belong to the specified compartment identifier. Required only if the id query param is not specified.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -892,9 +2151,199 @@ def list_knowledge_bases(ctx, from_json, all_pages, page_size, id, sort_by, life
     cli_util.render_response(result, ctx)
 
 
+@remediation_recipe_collection_group.command(name=cli_util.override('adm.list_remediation_recipes.command_name', 'list-remediation-recipes'), help=u"""Returns a list of Remediation Recipes based on the specified query parameters. The query parameters `compartmentId` or `id` must be provided. \n[Command Reference](listRemediationRecipes)""")
+@cli_util.option('--id', help=u"""A filter to return only resources that match the specified identifier. Required only if the compartmentId query parameter is not specified.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["DISPLAY_NAME", "LIFECYCLE_STATE", "TIME_CREATED", "TIME_UPDATED", "TYPE"]), help=u"""The field used to sort Remediation Recipes. Only one sort order is allowed. Default order for _displayName_ is **ascending alphabetical order**. Default order for _lifecyleState_ is the following sequence: **CREATING, ACTIVE, UPDATING, INACTIVE, FAILED, DELETING, and DELETED**. Default order for _timeCreated_ is **descending**. Default order for _timeUpdated_ is **descending**. Default order for _type_ is the following sequence: **ADM**.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "INACTIVE", "FAILED", "DELETING", "DELETED", "NEEDS_ATTENTION"]), help=u"""A filter to return only Remediation Recipes that match the specified lifecycleState.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
+@cli_util.option('--compartment-id', help=u"""A filter to return only resources that belong to the specified compartment identifier. Required only if the id query param is not specified.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'adm', 'class': 'RemediationRecipeCollection'})
+@cli_util.wrap_exceptions
+def list_remediation_recipes(ctx, from_json, all_pages, page_size, id, sort_by, lifecycle_state, sort_order, display_name, limit, page, compartment_id):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if id is not None:
+        kwargs['id'] = id
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_remediation_recipes,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_remediation_recipes,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_remediation_recipes(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@remediation_run_collection_group.command(name=cli_util.override('adm.list_remediation_runs.command_name', 'list-remediation-runs'), help=u"""Returns a list of remediation runs contained by a compartment. The query parameter `compartmentId` is required unless the query parameter `id` is specified. \n[Command Reference](listRemediationRuns)""")
+@cli_util.option('--id', help=u"""A filter to return only resources that match the specified identifier. Required only if the compartmentId query parameter is not specified.""")
+@cli_util.option('--remediation-recipe-id', help=u"""A filter to return only resources that match the specified Remediation Recipe identifier.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "CANCELED", "CANCELING", "FAILED", "IN_PROGRESS", "SUCCEEDED", "DELETING", "DELETED"]), help=u"""A filter to return only Remediation Runs that match the specified lifecycleState.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "timeFinished", "timeStarted", "displayName", "lifecycleState", "currentStageType"]), help=u"""The field used to sort Remediation Runs. Only one sort order is allowed. Default order for _timeCreated_ is **descending**. Default order for _timeFinished_ is **descending**. Default order for _timeStarted_ is **descending**. Default order for _displayName_ is **ascending alphabetical order**. Default order for _lifecycleState_ is the following sequence: **CREATING, ACTIVE, UPDATING, DELETING, DELETED, and FAILED**. Default order for currentStageType is the following sequence: **DETECT, RECOMMEND, VERIFY, and APPLY**.""")
+@cli_util.option('--compartment-id', help=u"""A filter to return only resources that belong to the specified compartment identifier. Required only if the id query param is not specified.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'adm', 'class': 'RemediationRunCollection'})
+@cli_util.wrap_exceptions
+def list_remediation_runs(ctx, from_json, all_pages, page_size, id, remediation_recipe_id, lifecycle_state, display_name, sort_order, sort_by, compartment_id, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if id is not None:
+        kwargs['id'] = id
+    if remediation_recipe_id is not None:
+        kwargs['remediation_recipe_id'] = remediation_recipe_id
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_remediation_runs,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_remediation_runs,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_remediation_runs(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@remediation_run_stage_collection_group.command(name=cli_util.override('adm.list_stages.command_name', 'list-stages'), help=u"""Returns a list of Remediation Run Stages based on the specified query parameters and Remediation Run identifier. \n[Command Reference](listStages)""")
+@cli_util.option('--remediation-run-id', required=True, help=u"""Unique Remediation Run identifier path parameter.""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["DETECT", "RECOMMEND", "VERIFY", "APPLY"]), help=u"""A filter to return only Stages that match the specified type.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "IN_PROGRESS", "SUCCEEDED", "FAILED", "CANCELING", "CANCELED"]), help=u"""A filter to return only Stages that match the specified status.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["status", "timeCreated", "timeFinished", "timeStarted", "type"]), help=u"""The field used to sort Stages. Only one sort order is allowed. Default order for status is the following sequence: **CREATED, IN_PROGRESS, SUCCEEDED, FAILED, CANCELING, and CANCELED**. Default order for _timeCreated_ is **descending**. Default order for _timeFinished_ is **descending**. Default order for _timeStarted_ is **descending**. Default order for _type_ is the following sequence: **DETECT, RECOMMEND, VERIFY, and APPLY**.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'adm', 'class': 'RemediationRunStageCollection'})
+@cli_util.wrap_exceptions
+def list_stages(ctx, from_json, all_pages, page_size, remediation_run_id, type, status, sort_order, limit, page, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(remediation_run_id, six.string_types) and len(remediation_run_id.strip()) == 0:
+        raise click.UsageError('Parameter --remediation-run-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if type is not None:
+        kwargs['type'] = type
+    if status is not None:
+        kwargs['status'] = status
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_stages,
+            remediation_run_id=remediation_run_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_stages,
+            limit,
+            page_size,
+            remediation_run_id=remediation_run_id,
+            **kwargs
+        )
+    else:
+        result = client.list_stages(
+            remediation_run_id=remediation_run_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @vulnerability_audit_group.command(name=cli_util.override('adm.list_vulnerability_audits.command_name', 'list'), help=u"""Returns a list of Vulnerability Audits based on the specified query parameters. At least one of id, compartmentId or knowledgeBaseId query parameter must be provided. \n[Command Reference](listVulnerabilityAudits)""")
-@cli_util.option('--id', help=u"""A filter to return only resources that match the specified identifier.""")
-@cli_util.option('--compartment-id', help=u"""A filter to return only resources that belong to the specified compartment identifier.""")
+@cli_util.option('--id', help=u"""A filter to return only resources that match the specified identifier. Required only if the compartmentId query parameter is not specified.""")
+@cli_util.option('--compartment-id', help=u"""A filter to return only resources that belong to the specified compartment identifier. Required only if the id query param is not specified.""")
 @cli_util.option('--knowledge-base-id', help=u"""A filter to return only Vulnerability Audits that were created against the specified knowledge base.""")
 @cli_util.option('--is-success', type=click.BOOL, help=u"""A filter to return only successful or failed Vulnerability Audits.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), help=u"""A filter to return only Vulnerability Audits that match the specified lifecycleState.""")
@@ -1075,7 +2524,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('adm.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""A filter to return only resources that belong to the specified compartment identifier.""")
+@cli_util.option('--compartment-id', help=u"""A filter to return only resources that belong to the specified compartment identifier. Required only if the id query param is not specified.""")
 @cli_util.option('--work-request-id', help=u"""The identifier of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources that match the specified OperationStatus.""")
 @cli_util.option('--resource-id', help=u"""The Oracle Cloud Identifier ([OCID]) of the resource affected by the work request.""")
@@ -1138,7 +2587,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 
 @knowledge_base_group.command(name=cli_util.override('adm.update_knowledge_base.command_name', 'update'), help=u"""Updates one or more attributes of the specified Knowledge Base. \n[Command Reference](updateKnowledgeBase)""")
 @cli_util.option('--knowledge-base-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of a Knowledge Base, as a URL path parameter.""")
-@cli_util.option('--display-name', help=u"""The name of the Knowledge Base.""")
+@cli_util.option('--display-name', help=u"""The name of the knowledge base.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1208,9 +2657,912 @@ def update_knowledge_base(ctx, from_json, force, wait_for_state, max_wait_second
     cli_util.render_response(result, ctx)
 
 
+@remediation_recipe_group.command(name=cli_util.override('adm.update_remediation_recipe.command_name', 'update'), help=u"""Updates one or more attributes of the specified Remediation Recipe. \n[Command Reference](updateRemediationRecipe)""")
+@cli_util.option('--remediation-recipe-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of a Remediation Recipe, as a URL path parameter.""")
+@cli_util.option('--display-name', help=u"""The name of the remediation recipe.""")
+@cli_util.option('--scm-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--verify-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detect-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--knowledge-base-id', help=u"""The Oracle Cloud Identifier ([OCID]) of the knowledge base.""")
+@cli_util.option('--is-run-triggered-on-kb-change', type=click.BOOL, help=u"""Boolean indicating if a run should be automatically triggered once the knowledge base is updated.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'scm-configuration': {'module': 'adm', 'class': 'ScmConfiguration'}, 'verify-configuration': {'module': 'adm', 'class': 'VerifyConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scm-configuration': {'module': 'adm', 'class': 'ScmConfiguration'}, 'verify-configuration': {'module': 'adm', 'class': 'VerifyConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_remediation_recipe(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_recipe_id, display_name, scm_configuration, verify_configuration, detect_configuration, network_configuration, knowledge_base_id, is_run_triggered_on_kb_change, freeform_tags, defined_tags, if_match):
+
+    if isinstance(remediation_recipe_id, six.string_types) and len(remediation_recipe_id.strip()) == 0:
+        raise click.UsageError('Parameter --remediation-recipe-id cannot be whitespace or empty string')
+    if not force:
+        if scm_configuration or verify_configuration or detect_configuration or network_configuration or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to scm-configuration and verify-configuration and detect-configuration and network-configuration and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if scm_configuration is not None:
+        _details['scmConfiguration'] = cli_util.parse_json_parameter("scm_configuration", scm_configuration)
+
+    if verify_configuration is not None:
+        _details['verifyConfiguration'] = cli_util.parse_json_parameter("verify_configuration", verify_configuration)
+
+    if detect_configuration is not None:
+        _details['detectConfiguration'] = cli_util.parse_json_parameter("detect_configuration", detect_configuration)
+
+    if network_configuration is not None:
+        _details['networkConfiguration'] = cli_util.parse_json_parameter("network_configuration", network_configuration)
+
+    if knowledge_base_id is not None:
+        _details['knowledgeBaseId'] = knowledge_base_id
+
+    if is_run_triggered_on_kb_change is not None:
+        _details['isRunTriggeredOnKbChange'] = is_run_triggered_on_kb_change
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.update_remediation_recipe(
+        remediation_recipe_id=remediation_recipe_id,
+        update_remediation_recipe_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@remediation_recipe_group.command(name=cli_util.override('adm.update_remediation_recipe_oci_code_repository_configuration.command_name', 'update-remediation-recipe-oci-code-repository-configuration'), help=u"""Updates one or more attributes of the specified Remediation Recipe. \n[Command Reference](updateRemediationRecipe)""")
+@cli_util.option('--remediation-recipe-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of a Remediation Recipe, as a URL path parameter.""")
+@cli_util.option('--scm-configuration-branch', required=True, help=u"""The branch used by ADM to patch vulnerabilities.""")
+@cli_util.option('--scm-configuration-is-automerge-enabled', required=True, type=click.BOOL, help=u"""If true, the Pull Request (PR) will be merged after the verify stage completes successfully If false, the PR with the proposed changes must be reviewed and manually merged.""")
+@cli_util.option('--scm-configuration-oci-code-repository-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of the OCI DevOps repository.""")
+@cli_util.option('--display-name', help=u"""The name of the remediation recipe.""")
+@cli_util.option('--verify-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detect-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--knowledge-base-id', help=u"""The Oracle Cloud Identifier ([OCID]) of the knowledge base.""")
+@cli_util.option('--is-run-triggered-on-kb-change', type=click.BOOL, help=u"""Boolean indicating if a run should be automatically triggered once the knowledge base is updated.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--scm-configuration-build-file-location', help=u"""The location of the build file relative to the root of the repository. Only Maven build files (POM) are currently supported. If this property is not specified, ADM will use the build file located at the root of the repository.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'verify-configuration': {'module': 'adm', 'class': 'VerifyConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'verify-configuration': {'module': 'adm', 'class': 'VerifyConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_remediation_recipe_oci_code_repository_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_recipe_id, scm_configuration_branch, scm_configuration_is_automerge_enabled, scm_configuration_oci_code_repository_id, display_name, verify_configuration, detect_configuration, network_configuration, knowledge_base_id, is_run_triggered_on_kb_change, freeform_tags, defined_tags, if_match, scm_configuration_build_file_location):
+
+    if isinstance(remediation_recipe_id, six.string_types) and len(remediation_recipe_id.strip()) == 0:
+        raise click.UsageError('Parameter --remediation-recipe-id cannot be whitespace or empty string')
+    if not force:
+        if verify_configuration or detect_configuration or network_configuration or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to verify-configuration and detect-configuration and network-configuration and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['scmConfiguration'] = {}
+    _details['scmConfiguration']['branch'] = scm_configuration_branch
+    _details['scmConfiguration']['isAutomergeEnabled'] = scm_configuration_is_automerge_enabled
+    _details['scmConfiguration']['ociCodeRepositoryId'] = scm_configuration_oci_code_repository_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if verify_configuration is not None:
+        _details['verifyConfiguration'] = cli_util.parse_json_parameter("verify_configuration", verify_configuration)
+
+    if detect_configuration is not None:
+        _details['detectConfiguration'] = cli_util.parse_json_parameter("detect_configuration", detect_configuration)
+
+    if network_configuration is not None:
+        _details['networkConfiguration'] = cli_util.parse_json_parameter("network_configuration", network_configuration)
+
+    if knowledge_base_id is not None:
+        _details['knowledgeBaseId'] = knowledge_base_id
+
+    if is_run_triggered_on_kb_change is not None:
+        _details['isRunTriggeredOnKbChange'] = is_run_triggered_on_kb_change
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if scm_configuration_build_file_location is not None:
+        _details['scmConfiguration']['buildFileLocation'] = scm_configuration_build_file_location
+
+    _details['scmConfiguration']['scmType'] = 'OCI_CODE_REPOSITORY'
+
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.update_remediation_recipe(
+        remediation_recipe_id=remediation_recipe_id,
+        update_remediation_recipe_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@remediation_recipe_group.command(name=cli_util.override('adm.update_remediation_recipe_external_scm_configuration.command_name', 'update-remediation-recipe-external-scm-configuration'), help=u"""Updates one or more attributes of the specified Remediation Recipe. \n[Command Reference](updateRemediationRecipe)""")
+@cli_util.option('--remediation-recipe-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of a Remediation Recipe, as a URL path parameter.""")
+@cli_util.option('--scm-configuration-branch', required=True, help=u"""The branch used by ADM to patch vulnerabilities.""")
+@cli_util.option('--scm-configuration-is-automerge-enabled', required=True, type=click.BOOL, help=u"""If true, the Pull Request (PR) will be merged after the verify stage completes successfully If false, the PR with the proposed changes must be reviewed and manually merged.""")
+@cli_util.option('--scm-configuration-external-scm-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["GITHUB", "GITLAB"]), help=u"""The type of External Source Code Management.""")
+@cli_util.option('--scm-configuration-repository-url', required=True, help=u"""The repository URL for the SCM. For Non-Enterprise GitHub the expected format is https://github.com/[owner]/[repoName] For Enterprise GitHub the expected format is http(s)://[hostname]/api/v3/repos/[owner]/[repoName] For GitLab the expected format is https://gitlab.com/[groupName]/[repoName]""")
+@cli_util.option('--scm-configuration-pat-secret-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of the Private Access Token (PAT) Secret. The secret provides the credentials necessary to authenticate against the SCM.""")
+@cli_util.option('--display-name', help=u"""The name of the remediation recipe.""")
+@cli_util.option('--verify-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detect-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--knowledge-base-id', help=u"""The Oracle Cloud Identifier ([OCID]) of the knowledge base.""")
+@cli_util.option('--is-run-triggered-on-kb-change', type=click.BOOL, help=u"""Boolean indicating if a run should be automatically triggered once the knowledge base is updated.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--scm-configuration-build-file-location', help=u"""The location of the build file relative to the root of the repository. Only Maven build files (POM) are currently supported. If this property is not specified, ADM will use the build file located at the root of the repository.""")
+@cli_util.option('--scm-configuration-username', help=u"""The username for the SCM (to perform operations such as cloning or pushing via HTTP).""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'verify-configuration': {'module': 'adm', 'class': 'VerifyConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'verify-configuration': {'module': 'adm', 'class': 'VerifyConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_remediation_recipe_external_scm_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_recipe_id, scm_configuration_branch, scm_configuration_is_automerge_enabled, scm_configuration_external_scm_type, scm_configuration_repository_url, scm_configuration_pat_secret_id, display_name, verify_configuration, detect_configuration, network_configuration, knowledge_base_id, is_run_triggered_on_kb_change, freeform_tags, defined_tags, if_match, scm_configuration_build_file_location, scm_configuration_username):
+
+    if isinstance(remediation_recipe_id, six.string_types) and len(remediation_recipe_id.strip()) == 0:
+        raise click.UsageError('Parameter --remediation-recipe-id cannot be whitespace or empty string')
+    if not force:
+        if verify_configuration or detect_configuration or network_configuration or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to verify-configuration and detect-configuration and network-configuration and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['scmConfiguration'] = {}
+    _details['scmConfiguration']['branch'] = scm_configuration_branch
+    _details['scmConfiguration']['isAutomergeEnabled'] = scm_configuration_is_automerge_enabled
+    _details['scmConfiguration']['externalScmType'] = scm_configuration_external_scm_type
+    _details['scmConfiguration']['repositoryUrl'] = scm_configuration_repository_url
+    _details['scmConfiguration']['patSecretId'] = scm_configuration_pat_secret_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if verify_configuration is not None:
+        _details['verifyConfiguration'] = cli_util.parse_json_parameter("verify_configuration", verify_configuration)
+
+    if detect_configuration is not None:
+        _details['detectConfiguration'] = cli_util.parse_json_parameter("detect_configuration", detect_configuration)
+
+    if network_configuration is not None:
+        _details['networkConfiguration'] = cli_util.parse_json_parameter("network_configuration", network_configuration)
+
+    if knowledge_base_id is not None:
+        _details['knowledgeBaseId'] = knowledge_base_id
+
+    if is_run_triggered_on_kb_change is not None:
+        _details['isRunTriggeredOnKbChange'] = is_run_triggered_on_kb_change
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if scm_configuration_build_file_location is not None:
+        _details['scmConfiguration']['buildFileLocation'] = scm_configuration_build_file_location
+
+    if scm_configuration_username is not None:
+        _details['scmConfiguration']['username'] = scm_configuration_username
+
+    _details['scmConfiguration']['scmType'] = 'EXTERNAL_SCM'
+
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.update_remediation_recipe(
+        remediation_recipe_id=remediation_recipe_id,
+        update_remediation_recipe_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@remediation_recipe_group.command(name=cli_util.override('adm.update_remediation_recipe_jenkins_pipeline_configuration.command_name', 'update-remediation-recipe-jenkins-pipeline-configuration'), help=u"""Updates one or more attributes of the specified Remediation Recipe. \n[Command Reference](updateRemediationRecipe)""")
+@cli_util.option('--remediation-recipe-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of a Remediation Recipe, as a URL path parameter.""")
+@cli_util.option('--verify-configuration-username', required=True, help=u"""The username that will be used to authenticate with Jenkins.""")
+@cli_util.option('--verify-configuration-pat-secret-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of the Private Access Token (PAT) Secret. The PAT provides the credentials to access the Jenkins Pipeline.""")
+@cli_util.option('--verify-configuration-jenkins-url', required=True, help=u"""The URL that locates the Jenkins pipeline.""")
+@cli_util.option('--verify-configuration-job-name', required=True, help=u"""The name of the Jenkins pipeline job that identifies the build pipeline.""")
+@cli_util.option('--display-name', help=u"""The name of the remediation recipe.""")
+@cli_util.option('--scm-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detect-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--knowledge-base-id', help=u"""The Oracle Cloud Identifier ([OCID]) of the knowledge base.""")
+@cli_util.option('--is-run-triggered-on-kb-change', type=click.BOOL, help=u"""Boolean indicating if a run should be automatically triggered once the knowledge base is updated.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--verify-configuration-additional-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional key-value pairs passed as parameters to the build service when running an experiment.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'scm-configuration': {'module': 'adm', 'class': 'ScmConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}, 'verify-configuration-additional-parameters': {'module': 'adm', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scm-configuration': {'module': 'adm', 'class': 'ScmConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}, 'verify-configuration-additional-parameters': {'module': 'adm', 'class': 'dict(str, string)'}})
+@cli_util.wrap_exceptions
+def update_remediation_recipe_jenkins_pipeline_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_recipe_id, verify_configuration_username, verify_configuration_pat_secret_id, verify_configuration_jenkins_url, verify_configuration_job_name, display_name, scm_configuration, detect_configuration, network_configuration, knowledge_base_id, is_run_triggered_on_kb_change, freeform_tags, defined_tags, if_match, verify_configuration_additional_parameters):
+
+    if isinstance(remediation_recipe_id, six.string_types) and len(remediation_recipe_id.strip()) == 0:
+        raise click.UsageError('Parameter --remediation-recipe-id cannot be whitespace or empty string')
+    if not force:
+        if scm_configuration or detect_configuration or network_configuration or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to scm-configuration and detect-configuration and network-configuration and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['verifyConfiguration'] = {}
+    _details['verifyConfiguration']['username'] = verify_configuration_username
+    _details['verifyConfiguration']['patSecretId'] = verify_configuration_pat_secret_id
+    _details['verifyConfiguration']['jenkinsUrl'] = verify_configuration_jenkins_url
+    _details['verifyConfiguration']['jobName'] = verify_configuration_job_name
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if scm_configuration is not None:
+        _details['scmConfiguration'] = cli_util.parse_json_parameter("scm_configuration", scm_configuration)
+
+    if detect_configuration is not None:
+        _details['detectConfiguration'] = cli_util.parse_json_parameter("detect_configuration", detect_configuration)
+
+    if network_configuration is not None:
+        _details['networkConfiguration'] = cli_util.parse_json_parameter("network_configuration", network_configuration)
+
+    if knowledge_base_id is not None:
+        _details['knowledgeBaseId'] = knowledge_base_id
+
+    if is_run_triggered_on_kb_change is not None:
+        _details['isRunTriggeredOnKbChange'] = is_run_triggered_on_kb_change
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if verify_configuration_additional_parameters is not None:
+        _details['verifyConfiguration']['additionalParameters'] = cli_util.parse_json_parameter("verify_configuration_additional_parameters", verify_configuration_additional_parameters)
+
+    _details['verifyConfiguration']['buildServiceType'] = 'JENKINS_PIPELINE'
+
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.update_remediation_recipe(
+        remediation_recipe_id=remediation_recipe_id,
+        update_remediation_recipe_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@remediation_recipe_group.command(name=cli_util.override('adm.update_remediation_recipe_none_verify_configuration.command_name', 'update-remediation-recipe-none-verify-configuration'), help=u"""Updates one or more attributes of the specified Remediation Recipe. \n[Command Reference](updateRemediationRecipe)""")
+@cli_util.option('--remediation-recipe-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of a Remediation Recipe, as a URL path parameter.""")
+@cli_util.option('--display-name', help=u"""The name of the remediation recipe.""")
+@cli_util.option('--scm-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detect-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--knowledge-base-id', help=u"""The Oracle Cloud Identifier ([OCID]) of the knowledge base.""")
+@cli_util.option('--is-run-triggered-on-kb-change', type=click.BOOL, help=u"""Boolean indicating if a run should be automatically triggered once the knowledge base is updated.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'scm-configuration': {'module': 'adm', 'class': 'ScmConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scm-configuration': {'module': 'adm', 'class': 'ScmConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_remediation_recipe_none_verify_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_recipe_id, display_name, scm_configuration, detect_configuration, network_configuration, knowledge_base_id, is_run_triggered_on_kb_change, freeform_tags, defined_tags, if_match):
+
+    if isinstance(remediation_recipe_id, six.string_types) and len(remediation_recipe_id.strip()) == 0:
+        raise click.UsageError('Parameter --remediation-recipe-id cannot be whitespace or empty string')
+    if not force:
+        if scm_configuration or detect_configuration or network_configuration or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to scm-configuration and detect-configuration and network-configuration and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['verifyConfiguration'] = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if scm_configuration is not None:
+        _details['scmConfiguration'] = cli_util.parse_json_parameter("scm_configuration", scm_configuration)
+
+    if detect_configuration is not None:
+        _details['detectConfiguration'] = cli_util.parse_json_parameter("detect_configuration", detect_configuration)
+
+    if network_configuration is not None:
+        _details['networkConfiguration'] = cli_util.parse_json_parameter("network_configuration", network_configuration)
+
+    if knowledge_base_id is not None:
+        _details['knowledgeBaseId'] = knowledge_base_id
+
+    if is_run_triggered_on_kb_change is not None:
+        _details['isRunTriggeredOnKbChange'] = is_run_triggered_on_kb_change
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['verifyConfiguration']['buildServiceType'] = 'NONE'
+
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.update_remediation_recipe(
+        remediation_recipe_id=remediation_recipe_id,
+        update_remediation_recipe_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@remediation_recipe_group.command(name=cli_util.override('adm.update_remediation_recipe_oci_dev_ops_build_configuration.command_name', 'update-remediation-recipe-oci-dev-ops-build-configuration'), help=u"""Updates one or more attributes of the specified Remediation Recipe. \n[Command Reference](updateRemediationRecipe)""")
+@cli_util.option('--remediation-recipe-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of a Remediation Recipe, as a URL path parameter.""")
+@cli_util.option('--verify-configuration-pipeline-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of the user's DevOps Build Pipeline.""")
+@cli_util.option('--display-name', help=u"""The name of the remediation recipe.""")
+@cli_util.option('--scm-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detect-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--knowledge-base-id', help=u"""The Oracle Cloud Identifier ([OCID]) of the knowledge base.""")
+@cli_util.option('--is-run-triggered-on-kb-change', type=click.BOOL, help=u"""Boolean indicating if a run should be automatically triggered once the knowledge base is updated.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--verify-configuration-additional-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional key-value pairs passed as parameters to the build service when running an experiment.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'scm-configuration': {'module': 'adm', 'class': 'ScmConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}, 'verify-configuration-additional-parameters': {'module': 'adm', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scm-configuration': {'module': 'adm', 'class': 'ScmConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}, 'verify-configuration-additional-parameters': {'module': 'adm', 'class': 'dict(str, string)'}})
+@cli_util.wrap_exceptions
+def update_remediation_recipe_oci_dev_ops_build_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_recipe_id, verify_configuration_pipeline_id, display_name, scm_configuration, detect_configuration, network_configuration, knowledge_base_id, is_run_triggered_on_kb_change, freeform_tags, defined_tags, if_match, verify_configuration_additional_parameters):
+
+    if isinstance(remediation_recipe_id, six.string_types) and len(remediation_recipe_id.strip()) == 0:
+        raise click.UsageError('Parameter --remediation-recipe-id cannot be whitespace or empty string')
+    if not force:
+        if scm_configuration or detect_configuration or network_configuration or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to scm-configuration and detect-configuration and network-configuration and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['verifyConfiguration'] = {}
+    _details['verifyConfiguration']['pipelineId'] = verify_configuration_pipeline_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if scm_configuration is not None:
+        _details['scmConfiguration'] = cli_util.parse_json_parameter("scm_configuration", scm_configuration)
+
+    if detect_configuration is not None:
+        _details['detectConfiguration'] = cli_util.parse_json_parameter("detect_configuration", detect_configuration)
+
+    if network_configuration is not None:
+        _details['networkConfiguration'] = cli_util.parse_json_parameter("network_configuration", network_configuration)
+
+    if knowledge_base_id is not None:
+        _details['knowledgeBaseId'] = knowledge_base_id
+
+    if is_run_triggered_on_kb_change is not None:
+        _details['isRunTriggeredOnKbChange'] = is_run_triggered_on_kb_change
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if verify_configuration_additional_parameters is not None:
+        _details['verifyConfiguration']['additionalParameters'] = cli_util.parse_json_parameter("verify_configuration_additional_parameters", verify_configuration_additional_parameters)
+
+    _details['verifyConfiguration']['buildServiceType'] = 'OCI_DEVOPS_BUILD'
+
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.update_remediation_recipe(
+        remediation_recipe_id=remediation_recipe_id,
+        update_remediation_recipe_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@remediation_recipe_group.command(name=cli_util.override('adm.update_remediation_recipe_git_hub_actions_configuration.command_name', 'update-remediation-recipe-git-hub-actions-configuration'), help=u"""Updates one or more attributes of the specified Remediation Recipe. \n[Command Reference](updateRemediationRecipe)""")
+@cli_util.option('--remediation-recipe-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of a Remediation Recipe, as a URL path parameter.""")
+@cli_util.option('--verify-configuration-repository-url', required=True, help=u"""The location of the repository where the GitHub Actions is defined. For Non-Enterprise GitHub the expected format is https://github.com/[owner]/[repoName] For Enterprise GitHub the expected format is http(s)://[hostname]/api/v3/repos/[owner]/[repoName]""")
+@cli_util.option('--verify-configuration-pat-secret-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of the Private Access Token (PAT) Secret. The PAT provides the credentials to access the GitHub Action.""")
+@cli_util.option('--verify-configuration-username', required=True, help=u"""The username that will trigger the GitHub Action.""")
+@cli_util.option('--verify-configuration-workflow-name', required=True, help=u"""The name of the GitHub Actions workflow that defines the build pipeline.""")
+@cli_util.option('--display-name', help=u"""The name of the remediation recipe.""")
+@cli_util.option('--scm-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detect-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--knowledge-base-id', help=u"""The Oracle Cloud Identifier ([OCID]) of the knowledge base.""")
+@cli_util.option('--is-run-triggered-on-kb-change', type=click.BOOL, help=u"""Boolean indicating if a run should be automatically triggered once the knowledge base is updated.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--verify-configuration-additional-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional key-value pairs passed as parameters to the build service when running an experiment.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'scm-configuration': {'module': 'adm', 'class': 'ScmConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}, 'verify-configuration-additional-parameters': {'module': 'adm', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scm-configuration': {'module': 'adm', 'class': 'ScmConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}, 'verify-configuration-additional-parameters': {'module': 'adm', 'class': 'dict(str, string)'}})
+@cli_util.wrap_exceptions
+def update_remediation_recipe_git_hub_actions_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_recipe_id, verify_configuration_repository_url, verify_configuration_pat_secret_id, verify_configuration_username, verify_configuration_workflow_name, display_name, scm_configuration, detect_configuration, network_configuration, knowledge_base_id, is_run_triggered_on_kb_change, freeform_tags, defined_tags, if_match, verify_configuration_additional_parameters):
+
+    if isinstance(remediation_recipe_id, six.string_types) and len(remediation_recipe_id.strip()) == 0:
+        raise click.UsageError('Parameter --remediation-recipe-id cannot be whitespace or empty string')
+    if not force:
+        if scm_configuration or detect_configuration or network_configuration or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to scm-configuration and detect-configuration and network-configuration and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['verifyConfiguration'] = {}
+    _details['verifyConfiguration']['repositoryUrl'] = verify_configuration_repository_url
+    _details['verifyConfiguration']['patSecretId'] = verify_configuration_pat_secret_id
+    _details['verifyConfiguration']['username'] = verify_configuration_username
+    _details['verifyConfiguration']['workflowName'] = verify_configuration_workflow_name
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if scm_configuration is not None:
+        _details['scmConfiguration'] = cli_util.parse_json_parameter("scm_configuration", scm_configuration)
+
+    if detect_configuration is not None:
+        _details['detectConfiguration'] = cli_util.parse_json_parameter("detect_configuration", detect_configuration)
+
+    if network_configuration is not None:
+        _details['networkConfiguration'] = cli_util.parse_json_parameter("network_configuration", network_configuration)
+
+    if knowledge_base_id is not None:
+        _details['knowledgeBaseId'] = knowledge_base_id
+
+    if is_run_triggered_on_kb_change is not None:
+        _details['isRunTriggeredOnKbChange'] = is_run_triggered_on_kb_change
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if verify_configuration_additional_parameters is not None:
+        _details['verifyConfiguration']['additionalParameters'] = cli_util.parse_json_parameter("verify_configuration_additional_parameters", verify_configuration_additional_parameters)
+
+    _details['verifyConfiguration']['buildServiceType'] = 'GITHUB_ACTIONS'
+
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.update_remediation_recipe(
+        remediation_recipe_id=remediation_recipe_id,
+        update_remediation_recipe_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@remediation_recipe_group.command(name=cli_util.override('adm.update_remediation_recipe_git_lab_pipeline_configuration.command_name', 'update-remediation-recipe-git-lab-pipeline-configuration'), help=u"""Updates one or more attributes of the specified Remediation Recipe. \n[Command Reference](updateRemediationRecipe)""")
+@cli_util.option('--remediation-recipe-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of a Remediation Recipe, as a URL path parameter.""")
+@cli_util.option('--verify-configuration-repository-url', required=True, help=u"""The location of the Repository where the GitLab Pipeline will be run. The expected format is https://gitlab.com/[groupName]/[repoName]""")
+@cli_util.option('--verify-configuration-username', required=True, help=u"""The username that will trigger the GitLab Pipeline.""")
+@cli_util.option('--verify-configuration-pat-secret-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of the Private Access Token (PAT) Secret. The PAT provides the credentials to access the GitLab pipeline.""")
+@cli_util.option('--verify-configuration-trigger-secret-id', required=True, help=u"""The Oracle Cloud Identifier ([OCID]) of the trigger Secret. The Secret provides access to the trigger for a GitLab pipeline.""")
+@cli_util.option('--display-name', help=u"""The name of the remediation recipe.""")
+@cli_util.option('--scm-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detect-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--knowledge-base-id', help=u"""The Oracle Cloud Identifier ([OCID]) of the knowledge base.""")
+@cli_util.option('--is-run-triggered-on-kb-change', type=click.BOOL, help=u"""Boolean indicating if a run should be automatically triggered once the knowledge base is updated.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--verify-configuration-additional-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional key-value pairs passed as parameters to the build service when running an experiment.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'scm-configuration': {'module': 'adm', 'class': 'ScmConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}, 'verify-configuration-additional-parameters': {'module': 'adm', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scm-configuration': {'module': 'adm', 'class': 'ScmConfiguration'}, 'detect-configuration': {'module': 'adm', 'class': 'DetectConfiguration'}, 'network-configuration': {'module': 'adm', 'class': 'NetworkConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}, 'verify-configuration-additional-parameters': {'module': 'adm', 'class': 'dict(str, string)'}})
+@cli_util.wrap_exceptions
+def update_remediation_recipe_git_lab_pipeline_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_recipe_id, verify_configuration_repository_url, verify_configuration_username, verify_configuration_pat_secret_id, verify_configuration_trigger_secret_id, display_name, scm_configuration, detect_configuration, network_configuration, knowledge_base_id, is_run_triggered_on_kb_change, freeform_tags, defined_tags, if_match, verify_configuration_additional_parameters):
+
+    if isinstance(remediation_recipe_id, six.string_types) and len(remediation_recipe_id.strip()) == 0:
+        raise click.UsageError('Parameter --remediation-recipe-id cannot be whitespace or empty string')
+    if not force:
+        if scm_configuration or detect_configuration or network_configuration or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to scm-configuration and detect-configuration and network-configuration and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['verifyConfiguration'] = {}
+    _details['verifyConfiguration']['repositoryUrl'] = verify_configuration_repository_url
+    _details['verifyConfiguration']['username'] = verify_configuration_username
+    _details['verifyConfiguration']['patSecretId'] = verify_configuration_pat_secret_id
+    _details['verifyConfiguration']['triggerSecretId'] = verify_configuration_trigger_secret_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if scm_configuration is not None:
+        _details['scmConfiguration'] = cli_util.parse_json_parameter("scm_configuration", scm_configuration)
+
+    if detect_configuration is not None:
+        _details['detectConfiguration'] = cli_util.parse_json_parameter("detect_configuration", detect_configuration)
+
+    if network_configuration is not None:
+        _details['networkConfiguration'] = cli_util.parse_json_parameter("network_configuration", network_configuration)
+
+    if knowledge_base_id is not None:
+        _details['knowledgeBaseId'] = knowledge_base_id
+
+    if is_run_triggered_on_kb_change is not None:
+        _details['isRunTriggeredOnKbChange'] = is_run_triggered_on_kb_change
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if verify_configuration_additional_parameters is not None:
+        _details['verifyConfiguration']['additionalParameters'] = cli_util.parse_json_parameter("verify_configuration_additional_parameters", verify_configuration_additional_parameters)
+
+    _details['verifyConfiguration']['buildServiceType'] = 'GITLAB_PIPELINE'
+
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.update_remediation_recipe(
+        remediation_recipe_id=remediation_recipe_id,
+        update_remediation_recipe_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@remediation_run_group.command(name=cli_util.override('adm.update_remediation_run.command_name', 'update'), help=u"""Updates by identifier one or more attributes of the specified remediation run. \n[Command Reference](updateRemediationRun)""")
+@cli_util.option('--remediation-run-id', required=True, help=u"""Unique Remediation Run identifier path parameter.""")
+@cli_util.option('--display-name', help=u"""The name of the remediation run.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "CANCELED", "CANCELING", "FAILED", "IN_PROGRESS", "SUCCEEDED", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'adm', 'class': 'RemediationRun'})
+@cli_util.wrap_exceptions
+def update_remediation_run(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_run_id, display_name, freeform_tags, defined_tags, if_match):
+
+    if isinstance(remediation_run_id, six.string_types) and len(remediation_run_id.strip()) == 0:
+        raise click.UsageError('Parameter --remediation-run-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.update_remediation_run(
+        remediation_run_id=remediation_run_id,
+        update_remediation_run_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_remediation_run') and callable(getattr(client, 'get_remediation_run')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_remediation_run(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @vulnerability_audit_group.command(name=cli_util.override('adm.update_vulnerability_audit.command_name', 'update'), help=u"""Updates one or more attributes of the specified Vulnerability Audit. \n[Command Reference](updateVulnerabilityAudit)""")
 @cli_util.option('--vulnerability-audit-id', required=True, help=u"""Unique Vulnerability Audit identifier path parameter.""")
-@cli_util.option('--display-name', help=u"""The name of the Vulnerability Audit.""")
+@cli_util.option('--display-name', help=u"""The name of the vulnerability audit.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
