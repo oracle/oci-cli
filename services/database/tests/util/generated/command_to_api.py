@@ -56,6 +56,7 @@ SDK_client_map = {
     "db.create_external_non_container_database": "oci.database.DatabaseClient.create_external_non_container_database",
     "db.create_external_pluggable_database": "oci.database.DatabaseClient.create_external_pluggable_database",
     "db.create_key_store": "oci.database.DatabaseClient.create_key_store",
+    "db.create_maintenance_run": "oci.database.DatabaseClient.create_maintenance_run",
     "db.create_oneoff_patch": "oci.database.DatabaseClient.create_oneoff_patch",
     "db.create_pluggable_database": "oci.database.DatabaseClient.create_pluggable_database",
     "db.create_vm_cluster": "oci.database.DatabaseClient.create_vm_cluster",

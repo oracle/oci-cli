@@ -233,6 +233,10 @@ goldengate_cli.deployment_backup_group.commands.pop(goldengate_cli.cancel_deploy
 cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_backup_group, goldengate_cli.cancel_deployment_backup_default_cancel_deployment_backup_details, "cancel")
 
 
+# oci goldengate deployment collect-deployment-diagnostic -> oci goldengate deployment collect-diagnostics
+cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_group, goldengate_cli.collect_deployment_diagnostic, "collect-diagnostics")
+
+
 # oci goldengate connection create-connection-create-golden-gate-connection-details -> oci goldengate connection create-goldengate-connection
 cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_golden_gate_connection_details, "create-goldengate-connection")
 
@@ -311,29 +315,6 @@ def update_connection_update_oci_object_storage_connection_details_extended(ctx,
     ctx.invoke(goldengate_cli.update_connection_update_oci_object_storage_connection_details, **kwargs)
 
 
-# oci goldengate deployment collect-deployment-diagnostic -> oci goldengate deployment collect-diagnostics
-cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_group, goldengate_cli.collect_deployment_diagnostic, "collect-diagnostics")
-
-# oci goldengate deployment deployment-wallet-exists-default-deployment-wallet-exists-details -> oci goldengate deployment wallet-exists
-cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_group, goldengate_cli.deployment_wallet_exists_default_deployment_wallet_exists_details, "wallet-exists")
-
-
-# oci goldengate deployment export-deployment-wallet -> oci goldengate deployment export-wallet
-cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_group, goldengate_cli.export_deployment_wallet, "export-wallet")
-
-
-# oci goldengate deployment import-deployment-wallet -> oci goldengate deployment import-wallet
-cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_group, goldengate_cli.import_deployment_wallet, "import-wallet")
-
-
-# oci goldengate deployment-wallets-operation-summary list-deployment-wallets-operations -> oci goldengate deployment-wallets-operation-summary list-wallet-operations
-cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_wallets_operation_summary_group, goldengate_cli.list_deployment_wallets_operations, "list-wallet-operations")
-
-
-# Remove deployment-wallet-exists from oci goldengate deployment
-goldengate_cli.deployment_group.commands.pop(goldengate_cli.deployment_wallet_exists.name)
-
-
 # oci goldengate deployment upgrade-deployment-upgrade-deployment-specific-release-details -> oci goldengate deployment upgrade-to
 cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_group, goldengate_cli.upgrade_deployment_upgrade_deployment_specific_release_details, "upgrade-to")
 
@@ -360,6 +341,26 @@ cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_version_collec
 
 # oci goldengate deployment-version-collection -> oci goldengate deployment-version
 cli_util.rename_command(goldengate_cli, goldengate_cli.goldengate_root_group, goldengate_cli.deployment_version_collection_group, "deployment-version")
+
+# oci goldengate deployment deployment-wallet-exists-default-deployment-wallet-exists-details -> oci goldengate deployment wallet-exists
+cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_group, goldengate_cli.deployment_wallet_exists_default_deployment_wallet_exists_details, "wallet-exists")
+
+
+# oci goldengate deployment export-deployment-wallet -> oci goldengate deployment export-wallet
+cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_group, goldengate_cli.export_deployment_wallet, "export-wallet")
+
+
+# oci goldengate deployment import-deployment-wallet -> oci goldengate deployment import-wallet
+cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_group, goldengate_cli.import_deployment_wallet, "import-wallet")
+
+
+# oci goldengate deployment-wallets-operation-summary list-deployment-wallets-operations -> oci goldengate deployment-wallets-operation-summary list-wallet-operations
+cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_wallets_operation_summary_group, goldengate_cli.list_deployment_wallets_operations, "list-wallet-operations")
+
+
+# Remove deployment-wallet-exists from oci goldengate deployment
+goldengate_cli.deployment_group.commands.pop(goldengate_cli.deployment_wallet_exists.name)
+
 
 # oci goldengate connection create-connection-create-azure-data-lake-storage-connection-details -> oci goldengate connection create-azure-data-lake-storage-connection
 cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_azure_data_lake_storage_connection_details, "create-azure-data-lake-storage-connection")
@@ -519,3 +520,75 @@ cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_upgrade_group,
 
 # oci goldengate deployment-upgrade reschedule-deployment-upgrade-reschedule-deployment-upgrade-to-date-details -> oci goldengate deployment-upgrade reschedule
 cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_upgrade_group, goldengate_cli.reschedule_deployment_upgrade_reschedule_deployment_upgrade_to_date_details, "reschedule")
+
+
+# oci goldengate connection create-connection-create-amazon-kinesis-connection-details -> oci goldengate connection create-amazon-kinesis-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_amazon_kinesis_connection_details, "create-amazon-kinesis-connection")
+
+
+# oci goldengate connection create-connection-create-amazon-redshift-connection-details -> oci goldengate connection create-amazon-redshift-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_amazon_redshift_connection_details, "create-amazon-redshift-connection")
+
+
+# oci goldengate connection create-connection-create-cassandra-connection-details -> oci goldengate connection create-cassandra-connection
+# cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_cassandra_connection_details, "create-cassandra-connection")
+
+
+# oci goldengate connection create-connection-create-db2-connection-details -> oci goldengate connection create-db2-connection
+# cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_db2_connection_details, "create-db2-connection")
+
+
+# oci goldengate connection create-connection-create-elasticsearch-connection-details -> oci goldengate connection create-elasticsearch-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_elasticsearch_connection_details, "create-elasticsearch-connection")
+
+
+# oci goldengate connection create-connection-create-generic-connection-details -> oci goldengate connection create-generic-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_generic_connection_details, "create-generic-connection")
+
+
+# oci goldengate connection create-connection-create-google-big-query-connection-details -> oci goldengate connection create-google-big-query-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_google_big_query_connection_details, "create-google-big-query-connection")
+
+
+# oci goldengate connection create-connection-create-google-cloud-storage-connection-details -> oci goldengate connection create-google-cloud-storage-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_google_cloud_storage_connection_details, "create-google-cloud-storage-connection")
+
+
+# oci goldengate connection create-connection-create-redis-connection-details -> oci goldengate connection create-redis-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_redis_connection_details, "create-redis-connection")
+
+
+# oci goldengate connection update-connection-update-amazon-kinesis-connection-details -> oci goldengate connection update-amazon-kinesis-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_amazon_kinesis_connection_details, "update-amazon-kinesis-connection")
+
+
+# oci goldengate connection update-connection-update-amazon-redshift-connection-details -> oci goldengate connection update-amazon-redshift-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_amazon_redshift_connection_details, "update-amazon-redshift-connection")
+
+
+# oci goldengate connection update-connection-update-cassandra-connection-details -> oci goldengate connection update-cassandra-connection
+# cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_cassandra_connection_details, "update-cassandra-connection")
+
+
+# oci goldengate connection update-connection-update-db2-connection-details -> oci goldengate connection update-db2-connection
+# cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_db2_connection_details, "update-db2-connection")
+
+
+# oci goldengate connection update-connection-update-elasticsearch-connection-details -> oci goldengate connection update-elasticsearch-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_elasticsearch_connection_details, "update-elasticsearch-connection")
+
+
+# oci goldengate connection update-connection-update-generic-connection-details -> oci goldengate connection update-generic-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_generic_connection_details, "update-generic-connection")
+
+
+# oci goldengate connection update-connection-update-google-big-query-connection-details -> oci goldengate connection update-google-big-query-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_google_big_query_connection_details, "update-google-big-query-connection")
+
+
+# oci goldengate connection update-connection-update-google-cloud-storage-connection-details -> oci goldengate connection update-google-cloud-storage-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_google_cloud_storage_connection_details, "update-google-cloud-storage-connection")
+
+
+# oci goldengate connection update-connection-update-redis-connection-details -> oci goldengate connection update-redis-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_redis_connection_details, "update-redis-connection")
