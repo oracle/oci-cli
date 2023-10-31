@@ -122,3 +122,101 @@ def create_dr_plan_execution_switchover_precheck_execution_option_details_extend
         kwargs.pop('warnings_ignored')
 
     ctx.invoke(disasterrecovery_cli.create_dr_plan_execution_switchover_precheck_execution_option_details, **kwargs)
+
+
+# oci disaster-recovery dr-plan-execution create-dr-plan-execution-start-drill-execution-option-details -> oci disaster-recovery dr-plan-execution create-start-drill
+cli_util.rename_command(disasterrecovery_cli, disasterrecovery_cli.dr_plan_execution_group, disasterrecovery_cli.create_dr_plan_execution_start_drill_execution_option_details, "create-start-drill")
+
+
+# oci disaster-recovery dr-plan-execution create-dr-plan-execution-start-drill-precheck-execution-option-details -> oci disaster-recovery dr-plan-execution create-start-drill-precheck
+cli_util.rename_command(disasterrecovery_cli, disasterrecovery_cli.dr_plan_execution_group, disasterrecovery_cli.create_dr_plan_execution_start_drill_precheck_execution_option_details, "create-start-drill-precheck")
+
+
+# oci disaster-recovery dr-plan-execution create-dr-plan-execution-stop-drill-execution-option-details -> oci disaster-recovery dr-plan-execution create-stop-drill
+cli_util.rename_command(disasterrecovery_cli, disasterrecovery_cli.dr_plan_execution_group, disasterrecovery_cli.create_dr_plan_execution_stop_drill_execution_option_details, "create-stop-drill")
+
+
+# oci disaster-recovery dr-plan-execution create-dr-plan-execution-stop-drill-precheck-execution-option-details -> oci disaster-recovery dr-plan-execution create-stop-drill-precheck
+cli_util.rename_command(disasterrecovery_cli, disasterrecovery_cli.dr_plan_execution_group, disasterrecovery_cli.create_dr_plan_execution_stop_drill_precheck_execution_option_details, "create-stop-drill-precheck")
+
+
+@cli_util.copy_params_from_generated_command(disasterrecovery_cli.create_dr_plan_execution_start_drill_execution_option_details, params_to_exclude=['execution_options_are_prechecks_enabled', 'execution_options_are_warnings_ignored'])
+@disasterrecovery_cli.dr_plan_execution_group.command(name=disasterrecovery_cli.create_dr_plan_execution_start_drill_execution_option_details.name, help=disasterrecovery_cli.create_dr_plan_execution_start_drill_execution_option_details.help)
+@cli_util.option('--prechecks-enabled', type=click.BOOL, help=u"""A flag indicating whether prechecks should be executed before the plan execution.
+
+Example: `false`""")
+@cli_util.option('--warnings-ignored', type=click.BOOL, help=u"""A flag indicating whether warnings should be ignored during the plan execution.
+
+Example: `true`""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'disaster_recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'disaster_recovery', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'disaster_recovery', 'class': 'DrPlanExecution'})
+@cli_util.wrap_exceptions
+def create_dr_plan_execution_start_drill_execution_option_details_extended(ctx, **kwargs):
+
+    if 'prechecks_enabled' in kwargs:
+        kwargs['execution_options_are_prechecks_enabled'] = kwargs['prechecks_enabled']
+        kwargs.pop('prechecks_enabled')
+
+    if 'warnings_ignored' in kwargs:
+        kwargs['execution_options_are_warnings_ignored'] = kwargs['warnings_ignored']
+        kwargs.pop('warnings_ignored')
+
+    ctx.invoke(disasterrecovery_cli.create_dr_plan_execution_start_drill_execution_option_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(disasterrecovery_cli.create_dr_plan_execution_start_drill_precheck_execution_option_details, params_to_exclude=['execution_options_are_warnings_ignored'])
+@disasterrecovery_cli.dr_plan_execution_group.command(name=disasterrecovery_cli.create_dr_plan_execution_start_drill_precheck_execution_option_details.name, help=disasterrecovery_cli.create_dr_plan_execution_start_drill_precheck_execution_option_details.help)
+@cli_util.option('--warnings-ignored', type=click.BOOL, help=u"""A flag indicating whether warnings should be ignored during the precheck.
+
+Example: `true`""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'disaster_recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'disaster_recovery', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'disaster_recovery', 'class': 'DrPlanExecution'})
+@cli_util.wrap_exceptions
+def create_dr_plan_execution_start_drill_precheck_execution_option_details_extended(ctx, **kwargs):
+
+    if 'warnings_ignored' in kwargs:
+        kwargs['execution_options_are_warnings_ignored'] = kwargs['warnings_ignored']
+        kwargs.pop('warnings_ignored')
+
+    ctx.invoke(disasterrecovery_cli.create_dr_plan_execution_start_drill_precheck_execution_option_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(disasterrecovery_cli.create_dr_plan_execution_stop_drill_execution_option_details, params_to_exclude=['execution_options_are_prechecks_enabled', 'execution_options_are_warnings_ignored'])
+@disasterrecovery_cli.dr_plan_execution_group.command(name=disasterrecovery_cli.create_dr_plan_execution_stop_drill_execution_option_details.name, help=disasterrecovery_cli.create_dr_plan_execution_stop_drill_execution_option_details.help)
+@cli_util.option('--prechecks-enabled', type=click.BOOL, help=u"""A flag indicating whether prechecks should be executed before the plan execution.
+
+Example: `false`""")
+@cli_util.option('--warnings-ignored', type=click.BOOL, help=u"""A flag indicating whether warnings should be ignored during the plan execution.
+
+Example: `true`""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'disaster_recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'disaster_recovery', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'disaster_recovery', 'class': 'DrPlanExecution'})
+@cli_util.wrap_exceptions
+def create_dr_plan_execution_stop_drill_execution_option_details_extended(ctx, **kwargs):
+
+    if 'prechecks_enabled' in kwargs:
+        kwargs['execution_options_are_prechecks_enabled'] = kwargs['prechecks_enabled']
+        kwargs.pop('prechecks_enabled')
+
+    if 'warnings_ignored' in kwargs:
+        kwargs['execution_options_are_warnings_ignored'] = kwargs['warnings_ignored']
+        kwargs.pop('warnings_ignored')
+
+    ctx.invoke(disasterrecovery_cli.create_dr_plan_execution_stop_drill_execution_option_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(disasterrecovery_cli.create_dr_plan_execution_stop_drill_precheck_execution_option_details, params_to_exclude=['execution_options_are_warnings_ignored'])
+@disasterrecovery_cli.dr_plan_execution_group.command(name=disasterrecovery_cli.create_dr_plan_execution_stop_drill_precheck_execution_option_details.name, help=disasterrecovery_cli.create_dr_plan_execution_stop_drill_precheck_execution_option_details.help)
+@cli_util.option('--warnings-ignored', type=click.BOOL, help=u"""A flag indicating whether warnings should be ignored during the precheck.
+
+Example: `true`""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'disaster_recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'disaster_recovery', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'disaster_recovery', 'class': 'DrPlanExecution'})
+@cli_util.wrap_exceptions
+def create_dr_plan_execution_stop_drill_precheck_execution_option_details_extended(ctx, **kwargs):
+
+    if 'warnings_ignored' in kwargs:
+        kwargs['execution_options_are_warnings_ignored'] = kwargs['warnings_ignored']
+        kwargs.pop('warnings_ignored')
+
+    ctx.invoke(disasterrecovery_cli.create_dr_plan_execution_stop_drill_precheck_execution_option_details, **kwargs)

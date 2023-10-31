@@ -187,3 +187,106 @@ cli_util.rename_command(datasafe_cli, datasafe_cli.audit_policy_analytic_collect
 
 # oci data-safe audit-policy-analytic-collection -> oci data-safe audit-policy-analytics
 cli_util.rename_command(datasafe_cli, datasafe_cli.data_safe_root_group, datasafe_cli.audit_policy_analytic_collection_group, "audit-policy-analytics")
+
+
+# oci data-safe database-security-config-collection list-database-security-configs -> oci data-safe database-security-config-collection list
+cli_util.rename_command(datasafe_cli, datasafe_cli.database_security_config_collection_group, datasafe_cli.list_database_security_configs, "list")
+
+
+# oci data-safe security-policy-collection list-security-policies -> oci data-safe security-policy-collection list
+cli_util.rename_command(datasafe_cli, datasafe_cli.security_policy_collection_group, datasafe_cli.list_security_policies, "list")
+
+
+# oci data-safe security-policy-deployment-collection list-security-policy-deployments -> oci data-safe security-policy-deployment-collection list
+cli_util.rename_command(datasafe_cli, datasafe_cli.security_policy_deployment_collection_group, datasafe_cli.list_security_policy_deployments, "list")
+
+
+# oci data-safe security-policy-entry-state-collection list-security-policy-entry-states -> oci data-safe security-policy-entry-state-collection list
+cli_util.rename_command(datasafe_cli, datasafe_cli.security_policy_entry_state_collection_group, datasafe_cli.list_security_policy_entry_states, "list")
+
+
+# oci data-safe sql-collection-analytics-collection list-sql-collection-analytics -> oci data-safe sql-collection-analytics-collection list
+cli_util.rename_command(datasafe_cli, datasafe_cli.sql_collection_analytics_collection_group, datasafe_cli.list_sql_collection_analytics, "list")
+
+
+# oci data-safe sql-collection-analytics-collection -> oci data-safe sql-collection-analytics
+cli_util.rename_command(datasafe_cli, datasafe_cli.data_safe_root_group, datasafe_cli.sql_collection_analytics_collection_group, "sql-collection-analytics")
+
+
+# oci data-safe sql-collection-collection list-sql-collections -> oci data-safe sql-collection-collection list
+cli_util.rename_command(datasafe_cli, datasafe_cli.sql_collection_collection_group, datasafe_cli.list_sql_collections, "list")
+
+
+# oci data-safe sql-collection-log-insights-collection list-sql-collection-log-insights -> oci data-safe sql-collection-log-insights-collection list
+cli_util.rename_command(datasafe_cli, datasafe_cli.sql_collection_log_insights_collection_group, datasafe_cli.list_sql_collection_log_insights, "list")
+
+
+# oci data-safe sql-collection-log-insights-collection -> oci data-safe sql-collection-log-insights
+cli_util.rename_command(datasafe_cli, datasafe_cli.data_safe_root_group, datasafe_cli.sql_collection_log_insights_collection_group, "sql-collection-log-insights")
+
+
+# oci data-safe sql-firewall-allowed-sql-analytics-collection list-sql-firewall-allowed-sql-analytics -> oci data-safe sql-firewall-allowed-sql-analytics-collection list
+cli_util.rename_command(datasafe_cli, datasafe_cli.sql_firewall_allowed_sql_analytics_collection_group, datasafe_cli.list_sql_firewall_allowed_sql_analytics, "list")
+
+
+# oci data-safe sql-firewall-allowed-sql-analytics-collection -> oci data-safe sql-firewall-allowed-sql-analytics
+cli_util.rename_command(datasafe_cli, datasafe_cli.data_safe_root_group, datasafe_cli.sql_firewall_allowed_sql_analytics_collection_group, "sql-firewall-allowed-sql-analytics")
+
+
+# oci data-safe sql-firewall-allowed-sql-collection list-sql-firewall-allowed-sqls -> oci data-safe sql-firewall-allowed-sql-collection list
+cli_util.rename_command(datasafe_cli, datasafe_cli.sql_firewall_allowed_sql_collection_group, datasafe_cli.list_sql_firewall_allowed_sqls, "list")
+
+
+# oci data-safe sql-firewall-allowed-sql-collection -> oci data-safe sql-firewall-allowed-sql
+cli_util.rename_command(datasafe_cli, datasafe_cli.data_safe_root_group, datasafe_cli.sql_firewall_allowed_sql_collection_group, "sql-firewall-allowed-sql")
+
+
+# oci data-safe sql-firewall-policy-analytics-collection list-sql-firewall-policy-analytics -> oci data-safe sql-firewall-policy-analytics-collection list
+cli_util.rename_command(datasafe_cli, datasafe_cli.sql_firewall_policy_analytics_collection_group, datasafe_cli.list_sql_firewall_policy_analytics, "list")
+
+
+# oci data-safe sql-firewall-policy-analytics-collection -> oci data-safe sql-firewall-policy-analytics
+cli_util.rename_command(datasafe_cli, datasafe_cli.data_safe_root_group, datasafe_cli.sql_firewall_policy_analytics_collection_group, "sql-firewall-policy-analytics")
+
+
+# oci data-safe sql-firewall-policy-collection list-sql-firewall-policies -> oci data-safe sql-firewall-policy-collection list
+cli_util.rename_command(datasafe_cli, datasafe_cli.sql_firewall_policy_collection_group, datasafe_cli.list_sql_firewall_policies, "list")
+
+
+# oci data-safe database-security-config-collection list-database-security-configs -> oci data-safe database-security-config
+datasafe_cli.database_security_config_collection_group.commands.pop(datasafe_cli.list_database_security_configs.name)
+datasafe_cli.database_security_config_group.add_command(datasafe_cli.list_database_security_configs)
+
+
+# oci data-safe security-policy-collection list-security-policies -> oci data-safe security-policy
+datasafe_cli.security_policy_collection_group.commands.pop(datasafe_cli.list_security_policies.name)
+datasafe_cli.security_policy_group.add_command(datasafe_cli.list_security_policies)
+
+
+# oci data-safe security-policy-deployment-collection list-security-policy-deployments -> oci data-safe security-policy-deployment
+datasafe_cli.security_policy_deployment_collection_group.commands.pop(datasafe_cli.list_security_policy_deployments.name)
+datasafe_cli.security_policy_deployment_group.add_command(datasafe_cli.list_security_policy_deployments)
+
+
+# oci data-safe security-policy-entry-state-collection list-security-policy-entry-states -> oci data-safe security-policy-entry-state
+datasafe_cli.security_policy_entry_state_collection_group.commands.pop(datasafe_cli.list_security_policy_entry_states.name)
+datasafe_cli.security_policy_entry_state_group.add_command(datasafe_cli.list_security_policy_entry_states)
+
+
+# oci data-safe sql-collection-collection list-sql-collections -> oci data-safe sql-collection
+datasafe_cli.sql_collection_collection_group.commands.pop(datasafe_cli.list_sql_collections.name)
+datasafe_cli.sql_collection_group.add_command(datasafe_cli.list_sql_collections)
+
+
+# oci data-safe sql-firewall-policy-collection list-sql-firewall-policies -> oci data-safe sql-firewall-policy
+datasafe_cli.sql_firewall_policy_collection_group.commands.pop(datasafe_cli.list_sql_firewall_policies.name)
+datasafe_cli.sql_firewall_policy_group.add_command(datasafe_cli.list_sql_firewall_policies)
+
+
+# removed command-less groups
+datasafe_cli.data_safe_root_group.commands.pop(datasafe_cli.database_security_config_collection_group.name)
+datasafe_cli.data_safe_root_group.commands.pop(datasafe_cli.security_policy_collection_group.name)
+datasafe_cli.data_safe_root_group.commands.pop(datasafe_cli.security_policy_deployment_collection_group.name)
+datasafe_cli.data_safe_root_group.commands.pop(datasafe_cli.security_policy_entry_state_collection_group.name)
+datasafe_cli.data_safe_root_group.commands.pop(datasafe_cli.sql_collection_collection_group.name)
+datasafe_cli.data_safe_root_group.commands.pop(datasafe_cli.sql_firewall_policy_collection_group.name)
