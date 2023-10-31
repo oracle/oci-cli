@@ -16,15 +16,16 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('disaster_recovery.disaster_recovery_root_group.command_name', 'disaster-recovery'), cls=CommandGroupWithAlias, help=cli_util.override('disaster_recovery.disaster_recovery_root_group.help', """Use the Full Stack Disaster Recovery (FSDR) API to manage disaster recovery for business applications.
-FSDR is an OCI disaster recovery orchestration and management service that provides comprehensive disaster recovery
-capabilities for all layers of an application stack, including infrastructure, middleware, database, and application."""), short_help=cli_util.override('disaster_recovery.disaster_recovery_root_group.short_help', """Full Stack Disaster Recovery API"""))
+@cli.command(cli_util.override('disaster_recovery.disaster_recovery_root_group.command_name', 'disaster-recovery'), cls=CommandGroupWithAlias, help=cli_util.override('disaster_recovery.disaster_recovery_root_group.help', """Use the Full Stack Disaster Recovery (DR) API to manage disaster recovery for business applications.
+Full Stack DR is an OCI disaster recovery orchestration and management service that provides comprehensive disaster
+recovery capabilities for all layers of an application stack, including infrastructure, middleware, database,
+and application."""), short_help=cli_util.override('disaster_recovery.disaster_recovery_root_group.short_help', """Full Stack Disaster Recovery API"""))
 @cli_util.help_option_group
 def disaster_recovery_root_group():
     pass
 
 
-@click.command(cli_util.override('disaster_recovery.dr_protection_group_group.command_name', 'dr-protection-group'), cls=CommandGroupWithAlias, help="""Details about a DR Protection Group.""")
+@click.command(cli_util.override('disaster_recovery.dr_protection_group_group.command_name', 'dr-protection-group'), cls=CommandGroupWithAlias, help="""The details of a DR protection group.""")
 @cli_util.help_option_group
 def dr_protection_group_group():
     pass
@@ -36,7 +37,7 @@ def work_request_error_group():
     pass
 
 
-@click.command(cli_util.override('disaster_recovery.dr_plan_execution_group.command_name', 'dr-plan-execution'), cls=CommandGroupWithAlias, help="""The details of a DR Plan Execution.""")
+@click.command(cli_util.override('disaster_recovery.dr_plan_execution_group.command_name', 'dr-plan-execution'), cls=CommandGroupWithAlias, help="""The details of a DR plan execution.""")
 @cli_util.help_option_group
 def dr_plan_execution_group():
     pass
@@ -54,7 +55,7 @@ def work_request_group():
     pass
 
 
-@click.command(cli_util.override('disaster_recovery.dr_plan_group.command_name', 'dr-plan'), cls=CommandGroupWithAlias, help="""The details of a DR Plan.""")
+@click.command(cli_util.override('disaster_recovery.dr_plan_group.command_name', 'dr-plan'), cls=CommandGroupWithAlias, help="""The details of a DR plan.""")
 @cli_util.help_option_group
 def dr_plan_group():
     pass
@@ -68,15 +69,17 @@ disaster_recovery_root_group.add_command(work_request_group)
 disaster_recovery_root_group.add_command(dr_plan_group)
 
 
-@dr_protection_group_group.command(name=cli_util.override('disaster_recovery.associate_dr_protection_group.command_name', 'associate'), help=u"""Create an association between the DR Protection Group identified by *drProtectionGroupId* and another DR Protection Group in a different region. \n[Command Reference](associateDrProtectionGroup)""")
-@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRIMARY", "STANDBY", "UNCONFIGURED"]), help=u"""The role of this DR Protection Group.""")
-@cli_util.option('--dr-protection-group-id', required=True, help=u"""The OCID of the DR Protection Group.
+@dr_protection_group_group.command(name=cli_util.override('disaster_recovery.associate_dr_protection_group.command_name', 'associate'), help=u"""Create an association between the DR protection group identified by *drProtectionGroupId* and another DR protection group. \n[Command Reference](associateDrProtectionGroup)""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRIMARY", "STANDBY", "UNCONFIGURED"]), help=u"""The role of the DR protection group.
 
-Example: `ocid1.drprotectiongroup.oc1.phx.exampleocid`""")
-@cli_util.option('--peer-id', help=u"""The OCID of the peer (remote) DR Protection Group.
+Example: `STANDBY`""")
+@cli_util.option('--dr-protection-group-id', required=True, help=u"""The OCID of the DR protection group.
 
-Example: `ocid1.drprotectiongroup.oc1.iad.&lt;unique_id&gt;`""")
-@cli_util.option('--peer-region', help=u"""The region of the peer (remote) DR Protection Group.
+Example: `ocid1.drprotectiongroup.oc1..uniqueID`""")
+@cli_util.option('--peer-id', help=u"""The OCID of the peer DR protection group.
+
+Example: `ocid1.drprotectiongroup.oc1..uniqueID`""")
+@cli_util.option('--peer-region', help=u"""The region of the peer DR protection group.
 
 Example: `us-ashburn-1`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -139,11 +142,11 @@ def associate_dr_protection_group(ctx, from_json, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.cancel_dr_plan_execution.command_name', 'cancel'), help=u"""Cancel the DR Plan Execution indentified by *drPlanExecutionId*. \n[Command Reference](cancelDrPlanExecution)""")
+@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.cancel_dr_plan_execution.command_name', 'cancel'), help=u"""Cancel the DR plan execution identified by *drPlanExecutionId*. \n[Command Reference](cancelDrPlanExecution)""")
 @cli_util.option('--action-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["CANCEL", "PAUSE", "RESUME"]), help=u"""The type of control action.""")
-@cli_util.option('--dr-plan-execution-id', required=True, help=u"""The OCID of the DR Plan Execution.
+@cli_util.option('--dr-plan-execution-id', required=True, help=u"""The OCID of the DR plan execution.
 
-Example: `ocid1.drplanexecution.oc1.iad.exampleocid`""")
+Example: `ocid1.drplanexecution.oc1..uniqueID`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "CANCELING", "CANCELED", "SUCCEEDED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -203,7 +206,7 @@ def cancel_dr_plan_execution(ctx, from_json, wait_for_state, max_wait_seconds, w
 @work_request_group.command(name=cli_util.override('disaster_recovery.cancel_work_request.command_name', 'cancel'), help=u"""Cancel the work request identified by *workRequestId*. \n[Command Reference](cancelWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID (OCID) of the asynchronous request.
 
-Example: `ocid1.workrequest.oc1.phx.exampleocid`""")
+Example: `ocid1.workrequest.oc1..uniqueID`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -228,13 +231,13 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@dr_protection_group_group.command(name=cli_util.override('disaster_recovery.change_dr_protection_group_compartment.command_name', 'change-compartment'), help=u"""Move the DR Protection Group identified by *drProtectionGroupId* to a different compartment. \n[Command Reference](changeDrProtectionGroupCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to which the DR Protection Group should be moved.
+@dr_protection_group_group.command(name=cli_util.override('disaster_recovery.change_dr_protection_group_compartment.command_name', 'change-compartment'), help=u"""Move the DR protection group identified by *drProtectionGroupId* to a different compartment. \n[Command Reference](changeDrProtectionGroupCompartment)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to which the DR protection group should be moved.
 
-Example: `ocid1.compartment.oc1..&lt;unique_id&gt;`""")
-@cli_util.option('--dr-protection-group-id', required=True, help=u"""The OCID of the DR Protection Group.
+Example: `ocid1.compartment.oc1..uniqueID`""")
+@cli_util.option('--dr-protection-group-id', required=True, help=u"""The OCID of the DR protection group.
 
-Example: `ocid1.drprotectiongroup.oc1.phx.exampleocid`""")
+Example: `ocid1.drprotectiongroup.oc1..uniqueID`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "CANCELING", "CANCELED", "SUCCEEDED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -289,16 +292,20 @@ def change_dr_protection_group_compartment(ctx, from_json, wait_for_state, max_w
     cli_util.render_response(result, ctx)
 
 
-@dr_plan_group.command(name=cli_util.override('disaster_recovery.create_dr_plan.command_name', 'create'), help=u"""Creates a new DR Plan of the specified DR Plan type. \n[Command Reference](createDrPlan)""")
-@cli_util.option('--display-name', required=True, help=u"""The display name of the DR Plan being created.
+@dr_plan_group.command(name=cli_util.override('disaster_recovery.create_dr_plan.command_name', 'create'), help=u"""Create a DR plan of the specified DR plan type. \n[Command Reference](createDrPlan)""")
+@cli_util.option('--display-name', required=True, help=u"""The display name of the DR plan being created.
 
 Example: `EBS Switchover PHX to IAD`""")
-@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SWITCHOVER", "FAILOVER"]), help=u"""The type of DR Plan to be created.""")
-@cli_util.option('--dr-protection-group-id', required=True, help=u"""The OCID of the DR Protection Group to which this DR Plan belongs.
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SWITCHOVER", "FAILOVER", "START_DRILL", "STOP_DRILL"]), help=u"""The type of DR plan to be created.""")
+@cli_util.option('--dr-protection-group-id', required=True, help=u"""The OCID of the DR protection group to which this DR plan belongs.
 
-Example: `ocid1.drprotectiongroup.oc1.iad.&lt;unique_id&gt;`""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+Example: `ocid1.drprotectiongroup.oc1..uniqueID`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace.
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "CANCELING", "CANCELED", "SUCCEEDED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -354,16 +361,20 @@ def create_dr_plan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.create_dr_plan_execution.command_name', 'create'), help=u"""Execute a DR Plan for a DR Protection Group. \n[Command Reference](createDrPlanExecution)""")
-@cli_util.option('--plan-id', required=True, help=u"""The OCID of the DR Plan.
+@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.create_dr_plan_execution.command_name', 'create'), help=u"""Execute a DR plan for a DR protection group. \n[Command Reference](createDrPlanExecution)""")
+@cli_util.option('--plan-id', required=True, help=u"""The OCID of the DR plan.
 
-Example: `ocid1.drplan.oc1.iad.&lt;unique_id&gt;`""")
+Example: `ocid1.drplan.oc1..uniqueID`""")
 @cli_util.option('--execution-options', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""The display name of the DR Plan Execution.
+@cli_util.option('--display-name', help=u"""The display name of the DR plan execution.
 
 Example: `Execution - EBS Switchover PHX to IAD`""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace.
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "CANCELING", "CANCELED", "SUCCEEDED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -421,15 +432,97 @@ def create_dr_plan_execution(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.create_dr_plan_execution_switchover_precheck_execution_option_details.command_name', 'create-dr-plan-execution-switchover-precheck-execution-option-details'), help=u"""Execute a DR Plan for a DR Protection Group. \n[Command Reference](createDrPlanExecution)""")
-@cli_util.option('--plan-id', required=True, help=u"""The OCID of the DR Plan.
+@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.create_dr_plan_execution_stop_drill_precheck_execution_option_details.command_name', 'create-dr-plan-execution-stop-drill-precheck-execution-option-details'), help=u"""Execute a DR plan for a DR protection group. \n[Command Reference](createDrPlanExecution)""")
+@cli_util.option('--plan-id', required=True, help=u"""The OCID of the DR plan.
 
-Example: `ocid1.drplan.oc1.iad.&lt;unique_id&gt;`""")
-@cli_util.option('--display-name', help=u"""The display name of the DR Plan Execution.
+Example: `ocid1.drplan.oc1..uniqueID`""")
+@cli_util.option('--display-name', help=u"""The display name of the DR plan execution.
 
 Example: `Execution - EBS Switchover PHX to IAD`""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace.
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--execution-options-are-warnings-ignored', type=click.BOOL, help=u"""A flag indicating whether warnings should be ignored during the precheck.
+
+Example: `true`""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "CANCELING", "CANCELED", "SUCCEEDED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'disaster_recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'disaster_recovery', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'disaster_recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'disaster_recovery', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'disaster_recovery', 'class': 'DrPlanExecution'})
+@cli_util.wrap_exceptions
+def create_dr_plan_execution_stop_drill_precheck_execution_option_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, plan_id, display_name, freeform_tags, defined_tags, execution_options_are_warnings_ignored):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['executionOptions'] = {}
+    _details['planId'] = plan_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if execution_options_are_warnings_ignored is not None:
+        _details['executionOptions']['areWarningsIgnored'] = execution_options_are_warnings_ignored
+
+    _details['executionOptions']['planExecutionType'] = 'STOP_DRILL_PRECHECK'
+
+    client = cli_util.build_client('disaster_recovery', 'disaster_recovery', ctx)
+    result = client.create_dr_plan_execution(
+        create_dr_plan_execution_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.create_dr_plan_execution_switchover_precheck_execution_option_details.command_name', 'create-dr-plan-execution-switchover-precheck-execution-option-details'), help=u"""Execute a DR plan for a DR protection group. \n[Command Reference](createDrPlanExecution)""")
+@cli_util.option('--plan-id', required=True, help=u"""The OCID of the DR plan.
+
+Example: `ocid1.drplan.oc1..uniqueID`""")
+@cli_util.option('--display-name', help=u"""The display name of the DR plan execution.
+
+Example: `Execution - EBS Switchover PHX to IAD`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace.
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--execution-options-are-warnings-ignored', type=click.BOOL, help=u"""A flag indicating whether warnings should be ignored during the switchover precheck.
 
 Example: `true`""")
@@ -495,15 +588,103 @@ def create_dr_plan_execution_switchover_precheck_execution_option_details(ctx, f
     cli_util.render_response(result, ctx)
 
 
-@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.create_dr_plan_execution_failover_precheck_execution_option_details.command_name', 'create-dr-plan-execution-failover-precheck-execution-option-details'), help=u"""Execute a DR Plan for a DR Protection Group. \n[Command Reference](createDrPlanExecution)""")
-@cli_util.option('--plan-id', required=True, help=u"""The OCID of the DR Plan.
+@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.create_dr_plan_execution_stop_drill_execution_option_details.command_name', 'create-dr-plan-execution-stop-drill-execution-option-details'), help=u"""Execute a DR plan for a DR protection group. \n[Command Reference](createDrPlanExecution)""")
+@cli_util.option('--plan-id', required=True, help=u"""The OCID of the DR plan.
 
-Example: `ocid1.drplan.oc1.iad.&lt;unique_id&gt;`""")
-@cli_util.option('--display-name', help=u"""The display name of the DR Plan Execution.
+Example: `ocid1.drplan.oc1..uniqueID`""")
+@cli_util.option('--display-name', help=u"""The display name of the DR plan execution.
 
 Example: `Execution - EBS Switchover PHX to IAD`""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace.
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--execution-options-are-prechecks-enabled', type=click.BOOL, help=u"""A flag indicating whether prechecks should be executed before the plan execution.
+
+Example: `false`""")
+@cli_util.option('--execution-options-are-warnings-ignored', type=click.BOOL, help=u"""A flag indicating whether warnings should be ignored during the plan execution.
+
+Example: `true`""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "CANCELING", "CANCELED", "SUCCEEDED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'disaster_recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'disaster_recovery', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'disaster_recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'disaster_recovery', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'disaster_recovery', 'class': 'DrPlanExecution'})
+@cli_util.wrap_exceptions
+def create_dr_plan_execution_stop_drill_execution_option_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, plan_id, display_name, freeform_tags, defined_tags, execution_options_are_prechecks_enabled, execution_options_are_warnings_ignored):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['executionOptions'] = {}
+    _details['planId'] = plan_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if execution_options_are_prechecks_enabled is not None:
+        _details['executionOptions']['arePrechecksEnabled'] = execution_options_are_prechecks_enabled
+
+    if execution_options_are_warnings_ignored is not None:
+        _details['executionOptions']['areWarningsIgnored'] = execution_options_are_warnings_ignored
+
+    _details['executionOptions']['planExecutionType'] = 'STOP_DRILL'
+
+    client = cli_util.build_client('disaster_recovery', 'disaster_recovery', ctx)
+    result = client.create_dr_plan_execution(
+        create_dr_plan_execution_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.create_dr_plan_execution_failover_precheck_execution_option_details.command_name', 'create-dr-plan-execution-failover-precheck-execution-option-details'), help=u"""Execute a DR plan for a DR protection group. \n[Command Reference](createDrPlanExecution)""")
+@cli_util.option('--plan-id', required=True, help=u"""The OCID of the DR plan.
+
+Example: `ocid1.drplan.oc1..uniqueID`""")
+@cli_util.option('--display-name', help=u"""The display name of the DR plan execution.
+
+Example: `Execution - EBS Switchover PHX to IAD`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace.
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--execution-options-are-warnings-ignored', type=click.BOOL, help=u"""A flag indicating whether warnings should be ignored during the failover precheck.
 
 Example: `false`""")
@@ -569,15 +750,181 @@ def create_dr_plan_execution_failover_precheck_execution_option_details(ctx, fro
     cli_util.render_response(result, ctx)
 
 
-@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.create_dr_plan_execution_switchover_execution_option_details.command_name', 'create-dr-plan-execution-switchover-execution-option-details'), help=u"""Execute a DR Plan for a DR Protection Group. \n[Command Reference](createDrPlanExecution)""")
-@cli_util.option('--plan-id', required=True, help=u"""The OCID of the DR Plan.
+@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.create_dr_plan_execution_start_drill_execution_option_details.command_name', 'create-dr-plan-execution-start-drill-execution-option-details'), help=u"""Execute a DR plan for a DR protection group. \n[Command Reference](createDrPlanExecution)""")
+@cli_util.option('--plan-id', required=True, help=u"""The OCID of the DR plan.
 
-Example: `ocid1.drplan.oc1.iad.&lt;unique_id&gt;`""")
-@cli_util.option('--display-name', help=u"""The display name of the DR Plan Execution.
+Example: `ocid1.drplan.oc1..uniqueID`""")
+@cli_util.option('--display-name', help=u"""The display name of the DR plan execution.
 
 Example: `Execution - EBS Switchover PHX to IAD`""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace.
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--execution-options-are-prechecks-enabled', type=click.BOOL, help=u"""A flag indicating whether prechecks should be executed before the plan execution.
+
+Example: `false`""")
+@cli_util.option('--execution-options-are-warnings-ignored', type=click.BOOL, help=u"""A flag indicating whether warnings should be ignored during the plan execution.
+
+Example: `true`""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "CANCELING", "CANCELED", "SUCCEEDED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'disaster_recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'disaster_recovery', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'disaster_recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'disaster_recovery', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'disaster_recovery', 'class': 'DrPlanExecution'})
+@cli_util.wrap_exceptions
+def create_dr_plan_execution_start_drill_execution_option_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, plan_id, display_name, freeform_tags, defined_tags, execution_options_are_prechecks_enabled, execution_options_are_warnings_ignored):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['executionOptions'] = {}
+    _details['planId'] = plan_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if execution_options_are_prechecks_enabled is not None:
+        _details['executionOptions']['arePrechecksEnabled'] = execution_options_are_prechecks_enabled
+
+    if execution_options_are_warnings_ignored is not None:
+        _details['executionOptions']['areWarningsIgnored'] = execution_options_are_warnings_ignored
+
+    _details['executionOptions']['planExecutionType'] = 'START_DRILL'
+
+    client = cli_util.build_client('disaster_recovery', 'disaster_recovery', ctx)
+    result = client.create_dr_plan_execution(
+        create_dr_plan_execution_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.create_dr_plan_execution_start_drill_precheck_execution_option_details.command_name', 'create-dr-plan-execution-start-drill-precheck-execution-option-details'), help=u"""Execute a DR plan for a DR protection group. \n[Command Reference](createDrPlanExecution)""")
+@cli_util.option('--plan-id', required=True, help=u"""The OCID of the DR plan.
+
+Example: `ocid1.drplan.oc1..uniqueID`""")
+@cli_util.option('--display-name', help=u"""The display name of the DR plan execution.
+
+Example: `Execution - EBS Switchover PHX to IAD`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace.
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--execution-options-are-warnings-ignored', type=click.BOOL, help=u"""A flag indicating whether warnings should be ignored during the precheck.
+
+Example: `true`""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "CANCELING", "CANCELED", "SUCCEEDED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'disaster_recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'disaster_recovery', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'disaster_recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'disaster_recovery', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'disaster_recovery', 'class': 'DrPlanExecution'})
+@cli_util.wrap_exceptions
+def create_dr_plan_execution_start_drill_precheck_execution_option_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, plan_id, display_name, freeform_tags, defined_tags, execution_options_are_warnings_ignored):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['executionOptions'] = {}
+    _details['planId'] = plan_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if execution_options_are_warnings_ignored is not None:
+        _details['executionOptions']['areWarningsIgnored'] = execution_options_are_warnings_ignored
+
+    _details['executionOptions']['planExecutionType'] = 'START_DRILL_PRECHECK'
+
+    client = cli_util.build_client('disaster_recovery', 'disaster_recovery', ctx)
+    result = client.create_dr_plan_execution(
+        create_dr_plan_execution_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.create_dr_plan_execution_switchover_execution_option_details.command_name', 'create-dr-plan-execution-switchover-execution-option-details'), help=u"""Execute a DR plan for a DR protection group. \n[Command Reference](createDrPlanExecution)""")
+@cli_util.option('--plan-id', required=True, help=u"""The OCID of the DR plan.
+
+Example: `ocid1.drplan.oc1..uniqueID`""")
+@cli_util.option('--display-name', help=u"""The display name of the DR plan execution.
+
+Example: `Execution - EBS Switchover PHX to IAD`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace.
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--execution-options-are-prechecks-enabled', type=click.BOOL, help=u"""A flag indicating whether prechecks should be executed before the plan execution.
 
 Example: `false`""")
@@ -649,15 +996,19 @@ def create_dr_plan_execution_switchover_execution_option_details(ctx, from_json,
     cli_util.render_response(result, ctx)
 
 
-@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.create_dr_plan_execution_failover_execution_option_details.command_name', 'create-dr-plan-execution-failover-execution-option-details'), help=u"""Execute a DR Plan for a DR Protection Group. \n[Command Reference](createDrPlanExecution)""")
-@cli_util.option('--plan-id', required=True, help=u"""The OCID of the DR Plan.
+@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.create_dr_plan_execution_failover_execution_option_details.command_name', 'create-dr-plan-execution-failover-execution-option-details'), help=u"""Execute a DR plan for a DR protection group. \n[Command Reference](createDrPlanExecution)""")
+@cli_util.option('--plan-id', required=True, help=u"""The OCID of the DR plan.
 
-Example: `ocid1.drplan.oc1.iad.&lt;unique_id&gt;`""")
-@cli_util.option('--display-name', help=u"""The display name of the DR Plan Execution.
+Example: `ocid1.drplan.oc1..uniqueID`""")
+@cli_util.option('--display-name', help=u"""The display name of the DR plan execution.
 
 Example: `Execution - EBS Switchover PHX to IAD`""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace.
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--execution-options-are-prechecks-enabled', type=click.BOOL, help=u"""A flag indicating whether prechecks should be executed before the plan execution.
 
 Example: `true`""")
@@ -729,20 +1080,24 @@ def create_dr_plan_execution_failover_execution_option_details(ctx, from_json, w
     cli_util.render_response(result, ctx)
 
 
-@dr_protection_group_group.command(name=cli_util.override('disaster_recovery.create_dr_protection_group.command_name', 'create'), help=u"""Create a new DR Protection Group. \n[Command Reference](createDrProtectionGroup)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to create the DR Protection Group.
+@dr_protection_group_group.command(name=cli_util.override('disaster_recovery.create_dr_protection_group.command_name', 'create'), help=u"""Create a DR protection group. \n[Command Reference](createDrProtectionGroup)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to create the DR protection group.
 
-Example: `ocid1.compartment.oc1..&lt;unique_id&gt;`""")
-@cli_util.option('--display-name', required=True, help=u"""The display name of the DR Protection Group.
+Example: `ocid1.compartment.oc1..uniqueID`""")
+@cli_util.option('--display-name', required=True, help=u"""The display name of the DR protection group.
 
-Example: `EBS PHX DRPG`""")
+Example: `EBS PHX Group`""")
 @cli_util.option('--log-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--association', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of DR Protection Group members.
+@cli_util.option('--members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of DR protection group members.
 
 This option is a JSON list with items of type CreateDrProtectionGroupMemberDetails.  For documentation on CreateDrProtectionGroupMemberDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/disasterrecovery/20220125/datatypes/CreateDrProtectionGroupMemberDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace.
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "CANCELING", "CANCELED", "SUCCEEDED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -804,10 +1159,10 @@ def create_dr_protection_group(ctx, from_json, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
-@dr_plan_group.command(name=cli_util.override('disaster_recovery.delete_dr_plan.command_name', 'delete'), help=u"""Delete the DR Plan identified by *drPlanId*. \n[Command Reference](deleteDrPlan)""")
-@cli_util.option('--dr-plan-id', required=True, help=u"""The OCID of the DR Plan.
+@dr_plan_group.command(name=cli_util.override('disaster_recovery.delete_dr_plan.command_name', 'delete'), help=u"""Delete the DR plan identified by *drPlanId*. \n[Command Reference](deleteDrPlan)""")
+@cli_util.option('--dr-plan-id', required=True, help=u"""The OCID of the DR plan.
 
-Example: `ocid1.drplan.oc1.iad.exampleocid`""")
+Example: `ocid1.drplan.oc1..uniqueID`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -870,10 +1225,10 @@ def delete_dr_plan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.delete_dr_plan_execution.command_name', 'delete'), help=u"""Delete the DR Plan Execution identified by *drPlanExecutionId*. \n[Command Reference](deleteDrPlanExecution)""")
-@cli_util.option('--dr-plan-execution-id', required=True, help=u"""The OCID of the DR Plan Execution.
+@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.delete_dr_plan_execution.command_name', 'delete'), help=u"""Delete the DR plan execution identified by *drPlanExecutionId*. \n[Command Reference](deleteDrPlanExecution)""")
+@cli_util.option('--dr-plan-execution-id', required=True, help=u"""The OCID of the DR plan execution.
 
-Example: `ocid1.drplanexecution.oc1.iad.exampleocid`""")
+Example: `ocid1.drplanexecution.oc1..uniqueID`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "CANCELING", "CANCELED", "SUCCEEDED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -924,10 +1279,10 @@ def delete_dr_plan_execution(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@dr_protection_group_group.command(name=cli_util.override('disaster_recovery.delete_dr_protection_group.command_name', 'delete'), help=u"""Delete the DR Protection Group identified by *drProtectionGroupId*. \n[Command Reference](deleteDrProtectionGroup)""")
-@cli_util.option('--dr-protection-group-id', required=True, help=u"""The OCID of the DR Protection Group.
+@dr_protection_group_group.command(name=cli_util.override('disaster_recovery.delete_dr_protection_group.command_name', 'delete'), help=u"""Delete the DR protection group identified by *drProtectionGroupId*. \n[Command Reference](deleteDrProtectionGroup)""")
+@cli_util.option('--dr-protection-group-id', required=True, help=u"""The OCID of the DR protection group.
 
-Example: `ocid1.drprotectiongroup.oc1.phx.exampleocid`""")
+Example: `ocid1.drprotectiongroup.oc1..uniqueID`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "CANCELING", "CANCELED", "SUCCEEDED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -978,11 +1333,11 @@ def delete_dr_protection_group(ctx, from_json, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
-@dr_protection_group_group.command(name=cli_util.override('disaster_recovery.disassociate_dr_protection_group.command_name', 'disassociate'), help=u"""Delete the association between the DR Protection Group identified by *drProtectionGroupId*. and its peer DR Protection Group. \n[Command Reference](disassociateDrProtectionGroup)""")
-@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DEFAULT"]), help=u"""The default type (required for forward compatibility).""")
-@cli_util.option('--dr-protection-group-id', required=True, help=u"""The OCID of the DR Protection Group.
+@dr_protection_group_group.command(name=cli_util.override('disaster_recovery.disassociate_dr_protection_group.command_name', 'disassociate'), help=u"""Delete the association between the DR protection group identified by *drProtectionGroupId*. and its peer DR protection group. \n[Command Reference](disassociateDrProtectionGroup)""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DEFAULT"]), help=u"""The default type.""")
+@cli_util.option('--dr-protection-group-id', required=True, help=u"""The OCID of the DR protection group.
 
-Example: `ocid1.drprotectiongroup.oc1.phx.exampleocid`""")
+Example: `ocid1.drprotectiongroup.oc1..uniqueID`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "CANCELING", "CANCELED", "SUCCEEDED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1037,10 +1392,10 @@ def disassociate_dr_protection_group(ctx, from_json, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
-@dr_protection_group_group.command(name=cli_util.override('disaster_recovery.disassociate_dr_protection_group_disassociate_dr_protection_group_default_details.command_name', 'disassociate-dr-protection-group-disassociate-dr-protection-group-default-details'), help=u"""Delete the association between the DR Protection Group identified by *drProtectionGroupId*. and its peer DR Protection Group. \n[Command Reference](disassociateDrProtectionGroup)""")
-@cli_util.option('--dr-protection-group-id', required=True, help=u"""The OCID of the DR Protection Group.
+@dr_protection_group_group.command(name=cli_util.override('disaster_recovery.disassociate_dr_protection_group_disassociate_dr_protection_group_default_details.command_name', 'disassociate-dr-protection-group-disassociate-dr-protection-group-default-details'), help=u"""Delete the association between the DR protection group identified by *drProtectionGroupId*. and its peer DR protection group. \n[Command Reference](disassociateDrProtectionGroup)""")
+@cli_util.option('--dr-protection-group-id', required=True, help=u"""The OCID of the DR protection group.
 
-Example: `ocid1.drprotectiongroup.oc1.phx.exampleocid`""")
+Example: `ocid1.drprotectiongroup.oc1..uniqueID`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "CANCELING", "CANCELED", "SUCCEEDED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1096,10 +1451,10 @@ def disassociate_dr_protection_group_disassociate_dr_protection_group_default_de
     cli_util.render_response(result, ctx)
 
 
-@dr_plan_group.command(name=cli_util.override('disaster_recovery.get_dr_plan.command_name', 'get'), help=u"""Get details for the DR Plan identified by *drPlanId*. \n[Command Reference](getDrPlan)""")
-@cli_util.option('--dr-plan-id', required=True, help=u"""The OCID of the DR Plan.
+@dr_plan_group.command(name=cli_util.override('disaster_recovery.get_dr_plan.command_name', 'get'), help=u"""Get details for the DR plan identified by *drPlanId*. \n[Command Reference](getDrPlan)""")
+@cli_util.option('--dr-plan-id', required=True, help=u"""The OCID of the DR plan.
 
-Example: `ocid1.drplan.oc1.iad.exampleocid`""")
+Example: `ocid1.drplan.oc1..uniqueID`""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1120,10 +1475,10 @@ def get_dr_plan(ctx, from_json, dr_plan_id):
     cli_util.render_response(result, ctx)
 
 
-@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.get_dr_plan_execution.command_name', 'get'), help=u"""Get details for the DR Plan Execution identified by *drPlanExecutionId*. \n[Command Reference](getDrPlanExecution)""")
-@cli_util.option('--dr-plan-execution-id', required=True, help=u"""The OCID of the DR Plan Execution.
+@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.get_dr_plan_execution.command_name', 'get'), help=u"""Get details for the DR plan execution identified by *drPlanExecutionId*. \n[Command Reference](getDrPlanExecution)""")
+@cli_util.option('--dr-plan-execution-id', required=True, help=u"""The OCID of the DR plan execution.
 
-Example: `ocid1.drplanexecution.oc1.iad.exampleocid`""")
+Example: `ocid1.drplanexecution.oc1..uniqueID`""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1144,10 +1499,10 @@ def get_dr_plan_execution(ctx, from_json, dr_plan_execution_id):
     cli_util.render_response(result, ctx)
 
 
-@dr_protection_group_group.command(name=cli_util.override('disaster_recovery.get_dr_protection_group.command_name', 'get'), help=u"""Get the DR Protection Group identified by *drProtectionGroupId*. \n[Command Reference](getDrProtectionGroup)""")
-@cli_util.option('--dr-protection-group-id', required=True, help=u"""The OCID of the DR Protection Group.
+@dr_protection_group_group.command(name=cli_util.override('disaster_recovery.get_dr_protection_group.command_name', 'get'), help=u"""Get the DR protection group identified by *drProtectionGroupId*. \n[Command Reference](getDrProtectionGroup)""")
+@cli_util.option('--dr-protection-group-id', required=True, help=u"""The OCID of the DR protection group.
 
-Example: `ocid1.drprotectiongroup.oc1.phx.exampleocid`""")
+Example: `ocid1.drprotectiongroup.oc1..uniqueID`""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1171,7 +1526,7 @@ def get_dr_protection_group(ctx, from_json, dr_protection_group_id):
 @work_request_group.command(name=cli_util.override('disaster_recovery.get_work_request.command_name', 'get'), help=u"""Get the status of the work request identified by *workRequestId*. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID (OCID) of the asynchronous request.
 
-Example: `ocid1.workrequest.oc1.phx.exampleocid`""")
+Example: `ocid1.workrequest.oc1..uniqueID`""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1192,16 +1547,16 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.ignore_dr_plan_execution.command_name', 'ignore'), help=u"""Ignore failed group or step in DR Plan Execution identified by *drPlanExecutionId* and resume execution. \n[Command Reference](ignoreDrPlanExecution)""")
+@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.ignore_dr_plan_execution.command_name', 'ignore'), help=u"""Ignore the failed group or step in DR plan execution identified by *drPlanExecutionId* and resume execution. \n[Command Reference](ignoreDrPlanExecution)""")
 @cli_util.option('--group-id', required=True, help=u"""The unique id of the group to ignore as a whole, or the group containing the step to ignore.
 
-Example: `sgid1.group..&lt;unique_id&gt;`""")
-@cli_util.option('--dr-plan-execution-id', required=True, help=u"""The OCID of the DR Plan Execution.
+Example: `sgid1.group..uniqueID`""")
+@cli_util.option('--dr-plan-execution-id', required=True, help=u"""The OCID of the DR plan execution.
 
-Example: `ocid1.drplanexecution.oc1.iad.exampleocid`""")
+Example: `ocid1.drplanexecution.oc1..uniqueID`""")
 @cli_util.option('--step-id', help=u"""The unique id of the step to ignore (optional). Only needed when ignoring a step.
 
-Example: `sgid1.step..&lt;unique_id&gt;`""")
+Example: `sgid1.step..uniqueID`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "CANCELING", "CANCELED", "SUCCEEDED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1259,18 +1614,18 @@ def ignore_dr_plan_execution(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.list_dr_plan_executions.command_name', 'list'), help=u"""Get a summary list of all DR Plan Executions for a DR Protection Group. \n[Command Reference](listDrPlanExecutions)""")
-@cli_util.option('--dr-protection-group-id', required=True, help=u"""The OCID of the DR Protection Group. Mandatory query param.
+@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.list_dr_plan_executions.command_name', 'list'), help=u"""Get a summary list of all DR plan executions for a DR protection group. \n[Command Reference](listDrPlanExecutions)""")
+@cli_util.option('--dr-protection-group-id', required=True, help=u"""The OCID of the DR protection group. Mandatory query param.
 
-Example: `ocid1.drprotectiongroup.oc1.phx.exampleocid`""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "CANCELING", "CANCELED", "SUCCEEDED", "FAILED", "DELETING", "DELETED", "PAUSING", "PAUSED", "RESUMING"]), help=u"""A filter to return only DR Plan Executions that match the given lifecycleState.""")
-@cli_util.option('--dr-plan-execution-id', help=u"""The OCID of the DR Plan Execution.
+Example: `ocid1.drprotectiongroup.oc1..uniqueID`""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "CANCELING", "CANCELED", "SUCCEEDED", "FAILED", "DELETING", "DELETED", "PAUSING", "PAUSED", "RESUMING"]), help=u"""A filter to return only DR plan executions that match the given lifecycle state.""")
+@cli_util.option('--dr-plan-execution-id', help=u"""The OCID of the DR plan execution.
 
-Example: `ocid1.drplanexecution.oc1.iad.exampleocid`""")
-@cli_util.option('--dr-plan-execution-type', type=custom_types.CliCaseInsensitiveChoice(["SWITCHOVER", "SWITCHOVER_PRECHECK", "FAILOVER", "FAILOVER_PRECHECK"]), help=u"""The DR Plan Execution type.""")
-@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.
+Example: `ocid1.drplanexecution.oc1..uniqueID`""")
+@cli_util.option('--dr-plan-execution-type', type=custom_types.CliCaseInsensitiveChoice(["SWITCHOVER", "SWITCHOVER_PRECHECK", "FAILOVER", "FAILOVER_PRECHECK", "START_DRILL", "START_DRILL_PRECHECK", "STOP_DRILL", "STOP_DRILL_PRECHECK"]), help=u"""The DR plan execution type.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name.
 
-Example: `MY UNIQUE DISPLAY NAME`""")
+Example: `MyResourceDisplayName`""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
 
 For important details about how pagination works, see [List Pagination].
@@ -1282,7 +1637,7 @@ For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.
 
-Example: `displayName`""")
+Example: `MyResourceDisplayName`""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1339,18 +1694,18 @@ def list_dr_plan_executions(ctx, from_json, all_pages, page_size, dr_protection_
     cli_util.render_response(result, ctx)
 
 
-@dr_plan_group.command(name=cli_util.override('disaster_recovery.list_dr_plans.command_name', 'list'), help=u"""Gets a summary list of all DR Plans for a DR Protection Group. \n[Command Reference](listDrPlans)""")
-@cli_util.option('--dr-protection-group-id', required=True, help=u"""The OCID of the DR Protection Group. Mandatory query param.
+@dr_plan_group.command(name=cli_util.override('disaster_recovery.list_dr_plans.command_name', 'list'), help=u"""Get a summary list of all DR plans for a DR protection group. \n[Command Reference](listDrPlans)""")
+@cli_util.option('--dr-protection-group-id', required=True, help=u"""The OCID of the DR protection group. Mandatory query param.
 
-Example: `ocid1.drprotectiongroup.oc1.phx.exampleocid`""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), help=u"""A filter to return only DR Plans that match the given lifecycleState.""")
-@cli_util.option('--dr-plan-id', help=u"""The OCID of the DR Plan.
+Example: `ocid1.drprotectiongroup.oc1..uniqueID`""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), help=u"""A filter to return only DR plans that match the given lifecycle state.""")
+@cli_util.option('--dr-plan-id', help=u"""The OCID of the DR plan.
 
-Example: `ocid1.drplan.oc1.iad.exampleocid`""")
-@cli_util.option('--dr-plan-type', type=custom_types.CliCaseInsensitiveChoice(["SWITCHOVER", "FAILOVER"]), help=u"""The DR Plan type.""")
-@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.
+Example: `ocid1.drplan.oc1..uniqueID`""")
+@cli_util.option('--dr-plan-type', type=custom_types.CliCaseInsensitiveChoice(["SWITCHOVER", "FAILOVER", "START_DRILL", "STOP_DRILL"]), help=u"""The DR plan type.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name.
 
-Example: `MY UNIQUE DISPLAY NAME`""")
+Example: `MyResourceDisplayName`""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
 
 For important details about how pagination works, see [List Pagination].
@@ -1362,7 +1717,7 @@ For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.
 
-Example: `displayName`""")
+Example: `MyResourceDisplayName`""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1419,17 +1774,17 @@ def list_dr_plans(ctx, from_json, all_pages, page_size, dr_protection_group_id, 
     cli_util.render_response(result, ctx)
 
 
-@dr_protection_group_group.command(name=cli_util.override('disaster_recovery.list_dr_protection_groups.command_name', 'list'), help=u"""Gets a summary list of all DR Protection Groups in a compartment. \n[Command Reference](listDrProtectionGroups)""")
+@dr_protection_group_group.command(name=cli_util.override('disaster_recovery.list_dr_protection_groups.command_name', 'list'), help=u"""Get a summary list of all DR protection groups in a compartment. \n[Command Reference](listDrProtectionGroups)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID (OCID) of the compartment in which to list resources.
 
-Example: `ocid1.compartment.oc1..exampleocid1`""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "NEEDS_ATTENTION", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only DR Protection Groups that match the given lifecycleState.""")
-@cli_util.option('--dr-protection-group-id', help=u"""The OCID of the DR Protection Group. Optional query param.
+Example: `ocid1.compartment.oc1..uniqueID`""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "INACTIVE", "NEEDS_ATTENTION", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only DR protection groups that match the given lifecycle state.""")
+@cli_util.option('--dr-protection-group-id', help=u"""The OCID of the DR protection group. Optional query param.
 
-Example: `ocid1.drprotectiongroup.oc1.phx.exampleocid`""")
-@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.
+Example: `ocid1.drprotectiongroup.oc1..uniqueID`""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name.
 
-Example: `MY UNIQUE DISPLAY NAME`""")
+Example: `MyResourceDisplayName`""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
 
 For important details about how pagination works, see [List Pagination].
@@ -1441,8 +1796,9 @@ For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.
 
-Example: `displayName`""")
-@cli_util.option('--role', type=custom_types.CliCaseInsensitiveChoice(["PRIMARY", "STANDBY", "UNCONFIGURED"]), help=u"""The DR Protection Group Role.""")
+Example: `MyResourceDisplayName`""")
+@cli_util.option('--role', type=custom_types.CliCaseInsensitiveChoice(["PRIMARY", "STANDBY", "UNCONFIGURED"]), help=u"""The DR protection group Role.""")
+@cli_util.option('--lifecycle-sub-state', type=custom_types.CliCaseInsensitiveChoice(["DR_DRILL_IN_PROGRESS"]), help=u"""A filter to return only DR protection groups that match the given lifecycle sub-state.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1450,7 +1806,7 @@ Example: `displayName`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'disaster_recovery', 'class': 'DrProtectionGroupCollection'})
 @cli_util.wrap_exceptions
-def list_dr_protection_groups(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, dr_protection_group_id, display_name, limit, page, sort_order, sort_by, role):
+def list_dr_protection_groups(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, dr_protection_group_id, display_name, limit, page, sort_order, sort_by, role, lifecycle_sub_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1472,6 +1828,8 @@ def list_dr_protection_groups(ctx, from_json, all_pages, page_size, compartment_
         kwargs['sort_by'] = sort_by
     if role is not None:
         kwargs['role'] = role
+    if lifecycle_sub_state is not None:
+        kwargs['lifecycle_sub_state'] = lifecycle_sub_state
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('disaster_recovery', 'disaster_recovery', ctx)
     if all_pages:
@@ -1499,10 +1857,10 @@ def list_dr_protection_groups(ctx, from_json, all_pages, page_size, compartment_
     cli_util.render_response(result, ctx)
 
 
-@work_request_error_group.command(name=cli_util.override('disaster_recovery.list_work_request_errors.command_name', 'list'), help=u"""Return a (paginated) list of errors for a given work request. \n[Command Reference](listWorkRequestErrors)""")
+@work_request_error_group.command(name=cli_util.override('disaster_recovery.list_work_request_errors.command_name', 'list'), help=u"""Get a list of work request errors for the work request identified by *workRequestId*. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID (OCID) of the asynchronous request.
 
-Example: `ocid1.workrequest.oc1.phx.exampleocid`""")
+Example: `ocid1.workrequest.oc1..uniqueID`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 For important details about how pagination works, see [List Pagination].""")
@@ -1564,10 +1922,10 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     cli_util.render_response(result, ctx)
 
 
-@work_request_log_entry_group.command(name=cli_util.override('disaster_recovery.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Return a (paginated) list of logs for the work request identified by *workRequestId*. \n[Command Reference](listWorkRequestLogs)""")
+@work_request_log_entry_group.command(name=cli_util.override('disaster_recovery.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Get a list of logs for the work request identified by *workRequestId*. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID (OCID) of the asynchronous request.
 
-Example: `ocid1.workrequest.oc1.phx.exampleocid`""")
+Example: `ocid1.workrequest.oc1..uniqueID`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 For important details about how pagination works, see [List Pagination].""")
@@ -1632,12 +1990,14 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @work_request_group.command(name=cli_util.override('disaster_recovery.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', help=u"""The ID (OCID) of the compartment in which to list resources.
 
-Example: `ocid1.compartment.oc1..exampleocid1`""")
+Example: `ocid1.compartment.oc1..uniqueID`""")
 @cli_util.option('--work-request-id', help=u"""The ID (OCID) of the asynchronous work request.
 
-Example: `ocid1.workrequest.oc1.phx.exampleocid1`""")
+Example: `ocid1.workrequest.oc1..uniqueID`""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "CANCELING", "CANCELED", "SUCCEEDED", "FAILED", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources whose lifecycleState matches the given OperationStatus.""")
-@cli_util.option('--resource-id', help=u"""The ID (OCID) of the resource affected by the work request. Example: `ocid1.drplanexecution.oc1.iad.exampleocid`""")
+@cli_util.option('--resource-id', help=u"""The ID (OCID) of the resource affected by the work request.
+
+Example: `ocid1.drplanexecution.oc1..uniqueID`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 For important details about how pagination works, see [List Pagination].""")
@@ -1701,11 +2061,11 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
     cli_util.render_response(result, ctx)
 
 
-@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.pause_dr_plan_execution.command_name', 'pause'), help=u"""Pause the DR Plan Execution identified by *drPlanExecutionId*. \n[Command Reference](pauseDrPlanExecution)""")
+@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.pause_dr_plan_execution.command_name', 'pause'), help=u"""Pause the DR plan execution identified by *drPlanExecutionId*. \n[Command Reference](pauseDrPlanExecution)""")
 @cli_util.option('--action-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["CANCEL", "PAUSE", "RESUME"]), help=u"""The type of control action.""")
-@cli_util.option('--dr-plan-execution-id', required=True, help=u"""The OCID of the DR Plan Execution.
+@cli_util.option('--dr-plan-execution-id', required=True, help=u"""The OCID of the DR plan execution.
 
-Example: `ocid1.drplanexecution.oc1.iad.exampleocid`""")
+Example: `ocid1.drplanexecution.oc1..uniqueID`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "CANCELING", "CANCELED", "SUCCEEDED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1762,11 +2122,11 @@ def pause_dr_plan_execution(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.resume_dr_plan_execution.command_name', 'resume'), help=u"""Resume the DR Plan Execution identified by *drPlanExecutionId*. \n[Command Reference](resumeDrPlanExecution)""")
+@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.resume_dr_plan_execution.command_name', 'resume'), help=u"""Resume the DR plan execution identified by *drPlanExecutionId*. \n[Command Reference](resumeDrPlanExecution)""")
 @cli_util.option('--action-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["CANCEL", "PAUSE", "RESUME"]), help=u"""The type of control action.""")
-@cli_util.option('--dr-plan-execution-id', required=True, help=u"""The OCID of the DR Plan Execution.
+@cli_util.option('--dr-plan-execution-id', required=True, help=u"""The OCID of the DR plan execution.
 
-Example: `ocid1.drplanexecution.oc1.iad.exampleocid`""")
+Example: `ocid1.drplanexecution.oc1..uniqueID`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "CANCELING", "CANCELED", "SUCCEEDED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1823,16 +2183,16 @@ def resume_dr_plan_execution(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.retry_dr_plan_execution.command_name', 'retry'), help=u"""Retry failed group or step in DR Plan Execution identified by *drPlanExecutionId* and resume execution. \n[Command Reference](retryDrPlanExecution)""")
+@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.retry_dr_plan_execution.command_name', 'retry'), help=u"""Retry the failed group or step in DR plan execution identified by *drPlanExecutionId* and resume execution. \n[Command Reference](retryDrPlanExecution)""")
 @cli_util.option('--group-id', required=True, help=u"""The unique id of the group to retry as a whole, or the group containing the step being retried.
 
-Example: `sgid1.group..&lt;unique_id&gt;`""")
-@cli_util.option('--dr-plan-execution-id', required=True, help=u"""The OCID of the DR Plan Execution.
+Example: `sgid1.group..uniqueID`""")
+@cli_util.option('--dr-plan-execution-id', required=True, help=u"""The OCID of the DR plan execution.
 
-Example: `ocid1.drplanexecution.oc1.iad.exampleocid`""")
+Example: `ocid1.drplanexecution.oc1..uniqueID`""")
 @cli_util.option('--step-id', help=u"""The unique id of the step to retry (optional). Only needed when retrying a step.
 
-Example: `sgid1.step..&lt;unique_id&gt;`""")
+Example: `sgid1.step..uniqueID`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "CANCELING", "CANCELED", "SUCCEEDED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1890,18 +2250,22 @@ def retry_dr_plan_execution(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@dr_plan_group.command(name=cli_util.override('disaster_recovery.update_dr_plan.command_name', 'update'), help=u"""Update the DR Plan identified by *drPlanId*. \n[Command Reference](updateDrPlan)""")
-@cli_util.option('--dr-plan-id', required=True, help=u"""The OCID of the DR Plan.
+@dr_plan_group.command(name=cli_util.override('disaster_recovery.update_dr_plan.command_name', 'update'), help=u"""Update the DR plan identified by *drPlanId*. \n[Command Reference](updateDrPlan)""")
+@cli_util.option('--dr-plan-id', required=True, help=u"""The OCID of the DR plan.
 
-Example: `ocid1.drplan.oc1.iad.exampleocid`""")
-@cli_util.option('--display-name', help=u"""The display name of the DR Plan being updated.
+Example: `ocid1.drplan.oc1..uniqueID`""")
+@cli_util.option('--display-name', help=u"""The display name of the DR plan being updated.
 
 Example: `EBS Switchover PHX to IAD`""")
-@cli_util.option('--plan-groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An ordered list of plan groups in a DR Plan.
+@cli_util.option('--plan-groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An ordered list of groups in a DR plan.
 
 This option is a JSON list with items of type UpdateDrPlanGroupDetails.  For documentation on UpdateDrPlanGroupDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/disasterrecovery/20220125/datatypes/UpdateDrPlanGroupDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace.
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "CANCELING", "CANCELED", "SUCCEEDED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1972,15 +2336,19 @@ def update_dr_plan(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.update_dr_plan_execution.command_name', 'update'), help=u"""Update the DR Plan Execution identified by *drPlanExecutionId*. \n[Command Reference](updateDrPlanExecution)""")
-@cli_util.option('--dr-plan-execution-id', required=True, help=u"""The OCID of the DR Plan Execution.
+@dr_plan_execution_group.command(name=cli_util.override('disaster_recovery.update_dr_plan_execution.command_name', 'update'), help=u"""Update the DR plan execution identified by *drPlanExecutionId*. \n[Command Reference](updateDrPlanExecution)""")
+@cli_util.option('--dr-plan-execution-id', required=True, help=u"""The OCID of the DR plan execution.
 
-Example: `ocid1.drplanexecution.oc1.iad.exampleocid`""")
-@cli_util.option('--display-name', help=u"""The display name of the DR Protection Group to update.
+Example: `ocid1.drplanexecution.oc1..uniqueID`""")
+@cli_util.option('--display-name', help=u"""The display name of the DR protection group to update.
 
-Example: `EBS IAD DRPG`""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+Example: `EBS IAD Group`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace.
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "CANCELING", "CANCELED", "SUCCEEDED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2048,19 +2416,23 @@ def update_dr_plan_execution(ctx, from_json, force, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
-@dr_protection_group_group.command(name=cli_util.override('disaster_recovery.update_dr_protection_group.command_name', 'update'), help=u"""Update the DR Protection Group identified by *drProtectionGroupId*. \n[Command Reference](updateDrProtectionGroup)""")
-@cli_util.option('--dr-protection-group-id', required=True, help=u"""The OCID of the DR Protection Group.
+@dr_protection_group_group.command(name=cli_util.override('disaster_recovery.update_dr_protection_group.command_name', 'update'), help=u"""Update the DR protection group identified by *drProtectionGroupId*. \n[Command Reference](updateDrProtectionGroup)""")
+@cli_util.option('--dr-protection-group-id', required=True, help=u"""The OCID of the DR protection group.
 
-Example: `ocid1.drprotectiongroup.oc1.phx.exampleocid`""")
-@cli_util.option('--display-name', help=u"""The display name of the DR Protection Group.
+Example: `ocid1.drprotectiongroup.oc1..uniqueID`""")
+@cli_util.option('--display-name', help=u"""The display name of the DR protection group.
 
-Example: `EBS PHX DRPG`""")
+Example: `EBS PHX Group`""")
 @cli_util.option('--log-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of DR Protection Group members.
+@cli_util.option('--members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of DR protection group members.  When updating members, this list must contain all members being retained, including added and updated members. The list must not contain deleted members.
 
 This option is a JSON list with items of type UpdateDrProtectionGroupMemberDetails.  For documentation on UpdateDrProtectionGroupMemberDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/disasterrecovery/20220125/datatypes/UpdateDrProtectionGroupMemberDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace.
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "CANCELING", "CANCELED", "SUCCEEDED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2134,11 +2506,11 @@ def update_dr_protection_group(ctx, from_json, force, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
-@dr_protection_group_group.command(name=cli_util.override('disaster_recovery.update_dr_protection_group_role.command_name', 'update-dr-protection-group-role'), help=u"""Update the role of the DR Protection Group identified by *drProtectionGroupId*. \n[Command Reference](updateDrProtectionGroupRole)""")
-@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRIMARY", "STANDBY", "UNCONFIGURED"]), help=u"""The role of the DR Protection Group.""")
-@cli_util.option('--dr-protection-group-id', required=True, help=u"""The OCID of the DR Protection Group.
+@dr_protection_group_group.command(name=cli_util.override('disaster_recovery.update_dr_protection_group_role.command_name', 'update-dr-protection-group-role'), help=u"""Update the role of the DR protection group identified by *drProtectionGroupId*. \n[Command Reference](updateDrProtectionGroupRole)""")
+@cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRIMARY", "STANDBY", "UNCONFIGURED"]), help=u"""The new role of the DR protection group.""")
+@cli_util.option('--dr-protection-group-id', required=True, help=u"""The OCID of the DR protection group.
 
-Example: `ocid1.drprotectiongroup.oc1.phx.exampleocid`""")
+Example: `ocid1.drprotectiongroup.oc1..uniqueID`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "CANCELING", "CANCELED", "SUCCEEDED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")

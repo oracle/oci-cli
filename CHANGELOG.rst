@@ -6,6 +6,121 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.36.0 - 2023-10-31
+--------------------
+Added
+~~~~~
+* Full Stack Disaster Recovery Service
+
+  * Support for performing disaster recovery drills
+
+    * ``oci disaster-recovery dr-plan-execution create-start-drill``
+    * ``oci disaster-recovery dr-plan-execution create-start-drill-precheck``
+    * ``oci disaster-recovery dr-plan-execution create-stop-drill``
+    * ``oci disaster-recovery dr-plan-execution create-stop-drill-precheck``
+
+  * Support for new optional parameter
+
+    * ``oci disaster-recovery dr-protection-group list --lifecycle-sub-state``
+
+* Stack Monitoring Service
+
+  * Support for new commands on extensibility, metric extensions, and baseline and anomaly detection
+
+    * ``oci stack-monitoring config create-license-auto-assign-config``
+    * ``oci stack-monitoring config create-license-enterprise-extensibility-config``
+    * ``oci stack-monitoring config update-license-auto-assign-config``
+    * ``oci stack-monitoring config update-license-enterprise-extensibility-config``
+    * ``oci stack-monitoring resource manage-license``
+    * ``oci stack-monitoring resource summarize-count``
+    * ``oci stack-monitoring resource list``
+    * ``oci stack-monitoring resource-task``
+    * ``oci stack-monitoring resource-type``
+    * ``oci stack-monitoring metric-extension``
+    * ``oci stack-monitoring baselineable-metric``
+
+  * Support for new optional parameter
+
+    * ``oci stack-monitoring resource create --license``
+    * ``oci stack-monitoring resource search --license``
+
+* Support for new optional parameter on integration with the Database Management service in the MySQL HeatWave Database service
+
+  * ``oci mysql db-system clone --database-management``
+  * ``oci mysql db-system create --database-management``
+  * ``oci mysql db-system import --database-management``
+  * ``oci mysql db-system list --database-management``
+  * ``oci mysql db-system update --database-management``
+
+* Support for new commands on integration with the MySQL HeatWave Database service in the Database Management service
+
+  * ``oci database-management managed-my-sql-databases``
+
+* Data Safe Service
+
+  * Support for new commands on database security configuration, security policy, and analytics for SQL collection, firewall policies, and firewall violations
+
+    * ``oci data-safe database-security-config``
+    * ``oci data-safe security-policy``
+    * ``oci data-safe security-policy-deployment``
+    * ``oci data-safe security-policy-entry-state``
+    * ``oci data-safe sql-collection``
+    * ``oci data-safe sql-collection-analytics``
+    * ``oci data-safe sql-collection-log-insights``
+    * ``oci data-safe sql-firewall-allowed-sql``
+    * ``oci data-safe sql-firewall-allowed-sql-analytics``
+    * ``oci data-safe sql-firewall-policy``
+    * ``oci data-safe sql-firewall-policy-analytics``
+    * ``oci data-safe sql-firewall-violation-summary``
+
+  * Support for new optional parameters
+
+    * ``oci data-safe work-request list --access-level --compartment-id-in-subtree``
+
+Changed
+~~~~~~~
+* [BREAKING] Optional parameter --sdm-masking-policy-difference-id for the below command is now required in the Data Safe service
+
+  * ``oci data-safe masking-policy apply-sdm-masking-policy-difference --sdm-masking-policy-difference-id``
+
+* [BREAKING] Database Tool Service
+
+  * Multiple commands renamed
+
+    * ``oci dbtools connection add-lock``
+    * ``oci dbtools connection remove-lock``
+    * ``oci dbtools connection create-generic-jdbc``
+    * ``oci dbtools connection create-postgresql``
+    * ``oci dbtools connection update-generic-jdbc``
+    * ``oci dbtools connection update-postgresql``
+    * ``oci dbtools connection validate-postgresql``
+    * ``oci dbtools private-endpoint add-lock``
+    * ``oci dbtools private-endpoint remove-lock``
+
+  * Required parameter --database-tools-connection-id renamed
+
+    * ``oci dbtools connection add-lock --connection-id``
+    * ``oci dbtools connection remove-lock --connection-id``
+    * ``oci dbtools connection update-generic-jdbc --connection-id``
+    * ``oci dbtools connection update-postgresql --connection-id``
+    * ``oci dbtools connection validate-postgresql --connection-id``
+
+  * Required parameter --user-password renamed
+
+    * ``oci dbtools connection create-generic-jdbc --user-password-secret-id``
+    * ``oci dbtools connection create-postgresql --user-password-secret-id``
+    * ``oci dbtools connection update-generic-jdbc --user-password-secret-id``
+    * ``oci dbtools connection update-postgresql --user-password-secret-id``
+
+  * Required parameter --database-tools-private-endpoint-id renamed
+
+    * ``oci dbtools private-endpoint add-lock --private-endpoint-id``
+    * ``oci dbtools private-endpoint remove-lock --private-endpoint-id``
+
+  * Optional parameter removed
+
+    * ``oci dbtools connection update-mysql-database --user-password``
+
 3.35.0 - 2023-10-24
 --------------------
 Added
