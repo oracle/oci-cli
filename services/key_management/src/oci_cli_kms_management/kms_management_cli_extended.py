@@ -148,16 +148,24 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'key_management', 'class': 'KeyVersion'})
 @cli_util.wrap_exceptions
-def create_key_version_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, key_id):
+def create_key_version_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, key_id, external_key_version_id):
 
     if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if external_key_version_id is not None:
+        _details['externalKeyVersionId'] = external_key_version_id
+
     client = cli_util.build_client('key_management', 'kms_management', ctx)
+
     result = client.create_key_version(
         key_id=key_id,
+        create_key_metadata_details=_details,
         **kwargs
     )
     if wait_for_state:

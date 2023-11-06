@@ -36,6 +36,7 @@ SDK_client_map = {
     "db.convert_to_regular_pluggable_database": "oci.database.DatabaseClient.convert_to_regular_pluggable_database",
     "db.create_application_vip": "oci.database.DatabaseClient.create_application_vip",
     "db.create_autonomous_container_database": "oci.database.DatabaseClient.create_autonomous_container_database",
+    "db.create_autonomous_container_database_dataguard_association": "oci.database.DatabaseClient.create_autonomous_container_database_dataguard_association",
     "db.create_autonomous_database": "oci.database.DatabaseClient.create_autonomous_database",
     "db.create_autonomous_database_backup": "oci.database.DatabaseClient.create_autonomous_database_backup",
     "db.create_autonomous_vm_cluster": "oci.database.DatabaseClient.create_autonomous_vm_cluster",

@@ -1,0 +1,30 @@
+# coding: utf-8
+# Copyright (c) 2016, 2023, Oracle and/or its affiliates. All rights reserved.
+
+SDK_client_map = {
+    "jms_java_downloads.cancel_work_request": "oci.jms_java_downloads.JavaDownloadClient.cancel_work_request",
+    "jms_java_downloads.create_java_download_report": "oci.jms_java_downloads.JavaDownloadClient.create_java_download_report",
+    "jms_java_downloads.create_java_download_token": "oci.jms_java_downloads.JavaDownloadClient.create_java_download_token",
+    "jms_java_downloads.create_java_license_acceptance_record": "oci.jms_java_downloads.JavaDownloadClient.create_java_license_acceptance_record",
+    "jms_java_downloads.delete_java_download_report": "oci.jms_java_downloads.JavaDownloadClient.delete_java_download_report",
+    "jms_java_downloads.delete_java_download_token": "oci.jms_java_downloads.JavaDownloadClient.delete_java_download_token",
+    "jms_java_downloads.delete_java_license_acceptance_record": "oci.jms_java_downloads.JavaDownloadClient.delete_java_license_acceptance_record",
+    "jms_java_downloads.generate_artifact_download_url": "oci.jms_java_downloads.JavaDownloadClient.generate_artifact_download_url",
+    "jms_java_downloads.get_java_download_report": "oci.jms_java_downloads.JavaDownloadClient.get_java_download_report",
+    "jms_java_downloads.get_java_download_report_content": "oci.jms_java_downloads.JavaDownloadClient.get_java_download_report_content",
+    "jms_java_downloads.get_java_download_token": "oci.jms_java_downloads.JavaDownloadClient.get_java_download_token",
+    "jms_java_downloads.get_java_license": "oci.jms_java_downloads.JavaDownloadClient.get_java_license",
+    "jms_java_downloads.get_java_license_acceptance_record": "oci.jms_java_downloads.JavaDownloadClient.get_java_license_acceptance_record",
+    "jms_java_downloads.get_work_request": "oci.jms_java_downloads.JavaDownloadClient.get_work_request",
+    "jms_java_downloads.list_java_download_records": "oci.jms_java_downloads.JavaDownloadClient.list_java_download_records",
+    "jms_java_downloads.list_java_download_reports": "oci.jms_java_downloads.JavaDownloadClient.list_java_download_reports",
+    "jms_java_downloads.list_java_download_tokens": "oci.jms_java_downloads.JavaDownloadClient.list_java_download_tokens",
+    "jms_java_downloads.list_java_license_acceptance_records": "oci.jms_java_downloads.JavaDownloadClient.list_java_license_acceptance_records",
+    "jms_java_downloads.list_java_licenses": "oci.jms_java_downloads.JavaDownloadClient.list_java_licenses",
+    "jms_java_downloads.list_work_request_errors": "oci.jms_java_downloads.JavaDownloadClient.list_work_request_errors",
+    "jms_java_downloads.list_work_request_logs": "oci.jms_java_downloads.JavaDownloadClient.list_work_request_logs",
+    "jms_java_downloads.list_work_requests": "oci.jms_java_downloads.JavaDownloadClient.list_work_requests",
+    "jms_java_downloads.request_summarized_java_download_counts": "oci.jms_java_downloads.JavaDownloadClient.request_summarized_java_download_counts",
+    "jms_java_downloads.update_java_download_token": "oci.jms_java_downloads.JavaDownloadClient.update_java_download_token",
+    "jms_java_downloads.update_java_license_acceptance_record": "oci.jms_java_downloads.JavaDownloadClient.update_java_license_acceptance_record",
+}
