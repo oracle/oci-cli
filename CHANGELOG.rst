@@ -6,6 +6,42 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.36.1 - 2023-11-07
+--------------------
+Added
+~~~~~
+* Java Management Service
+
+  * Support for distribution and management of Deployment Rule Set
+
+    * ``oci jms drs-file-collection list-drs-files``
+    * ``oci jms fleet create-drs-file``
+    * ``oci jms fleet update-drs-file``
+    * ``oci jms fleet enable-drs``
+    * ``oci jms fleet disable-drs``
+
+  * Support for exporting data across regions
+
+    * ``oci jms export-setting``
+    * ``oci jms export-status``
+
+  * Support for new optional parameter
+
+    * ``oci jms fleet-agent-configuration update --mac-os-configuration``
+    * ``oci jms java-family list --is-supported-version``
+    * ``oci jms work-request list --managed-instance-id``
+
+* Database Service
+
+  * Support for SaaS administrative user configuration
+
+    * ``oci db autonomous-database configure-saas-admin-user``
+    * ``oci db autonomous-database saas-admin-user-status``
+
+  * Support for Create Autonomous Dataguard Association
+
+    * ``oci db autonomous-container-database-dataguard create``
+
 3.36.0 - 2023-10-31
 --------------------
 Added

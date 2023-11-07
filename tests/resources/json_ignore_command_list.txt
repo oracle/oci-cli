@@ -232,3 +232,4 @@ nosql, table, delete-replica
 dbtools, connection, create-oracle-database
 dbtools, connection, update-oracle-database
 dbtools, connection, create-mysql-database
+jms, fleet-agent-configuration, update

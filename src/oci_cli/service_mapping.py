@@ -323,6 +323,11 @@ service_mapping = {
         "Java Management Service",
         "Observability & Management"
     ],
+    "jms-java-downloads": [
+        "jms_java_downloads",
+        "Java Management Service Download",
+        "Others"
+    ],
     "kms": [
         "key_management",
         "Key Management",
