@@ -23,9 +23,9 @@ def identity_domains_root_group():
     pass
 
 
-@click.command(cli_util.override('identity_domains.my_request_group.command_name', 'my-request'), cls=CommandGroupWithAlias, help="""Request resource""")
+@click.command(cli_util.override('identity_domains.my_pending_approval_group.command_name', 'my-pending-approval'), cls=CommandGroupWithAlias, help="""Schema for MyPendingApproval and MyCompletedApproval""")
 @cli_util.help_option_group
-def my_request_group():
+def my_pending_approval_group():
     pass
 
 
@@ -35,39 +35,9 @@ def my_user_db_credential_group():
     pass
 
 
-@click.command(cli_util.override('identity_domains.security_question_group.command_name', 'security-question'), cls=CommandGroupWithAlias, help="""Security Question""")
-@cli_util.help_option_group
-def security_question_group():
-    pass
-
-
-@click.command(cli_util.override('identity_domains.authentication_factor_settings_group.command_name', 'authentication-factor-settings'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
-@cli_util.help_option_group
-def authentication_factor_settings_group():
-    pass
-
-
 @click.command(cli_util.override('identity_domains.dynamic_resource_groups_group.command_name', 'dynamic-resource-groups'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
 @cli_util.help_option_group
 def dynamic_resource_groups_group():
-    pass
-
-
-@click.command(cli_util.override('identity_domains.o_auth2_client_credential_group.command_name', 'o-auth2-client-credential'), cls=CommandGroupWithAlias, help="""The user's OAuth2 client credentials.""")
-@cli_util.help_option_group
-def o_auth2_client_credential_group():
-    pass
-
-
-@click.command(cli_util.override('identity_domains.my_o_auth2_client_credentials_group.command_name', 'my-o-auth2-client-credentials'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
-@cli_util.help_option_group
-def my_o_auth2_client_credentials_group():
-    pass
-
-
-@click.command(cli_util.override('identity_domains.my_smtp_credential_group.command_name', 'my-smtp-credential'), cls=CommandGroupWithAlias, help="""User's smtp credential""")
-@cli_util.help_option_group
-def my_smtp_credential_group():
     pass
 
 
@@ -83,9 +53,9 @@ def my_authentication_factors_remover_group():
     pass
 
 
-@click.command(cli_util.override('identity_domains.dynamic_resource_group_group.command_name', 'dynamic-resource-group'), cls=CommandGroupWithAlias, help="""Schema for DynamicResourceGroup resource.""")
+@click.command(cli_util.override('identity_domains.setting_group.command_name', 'setting'), cls=CommandGroupWithAlias, help="""Settings schema""")
 @cli_util.help_option_group
-def dynamic_resource_group_group():
+def setting_group():
     pass
 
 
@@ -95,9 +65,9 @@ def user_db_credentials_group():
     pass
 
 
-@click.command(cli_util.override('identity_domains.my_user_db_credentials_group.command_name', 'my-user-db-credentials'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@click.command(cli_util.override('identity_domains.branding_setting_group.command_name', 'branding-setting'), cls=CommandGroupWithAlias, help="""Brand Settings schema""")
 @cli_util.help_option_group
-def my_user_db_credentials_group():
+def branding_setting_group():
     pass
 
 
@@ -107,27 +77,9 @@ def identity_providers_group():
     pass
 
 
-@click.command(cli_util.override('identity_domains.me_group.command_name', 'me'), cls=CommandGroupWithAlias, help="""User Account""")
-@cli_util.help_option_group
-def me_group():
-    pass
-
-
-@click.command(cli_util.override('identity_domains.user_db_credential_group.command_name', 'user-db-credential'), cls=CommandGroupWithAlias, help="""User's Database Credential""")
-@cli_util.help_option_group
-def user_db_credential_group():
-    pass
-
-
 @click.command(cli_util.override('identity_domains.user_password_changer_group.command_name', 'user-password-changer'), cls=CommandGroupWithAlias, help="""The schema used to handle a user password change by an administrator.""")
 @cli_util.help_option_group
 def user_password_changer_group():
-    pass
-
-
-@click.command(cli_util.override('identity_domains.group_group.command_name', 'group'), cls=CommandGroupWithAlias, help="""The Group resource.""")
-@cli_util.help_option_group
-def group_group():
     pass
 
 
@@ -161,39 +113,27 @@ def account_recovery_setting_group():
     pass
 
 
-@click.command(cli_util.override('identity_domains.users_group.command_name', 'users'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@click.command(cli_util.override('identity_domains.self_registration_profiles_group.command_name', 'self-registration-profiles'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
 @cli_util.help_option_group
-def users_group():
+def self_registration_profiles_group():
     pass
 
 
-@click.command(cli_util.override('identity_domains.my_smtp_credentials_group.command_name', 'my-smtp-credentials'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@click.command(cli_util.override('identity_domains.my_completed_approvals_group.command_name', 'my-completed-approvals'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
 @cli_util.help_option_group
-def my_smtp_credentials_group():
+def my_completed_approvals_group():
     pass
 
 
-@click.command(cli_util.override('identity_domains.my_o_auth2_client_credential_group.command_name', 'my-o-auth2-client-credential'), cls=CommandGroupWithAlias, help="""The user's OAuth2 client credentials.""")
+@click.command(cli_util.override('identity_domains.network_perimeter_group.command_name', 'network-perimeter'), cls=CommandGroupWithAlias, help="""NetworkPerimeter resource. A unit that captures a NetworkPerimeter as a collection of IP Addresses.""")
 @cli_util.help_option_group
-def my_o_auth2_client_credential_group():
+def network_perimeter_group():
     pass
 
 
-@click.command(cli_util.override('identity_domains.me_password_changer_group.command_name', 'me-password-changer'), cls=CommandGroupWithAlias, help="""The schema used for a user changing their own password.""")
+@click.command(cli_util.override('identity_domains.conditions_group.command_name', 'conditions'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
 @cli_util.help_option_group
-def me_password_changer_group():
-    pass
-
-
-@click.command(cli_util.override('identity_domains.authentication_factor_setting_group.command_name', 'authentication-factor-setting'), cls=CommandGroupWithAlias, help="""Multi Factor Authentication Settings for Tenant""")
-@cli_util.help_option_group
-def authentication_factor_setting_group():
-    pass
-
-
-@click.command(cli_util.override('identity_domains.my_authentication_factor_validator_group.command_name', 'my-authentication-factor-validator'), cls=CommandGroupWithAlias, help="""Validate any given Authentication Factor""")
-@cli_util.help_option_group
-def my_authentication_factor_validator_group():
+def conditions_group():
     pass
 
 
@@ -203,9 +143,9 @@ def my_customer_secret_key_group():
     pass
 
 
-@click.command(cli_util.override('identity_domains.my_authentication_factor_initiator_group.command_name', 'my-authentication-factor-initiator'), cls=CommandGroupWithAlias, help="""This schema defines the attributes of Initiator call.""")
+@click.command(cli_util.override('identity_domains.schema_group.command_name', 'schema'), cls=CommandGroupWithAlias, help="""SCIM schema""")
 @cli_util.help_option_group
-def my_authentication_factor_initiator_group():
+def schema_group():
     pass
 
 
@@ -227,27 +167,9 @@ def app_role_group():
     pass
 
 
-@click.command(cli_util.override('identity_domains.user_status_changer_group.command_name', 'user-status-changer'), cls=CommandGroupWithAlias, help="""Schema to handle user status change by administrator.""")
-@cli_util.help_option_group
-def user_status_changer_group():
-    pass
-
-
-@click.command(cli_util.override('identity_domains.my_apps_group.command_name', 'my-apps'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
-@cli_util.help_option_group
-def my_apps_group():
-    pass
-
-
 @click.command(cli_util.override('identity_domains.my_auth_tokens_group.command_name', 'my-auth-tokens'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
 @cli_util.help_option_group
 def my_auth_tokens_group():
-    pass
-
-
-@click.command(cli_util.override('identity_domains.my_customer_secret_keys_group.command_name', 'my-customer-secret-keys'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
-@cli_util.help_option_group
-def my_customer_secret_keys_group():
     pass
 
 
@@ -269,33 +191,15 @@ def my_support_accounts_group():
     pass
 
 
-@click.command(cli_util.override('identity_domains.kmsi_setting_group.command_name', 'kmsi-setting'), cls=CommandGroupWithAlias, help="""Kmsi Settings schema""")
+@click.command(cli_util.override('identity_domains.approval_workflow_step_group.command_name', 'approval-workflow-step'), cls=CommandGroupWithAlias, help="""Schema for ApprovalWorkflowStep""")
 @cli_util.help_option_group
-def kmsi_setting_group():
-    pass
-
-
-@click.command(cli_util.override('identity_domains.smtp_credential_group.command_name', 'smtp-credential'), cls=CommandGroupWithAlias, help="""User's smtp credential""")
-@cli_util.help_option_group
-def smtp_credential_group():
-    pass
-
-
-@click.command(cli_util.override('identity_domains.my_trusted_user_agent_group.command_name', 'my-trusted-user-agent'), cls=CommandGroupWithAlias, help="""This schema defines the attributes of Trusted User Agents owned by users. Multi-Factor Authentication uses Trusted User Agents to authenticate users.  A User Agent is software application that a user uses to issue requests.\r    For example, a User Agent could be a particular browser (possibly one of several executing on a desktop or laptop) or a particular mobile application (again, one of several executing on a particular mobile device). \r    A User Agent is trusted once the Multi-Factor Authentication has verified it in some way.""")
-@cli_util.help_option_group
-def my_trusted_user_agent_group():
+def approval_workflow_step_group():
     pass
 
 
 @click.command(cli_util.override('identity_domains.my_api_key_group.command_name', 'my-api-key'), cls=CommandGroupWithAlias, help="""The user's API key.""")
 @cli_util.help_option_group
 def my_api_key_group():
-    pass
-
-
-@click.command(cli_util.override('identity_domains.security_question_setting_group.command_name', 'security-question-setting'), cls=CommandGroupWithAlias, help="""Security Question Settings""")
-@cli_util.help_option_group
-def security_question_setting_group():
     pass
 
 
@@ -311,18 +215,6 @@ def api_keys_group():
     pass
 
 
-@click.command(cli_util.override('identity_domains.app_roles_group.command_name', 'app-roles'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
-@cli_util.help_option_group
-def app_roles_group():
-    pass
-
-
-@click.command(cli_util.override('identity_domains.account_mgmt_info_group.command_name', 'account-mgmt-info'), cls=CommandGroupWithAlias, help="""Schema for AccountMgmtInfo resource.""")
-@cli_util.help_option_group
-def account_mgmt_info_group():
-    pass
-
-
 @click.command(cli_util.override('identity_domains.apps_group.command_name', 'apps'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
 @cli_util.help_option_group
 def apps_group():
@@ -335,9 +227,9 @@ def my_requestable_groups_group():
     pass
 
 
-@click.command(cli_util.override('identity_domains.grants_group.command_name', 'grants'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@click.command(cli_util.override('identity_domains.policy_group.command_name', 'policy'), cls=CommandGroupWithAlias, help="""Policy resource. A named list of rules.""")
 @cli_util.help_option_group
-def grants_group():
+def policy_group():
     pass
 
 
@@ -347,9 +239,375 @@ def kmsi_settings_group():
     pass
 
 
+@click.command(cli_util.override('identity_domains.o_auth_partner_certificate_group.command_name', 'o-auth-partner-certificate'), cls=CommandGroupWithAlias, help="""OAuth Partner Certificate schema""")
+@cli_util.help_option_group
+def o_auth_partner_certificate_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.o_auth2_client_credentials_group.command_name', 'o-auth2-client-credentials'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def o_auth2_client_credentials_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.o_auth_client_certificate_group.command_name', 'o-auth-client-certificate'), cls=CommandGroupWithAlias, help="""OAuth Client Certificate schema""")
+@cli_util.help_option_group
+def o_auth_client_certificate_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.my_devices_group.command_name', 'my-devices'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def my_devices_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.password_policy_group.command_name', 'password-policy'), cls=CommandGroupWithAlias, help="""PasswordPolicy resource.""")
+@cli_util.help_option_group
+def password_policy_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.auth_tokens_group.command_name', 'auth-tokens'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def auth_tokens_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.smtp_credentials_group.command_name', 'smtp-credentials'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def smtp_credentials_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.account_mgmt_infos_group.command_name', 'account-mgmt-infos'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def account_mgmt_infos_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.identity_settings_group.command_name', 'identity-settings'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def identity_settings_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.user_attributes_settings_group.command_name', 'user-attributes-settings'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def user_attributes_settings_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.approval_workflows_group.command_name', 'approval-workflows'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def approval_workflows_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.my_request_group.command_name', 'my-request'), cls=CommandGroupWithAlias, help="""Request resource""")
+@cli_util.help_option_group
+def my_request_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.security_question_group.command_name', 'security-question'), cls=CommandGroupWithAlias, help="""Security Question""")
+@cli_util.help_option_group
+def security_question_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.authentication_factor_settings_group.command_name', 'authentication-factor-settings'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def authentication_factor_settings_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.o_auth2_client_credential_group.command_name', 'o-auth2-client-credential'), cls=CommandGroupWithAlias, help="""The user's OAuth2 client credentials.""")
+@cli_util.help_option_group
+def o_auth2_client_credential_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.rules_group.command_name', 'rules'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def rules_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.my_o_auth2_client_credentials_group.command_name', 'my-o-auth2-client-credentials'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def my_o_auth2_client_credentials_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.my_smtp_credential_group.command_name', 'my-smtp-credential'), cls=CommandGroupWithAlias, help="""User's smtp credential""")
+@cli_util.help_option_group
+def my_smtp_credential_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.dynamic_resource_group_group.command_name', 'dynamic-resource-group'), cls=CommandGroupWithAlias, help="""Schema for DynamicResourceGroup resource.""")
+@cli_util.help_option_group
+def dynamic_resource_group_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.my_completed_approval_group.command_name', 'my-completed-approval'), cls=CommandGroupWithAlias, help="""Schema for MyPendingApproval and MyCompletedApproval""")
+@cli_util.help_option_group
+def my_completed_approval_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.my_user_db_credentials_group.command_name', 'my-user-db-credentials'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def my_user_db_credentials_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.me_group.command_name', 'me'), cls=CommandGroupWithAlias, help="""User Account""")
+@cli_util.help_option_group
+def me_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.user_db_credential_group.command_name', 'user-db-credential'), cls=CommandGroupWithAlias, help="""User's Database Credential""")
+@cli_util.help_option_group
+def user_db_credential_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.cloud_gates_group.command_name', 'cloud-gates'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def cloud_gates_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.group_group.command_name', 'group'), cls=CommandGroupWithAlias, help="""The Group resource.""")
+@cli_util.help_option_group
+def group_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.network_perimeters_group.command_name', 'network-perimeters'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def network_perimeters_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.settings_group.command_name', 'settings'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def settings_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.o_auth_client_certificates_group.command_name', 'o-auth-client-certificates'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def o_auth_client_certificates_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.cloud_gate_group.command_name', 'cloud-gate'), cls=CommandGroupWithAlias, help="""Resource representing a Cloud Gate""")
+@cli_util.help_option_group
+def cloud_gate_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.cloud_gate_mappings_group.command_name', 'cloud-gate-mappings'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def cloud_gate_mappings_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.users_group.command_name', 'users'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def users_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.my_pending_approvals_group.command_name', 'my-pending-approvals'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def my_pending_approvals_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.condition_group.command_name', 'condition'), cls=CommandGroupWithAlias, help="""Condition resource. A unit that captures a condition.""")
+@cli_util.help_option_group
+def condition_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.my_smtp_credentials_group.command_name', 'my-smtp-credentials'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def my_smtp_credentials_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.my_o_auth2_client_credential_group.command_name', 'my-o-auth2-client-credential'), cls=CommandGroupWithAlias, help="""The user's OAuth2 client credentials.""")
+@cli_util.help_option_group
+def my_o_auth2_client_credential_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.schemas_group.command_name', 'schemas'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def schemas_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.me_password_changer_group.command_name', 'me-password-changer'), cls=CommandGroupWithAlias, help="""The schema used for a user changing their own password.""")
+@cli_util.help_option_group
+def me_password_changer_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.authentication_factor_setting_group.command_name', 'authentication-factor-setting'), cls=CommandGroupWithAlias, help="""Multi Factor Authentication Settings for Tenant""")
+@cli_util.help_option_group
+def authentication_factor_setting_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.my_authentication_factor_validator_group.command_name', 'my-authentication-factor-validator'), cls=CommandGroupWithAlias, help="""Validate any given Authentication Factor""")
+@cli_util.help_option_group
+def my_authentication_factor_validator_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.self_registration_profile_group.command_name', 'self-registration-profile'), cls=CommandGroupWithAlias, help="""Self Registration Profile""")
+@cli_util.help_option_group
+def self_registration_profile_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.my_authentication_factor_initiator_group.command_name', 'my-authentication-factor-initiator'), cls=CommandGroupWithAlias, help="""This schema defines the attributes of Initiator call.""")
+@cli_util.help_option_group
+def my_authentication_factor_initiator_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.notification_settings_group.command_name', 'notification-settings'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def notification_settings_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.policies_group.command_name', 'policies'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def policies_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.rule_group.command_name', 'rule'), cls=CommandGroupWithAlias, help="""Rule resource. A unit that has a condition which on evaluation with input returns defined values.""")
+@cli_util.help_option_group
+def rule_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.user_status_changer_group.command_name', 'user-status-changer'), cls=CommandGroupWithAlias, help="""Schema to handle user status change by administrator.""")
+@cli_util.help_option_group
+def user_status_changer_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.my_apps_group.command_name', 'my-apps'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def my_apps_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.notification_setting_group.command_name', 'notification-setting'), cls=CommandGroupWithAlias, help="""Notification resource.""")
+@cli_util.help_option_group
+def notification_setting_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.my_customer_secret_keys_group.command_name', 'my-customer-secret-keys'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def my_customer_secret_keys_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.cloud_gate_server_group.command_name', 'cloud-gate-server'), cls=CommandGroupWithAlias, help="""Resource representing a Cloud Gate server block""")
+@cli_util.help_option_group
+def cloud_gate_server_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.branding_settings_group.command_name', 'branding-settings'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def branding_settings_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.kmsi_setting_group.command_name', 'kmsi-setting'), cls=CommandGroupWithAlias, help="""Kmsi Settings schema""")
+@cli_util.help_option_group
+def kmsi_setting_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.approval_workflow_assignment_group.command_name', 'approval-workflow-assignment'), cls=CommandGroupWithAlias, help="""Schema for ApprovalWorkflowAssignment""")
+@cli_util.help_option_group
+def approval_workflow_assignment_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.smtp_credential_group.command_name', 'smtp-credential'), cls=CommandGroupWithAlias, help="""User's smtp credential""")
+@cli_util.help_option_group
+def smtp_credential_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.my_trusted_user_agent_group.command_name', 'my-trusted-user-agent'), cls=CommandGroupWithAlias, help="""This schema defines the attributes of Trusted User Agents owned by users. Multi-Factor Authentication uses Trusted User Agents to authenticate users.  A User Agent is software application that a user uses to issue requests.\r    For example, a User Agent could be a particular browser (possibly one of several executing on a desktop or laptop) or a particular mobile application (again, one of several executing on a particular mobile device). \r    A User Agent is trusted once the Multi-Factor Authentication has verified it in some way.""")
+@cli_util.help_option_group
+def my_trusted_user_agent_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.security_question_setting_group.command_name', 'security-question-setting'), cls=CommandGroupWithAlias, help="""Security Question Settings""")
+@cli_util.help_option_group
+def security_question_setting_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.approval_workflow_assignments_group.command_name', 'approval-workflow-assignments'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def approval_workflow_assignments_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.app_roles_group.command_name', 'app-roles'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def app_roles_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.account_mgmt_info_group.command_name', 'account-mgmt-info'), cls=CommandGroupWithAlias, help="""Schema for AccountMgmtInfo resource.""")
+@cli_util.help_option_group
+def account_mgmt_info_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.grants_group.command_name', 'grants'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def grants_group():
+    pass
+
+
 @click.command(cli_util.override('identity_domains.app_status_changer_group.command_name', 'app-status-changer'), cls=CommandGroupWithAlias, help="""Schema for AppStatusChanger resource.""")
 @cli_util.help_option_group
 def app_status_changer_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.approval_workflow_steps_group.command_name', 'approval-workflow-steps'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def approval_workflow_steps_group():
+    pass
+
+
+@click.command(cli_util.override('identity_domains.cloud_gate_mapping_group.command_name', 'cloud-gate-mapping'), cls=CommandGroupWithAlias, help="""Resource representing a Cloud Gate mapping""")
+@cli_util.help_option_group
+def cloud_gate_mapping_group():
     pass
 
 
@@ -377,9 +635,9 @@ def groups_group():
     pass
 
 
-@click.command(cli_util.override('identity_domains.o_auth2_client_credentials_group.command_name', 'o-auth2-client-credentials'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@click.command(cli_util.override('identity_domains.o_auth_partner_certificates_group.command_name', 'o-auth-partner-certificates'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
 @cli_util.help_option_group
-def o_auth2_client_credentials_group():
+def o_auth_partner_certificates_group():
     pass
 
 
@@ -401,27 +659,9 @@ def my_support_account_group():
     pass
 
 
-@click.command(cli_util.override('identity_domains.my_devices_group.command_name', 'my-devices'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
-@cli_util.help_option_group
-def my_devices_group():
-    pass
-
-
 @click.command(cli_util.override('identity_domains.identity_provider_group.command_name', 'identity-provider'), cls=CommandGroupWithAlias, help="""Federation trusted partner Identity Provider""")
 @cli_util.help_option_group
 def identity_provider_group():
-    pass
-
-
-@click.command(cli_util.override('identity_domains.password_policy_group.command_name', 'password-policy'), cls=CommandGroupWithAlias, help="""PasswordPolicy resource.""")
-@cli_util.help_option_group
-def password_policy_group():
-    pass
-
-
-@click.command(cli_util.override('identity_domains.auth_tokens_group.command_name', 'auth-tokens'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
-@cli_util.help_option_group
-def auth_tokens_group():
     pass
 
 
@@ -443,24 +683,6 @@ def account_recovery_settings_group():
     pass
 
 
-@click.command(cli_util.override('identity_domains.smtp_credentials_group.command_name', 'smtp-credentials'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
-@cli_util.help_option_group
-def smtp_credentials_group():
-    pass
-
-
-@click.command(cli_util.override('identity_domains.account_mgmt_infos_group.command_name', 'account-mgmt-infos'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
-@cli_util.help_option_group
-def account_mgmt_infos_group():
-    pass
-
-
-@click.command(cli_util.override('identity_domains.identity_settings_group.command_name', 'identity-settings'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
-@cli_util.help_option_group
-def identity_settings_group():
-    pass
-
-
 @click.command(cli_util.override('identity_domains.auth_token_group.command_name', 'auth-token'), cls=CommandGroupWithAlias, help="""The user's Auth token resource.""")
 @cli_util.help_option_group
 def auth_token_group():
@@ -479,9 +701,9 @@ def my_requests_group():
     pass
 
 
-@click.command(cli_util.override('identity_domains.user_attributes_settings_group.command_name', 'user-attributes-settings'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@click.command(cli_util.override('identity_domains.approval_workflow_group.command_name', 'approval-workflow'), cls=CommandGroupWithAlias, help="""Schema for ApprovalWorkflow""")
 @cli_util.help_option_group
-def user_attributes_settings_group():
+def approval_workflow_group():
     pass
 
 
@@ -491,90 +713,134 @@ def user_group():
     pass
 
 
+@click.command(cli_util.override('identity_domains.cloud_gate_servers_group.command_name', 'cloud-gate-servers'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
+@cli_util.help_option_group
+def cloud_gate_servers_group():
+    pass
+
+
 @click.command(cli_util.override('identity_domains.identity_setting_group.command_name', 'identity-setting'), cls=CommandGroupWithAlias, help="""Identity Settings""")
 @cli_util.help_option_group
 def identity_setting_group():
     pass
 
 
-identity_domains_root_group.add_command(my_request_group)
+identity_domains_root_group.add_command(my_pending_approval_group)
 identity_domains_root_group.add_command(my_user_db_credential_group)
-identity_domains_root_group.add_command(security_question_group)
-identity_domains_root_group.add_command(authentication_factor_settings_group)
 identity_domains_root_group.add_command(dynamic_resource_groups_group)
-identity_domains_root_group.add_command(o_auth2_client_credential_group)
-identity_domains_root_group.add_command(my_o_auth2_client_credentials_group)
-identity_domains_root_group.add_command(my_smtp_credential_group)
 identity_domains_root_group.add_command(my_api_keys_group)
 identity_domains_root_group.add_command(my_authentication_factors_remover_group)
-identity_domains_root_group.add_command(dynamic_resource_group_group)
+identity_domains_root_group.add_command(setting_group)
 identity_domains_root_group.add_command(user_db_credentials_group)
-identity_domains_root_group.add_command(my_user_db_credentials_group)
+identity_domains_root_group.add_command(branding_setting_group)
 identity_domains_root_group.add_command(identity_providers_group)
-identity_domains_root_group.add_command(me_group)
-identity_domains_root_group.add_command(user_db_credential_group)
 identity_domains_root_group.add_command(user_password_changer_group)
-identity_domains_root_group.add_command(group_group)
 identity_domains_root_group.add_command(app_group)
 identity_domains_root_group.add_command(resource_type_schema_attributes_group)
 identity_domains_root_group.add_command(my_device_group)
 identity_domains_root_group.add_command(authentication_factors_remover_group)
 identity_domains_root_group.add_command(account_recovery_setting_group)
-identity_domains_root_group.add_command(users_group)
-identity_domains_root_group.add_command(my_smtp_credentials_group)
-identity_domains_root_group.add_command(my_o_auth2_client_credential_group)
-identity_domains_root_group.add_command(me_password_changer_group)
-identity_domains_root_group.add_command(authentication_factor_setting_group)
-identity_domains_root_group.add_command(my_authentication_factor_validator_group)
+identity_domains_root_group.add_command(self_registration_profiles_group)
+identity_domains_root_group.add_command(my_completed_approvals_group)
+identity_domains_root_group.add_command(network_perimeter_group)
+identity_domains_root_group.add_command(conditions_group)
 identity_domains_root_group.add_command(my_customer_secret_key_group)
-identity_domains_root_group.add_command(my_authentication_factor_initiator_group)
+identity_domains_root_group.add_command(schema_group)
 identity_domains_root_group.add_command(password_policies_group)
 identity_domains_root_group.add_command(customer_secret_keys_group)
 identity_domains_root_group.add_command(app_role_group)
-identity_domains_root_group.add_command(user_status_changer_group)
-identity_domains_root_group.add_command(my_apps_group)
 identity_domains_root_group.add_command(my_auth_tokens_group)
-identity_domains_root_group.add_command(my_customer_secret_keys_group)
 identity_domains_root_group.add_command(user_password_resetter_group)
 identity_domains_root_group.add_command(security_questions_group)
 identity_domains_root_group.add_command(my_support_accounts_group)
-identity_domains_root_group.add_command(kmsi_setting_group)
-identity_domains_root_group.add_command(smtp_credential_group)
-identity_domains_root_group.add_command(my_trusted_user_agent_group)
+identity_domains_root_group.add_command(approval_workflow_step_group)
 identity_domains_root_group.add_command(my_api_key_group)
-identity_domains_root_group.add_command(security_question_setting_group)
 identity_domains_root_group.add_command(user_attributes_setting_group)
 identity_domains_root_group.add_command(api_keys_group)
-identity_domains_root_group.add_command(app_roles_group)
-identity_domains_root_group.add_command(account_mgmt_info_group)
 identity_domains_root_group.add_command(apps_group)
 identity_domains_root_group.add_command(my_requestable_groups_group)
-identity_domains_root_group.add_command(grants_group)
+identity_domains_root_group.add_command(policy_group)
 identity_domains_root_group.add_command(kmsi_settings_group)
+identity_domains_root_group.add_command(o_auth_partner_certificate_group)
+identity_domains_root_group.add_command(o_auth2_client_credentials_group)
+identity_domains_root_group.add_command(o_auth_client_certificate_group)
+identity_domains_root_group.add_command(my_devices_group)
+identity_domains_root_group.add_command(password_policy_group)
+identity_domains_root_group.add_command(auth_tokens_group)
+identity_domains_root_group.add_command(smtp_credentials_group)
+identity_domains_root_group.add_command(account_mgmt_infos_group)
+identity_domains_root_group.add_command(identity_settings_group)
+identity_domains_root_group.add_command(user_attributes_settings_group)
+identity_domains_root_group.add_command(approval_workflows_group)
+identity_domains_root_group.add_command(my_request_group)
+identity_domains_root_group.add_command(security_question_group)
+identity_domains_root_group.add_command(authentication_factor_settings_group)
+identity_domains_root_group.add_command(o_auth2_client_credential_group)
+identity_domains_root_group.add_command(rules_group)
+identity_domains_root_group.add_command(my_o_auth2_client_credentials_group)
+identity_domains_root_group.add_command(my_smtp_credential_group)
+identity_domains_root_group.add_command(dynamic_resource_group_group)
+identity_domains_root_group.add_command(my_completed_approval_group)
+identity_domains_root_group.add_command(my_user_db_credentials_group)
+identity_domains_root_group.add_command(me_group)
+identity_domains_root_group.add_command(user_db_credential_group)
+identity_domains_root_group.add_command(cloud_gates_group)
+identity_domains_root_group.add_command(group_group)
+identity_domains_root_group.add_command(network_perimeters_group)
+identity_domains_root_group.add_command(settings_group)
+identity_domains_root_group.add_command(o_auth_client_certificates_group)
+identity_domains_root_group.add_command(cloud_gate_group)
+identity_domains_root_group.add_command(cloud_gate_mappings_group)
+identity_domains_root_group.add_command(users_group)
+identity_domains_root_group.add_command(my_pending_approvals_group)
+identity_domains_root_group.add_command(condition_group)
+identity_domains_root_group.add_command(my_smtp_credentials_group)
+identity_domains_root_group.add_command(my_o_auth2_client_credential_group)
+identity_domains_root_group.add_command(schemas_group)
+identity_domains_root_group.add_command(me_password_changer_group)
+identity_domains_root_group.add_command(authentication_factor_setting_group)
+identity_domains_root_group.add_command(my_authentication_factor_validator_group)
+identity_domains_root_group.add_command(self_registration_profile_group)
+identity_domains_root_group.add_command(my_authentication_factor_initiator_group)
+identity_domains_root_group.add_command(notification_settings_group)
+identity_domains_root_group.add_command(policies_group)
+identity_domains_root_group.add_command(rule_group)
+identity_domains_root_group.add_command(user_status_changer_group)
+identity_domains_root_group.add_command(my_apps_group)
+identity_domains_root_group.add_command(notification_setting_group)
+identity_domains_root_group.add_command(my_customer_secret_keys_group)
+identity_domains_root_group.add_command(cloud_gate_server_group)
+identity_domains_root_group.add_command(branding_settings_group)
+identity_domains_root_group.add_command(kmsi_setting_group)
+identity_domains_root_group.add_command(approval_workflow_assignment_group)
+identity_domains_root_group.add_command(smtp_credential_group)
+identity_domains_root_group.add_command(my_trusted_user_agent_group)
+identity_domains_root_group.add_command(security_question_setting_group)
+identity_domains_root_group.add_command(approval_workflow_assignments_group)
+identity_domains_root_group.add_command(app_roles_group)
+identity_domains_root_group.add_command(account_mgmt_info_group)
+identity_domains_root_group.add_command(grants_group)
 identity_domains_root_group.add_command(app_status_changer_group)
+identity_domains_root_group.add_command(approval_workflow_steps_group)
+identity_domains_root_group.add_command(cloud_gate_mapping_group)
 identity_domains_root_group.add_command(my_trusted_user_agents_group)
 identity_domains_root_group.add_command(customer_secret_key_group)
 identity_domains_root_group.add_command(my_auth_token_group)
 identity_domains_root_group.add_command(groups_group)
-identity_domains_root_group.add_command(o_auth2_client_credentials_group)
+identity_domains_root_group.add_command(o_auth_partner_certificates_group)
 identity_domains_root_group.add_command(security_question_settings_group)
 identity_domains_root_group.add_command(user_capabilities_changer_group)
 identity_domains_root_group.add_command(my_support_account_group)
-identity_domains_root_group.add_command(my_devices_group)
 identity_domains_root_group.add_command(identity_provider_group)
-identity_domains_root_group.add_command(password_policy_group)
-identity_domains_root_group.add_command(auth_tokens_group)
 identity_domains_root_group.add_command(api_key_group)
 identity_domains_root_group.add_command(my_groups_group)
 identity_domains_root_group.add_command(account_recovery_settings_group)
-identity_domains_root_group.add_command(smtp_credentials_group)
-identity_domains_root_group.add_command(account_mgmt_infos_group)
-identity_domains_root_group.add_command(identity_settings_group)
 identity_domains_root_group.add_command(auth_token_group)
 identity_domains_root_group.add_command(grant_group)
 identity_domains_root_group.add_command(my_requests_group)
-identity_domains_root_group.add_command(user_attributes_settings_group)
+identity_domains_root_group.add_command(approval_workflow_group)
 identity_domains_root_group.add_command(user_group)
+identity_domains_root_group.add_command(cloud_gate_servers_group)
 identity_domains_root_group.add_command(identity_setting_group)
 
 
@@ -1670,6 +1936,380 @@ def create_app_role(ctx, from_json, schemas, display_name, app, authorization, r
     cli_util.render_response(result, ctx)
 
 
+@approval_workflow_group.command(name=cli_util.override('identity_domains.create_approval_workflow.command_name', 'create'), help=u"""Create ApprovalWorkflow
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](createApprovalWorkflow)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', required=True, help=u"""Name of the ApprovalWorkflow.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: immutable  - required: true  - returned: default  - type: string  - uniqueness: server""")
+@cli_util.option('--max-duration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--id', help=u"""Unique identifier for the SCIM Resource as defined by the Service Provider. Each representation of the Resource MUST include a non-empty id value. This identifier MUST be unique across the Service Provider's entire set of Resources. It MUST be a stable, non-reassignable identifier that does not change when the same Resource is returned in subsequent requests. The value of the id attribute is always issued by the Service Provider and MUST never be specified by the Service Consumer. bulkId: is a reserved keyword and MUST NOT be used in the unique identifier.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--ocid', help=u"""Unique OCI identifier for the SCIM Resource.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: immutable  - required: false  - returned: default  - type: string  - uniqueness: global""")
+@cli_util.option('--meta', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-created-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-last-modified-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-prevented-operations', type=custom_types.CliCaseInsensitiveChoice(["replace", "update", "delete"]), help=u"""Each value of this attribute specifies an operation that only an internal client may perform on this particular resource.
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
+
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--idcs-last-upgraded-in-release', help=u"""The release number when the resource was upgraded.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--domain-ocid', help=u"""OCI Domain Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--compartment-ocid', help=u"""OCI Compartment Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--tenancy-ocid', help=u"""OCI Tenant Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--description', help=u"""Description of the ApprovalWorkflow.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--approval-workflow-steps', type=custom_types.CLI_COMPLEX_TYPE, help=u"""ApprovalWorkflowSteps applicable for the ApprovalWorkflowInstance.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - idcsCompositeKey: [value, type]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type ApprovalWorkflowApprovalWorkflowSteps.  For documentation on ApprovalWorkflowApprovalWorkflowSteps please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/ApprovalWorkflowApprovalWorkflowSteps.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'max-duration': {'module': 'identity_domains', 'class': 'ApprovalWorkflowMaxDuration'}, 'approval-workflow-steps': {'module': 'identity_domains', 'class': 'list[ApprovalWorkflowApprovalWorkflowSteps]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'max-duration': {'module': 'identity_domains', 'class': 'ApprovalWorkflowMaxDuration'}, 'approval-workflow-steps': {'module': 'identity_domains', 'class': 'list[ApprovalWorkflowApprovalWorkflowSteps]'}}, output_type={'module': 'identity_domains', 'class': 'ApprovalWorkflow'})
+@cli_util.wrap_exceptions
+def create_approval_workflow(ctx, from_json, schemas, name, max_duration, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, description, approval_workflow_steps):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['name'] = name
+    _details['maxDuration'] = cli_util.parse_json_parameter("max_duration", max_duration)
+
+    if id is not None:
+        _details['id'] = id
+
+    if ocid is not None:
+        _details['ocid'] = ocid
+
+    if meta is not None:
+        _details['meta'] = cli_util.parse_json_parameter("meta", meta)
+
+    if idcs_created_by is not None:
+        _details['idcsCreatedBy'] = cli_util.parse_json_parameter("idcs_created_by", idcs_created_by)
+
+    if idcs_last_modified_by is not None:
+        _details['idcsLastModifiedBy'] = cli_util.parse_json_parameter("idcs_last_modified_by", idcs_last_modified_by)
+
+    if idcs_prevented_operations is not None:
+        _details['idcsPreventedOperations'] = cli_util.parse_json_parameter("idcs_prevented_operations", idcs_prevented_operations)
+
+    if tags is not None:
+        _details['tags'] = cli_util.parse_json_parameter("tags", tags)
+
+    if delete_in_progress is not None:
+        _details['deleteInProgress'] = delete_in_progress
+
+    if idcs_last_upgraded_in_release is not None:
+        _details['idcsLastUpgradedInRelease'] = idcs_last_upgraded_in_release
+
+    if domain_ocid is not None:
+        _details['domainOcid'] = domain_ocid
+
+    if compartment_ocid is not None:
+        _details['compartmentOcid'] = compartment_ocid
+
+    if tenancy_ocid is not None:
+        _details['tenancyOcid'] = tenancy_ocid
+
+    if description is not None:
+        _details['description'] = description
+
+    if approval_workflow_steps is not None:
+        _details['approvalWorkflowSteps'] = cli_util.parse_json_parameter("approval_workflow_steps", approval_workflow_steps)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.create_approval_workflow(
+        approval_workflow=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@approval_workflow_assignment_group.command(name=cli_util.override('identity_domains.create_approval_workflow_assignment.command_name', 'create'), help=u"""Create Approval Workflow Assignment
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](createApprovalWorkflowAssignment)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--assignment-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["MEMBERSHIP", "ACTIVATION"]), help=u"""Type of approval workflow assignment to the resource. Resources like Group have only one workflow associated (default assignment type is membership), but resources like TemporalBusinessRole can have atleast 2 AWs attached, one for membership to TPR, another for activation of that TPR membership
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--approval-workflow', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--assigned-to', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--id', help=u"""Unique identifier for the SCIM Resource as defined by the Service Provider. Each representation of the Resource MUST include a non-empty id value. This identifier MUST be unique across the Service Provider's entire set of Resources. It MUST be a stable, non-reassignable identifier that does not change when the same Resource is returned in subsequent requests. The value of the id attribute is always issued by the Service Provider and MUST never be specified by the Service Consumer. bulkId: is a reserved keyword and MUST NOT be used in the unique identifier.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--ocid', help=u"""Unique OCI identifier for the SCIM Resource.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: immutable  - required: false  - returned: default  - type: string  - uniqueness: global""")
+@cli_util.option('--meta', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-created-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-last-modified-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-prevented-operations', type=custom_types.CliCaseInsensitiveChoice(["replace", "update", "delete"]), help=u"""Each value of this attribute specifies an operation that only an internal client may perform on this particular resource.
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
+
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--idcs-last-upgraded-in-release', help=u"""The release number when the resource was upgraded.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--domain-ocid', help=u"""OCI Domain Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--compartment-ocid', help=u"""OCI Compartment Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--tenancy-ocid', help=u"""OCI Tenant Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'approval-workflow': {'module': 'identity_domains', 'class': 'ApprovalWorkflowAssignmentApprovalWorkflow'}, 'assigned-to': {'module': 'identity_domains', 'class': 'ApprovalWorkflowAssignmentAssignedTo'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'approval-workflow': {'module': 'identity_domains', 'class': 'ApprovalWorkflowAssignmentApprovalWorkflow'}, 'assigned-to': {'module': 'identity_domains', 'class': 'ApprovalWorkflowAssignmentAssignedTo'}}, output_type={'module': 'identity_domains', 'class': 'ApprovalWorkflowAssignment'})
+@cli_util.wrap_exceptions
+def create_approval_workflow_assignment(ctx, from_json, schemas, assignment_type, approval_workflow, assigned_to, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['assignmentType'] = assignment_type
+    _details['approvalWorkflow'] = cli_util.parse_json_parameter("approval_workflow", approval_workflow)
+    _details['assignedTo'] = cli_util.parse_json_parameter("assigned_to", assigned_to)
+
+    if id is not None:
+        _details['id'] = id
+
+    if ocid is not None:
+        _details['ocid'] = ocid
+
+    if meta is not None:
+        _details['meta'] = cli_util.parse_json_parameter("meta", meta)
+
+    if idcs_created_by is not None:
+        _details['idcsCreatedBy'] = cli_util.parse_json_parameter("idcs_created_by", idcs_created_by)
+
+    if idcs_last_modified_by is not None:
+        _details['idcsLastModifiedBy'] = cli_util.parse_json_parameter("idcs_last_modified_by", idcs_last_modified_by)
+
+    if idcs_prevented_operations is not None:
+        _details['idcsPreventedOperations'] = cli_util.parse_json_parameter("idcs_prevented_operations", idcs_prevented_operations)
+
+    if tags is not None:
+        _details['tags'] = cli_util.parse_json_parameter("tags", tags)
+
+    if delete_in_progress is not None:
+        _details['deleteInProgress'] = delete_in_progress
+
+    if idcs_last_upgraded_in_release is not None:
+        _details['idcsLastUpgradedInRelease'] = idcs_last_upgraded_in_release
+
+    if domain_ocid is not None:
+        _details['domainOcid'] = domain_ocid
+
+    if compartment_ocid is not None:
+        _details['compartmentOcid'] = compartment_ocid
+
+    if tenancy_ocid is not None:
+        _details['tenancyOcid'] = tenancy_ocid
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.create_approval_workflow_assignment(
+        approval_workflow_assignment=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@approval_workflow_step_group.command(name=cli_util.override('identity_domains.create_approval_workflow_step.command_name', 'create'), help=u"""Create ApprovalWorkflowStep
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](createApprovalWorkflowStep)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--order', required=True, type=click.INT, help=u"""Order of the ApprovalWorkflowStep.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - idcsMaxValue: 2147483647  - required: true  - returned: default  - type: integer  - uniqueness: none""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["escalation", "regular"]), help=u"""Type of ApprovalWorkflowStep
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--id', help=u"""Unique identifier for the SCIM Resource as defined by the Service Provider. Each representation of the Resource MUST include a non-empty id value. This identifier MUST be unique across the Service Provider's entire set of Resources. It MUST be a stable, non-reassignable identifier that does not change when the same Resource is returned in subsequent requests. The value of the id attribute is always issued by the Service Provider and MUST never be specified by the Service Consumer. bulkId: is a reserved keyword and MUST NOT be used in the unique identifier.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--ocid', help=u"""Unique OCI identifier for the SCIM Resource.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: immutable  - required: false  - returned: default  - type: string  - uniqueness: global""")
+@cli_util.option('--meta', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-created-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-last-modified-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-prevented-operations', type=custom_types.CliCaseInsensitiveChoice(["replace", "update", "delete"]), help=u"""Each value of this attribute specifies an operation that only an internal client may perform on this particular resource.
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
+
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--idcs-last-upgraded-in-release', help=u"""The release number when the resource was upgraded.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--domain-ocid', help=u"""OCI Domain Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--compartment-ocid', help=u"""OCI Compartment Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--tenancy-ocid', help=u"""OCI Tenant Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--minimum-approvals', type=click.INT, help=u"""Minimum number of Approvals required for this step.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - idcsMinValue: 1  - idcsMaxValue: 2147483647  - required: false  - returned: default  - type: integer  - uniqueness: none""")
+@cli_util.option('--approvers-expressions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""approversExpressions of ApprovalWorkflowStep
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--approvers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Approvers of the ApprovalWorkflowStep.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - idcsCompositeKey: [value, type]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type ApprovalWorkflowStepApprovers.  For documentation on ApprovalWorkflowStepApprovers please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/ApprovalWorkflowStepApprovers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'approvers-expressions': {'module': 'identity_domains', 'class': 'list[string]'}, 'approvers': {'module': 'identity_domains', 'class': 'list[ApprovalWorkflowStepApprovers]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'approvers-expressions': {'module': 'identity_domains', 'class': 'list[string]'}, 'approvers': {'module': 'identity_domains', 'class': 'list[ApprovalWorkflowStepApprovers]'}}, output_type={'module': 'identity_domains', 'class': 'ApprovalWorkflowStep'})
+@cli_util.wrap_exceptions
+def create_approval_workflow_step(ctx, from_json, schemas, order, type, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, minimum_approvals, approvers_expressions, approvers):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['order'] = order
+    _details['type'] = type
+
+    if id is not None:
+        _details['id'] = id
+
+    if ocid is not None:
+        _details['ocid'] = ocid
+
+    if meta is not None:
+        _details['meta'] = cli_util.parse_json_parameter("meta", meta)
+
+    if idcs_created_by is not None:
+        _details['idcsCreatedBy'] = cli_util.parse_json_parameter("idcs_created_by", idcs_created_by)
+
+    if idcs_last_modified_by is not None:
+        _details['idcsLastModifiedBy'] = cli_util.parse_json_parameter("idcs_last_modified_by", idcs_last_modified_by)
+
+    if idcs_prevented_operations is not None:
+        _details['idcsPreventedOperations'] = cli_util.parse_json_parameter("idcs_prevented_operations", idcs_prevented_operations)
+
+    if tags is not None:
+        _details['tags'] = cli_util.parse_json_parameter("tags", tags)
+
+    if delete_in_progress is not None:
+        _details['deleteInProgress'] = delete_in_progress
+
+    if idcs_last_upgraded_in_release is not None:
+        _details['idcsLastUpgradedInRelease'] = idcs_last_upgraded_in_release
+
+    if domain_ocid is not None:
+        _details['domainOcid'] = domain_ocid
+
+    if compartment_ocid is not None:
+        _details['compartmentOcid'] = compartment_ocid
+
+    if tenancy_ocid is not None:
+        _details['tenancyOcid'] = tenancy_ocid
+
+    if minimum_approvals is not None:
+        _details['minimumApprovals'] = minimum_approvals
+
+    if approvers_expressions is not None:
+        _details['approversExpressions'] = cli_util.parse_json_parameter("approvers_expressions", approvers_expressions)
+
+    if approvers is not None:
+        _details['approvers'] = cli_util.parse_json_parameter("approvers", approvers)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.create_approval_workflow_step(
+        approval_workflow_step=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @auth_token_group.command(name=cli_util.override('identity_domains.create_auth_token.command_name', 'create'), help=u"""Create a user's Auth token.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](createAuthToken)""")
@@ -1852,12 +2492,15 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["KMSI", "MFA", "ACCOUNTRECOVERY", "ALL"]), help=u"""Specifies the type of factors to remove. Either MFA factors or AccountRecovery factors or All factors
 
 **SCIM++ Properties:**  - type: string  - multiValued: false  - required: false  - mutability: readWrite  - returned: default  - uniqueness: none  - idcsSearchable: false""")
+@cli_util.option('--token', help=u"""Specifies the token to be removed
+
+**SCIM++ Properties:**  - type: string  - multiValued: false  - required: false  - mutability: readWrite  - returned: request  - uniqueness: none  - idcsSearchable: false""")
 @json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'user': {'module': 'identity_domains', 'class': 'AuthenticationFactorsRemoverUser'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'user': {'module': 'identity_domains', 'class': 'AuthenticationFactorsRemoverUser'}}, output_type={'module': 'identity_domains', 'class': 'AuthenticationFactorsRemover'})
 @cli_util.wrap_exceptions
-def create_authentication_factors_remover(ctx, from_json, schemas, user, authorization, resource_type_schema_version, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, type):
+def create_authentication_factors_remover(ctx, from_json, schemas, user, authorization, resource_type_schema_version, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, type, token):
 
     kwargs = {}
     if authorization is not None:
@@ -1908,9 +2551,636 @@ def create_authentication_factors_remover(ctx, from_json, schemas, user, authori
     if type is not None:
         _details['type'] = type
 
+    if token is not None:
+        _details['token'] = token
+
     client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
     result = client.create_authentication_factors_remover(
         authentication_factors_remover=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_gate_group.command(name=cli_util.override('identity_domains.create_cloud_gate.command_name', 'create'), help=u"""Create a Cloud Gate
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](createCloudGate)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', required=True, help=u"""Display name/Host identifier for this Cloud Gate
+
+**Added In:** 19.2.1
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: true  - returned: always  - type: string  - uniqueness: server""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--id', help=u"""Unique identifier for the SCIM Resource as defined by the Service Provider. Each representation of the Resource MUST include a non-empty id value. This identifier MUST be unique across the Service Provider's entire set of Resources. It MUST be a stable, non-reassignable identifier that does not change when the same Resource is returned in subsequent requests. The value of the id attribute is always issued by the Service Provider and MUST never be specified by the Service Consumer. bulkId: is a reserved keyword and MUST NOT be used in the unique identifier.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--ocid', help=u"""Unique OCI identifier for the SCIM Resource.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: immutable  - required: false  - returned: default  - type: string  - uniqueness: global""")
+@cli_util.option('--meta', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-created-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-last-modified-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-prevented-operations', type=custom_types.CliCaseInsensitiveChoice(["replace", "update", "delete"]), help=u"""Each value of this attribute specifies an operation that only an internal client may perform on this particular resource.
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
+
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--idcs-last-upgraded-in-release', help=u"""The release number when the resource was upgraded.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--domain-ocid', help=u"""OCI Domain Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--compartment-ocid', help=u"""OCI Compartment Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--tenancy-ocid', help=u"""OCI Tenant Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--is-opc-service', type=click.BOOL, help=u"""Indicates whether this resource was created by OPC
+
+**Added In:** 19.3.3
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: boolean  - uniqueness: none""")
+@cli_util.option('--last-modified-time', help=u"""Last updated timestamp for this CloudGate's servers and mappings.
+
+**Added In:** 19.2.1
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: dateTime  - uniqueness: none""")
+@cli_util.option('--description', help=u"""Brief description for this Cloud Gate
+
+**Added In:** 19.2.1
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--active', type=click.BOOL, help=u"""Activation status for this Cloud Gate
+
+**Added In:** 19.2.1
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["lbaas", "gateway"]), help=u"""Type of Cloud Gate
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: immutable  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--upstream-server-groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of upstream server groups
+
+**Added In:** 20.1.3
+
+**SCIM++ Properties:**  - caseExact: false  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type CloudGateExtUpstreamServerGroups.  For documentation on CloudGateExtUpstreamServerGroups please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/CloudGateExtUpstreamServerGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--upstream-servers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of upstream servers
+
+**Added In:** 20.1.3
+
+**SCIM++ Properties:**  - caseExact: false  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type CloudGateExtUpstreamServers.  For documentation on CloudGateExtUpstreamServers please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/CloudGateExtUpstreamServers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--oauth-client', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--servers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of Server Blocks on this Cloud Gate
+
+**SCIM++ Properties:**  - caseExact: true  - idcsCompositeKey: [hostName]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type CloudGateExtServers.  For documentation on CloudGateExtServers please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/CloudGateExtServers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--mappings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of Cloud Gate Mappings that map Apps to this Cloud Gate
+
+**SCIM++ Properties:**  - caseExact: true  - idcsCompositeKey: [serverId, resourcePrefix]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type CloudGateExtMappings.  For documentation on CloudGateExtMappings please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/CloudGateExtMappings.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'upstream-server-groups': {'module': 'identity_domains', 'class': 'list[CloudGateExtUpstreamServerGroups]'}, 'upstream-servers': {'module': 'identity_domains', 'class': 'list[CloudGateExtUpstreamServers]'}, 'oauth-client': {'module': 'identity_domains', 'class': 'CloudGateOauthClient'}, 'servers': {'module': 'identity_domains', 'class': 'list[CloudGateExtServers]'}, 'mappings': {'module': 'identity_domains', 'class': 'list[CloudGateExtMappings]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'upstream-server-groups': {'module': 'identity_domains', 'class': 'list[CloudGateExtUpstreamServerGroups]'}, 'upstream-servers': {'module': 'identity_domains', 'class': 'list[CloudGateExtUpstreamServers]'}, 'oauth-client': {'module': 'identity_domains', 'class': 'CloudGateOauthClient'}, 'servers': {'module': 'identity_domains', 'class': 'list[CloudGateExtServers]'}, 'mappings': {'module': 'identity_domains', 'class': 'list[CloudGateExtMappings]'}}, output_type={'module': 'identity_domains', 'class': 'CloudGate'})
+@cli_util.wrap_exceptions
+def create_cloud_gate(ctx, from_json, schemas, display_name, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, is_opc_service, last_modified_time, description, active, type, upstream_server_groups, upstream_servers, oauth_client, servers, mappings):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['displayName'] = display_name
+
+    if id is not None:
+        _details['id'] = id
+
+    if ocid is not None:
+        _details['ocid'] = ocid
+
+    if meta is not None:
+        _details['meta'] = cli_util.parse_json_parameter("meta", meta)
+
+    if idcs_created_by is not None:
+        _details['idcsCreatedBy'] = cli_util.parse_json_parameter("idcs_created_by", idcs_created_by)
+
+    if idcs_last_modified_by is not None:
+        _details['idcsLastModifiedBy'] = cli_util.parse_json_parameter("idcs_last_modified_by", idcs_last_modified_by)
+
+    if idcs_prevented_operations is not None:
+        _details['idcsPreventedOperations'] = cli_util.parse_json_parameter("idcs_prevented_operations", idcs_prevented_operations)
+
+    if tags is not None:
+        _details['tags'] = cli_util.parse_json_parameter("tags", tags)
+
+    if delete_in_progress is not None:
+        _details['deleteInProgress'] = delete_in_progress
+
+    if idcs_last_upgraded_in_release is not None:
+        _details['idcsLastUpgradedInRelease'] = idcs_last_upgraded_in_release
+
+    if domain_ocid is not None:
+        _details['domainOcid'] = domain_ocid
+
+    if compartment_ocid is not None:
+        _details['compartmentOcid'] = compartment_ocid
+
+    if tenancy_ocid is not None:
+        _details['tenancyOcid'] = tenancy_ocid
+
+    if is_opc_service is not None:
+        _details['isOPCService'] = is_opc_service
+
+    if last_modified_time is not None:
+        _details['lastModifiedTime'] = last_modified_time
+
+    if description is not None:
+        _details['description'] = description
+
+    if active is not None:
+        _details['active'] = active
+
+    if type is not None:
+        _details['type'] = type
+
+    if upstream_server_groups is not None:
+        _details['upstreamServerGroups'] = cli_util.parse_json_parameter("upstream_server_groups", upstream_server_groups)
+
+    if upstream_servers is not None:
+        _details['upstreamServers'] = cli_util.parse_json_parameter("upstream_servers", upstream_servers)
+
+    if oauth_client is not None:
+        _details['oauthClient'] = cli_util.parse_json_parameter("oauth_client", oauth_client)
+
+    if servers is not None:
+        _details['servers'] = cli_util.parse_json_parameter("servers", servers)
+
+    if mappings is not None:
+        _details['mappings'] = cli_util.parse_json_parameter("mappings", mappings)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.create_cloud_gate(
+        cloud_gate=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_gate_mapping_group.command(name=cli_util.override('identity_domains.create_cloud_gate_mapping.command_name', 'create'), help=u"""Create a Cloud Gate mapping
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](createCloudGateMapping)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--resource-prefix', required=True, help=u"""Resource prefix for this mapping.  This will be used to define the location block
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--policy-name', required=True, help=u"""The Web Tier policy name used for the App that is mapped to the owning Cloud Gate
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--server', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--gateway-app', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--cloud-gate', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--id', help=u"""Unique identifier for the SCIM Resource as defined by the Service Provider. Each representation of the Resource MUST include a non-empty id value. This identifier MUST be unique across the Service Provider's entire set of Resources. It MUST be a stable, non-reassignable identifier that does not change when the same Resource is returned in subsequent requests. The value of the id attribute is always issued by the Service Provider and MUST never be specified by the Service Consumer. bulkId: is a reserved keyword and MUST NOT be used in the unique identifier.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--ocid', help=u"""Unique OCI identifier for the SCIM Resource.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: immutable  - required: false  - returned: default  - type: string  - uniqueness: global""")
+@cli_util.option('--meta', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-created-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-last-modified-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-prevented-operations', type=custom_types.CliCaseInsensitiveChoice(["replace", "update", "delete"]), help=u"""Each value of this attribute specifies an operation that only an internal client may perform on this particular resource.
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
+
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--idcs-last-upgraded-in-release', help=u"""The release number when the resource was upgraded.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--domain-ocid', help=u"""OCI Domain Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--compartment-ocid', help=u"""OCI Compartment Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--tenancy-ocid', help=u"""OCI Tenant Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--is-opc-service', type=click.BOOL, help=u"""Indicates whether this resource was created by OPC
+
+**Added In:** 19.3.3
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: boolean  - uniqueness: none""")
+@cli_util.option('--description', help=u"""Brief description for this Cloud Gate
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--proxy-pass', help=u"""NGINX ProxyPass entry for this Mapping
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--nginx-settings', help=u"""More NGINX Settings. JSON encoded key value pairs similar to WTP encoding
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--upstream-server-group', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'upstream-server-group': {'module': 'identity_domains', 'class': 'CloudGateMappingUpstreamServerGroup'}, 'server': {'module': 'identity_domains', 'class': 'CloudGateMappingServer'}, 'gateway-app': {'module': 'identity_domains', 'class': 'CloudGateMappingGatewayApp'}, 'cloud-gate': {'module': 'identity_domains', 'class': 'CloudGateMappingCloudGate'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'upstream-server-group': {'module': 'identity_domains', 'class': 'CloudGateMappingUpstreamServerGroup'}, 'server': {'module': 'identity_domains', 'class': 'CloudGateMappingServer'}, 'gateway-app': {'module': 'identity_domains', 'class': 'CloudGateMappingGatewayApp'}, 'cloud-gate': {'module': 'identity_domains', 'class': 'CloudGateMappingCloudGate'}}, output_type={'module': 'identity_domains', 'class': 'CloudGateMapping'})
+@cli_util.wrap_exceptions
+def create_cloud_gate_mapping(ctx, from_json, schemas, resource_prefix, policy_name, server, gateway_app, cloud_gate, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, is_opc_service, description, proxy_pass, nginx_settings, upstream_server_group):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['resourcePrefix'] = resource_prefix
+    _details['policyName'] = policy_name
+    _details['server'] = cli_util.parse_json_parameter("server", server)
+    _details['gatewayApp'] = cli_util.parse_json_parameter("gateway_app", gateway_app)
+    _details['cloudGate'] = cli_util.parse_json_parameter("cloud_gate", cloud_gate)
+
+    if id is not None:
+        _details['id'] = id
+
+    if ocid is not None:
+        _details['ocid'] = ocid
+
+    if meta is not None:
+        _details['meta'] = cli_util.parse_json_parameter("meta", meta)
+
+    if idcs_created_by is not None:
+        _details['idcsCreatedBy'] = cli_util.parse_json_parameter("idcs_created_by", idcs_created_by)
+
+    if idcs_last_modified_by is not None:
+        _details['idcsLastModifiedBy'] = cli_util.parse_json_parameter("idcs_last_modified_by", idcs_last_modified_by)
+
+    if idcs_prevented_operations is not None:
+        _details['idcsPreventedOperations'] = cli_util.parse_json_parameter("idcs_prevented_operations", idcs_prevented_operations)
+
+    if tags is not None:
+        _details['tags'] = cli_util.parse_json_parameter("tags", tags)
+
+    if delete_in_progress is not None:
+        _details['deleteInProgress'] = delete_in_progress
+
+    if idcs_last_upgraded_in_release is not None:
+        _details['idcsLastUpgradedInRelease'] = idcs_last_upgraded_in_release
+
+    if domain_ocid is not None:
+        _details['domainOcid'] = domain_ocid
+
+    if compartment_ocid is not None:
+        _details['compartmentOcid'] = compartment_ocid
+
+    if tenancy_ocid is not None:
+        _details['tenancyOcid'] = tenancy_ocid
+
+    if is_opc_service is not None:
+        _details['isOPCService'] = is_opc_service
+
+    if description is not None:
+        _details['description'] = description
+
+    if proxy_pass is not None:
+        _details['proxyPass'] = proxy_pass
+
+    if nginx_settings is not None:
+        _details['nginxSettings'] = nginx_settings
+
+    if upstream_server_group is not None:
+        _details['upstreamServerGroup'] = cli_util.parse_json_parameter("upstream_server_group", upstream_server_group)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.create_cloud_gate_mapping(
+        cloud_gate_mapping=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_gate_server_group.command(name=cli_util.override('identity_domains.create_cloud_gate_server.command_name', 'create'), help=u"""Create a Cloud Gate server
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](createCloudGateServer)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', required=True, help=u"""Display name for the Server block
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: true  - returned: always  - type: string  - uniqueness: server""")
+@cli_util.option('--host-name', required=True, help=u"""Hostname for the Server block
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: true  - returned: always  - type: string  - uniqueness: none""")
+@cli_util.option('--port', required=True, type=click.INT, help=u"""Port for the Server Block
+
+**SCIM++ Properties:**  - caseExact: true  - idcsMaxValue: 65535  - idcsMinValue: 1  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: true  - returned: default  - type: integer  - uniqueness: none""")
+@cli_util.option('--ssl', required=True, type=click.BOOL, help=u"""SSL flag for the Server Block
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: true  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--cloud-gate', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--id', help=u"""Unique identifier for the SCIM Resource as defined by the Service Provider. Each representation of the Resource MUST include a non-empty id value. This identifier MUST be unique across the Service Provider's entire set of Resources. It MUST be a stable, non-reassignable identifier that does not change when the same Resource is returned in subsequent requests. The value of the id attribute is always issued by the Service Provider and MUST never be specified by the Service Consumer. bulkId: is a reserved keyword and MUST NOT be used in the unique identifier.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--ocid', help=u"""Unique OCI identifier for the SCIM Resource.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: immutable  - required: false  - returned: default  - type: string  - uniqueness: global""")
+@cli_util.option('--meta', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-created-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-last-modified-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-prevented-operations', type=custom_types.CliCaseInsensitiveChoice(["replace", "update", "delete"]), help=u"""Each value of this attribute specifies an operation that only an internal client may perform on this particular resource.
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
+
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--idcs-last-upgraded-in-release', help=u"""The release number when the resource was upgraded.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--domain-ocid', help=u"""OCI Domain Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--compartment-ocid', help=u"""OCI Compartment Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--tenancy-ocid', help=u"""OCI Tenant Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--is-opc-service', type=click.BOOL, help=u"""Indicates whether this resource was created by OPC
+
+**Added In:** 19.3.3
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: boolean  - uniqueness: none""")
+@cli_util.option('--description', help=u"""Brief description for this Cloud Gate server block
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--nginx-settings', help=u"""More nginx Settings. JSON encoded text block
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'cloud-gate': {'module': 'identity_domains', 'class': 'CloudGateServerCloudGate'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'cloud-gate': {'module': 'identity_domains', 'class': 'CloudGateServerCloudGate'}}, output_type={'module': 'identity_domains', 'class': 'CloudGateServer'})
+@cli_util.wrap_exceptions
+def create_cloud_gate_server(ctx, from_json, schemas, display_name, host_name, port, ssl, cloud_gate, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, is_opc_service, description, nginx_settings):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['displayName'] = display_name
+    _details['hostName'] = host_name
+    _details['port'] = port
+    _details['ssl'] = ssl
+    _details['cloudGate'] = cli_util.parse_json_parameter("cloud_gate", cloud_gate)
+
+    if id is not None:
+        _details['id'] = id
+
+    if ocid is not None:
+        _details['ocid'] = ocid
+
+    if meta is not None:
+        _details['meta'] = cli_util.parse_json_parameter("meta", meta)
+
+    if idcs_created_by is not None:
+        _details['idcsCreatedBy'] = cli_util.parse_json_parameter("idcs_created_by", idcs_created_by)
+
+    if idcs_last_modified_by is not None:
+        _details['idcsLastModifiedBy'] = cli_util.parse_json_parameter("idcs_last_modified_by", idcs_last_modified_by)
+
+    if idcs_prevented_operations is not None:
+        _details['idcsPreventedOperations'] = cli_util.parse_json_parameter("idcs_prevented_operations", idcs_prevented_operations)
+
+    if tags is not None:
+        _details['tags'] = cli_util.parse_json_parameter("tags", tags)
+
+    if delete_in_progress is not None:
+        _details['deleteInProgress'] = delete_in_progress
+
+    if idcs_last_upgraded_in_release is not None:
+        _details['idcsLastUpgradedInRelease'] = idcs_last_upgraded_in_release
+
+    if domain_ocid is not None:
+        _details['domainOcid'] = domain_ocid
+
+    if compartment_ocid is not None:
+        _details['compartmentOcid'] = compartment_ocid
+
+    if tenancy_ocid is not None:
+        _details['tenancyOcid'] = tenancy_ocid
+
+    if is_opc_service is not None:
+        _details['isOPCService'] = is_opc_service
+
+    if description is not None:
+        _details['description'] = description
+
+    if nginx_settings is not None:
+        _details['nginxSettings'] = nginx_settings
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.create_cloud_gate_server(
+        cloud_gate_server=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@condition_group.command(name=cli_util.override('identity_domains.create_condition.command_name', 'create'), help=u"""Create a Condition
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](createCondition)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', required=True, help=u"""Condition name
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: true  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--attribute-name', required=True, help=u"""AttributeName - RHS of condition
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--operator', required=True, type=custom_types.CliCaseInsensitiveChoice(["eq", "ne", "co", "coany", "sw", "ew", "gt", "ge", "lt", "le", "in", "nin"]), help=u"""**SCIM++ Properties:** - caseExact: true - idcsSearchable: false - multiValued: false - mutability: readWrite - required: true - returned: default - type: string - uniqueness: none Operator in the condition. It support all SCIM operators like eq, gt, lt, le, sw etc""")
+@cli_util.option('--attribute-value', required=True, help=u"""attributeValue - RHS of condition
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--id', help=u"""Unique identifier for the SCIM Resource as defined by the Service Provider. Each representation of the Resource MUST include a non-empty id value. This identifier MUST be unique across the Service Provider's entire set of Resources. It MUST be a stable, non-reassignable identifier that does not change when the same Resource is returned in subsequent requests. The value of the id attribute is always issued by the Service Provider and MUST never be specified by the Service Consumer. bulkId: is a reserved keyword and MUST NOT be used in the unique identifier.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--ocid', help=u"""Unique OCI identifier for the SCIM Resource.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: immutable  - required: false  - returned: default  - type: string  - uniqueness: global""")
+@cli_util.option('--meta', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-created-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-last-modified-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-prevented-operations', type=custom_types.CliCaseInsensitiveChoice(["replace", "update", "delete"]), help=u"""Each value of this attribute specifies an operation that only an internal client may perform on this particular resource.
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
+
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--idcs-last-upgraded-in-release', help=u"""The release number when the resource was upgraded.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--domain-ocid', help=u"""OCI Domain Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--compartment-ocid', help=u"""OCI Compartment Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--tenancy-ocid', help=u"""OCI Tenant Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--external-id', help=u"""An identifier for the Resource as defined by the Service Consumer. The externalId may simplify identification of the Resource between Service Consumer and Service provider by allowing the Consumer to refer to the Resource with its own identifier, obviating the need to store a local mapping between the local identifier of the Resource and the identifier used by the Service Provider. Each Resource MAY include a non-empty externalId value.  The value of the externalId attribute is always issued be the Service Consumer and can never be specified by the Service Provider. The Service Provider MUST always interpret the externalId as scoped to the Service Consumer's tenant.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--description', help=u"""Condition Description
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--evaluate-condition-if', help=u"""Evaluate the condition if this expression returns true, else skip condition evaluation
+
+**Added In:** 18.1.6
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}}, output_type={'module': 'identity_domains', 'class': 'Condition'})
+@cli_util.wrap_exceptions
+def create_condition(ctx, from_json, schemas, name, attribute_name, operator, attribute_value, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, description, evaluate_condition_if):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['name'] = name
+    _details['attributeName'] = attribute_name
+    _details['operator'] = operator
+    _details['attributeValue'] = attribute_value
+
+    if id is not None:
+        _details['id'] = id
+
+    if ocid is not None:
+        _details['ocid'] = ocid
+
+    if meta is not None:
+        _details['meta'] = cli_util.parse_json_parameter("meta", meta)
+
+    if idcs_created_by is not None:
+        _details['idcsCreatedBy'] = cli_util.parse_json_parameter("idcs_created_by", idcs_created_by)
+
+    if idcs_last_modified_by is not None:
+        _details['idcsLastModifiedBy'] = cli_util.parse_json_parameter("idcs_last_modified_by", idcs_last_modified_by)
+
+    if idcs_prevented_operations is not None:
+        _details['idcsPreventedOperations'] = cli_util.parse_json_parameter("idcs_prevented_operations", idcs_prevented_operations)
+
+    if tags is not None:
+        _details['tags'] = cli_util.parse_json_parameter("tags", tags)
+
+    if delete_in_progress is not None:
+        _details['deleteInProgress'] = delete_in_progress
+
+    if idcs_last_upgraded_in_release is not None:
+        _details['idcsLastUpgradedInRelease'] = idcs_last_upgraded_in_release
+
+    if domain_ocid is not None:
+        _details['domainOcid'] = domain_ocid
+
+    if compartment_ocid is not None:
+        _details['compartmentOcid'] = compartment_ocid
+
+    if tenancy_ocid is not None:
+        _details['tenancyOcid'] = tenancy_ocid
+
+    if external_id is not None:
+        _details['externalId'] = external_id
+
+    if description is not None:
+        _details['description'] = description
+
+    if evaluate_condition_if is not None:
+        _details['evaluateConditionIf'] = evaluate_condition_if
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.create_condition(
+        condition=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -3948,12 +5218,15 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["KMSI", "MFA", "ACCOUNTRECOVERY", "ALL"]), help=u"""Specifies the type of factors to remove. Either MFA factors or AccountRecovery factors or All factors
 
 **SCIM++ Properties:**  - type: string  - multiValued: false  - required: false  - mutability: readWrite  - returned: default  - uniqueness: none  - idcsSearchable: false""")
+@cli_util.option('--token', help=u"""Specifies the token to be removed
+
+**SCIM++ Properties:**  - type: string  - multiValued: false  - required: false  - mutability: readWrite  - returned: request  - uniqueness: none  - idcsSearchable: false""")
 @json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'user': {'module': 'identity_domains', 'class': 'MyAuthenticationFactorsRemoverUser'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'user': {'module': 'identity_domains', 'class': 'MyAuthenticationFactorsRemoverUser'}}, output_type={'module': 'identity_domains', 'class': 'MyAuthenticationFactorsRemover'})
 @cli_util.wrap_exceptions
-def create_my_authentication_factors_remover(ctx, from_json, schemas, user, authorization, resource_type_schema_version, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, type):
+def create_my_authentication_factors_remover(ctx, from_json, schemas, user, authorization, resource_type_schema_version, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, type, token):
 
     kwargs = {}
     if authorization is not None:
@@ -4003,6 +5276,9 @@ def create_my_authentication_factors_remover(ctx, from_json, schemas, user, auth
 
     if type is not None:
         _details['type'] = type
+
+    if token is not None:
+        _details['token'] = token
 
     client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
     result = client.create_my_authentication_factors_remover(
@@ -4340,16 +5616,33 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 @cli_util.option('--tenancy-ocid', help=u"""OCI Tenant Id (ocid) in which the resource lives.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
-@cli_util.option('--status', help=u"""status
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "COMPLETE", "IN_PROGRESS", "APPROVED", "REJECTED", "CANCELED", "EXPIRED", "FAILED"]), help=u"""status
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--action', type=custom_types.CliCaseInsensitiveChoice(["CANCEL", "ESCALATE"]), help=u"""Requestor can set action to CANCEL to cancel the request or to ESCALATE to escalate the request while the request status is IN_PROGRESS. Requestor can't escalate the request if canceling or escalation is in progress.
+
+**Added In:** 2307071836
 
 **SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--expires', help=u"""Time by when Request expires
+
+**Added In:** 2307071836
+
+**SCIM++ Properties:**  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: dateTime  - uniqueness: none""")
+@cli_util.option('--approval-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Approvals created for this request.
+
+**Added In:** 2307071836
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type MyRequestApprovalDetails.  For documentation on MyRequestApprovalDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/MyRequestApprovalDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--requestor', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'requestor': {'module': 'identity_domains', 'class': 'MyRequestRequestor'}, 'requesting': {'module': 'identity_domains', 'class': 'MyRequestRequesting'}})
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'approval-details': {'module': 'identity_domains', 'class': 'list[MyRequestApprovalDetails]'}, 'requestor': {'module': 'identity_domains', 'class': 'MyRequestRequestor'}, 'requesting': {'module': 'identity_domains', 'class': 'MyRequestRequesting'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'requestor': {'module': 'identity_domains', 'class': 'MyRequestRequestor'}, 'requesting': {'module': 'identity_domains', 'class': 'MyRequestRequesting'}}, output_type={'module': 'identity_domains', 'class': 'MyRequest'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'approval-details': {'module': 'identity_domains', 'class': 'list[MyRequestApprovalDetails]'}, 'requestor': {'module': 'identity_domains', 'class': 'MyRequestRequestor'}, 'requesting': {'module': 'identity_domains', 'class': 'MyRequestRequesting'}}, output_type={'module': 'identity_domains', 'class': 'MyRequest'})
 @cli_util.wrap_exceptions
-def create_my_request(ctx, from_json, schemas, justification, requesting, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, status, requestor):
+def create_my_request(ctx, from_json, schemas, justification, requesting, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, status, action, expires, approval_details, requestor):
 
     kwargs = {}
     if authorization is not None:
@@ -4404,6 +5697,15 @@ def create_my_request(ctx, from_json, schemas, justification, requesting, author
 
     if status is not None:
         _details['status'] = status
+
+    if action is not None:
+        _details['action'] = action
+
+    if expires is not None:
+        _details['expires'] = expires
+
+    if approval_details is not None:
+        _details['approvalDetails'] = cli_util.parse_json_parameter("approval_details", approval_details)
 
     if requestor is not None:
         _details['requestor'] = cli_util.parse_json_parameter("requestor", requestor)
@@ -4842,6 +6144,132 @@ def create_my_user_db_credential(ctx, from_json, schemas, db_password, authoriza
     cli_util.render_response(result, ctx)
 
 
+@network_perimeter_group.command(name=cli_util.override('identity_domains.create_network_perimeter.command_name', 'create'), help=u"""Create a NetworkPerimeter
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](createNetworkPerimeter)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', required=True, help=u"""NetworkPerimeter name
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: true  - returned: always  - type: string  - uniqueness: server""")
+@cli_util.option('--ip-addresses', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""IPAddresses or Ranges assigned to the NetworkPerimeter
+
+**SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: complex  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--id', help=u"""Unique identifier for the SCIM Resource as defined by the Service Provider. Each representation of the Resource MUST include a non-empty id value. This identifier MUST be unique across the Service Provider's entire set of Resources. It MUST be a stable, non-reassignable identifier that does not change when the same Resource is returned in subsequent requests. The value of the id attribute is always issued by the Service Provider and MUST never be specified by the Service Consumer. bulkId: is a reserved keyword and MUST NOT be used in the unique identifier.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--ocid', help=u"""Unique OCI identifier for the SCIM Resource.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: immutable  - required: false  - returned: default  - type: string  - uniqueness: global""")
+@cli_util.option('--meta', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-created-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-last-modified-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-prevented-operations', type=custom_types.CliCaseInsensitiveChoice(["replace", "update", "delete"]), help=u"""Each value of this attribute specifies an operation that only an internal client may perform on this particular resource.
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
+
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--idcs-last-upgraded-in-release', help=u"""The release number when the resource was upgraded.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--domain-ocid', help=u"""OCI Domain Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--compartment-ocid', help=u"""OCI Compartment Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--tenancy-ocid', help=u"""OCI Tenant Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--external-id', help=u"""An identifier for the Resource as defined by the Service Consumer. The externalId may simplify identification of the Resource between Service Consumer and Service provider by allowing the Consumer to refer to the Resource with its own identifier, obviating the need to store a local mapping between the local identifier of the Resource and the identifier used by the Service Provider. Each Resource MAY include a non-empty externalId value.  The value of the externalId attribute is always issued be the Service Consumer and can never be specified by the Service Provider. The Service Provider MUST always interpret the externalId as scoped to the Service Consumer's tenant.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--description', help=u"""NetworkPerimeter Description
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'ip-addresses': {'module': 'identity_domains', 'class': 'list[NetworkPerimeterIpAddresses]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'ip-addresses': {'module': 'identity_domains', 'class': 'list[NetworkPerimeterIpAddresses]'}}, output_type={'module': 'identity_domains', 'class': 'NetworkPerimeter'})
+@cli_util.wrap_exceptions
+def create_network_perimeter(ctx, from_json, schemas, name, ip_addresses, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, description):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['name'] = name
+    _details['ipAddresses'] = cli_util.parse_json_parameter("ip_addresses", ip_addresses)
+
+    if id is not None:
+        _details['id'] = id
+
+    if ocid is not None:
+        _details['ocid'] = ocid
+
+    if meta is not None:
+        _details['meta'] = cli_util.parse_json_parameter("meta", meta)
+
+    if idcs_created_by is not None:
+        _details['idcsCreatedBy'] = cli_util.parse_json_parameter("idcs_created_by", idcs_created_by)
+
+    if idcs_last_modified_by is not None:
+        _details['idcsLastModifiedBy'] = cli_util.parse_json_parameter("idcs_last_modified_by", idcs_last_modified_by)
+
+    if idcs_prevented_operations is not None:
+        _details['idcsPreventedOperations'] = cli_util.parse_json_parameter("idcs_prevented_operations", idcs_prevented_operations)
+
+    if tags is not None:
+        _details['tags'] = cli_util.parse_json_parameter("tags", tags)
+
+    if delete_in_progress is not None:
+        _details['deleteInProgress'] = delete_in_progress
+
+    if idcs_last_upgraded_in_release is not None:
+        _details['idcsLastUpgradedInRelease'] = idcs_last_upgraded_in_release
+
+    if domain_ocid is not None:
+        _details['domainOcid'] = domain_ocid
+
+    if compartment_ocid is not None:
+        _details['compartmentOcid'] = compartment_ocid
+
+    if tenancy_ocid is not None:
+        _details['tenancyOcid'] = tenancy_ocid
+
+    if external_id is not None:
+        _details['externalId'] = external_id
+
+    if description is not None:
+        _details['description'] = description
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.create_network_perimeter(
+        network_perimeter=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @o_auth2_client_credential_group.command(name=cli_util.override('identity_domains.create_o_auth2_client_credential.command_name', 'create'), help=u"""Add a user's OAuth2 client credentials.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](createOAuth2ClientCredential)""")
@@ -4991,6 +6419,332 @@ def create_o_auth2_client_credential(ctx, from_json, schemas, name, scopes, auth
     client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
     result = client.create_o_auth2_client_credential(
         o_auth2_client_credential=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@o_auth_client_certificate_group.command(name=cli_util.override('identity_domains.create_o_auth_client_certificate.command_name', 'create'), help=u"""Create an OAuth Client Certificate
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](createOAuthClientCertificate)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--certificate-alias', required=True, help=u"""Certificate alias
+
+**SCIM++ Properties:**  - type: string  - multiValued: false  - required: true  - caseExact: false  - mutability: readWrite  - returned: always  - uniqueness: none  - idcsSearchable: true""")
+@cli_util.option('--x509-base64-certificate', required=True, help=u"""Base 64Key data attribute
+
+**SCIM++ Properties:**  - caseExact: true  - multiValued: false  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--id', help=u"""Unique identifier for the SCIM Resource as defined by the Service Provider. Each representation of the Resource MUST include a non-empty id value. This identifier MUST be unique across the Service Provider's entire set of Resources. It MUST be a stable, non-reassignable identifier that does not change when the same Resource is returned in subsequent requests. The value of the id attribute is always issued by the Service Provider and MUST never be specified by the Service Consumer. bulkId: is a reserved keyword and MUST NOT be used in the unique identifier.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--ocid', help=u"""Unique OCI identifier for the SCIM Resource.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: immutable  - required: false  - returned: default  - type: string  - uniqueness: global""")
+@cli_util.option('--meta', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-created-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-last-modified-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-prevented-operations', type=custom_types.CliCaseInsensitiveChoice(["replace", "update", "delete"]), help=u"""Each value of this attribute specifies an operation that only an internal client may perform on this particular resource.
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
+
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--idcs-last-upgraded-in-release', help=u"""The release number when the resource was upgraded.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--domain-ocid', help=u"""OCI Domain Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--compartment-ocid', help=u"""OCI Compartment Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--tenancy-ocid', help=u"""OCI Tenant Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--external-id', help=u"""An identifier for the Resource as defined by the Service Consumer. The externalId may simplify identification of the Resource between Service Consumer and Service Provider by allowing the Consumer to refer to the Resource with its own identifier, obviating the need to store a local mapping between the local identifier of the Resource and the identifier used by the Service Provider. Each Resource MAY include a non-empty externalId value. The value of the externalId attribute is always issued by the Service Consumer and can never be specified by the Service Provider. The Service Provider MUST always interpret the externalId as scoped to the Service Consumer's tenant.
+
+**SCIM++ Properties:**  - type: string  - multiValued: false  - required: false  - caseExact: false  - mutability: readWrite  - returned: default  - uniqueness: none""")
+@cli_util.option('--key-store-name', help=u"""Key store name
+
+**SCIM++ Properties:**  - type: string  - multiValued: false  - required: false  - caseExact: false  - returned: always  - uniqueness: none""")
+@cli_util.option('--map', help=u"""Map
+
+**SCIM++ Properties:**  - type: string  - multiValued: false  - required: false  - caseExact: false  - returned: always  - uniqueness: none""")
+@cli_util.option('--key-store-password', help=u"""Key store password
+
+**SCIM++ Properties:**  - type: string  - multiValued: false  - idcsSensitive: none  - required: false  - caseExact: true  - returned: never  - uniqueness: none""")
+@cli_util.option('--key-store-id', help=u"""Key store ID
+
+**SCIM++ Properties:**  - type: string  - multiValued: false  - required: false  - caseExact: true  - returned: never  - uniqueness: none  - idcsSearchable: true""")
+@cli_util.option('--sha1-thumbprint', help=u"""SHA-1 Thumbprint
+
+**SCIM++ Properties:**  - type: string  - multiValued: false  - idcsSearchable: true  - required: false  - caseExact: true  - returned: default  - uniqueness: none""")
+@cli_util.option('--sha256-thumbprint', help=u"""SHA-256 Thumbprint
+
+**SCIM++ Properties:**  - type: string  - multiValued: false  - idcsSearchable: true  - required: false  - caseExact: true  - returned: default  - uniqueness: none""")
+@cli_util.option('--cert-start-date', help=u"""Certificate start date
+
+**SCIM++ Properties:**  - type: dateTime  - multiValued: false  - required: false  - caseExact: true  - mutability: readWrite  - returned: default  - uniqueness: none""")
+@cli_util.option('--cert-end-date', help=u"""Certificate end date
+
+**SCIM++ Properties:**  - type: dateTime  - multiValued: false  - required: false  - caseExact: true  - mutability: readWrite  - returned: default  - uniqueness: none""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}}, output_type={'module': 'identity_domains', 'class': 'OAuthClientCertificate'})
+@cli_util.wrap_exceptions
+def create_o_auth_client_certificate(ctx, from_json, schemas, certificate_alias, x509_base64_certificate, authorization, resource_type_schema_version, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, key_store_name, map, key_store_password, key_store_id, sha1_thumbprint, sha256_thumbprint, cert_start_date, cert_end_date):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['certificateAlias'] = certificate_alias
+    _details['x509Base64Certificate'] = x509_base64_certificate
+
+    if id is not None:
+        _details['id'] = id
+
+    if ocid is not None:
+        _details['ocid'] = ocid
+
+    if meta is not None:
+        _details['meta'] = cli_util.parse_json_parameter("meta", meta)
+
+    if idcs_created_by is not None:
+        _details['idcsCreatedBy'] = cli_util.parse_json_parameter("idcs_created_by", idcs_created_by)
+
+    if idcs_last_modified_by is not None:
+        _details['idcsLastModifiedBy'] = cli_util.parse_json_parameter("idcs_last_modified_by", idcs_last_modified_by)
+
+    if idcs_prevented_operations is not None:
+        _details['idcsPreventedOperations'] = cli_util.parse_json_parameter("idcs_prevented_operations", idcs_prevented_operations)
+
+    if tags is not None:
+        _details['tags'] = cli_util.parse_json_parameter("tags", tags)
+
+    if delete_in_progress is not None:
+        _details['deleteInProgress'] = delete_in_progress
+
+    if idcs_last_upgraded_in_release is not None:
+        _details['idcsLastUpgradedInRelease'] = idcs_last_upgraded_in_release
+
+    if domain_ocid is not None:
+        _details['domainOcid'] = domain_ocid
+
+    if compartment_ocid is not None:
+        _details['compartmentOcid'] = compartment_ocid
+
+    if tenancy_ocid is not None:
+        _details['tenancyOcid'] = tenancy_ocid
+
+    if external_id is not None:
+        _details['externalId'] = external_id
+
+    if key_store_name is not None:
+        _details['keyStoreName'] = key_store_name
+
+    if map is not None:
+        _details['map'] = map
+
+    if key_store_password is not None:
+        _details['keyStorePassword'] = key_store_password
+
+    if key_store_id is not None:
+        _details['keyStoreId'] = key_store_id
+
+    if sha1_thumbprint is not None:
+        _details['sha1Thumbprint'] = sha1_thumbprint
+
+    if sha256_thumbprint is not None:
+        _details['sha256Thumbprint'] = sha256_thumbprint
+
+    if cert_start_date is not None:
+        _details['certStartDate'] = cert_start_date
+
+    if cert_end_date is not None:
+        _details['certEndDate'] = cert_end_date
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.create_o_auth_client_certificate(
+        o_auth_client_certificate=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@o_auth_partner_certificate_group.command(name=cli_util.override('identity_domains.create_o_auth_partner_certificate.command_name', 'create'), help=u"""Create an OAuth Partner Certificate
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](createOAuthPartnerCertificate)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--certificate-alias', required=True, help=u"""Certificate alias
+
+**SCIM++ Properties:**  - type: string  - multiValued: false  - required: true  - caseExact: false  - mutability: readWrite  - returned: always  - uniqueness: none  - idcsSearchable: true""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--id', help=u"""Unique identifier for the SCIM Resource as defined by the Service Provider. Each representation of the Resource MUST include a non-empty id value. This identifier MUST be unique across the Service Provider's entire set of Resources. It MUST be a stable, non-reassignable identifier that does not change when the same Resource is returned in subsequent requests. The value of the id attribute is always issued by the Service Provider and MUST never be specified by the Service Consumer. bulkId: is a reserved keyword and MUST NOT be used in the unique identifier.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--ocid', help=u"""Unique OCI identifier for the SCIM Resource.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: immutable  - required: false  - returned: default  - type: string  - uniqueness: global""")
+@cli_util.option('--meta', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-created-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-last-modified-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-prevented-operations', type=custom_types.CliCaseInsensitiveChoice(["replace", "update", "delete"]), help=u"""Each value of this attribute specifies an operation that only an internal client may perform on this particular resource.
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
+
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--idcs-last-upgraded-in-release', help=u"""The release number when the resource was upgraded.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--domain-ocid', help=u"""OCI Domain Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--compartment-ocid', help=u"""OCI Compartment Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--tenancy-ocid', help=u"""OCI Tenant Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--external-id', help=u"""An identifier for the Resource as defined by the Service Consumer. The externalId may simplify identification of the Resource between Service Consumer and Service Provider by allowing the Consumer to refer to the Resource with its own identifier, obviating the need to store a local mapping between the local identifier of the Resource and the identifier used by the Service Provider. Each Resource MAY include a non-empty externalId value. The value of the externalId attribute is always issued by the Service Consumer and can never be specified by the Service Provider. The Service Provider MUST always interpret the externalId as scoped to the Service Consumer's tenant.
+
+**SCIM++ Properties:**  - type: string  - multiValued: false  - required: false  - caseExact: false  - mutability: readWrite  - returned: default  - uniqueness: none""")
+@cli_util.option('--key-store-name', help=u"""Key store name
+
+**SCIM++ Properties:**  - type: string  - multiValued: false  - required: false  - caseExact: false  - returned: always  - uniqueness: none""")
+@cli_util.option('--map', help=u"""Map
+
+**SCIM++ Properties:**  - type: string  - multiValued: false  - required: false  - caseExact: false  - returned: always  - uniqueness: none""")
+@cli_util.option('--key-store-password', help=u"""Key store password
+
+**SCIM++ Properties:**  - type: string  - multiValued: false  - idcsSensitive: none  - required: false  - caseExact: true  - returned: never  - uniqueness: none""")
+@cli_util.option('--key-store-id', help=u"""Key store ID
+
+**SCIM++ Properties:**  - type: string  - multiValued: false  - required: false  - caseExact: true  - returned: never  - uniqueness: none  - idcsSearchable: true""")
+@cli_util.option('--sha1-thumbprint', help=u"""SHA-1 Thumbprint
+
+**SCIM++ Properties:**  - type: string  - multiValued: false  - required: false  - caseExact: true  - returned: default  - idcsSearchable: true  - uniqueness: none""")
+@cli_util.option('--sha256-thumbprint', help=u"""SHA-256 Thumbprint
+
+**SCIM++ Properties:**  - type: string  - multiValued: false  - required: false  - caseExact: true  - returned: default  - idcsSearchable: true  - uniqueness: none""")
+@cli_util.option('--cert-start-date', help=u"""Certificate start date
+
+**SCIM++ Properties:**  - type: dateTime  - multiValued: false  - required: false  - caseExact: true  - mutability: readWrite  - returned: default  - uniqueness: none""")
+@cli_util.option('--x509-base64-certificate', help=u"""Base 64Key data attribute
+
+**SCIM++ Properties:**  - caseExact: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--cert-end-date', help=u"""Certificate end date
+
+**SCIM++ Properties:**  - type: dateTime  - multiValued: false  - required: false  - caseExact: true  - mutability: readWrite  - returned: default  - uniqueness: none""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}}, output_type={'module': 'identity_domains', 'class': 'OAuthPartnerCertificate'})
+@cli_util.wrap_exceptions
+def create_o_auth_partner_certificate(ctx, from_json, schemas, certificate_alias, authorization, resource_type_schema_version, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, key_store_name, map, key_store_password, key_store_id, sha1_thumbprint, sha256_thumbprint, cert_start_date, x509_base64_certificate, cert_end_date):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['certificateAlias'] = certificate_alias
+
+    if id is not None:
+        _details['id'] = id
+
+    if ocid is not None:
+        _details['ocid'] = ocid
+
+    if meta is not None:
+        _details['meta'] = cli_util.parse_json_parameter("meta", meta)
+
+    if idcs_created_by is not None:
+        _details['idcsCreatedBy'] = cli_util.parse_json_parameter("idcs_created_by", idcs_created_by)
+
+    if idcs_last_modified_by is not None:
+        _details['idcsLastModifiedBy'] = cli_util.parse_json_parameter("idcs_last_modified_by", idcs_last_modified_by)
+
+    if idcs_prevented_operations is not None:
+        _details['idcsPreventedOperations'] = cli_util.parse_json_parameter("idcs_prevented_operations", idcs_prevented_operations)
+
+    if tags is not None:
+        _details['tags'] = cli_util.parse_json_parameter("tags", tags)
+
+    if delete_in_progress is not None:
+        _details['deleteInProgress'] = delete_in_progress
+
+    if idcs_last_upgraded_in_release is not None:
+        _details['idcsLastUpgradedInRelease'] = idcs_last_upgraded_in_release
+
+    if domain_ocid is not None:
+        _details['domainOcid'] = domain_ocid
+
+    if compartment_ocid is not None:
+        _details['compartmentOcid'] = compartment_ocid
+
+    if tenancy_ocid is not None:
+        _details['tenancyOcid'] = tenancy_ocid
+
+    if external_id is not None:
+        _details['externalId'] = external_id
+
+    if key_store_name is not None:
+        _details['keyStoreName'] = key_store_name
+
+    if map is not None:
+        _details['map'] = map
+
+    if key_store_password is not None:
+        _details['keyStorePassword'] = key_store_password
+
+    if key_store_id is not None:
+        _details['keyStoreId'] = key_store_id
+
+    if sha1_thumbprint is not None:
+        _details['sha1Thumbprint'] = sha1_thumbprint
+
+    if sha256_thumbprint is not None:
+        _details['sha256Thumbprint'] = sha256_thumbprint
+
+    if cert_start_date is not None:
+        _details['certStartDate'] = cert_start_date
+
+    if x509_base64_certificate is not None:
+        _details['x509Base64Certificate'] = x509_base64_certificate
+
+    if cert_end_date is not None:
+        _details['certEndDate'] = cert_end_date
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.create_o_auth_partner_certificate(
+        o_auth_partner_certificate=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -5340,6 +7094,306 @@ def create_password_policy(ctx, from_json, schemas, name, authorization, resourc
     cli_util.render_response(result, ctx)
 
 
+@policy_group.command(name=cli_util.override('identity_domains.create_policy.command_name', 'create'), help=u"""Create a Policy
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](createPolicy)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', required=True, help=u"""Policy name
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: true  - returned: always  - type: string  - uniqueness: none""")
+@cli_util.option('--policy-type', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--id', help=u"""Unique identifier for the SCIM Resource as defined by the Service Provider. Each representation of the Resource MUST include a non-empty id value. This identifier MUST be unique across the Service Provider's entire set of Resources. It MUST be a stable, non-reassignable identifier that does not change when the same Resource is returned in subsequent requests. The value of the id attribute is always issued by the Service Provider and MUST never be specified by the Service Consumer. bulkId: is a reserved keyword and MUST NOT be used in the unique identifier.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--ocid', help=u"""Unique OCI identifier for the SCIM Resource.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: immutable  - required: false  - returned: default  - type: string  - uniqueness: global""")
+@cli_util.option('--meta', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-created-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-last-modified-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-prevented-operations', type=custom_types.CliCaseInsensitiveChoice(["replace", "update", "delete"]), help=u"""Each value of this attribute specifies an operation that only an internal client may perform on this particular resource.
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
+
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--idcs-last-upgraded-in-release', help=u"""The release number when the resource was upgraded.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--domain-ocid', help=u"""OCI Domain Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--compartment-ocid', help=u"""OCI Compartment Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--tenancy-ocid', help=u"""OCI Tenant Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--external-id', help=u"""An identifier for the Resource as defined by the Service Consumer. The externalId may simplify identification of the Resource between Service Consumer and Service provider by allowing the Consumer to refer to the Resource with its own identifier, obviating the need to store a local mapping between the local identifier of the Resource and the identifier used by the Service Provider. Each Resource MAY include a non-empty externalId value.  The value of the externalId attribute is always issued be the Service Consumer and can never be specified by the Service Provider. The Service Provider MUST always interpret the externalId as scoped to the Service Consumer's tenant.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--description', help=u"""Policy Description
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--active', type=click.BOOL, help=u"""If true, Policy is active.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--policy-groovy', help=u"""The Groovy script that is run instead of the policy, if the policy type allows the policy to be a Groovy script.
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Rules assigned to this policy
+
+**SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type PolicyRules.  For documentation on PolicyRules please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/PolicyRules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'rules': {'module': 'identity_domains', 'class': 'list[PolicyRules]'}, 'policy-type': {'module': 'identity_domains', 'class': 'PolicyPolicyType'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'rules': {'module': 'identity_domains', 'class': 'list[PolicyRules]'}, 'policy-type': {'module': 'identity_domains', 'class': 'PolicyPolicyType'}}, output_type={'module': 'identity_domains', 'class': 'Policy'})
+@cli_util.wrap_exceptions
+def create_policy(ctx, from_json, schemas, name, policy_type, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, description, active, policy_groovy, rules):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['name'] = name
+    _details['policyType'] = cli_util.parse_json_parameter("policy_type", policy_type)
+
+    if id is not None:
+        _details['id'] = id
+
+    if ocid is not None:
+        _details['ocid'] = ocid
+
+    if meta is not None:
+        _details['meta'] = cli_util.parse_json_parameter("meta", meta)
+
+    if idcs_created_by is not None:
+        _details['idcsCreatedBy'] = cli_util.parse_json_parameter("idcs_created_by", idcs_created_by)
+
+    if idcs_last_modified_by is not None:
+        _details['idcsLastModifiedBy'] = cli_util.parse_json_parameter("idcs_last_modified_by", idcs_last_modified_by)
+
+    if idcs_prevented_operations is not None:
+        _details['idcsPreventedOperations'] = cli_util.parse_json_parameter("idcs_prevented_operations", idcs_prevented_operations)
+
+    if tags is not None:
+        _details['tags'] = cli_util.parse_json_parameter("tags", tags)
+
+    if delete_in_progress is not None:
+        _details['deleteInProgress'] = delete_in_progress
+
+    if idcs_last_upgraded_in_release is not None:
+        _details['idcsLastUpgradedInRelease'] = idcs_last_upgraded_in_release
+
+    if domain_ocid is not None:
+        _details['domainOcid'] = domain_ocid
+
+    if compartment_ocid is not None:
+        _details['compartmentOcid'] = compartment_ocid
+
+    if tenancy_ocid is not None:
+        _details['tenancyOcid'] = tenancy_ocid
+
+    if external_id is not None:
+        _details['externalId'] = external_id
+
+    if description is not None:
+        _details['description'] = description
+
+    if active is not None:
+        _details['active'] = active
+
+    if policy_groovy is not None:
+        _details['policyGroovy'] = policy_groovy
+
+    if rules is not None:
+        _details['rules'] = cli_util.parse_json_parameter("rules", rules)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.create_policy(
+        policy=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@rule_group.command(name=cli_util.override('identity_domains.create_rule.command_name', 'create'), help=u"""Create a Rule
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](createRule)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', required=True, help=u"""Rule name
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: true  - returned: always  - type: string  - uniqueness: none""")
+@cli_util.option('--condition', required=True, help=u"""SCIM filters
+
+**Deprecated Since: 17.3.4**
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--policy-type', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('---return', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The return values are the then portion of a Rule
+
+**SCIM++ Properties:**  - idcsCompositeKey: [name]  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: complex  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--id', help=u"""Unique identifier for the SCIM Resource as defined by the Service Provider. Each representation of the Resource MUST include a non-empty id value. This identifier MUST be unique across the Service Provider's entire set of Resources. It MUST be a stable, non-reassignable identifier that does not change when the same Resource is returned in subsequent requests. The value of the id attribute is always issued by the Service Provider and MUST never be specified by the Service Consumer. bulkId: is a reserved keyword and MUST NOT be used in the unique identifier.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--ocid', help=u"""Unique OCI identifier for the SCIM Resource.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: immutable  - required: false  - returned: default  - type: string  - uniqueness: global""")
+@cli_util.option('--meta', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-created-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-last-modified-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-prevented-operations', type=custom_types.CliCaseInsensitiveChoice(["replace", "update", "delete"]), help=u"""Each value of this attribute specifies an operation that only an internal client may perform on this particular resource.
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
+
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--idcs-last-upgraded-in-release', help=u"""The release number when the resource was upgraded.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--domain-ocid', help=u"""OCI Domain Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--compartment-ocid', help=u"""OCI Compartment Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--tenancy-ocid', help=u"""OCI Tenant Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--external-id', help=u"""An identifier for the Resource as defined by the Service Consumer. The externalId may simplify identification of the Resource between Service Consumer and Service provider by allowing the Consumer to refer to the Resource with its own identifier, obviating the need to store a local mapping between the local identifier of the Resource and the identifier used by the Service Provider. Each Resource MAY include a non-empty externalId value.  The value of the externalId attribute is always issued be the Service Consumer and can never be specified by the Service Provider. The Service Provider MUST always interpret the externalId as scoped to the Service Consumer's tenant.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--description', help=u"""Rule Description
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--active', type=click.BOOL, help=u"""If true, rule is active
+
+**SCIM++ Properties:**  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--locked', type=click.BOOL, help=u"""Shows if the rule is locked
+
+**SCIM++ Properties:**  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--rule-groovy', help=u"""The Groovy script that is run instead of the rule, if policy type allows the rule to be a Groovy script.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--condition-group', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'condition-group': {'module': 'identity_domains', 'class': 'RuleConditionGroup'}, 'policy-type': {'module': 'identity_domains', 'class': 'RulePolicyType'}, '-return': {'module': 'identity_domains', 'class': 'list[RuleReturn]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'condition-group': {'module': 'identity_domains', 'class': 'RuleConditionGroup'}, 'policy-type': {'module': 'identity_domains', 'class': 'RulePolicyType'}, '-return': {'module': 'identity_domains', 'class': 'list[RuleReturn]'}}, output_type={'module': 'identity_domains', 'class': 'Rule'})
+@cli_util.wrap_exceptions
+def create_rule(ctx, from_json, schemas, name, condition, policy_type, _return, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, description, active, locked, rule_groovy, condition_group):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['name'] = name
+    _details['condition'] = condition
+    _details['policyType'] = cli_util.parse_json_parameter("policy_type", policy_type)
+    _details['return'] = cli_util.parse_json_parameter("_return", _return)
+
+    if id is not None:
+        _details['id'] = id
+
+    if ocid is not None:
+        _details['ocid'] = ocid
+
+    if meta is not None:
+        _details['meta'] = cli_util.parse_json_parameter("meta", meta)
+
+    if idcs_created_by is not None:
+        _details['idcsCreatedBy'] = cli_util.parse_json_parameter("idcs_created_by", idcs_created_by)
+
+    if idcs_last_modified_by is not None:
+        _details['idcsLastModifiedBy'] = cli_util.parse_json_parameter("idcs_last_modified_by", idcs_last_modified_by)
+
+    if idcs_prevented_operations is not None:
+        _details['idcsPreventedOperations'] = cli_util.parse_json_parameter("idcs_prevented_operations", idcs_prevented_operations)
+
+    if tags is not None:
+        _details['tags'] = cli_util.parse_json_parameter("tags", tags)
+
+    if delete_in_progress is not None:
+        _details['deleteInProgress'] = delete_in_progress
+
+    if idcs_last_upgraded_in_release is not None:
+        _details['idcsLastUpgradedInRelease'] = idcs_last_upgraded_in_release
+
+    if domain_ocid is not None:
+        _details['domainOcid'] = domain_ocid
+
+    if compartment_ocid is not None:
+        _details['compartmentOcid'] = compartment_ocid
+
+    if tenancy_ocid is not None:
+        _details['tenancyOcid'] = tenancy_ocid
+
+    if external_id is not None:
+        _details['externalId'] = external_id
+
+    if description is not None:
+        _details['description'] = description
+
+    if active is not None:
+        _details['active'] = active
+
+    if locked is not None:
+        _details['locked'] = locked
+
+    if rule_groovy is not None:
+        _details['ruleGroovy'] = rule_groovy
+
+    if condition_group is not None:
+        _details['conditionGroup'] = cli_util.parse_json_parameter("condition_group", condition_group)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.create_rule(
+        rule=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @security_question_group.command(name=cli_util.override('identity_domains.create_security_question.command_name', 'create'), help=u"""Create a security question.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](createSecurityQuestion)""")
@@ -5459,6 +7513,222 @@ def create_security_question(ctx, from_json, schemas, active, type, question_tex
     client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
     result = client.create_security_question(
         security_question=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@self_registration_profile_group.command(name=cli_util.override('identity_domains.create_self_registration_profile.command_name', 'create'), help=u"""Create a self-registration profile.
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](createSelfRegistrationProfile)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', required=True, help=u"""Name of the profile
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: true  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--activation-email-required', required=True, type=click.BOOL, help=u"""**SCIM++ Properties:** - caseExact: false - idcsSearchable: true - multiValued: false - mutability: readWrite - required: true - returned: default - type: boolean - uniqueness: none A Boolean value that indicates whether Account verification email is required to be sent before login or not""")
+@cli_util.option('--number-of-days-redirect-url-is-valid', required=True, type=click.INT, help=u"""Number of days redirect URL is valid
+
+**SCIM++ Properties:**  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: true  - returned: default  - type: integer  - uniqueness: none""")
+@cli_util.option('--show-on-login-page', required=True, type=click.BOOL, help=u"""A Boolean value that indicates whether the profile should be displayed on login page
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: true  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--redirect-url', required=True, help=u"""This URL will be replaced in email notification sent to user. When activation email required is set to true, user is created in \\\"pending verification\\\" state, upon clicking this link user will be able to activate himself. When activation email required is set to false, user is created in \\\"verified\\\" state, this link will be used to verify user's email.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--consent-text-present', required=True, type=click.BOOL, help=u"""A boolean value that indicates whether the consent text is present.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: true  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--display-name', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Registration page name
+
+**SCIM++ Properties:**  - idcsCompositeKey: [locale]  - idcsMultiLanguage: true  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: complex  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--email-template', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--id', help=u"""Unique identifier for the SCIM Resource as defined by the Service Provider. Each representation of the Resource MUST include a non-empty id value. This identifier MUST be unique across the Service Provider's entire set of Resources. It MUST be a stable, non-reassignable identifier that does not change when the same Resource is returned in subsequent requests. The value of the id attribute is always issued by the Service Provider and MUST never be specified by the Service Consumer. bulkId: is a reserved keyword and MUST NOT be used in the unique identifier.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--ocid', help=u"""Unique OCI identifier for the SCIM Resource.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: immutable  - required: false  - returned: default  - type: string  - uniqueness: global""")
+@cli_util.option('--meta', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-created-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-last-modified-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-prevented-operations', type=custom_types.CliCaseInsensitiveChoice(["replace", "update", "delete"]), help=u"""Each value of this attribute specifies an operation that only an internal client may perform on this particular resource.
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
+
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--idcs-last-upgraded-in-release', help=u"""The release number when the resource was upgraded.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--domain-ocid', help=u"""OCI Domain Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--compartment-ocid', help=u"""OCI Compartment Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--tenancy-ocid', help=u"""OCI Tenant Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--external-id', help=u"""An identifier for the Resource as defined by the Service Consumer. The externalId may simplify identification of the Resource between Service Consumer and Service Provider by allowing the Consumer to refer to the Resource with its own identifier, obviating the need to store a local mapping between the local identifier of the Resource and the identifier used by the Service Provider. Each Resource MAY include a non-empty externalId value. The value of the externalId attribute is always issued by the Service Consumer and can never be specified by the Service Provider. The Service Provider MUST always interpret the externalId as scoped to the Service Consumer's tenant.
+
+**SCIM++ Properties:**  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--active', type=click.BOOL, help=u"""A Boolean value that indicates whether the profile is enabled or not
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--allowed-email-domains', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A Multivalue String value for Email domains which are valid for this profile
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--disallowed-email-domains', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A Multivalue String Value for Email domains to be handled as exceptions
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--header-logo', help=u"""Reference to header logo
+
+**SCIM++ Properties:**  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: reference""")
+@cli_util.option('--footer-logo', help=u"""References to footer logo
+
+**SCIM++ Properties:**  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: reference""")
+@cli_util.option('--after-submit-text', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Text to be displayed on UI after doing self registration
+
+**SCIM++ Properties:**  - idcsCompositeKey: [locale]  - idcsMultiLanguage: true  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type SelfRegistrationProfileAfterSubmitText.  For documentation on SelfRegistrationProfileAfterSubmitText please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileAfterSubmitText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--user-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""**SCIM++ Properties:** - idcsCompositeKey: [value] - idcsSearchable: true - multiValued: true - mutability: readWrite - required: false - returned: default - type: complex - uniqueness: none User Attributes
+
+This option is a JSON list with items of type SelfRegistrationProfileUserAttributes.  For documentation on SelfRegistrationProfileUserAttributes please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileUserAttributes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--default-groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Default groups assigned to the user
+
+**SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex
+
+This option is a JSON list with items of type SelfRegistrationProfileDefaultGroups.  For documentation on SelfRegistrationProfileDefaultGroups please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileDefaultGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--header-text', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Header text
+
+**SCIM++ Properties:**  - idcsCompositeKey: [locale]  - idcsMultiLanguage: true  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type SelfRegistrationProfileHeaderText.  For documentation on SelfRegistrationProfileHeaderText please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileHeaderText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--footer-text', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Footer text
+
+**SCIM++ Properties:**  - idcsCompositeKey: [locale]  - idcsMultiLanguage: true  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type SelfRegistrationProfileFooterText.  For documentation on SelfRegistrationProfileFooterText please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileFooterText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--consent-text', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Consent text
+
+**SCIM++ Properties:**  - idcsCompositeKey: [locale]  - idcsMultiLanguage: true  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type SelfRegistrationProfileConsentText.  For documentation on SelfRegistrationProfileConsentText please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileConsentText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'allowed-email-domains': {'module': 'identity_domains', 'class': 'list[string]'}, 'disallowed-email-domains': {'module': 'identity_domains', 'class': 'list[string]'}, 'display-name': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileDisplayName]'}, 'after-submit-text': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileAfterSubmitText]'}, 'user-attributes': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileUserAttributes]'}, 'email-template': {'module': 'identity_domains', 'class': 'SelfRegistrationProfileEmailTemplate'}, 'default-groups': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileDefaultGroups]'}, 'header-text': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileHeaderText]'}, 'footer-text': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileFooterText]'}, 'consent-text': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileConsentText]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'allowed-email-domains': {'module': 'identity_domains', 'class': 'list[string]'}, 'disallowed-email-domains': {'module': 'identity_domains', 'class': 'list[string]'}, 'display-name': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileDisplayName]'}, 'after-submit-text': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileAfterSubmitText]'}, 'user-attributes': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileUserAttributes]'}, 'email-template': {'module': 'identity_domains', 'class': 'SelfRegistrationProfileEmailTemplate'}, 'default-groups': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileDefaultGroups]'}, 'header-text': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileHeaderText]'}, 'footer-text': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileFooterText]'}, 'consent-text': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileConsentText]'}}, output_type={'module': 'identity_domains', 'class': 'SelfRegistrationProfile'})
+@cli_util.wrap_exceptions
+def create_self_registration_profile(ctx, from_json, schemas, name, activation_email_required, number_of_days_redirect_url_is_valid, show_on_login_page, redirect_url, consent_text_present, display_name, email_template, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, active, allowed_email_domains, disallowed_email_domains, header_logo, footer_logo, after_submit_text, user_attributes, default_groups, header_text, footer_text, consent_text):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['name'] = name
+    _details['activationEmailRequired'] = activation_email_required
+    _details['numberOfDaysRedirectUrlIsValid'] = number_of_days_redirect_url_is_valid
+    _details['showOnLoginPage'] = show_on_login_page
+    _details['redirectUrl'] = redirect_url
+    _details['consentTextPresent'] = consent_text_present
+    _details['displayName'] = cli_util.parse_json_parameter("display_name", display_name)
+    _details['emailTemplate'] = cli_util.parse_json_parameter("email_template", email_template)
+
+    if id is not None:
+        _details['id'] = id
+
+    if ocid is not None:
+        _details['ocid'] = ocid
+
+    if meta is not None:
+        _details['meta'] = cli_util.parse_json_parameter("meta", meta)
+
+    if idcs_created_by is not None:
+        _details['idcsCreatedBy'] = cli_util.parse_json_parameter("idcs_created_by", idcs_created_by)
+
+    if idcs_last_modified_by is not None:
+        _details['idcsLastModifiedBy'] = cli_util.parse_json_parameter("idcs_last_modified_by", idcs_last_modified_by)
+
+    if idcs_prevented_operations is not None:
+        _details['idcsPreventedOperations'] = cli_util.parse_json_parameter("idcs_prevented_operations", idcs_prevented_operations)
+
+    if tags is not None:
+        _details['tags'] = cli_util.parse_json_parameter("tags", tags)
+
+    if delete_in_progress is not None:
+        _details['deleteInProgress'] = delete_in_progress
+
+    if idcs_last_upgraded_in_release is not None:
+        _details['idcsLastUpgradedInRelease'] = idcs_last_upgraded_in_release
+
+    if domain_ocid is not None:
+        _details['domainOcid'] = domain_ocid
+
+    if compartment_ocid is not None:
+        _details['compartmentOcid'] = compartment_ocid
+
+    if tenancy_ocid is not None:
+        _details['tenancyOcid'] = tenancy_ocid
+
+    if external_id is not None:
+        _details['externalId'] = external_id
+
+    if active is not None:
+        _details['active'] = active
+
+    if allowed_email_domains is not None:
+        _details['allowedEmailDomains'] = cli_util.parse_json_parameter("allowed_email_domains", allowed_email_domains)
+
+    if disallowed_email_domains is not None:
+        _details['disallowedEmailDomains'] = cli_util.parse_json_parameter("disallowed_email_domains", disallowed_email_domains)
+
+    if header_logo is not None:
+        _details['headerLogo'] = header_logo
+
+    if footer_logo is not None:
+        _details['footerLogo'] = footer_logo
+
+    if after_submit_text is not None:
+        _details['afterSubmitText'] = cli_util.parse_json_parameter("after_submit_text", after_submit_text)
+
+    if user_attributes is not None:
+        _details['userAttributes'] = cli_util.parse_json_parameter("user_attributes", user_attributes)
+
+    if default_groups is not None:
+        _details['defaultGroups'] = cli_util.parse_json_parameter("default_groups", default_groups)
+
+    if header_text is not None:
+        _details['headerText'] = cli_util.parse_json_parameter("header_text", header_text)
+
+    if footer_text is not None:
+        _details['footerText'] = cli_util.parse_json_parameter("footer_text", footer_text)
+
+    if consent_text is not None:
+        _details['consentText'] = cli_util.parse_json_parameter("consent_text", consent_text)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.create_self_registration_profile(
+        self_registration_profile=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -6230,6 +8500,114 @@ def delete_app_role(ctx, from_json, app_role_id, authorization, resource_type_sc
     cli_util.render_response(result, ctx)
 
 
+@approval_workflow_group.command(name=cli_util.override('identity_domains.delete_approval_workflow.command_name', 'delete'), help=u"""Delete ApprovalWorkflow
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](deleteApprovalWorkflow)""")
+@cli_util.option('--approval-workflow-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--force-delete', type=click.BOOL, help=u"""To force delete the resource and all its references (if any).""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_approval_workflow(ctx, from_json, approval_workflow_id, authorization, resource_type_schema_version, force_delete, if_match):
+
+    if isinstance(approval_workflow_id, six.string_types) and len(approval_workflow_id.strip()) == 0:
+        raise click.UsageError('Parameter --approval-workflow-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if force_delete is not None:
+        kwargs['force_delete'] = force_delete
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.delete_approval_workflow(
+        approval_workflow_id=approval_workflow_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@approval_workflow_assignment_group.command(name=cli_util.override('identity_domains.delete_approval_workflow_assignment.command_name', 'delete'), help=u"""Delete Approval Workflow Assignment
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](deleteApprovalWorkflowAssignment)""")
+@cli_util.option('--approval-workflow-assignment-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--force-delete', type=click.BOOL, help=u"""To force delete the resource and all its references (if any).""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_approval_workflow_assignment(ctx, from_json, approval_workflow_assignment_id, authorization, resource_type_schema_version, force_delete, if_match):
+
+    if isinstance(approval_workflow_assignment_id, six.string_types) and len(approval_workflow_assignment_id.strip()) == 0:
+        raise click.UsageError('Parameter --approval-workflow-assignment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if force_delete is not None:
+        kwargs['force_delete'] = force_delete
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.delete_approval_workflow_assignment(
+        approval_workflow_assignment_id=approval_workflow_assignment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@approval_workflow_step_group.command(name=cli_util.override('identity_domains.delete_approval_workflow_step.command_name', 'delete'), help=u"""Delete ApprovalWorkflowStep
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](deleteApprovalWorkflowStep)""")
+@cli_util.option('--approval-workflow-step-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--force-delete', type=click.BOOL, help=u"""To force delete the resource and all its references (if any).""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_approval_workflow_step(ctx, from_json, approval_workflow_step_id, authorization, resource_type_schema_version, force_delete, if_match):
+
+    if isinstance(approval_workflow_step_id, six.string_types) and len(approval_workflow_step_id.strip()) == 0:
+        raise click.UsageError('Parameter --approval-workflow-step-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if force_delete is not None:
+        kwargs['force_delete'] = force_delete
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.delete_approval_workflow_step(
+        approval_workflow_step_id=approval_workflow_step_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @auth_token_group.command(name=cli_util.override('identity_domains.delete_auth_token.command_name', 'delete'), help=u"""Delete a user's Auth token.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](deleteAuthToken)""")
@@ -6261,6 +8639,150 @@ def delete_auth_token(ctx, from_json, auth_token_id, authorization, resource_typ
     client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
     result = client.delete_auth_token(
         auth_token_id=auth_token_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_gate_group.command(name=cli_util.override('identity_domains.delete_cloud_gate.command_name', 'delete'), help=u"""Delete a Cloud Gate
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](deleteCloudGate)""")
+@cli_util.option('--cloud-gate-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--force-delete', type=click.BOOL, help=u"""To force delete the resource and all its references (if any).""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_cloud_gate(ctx, from_json, cloud_gate_id, authorization, resource_type_schema_version, force_delete, if_match):
+
+    if isinstance(cloud_gate_id, six.string_types) and len(cloud_gate_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-gate-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if force_delete is not None:
+        kwargs['force_delete'] = force_delete
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.delete_cloud_gate(
+        cloud_gate_id=cloud_gate_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_gate_mapping_group.command(name=cli_util.override('identity_domains.delete_cloud_gate_mapping.command_name', 'delete'), help=u"""Delete a Cloud Gate mapping
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](deleteCloudGateMapping)""")
+@cli_util.option('--cloud-gate-mapping-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--force-delete', type=click.BOOL, help=u"""To force delete the resource and all its references (if any).""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_cloud_gate_mapping(ctx, from_json, cloud_gate_mapping_id, authorization, resource_type_schema_version, force_delete, if_match):
+
+    if isinstance(cloud_gate_mapping_id, six.string_types) and len(cloud_gate_mapping_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-gate-mapping-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if force_delete is not None:
+        kwargs['force_delete'] = force_delete
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.delete_cloud_gate_mapping(
+        cloud_gate_mapping_id=cloud_gate_mapping_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_gate_server_group.command(name=cli_util.override('identity_domains.delete_cloud_gate_server.command_name', 'delete'), help=u"""Delete a Cloud Gate server
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](deleteCloudGateServer)""")
+@cli_util.option('--cloud-gate-server-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--force-delete', type=click.BOOL, help=u"""To force delete the resource and all its references (if any).""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_cloud_gate_server(ctx, from_json, cloud_gate_server_id, authorization, resource_type_schema_version, force_delete, if_match):
+
+    if isinstance(cloud_gate_server_id, six.string_types) and len(cloud_gate_server_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-gate-server-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if force_delete is not None:
+        kwargs['force_delete'] = force_delete
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.delete_cloud_gate_server(
+        cloud_gate_server_id=cloud_gate_server_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@condition_group.command(name=cli_util.override('identity_domains.delete_condition.command_name', 'delete'), help=u"""Delete a Condition
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](deleteCondition)""")
+@cli_util.option('--condition-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--force-delete', type=click.BOOL, help=u"""To force delete the resource and all its references (if any).""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_condition(ctx, from_json, condition_id, authorization, resource_type_schema_version, force_delete, if_match):
+
+    if isinstance(condition_id, six.string_types) and len(condition_id.strip()) == 0:
+        raise click.UsageError('Parameter --condition-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if force_delete is not None:
+        kwargs['force_delete'] = force_delete
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.delete_condition(
+        condition_id=condition_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -6770,6 +9292,42 @@ def delete_my_user_db_credential(ctx, from_json, my_user_db_credential_id, autho
     cli_util.render_response(result, ctx)
 
 
+@network_perimeter_group.command(name=cli_util.override('identity_domains.delete_network_perimeter.command_name', 'delete'), help=u"""Delete a NetworkPerimeter
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](deleteNetworkPerimeter)""")
+@cli_util.option('--network-perimeter-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--force-delete', type=click.BOOL, help=u"""To force delete the resource and all its references (if any).""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_network_perimeter(ctx, from_json, network_perimeter_id, authorization, resource_type_schema_version, force_delete, if_match):
+
+    if isinstance(network_perimeter_id, six.string_types) and len(network_perimeter_id.strip()) == 0:
+        raise click.UsageError('Parameter --network-perimeter-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if force_delete is not None:
+        kwargs['force_delete'] = force_delete
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.delete_network_perimeter(
+        network_perimeter_id=network_perimeter_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @o_auth2_client_credential_group.command(name=cli_util.override('identity_domains.delete_o_auth2_client_credential.command_name', 'delete'), help=u"""Delete a user's OAuth2 client credentials.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](deleteOAuth2ClientCredential)""")
@@ -6801,6 +9359,78 @@ def delete_o_auth2_client_credential(ctx, from_json, o_auth2_client_credential_i
     client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
     result = client.delete_o_auth2_client_credential(
         o_auth2_client_credential_id=o_auth2_client_credential_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@o_auth_client_certificate_group.command(name=cli_util.override('identity_domains.delete_o_auth_client_certificate.command_name', 'delete'), help=u"""Delete an OAuth Client Certificate
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](deleteOAuthClientCertificate)""")
+@cli_util.option('--o-auth-client-certificate-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--force-delete', type=click.BOOL, help=u"""To force delete the resource and all its references (if any).""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_o_auth_client_certificate(ctx, from_json, o_auth_client_certificate_id, authorization, resource_type_schema_version, force_delete, if_match):
+
+    if isinstance(o_auth_client_certificate_id, six.string_types) and len(o_auth_client_certificate_id.strip()) == 0:
+        raise click.UsageError('Parameter --o-auth-client-certificate-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if force_delete is not None:
+        kwargs['force_delete'] = force_delete
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.delete_o_auth_client_certificate(
+        o_auth_client_certificate_id=o_auth_client_certificate_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@o_auth_partner_certificate_group.command(name=cli_util.override('identity_domains.delete_o_auth_partner_certificate.command_name', 'delete'), help=u"""Delete an OAuth Partner Certificate
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](deleteOAuthPartnerCertificate)""")
+@cli_util.option('--o-auth-partner-certificate-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--force-delete', type=click.BOOL, help=u"""To force delete the resource and all its references (if any).""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_o_auth_partner_certificate(ctx, from_json, o_auth_partner_certificate_id, authorization, resource_type_schema_version, force_delete, if_match):
+
+    if isinstance(o_auth_partner_certificate_id, six.string_types) and len(o_auth_partner_certificate_id.strip()) == 0:
+        raise click.UsageError('Parameter --o-auth-partner-certificate-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if force_delete is not None:
+        kwargs['force_delete'] = force_delete
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.delete_o_auth_partner_certificate(
+        o_auth_partner_certificate_id=o_auth_partner_certificate_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -6842,6 +9472,78 @@ def delete_password_policy(ctx, from_json, password_policy_id, authorization, re
     cli_util.render_response(result, ctx)
 
 
+@policy_group.command(name=cli_util.override('identity_domains.delete_policy.command_name', 'delete'), help=u"""Delete a Policy
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](deletePolicy)""")
+@cli_util.option('--policy-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--force-delete', type=click.BOOL, help=u"""To force delete the resource and all its references (if any).""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_policy(ctx, from_json, policy_id, authorization, resource_type_schema_version, force_delete, if_match):
+
+    if isinstance(policy_id, six.string_types) and len(policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if force_delete is not None:
+        kwargs['force_delete'] = force_delete
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.delete_policy(
+        policy_id=policy_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@rule_group.command(name=cli_util.override('identity_domains.delete_rule.command_name', 'delete'), help=u"""Delete a Rule
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](deleteRule)""")
+@cli_util.option('--rule-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--force-delete', type=click.BOOL, help=u"""To force delete the resource and all its references (if any).""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_rule(ctx, from_json, rule_id, authorization, resource_type_schema_version, force_delete, if_match):
+
+    if isinstance(rule_id, six.string_types) and len(rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --rule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if force_delete is not None:
+        kwargs['force_delete'] = force_delete
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.delete_rule(
+        rule_id=rule_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @security_question_group.command(name=cli_util.override('identity_domains.delete_security_question.command_name', 'delete'), help=u"""Delete a security question.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](deleteSecurityQuestion)""")
@@ -6873,6 +9575,42 @@ def delete_security_question(ctx, from_json, security_question_id, authorization
     client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
     result = client.delete_security_question(
         security_question_id=security_question_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@self_registration_profile_group.command(name=cli_util.override('identity_domains.delete_self_registration_profile.command_name', 'delete'), help=u"""Delete a self-registration profile.
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](deleteSelfRegistrationProfile)""")
+@cli_util.option('--self-registration-profile-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--force-delete', type=click.BOOL, help=u"""To force delete the resource and all its references (if any).""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_self_registration_profile(ctx, from_json, self_registration_profile_id, authorization, resource_type_schema_version, force_delete, if_match):
+
+    if isinstance(self_registration_profile_id, six.string_types) and len(self_registration_profile_id.strip()) == 0:
+        raise click.UsageError('Parameter --self-registration-profile-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if force_delete is not None:
+        kwargs['force_delete'] = force_delete
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.delete_self_registration_profile(
+        self_registration_profile_id=self_registration_profile_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -7161,6 +9899,111 @@ def get_app_role(ctx, from_json, app_role_id, authorization, resource_type_schem
     cli_util.render_response(result, ctx)
 
 
+@approval_workflow_group.command(name=cli_util.override('identity_domains.get_approval_workflow.command_name', 'get'), help=u"""Get ApprovalWorkflow
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getApprovalWorkflow)""")
+@cli_util.option('--approval-workflow-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'ApprovalWorkflow'})
+@cli_util.wrap_exceptions
+def get_approval_workflow(ctx, from_json, approval_workflow_id, authorization, resource_type_schema_version, attributes, attribute_sets):
+
+    if isinstance(approval_workflow_id, six.string_types) and len(approval_workflow_id.strip()) == 0:
+        raise click.UsageError('Parameter --approval-workflow-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.get_approval_workflow(
+        approval_workflow_id=approval_workflow_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@approval_workflow_assignment_group.command(name=cli_util.override('identity_domains.get_approval_workflow_assignment.command_name', 'get'), help=u"""Get an Approval Workflow Assignment
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getApprovalWorkflowAssignment)""")
+@cli_util.option('--approval-workflow-assignment-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'ApprovalWorkflowAssignment'})
+@cli_util.wrap_exceptions
+def get_approval_workflow_assignment(ctx, from_json, approval_workflow_assignment_id, authorization, resource_type_schema_version, attributes, attribute_sets):
+
+    if isinstance(approval_workflow_assignment_id, six.string_types) and len(approval_workflow_assignment_id.strip()) == 0:
+        raise click.UsageError('Parameter --approval-workflow-assignment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.get_approval_workflow_assignment(
+        approval_workflow_assignment_id=approval_workflow_assignment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@approval_workflow_step_group.command(name=cli_util.override('identity_domains.get_approval_workflow_step.command_name', 'get'), help=u"""Get ApprovalWorkflowStep
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getApprovalWorkflowStep)""")
+@cli_util.option('--approval-workflow-step-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'ApprovalWorkflowStep'})
+@cli_util.wrap_exceptions
+def get_approval_workflow_step(ctx, from_json, approval_workflow_step_id, authorization, resource_type_schema_version, attributes, attribute_sets):
+
+    if isinstance(approval_workflow_step_id, six.string_types) and len(approval_workflow_step_id.strip()) == 0:
+        raise click.UsageError('Parameter --approval-workflow-step-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.get_approval_workflow_step(
+        approval_workflow_step_id=approval_workflow_step_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @auth_token_group.command(name=cli_util.override('identity_domains.get_auth_token.command_name', 'get'), help=u"""Get a user's Auth token.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getAuthToken)""")
@@ -7226,6 +10069,181 @@ def get_authentication_factor_setting(ctx, from_json, authentication_factor_sett
     client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
     result = client.get_authentication_factor_setting(
         authentication_factor_setting_id=authentication_factor_setting_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@branding_setting_group.command(name=cli_util.override('identity_domains.get_branding_setting.command_name', 'get'), help=u"""Get Branding Settings
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getBrandingSetting)""")
+@cli_util.option('--branding-setting-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'BrandingSetting'})
+@cli_util.wrap_exceptions
+def get_branding_setting(ctx, from_json, branding_setting_id, authorization, resource_type_schema_version, attributes, attribute_sets):
+
+    if isinstance(branding_setting_id, six.string_types) and len(branding_setting_id.strip()) == 0:
+        raise click.UsageError('Parameter --branding-setting-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.get_branding_setting(
+        branding_setting_id=branding_setting_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_gate_group.command(name=cli_util.override('identity_domains.get_cloud_gate.command_name', 'get'), help=u"""Get a Cloud Gate
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getCloudGate)""")
+@cli_util.option('--cloud-gate-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'CloudGate'})
+@cli_util.wrap_exceptions
+def get_cloud_gate(ctx, from_json, cloud_gate_id, authorization, resource_type_schema_version, attributes, attribute_sets):
+
+    if isinstance(cloud_gate_id, six.string_types) and len(cloud_gate_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-gate-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.get_cloud_gate(
+        cloud_gate_id=cloud_gate_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_gate_mapping_group.command(name=cli_util.override('identity_domains.get_cloud_gate_mapping.command_name', 'get'), help=u"""Get a Cloud Gate mapping
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getCloudGateMapping)""")
+@cli_util.option('--cloud-gate-mapping-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'CloudGateMapping'})
+@cli_util.wrap_exceptions
+def get_cloud_gate_mapping(ctx, from_json, cloud_gate_mapping_id, authorization, resource_type_schema_version, attributes, attribute_sets):
+
+    if isinstance(cloud_gate_mapping_id, six.string_types) and len(cloud_gate_mapping_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-gate-mapping-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.get_cloud_gate_mapping(
+        cloud_gate_mapping_id=cloud_gate_mapping_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_gate_server_group.command(name=cli_util.override('identity_domains.get_cloud_gate_server.command_name', 'get'), help=u"""Get a Cloud Gate server
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getCloudGateServer)""")
+@cli_util.option('--cloud-gate-server-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'CloudGateServer'})
+@cli_util.wrap_exceptions
+def get_cloud_gate_server(ctx, from_json, cloud_gate_server_id, authorization, resource_type_schema_version, attributes, attribute_sets):
+
+    if isinstance(cloud_gate_server_id, six.string_types) and len(cloud_gate_server_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-gate-server-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.get_cloud_gate_server(
+        cloud_gate_server_id=cloud_gate_server_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@condition_group.command(name=cli_util.override('identity_domains.get_condition.command_name', 'get'), help=u"""Get a Condition
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getCondition)""")
+@cli_util.option('--condition-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'Condition'})
+@cli_util.wrap_exceptions
+def get_condition(ctx, from_json, condition_id, authorization, resource_type_schema_version, attributes, attribute_sets):
+
+    if isinstance(condition_id, six.string_types) and len(condition_id.strip()) == 0:
+        raise click.UsageError('Parameter --condition-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.get_condition(
+        condition_id=condition_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -7564,6 +10582,35 @@ def get_my_auth_token(ctx, from_json, my_auth_token_id, authorization, resource_
     cli_util.render_response(result, ctx)
 
 
+@my_completed_approval_group.command(name=cli_util.override('identity_domains.get_my_completed_approval.command_name', 'get'), help=u"""Get My MyCompletedApproval
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getMyCompletedApproval)""")
+@cli_util.option('--my-completed-approval-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'MyCompletedApproval'})
+@cli_util.wrap_exceptions
+def get_my_completed_approval(ctx, from_json, my_completed_approval_id, authorization, resource_type_schema_version):
+
+    if isinstance(my_completed_approval_id, six.string_types) and len(my_completed_approval_id.strip()) == 0:
+        raise click.UsageError('Parameter --my-completed-approval-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.get_my_completed_approval(
+        my_completed_approval_id=my_completed_approval_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @my_customer_secret_key_group.command(name=cli_util.override('identity_domains.get_my_customer_secret_key.command_name', 'get'), help=u"""Get a user's own customer secret key.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getMyCustomerSecretKey)""")
@@ -7652,6 +10699,70 @@ def get_my_o_auth2_client_credential(ctx, from_json, my_o_auth2_client_credentia
     client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
     result = client.get_my_o_auth2_client_credential(
         my_o_auth2_client_credential_id=my_o_auth2_client_credential_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@my_pending_approval_group.command(name=cli_util.override('identity_domains.get_my_pending_approval.command_name', 'get'), help=u"""Get My MyPendingApproval
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getMyPendingApproval)""")
+@cli_util.option('--my-pending-approval-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'MyPendingApproval'})
+@cli_util.wrap_exceptions
+def get_my_pending_approval(ctx, from_json, my_pending_approval_id, authorization, resource_type_schema_version):
+
+    if isinstance(my_pending_approval_id, six.string_types) and len(my_pending_approval_id.strip()) == 0:
+        raise click.UsageError('Parameter --my-pending-approval-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.get_my_pending_approval(
+        my_pending_approval_id=my_pending_approval_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@my_request_group.command(name=cli_util.override('identity_domains.get_my_request.command_name', 'get'), help=u"""Get My Requests
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getMyRequest)""")
+@cli_util.option('--my-request-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'MyRequest'})
+@cli_util.wrap_exceptions
+def get_my_request(ctx, from_json, my_request_id, authorization, resource_type_schema_version, attributes, attribute_sets):
+
+    if isinstance(my_request_id, six.string_types) and len(my_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --my-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.get_my_request(
+        my_request_id=my_request_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -7779,6 +10890,76 @@ def get_my_user_db_credential(ctx, from_json, my_user_db_credential_id, authoriz
     cli_util.render_response(result, ctx)
 
 
+@network_perimeter_group.command(name=cli_util.override('identity_domains.get_network_perimeter.command_name', 'get'), help=u"""Get a NetworkPerimeter
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getNetworkPerimeter)""")
+@cli_util.option('--network-perimeter-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'NetworkPerimeter'})
+@cli_util.wrap_exceptions
+def get_network_perimeter(ctx, from_json, network_perimeter_id, authorization, resource_type_schema_version, attributes, attribute_sets):
+
+    if isinstance(network_perimeter_id, six.string_types) and len(network_perimeter_id.strip()) == 0:
+        raise click.UsageError('Parameter --network-perimeter-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.get_network_perimeter(
+        network_perimeter_id=network_perimeter_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@notification_setting_group.command(name=cli_util.override('identity_domains.get_notification_setting.command_name', 'get'), help=u"""Get Notification Settings
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getNotificationSetting)""")
+@cli_util.option('--notification-setting-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'NotificationSetting'})
+@cli_util.wrap_exceptions
+def get_notification_setting(ctx, from_json, notification_setting_id, authorization, resource_type_schema_version, attributes, attribute_sets):
+
+    if isinstance(notification_setting_id, six.string_types) and len(notification_setting_id.strip()) == 0:
+        raise click.UsageError('Parameter --notification-setting-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.get_notification_setting(
+        notification_setting_id=notification_setting_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @o_auth2_client_credential_group.command(name=cli_util.override('identity_domains.get_o_auth2_client_credential.command_name', 'get'), help=u"""Get a user's OAuth2 client credentials.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getOAuth2ClientCredential)""")
@@ -7814,6 +10995,64 @@ def get_o_auth2_client_credential(ctx, from_json, o_auth2_client_credential_id, 
     cli_util.render_response(result, ctx)
 
 
+@o_auth_client_certificate_group.command(name=cli_util.override('identity_domains.get_o_auth_client_certificate.command_name', 'get'), help=u"""Get OAuth Client Certificates
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getOAuthClientCertificate)""")
+@cli_util.option('--o-auth-client-certificate-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'OAuthClientCertificate'})
+@cli_util.wrap_exceptions
+def get_o_auth_client_certificate(ctx, from_json, o_auth_client_certificate_id, authorization, resource_type_schema_version):
+
+    if isinstance(o_auth_client_certificate_id, six.string_types) and len(o_auth_client_certificate_id.strip()) == 0:
+        raise click.UsageError('Parameter --o-auth-client-certificate-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.get_o_auth_client_certificate(
+        o_auth_client_certificate_id=o_auth_client_certificate_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@o_auth_partner_certificate_group.command(name=cli_util.override('identity_domains.get_o_auth_partner_certificate.command_name', 'get'), help=u"""Get an OAuth Partner Certificate
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getOAuthPartnerCertificate)""")
+@cli_util.option('--o-auth-partner-certificate-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'OAuthPartnerCertificate'})
+@cli_util.wrap_exceptions
+def get_o_auth_partner_certificate(ctx, from_json, o_auth_partner_certificate_id, authorization, resource_type_schema_version):
+
+    if isinstance(o_auth_partner_certificate_id, six.string_types) and len(o_auth_partner_certificate_id.strip()) == 0:
+        raise click.UsageError('Parameter --o-auth-partner-certificate-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.get_o_auth_partner_certificate(
+        o_auth_partner_certificate_id=o_auth_partner_certificate_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @password_policy_group.command(name=cli_util.override('identity_domains.get_password_policy.command_name', 'get'), help=u"""Get a password policy.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getPasswordPolicy)""")
@@ -7844,6 +11083,105 @@ def get_password_policy(ctx, from_json, password_policy_id, authorization, resou
     client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
     result = client.get_password_policy(
         password_policy_id=password_policy_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@policy_group.command(name=cli_util.override('identity_domains.get_policy.command_name', 'get'), help=u"""Get a Policy
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getPolicy)""")
+@cli_util.option('--policy-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'Policy'})
+@cli_util.wrap_exceptions
+def get_policy(ctx, from_json, policy_id, authorization, resource_type_schema_version, attributes, attribute_sets):
+
+    if isinstance(policy_id, six.string_types) and len(policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.get_policy(
+        policy_id=policy_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@rule_group.command(name=cli_util.override('identity_domains.get_rule.command_name', 'get'), help=u"""Get a Rule
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getRule)""")
+@cli_util.option('--rule-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'Rule'})
+@cli_util.wrap_exceptions
+def get_rule(ctx, from_json, rule_id, authorization, resource_type_schema_version, attributes, attribute_sets):
+
+    if isinstance(rule_id, six.string_types) and len(rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --rule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.get_rule(
+        rule_id=rule_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@schema_group.command(name=cli_util.override('identity_domains.get_schema.command_name', 'get'), help=u"""Get a Schema
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getSchema)""")
+@cli_util.option('--schema-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'Schema'})
+@cli_util.wrap_exceptions
+def get_schema(ctx, from_json, schema_id, authorization, resource_type_schema_version):
+
+    if isinstance(schema_id, six.string_types) and len(schema_id.strip()) == 0:
+        raise click.UsageError('Parameter --schema-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.get_schema(
+        schema_id=schema_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -7914,6 +11252,76 @@ def get_security_question_setting(ctx, from_json, security_question_setting_id, 
     client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
     result = client.get_security_question_setting(
         security_question_setting_id=security_question_setting_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@self_registration_profile_group.command(name=cli_util.override('identity_domains.get_self_registration_profile.command_name', 'get'), help=u"""Get a self-registration profile.
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getSelfRegistrationProfile)""")
+@cli_util.option('--self-registration-profile-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'SelfRegistrationProfile'})
+@cli_util.wrap_exceptions
+def get_self_registration_profile(ctx, from_json, self_registration_profile_id, authorization, resource_type_schema_version, attributes, attribute_sets):
+
+    if isinstance(self_registration_profile_id, six.string_types) and len(self_registration_profile_id.strip()) == 0:
+        raise click.UsageError('Parameter --self-registration-profile-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.get_self_registration_profile(
+        self_registration_profile_id=self_registration_profile_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@setting_group.command(name=cli_util.override('identity_domains.get_setting.command_name', 'get'), help=u"""Get Settings
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getSetting)""")
+@cli_util.option('--setting-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'Setting'})
+@cli_util.wrap_exceptions
+def get_setting(ctx, from_json, setting_id, authorization, resource_type_schema_version, attributes, attribute_sets):
+
+    if isinstance(setting_id, six.string_types) and len(setting_id.strip()) == 0:
+        raise click.UsageError('Parameter --setting-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.get_setting(
+        setting_id=setting_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -8332,6 +11740,222 @@ def list_app_roles(ctx, from_json, all_pages, page_size, filter, sort_by, sort_o
     cli_util.render_response(result, ctx)
 
 
+@approval_workflow_assignments_group.command(name=cli_util.override('identity_domains.list_approval_workflow_assignments.command_name', 'list'), help=u"""Search Approval Workflow Assignments
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listApprovalWorkflowAssignments)""")
+@cli_util.option('--filter', help=u"""OPTIONAL. The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See the Filtering section of the SCIM specification for more information (Section 3.4.2.2). The string should contain at least one condition that each item must match in order to be returned in the search results. Each condition specifies an attribute, an operator, and a value. Conditions within a filter can be connected by logical operators (such as AND and OR). Sets of conditions can be grouped together using parentheses.""")
+@cli_util.option('--sort-by', help=u"""OPTIONAL. A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation form. See the Attribute Notation section of the SCIM specification for more information (Section 3.10). Also, see the Sorting section of the SCIM specification for more information (Section 3.4.2.3).""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are 'ascending' and 'descending'. See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""OPTIONAL. An integer that indicates the 1-based index of the first query result. See the Pagination section of the SCIM specification for more information. (Section 3.4.2.4). The number of results pages to return. The first page is 1. Specify 2 to access the second page of results, and so on.""")
+@cli_util.option('--count', type=click.INT, help=u"""OPTIONAL. An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. (Section 3.4.2.4).""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'ApprovalWorkflowAssignments'})
+@cli_util.wrap_exceptions
+def list_approval_workflow_assignments(ctx, from_json, all_pages, page_size, filter, sort_by, sort_order, start_index, count, attributes, attribute_sets, authorization, resource_type_schema_version, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if filter is not None:
+        kwargs['filter'] = filter
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if start_index is not None:
+        kwargs['start_index'] = start_index
+    if count is not None:
+        kwargs['count'] = count
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_approval_workflow_assignments,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_approval_workflow_assignments,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_approval_workflow_assignments(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@approval_workflow_steps_group.command(name=cli_util.override('identity_domains.list_approval_workflow_steps.command_name', 'list'), help=u"""Search ApprovalWorkflowStep
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listApprovalWorkflowSteps)""")
+@cli_util.option('--filter', help=u"""OPTIONAL. The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See the Filtering section of the SCIM specification for more information (Section 3.4.2.2). The string should contain at least one condition that each item must match in order to be returned in the search results. Each condition specifies an attribute, an operator, and a value. Conditions within a filter can be connected by logical operators (such as AND and OR). Sets of conditions can be grouped together using parentheses.""")
+@cli_util.option('--sort-by', help=u"""OPTIONAL. A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation form. See the Attribute Notation section of the SCIM specification for more information (Section 3.10). Also, see the Sorting section of the SCIM specification for more information (Section 3.4.2.3).""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are 'ascending' and 'descending'. See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""OPTIONAL. An integer that indicates the 1-based index of the first query result. See the Pagination section of the SCIM specification for more information. (Section 3.4.2.4). The number of results pages to return. The first page is 1. Specify 2 to access the second page of results, and so on.""")
+@cli_util.option('--count', type=click.INT, help=u"""OPTIONAL. An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. (Section 3.4.2.4).""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'ApprovalWorkflowSteps'})
+@cli_util.wrap_exceptions
+def list_approval_workflow_steps(ctx, from_json, all_pages, page_size, filter, sort_by, sort_order, start_index, count, attributes, attribute_sets, authorization, resource_type_schema_version, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if filter is not None:
+        kwargs['filter'] = filter
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if start_index is not None:
+        kwargs['start_index'] = start_index
+    if count is not None:
+        kwargs['count'] = count
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_approval_workflow_steps,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_approval_workflow_steps,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_approval_workflow_steps(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@approval_workflows_group.command(name=cli_util.override('identity_domains.list_approval_workflows.command_name', 'list'), help=u"""Search ApprovalWorkflow
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listApprovalWorkflows)""")
+@cli_util.option('--filter', help=u"""OPTIONAL. The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See the Filtering section of the SCIM specification for more information (Section 3.4.2.2). The string should contain at least one condition that each item must match in order to be returned in the search results. Each condition specifies an attribute, an operator, and a value. Conditions within a filter can be connected by logical operators (such as AND and OR). Sets of conditions can be grouped together using parentheses.""")
+@cli_util.option('--sort-by', help=u"""OPTIONAL. A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation form. See the Attribute Notation section of the SCIM specification for more information (Section 3.10). Also, see the Sorting section of the SCIM specification for more information (Section 3.4.2.3).""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are 'ascending' and 'descending'. See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""OPTIONAL. An integer that indicates the 1-based index of the first query result. See the Pagination section of the SCIM specification for more information. (Section 3.4.2.4). The number of results pages to return. The first page is 1. Specify 2 to access the second page of results, and so on.""")
+@cli_util.option('--count', type=click.INT, help=u"""OPTIONAL. An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. (Section 3.4.2.4).""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'ApprovalWorkflows'})
+@cli_util.wrap_exceptions
+def list_approval_workflows(ctx, from_json, all_pages, page_size, filter, sort_by, sort_order, start_index, count, attributes, attribute_sets, authorization, resource_type_schema_version, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if filter is not None:
+        kwargs['filter'] = filter
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if start_index is not None:
+        kwargs['start_index'] = start_index
+    if count is not None:
+        kwargs['count'] = count
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_approval_workflows,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_approval_workflows,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_approval_workflows(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @apps_group.command(name=cli_util.override('identity_domains.list_apps.command_name', 'list'), help=u"""Search Apps
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listApps)""")
@@ -8528,6 +12152,351 @@ def list_authentication_factor_settings(ctx, from_json, all_pages, page_size, at
         )
     else:
         result = client.list_authentication_factor_settings(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@branding_settings_group.command(name=cli_util.override('identity_domains.list_branding_settings.command_name', 'list'), help=u"""Search Branding Settings
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listBrandingSettings)""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'BrandingSettings'})
+@cli_util.wrap_exceptions
+def list_branding_settings(ctx, from_json, all_pages, page_size, attributes, attribute_sets, authorization, resource_type_schema_version, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_branding_settings,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_branding_settings,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_branding_settings(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_gate_mappings_group.command(name=cli_util.override('identity_domains.list_cloud_gate_mappings.command_name', 'list'), help=u"""Search Cloud Gate mappings
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listCloudGateMappings)""")
+@cli_util.option('--filter', help=u"""OPTIONAL. The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See the Filtering section of the SCIM specification for more information (Section 3.4.2.2). The string should contain at least one condition that each item must match in order to be returned in the search results. Each condition specifies an attribute, an operator, and a value. Conditions within a filter can be connected by logical operators (such as AND and OR). Sets of conditions can be grouped together using parentheses.""")
+@cli_util.option('--sort-by', help=u"""OPTIONAL. A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation form. See the Attribute Notation section of the SCIM specification for more information (Section 3.10). Also, see the Sorting section of the SCIM specification for more information (Section 3.4.2.3).""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are 'ascending' and 'descending'. See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""OPTIONAL. An integer that indicates the 1-based index of the first query result. See the Pagination section of the SCIM specification for more information. (Section 3.4.2.4). The number of results pages to return. The first page is 1. Specify 2 to access the second page of results, and so on.""")
+@cli_util.option('--count', type=click.INT, help=u"""OPTIONAL. An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. (Section 3.4.2.4).""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'CloudGateMappings'})
+@cli_util.wrap_exceptions
+def list_cloud_gate_mappings(ctx, from_json, all_pages, page_size, filter, sort_by, sort_order, start_index, count, attributes, attribute_sets, authorization, resource_type_schema_version, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if filter is not None:
+        kwargs['filter'] = filter
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if start_index is not None:
+        kwargs['start_index'] = start_index
+    if count is not None:
+        kwargs['count'] = count
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_cloud_gate_mappings,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_cloud_gate_mappings,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_cloud_gate_mappings(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_gate_servers_group.command(name=cli_util.override('identity_domains.list_cloud_gate_servers.command_name', 'list'), help=u"""Search Cloud Gate servers
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listCloudGateServers)""")
+@cli_util.option('--filter', help=u"""OPTIONAL. The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See the Filtering section of the SCIM specification for more information (Section 3.4.2.2). The string should contain at least one condition that each item must match in order to be returned in the search results. Each condition specifies an attribute, an operator, and a value. Conditions within a filter can be connected by logical operators (such as AND and OR). Sets of conditions can be grouped together using parentheses.""")
+@cli_util.option('--sort-by', help=u"""OPTIONAL. A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation form. See the Attribute Notation section of the SCIM specification for more information (Section 3.10). Also, see the Sorting section of the SCIM specification for more information (Section 3.4.2.3).""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are 'ascending' and 'descending'. See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""OPTIONAL. An integer that indicates the 1-based index of the first query result. See the Pagination section of the SCIM specification for more information. (Section 3.4.2.4). The number of results pages to return. The first page is 1. Specify 2 to access the second page of results, and so on.""")
+@cli_util.option('--count', type=click.INT, help=u"""OPTIONAL. An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. (Section 3.4.2.4).""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'CloudGateServers'})
+@cli_util.wrap_exceptions
+def list_cloud_gate_servers(ctx, from_json, all_pages, page_size, filter, sort_by, sort_order, start_index, count, attributes, attribute_sets, authorization, resource_type_schema_version, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if filter is not None:
+        kwargs['filter'] = filter
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if start_index is not None:
+        kwargs['start_index'] = start_index
+    if count is not None:
+        kwargs['count'] = count
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_cloud_gate_servers,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_cloud_gate_servers,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_cloud_gate_servers(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_gates_group.command(name=cli_util.override('identity_domains.list_cloud_gates.command_name', 'list'), help=u"""Search Cloud Gates
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listCloudGates)""")
+@cli_util.option('--filter', help=u"""OPTIONAL. The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See the Filtering section of the SCIM specification for more information (Section 3.4.2.2). The string should contain at least one condition that each item must match in order to be returned in the search results. Each condition specifies an attribute, an operator, and a value. Conditions within a filter can be connected by logical operators (such as AND and OR). Sets of conditions can be grouped together using parentheses.""")
+@cli_util.option('--sort-by', help=u"""OPTIONAL. A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation form. See the Attribute Notation section of the SCIM specification for more information (Section 3.10). Also, see the Sorting section of the SCIM specification for more information (Section 3.4.2.3).""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are 'ascending' and 'descending'. See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""OPTIONAL. An integer that indicates the 1-based index of the first query result. See the Pagination section of the SCIM specification for more information. (Section 3.4.2.4). The number of results pages to return. The first page is 1. Specify 2 to access the second page of results, and so on.""")
+@cli_util.option('--count', type=click.INT, help=u"""OPTIONAL. An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. (Section 3.4.2.4).""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'CloudGates'})
+@cli_util.wrap_exceptions
+def list_cloud_gates(ctx, from_json, all_pages, page_size, filter, sort_by, sort_order, start_index, count, attributes, attribute_sets, authorization, resource_type_schema_version, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if filter is not None:
+        kwargs['filter'] = filter
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if start_index is not None:
+        kwargs['start_index'] = start_index
+    if count is not None:
+        kwargs['count'] = count
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_cloud_gates,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_cloud_gates,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_cloud_gates(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@conditions_group.command(name=cli_util.override('identity_domains.list_conditions.command_name', 'list'), help=u"""Search Conditions
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listConditions)""")
+@cli_util.option('--filter', help=u"""OPTIONAL. The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See the Filtering section of the SCIM specification for more information (Section 3.4.2.2). The string should contain at least one condition that each item must match in order to be returned in the search results. Each condition specifies an attribute, an operator, and a value. Conditions within a filter can be connected by logical operators (such as AND and OR). Sets of conditions can be grouped together using parentheses.""")
+@cli_util.option('--sort-by', help=u"""OPTIONAL. A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation form. See the Attribute Notation section of the SCIM specification for more information (Section 3.10). Also, see the Sorting section of the SCIM specification for more information (Section 3.4.2.3).""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are 'ascending' and 'descending'. See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""OPTIONAL. An integer that indicates the 1-based index of the first query result. See the Pagination section of the SCIM specification for more information. (Section 3.4.2.4). The number of results pages to return. The first page is 1. Specify 2 to access the second page of results, and so on.""")
+@cli_util.option('--count', type=click.INT, help=u"""OPTIONAL. An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. (Section 3.4.2.4).""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'Conditions'})
+@cli_util.wrap_exceptions
+def list_conditions(ctx, from_json, all_pages, page_size, filter, sort_by, sort_order, start_index, count, attributes, attribute_sets, authorization, resource_type_schema_version, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if filter is not None:
+        kwargs['filter'] = filter
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if start_index is not None:
+        kwargs['start_index'] = start_index
+    if count is not None:
+        kwargs['count'] = count
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_conditions,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_conditions,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_conditions(
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -9205,6 +13174,72 @@ def list_my_auth_tokens(ctx, from_json, all_pages, page_size, filter, sort_by, s
     cli_util.render_response(result, ctx)
 
 
+@my_completed_approvals_group.command(name=cli_util.override('identity_domains.list_my_completed_approvals.command_name', 'list'), help=u"""Search My MyCompletedApproval
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listMyCompletedApprovals)""")
+@cli_util.option('--filter', help=u"""OPTIONAL. The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See the Filtering section of the SCIM specification for more information (Section 3.4.2.2). The string should contain at least one condition that each item must match in order to be returned in the search results. Each condition specifies an attribute, an operator, and a value. Conditions within a filter can be connected by logical operators (such as AND and OR). Sets of conditions can be grouped together using parentheses.""")
+@cli_util.option('--sort-by', help=u"""OPTIONAL. A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation form. See the Attribute Notation section of the SCIM specification for more information (Section 3.10). Also, see the Sorting section of the SCIM specification for more information (Section 3.4.2.3).""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are 'ascending' and 'descending'. See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""OPTIONAL. An integer that indicates the 1-based index of the first query result. See the Pagination section of the SCIM specification for more information. (Section 3.4.2.4). The number of results pages to return. The first page is 1. Specify 2 to access the second page of results, and so on.""")
+@cli_util.option('--count', type=click.INT, help=u"""OPTIONAL. An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. (Section 3.4.2.4).""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'MyCompletedApprovals'})
+@cli_util.wrap_exceptions
+def list_my_completed_approvals(ctx, from_json, all_pages, page_size, filter, sort_by, sort_order, start_index, count, authorization, resource_type_schema_version, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if filter is not None:
+        kwargs['filter'] = filter
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if start_index is not None:
+        kwargs['start_index'] = start_index
+    if count is not None:
+        kwargs['count'] = count
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_my_completed_approvals,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_my_completed_approvals,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_my_completed_approvals(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @my_customer_secret_keys_group.command(name=cli_util.override('identity_domains.list_my_customer_secret_keys.command_name', 'list'), help=u"""Search for a user's own customer secret key.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listMyCustomerSecretKeys)""")
@@ -9476,6 +13511,72 @@ def list_my_o_auth2_client_credentials(ctx, from_json, all_pages, page_size, fil
         )
     else:
         result = client.list_my_o_auth2_client_credentials(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@my_pending_approvals_group.command(name=cli_util.override('identity_domains.list_my_pending_approvals.command_name', 'list'), help=u"""Search My Approvals
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listMyPendingApprovals)""")
+@cli_util.option('--filter', help=u"""OPTIONAL. The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See the Filtering section of the SCIM specification for more information (Section 3.4.2.2). The string should contain at least one condition that each item must match in order to be returned in the search results. Each condition specifies an attribute, an operator, and a value. Conditions within a filter can be connected by logical operators (such as AND and OR). Sets of conditions can be grouped together using parentheses.""")
+@cli_util.option('--sort-by', help=u"""OPTIONAL. A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation form. See the Attribute Notation section of the SCIM specification for more information (Section 3.10). Also, see the Sorting section of the SCIM specification for more information (Section 3.4.2.3).""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are 'ascending' and 'descending'. See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""OPTIONAL. An integer that indicates the 1-based index of the first query result. See the Pagination section of the SCIM specification for more information. (Section 3.4.2.4). The number of results pages to return. The first page is 1. Specify 2 to access the second page of results, and so on.""")
+@cli_util.option('--count', type=click.INT, help=u"""OPTIONAL. An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. (Section 3.4.2.4).""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'MyPendingApprovals'})
+@cli_util.wrap_exceptions
+def list_my_pending_approvals(ctx, from_json, all_pages, page_size, filter, sort_by, sort_order, start_index, count, authorization, resource_type_schema_version, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if filter is not None:
+        kwargs['filter'] = filter
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if start_index is not None:
+        kwargs['start_index'] = start_index
+    if count is not None:
+        kwargs['count'] = count
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_my_pending_approvals,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_my_pending_approvals,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_my_pending_approvals(
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -9889,6 +13990,135 @@ def list_my_user_db_credentials(ctx, from_json, all_pages, page_size, filter, so
     cli_util.render_response(result, ctx)
 
 
+@network_perimeters_group.command(name=cli_util.override('identity_domains.list_network_perimeters.command_name', 'list'), help=u"""Search NetworkPerimeters
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listNetworkPerimeters)""")
+@cli_util.option('--filter', help=u"""OPTIONAL. The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See the Filtering section of the SCIM specification for more information (Section 3.4.2.2). The string should contain at least one condition that each item must match in order to be returned in the search results. Each condition specifies an attribute, an operator, and a value. Conditions within a filter can be connected by logical operators (such as AND and OR). Sets of conditions can be grouped together using parentheses.""")
+@cli_util.option('--sort-by', help=u"""OPTIONAL. A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation form. See the Attribute Notation section of the SCIM specification for more information (Section 3.10). Also, see the Sorting section of the SCIM specification for more information (Section 3.4.2.3).""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are 'ascending' and 'descending'. See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""OPTIONAL. An integer that indicates the 1-based index of the first query result. See the Pagination section of the SCIM specification for more information. (Section 3.4.2.4). The number of results pages to return. The first page is 1. Specify 2 to access the second page of results, and so on.""")
+@cli_util.option('--count', type=click.INT, help=u"""OPTIONAL. An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. (Section 3.4.2.4).""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'NetworkPerimeters'})
+@cli_util.wrap_exceptions
+def list_network_perimeters(ctx, from_json, all_pages, page_size, filter, sort_by, sort_order, start_index, count, attributes, attribute_sets, authorization, resource_type_schema_version, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if filter is not None:
+        kwargs['filter'] = filter
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if start_index is not None:
+        kwargs['start_index'] = start_index
+    if count is not None:
+        kwargs['count'] = count
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_network_perimeters,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_network_perimeters,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_network_perimeters(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@notification_settings_group.command(name=cli_util.override('identity_domains.list_notification_settings.command_name', 'list'), help=u"""Search Notification Settings
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listNotificationSettings)""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'NotificationSettings'})
+@cli_util.wrap_exceptions
+def list_notification_settings(ctx, from_json, all_pages, page_size, attributes, attribute_sets, authorization, resource_type_schema_version, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_notification_settings,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_notification_settings,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_notification_settings(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @o_auth2_client_credentials_group.command(name=cli_util.override('identity_domains.list_o_auth2_client_credentials.command_name', 'list'), help=u"""Search for a user's OAuth2 client credentials.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listOAuth2ClientCredentials)""")
@@ -9956,6 +14186,138 @@ def list_o_auth2_client_credentials(ctx, from_json, all_pages, page_size, filter
         )
     else:
         result = client.list_o_auth2_client_credentials(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@o_auth_client_certificates_group.command(name=cli_util.override('identity_domains.list_o_auth_client_certificates.command_name', 'list'), help=u"""Search OAuth Client Certificates
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listOAuthClientCertificates)""")
+@cli_util.option('--filter', help=u"""OPTIONAL. The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See the Filtering section of the SCIM specification for more information (Section 3.4.2.2). The string should contain at least one condition that each item must match in order to be returned in the search results. Each condition specifies an attribute, an operator, and a value. Conditions within a filter can be connected by logical operators (such as AND and OR). Sets of conditions can be grouped together using parentheses.""")
+@cli_util.option('--sort-by', help=u"""OPTIONAL. A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation form. See the Attribute Notation section of the SCIM specification for more information (Section 3.10). Also, see the Sorting section of the SCIM specification for more information (Section 3.4.2.3).""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are 'ascending' and 'descending'. See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""OPTIONAL. An integer that indicates the 1-based index of the first query result. See the Pagination section of the SCIM specification for more information. (Section 3.4.2.4). The number of results pages to return. The first page is 1. Specify 2 to access the second page of results, and so on.""")
+@cli_util.option('--count', type=click.INT, help=u"""OPTIONAL. An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. (Section 3.4.2.4).""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'OAuthClientCertificates'})
+@cli_util.wrap_exceptions
+def list_o_auth_client_certificates(ctx, from_json, all_pages, page_size, filter, sort_by, sort_order, start_index, count, authorization, resource_type_schema_version, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if filter is not None:
+        kwargs['filter'] = filter
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if start_index is not None:
+        kwargs['start_index'] = start_index
+    if count is not None:
+        kwargs['count'] = count
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_o_auth_client_certificates,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_o_auth_client_certificates,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_o_auth_client_certificates(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@o_auth_partner_certificates_group.command(name=cli_util.override('identity_domains.list_o_auth_partner_certificates.command_name', 'list'), help=u"""Search OAuth Partner Certificates
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listOAuthPartnerCertificates)""")
+@cli_util.option('--filter', help=u"""OPTIONAL. The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See the Filtering section of the SCIM specification for more information (Section 3.4.2.2). The string should contain at least one condition that each item must match in order to be returned in the search results. Each condition specifies an attribute, an operator, and a value. Conditions within a filter can be connected by logical operators (such as AND and OR). Sets of conditions can be grouped together using parentheses.""")
+@cli_util.option('--sort-by', help=u"""OPTIONAL. A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation form. See the Attribute Notation section of the SCIM specification for more information (Section 3.10). Also, see the Sorting section of the SCIM specification for more information (Section 3.4.2.3).""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are 'ascending' and 'descending'. See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""OPTIONAL. An integer that indicates the 1-based index of the first query result. See the Pagination section of the SCIM specification for more information. (Section 3.4.2.4). The number of results pages to return. The first page is 1. Specify 2 to access the second page of results, and so on.""")
+@cli_util.option('--count', type=click.INT, help=u"""OPTIONAL. An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. (Section 3.4.2.4).""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'OAuthPartnerCertificates'})
+@cli_util.wrap_exceptions
+def list_o_auth_partner_certificates(ctx, from_json, all_pages, page_size, filter, sort_by, sort_order, start_index, count, authorization, resource_type_schema_version, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if filter is not None:
+        kwargs['filter'] = filter
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if start_index is not None:
+        kwargs['start_index'] = start_index
+    if count is not None:
+        kwargs['count'] = count
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_o_auth_partner_certificates,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_o_auth_partner_certificates,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_o_auth_partner_certificates(
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -10033,6 +14395,78 @@ def list_password_policies(ctx, from_json, all_pages, page_size, filter, sort_by
     cli_util.render_response(result, ctx)
 
 
+@policies_group.command(name=cli_util.override('identity_domains.list_policies.command_name', 'list'), help=u"""Search Policies
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listPolicies)""")
+@cli_util.option('--filter', help=u"""OPTIONAL. The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See the Filtering section of the SCIM specification for more information (Section 3.4.2.2). The string should contain at least one condition that each item must match in order to be returned in the search results. Each condition specifies an attribute, an operator, and a value. Conditions within a filter can be connected by logical operators (such as AND and OR). Sets of conditions can be grouped together using parentheses.""")
+@cli_util.option('--sort-by', help=u"""OPTIONAL. A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation form. See the Attribute Notation section of the SCIM specification for more information (Section 3.10). Also, see the Sorting section of the SCIM specification for more information (Section 3.4.2.3).""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are 'ascending' and 'descending'. See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""OPTIONAL. An integer that indicates the 1-based index of the first query result. See the Pagination section of the SCIM specification for more information. (Section 3.4.2.4). The number of results pages to return. The first page is 1. Specify 2 to access the second page of results, and so on.""")
+@cli_util.option('--count', type=click.INT, help=u"""OPTIONAL. An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. (Section 3.4.2.4).""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'Policies'})
+@cli_util.wrap_exceptions
+def list_policies(ctx, from_json, all_pages, page_size, filter, sort_by, sort_order, start_index, count, attributes, attribute_sets, authorization, resource_type_schema_version, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if filter is not None:
+        kwargs['filter'] = filter
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if start_index is not None:
+        kwargs['start_index'] = start_index
+    if count is not None:
+        kwargs['count'] = count
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_policies,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_policies,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_policies(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @resource_type_schema_attributes_group.command(name=cli_util.override('identity_domains.list_resource_type_schema_attributes.command_name', 'list'), help=u"""Search Resource Type Schema Attributes
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listResourceTypeSchemaAttributes)""")
@@ -10100,6 +14534,141 @@ def list_resource_type_schema_attributes(ctx, from_json, all_pages, page_size, f
         )
     else:
         result = client.list_resource_type_schema_attributes(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@rules_group.command(name=cli_util.override('identity_domains.list_rules.command_name', 'list'), help=u"""Search Rules
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listRules)""")
+@cli_util.option('--filter', help=u"""OPTIONAL. The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See the Filtering section of the SCIM specification for more information (Section 3.4.2.2). The string should contain at least one condition that each item must match in order to be returned in the search results. Each condition specifies an attribute, an operator, and a value. Conditions within a filter can be connected by logical operators (such as AND and OR). Sets of conditions can be grouped together using parentheses.""")
+@cli_util.option('--sort-by', help=u"""OPTIONAL. A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation form. See the Attribute Notation section of the SCIM specification for more information (Section 3.10). Also, see the Sorting section of the SCIM specification for more information (Section 3.4.2.3).""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are 'ascending' and 'descending'. See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""OPTIONAL. An integer that indicates the 1-based index of the first query result. See the Pagination section of the SCIM specification for more information. (Section 3.4.2.4). The number of results pages to return. The first page is 1. Specify 2 to access the second page of results, and so on.""")
+@cli_util.option('--count', type=click.INT, help=u"""OPTIONAL. An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. (Section 3.4.2.4).""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'Rules'})
+@cli_util.wrap_exceptions
+def list_rules(ctx, from_json, all_pages, page_size, filter, sort_by, sort_order, start_index, count, attributes, attribute_sets, authorization, resource_type_schema_version, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if filter is not None:
+        kwargs['filter'] = filter
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if start_index is not None:
+        kwargs['start_index'] = start_index
+    if count is not None:
+        kwargs['count'] = count
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_rules,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_rules,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_rules(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@schemas_group.command(name=cli_util.override('identity_domains.list_schemas.command_name', 'list'), help=u"""Search Schemas
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listSchemas)""")
+@cli_util.option('--sort-by', help=u"""OPTIONAL. A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation form. See the Attribute Notation section of the SCIM specification for more information (Section 3.10). Also, see the Sorting section of the SCIM specification for more information (Section 3.4.2.3).""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are 'ascending' and 'descending'. See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""OPTIONAL. An integer that indicates the 1-based index of the first query result. See the Pagination section of the SCIM specification for more information. (Section 3.4.2.4). The number of results pages to return. The first page is 1. Specify 2 to access the second page of results, and so on.""")
+@cli_util.option('--count', type=click.INT, help=u"""OPTIONAL. An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. (Section 3.4.2.4).""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'Schemas'})
+@cli_util.wrap_exceptions
+def list_schemas(ctx, from_json, all_pages, page_size, sort_by, sort_order, start_index, count, authorization, resource_type_schema_version, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if start_index is not None:
+        kwargs['start_index'] = start_index
+    if count is not None:
+        kwargs['count'] = count
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_schemas,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_schemas,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_schemas(
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -10229,6 +14798,135 @@ def list_security_questions(ctx, from_json, all_pages, page_size, filter, sort_b
         )
     else:
         result = client.list_security_questions(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@self_registration_profiles_group.command(name=cli_util.override('identity_domains.list_self_registration_profiles.command_name', 'list'), help=u"""Search for self-registration profiles.
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listSelfRegistrationProfiles)""")
+@cli_util.option('--filter', help=u"""OPTIONAL. The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See the Filtering section of the SCIM specification for more information (Section 3.4.2.2). The string should contain at least one condition that each item must match in order to be returned in the search results. Each condition specifies an attribute, an operator, and a value. Conditions within a filter can be connected by logical operators (such as AND and OR). Sets of conditions can be grouped together using parentheses.""")
+@cli_util.option('--sort-by', help=u"""OPTIONAL. A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation form. See the Attribute Notation section of the SCIM specification for more information (Section 3.10). Also, see the Sorting section of the SCIM specification for more information (Section 3.4.2.3).""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are 'ascending' and 'descending'. See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""OPTIONAL. An integer that indicates the 1-based index of the first query result. See the Pagination section of the SCIM specification for more information. (Section 3.4.2.4). The number of results pages to return. The first page is 1. Specify 2 to access the second page of results, and so on.""")
+@cli_util.option('--count', type=click.INT, help=u"""OPTIONAL. An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. (Section 3.4.2.4).""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'SelfRegistrationProfiles'})
+@cli_util.wrap_exceptions
+def list_self_registration_profiles(ctx, from_json, all_pages, page_size, filter, sort_by, sort_order, start_index, count, attributes, attribute_sets, authorization, resource_type_schema_version, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if filter is not None:
+        kwargs['filter'] = filter
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if start_index is not None:
+        kwargs['start_index'] = start_index
+    if count is not None:
+        kwargs['count'] = count
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_self_registration_profiles,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_self_registration_profiles,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_self_registration_profiles(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@settings_group.command(name=cli_util.override('identity_domains.list_settings.command_name', 'list'), help=u"""Search Settings
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listSettings)""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'Settings'})
+@cli_util.wrap_exceptions
+def list_settings(ctx, from_json, all_pages, page_size, attributes, attribute_sets, authorization, resource_type_schema_version, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_settings,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_settings,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_settings(
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -10691,6 +15389,98 @@ def patch_app_role(ctx, from_json, app_role_id, schemas, operations, authorizati
     cli_util.render_response(result, ctx)
 
 
+@approval_workflow_group.command(name=cli_util.override('identity_domains.patch_approval_workflow.command_name', 'patch'), help=u"""Update ApprovalWorkflow
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](patchApprovalWorkflow)""")
+@cli_util.option('--approval-workflow-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior. REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--operations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The body of an HTTP PATCH request MUST contain the attribute \"Operations\", whose value is an array of one or more patch operations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}}, output_type={'module': 'identity_domains', 'class': 'ApprovalWorkflow'})
+@cli_util.wrap_exceptions
+def patch_approval_workflow(ctx, from_json, approval_workflow_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
+
+    if isinstance(approval_workflow_id, six.string_types) and len(approval_workflow_id.strip()) == 0:
+        raise click.UsageError('Parameter --approval-workflow-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['Operations'] = cli_util.parse_json_parameter("operations", operations)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.patch_approval_workflow(
+        approval_workflow_id=approval_workflow_id,
+        patch_op=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@approval_workflow_step_group.command(name=cli_util.override('identity_domains.patch_approval_workflow_step.command_name', 'patch'), help=u"""Update ApprovalWorkflowStep
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](patchApprovalWorkflowStep)""")
+@cli_util.option('--approval-workflow-step-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior. REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--operations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The body of an HTTP PATCH request MUST contain the attribute \"Operations\", whose value is an array of one or more patch operations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}}, output_type={'module': 'identity_domains', 'class': 'ApprovalWorkflowStep'})
+@cli_util.wrap_exceptions
+def patch_approval_workflow_step(ctx, from_json, approval_workflow_step_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
+
+    if isinstance(approval_workflow_step_id, six.string_types) and len(approval_workflow_step_id.strip()) == 0:
+        raise click.UsageError('Parameter --approval-workflow-step-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['Operations'] = cli_util.parse_json_parameter("operations", operations)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.patch_approval_workflow_step(
+        approval_workflow_step_id=approval_workflow_step_id,
+        patch_op=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @auth_token_group.command(name=cli_util.override('identity_domains.patch_auth_token.command_name', 'patch'), help=u"""Update a user's Auth token.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](patchAuthToken)""")
@@ -10731,6 +15521,190 @@ def patch_auth_token(ctx, from_json, auth_token_id, schemas, operations, authori
     client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
     result = client.patch_auth_token(
         auth_token_id=auth_token_id,
+        patch_op=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_gate_group.command(name=cli_util.override('identity_domains.patch_cloud_gate.command_name', 'patch'), help=u"""Update a Cloud Gate
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](patchCloudGate)""")
+@cli_util.option('--cloud-gate-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior. REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--operations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The body of an HTTP PATCH request MUST contain the attribute \"Operations\", whose value is an array of one or more patch operations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}}, output_type={'module': 'identity_domains', 'class': 'CloudGate'})
+@cli_util.wrap_exceptions
+def patch_cloud_gate(ctx, from_json, cloud_gate_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
+
+    if isinstance(cloud_gate_id, six.string_types) and len(cloud_gate_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-gate-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['Operations'] = cli_util.parse_json_parameter("operations", operations)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.patch_cloud_gate(
+        cloud_gate_id=cloud_gate_id,
+        patch_op=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_gate_mapping_group.command(name=cli_util.override('identity_domains.patch_cloud_gate_mapping.command_name', 'patch'), help=u"""Update a Cloud Gate mapping
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](patchCloudGateMapping)""")
+@cli_util.option('--cloud-gate-mapping-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior. REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--operations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The body of an HTTP PATCH request MUST contain the attribute \"Operations\", whose value is an array of one or more patch operations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}}, output_type={'module': 'identity_domains', 'class': 'CloudGateMapping'})
+@cli_util.wrap_exceptions
+def patch_cloud_gate_mapping(ctx, from_json, cloud_gate_mapping_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
+
+    if isinstance(cloud_gate_mapping_id, six.string_types) and len(cloud_gate_mapping_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-gate-mapping-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['Operations'] = cli_util.parse_json_parameter("operations", operations)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.patch_cloud_gate_mapping(
+        cloud_gate_mapping_id=cloud_gate_mapping_id,
+        patch_op=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_gate_server_group.command(name=cli_util.override('identity_domains.patch_cloud_gate_server.command_name', 'patch'), help=u"""Update a Cloud Gate server
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](patchCloudGateServer)""")
+@cli_util.option('--cloud-gate-server-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior. REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--operations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The body of an HTTP PATCH request MUST contain the attribute \"Operations\", whose value is an array of one or more patch operations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}}, output_type={'module': 'identity_domains', 'class': 'CloudGateServer'})
+@cli_util.wrap_exceptions
+def patch_cloud_gate_server(ctx, from_json, cloud_gate_server_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
+
+    if isinstance(cloud_gate_server_id, six.string_types) and len(cloud_gate_server_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-gate-server-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['Operations'] = cli_util.parse_json_parameter("operations", operations)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.patch_cloud_gate_server(
+        cloud_gate_server_id=cloud_gate_server_id,
+        patch_op=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@condition_group.command(name=cli_util.override('identity_domains.patch_condition.command_name', 'patch'), help=u"""Update a Condition
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](patchCondition)""")
+@cli_util.option('--condition-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior. REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--operations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The body of an HTTP PATCH request MUST contain the attribute \"Operations\", whose value is an array of one or more patch operations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}}, output_type={'module': 'identity_domains', 'class': 'Condition'})
+@cli_util.wrap_exceptions
+def patch_condition(ctx, from_json, condition_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
+
+    if isinstance(condition_id, six.string_types) and len(condition_id.strip()) == 0:
+        raise click.UsageError('Parameter --condition-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['Operations'] = cli_util.parse_json_parameter("operations", operations)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.patch_condition(
+        condition_id=condition_id,
         patch_op=_details,
         **kwargs
     )
@@ -11306,6 +16280,92 @@ def patch_my_o_auth2_client_credential(ctx, from_json, my_o_auth2_client_credent
     cli_util.render_response(result, ctx)
 
 
+@my_pending_approval_group.command(name=cli_util.override('identity_domains.patch_my_pending_approval.command_name', 'patch'), help=u"""Update MyPendingApproval
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](patchMyPendingApproval)""")
+@cli_util.option('--my-pending-approval-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior. REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--operations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The body of an HTTP PATCH request MUST contain the attribute \"Operations\", whose value is an array of one or more patch operations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}}, output_type={'module': 'identity_domains', 'class': 'MyPendingApproval'})
+@cli_util.wrap_exceptions
+def patch_my_pending_approval(ctx, from_json, my_pending_approval_id, schemas, operations, authorization, resource_type_schema_version, if_match):
+
+    if isinstance(my_pending_approval_id, six.string_types) and len(my_pending_approval_id.strip()) == 0:
+        raise click.UsageError('Parameter --my-pending-approval-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['Operations'] = cli_util.parse_json_parameter("operations", operations)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.patch_my_pending_approval(
+        my_pending_approval_id=my_pending_approval_id,
+        patch_op=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@my_request_group.command(name=cli_util.override('identity_domains.patch_my_request.command_name', 'patch'), help=u"""Update My Requests
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](patchMyRequest)""")
+@cli_util.option('--my-request-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior. REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--operations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The body of an HTTP PATCH request MUST contain the attribute \"Operations\", whose value is an array of one or more patch operations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}}, output_type={'module': 'identity_domains', 'class': 'MyRequest'})
+@cli_util.wrap_exceptions
+def patch_my_request(ctx, from_json, my_request_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
+
+    if isinstance(my_request_id, six.string_types) and len(my_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --my-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['Operations'] = cli_util.parse_json_parameter("operations", operations)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.patch_my_request(
+        my_request_id=my_request_id,
+        patch_op=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @my_smtp_credential_group.command(name=cli_util.override('identity_domains.patch_my_smtp_credential.command_name', 'patch'), help=u"""Update a user's own SMTP credential.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](patchMySmtpCredential)""")
@@ -11340,6 +16400,52 @@ def patch_my_smtp_credential(ctx, from_json, my_smtp_credential_id, schemas, ope
     client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
     result = client.patch_my_smtp_credential(
         my_smtp_credential_id=my_smtp_credential_id,
+        patch_op=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@network_perimeter_group.command(name=cli_util.override('identity_domains.patch_network_perimeter.command_name', 'patch'), help=u"""Update a NetworkPerimeter
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](patchNetworkPerimeter)""")
+@cli_util.option('--network-perimeter-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior. REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--operations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The body of an HTTP PATCH request MUST contain the attribute \"Operations\", whose value is an array of one or more patch operations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}}, output_type={'module': 'identity_domains', 'class': 'NetworkPerimeter'})
+@cli_util.wrap_exceptions
+def patch_network_perimeter(ctx, from_json, network_perimeter_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
+
+    if isinstance(network_perimeter_id, six.string_types) and len(network_perimeter_id.strip()) == 0:
+        raise click.UsageError('Parameter --network-perimeter-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['Operations'] = cli_util.parse_json_parameter("operations", operations)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.patch_network_perimeter(
+        network_perimeter_id=network_perimeter_id,
         patch_op=_details,
         **kwargs
     )
@@ -11438,6 +16544,138 @@ def patch_password_policy(ctx, from_json, password_policy_id, schemas, operation
     cli_util.render_response(result, ctx)
 
 
+@policy_group.command(name=cli_util.override('identity_domains.patch_policy.command_name', 'patch'), help=u"""Update a Policy
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](patchPolicy)""")
+@cli_util.option('--policy-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior. REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--operations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The body of an HTTP PATCH request MUST contain the attribute \"Operations\", whose value is an array of one or more patch operations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}}, output_type={'module': 'identity_domains', 'class': 'Policy'})
+@cli_util.wrap_exceptions
+def patch_policy(ctx, from_json, policy_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
+
+    if isinstance(policy_id, six.string_types) and len(policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['Operations'] = cli_util.parse_json_parameter("operations", operations)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.patch_policy(
+        policy_id=policy_id,
+        patch_op=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@rule_group.command(name=cli_util.override('identity_domains.patch_rule.command_name', 'patch'), help=u"""Update a Rule
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](patchRule)""")
+@cli_util.option('--rule-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior. REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--operations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The body of an HTTP PATCH request MUST contain the attribute \"Operations\", whose value is an array of one or more patch operations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}}, output_type={'module': 'identity_domains', 'class': 'Rule'})
+@cli_util.wrap_exceptions
+def patch_rule(ctx, from_json, rule_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
+
+    if isinstance(rule_id, six.string_types) and len(rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --rule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['Operations'] = cli_util.parse_json_parameter("operations", operations)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.patch_rule(
+        rule_id=rule_id,
+        patch_op=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@schema_group.command(name=cli_util.override('identity_domains.patch_schema.command_name', 'patch'), help=u"""Update a Schema Def
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](patchSchema)""")
+@cli_util.option('--schema-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior. REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--operations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The body of an HTTP PATCH request MUST contain the attribute \"Operations\", whose value is an array of one or more patch operations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}}, output_type={'module': 'identity_domains', 'class': 'Schema'})
+@cli_util.wrap_exceptions
+def patch_schema(ctx, from_json, schema_id, schemas, operations, authorization, resource_type_schema_version, if_match):
+
+    if isinstance(schema_id, six.string_types) and len(schema_id.strip()) == 0:
+        raise click.UsageError('Parameter --schema-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['Operations'] = cli_util.parse_json_parameter("operations", operations)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.patch_schema(
+        schema_id=schema_id,
+        patch_op=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @security_question_group.command(name=cli_util.override('identity_domains.patch_security_question.command_name', 'patch'), help=u"""Update a security question.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](patchSecurityQuestion)""")
@@ -11524,6 +16762,98 @@ def patch_security_question_setting(ctx, from_json, security_question_setting_id
     client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
     result = client.patch_security_question_setting(
         security_question_setting_id=security_question_setting_id,
+        patch_op=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@self_registration_profile_group.command(name=cli_util.override('identity_domains.patch_self_registration_profile.command_name', 'patch'), help=u"""Update a self-registration profile.
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](patchSelfRegistrationProfile)""")
+@cli_util.option('--self-registration-profile-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior. REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--operations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The body of an HTTP PATCH request MUST contain the attribute \"Operations\", whose value is an array of one or more patch operations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}}, output_type={'module': 'identity_domains', 'class': 'SelfRegistrationProfile'})
+@cli_util.wrap_exceptions
+def patch_self_registration_profile(ctx, from_json, self_registration_profile_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
+
+    if isinstance(self_registration_profile_id, six.string_types) and len(self_registration_profile_id.strip()) == 0:
+        raise click.UsageError('Parameter --self-registration-profile-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['Operations'] = cli_util.parse_json_parameter("operations", operations)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.patch_self_registration_profile(
+        self_registration_profile_id=self_registration_profile_id,
+        patch_op=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@setting_group.command(name=cli_util.override('identity_domains.patch_setting.command_name', 'patch'), help=u"""Update a Setting
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](patchSetting)""")
+@cli_util.option('--setting-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior. REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--operations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The body of an HTTP PATCH request MUST contain the attribute \"Operations\", whose value is an array of one or more patch operations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'operations': {'module': 'identity_domains', 'class': 'list[Operations]'}}, output_type={'module': 'identity_domains', 'class': 'Setting'})
+@cli_util.wrap_exceptions
+def patch_setting(ctx, from_json, setting_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
+
+    if isinstance(setting_id, six.string_types) and len(setting_id.strip()) == 0:
+        raise click.UsageError('Parameter --setting-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['Operations'] = cli_util.parse_json_parameter("operations", operations)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.patch_setting(
+        setting_id=setting_id,
         patch_op=_details,
         **kwargs
     )
@@ -12715,6 +18045,145 @@ def put_app_status_changer(ctx, from_json, force, app_status_changer_id, schemas
     cli_util.render_response(result, ctx)
 
 
+@approval_workflow_group.command(name=cli_util.override('identity_domains.put_approval_workflow.command_name', 'put'), help=u"""Replace ApprovalWorkflow
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](putApprovalWorkflow)""")
+@cli_util.option('--approval-workflow-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', required=True, help=u"""Name of the ApprovalWorkflow.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: immutable  - required: true  - returned: default  - type: string  - uniqueness: server""")
+@cli_util.option('--max-duration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--id', help=u"""Unique identifier for the SCIM Resource as defined by the Service Provider. Each representation of the Resource MUST include a non-empty id value. This identifier MUST be unique across the Service Provider's entire set of Resources. It MUST be a stable, non-reassignable identifier that does not change when the same Resource is returned in subsequent requests. The value of the id attribute is always issued by the Service Provider and MUST never be specified by the Service Consumer. bulkId: is a reserved keyword and MUST NOT be used in the unique identifier.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--ocid', help=u"""Unique OCI identifier for the SCIM Resource.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: immutable  - required: false  - returned: default  - type: string  - uniqueness: global""")
+@cli_util.option('--meta', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-created-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-last-modified-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-prevented-operations', type=custom_types.CliCaseInsensitiveChoice(["replace", "update", "delete"]), help=u"""Each value of this attribute specifies an operation that only an internal client may perform on this particular resource.
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
+
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--idcs-last-upgraded-in-release', help=u"""The release number when the resource was upgraded.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--domain-ocid', help=u"""OCI Domain Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--compartment-ocid', help=u"""OCI Compartment Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--tenancy-ocid', help=u"""OCI Tenant Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--description', help=u"""Description of the ApprovalWorkflow.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--approval-workflow-steps', type=custom_types.CLI_COMPLEX_TYPE, help=u"""ApprovalWorkflowSteps applicable for the ApprovalWorkflowInstance.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - idcsCompositeKey: [value, type]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type ApprovalWorkflowApprovalWorkflowSteps.  For documentation on ApprovalWorkflowApprovalWorkflowSteps please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/ApprovalWorkflowApprovalWorkflowSteps.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'max-duration': {'module': 'identity_domains', 'class': 'ApprovalWorkflowMaxDuration'}, 'approval-workflow-steps': {'module': 'identity_domains', 'class': 'list[ApprovalWorkflowApprovalWorkflowSteps]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'max-duration': {'module': 'identity_domains', 'class': 'ApprovalWorkflowMaxDuration'}, 'approval-workflow-steps': {'module': 'identity_domains', 'class': 'list[ApprovalWorkflowApprovalWorkflowSteps]'}}, output_type={'module': 'identity_domains', 'class': 'ApprovalWorkflow'})
+@cli_util.wrap_exceptions
+def put_approval_workflow(ctx, from_json, force, approval_workflow_id, schemas, name, max_duration, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, description, approval_workflow_steps, if_match):
+
+    if isinstance(approval_workflow_id, six.string_types) and len(approval_workflow_id.strip()) == 0:
+        raise click.UsageError('Parameter --approval-workflow-id cannot be whitespace or empty string')
+    if not force:
+        if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or max_duration or approval_workflow_steps:
+            if not click.confirm("WARNING: Updates to schemas and meta and idcs-created-by and idcs-last-modified-by and idcs-prevented-operations and tags and max-duration and approval-workflow-steps will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['name'] = name
+    _details['maxDuration'] = cli_util.parse_json_parameter("max_duration", max_duration)
+
+    if id is not None:
+        _details['id'] = id
+
+    if ocid is not None:
+        _details['ocid'] = ocid
+
+    if meta is not None:
+        _details['meta'] = cli_util.parse_json_parameter("meta", meta)
+
+    if idcs_created_by is not None:
+        _details['idcsCreatedBy'] = cli_util.parse_json_parameter("idcs_created_by", idcs_created_by)
+
+    if idcs_last_modified_by is not None:
+        _details['idcsLastModifiedBy'] = cli_util.parse_json_parameter("idcs_last_modified_by", idcs_last_modified_by)
+
+    if idcs_prevented_operations is not None:
+        _details['idcsPreventedOperations'] = cli_util.parse_json_parameter("idcs_prevented_operations", idcs_prevented_operations)
+
+    if tags is not None:
+        _details['tags'] = cli_util.parse_json_parameter("tags", tags)
+
+    if delete_in_progress is not None:
+        _details['deleteInProgress'] = delete_in_progress
+
+    if idcs_last_upgraded_in_release is not None:
+        _details['idcsLastUpgradedInRelease'] = idcs_last_upgraded_in_release
+
+    if domain_ocid is not None:
+        _details['domainOcid'] = domain_ocid
+
+    if compartment_ocid is not None:
+        _details['compartmentOcid'] = compartment_ocid
+
+    if tenancy_ocid is not None:
+        _details['tenancyOcid'] = tenancy_ocid
+
+    if description is not None:
+        _details['description'] = description
+
+    if approval_workflow_steps is not None:
+        _details['approvalWorkflowSteps'] = cli_util.parse_json_parameter("approval_workflow_steps", approval_workflow_steps)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.put_approval_workflow(
+        approval_workflow_id=approval_workflow_id,
+        approval_workflow=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @authentication_factor_setting_group.command(name=cli_util.override('identity_domains.put_authentication_factor_setting.command_name', 'put'), help=u"""Replace Authentication Factor Settings
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](putAuthenticationFactorSetting)""")
@@ -12953,6 +18422,682 @@ def put_authentication_factor_setting(ctx, from_json, force, authentication_fact
     result = client.put_authentication_factor_setting(
         authentication_factor_setting_id=authentication_factor_setting_id,
         authentication_factor_setting=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_gate_group.command(name=cli_util.override('identity_domains.put_cloud_gate.command_name', 'put'), help=u"""Replace a Cloud Gate
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](putCloudGate)""")
+@cli_util.option('--cloud-gate-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', required=True, help=u"""Display name/Host identifier for this Cloud Gate
+
+**Added In:** 19.2.1
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: true  - returned: always  - type: string  - uniqueness: server""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--id', help=u"""Unique identifier for the SCIM Resource as defined by the Service Provider. Each representation of the Resource MUST include a non-empty id value. This identifier MUST be unique across the Service Provider's entire set of Resources. It MUST be a stable, non-reassignable identifier that does not change when the same Resource is returned in subsequent requests. The value of the id attribute is always issued by the Service Provider and MUST never be specified by the Service Consumer. bulkId: is a reserved keyword and MUST NOT be used in the unique identifier.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--ocid', help=u"""Unique OCI identifier for the SCIM Resource.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: immutable  - required: false  - returned: default  - type: string  - uniqueness: global""")
+@cli_util.option('--meta', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-created-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-last-modified-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-prevented-operations', type=custom_types.CliCaseInsensitiveChoice(["replace", "update", "delete"]), help=u"""Each value of this attribute specifies an operation that only an internal client may perform on this particular resource.
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
+
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--idcs-last-upgraded-in-release', help=u"""The release number when the resource was upgraded.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--domain-ocid', help=u"""OCI Domain Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--compartment-ocid', help=u"""OCI Compartment Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--tenancy-ocid', help=u"""OCI Tenant Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--is-opc-service', type=click.BOOL, help=u"""Indicates whether this resource was created by OPC
+
+**Added In:** 19.3.3
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: boolean  - uniqueness: none""")
+@cli_util.option('--last-modified-time', help=u"""Last updated timestamp for this CloudGate's servers and mappings.
+
+**Added In:** 19.2.1
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: dateTime  - uniqueness: none""")
+@cli_util.option('--description', help=u"""Brief description for this Cloud Gate
+
+**Added In:** 19.2.1
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--active', type=click.BOOL, help=u"""Activation status for this Cloud Gate
+
+**Added In:** 19.2.1
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["lbaas", "gateway"]), help=u"""Type of Cloud Gate
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: immutable  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--upstream-server-groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of upstream server groups
+
+**Added In:** 20.1.3
+
+**SCIM++ Properties:**  - caseExact: false  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type CloudGateExtUpstreamServerGroups.  For documentation on CloudGateExtUpstreamServerGroups please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/CloudGateExtUpstreamServerGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--upstream-servers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of upstream servers
+
+**Added In:** 20.1.3
+
+**SCIM++ Properties:**  - caseExact: false  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type CloudGateExtUpstreamServers.  For documentation on CloudGateExtUpstreamServers please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/CloudGateExtUpstreamServers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--oauth-client', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--servers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of Server Blocks on this Cloud Gate
+
+**SCIM++ Properties:**  - caseExact: true  - idcsCompositeKey: [hostName]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type CloudGateExtServers.  For documentation on CloudGateExtServers please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/CloudGateExtServers.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--mappings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of Cloud Gate Mappings that map Apps to this Cloud Gate
+
+**SCIM++ Properties:**  - caseExact: true  - idcsCompositeKey: [serverId, resourcePrefix]  - idcsSearchable: true  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type CloudGateExtMappings.  For documentation on CloudGateExtMappings please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/CloudGateExtMappings.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'upstream-server-groups': {'module': 'identity_domains', 'class': 'list[CloudGateExtUpstreamServerGroups]'}, 'upstream-servers': {'module': 'identity_domains', 'class': 'list[CloudGateExtUpstreamServers]'}, 'oauth-client': {'module': 'identity_domains', 'class': 'CloudGateOauthClient'}, 'servers': {'module': 'identity_domains', 'class': 'list[CloudGateExtServers]'}, 'mappings': {'module': 'identity_domains', 'class': 'list[CloudGateExtMappings]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'upstream-server-groups': {'module': 'identity_domains', 'class': 'list[CloudGateExtUpstreamServerGroups]'}, 'upstream-servers': {'module': 'identity_domains', 'class': 'list[CloudGateExtUpstreamServers]'}, 'oauth-client': {'module': 'identity_domains', 'class': 'CloudGateOauthClient'}, 'servers': {'module': 'identity_domains', 'class': 'list[CloudGateExtServers]'}, 'mappings': {'module': 'identity_domains', 'class': 'list[CloudGateExtMappings]'}}, output_type={'module': 'identity_domains', 'class': 'CloudGate'})
+@cli_util.wrap_exceptions
+def put_cloud_gate(ctx, from_json, force, cloud_gate_id, schemas, display_name, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, is_opc_service, last_modified_time, description, active, type, upstream_server_groups, upstream_servers, oauth_client, servers, mappings, if_match):
+
+    if isinstance(cloud_gate_id, six.string_types) and len(cloud_gate_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-gate-id cannot be whitespace or empty string')
+    if not force:
+        if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or upstream_server_groups or upstream_servers or oauth_client or servers or mappings:
+            if not click.confirm("WARNING: Updates to schemas and meta and idcs-created-by and idcs-last-modified-by and idcs-prevented-operations and tags and upstream-server-groups and upstream-servers and oauth-client and servers and mappings will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['displayName'] = display_name
+
+    if id is not None:
+        _details['id'] = id
+
+    if ocid is not None:
+        _details['ocid'] = ocid
+
+    if meta is not None:
+        _details['meta'] = cli_util.parse_json_parameter("meta", meta)
+
+    if idcs_created_by is not None:
+        _details['idcsCreatedBy'] = cli_util.parse_json_parameter("idcs_created_by", idcs_created_by)
+
+    if idcs_last_modified_by is not None:
+        _details['idcsLastModifiedBy'] = cli_util.parse_json_parameter("idcs_last_modified_by", idcs_last_modified_by)
+
+    if idcs_prevented_operations is not None:
+        _details['idcsPreventedOperations'] = cli_util.parse_json_parameter("idcs_prevented_operations", idcs_prevented_operations)
+
+    if tags is not None:
+        _details['tags'] = cli_util.parse_json_parameter("tags", tags)
+
+    if delete_in_progress is not None:
+        _details['deleteInProgress'] = delete_in_progress
+
+    if idcs_last_upgraded_in_release is not None:
+        _details['idcsLastUpgradedInRelease'] = idcs_last_upgraded_in_release
+
+    if domain_ocid is not None:
+        _details['domainOcid'] = domain_ocid
+
+    if compartment_ocid is not None:
+        _details['compartmentOcid'] = compartment_ocid
+
+    if tenancy_ocid is not None:
+        _details['tenancyOcid'] = tenancy_ocid
+
+    if is_opc_service is not None:
+        _details['isOPCService'] = is_opc_service
+
+    if last_modified_time is not None:
+        _details['lastModifiedTime'] = last_modified_time
+
+    if description is not None:
+        _details['description'] = description
+
+    if active is not None:
+        _details['active'] = active
+
+    if type is not None:
+        _details['type'] = type
+
+    if upstream_server_groups is not None:
+        _details['upstreamServerGroups'] = cli_util.parse_json_parameter("upstream_server_groups", upstream_server_groups)
+
+    if upstream_servers is not None:
+        _details['upstreamServers'] = cli_util.parse_json_parameter("upstream_servers", upstream_servers)
+
+    if oauth_client is not None:
+        _details['oauthClient'] = cli_util.parse_json_parameter("oauth_client", oauth_client)
+
+    if servers is not None:
+        _details['servers'] = cli_util.parse_json_parameter("servers", servers)
+
+    if mappings is not None:
+        _details['mappings'] = cli_util.parse_json_parameter("mappings", mappings)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.put_cloud_gate(
+        cloud_gate_id=cloud_gate_id,
+        cloud_gate=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_gate_mapping_group.command(name=cli_util.override('identity_domains.put_cloud_gate_mapping.command_name', 'put'), help=u"""Replace a Cloud Gate mapping
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](putCloudGateMapping)""")
+@cli_util.option('--cloud-gate-mapping-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--resource-prefix', required=True, help=u"""Resource prefix for this mapping.  This will be used to define the location block
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--policy-name', required=True, help=u"""The Web Tier policy name used for the App that is mapped to the owning Cloud Gate
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--server', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--gateway-app', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--cloud-gate', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--id', help=u"""Unique identifier for the SCIM Resource as defined by the Service Provider. Each representation of the Resource MUST include a non-empty id value. This identifier MUST be unique across the Service Provider's entire set of Resources. It MUST be a stable, non-reassignable identifier that does not change when the same Resource is returned in subsequent requests. The value of the id attribute is always issued by the Service Provider and MUST never be specified by the Service Consumer. bulkId: is a reserved keyword and MUST NOT be used in the unique identifier.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--ocid', help=u"""Unique OCI identifier for the SCIM Resource.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: immutable  - required: false  - returned: default  - type: string  - uniqueness: global""")
+@cli_util.option('--meta', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-created-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-last-modified-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-prevented-operations', type=custom_types.CliCaseInsensitiveChoice(["replace", "update", "delete"]), help=u"""Each value of this attribute specifies an operation that only an internal client may perform on this particular resource.
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
+
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--idcs-last-upgraded-in-release', help=u"""The release number when the resource was upgraded.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--domain-ocid', help=u"""OCI Domain Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--compartment-ocid', help=u"""OCI Compartment Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--tenancy-ocid', help=u"""OCI Tenant Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--is-opc-service', type=click.BOOL, help=u"""Indicates whether this resource was created by OPC
+
+**Added In:** 19.3.3
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: boolean  - uniqueness: none""")
+@cli_util.option('--description', help=u"""Brief description for this Cloud Gate
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--proxy-pass', help=u"""NGINX ProxyPass entry for this Mapping
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--nginx-settings', help=u"""More NGINX Settings. JSON encoded key value pairs similar to WTP encoding
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--upstream-server-group', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'upstream-server-group': {'module': 'identity_domains', 'class': 'CloudGateMappingUpstreamServerGroup'}, 'server': {'module': 'identity_domains', 'class': 'CloudGateMappingServer'}, 'gateway-app': {'module': 'identity_domains', 'class': 'CloudGateMappingGatewayApp'}, 'cloud-gate': {'module': 'identity_domains', 'class': 'CloudGateMappingCloudGate'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'upstream-server-group': {'module': 'identity_domains', 'class': 'CloudGateMappingUpstreamServerGroup'}, 'server': {'module': 'identity_domains', 'class': 'CloudGateMappingServer'}, 'gateway-app': {'module': 'identity_domains', 'class': 'CloudGateMappingGatewayApp'}, 'cloud-gate': {'module': 'identity_domains', 'class': 'CloudGateMappingCloudGate'}}, output_type={'module': 'identity_domains', 'class': 'CloudGateMapping'})
+@cli_util.wrap_exceptions
+def put_cloud_gate_mapping(ctx, from_json, force, cloud_gate_mapping_id, schemas, resource_prefix, policy_name, server, gateway_app, cloud_gate, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, is_opc_service, description, proxy_pass, nginx_settings, upstream_server_group, if_match):
+
+    if isinstance(cloud_gate_mapping_id, six.string_types) and len(cloud_gate_mapping_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-gate-mapping-id cannot be whitespace or empty string')
+    if not force:
+        if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or upstream_server_group or server or gateway_app or cloud_gate:
+            if not click.confirm("WARNING: Updates to schemas and meta and idcs-created-by and idcs-last-modified-by and idcs-prevented-operations and tags and upstream-server-group and server and gateway-app and cloud-gate will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['resourcePrefix'] = resource_prefix
+    _details['policyName'] = policy_name
+    _details['server'] = cli_util.parse_json_parameter("server", server)
+    _details['gatewayApp'] = cli_util.parse_json_parameter("gateway_app", gateway_app)
+    _details['cloudGate'] = cli_util.parse_json_parameter("cloud_gate", cloud_gate)
+
+    if id is not None:
+        _details['id'] = id
+
+    if ocid is not None:
+        _details['ocid'] = ocid
+
+    if meta is not None:
+        _details['meta'] = cli_util.parse_json_parameter("meta", meta)
+
+    if idcs_created_by is not None:
+        _details['idcsCreatedBy'] = cli_util.parse_json_parameter("idcs_created_by", idcs_created_by)
+
+    if idcs_last_modified_by is not None:
+        _details['idcsLastModifiedBy'] = cli_util.parse_json_parameter("idcs_last_modified_by", idcs_last_modified_by)
+
+    if idcs_prevented_operations is not None:
+        _details['idcsPreventedOperations'] = cli_util.parse_json_parameter("idcs_prevented_operations", idcs_prevented_operations)
+
+    if tags is not None:
+        _details['tags'] = cli_util.parse_json_parameter("tags", tags)
+
+    if delete_in_progress is not None:
+        _details['deleteInProgress'] = delete_in_progress
+
+    if idcs_last_upgraded_in_release is not None:
+        _details['idcsLastUpgradedInRelease'] = idcs_last_upgraded_in_release
+
+    if domain_ocid is not None:
+        _details['domainOcid'] = domain_ocid
+
+    if compartment_ocid is not None:
+        _details['compartmentOcid'] = compartment_ocid
+
+    if tenancy_ocid is not None:
+        _details['tenancyOcid'] = tenancy_ocid
+
+    if is_opc_service is not None:
+        _details['isOPCService'] = is_opc_service
+
+    if description is not None:
+        _details['description'] = description
+
+    if proxy_pass is not None:
+        _details['proxyPass'] = proxy_pass
+
+    if nginx_settings is not None:
+        _details['nginxSettings'] = nginx_settings
+
+    if upstream_server_group is not None:
+        _details['upstreamServerGroup'] = cli_util.parse_json_parameter("upstream_server_group", upstream_server_group)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.put_cloud_gate_mapping(
+        cloud_gate_mapping_id=cloud_gate_mapping_id,
+        cloud_gate_mapping=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_gate_server_group.command(name=cli_util.override('identity_domains.put_cloud_gate_server.command_name', 'put'), help=u"""Replace a Cloud Gate server
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](putCloudGateServer)""")
+@cli_util.option('--cloud-gate-server-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', required=True, help=u"""Display name for the Server block
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: true  - returned: always  - type: string  - uniqueness: server""")
+@cli_util.option('--host-name', required=True, help=u"""Hostname for the Server block
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: true  - returned: always  - type: string  - uniqueness: none""")
+@cli_util.option('--port', required=True, type=click.INT, help=u"""Port for the Server Block
+
+**SCIM++ Properties:**  - caseExact: true  - idcsMaxValue: 65535  - idcsMinValue: 1  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: true  - returned: default  - type: integer  - uniqueness: none""")
+@cli_util.option('--ssl', required=True, type=click.BOOL, help=u"""SSL flag for the Server Block
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: true  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--cloud-gate', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--id', help=u"""Unique identifier for the SCIM Resource as defined by the Service Provider. Each representation of the Resource MUST include a non-empty id value. This identifier MUST be unique across the Service Provider's entire set of Resources. It MUST be a stable, non-reassignable identifier that does not change when the same Resource is returned in subsequent requests. The value of the id attribute is always issued by the Service Provider and MUST never be specified by the Service Consumer. bulkId: is a reserved keyword and MUST NOT be used in the unique identifier.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--ocid', help=u"""Unique OCI identifier for the SCIM Resource.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: immutable  - required: false  - returned: default  - type: string  - uniqueness: global""")
+@cli_util.option('--meta', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-created-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-last-modified-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-prevented-operations', type=custom_types.CliCaseInsensitiveChoice(["replace", "update", "delete"]), help=u"""Each value of this attribute specifies an operation that only an internal client may perform on this particular resource.
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
+
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--idcs-last-upgraded-in-release', help=u"""The release number when the resource was upgraded.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--domain-ocid', help=u"""OCI Domain Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--compartment-ocid', help=u"""OCI Compartment Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--tenancy-ocid', help=u"""OCI Tenant Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--is-opc-service', type=click.BOOL, help=u"""Indicates whether this resource was created by OPC
+
+**Added In:** 19.3.3
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: boolean  - uniqueness: none""")
+@cli_util.option('--description', help=u"""Brief description for this Cloud Gate server block
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--nginx-settings', help=u"""More nginx Settings. JSON encoded text block
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'cloud-gate': {'module': 'identity_domains', 'class': 'CloudGateServerCloudGate'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'cloud-gate': {'module': 'identity_domains', 'class': 'CloudGateServerCloudGate'}}, output_type={'module': 'identity_domains', 'class': 'CloudGateServer'})
+@cli_util.wrap_exceptions
+def put_cloud_gate_server(ctx, from_json, force, cloud_gate_server_id, schemas, display_name, host_name, port, ssl, cloud_gate, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, is_opc_service, description, nginx_settings, if_match):
+
+    if isinstance(cloud_gate_server_id, six.string_types) and len(cloud_gate_server_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-gate-server-id cannot be whitespace or empty string')
+    if not force:
+        if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or cloud_gate:
+            if not click.confirm("WARNING: Updates to schemas and meta and idcs-created-by and idcs-last-modified-by and idcs-prevented-operations and tags and cloud-gate will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['displayName'] = display_name
+    _details['hostName'] = host_name
+    _details['port'] = port
+    _details['ssl'] = ssl
+    _details['cloudGate'] = cli_util.parse_json_parameter("cloud_gate", cloud_gate)
+
+    if id is not None:
+        _details['id'] = id
+
+    if ocid is not None:
+        _details['ocid'] = ocid
+
+    if meta is not None:
+        _details['meta'] = cli_util.parse_json_parameter("meta", meta)
+
+    if idcs_created_by is not None:
+        _details['idcsCreatedBy'] = cli_util.parse_json_parameter("idcs_created_by", idcs_created_by)
+
+    if idcs_last_modified_by is not None:
+        _details['idcsLastModifiedBy'] = cli_util.parse_json_parameter("idcs_last_modified_by", idcs_last_modified_by)
+
+    if idcs_prevented_operations is not None:
+        _details['idcsPreventedOperations'] = cli_util.parse_json_parameter("idcs_prevented_operations", idcs_prevented_operations)
+
+    if tags is not None:
+        _details['tags'] = cli_util.parse_json_parameter("tags", tags)
+
+    if delete_in_progress is not None:
+        _details['deleteInProgress'] = delete_in_progress
+
+    if idcs_last_upgraded_in_release is not None:
+        _details['idcsLastUpgradedInRelease'] = idcs_last_upgraded_in_release
+
+    if domain_ocid is not None:
+        _details['domainOcid'] = domain_ocid
+
+    if compartment_ocid is not None:
+        _details['compartmentOcid'] = compartment_ocid
+
+    if tenancy_ocid is not None:
+        _details['tenancyOcid'] = tenancy_ocid
+
+    if is_opc_service is not None:
+        _details['isOPCService'] = is_opc_service
+
+    if description is not None:
+        _details['description'] = description
+
+    if nginx_settings is not None:
+        _details['nginxSettings'] = nginx_settings
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.put_cloud_gate_server(
+        cloud_gate_server_id=cloud_gate_server_id,
+        cloud_gate_server=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@condition_group.command(name=cli_util.override('identity_domains.put_condition.command_name', 'put'), help=u"""Replace a Condition
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](putCondition)""")
+@cli_util.option('--condition-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', required=True, help=u"""Condition name
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: true  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--attribute-name', required=True, help=u"""AttributeName - RHS of condition
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--operator', required=True, type=custom_types.CliCaseInsensitiveChoice(["eq", "ne", "co", "coany", "sw", "ew", "gt", "ge", "lt", "le", "in", "nin"]), help=u"""**SCIM++ Properties:** - caseExact: true - idcsSearchable: false - multiValued: false - mutability: readWrite - required: true - returned: default - type: string - uniqueness: none Operator in the condition. It support all SCIM operators like eq, gt, lt, le, sw etc""")
+@cli_util.option('--attribute-value', required=True, help=u"""attributeValue - RHS of condition
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--id', help=u"""Unique identifier for the SCIM Resource as defined by the Service Provider. Each representation of the Resource MUST include a non-empty id value. This identifier MUST be unique across the Service Provider's entire set of Resources. It MUST be a stable, non-reassignable identifier that does not change when the same Resource is returned in subsequent requests. The value of the id attribute is always issued by the Service Provider and MUST never be specified by the Service Consumer. bulkId: is a reserved keyword and MUST NOT be used in the unique identifier.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--ocid', help=u"""Unique OCI identifier for the SCIM Resource.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: immutable  - required: false  - returned: default  - type: string  - uniqueness: global""")
+@cli_util.option('--meta', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-created-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-last-modified-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-prevented-operations', type=custom_types.CliCaseInsensitiveChoice(["replace", "update", "delete"]), help=u"""Each value of this attribute specifies an operation that only an internal client may perform on this particular resource.
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
+
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--idcs-last-upgraded-in-release', help=u"""The release number when the resource was upgraded.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--domain-ocid', help=u"""OCI Domain Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--compartment-ocid', help=u"""OCI Compartment Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--tenancy-ocid', help=u"""OCI Tenant Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--external-id', help=u"""An identifier for the Resource as defined by the Service Consumer. The externalId may simplify identification of the Resource between Service Consumer and Service provider by allowing the Consumer to refer to the Resource with its own identifier, obviating the need to store a local mapping between the local identifier of the Resource and the identifier used by the Service Provider. Each Resource MAY include a non-empty externalId value.  The value of the externalId attribute is always issued be the Service Consumer and can never be specified by the Service Provider. The Service Provider MUST always interpret the externalId as scoped to the Service Consumer's tenant.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--description', help=u"""Condition Description
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--evaluate-condition-if', help=u"""Evaluate the condition if this expression returns true, else skip condition evaluation
+
+**Added In:** 18.1.6
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}}, output_type={'module': 'identity_domains', 'class': 'Condition'})
+@cli_util.wrap_exceptions
+def put_condition(ctx, from_json, force, condition_id, schemas, name, attribute_name, operator, attribute_value, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, description, evaluate_condition_if, if_match):
+
+    if isinstance(condition_id, six.string_types) and len(condition_id.strip()) == 0:
+        raise click.UsageError('Parameter --condition-id cannot be whitespace or empty string')
+    if not force:
+        if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags:
+            if not click.confirm("WARNING: Updates to schemas and meta and idcs-created-by and idcs-last-modified-by and idcs-prevented-operations and tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['name'] = name
+    _details['attributeName'] = attribute_name
+    _details['operator'] = operator
+    _details['attributeValue'] = attribute_value
+
+    if id is not None:
+        _details['id'] = id
+
+    if ocid is not None:
+        _details['ocid'] = ocid
+
+    if meta is not None:
+        _details['meta'] = cli_util.parse_json_parameter("meta", meta)
+
+    if idcs_created_by is not None:
+        _details['idcsCreatedBy'] = cli_util.parse_json_parameter("idcs_created_by", idcs_created_by)
+
+    if idcs_last_modified_by is not None:
+        _details['idcsLastModifiedBy'] = cli_util.parse_json_parameter("idcs_last_modified_by", idcs_last_modified_by)
+
+    if idcs_prevented_operations is not None:
+        _details['idcsPreventedOperations'] = cli_util.parse_json_parameter("idcs_prevented_operations", idcs_prevented_operations)
+
+    if tags is not None:
+        _details['tags'] = cli_util.parse_json_parameter("tags", tags)
+
+    if delete_in_progress is not None:
+        _details['deleteInProgress'] = delete_in_progress
+
+    if idcs_last_upgraded_in_release is not None:
+        _details['idcsLastUpgradedInRelease'] = idcs_last_upgraded_in_release
+
+    if domain_ocid is not None:
+        _details['domainOcid'] = domain_ocid
+
+    if compartment_ocid is not None:
+        _details['compartmentOcid'] = compartment_ocid
+
+    if tenancy_ocid is not None:
+        _details['tenancyOcid'] = tenancy_ocid
+
+    if external_id is not None:
+        _details['externalId'] = external_id
+
+    if description is not None:
+        _details['description'] = description
+
+    if evaluate_condition_if is not None:
+        _details['evaluateConditionIf'] = evaluate_condition_if
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.put_condition(
+        condition_id=condition_id,
+        condition=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -14389,7 +20534,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--password', required=True, help=u"""Password attribute. Max length for password is controlled via Password Policy.
+@cli_util.option('--password', required=True, help=u"""Password attribute. The maximum length for a password is controlled by a password policy.
 
 **SCIM++ Properties:**  - type: string  - multiValued: false  - required: true  - mutability: writeOnly  - returned: never  - uniqueness: none  - caseExact: false  - idcsSensitive: hash  - idcsSearchable: false""")
 @cli_util.option('--old-password', required=True, help=u"""The old password attribute.
@@ -14500,6 +20645,308 @@ def put_me_password_changer(ctx, from_json, force, schemas, password, old_passwo
     client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
     result = client.put_me_password_changer(
         me_password_changer=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@network_perimeter_group.command(name=cli_util.override('identity_domains.put_network_perimeter.command_name', 'put'), help=u"""Replace a NetworkPerimeter
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](putNetworkPerimeter)""")
+@cli_util.option('--network-perimeter-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', required=True, help=u"""NetworkPerimeter name
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: true  - returned: always  - type: string  - uniqueness: server""")
+@cli_util.option('--ip-addresses', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""IPAddresses or Ranges assigned to the NetworkPerimeter
+
+**SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: complex  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--id', help=u"""Unique identifier for the SCIM Resource as defined by the Service Provider. Each representation of the Resource MUST include a non-empty id value. This identifier MUST be unique across the Service Provider's entire set of Resources. It MUST be a stable, non-reassignable identifier that does not change when the same Resource is returned in subsequent requests. The value of the id attribute is always issued by the Service Provider and MUST never be specified by the Service Consumer. bulkId: is a reserved keyword and MUST NOT be used in the unique identifier.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--ocid', help=u"""Unique OCI identifier for the SCIM Resource.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: immutable  - required: false  - returned: default  - type: string  - uniqueness: global""")
+@cli_util.option('--meta', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-created-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-last-modified-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-prevented-operations', type=custom_types.CliCaseInsensitiveChoice(["replace", "update", "delete"]), help=u"""Each value of this attribute specifies an operation that only an internal client may perform on this particular resource.
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
+
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--idcs-last-upgraded-in-release', help=u"""The release number when the resource was upgraded.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--domain-ocid', help=u"""OCI Domain Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--compartment-ocid', help=u"""OCI Compartment Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--tenancy-ocid', help=u"""OCI Tenant Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--external-id', help=u"""An identifier for the Resource as defined by the Service Consumer. The externalId may simplify identification of the Resource between Service Consumer and Service provider by allowing the Consumer to refer to the Resource with its own identifier, obviating the need to store a local mapping between the local identifier of the Resource and the identifier used by the Service Provider. Each Resource MAY include a non-empty externalId value.  The value of the externalId attribute is always issued be the Service Consumer and can never be specified by the Service Provider. The Service Provider MUST always interpret the externalId as scoped to the Service Consumer's tenant.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--description', help=u"""NetworkPerimeter Description
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'ip-addresses': {'module': 'identity_domains', 'class': 'list[NetworkPerimeterIpAddresses]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'ip-addresses': {'module': 'identity_domains', 'class': 'list[NetworkPerimeterIpAddresses]'}}, output_type={'module': 'identity_domains', 'class': 'NetworkPerimeter'})
+@cli_util.wrap_exceptions
+def put_network_perimeter(ctx, from_json, force, network_perimeter_id, schemas, name, ip_addresses, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, description, if_match):
+
+    if isinstance(network_perimeter_id, six.string_types) and len(network_perimeter_id.strip()) == 0:
+        raise click.UsageError('Parameter --network-perimeter-id cannot be whitespace or empty string')
+    if not force:
+        if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or ip_addresses:
+            if not click.confirm("WARNING: Updates to schemas and meta and idcs-created-by and idcs-last-modified-by and idcs-prevented-operations and tags and ip-addresses will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['name'] = name
+    _details['ipAddresses'] = cli_util.parse_json_parameter("ip_addresses", ip_addresses)
+
+    if id is not None:
+        _details['id'] = id
+
+    if ocid is not None:
+        _details['ocid'] = ocid
+
+    if meta is not None:
+        _details['meta'] = cli_util.parse_json_parameter("meta", meta)
+
+    if idcs_created_by is not None:
+        _details['idcsCreatedBy'] = cli_util.parse_json_parameter("idcs_created_by", idcs_created_by)
+
+    if idcs_last_modified_by is not None:
+        _details['idcsLastModifiedBy'] = cli_util.parse_json_parameter("idcs_last_modified_by", idcs_last_modified_by)
+
+    if idcs_prevented_operations is not None:
+        _details['idcsPreventedOperations'] = cli_util.parse_json_parameter("idcs_prevented_operations", idcs_prevented_operations)
+
+    if tags is not None:
+        _details['tags'] = cli_util.parse_json_parameter("tags", tags)
+
+    if delete_in_progress is not None:
+        _details['deleteInProgress'] = delete_in_progress
+
+    if idcs_last_upgraded_in_release is not None:
+        _details['idcsLastUpgradedInRelease'] = idcs_last_upgraded_in_release
+
+    if domain_ocid is not None:
+        _details['domainOcid'] = domain_ocid
+
+    if compartment_ocid is not None:
+        _details['compartmentOcid'] = compartment_ocid
+
+    if tenancy_ocid is not None:
+        _details['tenancyOcid'] = tenancy_ocid
+
+    if external_id is not None:
+        _details['externalId'] = external_id
+
+    if description is not None:
+        _details['description'] = description
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.put_network_perimeter(
+        network_perimeter_id=network_perimeter_id,
+        network_perimeter=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@notification_setting_group.command(name=cli_util.override('identity_domains.put_notification_setting.command_name', 'put'), help=u"""Replace Notification Settings
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](putNotificationSetting)""")
+@cli_util.option('--notification-setting-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--notification-enabled', required=True, type=click.BOOL, help=u"""Tenant level settings for the notification service
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: true  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--from-email-address', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--event-settings', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Event settings
+
+**SCIM++ Properties:**  - caseExact: false  - idcsCompositeKey: [eventId]  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: complex  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--id', help=u"""Unique identifier for the SCIM Resource as defined by the Service Provider. Each representation of the Resource MUST include a non-empty id value. This identifier MUST be unique across the Service Provider's entire set of Resources. It MUST be a stable, non-reassignable identifier that does not change when the same Resource is returned in subsequent requests. The value of the id attribute is always issued by the Service Provider and MUST never be specified by the Service Consumer. bulkId: is a reserved keyword and MUST NOT be used in the unique identifier.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--ocid', help=u"""Unique OCI identifier for the SCIM Resource.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: immutable  - required: false  - returned: default  - type: string  - uniqueness: global""")
+@cli_util.option('--meta', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-created-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-last-modified-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-prevented-operations', type=custom_types.CliCaseInsensitiveChoice(["replace", "update", "delete"]), help=u"""Each value of this attribute specifies an operation that only an internal client may perform on this particular resource.
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
+
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--idcs-last-upgraded-in-release', help=u"""The release number when the resource was upgraded.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--domain-ocid', help=u"""OCI Domain Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--compartment-ocid', help=u"""OCI Compartment Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--tenancy-ocid', help=u"""OCI Tenant Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--external-id', help=u"""An identifier for the Resource as defined by the Service Consumer. The externalId may simplify identification of the Resource between Service Consumer and Service Provider by allowing the Consumer to refer to the Resource with its own identifier, obviating the need to store a local mapping between the local identifier of the Resource and the identifier used by the Service Provider. Each Resource MAY include a non-empty externalId value. The value of the externalId attribute is always issued by the Service Consumer and can never be specified by the Service Provider. The Service Provider MUST always interpret the externalId as scoped to the Service Consumer's tenant.
+
+**SCIM++ Properties:**  - caseExact: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--test-mode-enabled', type=click.BOOL, help=u"""Specify if the notification service is in test mode
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--test-recipients', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of the test recipient email addresses
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--send-notifications-to-secondary-email', type=click.BOOL, help=u"""Indicates whether to allow notifications on a secondary email.
+
+**Deprecated Since: 19.2.1**
+
+**SCIM++ Properties:**  - caseExact: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--send-notification-to-old-and-new-primary-emails-when-admin-changes-primary-email', type=click.BOOL, help=u"""If true and admin changed user's primary email, send user's profile changed email to old and new primary email address.
+
+**Added In:** 20.1.3
+
+**SCIM++ Properties:**  - caseExact: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'test-recipients': {'module': 'identity_domains', 'class': 'list[string]'}, 'from-email-address': {'module': 'identity_domains', 'class': 'NotificationSettingsFromEmailAddress'}, 'event-settings': {'module': 'identity_domains', 'class': 'list[NotificationSettingsEventSettings]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'test-recipients': {'module': 'identity_domains', 'class': 'list[string]'}, 'from-email-address': {'module': 'identity_domains', 'class': 'NotificationSettingsFromEmailAddress'}, 'event-settings': {'module': 'identity_domains', 'class': 'list[NotificationSettingsEventSettings]'}}, output_type={'module': 'identity_domains', 'class': 'NotificationSetting'})
+@cli_util.wrap_exceptions
+def put_notification_setting(ctx, from_json, force, notification_setting_id, schemas, notification_enabled, from_email_address, event_settings, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, test_mode_enabled, test_recipients, send_notifications_to_secondary_email, send_notification_to_old_and_new_primary_emails_when_admin_changes_primary_email, if_match):
+
+    if isinstance(notification_setting_id, six.string_types) and len(notification_setting_id.strip()) == 0:
+        raise click.UsageError('Parameter --notification-setting-id cannot be whitespace or empty string')
+    if not force:
+        if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or test_recipients or from_email_address or event_settings:
+            if not click.confirm("WARNING: Updates to schemas and meta and idcs-created-by and idcs-last-modified-by and idcs-prevented-operations and tags and test-recipients and from-email-address and event-settings will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['notificationEnabled'] = notification_enabled
+    _details['fromEmailAddress'] = cli_util.parse_json_parameter("from_email_address", from_email_address)
+    _details['eventSettings'] = cli_util.parse_json_parameter("event_settings", event_settings)
+
+    if id is not None:
+        _details['id'] = id
+
+    if ocid is not None:
+        _details['ocid'] = ocid
+
+    if meta is not None:
+        _details['meta'] = cli_util.parse_json_parameter("meta", meta)
+
+    if idcs_created_by is not None:
+        _details['idcsCreatedBy'] = cli_util.parse_json_parameter("idcs_created_by", idcs_created_by)
+
+    if idcs_last_modified_by is not None:
+        _details['idcsLastModifiedBy'] = cli_util.parse_json_parameter("idcs_last_modified_by", idcs_last_modified_by)
+
+    if idcs_prevented_operations is not None:
+        _details['idcsPreventedOperations'] = cli_util.parse_json_parameter("idcs_prevented_operations", idcs_prevented_operations)
+
+    if tags is not None:
+        _details['tags'] = cli_util.parse_json_parameter("tags", tags)
+
+    if delete_in_progress is not None:
+        _details['deleteInProgress'] = delete_in_progress
+
+    if idcs_last_upgraded_in_release is not None:
+        _details['idcsLastUpgradedInRelease'] = idcs_last_upgraded_in_release
+
+    if domain_ocid is not None:
+        _details['domainOcid'] = domain_ocid
+
+    if compartment_ocid is not None:
+        _details['compartmentOcid'] = compartment_ocid
+
+    if tenancy_ocid is not None:
+        _details['tenancyOcid'] = tenancy_ocid
+
+    if external_id is not None:
+        _details['externalId'] = external_id
+
+    if test_mode_enabled is not None:
+        _details['testModeEnabled'] = test_mode_enabled
+
+    if test_recipients is not None:
+        _details['testRecipients'] = cli_util.parse_json_parameter("test_recipients", test_recipients)
+
+    if send_notifications_to_secondary_email is not None:
+        _details['sendNotificationsToSecondaryEmail'] = send_notifications_to_secondary_email
+
+    if send_notification_to_old_and_new_primary_emails_when_admin_changes_primary_email is not None:
+        _details['sendNotificationToOldAndNewPrimaryEmailsWhenAdminChangesPrimaryEmail'] = send_notification_to_old_and_new_primary_emails_when_admin_changes_primary_email
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.put_notification_setting(
+        notification_setting_id=notification_setting_id,
+        notification_setting=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -14862,6 +21309,437 @@ def put_password_policy(ctx, from_json, force, password_policy_id, schemas, name
     cli_util.render_response(result, ctx)
 
 
+@policy_group.command(name=cli_util.override('identity_domains.put_policy.command_name', 'put'), help=u"""Replace a Policy
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](putPolicy)""")
+@cli_util.option('--policy-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', required=True, help=u"""Policy name
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: true  - returned: always  - type: string  - uniqueness: none""")
+@cli_util.option('--policy-type', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--id', help=u"""Unique identifier for the SCIM Resource as defined by the Service Provider. Each representation of the Resource MUST include a non-empty id value. This identifier MUST be unique across the Service Provider's entire set of Resources. It MUST be a stable, non-reassignable identifier that does not change when the same Resource is returned in subsequent requests. The value of the id attribute is always issued by the Service Provider and MUST never be specified by the Service Consumer. bulkId: is a reserved keyword and MUST NOT be used in the unique identifier.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--ocid', help=u"""Unique OCI identifier for the SCIM Resource.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: immutable  - required: false  - returned: default  - type: string  - uniqueness: global""")
+@cli_util.option('--meta', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-created-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-last-modified-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-prevented-operations', type=custom_types.CliCaseInsensitiveChoice(["replace", "update", "delete"]), help=u"""Each value of this attribute specifies an operation that only an internal client may perform on this particular resource.
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
+
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--idcs-last-upgraded-in-release', help=u"""The release number when the resource was upgraded.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--domain-ocid', help=u"""OCI Domain Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--compartment-ocid', help=u"""OCI Compartment Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--tenancy-ocid', help=u"""OCI Tenant Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--external-id', help=u"""An identifier for the Resource as defined by the Service Consumer. The externalId may simplify identification of the Resource between Service Consumer and Service provider by allowing the Consumer to refer to the Resource with its own identifier, obviating the need to store a local mapping between the local identifier of the Resource and the identifier used by the Service Provider. Each Resource MAY include a non-empty externalId value.  The value of the externalId attribute is always issued be the Service Consumer and can never be specified by the Service Provider. The Service Provider MUST always interpret the externalId as scoped to the Service Consumer's tenant.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--description', help=u"""Policy Description
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--active', type=click.BOOL, help=u"""If true, Policy is active.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--policy-groovy', help=u"""The Groovy script that is run instead of the policy, if the policy type allows the policy to be a Groovy script.
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Rules assigned to this policy
+
+**SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type PolicyRules.  For documentation on PolicyRules please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/PolicyRules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'rules': {'module': 'identity_domains', 'class': 'list[PolicyRules]'}, 'policy-type': {'module': 'identity_domains', 'class': 'PolicyPolicyType'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'rules': {'module': 'identity_domains', 'class': 'list[PolicyRules]'}, 'policy-type': {'module': 'identity_domains', 'class': 'PolicyPolicyType'}}, output_type={'module': 'identity_domains', 'class': 'Policy'})
+@cli_util.wrap_exceptions
+def put_policy(ctx, from_json, force, policy_id, schemas, name, policy_type, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, description, active, policy_groovy, rules, if_match):
+
+    if isinstance(policy_id, six.string_types) and len(policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --policy-id cannot be whitespace or empty string')
+    if not force:
+        if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or rules or policy_type:
+            if not click.confirm("WARNING: Updates to schemas and meta and idcs-created-by and idcs-last-modified-by and idcs-prevented-operations and tags and rules and policy-type will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['name'] = name
+    _details['policyType'] = cli_util.parse_json_parameter("policy_type", policy_type)
+
+    if id is not None:
+        _details['id'] = id
+
+    if ocid is not None:
+        _details['ocid'] = ocid
+
+    if meta is not None:
+        _details['meta'] = cli_util.parse_json_parameter("meta", meta)
+
+    if idcs_created_by is not None:
+        _details['idcsCreatedBy'] = cli_util.parse_json_parameter("idcs_created_by", idcs_created_by)
+
+    if idcs_last_modified_by is not None:
+        _details['idcsLastModifiedBy'] = cli_util.parse_json_parameter("idcs_last_modified_by", idcs_last_modified_by)
+
+    if idcs_prevented_operations is not None:
+        _details['idcsPreventedOperations'] = cli_util.parse_json_parameter("idcs_prevented_operations", idcs_prevented_operations)
+
+    if tags is not None:
+        _details['tags'] = cli_util.parse_json_parameter("tags", tags)
+
+    if delete_in_progress is not None:
+        _details['deleteInProgress'] = delete_in_progress
+
+    if idcs_last_upgraded_in_release is not None:
+        _details['idcsLastUpgradedInRelease'] = idcs_last_upgraded_in_release
+
+    if domain_ocid is not None:
+        _details['domainOcid'] = domain_ocid
+
+    if compartment_ocid is not None:
+        _details['compartmentOcid'] = compartment_ocid
+
+    if tenancy_ocid is not None:
+        _details['tenancyOcid'] = tenancy_ocid
+
+    if external_id is not None:
+        _details['externalId'] = external_id
+
+    if description is not None:
+        _details['description'] = description
+
+    if active is not None:
+        _details['active'] = active
+
+    if policy_groovy is not None:
+        _details['policyGroovy'] = policy_groovy
+
+    if rules is not None:
+        _details['rules'] = cli_util.parse_json_parameter("rules", rules)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.put_policy(
+        policy_id=policy_id,
+        policy=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@rule_group.command(name=cli_util.override('identity_domains.put_rule.command_name', 'put'), help=u"""Replace a Rule
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](putRule)""")
+@cli_util.option('--rule-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', required=True, help=u"""Rule name
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: true  - returned: always  - type: string  - uniqueness: none""")
+@cli_util.option('--condition', required=True, help=u"""SCIM filters
+
+**Deprecated Since: 17.3.4**
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--policy-type', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('---return', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The return values are the then portion of a Rule
+
+**SCIM++ Properties:**  - idcsCompositeKey: [name]  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: complex  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--id', help=u"""Unique identifier for the SCIM Resource as defined by the Service Provider. Each representation of the Resource MUST include a non-empty id value. This identifier MUST be unique across the Service Provider's entire set of Resources. It MUST be a stable, non-reassignable identifier that does not change when the same Resource is returned in subsequent requests. The value of the id attribute is always issued by the Service Provider and MUST never be specified by the Service Consumer. bulkId: is a reserved keyword and MUST NOT be used in the unique identifier.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--ocid', help=u"""Unique OCI identifier for the SCIM Resource.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: immutable  - required: false  - returned: default  - type: string  - uniqueness: global""")
+@cli_util.option('--meta', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-created-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-last-modified-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-prevented-operations', type=custom_types.CliCaseInsensitiveChoice(["replace", "update", "delete"]), help=u"""Each value of this attribute specifies an operation that only an internal client may perform on this particular resource.
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
+
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--idcs-last-upgraded-in-release', help=u"""The release number when the resource was upgraded.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--domain-ocid', help=u"""OCI Domain Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--compartment-ocid', help=u"""OCI Compartment Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--tenancy-ocid', help=u"""OCI Tenant Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--external-id', help=u"""An identifier for the Resource as defined by the Service Consumer. The externalId may simplify identification of the Resource between Service Consumer and Service provider by allowing the Consumer to refer to the Resource with its own identifier, obviating the need to store a local mapping between the local identifier of the Resource and the identifier used by the Service Provider. Each Resource MAY include a non-empty externalId value.  The value of the externalId attribute is always issued be the Service Consumer and can never be specified by the Service Provider. The Service Provider MUST always interpret the externalId as scoped to the Service Consumer's tenant.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--description', help=u"""Rule Description
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--active', type=click.BOOL, help=u"""If true, rule is active
+
+**SCIM++ Properties:**  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--locked', type=click.BOOL, help=u"""Shows if the rule is locked
+
+**SCIM++ Properties:**  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--rule-groovy', help=u"""The Groovy script that is run instead of the rule, if policy type allows the rule to be a Groovy script.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--condition-group', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'condition-group': {'module': 'identity_domains', 'class': 'RuleConditionGroup'}, 'policy-type': {'module': 'identity_domains', 'class': 'RulePolicyType'}, '-return': {'module': 'identity_domains', 'class': 'list[RuleReturn]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'condition-group': {'module': 'identity_domains', 'class': 'RuleConditionGroup'}, 'policy-type': {'module': 'identity_domains', 'class': 'RulePolicyType'}, '-return': {'module': 'identity_domains', 'class': 'list[RuleReturn]'}}, output_type={'module': 'identity_domains', 'class': 'Rule'})
+@cli_util.wrap_exceptions
+def put_rule(ctx, from_json, force, rule_id, schemas, name, condition, policy_type, _return, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, description, active, locked, rule_groovy, condition_group, if_match):
+
+    if isinstance(rule_id, six.string_types) and len(rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --rule-id cannot be whitespace or empty string')
+    if not force:
+        if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or condition_group or policy_type or _return:
+            if not click.confirm("WARNING: Updates to schemas and meta and idcs-created-by and idcs-last-modified-by and idcs-prevented-operations and tags and condition-group and policy-type and -return will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['name'] = name
+    _details['condition'] = condition
+    _details['policyType'] = cli_util.parse_json_parameter("policy_type", policy_type)
+    _details['return'] = cli_util.parse_json_parameter("_return", _return)
+
+    if id is not None:
+        _details['id'] = id
+
+    if ocid is not None:
+        _details['ocid'] = ocid
+
+    if meta is not None:
+        _details['meta'] = cli_util.parse_json_parameter("meta", meta)
+
+    if idcs_created_by is not None:
+        _details['idcsCreatedBy'] = cli_util.parse_json_parameter("idcs_created_by", idcs_created_by)
+
+    if idcs_last_modified_by is not None:
+        _details['idcsLastModifiedBy'] = cli_util.parse_json_parameter("idcs_last_modified_by", idcs_last_modified_by)
+
+    if idcs_prevented_operations is not None:
+        _details['idcsPreventedOperations'] = cli_util.parse_json_parameter("idcs_prevented_operations", idcs_prevented_operations)
+
+    if tags is not None:
+        _details['tags'] = cli_util.parse_json_parameter("tags", tags)
+
+    if delete_in_progress is not None:
+        _details['deleteInProgress'] = delete_in_progress
+
+    if idcs_last_upgraded_in_release is not None:
+        _details['idcsLastUpgradedInRelease'] = idcs_last_upgraded_in_release
+
+    if domain_ocid is not None:
+        _details['domainOcid'] = domain_ocid
+
+    if compartment_ocid is not None:
+        _details['compartmentOcid'] = compartment_ocid
+
+    if tenancy_ocid is not None:
+        _details['tenancyOcid'] = tenancy_ocid
+
+    if external_id is not None:
+        _details['externalId'] = external_id
+
+    if description is not None:
+        _details['description'] = description
+
+    if active is not None:
+        _details['active'] = active
+
+    if locked is not None:
+        _details['locked'] = locked
+
+    if rule_groovy is not None:
+        _details['ruleGroovy'] = rule_groovy
+
+    if condition_group is not None:
+        _details['conditionGroup'] = cli_util.parse_json_parameter("condition_group", condition_group)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.put_rule(
+        rule_id=rule_id,
+        rule=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@schema_group.command(name=cli_util.override('identity_domains.put_schema.command_name', 'put'), help=u"""Replace a Schema Def
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](putSchema)""")
+@cli_util.option('--schema-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-mappable', required=True, type=click.BOOL, help=u"""Specifies if the attributes in this schema can be used for mapping with external identity sources such as AD or LDAP
+
+**SCIM++ Properties:**  - caseExact: false  - multiValued: false  - mutability: readOnly  - required: true  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--idcs-maps-to-same-target-attribute-name-as', help=u"""Contains the canonical name of the other attribute sharing the same idcsTargetAttributeName
+
+**Added In:** 2209122038
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: always  - type: string  - uniqueness: none""")
+@cli_util.option('--external-id', help=u"""An identifier for the Resource as defined by the Service Consumer. The externalId may simplify identification of the Resource between Service Consumer and Service Provider by allowing the Consumer to refer to the Resource with its own identifier, obviating the need to store a local mapping between the local identifier of the Resource and the identifier used by the Service Provider. Each Resource MAY include a non-empty externalId value. The value of the externalId attribute is always issued by the Service Consumer and can never be specified by the Service Provider. The Service Provider MUST always interpret the externalId as scoped to the Service Consumer's tenant.
+
+**SCIM++ Properties:**  - caseExact: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--name', help=u"""Schema's human-readable name
+
+**SCIM++ Properties:**  - caseExact: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--idcs-resource-types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Resource types defs this resource refers to
+
+**SCIM++ Properties:**  - caseExact: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""Schema's human-readable description
+
+**SCIM++ Properties:**  - caseExact: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--idcs-attribute-cacheable', type=click.BOOL, help=u"""Specifies whether the attribute is cacheable. True by default for all attributes. If attribute with idcsAttributeCachable = false, is present \\\"attributesToGet\\\" while executing GET/SEARCH on cacheable resource, Cache is missed and data is fetched from Data Provider.
+
+**Added In:** 17.3.4
+
+**SCIM++ Properties:**  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: boolean""")
+@cli_util.option('--idcs-override-common-attribute', type=click.BOOL, help=u"""Specifies whether the dataprovider mapping from resource schema should override from common schema with the same name.
+
+**Added In:** 2102181953
+
+**SCIM++ Properties:**  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: boolean""")
+@cli_util.option('--attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A complex type that specifies the set of Resource attributes
+
+**SCIM++ Properties:**  - idcsCompositeKey: []  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex
+
+This option is a JSON list with items of type SchemaAttributes.  For documentation on SchemaAttributes please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SchemaAttributes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'idcs-resource-types': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[SchemaAttributes]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'idcs-resource-types': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[SchemaAttributes]'}}, output_type={'module': 'identity_domains', 'class': 'Schema'})
+@cli_util.wrap_exceptions
+def put_schema(ctx, from_json, force, schema_id, schemas, idcs_mappable, authorization, resource_type_schema_version, idcs_maps_to_same_target_attribute_name_as, external_id, name, idcs_resource_types, description, idcs_attribute_cacheable, idcs_override_common_attribute, attributes, if_match):
+
+    if isinstance(schema_id, six.string_types) and len(schema_id.strip()) == 0:
+        raise click.UsageError('Parameter --schema-id cannot be whitespace or empty string')
+    if not force:
+        if schemas or idcs_resource_types or attributes:
+            if not click.confirm("WARNING: Updates to schemas and idcs-resource-types and attributes will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['idcsMappable'] = idcs_mappable
+
+    if idcs_maps_to_same_target_attribute_name_as is not None:
+        _details['idcsMapsToSameTargetAttributeNameAs'] = idcs_maps_to_same_target_attribute_name_as
+
+    if external_id is not None:
+        _details['externalId'] = external_id
+
+    if name is not None:
+        _details['name'] = name
+
+    if idcs_resource_types is not None:
+        _details['idcsResourceTypes'] = cli_util.parse_json_parameter("idcs_resource_types", idcs_resource_types)
+
+    if description is not None:
+        _details['description'] = description
+
+    if idcs_attribute_cacheable is not None:
+        _details['idcsAttributeCacheable'] = idcs_attribute_cacheable
+
+    if idcs_override_common_attribute is not None:
+        _details['idcsOverrideCommonAttribute'] = idcs_override_common_attribute
+
+    if attributes is not None:
+        _details['attributes'] = cli_util.parse_json_parameter("attributes", attributes)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.put_schema(
+        schema_id=schema_id,
+        schema=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @security_question_setting_group.command(name=cli_util.override('identity_domains.put_security_question_setting.command_name', 'put'), help=u"""Replace a security question setting.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](putSecurityQuestionSetting)""")
@@ -14998,6 +21876,714 @@ def put_security_question_setting(ctx, from_json, force, security_question_setti
     result = client.put_security_question_setting(
         security_question_setting_id=security_question_setting_id,
         security_question_setting=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@self_registration_profile_group.command(name=cli_util.override('identity_domains.put_self_registration_profile.command_name', 'put'), help=u"""Replace a self-registration profile.
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](putSelfRegistrationProfile)""")
+@cli_util.option('--self-registration-profile-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', required=True, help=u"""Name of the profile
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: true  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--activation-email-required', required=True, type=click.BOOL, help=u"""**SCIM++ Properties:** - caseExact: false - idcsSearchable: true - multiValued: false - mutability: readWrite - required: true - returned: default - type: boolean - uniqueness: none A Boolean value that indicates whether Account verification email is required to be sent before login or not""")
+@cli_util.option('--number-of-days-redirect-url-is-valid', required=True, type=click.INT, help=u"""Number of days redirect URL is valid
+
+**SCIM++ Properties:**  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: true  - returned: default  - type: integer  - uniqueness: none""")
+@cli_util.option('--show-on-login-page', required=True, type=click.BOOL, help=u"""A Boolean value that indicates whether the profile should be displayed on login page
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: true  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--redirect-url', required=True, help=u"""This URL will be replaced in email notification sent to user. When activation email required is set to true, user is created in \\\"pending verification\\\" state, upon clicking this link user will be able to activate himself. When activation email required is set to false, user is created in \\\"verified\\\" state, this link will be used to verify user's email.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--consent-text-present', required=True, type=click.BOOL, help=u"""A boolean value that indicates whether the consent text is present.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: true  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--display-name', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Registration page name
+
+**SCIM++ Properties:**  - idcsCompositeKey: [locale]  - idcsMultiLanguage: true  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: complex  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--email-template', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--id', help=u"""Unique identifier for the SCIM Resource as defined by the Service Provider. Each representation of the Resource MUST include a non-empty id value. This identifier MUST be unique across the Service Provider's entire set of Resources. It MUST be a stable, non-reassignable identifier that does not change when the same Resource is returned in subsequent requests. The value of the id attribute is always issued by the Service Provider and MUST never be specified by the Service Consumer. bulkId: is a reserved keyword and MUST NOT be used in the unique identifier.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--ocid', help=u"""Unique OCI identifier for the SCIM Resource.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: immutable  - required: false  - returned: default  - type: string  - uniqueness: global""")
+@cli_util.option('--meta', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-created-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-last-modified-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-prevented-operations', type=custom_types.CliCaseInsensitiveChoice(["replace", "update", "delete"]), help=u"""Each value of this attribute specifies an operation that only an internal client may perform on this particular resource.
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
+
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--idcs-last-upgraded-in-release', help=u"""The release number when the resource was upgraded.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--domain-ocid', help=u"""OCI Domain Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--compartment-ocid', help=u"""OCI Compartment Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--tenancy-ocid', help=u"""OCI Tenant Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--external-id', help=u"""An identifier for the Resource as defined by the Service Consumer. The externalId may simplify identification of the Resource between Service Consumer and Service Provider by allowing the Consumer to refer to the Resource with its own identifier, obviating the need to store a local mapping between the local identifier of the Resource and the identifier used by the Service Provider. Each Resource MAY include a non-empty externalId value. The value of the externalId attribute is always issued by the Service Consumer and can never be specified by the Service Provider. The Service Provider MUST always interpret the externalId as scoped to the Service Consumer's tenant.
+
+**SCIM++ Properties:**  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--active', type=click.BOOL, help=u"""A Boolean value that indicates whether the profile is enabled or not
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--allowed-email-domains', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A Multivalue String value for Email domains which are valid for this profile
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--disallowed-email-domains', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A Multivalue String Value for Email domains to be handled as exceptions
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--header-logo', help=u"""Reference to header logo
+
+**SCIM++ Properties:**  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: reference""")
+@cli_util.option('--footer-logo', help=u"""References to footer logo
+
+**SCIM++ Properties:**  - idcsSearchable: true  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: reference""")
+@cli_util.option('--after-submit-text', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Text to be displayed on UI after doing self registration
+
+**SCIM++ Properties:**  - idcsCompositeKey: [locale]  - idcsMultiLanguage: true  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type SelfRegistrationProfileAfterSubmitText.  For documentation on SelfRegistrationProfileAfterSubmitText please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileAfterSubmitText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--user-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""**SCIM++ Properties:** - idcsCompositeKey: [value] - idcsSearchable: true - multiValued: true - mutability: readWrite - required: false - returned: default - type: complex - uniqueness: none User Attributes
+
+This option is a JSON list with items of type SelfRegistrationProfileUserAttributes.  For documentation on SelfRegistrationProfileUserAttributes please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileUserAttributes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--default-groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Default groups assigned to the user
+
+**SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex
+
+This option is a JSON list with items of type SelfRegistrationProfileDefaultGroups.  For documentation on SelfRegistrationProfileDefaultGroups please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileDefaultGroups.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--header-text', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Header text
+
+**SCIM++ Properties:**  - idcsCompositeKey: [locale]  - idcsMultiLanguage: true  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type SelfRegistrationProfileHeaderText.  For documentation on SelfRegistrationProfileHeaderText please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileHeaderText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--footer-text', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Footer text
+
+**SCIM++ Properties:**  - idcsCompositeKey: [locale]  - idcsMultiLanguage: true  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type SelfRegistrationProfileFooterText.  For documentation on SelfRegistrationProfileFooterText please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileFooterText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--consent-text', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Consent text
+
+**SCIM++ Properties:**  - idcsCompositeKey: [locale]  - idcsMultiLanguage: true  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type SelfRegistrationProfileConsentText.  For documentation on SelfRegistrationProfileConsentText please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SelfRegistrationProfileConsentText.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'allowed-email-domains': {'module': 'identity_domains', 'class': 'list[string]'}, 'disallowed-email-domains': {'module': 'identity_domains', 'class': 'list[string]'}, 'display-name': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileDisplayName]'}, 'after-submit-text': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileAfterSubmitText]'}, 'user-attributes': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileUserAttributes]'}, 'email-template': {'module': 'identity_domains', 'class': 'SelfRegistrationProfileEmailTemplate'}, 'default-groups': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileDefaultGroups]'}, 'header-text': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileHeaderText]'}, 'footer-text': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileFooterText]'}, 'consent-text': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileConsentText]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'allowed-email-domains': {'module': 'identity_domains', 'class': 'list[string]'}, 'disallowed-email-domains': {'module': 'identity_domains', 'class': 'list[string]'}, 'display-name': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileDisplayName]'}, 'after-submit-text': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileAfterSubmitText]'}, 'user-attributes': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileUserAttributes]'}, 'email-template': {'module': 'identity_domains', 'class': 'SelfRegistrationProfileEmailTemplate'}, 'default-groups': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileDefaultGroups]'}, 'header-text': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileHeaderText]'}, 'footer-text': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileFooterText]'}, 'consent-text': {'module': 'identity_domains', 'class': 'list[SelfRegistrationProfileConsentText]'}}, output_type={'module': 'identity_domains', 'class': 'SelfRegistrationProfile'})
+@cli_util.wrap_exceptions
+def put_self_registration_profile(ctx, from_json, force, self_registration_profile_id, schemas, name, activation_email_required, number_of_days_redirect_url_is_valid, show_on_login_page, redirect_url, consent_text_present, display_name, email_template, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, active, allowed_email_domains, disallowed_email_domains, header_logo, footer_logo, after_submit_text, user_attributes, default_groups, header_text, footer_text, consent_text, if_match):
+
+    if isinstance(self_registration_profile_id, six.string_types) and len(self_registration_profile_id.strip()) == 0:
+        raise click.UsageError('Parameter --self-registration-profile-id cannot be whitespace or empty string')
+    if not force:
+        if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or allowed_email_domains or disallowed_email_domains or display_name or after_submit_text or user_attributes or email_template or default_groups or header_text or footer_text or consent_text:
+            if not click.confirm("WARNING: Updates to schemas and meta and idcs-created-by and idcs-last-modified-by and idcs-prevented-operations and tags and allowed-email-domains and disallowed-email-domains and display-name and after-submit-text and user-attributes and email-template and default-groups and header-text and footer-text and consent-text will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['name'] = name
+    _details['activationEmailRequired'] = activation_email_required
+    _details['numberOfDaysRedirectUrlIsValid'] = number_of_days_redirect_url_is_valid
+    _details['showOnLoginPage'] = show_on_login_page
+    _details['redirectUrl'] = redirect_url
+    _details['consentTextPresent'] = consent_text_present
+    _details['displayName'] = cli_util.parse_json_parameter("display_name", display_name)
+    _details['emailTemplate'] = cli_util.parse_json_parameter("email_template", email_template)
+
+    if id is not None:
+        _details['id'] = id
+
+    if ocid is not None:
+        _details['ocid'] = ocid
+
+    if meta is not None:
+        _details['meta'] = cli_util.parse_json_parameter("meta", meta)
+
+    if idcs_created_by is not None:
+        _details['idcsCreatedBy'] = cli_util.parse_json_parameter("idcs_created_by", idcs_created_by)
+
+    if idcs_last_modified_by is not None:
+        _details['idcsLastModifiedBy'] = cli_util.parse_json_parameter("idcs_last_modified_by", idcs_last_modified_by)
+
+    if idcs_prevented_operations is not None:
+        _details['idcsPreventedOperations'] = cli_util.parse_json_parameter("idcs_prevented_operations", idcs_prevented_operations)
+
+    if tags is not None:
+        _details['tags'] = cli_util.parse_json_parameter("tags", tags)
+
+    if delete_in_progress is not None:
+        _details['deleteInProgress'] = delete_in_progress
+
+    if idcs_last_upgraded_in_release is not None:
+        _details['idcsLastUpgradedInRelease'] = idcs_last_upgraded_in_release
+
+    if domain_ocid is not None:
+        _details['domainOcid'] = domain_ocid
+
+    if compartment_ocid is not None:
+        _details['compartmentOcid'] = compartment_ocid
+
+    if tenancy_ocid is not None:
+        _details['tenancyOcid'] = tenancy_ocid
+
+    if external_id is not None:
+        _details['externalId'] = external_id
+
+    if active is not None:
+        _details['active'] = active
+
+    if allowed_email_domains is not None:
+        _details['allowedEmailDomains'] = cli_util.parse_json_parameter("allowed_email_domains", allowed_email_domains)
+
+    if disallowed_email_domains is not None:
+        _details['disallowedEmailDomains'] = cli_util.parse_json_parameter("disallowed_email_domains", disallowed_email_domains)
+
+    if header_logo is not None:
+        _details['headerLogo'] = header_logo
+
+    if footer_logo is not None:
+        _details['footerLogo'] = footer_logo
+
+    if after_submit_text is not None:
+        _details['afterSubmitText'] = cli_util.parse_json_parameter("after_submit_text", after_submit_text)
+
+    if user_attributes is not None:
+        _details['userAttributes'] = cli_util.parse_json_parameter("user_attributes", user_attributes)
+
+    if default_groups is not None:
+        _details['defaultGroups'] = cli_util.parse_json_parameter("default_groups", default_groups)
+
+    if header_text is not None:
+        _details['headerText'] = cli_util.parse_json_parameter("header_text", header_text)
+
+    if footer_text is not None:
+        _details['footerText'] = cli_util.parse_json_parameter("footer_text", footer_text)
+
+    if consent_text is not None:
+        _details['consentText'] = cli_util.parse_json_parameter("consent_text", consent_text)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.put_self_registration_profile(
+        self_registration_profile_id=self_registration_profile_id,
+        self_registration_profile=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@setting_group.command(name=cli_util.override('identity_domains.put_setting.command_name', 'put'), help=u"""Replace Settings
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](putSetting)""")
+@cli_util.option('--setting-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: true  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--csr-access', required=True, type=custom_types.CliCaseInsensitiveChoice(["readOnly", "readWrite", "none"]), help=u"""This value indicates whether Customer Service Representatives can login and have readOnly or readWrite access.  A value of 'none' means CSR cannot login to the services.
+
+**SCIM++ Properties:**  - multiValued: false  - mutability: readWrite  - required: true  - returned: default  - type: string""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--id', help=u"""Unique identifier for the SCIM Resource as defined by the Service Provider. Each representation of the Resource MUST include a non-empty id value. This identifier MUST be unique across the Service Provider's entire set of Resources. It MUST be a stable, non-reassignable identifier that does not change when the same Resource is returned in subsequent requests. The value of the id attribute is always issued by the Service Provider and MUST never be specified by the Service Consumer. bulkId: is a reserved keyword and MUST NOT be used in the unique identifier.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: always  - type: string  - uniqueness: global""")
+@cli_util.option('--ocid', help=u"""Unique OCI identifier for the SCIM Resource.
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: true  - multiValued: false  - mutability: immutable  - required: false  - returned: default  - type: string  - uniqueness: global""")
+@cli_util.option('--meta', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-created-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-last-modified-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-prevented-operations', type=custom_types.CliCaseInsensitiveChoice(["replace", "update", "delete"]), help=u"""Each value of this attribute specifies an operation that only an internal client may perform on this particular resource.
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
+
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--idcs-last-upgraded-in-release', help=u"""The release number when the resource was upgraded.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--domain-ocid', help=u"""OCI Domain Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--compartment-ocid', help=u"""OCI Compartment Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--tenancy-ocid', help=u"""OCI Tenant Id (ocid) in which the resource lives.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--external-id', help=u"""An identifier for the Resource as defined by the Service Consumer. The externalId may simplify identification of the Resource between Service Consumer and Service Provider by allowing the Consumer to refer to the Resource with its own identifier, obviating the need to store a local mapping between the local identifier of the Resource and the identifier used by the Service Provider. Each Resource MAY include a non-empty externalId value. The value of the externalId attribute is always issued by the Service Consumer and can never be specified by the Service Provider. The Service Provider MUST always interpret the externalId as scoped to the Service Consumer's tenant.
+
+**SCIM++ Properties:**  - caseExact: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--contact-emails', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Contact emails used to notify tenants. Can be one or more user or group alias emails.
+
+**SCIM++ Properties:**  - caseExact: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--custom-branding', type=click.BOOL, help=u"""Indicates if the branding is default or custom
+
+**SCIM++ Properties:**  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: boolean""")
+@cli_util.option('--preferred-language', help=u"""Preferred written or spoken language used for localized user interfaces
+
+**SCIM++ Properties:**  - caseExact: false  - idcsCanonicalValueSourceFilter: attrName eq \"languages\" and attrValues.value eq \"$(preferredLanguage)\"  - idcsCanonicalValueSourceResourceType: AllowedValue  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--timezone', help=u"""User's timezone
+
+**SCIM++ Properties:**  - caseExact: false  - idcsCanonicalValueSourceFilter: attrName eq \"timezones\" and attrValues.value eq \"$(timezone)\"  - idcsCanonicalValueSourceResourceType: AllowedValue  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--diagnostic-record-for-search-identifies-returned-resources', type=click.BOOL, help=u"""Controls whether DiagnosticRecords for external search-operations (against SCIM resource-types in the Admin service) identify returned resources.  If true, indicates that for each successful external search-operation at least one DiagnosticRecord will include at least one identifier for each matching resource that is returned in that search-response.  If false, no DiagnosticRecord should be expected to identify returned resources for a search-operation.  The default value is false.
+
+**Added In:** 2011192329
+
+**SCIM++ Properties:**  - caseExact: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--re-auth-when-changing-my-authentication-factors', type=click.BOOL, help=u"""Specifies whether re-authentication is required or not when a user changes one of their security factors such as password or email. Default is true to ensure more secure behavior.
+
+**Added In:** 20.1.3
+
+**SCIM++ Properties:**  - caseExact: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--re-auth-factor', type=custom_types.CliCaseInsensitiveChoice(["password"]), help=u"""If reAuthWhenChangingMyAuthenticationFactors is true (default), this attribute specifies which re-authentication factor to use. Allowed value is \\\"password\\\".
+
+**Added In:** 20.1.3
+
+**SCIM++ Properties:**  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: string""")
+@cli_util.option('--locale', help=u"""Default location for purposes of localizing items such as currency, date and time format, numerical representations, and so on.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsCanonicalValueSourceFilter: attrName eq \"locales\" and attrValues.value eq \"$(locale)\"  - idcsCanonicalValueSourceResourceType: AllowedValue  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--signing-cert-public-access', type=click.BOOL, help=u"""Indicates if access on SigningCert is allowed to public or not
+
+**Added In:** 17.3.4
+
+**SCIM++ Properties:**  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: boolean""")
+@cli_util.option('--sub-mapping-attr', help=u"""**Added In:** 20.1.3
+
+**SCIM++ Properties:** - caseExact: false - multiValued: false - mutability: readWrite - required: false - returned: default - type: string - uniqueness: none Subject mapping user profile attribute. The input format should be SCIM compliant. This attribute should be of type String and multivalued to false.""")
+@cli_util.option('--account-always-trust-scope', type=click.BOOL, help=u"""Indicates whether all the Apps in this customer tenancy should trust each other. A value of true overrides the 'defaultTrustScope' attribute here in Settings, as well as any App-specific 'trustScope' attribute, to force in effect 'trustScope=Account' for every App in this customer tenancy.
+
+**Added In:** 18.1.6
+
+**SCIM++ Properties:**  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: boolean""")
+@cli_util.option('--default-trust-scope', type=custom_types.CliCaseInsensitiveChoice(["Explicit", "Account", "Tags"]), help=u"""**Deprecated Since: 18.3.6**
+
+**SCIM++ Properties:** - multiValued: false - mutability: readWrite - required: false - returned: default - type: string Indicates the default trust scope for all apps""")
+@cli_util.option('--issuer', help=u"""Tenant issuer.
+
+**Added In:** 20.1.3
+
+**SCIM++ Properties:**  - caseExact: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--prev-issuer', help=u"""Previous Tenant issuer. This is an Oracle Identity Cloud Service internal attribute which is not meant to be directly modified by ID Admin. Even if the request body (Settings) contains this attribute, the actual value will be set according to the Oracle Identity Cloud Service internal logic rather than solely based on the value provided in the request payload.
+
+**Added In:** 20.1.3
+
+**SCIM++ Properties:**  - caseExact: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: request  - type: string  - uniqueness: none""")
+@cli_util.option('--diagnostic-level', type=click.INT, help=u"""The level of diagnostic logging that is currently in effect. A level of 0 (zero) indicates that diagnostic logging is disabled. A level of 1 (one) indicates that diagnostic logging is enabled.
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: integer  - uniqueness: none""")
+@cli_util.option('--diagnostic-tracing-upto', help=u"""The end time up to which diagnostic recording is switched on
+
+**SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: dateTime  - uniqueness: none""")
+@cli_util.option('--allowed-domains', type=custom_types.CLI_COMPLEX_TYPE, help=u"""One or more email domains allowed in a user's email field. If unassigned, any domain is allowed.
+
+**SCIM++ Properties:**  - caseExact: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--enable-terms-of-use', type=click.BOOL, help=u"""Indicates if Terms of Use is enabled in UI
+
+**Added In:** 18.2.4
+
+**SCIM++ Properties:**  - caseExact: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--terms-of-use-url', help=u"""Terms of Use URL
+
+**Added In:** 18.2.4
+
+**SCIM++ Properties:**  - caseExact: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--privacy-policy-url', help=u"""Privacy Policy URL
+
+**Added In:** 18.2.4
+
+**SCIM++ Properties:**  - caseExact: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--migration-status', help=u"""Database Migration Status
+
+**Added In:** 19.2.1
+
+**SCIM++ Properties:**  - caseExact: true  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--on-premises-provisioning', type=click.BOOL, help=u"""On-Premises provisioning feature toggle.
+
+**Added In:** 19.2.1
+
+**SCIM++ Properties:**  - caseExact: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--allowed-forgot-password-flow-return-urls', type=custom_types.CLI_COMPLEX_TYPE, help=u"""If specified, indicates the set of Urls which can be returned to after successful forgot password flow
+
+**Added In:** 19.3.3
+
+**SCIM++ Properties:**  - type: string  - multiValued: true  - required: false  - mutability: readWrite  - returned: default  - uniqueness: none  - caseExact: false""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--allowed-notification-redirect-urls', type=custom_types.CLI_COMPLEX_TYPE, help=u"""If specified, indicates the set of allowed notification redirect Urls which can be specified as the value of \\\"notificationRedirectUrl\\\" in the POST .../admin/v1/MePasswordResetRequestor request payload, which will then be included in the reset password email notification sent to a user as part of the forgot password / password reset flow.
+
+**Added In:** 2009041201
+
+**SCIM++ Properties:**  - type: string  - multiValued: true  - required: false  - mutability: readWrite  - returned: default  - uniqueness: none  - caseExact: false""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--audit-event-retention-period', type=click.INT, help=u"""Audit Event retention period. If set, overrides default of 30 days after which Audit Events will be purged
+
+**Added In:** 19.2.1
+
+**SCIM++ Properties:**  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: integer""")
+@cli_util.option('--is-hosted-page', type=click.BOOL, help=u"""Indicates if 'hosted' option was selected
+
+**Added In:** 20.1.3
+
+**SCIM++ Properties:**  - caseExact: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--custom-html-location', help=u"""Storage URL location where the sanitized custom html is located
+
+**Added In:** 20.1.3
+
+**SCIM++ Properties:**  - caseExact: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--custom-css-location', help=u"""Storage URL location where the sanitized custom css is located
+
+**Added In:** 20.1.3
+
+**SCIM++ Properties:**  - caseExact: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--custom-translation', help=u"""Custom translations (JSON String)
+
+**Added In:** 20.1.3
+
+**SCIM++ Properties:**  - caseExact: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--cloud-account-name', help=u"""The attribute to store the cloud account name
+
+**Deprecated Since: 2011192329**
+
+**SCIM++ Properties:**  - caseExact: false  - multiValued: false  - mutability: readOnly  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--cloud-migration-url-enabled', type=click.BOOL, help=u"""CloudAccountMigration: Enable Custom SIM Migrator Url.
+
+**Added In:** 2012271618
+
+**SCIM++ Properties:**  - caseExact: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--cloud-migration-custom-url', help=u"""If specified, indicates the custom SIM Migrator Url which can be used while SIM to Oracle Identity Cloud Service CloudAccount Migration.
+
+**Added In:** 2012271618
+
+**SCIM++ Properties:**  - type: string  - multiValued: false  - required: false  - mutability: readWrite  - returned: default  - uniqueness: none  - caseExact: false""")
+@cli_util.option('--service-admin-cannot-list-other-users', type=click.BOOL, help=u"""By default, a service admin can list all users in stripe. If true, a service admin cannot list other users.
+
+**Added In:** 2108190438
+
+**SCIM++ Properties:**  - caseExact: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: boolean""")
+@cli_util.option('--max-no-of-app-role-members-to-return', type=click.INT, help=u"""Limit the maximum return of members for an AppRole
+
+**Added In:** 2111112015
+
+**SCIM++ Properties:**  - idcsMinValue: 0  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: integer  - uniqueness: none""")
+@cli_util.option('--max-no-of-app-cmva-to-return', type=click.INT, help=u"""Limit the maximum return of CMVA for an App
+
+**Added In:** 2111112015
+
+**SCIM++ Properties:**  - idcsMinValue: 0  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: integer  - uniqueness: none""")
+@cli_util.option('--iam-upst-session-expiry', type=click.INT, help=u"""Maximum duration for IAM User Principal Session Token expiry
+
+**Added In:** 2307071836
+
+**SCIM++ Properties:**  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: integer  - uniqueness: none""")
+@cli_util.option('--cloud-gate-cors-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--certificate-validation', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--tenant-custom-claims', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Custom claims associated with the specific tenant
+
+**Added In:** 18.4.2
+
+**SCIM++ Properties:**  - idcsCompositeKey: [name]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex  - uniqueness: none
+
+This option is a JSON list with items of type SettingsTenantCustomClaims.  For documentation on SettingsTenantCustomClaims please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SettingsTenantCustomClaims.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--purge-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Purge Configs for different Resource Types
+
+**Deprecated Since: 19.1.6**
+
+**SCIM++ Properties:**  - idcsCompositeKey: [resourceName]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex
+
+This option is a JSON list with items of type SettingsPurgeConfigs.  For documentation on SettingsPurgeConfigs please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SettingsPurgeConfigs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--default-company-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Default name of the Company in different locales
+
+**Added In:** 18.2.2
+
+**SCIM++ Properties:**  - idcsCompositeKey: [locale]  - multiValued: true  - mutability: readOnly  - required: false  - returned: default  - type: complex
+
+This option is a JSON list with items of type SettingsDefaultCompanyNames.  For documentation on SettingsDefaultCompanyNames please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SettingsDefaultCompanyNames.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--default-login-texts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Default Login text in different locales
+
+**Added In:** 18.2.2
+
+**SCIM++ Properties:**  - idcsCompositeKey: [locale]  - multiValued: true  - mutability: readOnly  - required: false  - returned: default  - type: complex
+
+This option is a JSON list with items of type SettingsDefaultLoginTexts.  For documentation on SettingsDefaultLoginTexts please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SettingsDefaultLoginTexts.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--default-images', type=custom_types.CLI_COMPLEX_TYPE, help=u"""References to various images
+
+**Added In:** 18.2.2
+
+**SCIM++ Properties:**  - idcsCompositeKey: [type]  - multiValued: true  - mutability: readOnly  - required: false  - returned: default  - type: complex
+
+This option is a JSON list with items of type SettingsDefaultImages.  For documentation on SettingsDefaultImages please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SettingsDefaultImages.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--company-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Name of the company in different locales
+
+**SCIM++ Properties:**  - idcsCompositeKey: [locale]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex
+
+This option is a JSON list with items of type SettingsCompanyNames.  For documentation on SettingsCompanyNames please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SettingsCompanyNames.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--login-texts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Login text in different locales
+
+**SCIM++ Properties:**  - idcsCompositeKey: [locale]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex
+
+This option is a JSON list with items of type SettingsLoginTexts.  For documentation on SettingsLoginTexts please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SettingsLoginTexts.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--images', type=custom_types.CLI_COMPLEX_TYPE, help=u"""References to various images
+
+**SCIM++ Properties:**  - idcsCompositeKey: [type]  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: complex
+
+This option is a JSON list with items of type SettingsImages.  For documentation on SettingsImages please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/SettingsImages.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'contact-emails': {'module': 'identity_domains', 'class': 'list[string]'}, 'allowed-domains': {'module': 'identity_domains', 'class': 'list[string]'}, 'allowed-forgot-password-flow-return-urls': {'module': 'identity_domains', 'class': 'list[string]'}, 'allowed-notification-redirect-urls': {'module': 'identity_domains', 'class': 'list[string]'}, 'cloud-gate-cors-settings': {'module': 'identity_domains', 'class': 'SettingsCloudGateCorsSettings'}, 'certificate-validation': {'module': 'identity_domains', 'class': 'SettingsCertificateValidation'}, 'tenant-custom-claims': {'module': 'identity_domains', 'class': 'list[SettingsTenantCustomClaims]'}, 'purge-configs': {'module': 'identity_domains', 'class': 'list[SettingsPurgeConfigs]'}, 'default-company-names': {'module': 'identity_domains', 'class': 'list[SettingsDefaultCompanyNames]'}, 'default-login-texts': {'module': 'identity_domains', 'class': 'list[SettingsDefaultLoginTexts]'}, 'default-images': {'module': 'identity_domains', 'class': 'list[SettingsDefaultImages]'}, 'company-names': {'module': 'identity_domains', 'class': 'list[SettingsCompanyNames]'}, 'login-texts': {'module': 'identity_domains', 'class': 'list[SettingsLoginTexts]'}, 'images': {'module': 'identity_domains', 'class': 'list[SettingsImages]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'contact-emails': {'module': 'identity_domains', 'class': 'list[string]'}, 'allowed-domains': {'module': 'identity_domains', 'class': 'list[string]'}, 'allowed-forgot-password-flow-return-urls': {'module': 'identity_domains', 'class': 'list[string]'}, 'allowed-notification-redirect-urls': {'module': 'identity_domains', 'class': 'list[string]'}, 'cloud-gate-cors-settings': {'module': 'identity_domains', 'class': 'SettingsCloudGateCorsSettings'}, 'certificate-validation': {'module': 'identity_domains', 'class': 'SettingsCertificateValidation'}, 'tenant-custom-claims': {'module': 'identity_domains', 'class': 'list[SettingsTenantCustomClaims]'}, 'purge-configs': {'module': 'identity_domains', 'class': 'list[SettingsPurgeConfigs]'}, 'default-company-names': {'module': 'identity_domains', 'class': 'list[SettingsDefaultCompanyNames]'}, 'default-login-texts': {'module': 'identity_domains', 'class': 'list[SettingsDefaultLoginTexts]'}, 'default-images': {'module': 'identity_domains', 'class': 'list[SettingsDefaultImages]'}, 'company-names': {'module': 'identity_domains', 'class': 'list[SettingsCompanyNames]'}, 'login-texts': {'module': 'identity_domains', 'class': 'list[SettingsLoginTexts]'}, 'images': {'module': 'identity_domains', 'class': 'list[SettingsImages]'}}, output_type={'module': 'identity_domains', 'class': 'Setting'})
+@cli_util.wrap_exceptions
+def put_setting(ctx, from_json, force, setting_id, schemas, csr_access, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, contact_emails, custom_branding, preferred_language, timezone, diagnostic_record_for_search_identifies_returned_resources, re_auth_when_changing_my_authentication_factors, re_auth_factor, locale, signing_cert_public_access, sub_mapping_attr, account_always_trust_scope, default_trust_scope, issuer, prev_issuer, diagnostic_level, diagnostic_tracing_upto, allowed_domains, enable_terms_of_use, terms_of_use_url, privacy_policy_url, migration_status, on_premises_provisioning, allowed_forgot_password_flow_return_urls, allowed_notification_redirect_urls, audit_event_retention_period, is_hosted_page, custom_html_location, custom_css_location, custom_translation, cloud_account_name, cloud_migration_url_enabled, cloud_migration_custom_url, service_admin_cannot_list_other_users, max_no_of_app_role_members_to_return, max_no_of_app_cmva_to_return, iam_upst_session_expiry, cloud_gate_cors_settings, certificate_validation, tenant_custom_claims, purge_configs, default_company_names, default_login_texts, default_images, company_names, login_texts, images, if_match):
+
+    if isinstance(setting_id, six.string_types) and len(setting_id.strip()) == 0:
+        raise click.UsageError('Parameter --setting-id cannot be whitespace or empty string')
+    if not force:
+        if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or contact_emails or re_auth_factor or allowed_domains or allowed_forgot_password_flow_return_urls or allowed_notification_redirect_urls or cloud_gate_cors_settings or certificate_validation or tenant_custom_claims or purge_configs or default_company_names or default_login_texts or default_images or company_names or login_texts or images:
+            if not click.confirm("WARNING: Updates to schemas and meta and idcs-created-by and idcs-last-modified-by and idcs-prevented-operations and tags and contact-emails and re-auth-factor and allowed-domains and allowed-forgot-password-flow-return-urls and allowed-notification-redirect-urls and cloud-gate-cors-settings and certificate-validation and tenant-custom-claims and purge-configs and default-company-names and default-login-texts and default-images and company-names and login-texts and images will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['csrAccess'] = csr_access
+
+    if id is not None:
+        _details['id'] = id
+
+    if ocid is not None:
+        _details['ocid'] = ocid
+
+    if meta is not None:
+        _details['meta'] = cli_util.parse_json_parameter("meta", meta)
+
+    if idcs_created_by is not None:
+        _details['idcsCreatedBy'] = cli_util.parse_json_parameter("idcs_created_by", idcs_created_by)
+
+    if idcs_last_modified_by is not None:
+        _details['idcsLastModifiedBy'] = cli_util.parse_json_parameter("idcs_last_modified_by", idcs_last_modified_by)
+
+    if idcs_prevented_operations is not None:
+        _details['idcsPreventedOperations'] = cli_util.parse_json_parameter("idcs_prevented_operations", idcs_prevented_operations)
+
+    if tags is not None:
+        _details['tags'] = cli_util.parse_json_parameter("tags", tags)
+
+    if delete_in_progress is not None:
+        _details['deleteInProgress'] = delete_in_progress
+
+    if idcs_last_upgraded_in_release is not None:
+        _details['idcsLastUpgradedInRelease'] = idcs_last_upgraded_in_release
+
+    if domain_ocid is not None:
+        _details['domainOcid'] = domain_ocid
+
+    if compartment_ocid is not None:
+        _details['compartmentOcid'] = compartment_ocid
+
+    if tenancy_ocid is not None:
+        _details['tenancyOcid'] = tenancy_ocid
+
+    if external_id is not None:
+        _details['externalId'] = external_id
+
+    if contact_emails is not None:
+        _details['contactEmails'] = cli_util.parse_json_parameter("contact_emails", contact_emails)
+
+    if custom_branding is not None:
+        _details['customBranding'] = custom_branding
+
+    if preferred_language is not None:
+        _details['preferredLanguage'] = preferred_language
+
+    if timezone is not None:
+        _details['timezone'] = timezone
+
+    if diagnostic_record_for_search_identifies_returned_resources is not None:
+        _details['diagnosticRecordForSearchIdentifiesReturnedResources'] = diagnostic_record_for_search_identifies_returned_resources
+
+    if re_auth_when_changing_my_authentication_factors is not None:
+        _details['reAuthWhenChangingMyAuthenticationFactors'] = re_auth_when_changing_my_authentication_factors
+
+    if re_auth_factor is not None:
+        _details['reAuthFactor'] = cli_util.parse_json_parameter("re_auth_factor", re_auth_factor)
+
+    if locale is not None:
+        _details['locale'] = locale
+
+    if signing_cert_public_access is not None:
+        _details['signingCertPublicAccess'] = signing_cert_public_access
+
+    if sub_mapping_attr is not None:
+        _details['subMappingAttr'] = sub_mapping_attr
+
+    if account_always_trust_scope is not None:
+        _details['accountAlwaysTrustScope'] = account_always_trust_scope
+
+    if default_trust_scope is not None:
+        _details['defaultTrustScope'] = default_trust_scope
+
+    if issuer is not None:
+        _details['issuer'] = issuer
+
+    if prev_issuer is not None:
+        _details['prevIssuer'] = prev_issuer
+
+    if diagnostic_level is not None:
+        _details['diagnosticLevel'] = diagnostic_level
+
+    if diagnostic_tracing_upto is not None:
+        _details['diagnosticTracingUpto'] = diagnostic_tracing_upto
+
+    if allowed_domains is not None:
+        _details['allowedDomains'] = cli_util.parse_json_parameter("allowed_domains", allowed_domains)
+
+    if enable_terms_of_use is not None:
+        _details['enableTermsOfUse'] = enable_terms_of_use
+
+    if terms_of_use_url is not None:
+        _details['termsOfUseUrl'] = terms_of_use_url
+
+    if privacy_policy_url is not None:
+        _details['privacyPolicyUrl'] = privacy_policy_url
+
+    if migration_status is not None:
+        _details['migrationStatus'] = migration_status
+
+    if on_premises_provisioning is not None:
+        _details['onPremisesProvisioning'] = on_premises_provisioning
+
+    if allowed_forgot_password_flow_return_urls is not None:
+        _details['allowedForgotPasswordFlowReturnUrls'] = cli_util.parse_json_parameter("allowed_forgot_password_flow_return_urls", allowed_forgot_password_flow_return_urls)
+
+    if allowed_notification_redirect_urls is not None:
+        _details['allowedNotificationRedirectUrls'] = cli_util.parse_json_parameter("allowed_notification_redirect_urls", allowed_notification_redirect_urls)
+
+    if audit_event_retention_period is not None:
+        _details['auditEventRetentionPeriod'] = audit_event_retention_period
+
+    if is_hosted_page is not None:
+        _details['isHostedPage'] = is_hosted_page
+
+    if custom_html_location is not None:
+        _details['customHtmlLocation'] = custom_html_location
+
+    if custom_css_location is not None:
+        _details['customCssLocation'] = custom_css_location
+
+    if custom_translation is not None:
+        _details['customTranslation'] = custom_translation
+
+    if cloud_account_name is not None:
+        _details['cloudAccountName'] = cloud_account_name
+
+    if cloud_migration_url_enabled is not None:
+        _details['cloudMigrationUrlEnabled'] = cloud_migration_url_enabled
+
+    if cloud_migration_custom_url is not None:
+        _details['cloudMigrationCustomUrl'] = cloud_migration_custom_url
+
+    if service_admin_cannot_list_other_users is not None:
+        _details['serviceAdminCannotListOtherUsers'] = service_admin_cannot_list_other_users
+
+    if max_no_of_app_role_members_to_return is not None:
+        _details['maxNoOfAppRoleMembersToReturn'] = max_no_of_app_role_members_to_return
+
+    if max_no_of_app_cmva_to_return is not None:
+        _details['maxNoOfAppCMVAToReturn'] = max_no_of_app_cmva_to_return
+
+    if iam_upst_session_expiry is not None:
+        _details['iamUpstSessionExpiry'] = iam_upst_session_expiry
+
+    if cloud_gate_cors_settings is not None:
+        _details['cloudGateCorsSettings'] = cli_util.parse_json_parameter("cloud_gate_cors_settings", cloud_gate_cors_settings)
+
+    if certificate_validation is not None:
+        _details['certificateValidation'] = cli_util.parse_json_parameter("certificate_validation", certificate_validation)
+
+    if tenant_custom_claims is not None:
+        _details['tenantCustomClaims'] = cli_util.parse_json_parameter("tenant_custom_claims", tenant_custom_claims)
+
+    if purge_configs is not None:
+        _details['purgeConfigs'] = cli_util.parse_json_parameter("purge_configs", purge_configs)
+
+    if default_company_names is not None:
+        _details['defaultCompanyNames'] = cli_util.parse_json_parameter("default_company_names", default_company_names)
+
+    if default_login_texts is not None:
+        _details['defaultLoginTexts'] = cli_util.parse_json_parameter("default_login_texts", default_login_texts)
+
+    if default_images is not None:
+        _details['defaultImages'] = cli_util.parse_json_parameter("default_images", default_images)
+
+    if company_names is not None:
+        _details['companyNames'] = cli_util.parse_json_parameter("company_names", company_names)
+
+    if login_texts is not None:
+        _details['loginTexts'] = cli_util.parse_json_parameter("login_texts", login_texts)
+
+    if images is not None:
+        _details['images'] = cli_util.parse_json_parameter("images", images)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.put_setting(
+        setting_id=setting_id,
+        setting=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -16008,7 +23594,7 @@ def search_account_mgmt_infos(ctx, from_json, schemas, authorization, resource_t
     cli_util.render_response(result, ctx)
 
 
-@api_keys_group.command(name=cli_util.override('identity_domains.search_api_keys.command_name', 'search'), help=u"""Search ApiKeys Using POST
+@api_keys_group.command(name=cli_util.override('identity_domains.search_api_keys.command_name', 'search'), help=u"""Search for API keys using POST.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](searchApiKeys)""")
 @cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. Query requests MUST be identified using the following URI: \"urn:ietf:params:scim:api:messages:2.0:SearchRequest\" REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -16303,6 +23889,262 @@ def search_authentication_factor_settings(ctx, from_json, schemas, authorization
     client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
     result = client.search_authentication_factor_settings(
         authentication_factor_settings_search_request=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_gate_mappings_group.command(name=cli_util.override('identity_domains.search_cloud_gate_mappings.command_name', 'search'), help=u"""Search Cloud Gate mappings Using POST
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](searchCloudGateMappings)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. Query requests MUST be identified using the following URI: \"urn:ietf:params:scim:api:messages:2.0:SearchRequest\" REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A multi-valued list of strings indicating the names of resource attributes to return in the response overriding the set of attributes that would be returned by default. Attribute names MUST be in standard attribute notation ([Section 3.10]) form. See ([additional retrieval query parameters]). OPTIONAL.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If \"attributes\" query parameter is also available, union of the two is fetched. Valid values : all, always, never, request, default. Values are case-insensitive. OPTIONAL.""")
+@cli_util.option('--filter', help=u"""The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See [Section 3.4.2.2]. OPTIONAL.""")
+@cli_util.option('--sort-by', help=u"""A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation ([Section 3.10]) form. See [Sorting section]. OPTIONAL.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are \"ascending\" and \"descending\". See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""An integer that indicates the 1-based index of the first query result. See [Pagination Section]. OPTIONAL.""")
+@cli_util.option('--count', type=click.INT, help=u"""An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. ([Section 3.4.2.4]). OPTIONAL.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}}, output_type={'module': 'identity_domains', 'class': 'CloudGateMappings'})
+@cli_util.wrap_exceptions
+def search_cloud_gate_mappings(ctx, from_json, schemas, authorization, resource_type_schema_version, attributes, attribute_sets, filter, sort_by, sort_order, start_index, count, page, limit):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+
+    if attributes is not None:
+        _details['attributes'] = cli_util.parse_json_parameter("attributes", attributes)
+
+    if attribute_sets is not None:
+        _details['attributeSets'] = cli_util.parse_json_parameter("attribute_sets", attribute_sets)
+
+    if filter is not None:
+        _details['filter'] = filter
+
+    if sort_by is not None:
+        _details['sortBy'] = sort_by
+
+    if sort_order is not None:
+        _details['sortOrder'] = sort_order
+
+    if start_index is not None:
+        _details['startIndex'] = start_index
+
+    if count is not None:
+        _details['count'] = count
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.search_cloud_gate_mappings(
+        cloud_gate_mapping_search_request=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_gate_servers_group.command(name=cli_util.override('identity_domains.search_cloud_gate_servers.command_name', 'search'), help=u"""Search Cloud Gate servers Using POST
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](searchCloudGateServers)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. Query requests MUST be identified using the following URI: \"urn:ietf:params:scim:api:messages:2.0:SearchRequest\" REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A multi-valued list of strings indicating the names of resource attributes to return in the response overriding the set of attributes that would be returned by default. Attribute names MUST be in standard attribute notation ([Section 3.10]) form. See ([additional retrieval query parameters]). OPTIONAL.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If \"attributes\" query parameter is also available, union of the two is fetched. Valid values : all, always, never, request, default. Values are case-insensitive. OPTIONAL.""")
+@cli_util.option('--filter', help=u"""The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See [Section 3.4.2.2]. OPTIONAL.""")
+@cli_util.option('--sort-by', help=u"""A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation ([Section 3.10]) form. See [Sorting section]. OPTIONAL.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are \"ascending\" and \"descending\". See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""An integer that indicates the 1-based index of the first query result. See [Pagination Section]. OPTIONAL.""")
+@cli_util.option('--count', type=click.INT, help=u"""An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. ([Section 3.4.2.4]). OPTIONAL.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}}, output_type={'module': 'identity_domains', 'class': 'CloudGateServers'})
+@cli_util.wrap_exceptions
+def search_cloud_gate_servers(ctx, from_json, schemas, authorization, resource_type_schema_version, attributes, attribute_sets, filter, sort_by, sort_order, start_index, count, page, limit):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+
+    if attributes is not None:
+        _details['attributes'] = cli_util.parse_json_parameter("attributes", attributes)
+
+    if attribute_sets is not None:
+        _details['attributeSets'] = cli_util.parse_json_parameter("attribute_sets", attribute_sets)
+
+    if filter is not None:
+        _details['filter'] = filter
+
+    if sort_by is not None:
+        _details['sortBy'] = sort_by
+
+    if sort_order is not None:
+        _details['sortOrder'] = sort_order
+
+    if start_index is not None:
+        _details['startIndex'] = start_index
+
+    if count is not None:
+        _details['count'] = count
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.search_cloud_gate_servers(
+        cloud_gate_server_search_request=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_gates_group.command(name=cli_util.override('identity_domains.search_cloud_gates.command_name', 'search'), help=u"""Search Cloud Gates Using POST
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](searchCloudGates)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. Query requests MUST be identified using the following URI: \"urn:ietf:params:scim:api:messages:2.0:SearchRequest\" REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A multi-valued list of strings indicating the names of resource attributes to return in the response overriding the set of attributes that would be returned by default. Attribute names MUST be in standard attribute notation ([Section 3.10]) form. See ([additional retrieval query parameters]). OPTIONAL.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If \"attributes\" query parameter is also available, union of the two is fetched. Valid values : all, always, never, request, default. Values are case-insensitive. OPTIONAL.""")
+@cli_util.option('--filter', help=u"""The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See [Section 3.4.2.2]. OPTIONAL.""")
+@cli_util.option('--sort-by', help=u"""A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation ([Section 3.10]) form. See [Sorting section]. OPTIONAL.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are \"ascending\" and \"descending\". See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""An integer that indicates the 1-based index of the first query result. See [Pagination Section]. OPTIONAL.""")
+@cli_util.option('--count', type=click.INT, help=u"""An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. ([Section 3.4.2.4]). OPTIONAL.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}}, output_type={'module': 'identity_domains', 'class': 'CloudGates'})
+@cli_util.wrap_exceptions
+def search_cloud_gates(ctx, from_json, schemas, authorization, resource_type_schema_version, attributes, attribute_sets, filter, sort_by, sort_order, start_index, count, page, limit):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+
+    if attributes is not None:
+        _details['attributes'] = cli_util.parse_json_parameter("attributes", attributes)
+
+    if attribute_sets is not None:
+        _details['attributeSets'] = cli_util.parse_json_parameter("attribute_sets", attribute_sets)
+
+    if filter is not None:
+        _details['filter'] = filter
+
+    if sort_by is not None:
+        _details['sortBy'] = sort_by
+
+    if sort_order is not None:
+        _details['sortOrder'] = sort_order
+
+    if start_index is not None:
+        _details['startIndex'] = start_index
+
+    if count is not None:
+        _details['count'] = count
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.search_cloud_gates(
+        cloud_gate_search_request=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@conditions_group.command(name=cli_util.override('identity_domains.search_conditions.command_name', 'search'), help=u"""Search Conditions Using POST
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](searchConditions)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. Query requests MUST be identified using the following URI: \"urn:ietf:params:scim:api:messages:2.0:SearchRequest\" REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A multi-valued list of strings indicating the names of resource attributes to return in the response overriding the set of attributes that would be returned by default. Attribute names MUST be in standard attribute notation ([Section 3.10]) form. See ([additional retrieval query parameters]). OPTIONAL.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If \"attributes\" query parameter is also available, union of the two is fetched. Valid values : all, always, never, request, default. Values are case-insensitive. OPTIONAL.""")
+@cli_util.option('--filter', help=u"""The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See [Section 3.4.2.2]. OPTIONAL.""")
+@cli_util.option('--sort-by', help=u"""A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation ([Section 3.10]) form. See [Sorting section]. OPTIONAL.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are \"ascending\" and \"descending\". See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""An integer that indicates the 1-based index of the first query result. See [Pagination Section]. OPTIONAL.""")
+@cli_util.option('--count', type=click.INT, help=u"""An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. ([Section 3.4.2.4]). OPTIONAL.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}}, output_type={'module': 'identity_domains', 'class': 'Conditions'})
+@cli_util.wrap_exceptions
+def search_conditions(ctx, from_json, schemas, authorization, resource_type_schema_version, attributes, attribute_sets, filter, sort_by, sort_order, start_index, count, page, limit):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+
+    if attributes is not None:
+        _details['attributes'] = cli_util.parse_json_parameter("attributes", attributes)
+
+    if attribute_sets is not None:
+        _details['attributeSets'] = cli_util.parse_json_parameter("attribute_sets", attribute_sets)
+
+    if filter is not None:
+        _details['filter'] = filter
+
+    if sort_by is not None:
+        _details['sortBy'] = sort_by
+
+    if sort_order is not None:
+        _details['sortOrder'] = sort_order
+
+    if start_index is not None:
+        _details['startIndex'] = start_index
+
+    if count is not None:
+        _details['count'] = count
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.search_conditions(
+        condition_search_request=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -16972,6 +24814,114 @@ def search_my_requests(ctx, from_json, schemas, authorization, resource_type_sch
     cli_util.render_response(result, ctx)
 
 
+@network_perimeters_group.command(name=cli_util.override('identity_domains.search_network_perimeters.command_name', 'search'), help=u"""Search NetworkPerimeters Using POST
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](searchNetworkPerimeters)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. Query requests MUST be identified using the following URI: \"urn:ietf:params:scim:api:messages:2.0:SearchRequest\" REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A multi-valued list of strings indicating the names of resource attributes to return in the response overriding the set of attributes that would be returned by default. Attribute names MUST be in standard attribute notation ([Section 3.10]) form. See ([additional retrieval query parameters]). OPTIONAL.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If \"attributes\" query parameter is also available, union of the two is fetched. Valid values : all, always, never, request, default. Values are case-insensitive. OPTIONAL.""")
+@cli_util.option('--filter', help=u"""The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See [Section 3.4.2.2]. OPTIONAL.""")
+@cli_util.option('--sort-by', help=u"""A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation ([Section 3.10]) form. See [Sorting section]. OPTIONAL.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are \"ascending\" and \"descending\". See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""An integer that indicates the 1-based index of the first query result. See [Pagination Section]. OPTIONAL.""")
+@cli_util.option('--count', type=click.INT, help=u"""An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. ([Section 3.4.2.4]). OPTIONAL.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}}, output_type={'module': 'identity_domains', 'class': 'NetworkPerimeters'})
+@cli_util.wrap_exceptions
+def search_network_perimeters(ctx, from_json, schemas, authorization, resource_type_schema_version, attributes, attribute_sets, filter, sort_by, sort_order, start_index, count, page, limit):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+
+    if attributes is not None:
+        _details['attributes'] = cli_util.parse_json_parameter("attributes", attributes)
+
+    if attribute_sets is not None:
+        _details['attributeSets'] = cli_util.parse_json_parameter("attribute_sets", attribute_sets)
+
+    if filter is not None:
+        _details['filter'] = filter
+
+    if sort_by is not None:
+        _details['sortBy'] = sort_by
+
+    if sort_order is not None:
+        _details['sortOrder'] = sort_order
+
+    if start_index is not None:
+        _details['startIndex'] = start_index
+
+    if count is not None:
+        _details['count'] = count
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.search_network_perimeters(
+        network_perimeter_search_request=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@notification_settings_group.command(name=cli_util.override('identity_domains.search_notification_settings.command_name', 'search'), help=u"""Search Notification Settings Using POST
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](searchNotificationSettings)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. Query requests MUST be identified using the following URI: \"urn:ietf:params:scim:api:messages:2.0:SearchRequest\" REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A multi-valued list of strings indicating the names of resource attributes to return in the response overriding the set of attributes that would be returned by default. Attribute names MUST be in standard attribute notation ([Section 3.10]) form. See ([additional retrieval query parameters]). OPTIONAL.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If \"attributes\" query parameter is also available, union of the two is fetched. Valid values : all, always, never, request, default. Values are case-insensitive. OPTIONAL.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}}, output_type={'module': 'identity_domains', 'class': 'NotificationSettings'})
+@cli_util.wrap_exceptions
+def search_notification_settings(ctx, from_json, schemas, authorization, resource_type_schema_version, attributes, attribute_sets, page, limit):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+
+    if attributes is not None:
+        _details['attributes'] = cli_util.parse_json_parameter("attributes", attributes)
+
+    if attribute_sets is not None:
+        _details['attributeSets'] = cli_util.parse_json_parameter("attribute_sets", attribute_sets)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.search_notification_settings(
+        notification_settings_search_request=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @o_auth2_client_credentials_group.command(name=cli_util.override('identity_domains.search_o_auth2_client_credentials.command_name', 'search'), help=u"""Search for OAuth2 client credentials using POST.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](searchOAuth2ClientCredentials)""")
@@ -17031,6 +24981,134 @@ def search_o_auth2_client_credentials(ctx, from_json, schemas, authorization, re
     client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
     result = client.search_o_auth2_client_credentials(
         o_auth2_client_credential_search_request=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@o_auth_client_certificates_group.command(name=cli_util.override('identity_domains.search_o_auth_client_certificates.command_name', 'search'), help=u"""Search OAuth Client Certificates Using POST
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](searchOAuthClientCertificates)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. Query requests MUST be identified using the following URI: \"urn:ietf:params:scim:api:messages:2.0:SearchRequest\" REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A multi-valued list of strings indicating the names of resource attributes to return in the response overriding the set of attributes that would be returned by default. Attribute names MUST be in standard attribute notation ([Section 3.10]) form. See ([additional retrieval query parameters]). OPTIONAL.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If \"attributes\" query parameter is also available, union of the two is fetched. Valid values : all, always, never, request, default. Values are case-insensitive. OPTIONAL.""")
+@cli_util.option('--filter', help=u"""The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See [Section 3.4.2.2]. OPTIONAL.""")
+@cli_util.option('--sort-by', help=u"""A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation ([Section 3.10]) form. See [Sorting section]. OPTIONAL.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are \"ascending\" and \"descending\". See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""An integer that indicates the 1-based index of the first query result. See [Pagination Section]. OPTIONAL.""")
+@cli_util.option('--count', type=click.INT, help=u"""An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. ([Section 3.4.2.4]). OPTIONAL.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}}, output_type={'module': 'identity_domains', 'class': 'OAuthClientCertificates'})
+@cli_util.wrap_exceptions
+def search_o_auth_client_certificates(ctx, from_json, schemas, authorization, resource_type_schema_version, attributes, attribute_sets, filter, sort_by, sort_order, start_index, count, page, limit):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+
+    if attributes is not None:
+        _details['attributes'] = cli_util.parse_json_parameter("attributes", attributes)
+
+    if attribute_sets is not None:
+        _details['attributeSets'] = cli_util.parse_json_parameter("attribute_sets", attribute_sets)
+
+    if filter is not None:
+        _details['filter'] = filter
+
+    if sort_by is not None:
+        _details['sortBy'] = sort_by
+
+    if sort_order is not None:
+        _details['sortOrder'] = sort_order
+
+    if start_index is not None:
+        _details['startIndex'] = start_index
+
+    if count is not None:
+        _details['count'] = count
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.search_o_auth_client_certificates(
+        o_auth_client_certificate_search_request=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@o_auth_partner_certificates_group.command(name=cli_util.override('identity_domains.search_o_auth_partner_certificates.command_name', 'search'), help=u"""Search OAuth Partner Certificates Using POST
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](searchOAuthPartnerCertificates)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. Query requests MUST be identified using the following URI: \"urn:ietf:params:scim:api:messages:2.0:SearchRequest\" REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A multi-valued list of strings indicating the names of resource attributes to return in the response overriding the set of attributes that would be returned by default. Attribute names MUST be in standard attribute notation ([Section 3.10]) form. See ([additional retrieval query parameters]). OPTIONAL.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If \"attributes\" query parameter is also available, union of the two is fetched. Valid values : all, always, never, request, default. Values are case-insensitive. OPTIONAL.""")
+@cli_util.option('--filter', help=u"""The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See [Section 3.4.2.2]. OPTIONAL.""")
+@cli_util.option('--sort-by', help=u"""A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation ([Section 3.10]) form. See [Sorting section]. OPTIONAL.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are \"ascending\" and \"descending\". See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""An integer that indicates the 1-based index of the first query result. See [Pagination Section]. OPTIONAL.""")
+@cli_util.option('--count', type=click.INT, help=u"""An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. ([Section 3.4.2.4]). OPTIONAL.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}}, output_type={'module': 'identity_domains', 'class': 'OAuthPartnerCertificates'})
+@cli_util.wrap_exceptions
+def search_o_auth_partner_certificates(ctx, from_json, schemas, authorization, resource_type_schema_version, attributes, attribute_sets, filter, sort_by, sort_order, start_index, count, page, limit):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+
+    if attributes is not None:
+        _details['attributes'] = cli_util.parse_json_parameter("attributes", attributes)
+
+    if attribute_sets is not None:
+        _details['attributeSets'] = cli_util.parse_json_parameter("attribute_sets", attribute_sets)
+
+    if filter is not None:
+        _details['filter'] = filter
+
+    if sort_by is not None:
+        _details['sortBy'] = sort_by
+
+    if sort_order is not None:
+        _details['sortOrder'] = sort_order
+
+    if start_index is not None:
+        _details['startIndex'] = start_index
+
+    if count is not None:
+        _details['count'] = count
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.search_o_auth_partner_certificates(
+        o_auth_partner_certificate_search_request=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -17100,6 +25178,70 @@ def search_password_policies(ctx, from_json, schemas, authorization, resource_ty
     cli_util.render_response(result, ctx)
 
 
+@policies_group.command(name=cli_util.override('identity_domains.search_policies.command_name', 'search'), help=u"""Search Policies Using POST
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](searchPolicies)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. Query requests MUST be identified using the following URI: \"urn:ietf:params:scim:api:messages:2.0:SearchRequest\" REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A multi-valued list of strings indicating the names of resource attributes to return in the response overriding the set of attributes that would be returned by default. Attribute names MUST be in standard attribute notation ([Section 3.10]) form. See ([additional retrieval query parameters]). OPTIONAL.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If \"attributes\" query parameter is also available, union of the two is fetched. Valid values : all, always, never, request, default. Values are case-insensitive. OPTIONAL.""")
+@cli_util.option('--filter', help=u"""The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See [Section 3.4.2.2]. OPTIONAL.""")
+@cli_util.option('--sort-by', help=u"""A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation ([Section 3.10]) form. See [Sorting section]. OPTIONAL.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are \"ascending\" and \"descending\". See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""An integer that indicates the 1-based index of the first query result. See [Pagination Section]. OPTIONAL.""")
+@cli_util.option('--count', type=click.INT, help=u"""An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. ([Section 3.4.2.4]). OPTIONAL.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}}, output_type={'module': 'identity_domains', 'class': 'Policies'})
+@cli_util.wrap_exceptions
+def search_policies(ctx, from_json, schemas, authorization, resource_type_schema_version, attributes, attribute_sets, filter, sort_by, sort_order, start_index, count, page, limit):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+
+    if attributes is not None:
+        _details['attributes'] = cli_util.parse_json_parameter("attributes", attributes)
+
+    if attribute_sets is not None:
+        _details['attributeSets'] = cli_util.parse_json_parameter("attribute_sets", attribute_sets)
+
+    if filter is not None:
+        _details['filter'] = filter
+
+    if sort_by is not None:
+        _details['sortBy'] = sort_by
+
+    if sort_order is not None:
+        _details['sortOrder'] = sort_order
+
+    if start_index is not None:
+        _details['startIndex'] = start_index
+
+    if count is not None:
+        _details['count'] = count
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.search_policies(
+        policy_search_request=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @resource_type_schema_attributes_group.command(name=cli_util.override('identity_domains.search_resource_type_schema_attributes.command_name', 'search'), help=u"""Search Resource Type Schema Attributes Using POST
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](searchResourceTypeSchemaAttributes)""")
@@ -17159,6 +25301,130 @@ def search_resource_type_schema_attributes(ctx, from_json, schemas, authorizatio
     client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
     result = client.search_resource_type_schema_attributes(
         resource_type_schema_attribute_search_request=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@rules_group.command(name=cli_util.override('identity_domains.search_rules.command_name', 'search'), help=u"""Search Rules Using POST
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](searchRules)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. Query requests MUST be identified using the following URI: \"urn:ietf:params:scim:api:messages:2.0:SearchRequest\" REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A multi-valued list of strings indicating the names of resource attributes to return in the response overriding the set of attributes that would be returned by default. Attribute names MUST be in standard attribute notation ([Section 3.10]) form. See ([additional retrieval query parameters]). OPTIONAL.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If \"attributes\" query parameter is also available, union of the two is fetched. Valid values : all, always, never, request, default. Values are case-insensitive. OPTIONAL.""")
+@cli_util.option('--filter', help=u"""The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See [Section 3.4.2.2]. OPTIONAL.""")
+@cli_util.option('--sort-by', help=u"""A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation ([Section 3.10]) form. See [Sorting section]. OPTIONAL.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are \"ascending\" and \"descending\". See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""An integer that indicates the 1-based index of the first query result. See [Pagination Section]. OPTIONAL.""")
+@cli_util.option('--count', type=click.INT, help=u"""An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. ([Section 3.4.2.4]). OPTIONAL.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}}, output_type={'module': 'identity_domains', 'class': 'Rules'})
+@cli_util.wrap_exceptions
+def search_rules(ctx, from_json, schemas, authorization, resource_type_schema_version, attributes, attribute_sets, filter, sort_by, sort_order, start_index, count, page, limit):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+
+    if attributes is not None:
+        _details['attributes'] = cli_util.parse_json_parameter("attributes", attributes)
+
+    if attribute_sets is not None:
+        _details['attributeSets'] = cli_util.parse_json_parameter("attribute_sets", attribute_sets)
+
+    if filter is not None:
+        _details['filter'] = filter
+
+    if sort_by is not None:
+        _details['sortBy'] = sort_by
+
+    if sort_order is not None:
+        _details['sortOrder'] = sort_order
+
+    if start_index is not None:
+        _details['startIndex'] = start_index
+
+    if count is not None:
+        _details['count'] = count
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.search_rules(
+        rule_search_request=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@schemas_group.command(name=cli_util.override('identity_domains.search_schemas.command_name', 'search'), help=u"""Search Schemas Using POST
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](searchSchemas)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. Query requests MUST be identified using the following URI: \"urn:ietf:params:scim:api:messages:2.0:SearchRequest\" REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A multi-valued list of strings indicating the names of resource attributes to return in the response overriding the set of attributes that would be returned by default. Attribute names MUST be in standard attribute notation ([Section 3.10]) form. See ([additional retrieval query parameters]). OPTIONAL.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If \"attributes\" query parameter is also available, union of the two is fetched. Valid values : all, always, never, request, default. Values are case-insensitive. OPTIONAL.""")
+@cli_util.option('--sort-by', help=u"""A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation ([Section 3.10]) form. See [Sorting section]. OPTIONAL.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are \"ascending\" and \"descending\". See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""An integer that indicates the 1-based index of the first query result. See [Pagination Section]. OPTIONAL.""")
+@cli_util.option('--count', type=click.INT, help=u"""An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. ([Section 3.4.2.4]). OPTIONAL.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}}, output_type={'module': 'identity_domains', 'class': 'Schemas'})
+@cli_util.wrap_exceptions
+def search_schemas(ctx, from_json, schemas, authorization, resource_type_schema_version, attributes, attribute_sets, sort_by, sort_order, start_index, count, page, limit):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+
+    if attributes is not None:
+        _details['attributes'] = cli_util.parse_json_parameter("attributes", attributes)
+
+    if attribute_sets is not None:
+        _details['attributeSets'] = cli_util.parse_json_parameter("attribute_sets", attribute_sets)
+
+    if sort_by is not None:
+        _details['sortBy'] = sort_by
+
+    if sort_order is not None:
+        _details['sortOrder'] = sort_order
+
+    if start_index is not None:
+        _details['startIndex'] = start_index
+
+    if count is not None:
+        _details['count'] = count
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.search_schemas(
+        schema_search_request=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -17267,6 +25533,114 @@ def search_security_questions(ctx, from_json, schemas, authorization, resource_t
     client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
     result = client.search_security_questions(
         security_question_search_request=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@self_registration_profiles_group.command(name=cli_util.override('identity_domains.search_self_registration_profiles.command_name', 'search'), help=u"""Search for self-registration profile using POST.
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](searchSelfRegistrationProfiles)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. Query requests MUST be identified using the following URI: \"urn:ietf:params:scim:api:messages:2.0:SearchRequest\" REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A multi-valued list of strings indicating the names of resource attributes to return in the response overriding the set of attributes that would be returned by default. Attribute names MUST be in standard attribute notation ([Section 3.10]) form. See ([additional retrieval query parameters]). OPTIONAL.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If \"attributes\" query parameter is also available, union of the two is fetched. Valid values : all, always, never, request, default. Values are case-insensitive. OPTIONAL.""")
+@cli_util.option('--filter', help=u"""The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See [Section 3.4.2.2]. OPTIONAL.""")
+@cli_util.option('--sort-by', help=u"""A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation ([Section 3.10]) form. See [Sorting section]. OPTIONAL.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are \"ascending\" and \"descending\". See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""An integer that indicates the 1-based index of the first query result. See [Pagination Section]. OPTIONAL.""")
+@cli_util.option('--count', type=click.INT, help=u"""An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. ([Section 3.4.2.4]). OPTIONAL.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}}, output_type={'module': 'identity_domains', 'class': 'SelfRegistrationProfiles'})
+@cli_util.wrap_exceptions
+def search_self_registration_profiles(ctx, from_json, schemas, authorization, resource_type_schema_version, attributes, attribute_sets, filter, sort_by, sort_order, start_index, count, page, limit):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+
+    if attributes is not None:
+        _details['attributes'] = cli_util.parse_json_parameter("attributes", attributes)
+
+    if attribute_sets is not None:
+        _details['attributeSets'] = cli_util.parse_json_parameter("attribute_sets", attribute_sets)
+
+    if filter is not None:
+        _details['filter'] = filter
+
+    if sort_by is not None:
+        _details['sortBy'] = sort_by
+
+    if sort_order is not None:
+        _details['sortOrder'] = sort_order
+
+    if start_index is not None:
+        _details['startIndex'] = start_index
+
+    if count is not None:
+        _details['count'] = count
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.search_self_registration_profiles(
+        self_registration_profile_search_request=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@settings_group.command(name=cli_util.override('identity_domains.search_settings.command_name', 'search'), help=u"""Search Settings Using POST
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](searchSettings)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. Query requests MUST be identified using the following URI: \"urn:ietf:params:scim:api:messages:2.0:SearchRequest\" REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A multi-valued list of strings indicating the names of resource attributes to return in the response overriding the set of attributes that would be returned by default. Attribute names MUST be in standard attribute notation ([Section 3.10]) form. See ([additional retrieval query parameters]). OPTIONAL.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If \"attributes\" query parameter is also available, union of the two is fetched. Valid values : all, always, never, request, default. Values are case-insensitive. OPTIONAL.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}}, output_type={'module': 'identity_domains', 'class': 'Settings'})
+@cli_util.wrap_exceptions
+def search_settings(ctx, from_json, schemas, authorization, resource_type_schema_version, attributes, attribute_sets, page, limit):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+
+    if attributes is not None:
+        _details['attributes'] = cli_util.parse_json_parameter("attributes", attributes)
+
+    if attribute_sets is not None:
+        _details['attributeSets'] = cli_util.parse_json_parameter("attribute_sets", attribute_sets)
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.search_settings(
+        settings_search_request=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)

@@ -941,6 +941,37 @@ def add_worker_nodes(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
+@bds_instance_group.command(name=cli_util.override('bds.certificate_service_info.command_name', 'certificate-service-info'), help=u"""A list of services and their certificate details. \n[Command Reference](certificateServiceInfo)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--services', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of services for which TLS/SSL needs to be enabled.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({'services': {'module': 'bds', 'class': 'list[Service]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'services': {'module': 'bds', 'class': 'list[Service]'}}, output_type={'module': 'bds', 'class': 'list[CertificateServiceInfoSummary]'})
+@cli_util.wrap_exceptions
+def certificate_service_info(ctx, from_json, bds_instance_id, services, if_match):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['services'] = cli_util.parse_json_parameter("services", services)
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.certificate_service_info(
+        bds_instance_id=bds_instance_id,
+        certificate_service_info_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @bds_instance_group.command(name=cli_util.override('bds.change_bds_instance_compartment.command_name', 'change-compartment'), help=u"""Moves a Big Data Service cluster into a different compartment. \n[Command Reference](changeBdsInstanceCompartment)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
@@ -1429,6 +1460,138 @@ def delete_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wait_
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@bds_instance_group.command(name=cli_util.override('bds.disable_certificate.command_name', 'disable-certificate'), help=u"""Disabling TLS/SSL for various ODH services running on the BDS cluster. \n[Command Reference](disableCertificate)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--services', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of services for which certificate needs to be disabled.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'services': {'module': 'bds', 'class': 'list[Service]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'services': {'module': 'bds', 'class': 'list[Service]'}})
+@cli_util.wrap_exceptions
+def disable_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, services, if_match):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['clusterAdminPassword'] = cluster_admin_password
+    _details['services'] = cli_util.parse_json_parameter("services", services)
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.disable_certificate(
+        bds_instance_id=bds_instance_id,
+        disable_certificate_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@bds_instance_group.command(name=cli_util.override('bds.enable_certificate.command_name', 'enable-certificate'), help=u"""Configuring TLS/SSL for various ODH services running on the BDS cluster. \n[Command Reference](enableCertificate)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--services', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of services for which certificate needs to be enabled.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--root-certificate', help=u"""Plain text certificate/s in order, separated by new line character. If not provided in request a self-signed root certificate is generated inside the cluster. In case hostCertDetails is provided, root certificate is mandatory.""")
+@cli_util.option('--host-cert-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of leaf certificates to use for services on each host. If custom host certificate is provided the root certificate becomes required.
+
+This option is a JSON list with items of type HostCertDetails.  For documentation on HostCertDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/bds/20190531/datatypes/HostCertDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--server-key-password', help=u"""Base-64 encoded password for CA certificate's private key. This value can be empty.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'services': {'module': 'bds', 'class': 'list[Service]'}, 'host-cert-details': {'module': 'bds', 'class': 'list[HostCertDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'services': {'module': 'bds', 'class': 'list[Service]'}, 'host-cert-details': {'module': 'bds', 'class': 'list[HostCertDetails]'}})
+@cli_util.wrap_exceptions
+def enable_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, services, root_certificate, host_cert_details, server_key_password, if_match):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['clusterAdminPassword'] = cluster_admin_password
+    _details['services'] = cli_util.parse_json_parameter("services", services)
+
+    if root_certificate is not None:
+        _details['rootCertificate'] = root_certificate
+
+    if host_cert_details is not None:
+        _details['hostCertDetails'] = cli_util.parse_json_parameter("host_cert_details", host_cert_details)
+
+    if server_key_password is not None:
+        _details['serverKeyPassword'] = server_key_password
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.enable_certificate(
+        bds_instance_id=bds_instance_id,
+        enable_certificate_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
                 cli_util.render_response(result, ctx)
                 sys.exit(2)
             except Exception:
@@ -2595,6 +2758,83 @@ def remove_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     result = client.remove_node(
         bds_instance_id=bds_instance_id,
         remove_node_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@bds_instance_group.command(name=cli_util.override('bds.renew_certificate.command_name', 'renew-certificate'), help=u"""Renewing TLS/SSL for various ODH services running on the BDS cluster. \n[Command Reference](renewCertificate)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--services', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of services for which certificate needs to be renewed. If no services provided renew will happen only for default services - AMBARI,RANGER,HUE,LIVY.
+
+This option is a JSON list with items of type Service.  For documentation on Service please see our API reference: https://docs.cloud.oracle.com/api/#/en/bds/20190531/datatypes/Service.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--root-certificate', help=u"""Plain text certificate/s in order, separated by new line character. If not provided in request a self-signed root certificate is generated inside the cluster. In case hostCertDetails is provided, root certificate is mandatory.""")
+@cli_util.option('--host-cert-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of leaf certificates to use for services on each host. If custom host certificate is provided the root certificate becomes required.
+
+This option is a JSON list with items of type HostCertDetails.  For documentation on HostCertDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/bds/20190531/datatypes/HostCertDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--server-key-password', help=u"""Base-64 encoded password for CA certificate's private key. This value can be empty.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'services': {'module': 'bds', 'class': 'list[Service]'}, 'host-cert-details': {'module': 'bds', 'class': 'list[HostCertDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'services': {'module': 'bds', 'class': 'list[Service]'}, 'host-cert-details': {'module': 'bds', 'class': 'list[HostCertDetails]'}})
+@cli_util.wrap_exceptions
+def renew_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, services, root_certificate, host_cert_details, server_key_password, if_match):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['clusterAdminPassword'] = cluster_admin_password
+
+    if services is not None:
+        _details['services'] = cli_util.parse_json_parameter("services", services)
+
+    if root_certificate is not None:
+        _details['rootCertificate'] = root_certificate
+
+    if host_cert_details is not None:
+        _details['hostCertDetails'] = cli_util.parse_json_parameter("host_cert_details", host_cert_details)
+
+    if server_key_password is not None:
+        _details['serverKeyPassword'] = server_key_password
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.renew_certificate(
+        bds_instance_id=bds_instance_id,
+        renew_certificate_details=_details,
         **kwargs
     )
     if wait_for_state:
