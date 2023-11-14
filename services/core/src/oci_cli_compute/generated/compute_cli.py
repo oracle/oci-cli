@@ -66,6 +66,12 @@ def compute_capacity_reservation_group():
     pass
 
 
+@click.command(cli_util.override('compute.compute_bare_metal_host_group.command_name', 'compute-bare-metal-host'), cls=CommandGroupWithAlias, help="""A compute bare metal host.""")
+@cli_util.help_option_group
+def compute_bare_metal_host_group():
+    pass
+
+
 @click.command(cli_util.override('compute.dedicated_vm_host_instance_group.command_name', 'dedicated-vm-host-instance'), cls=CommandGroupWithAlias, help="""Condensed instance data when listing instances on a dedicated VM host.""")
 @cli_util.help_option_group
 def dedicated_vm_host_instance_group():
@@ -95,6 +101,12 @@ def instance_credentials_group():
 @click.command(cli_util.override('compute.capacity_reservation_instance_group.command_name', 'capacity-reservation-instance'), cls=CommandGroupWithAlias, help="""Condensed instance data when listing instances in a compute capacity reservation.""")
 @cli_util.help_option_group
 def capacity_reservation_instance_group():
+    pass
+
+
+@click.command(cli_util.override('compute.compute_hpc_island_group.command_name', 'compute-hpc-island'), cls=CommandGroupWithAlias, help="""A compute HPC island.""")
+@cli_util.help_option_group
+def compute_hpc_island_group():
     pass
 
 
@@ -138,6 +150,12 @@ def compute_image_capability_schema_group():
     pass
 
 
+@click.command(cli_util.override('compute.compute_network_block_group.command_name', 'compute-network-block'), cls=CommandGroupWithAlias, help="""A compute network block.""")
+@cli_util.help_option_group
+def compute_network_block_group():
+    pass
+
+
 @click.command(cli_util.override('compute.app_catalog_listing_resource_version_group.command_name', 'app-catalog-listing-resource-version'), cls=CommandGroupWithAlias, help="""Listing Resource Version""")
 @cli_util.help_option_group
 def app_catalog_listing_resource_version_group():
@@ -167,6 +185,12 @@ def app_catalog_subscription_group():
 Use the capacity report to determine whether sufficient capacity is available for a shape before you create an instance or change the shape of an instance.""")
 @cli_util.help_option_group
 def compute_capacity_report_group():
+    pass
+
+
+@click.command(cli_util.override('compute.compute_capacity_topology_group.command_name', 'compute-capacity-topology'), cls=CommandGroupWithAlias, help="""A compute capacity topology that allows you to query your bare metal hosts and their RDMA network topology.""")
+@cli_util.help_option_group
+def compute_capacity_topology_group():
     pass
 
 
@@ -249,22 +273,26 @@ compute_root_group.add_command(instance_group)
 compute_root_group.add_command(vnic_attachment_group)
 compute_root_group.add_command(volume_attachment_group)
 compute_root_group.add_command(compute_capacity_reservation_group)
+compute_root_group.add_command(compute_bare_metal_host_group)
 compute_root_group.add_command(dedicated_vm_host_instance_group)
 compute_root_group.add_command(instance_console_connection_group)
 compute_root_group.add_command(compute_global_image_capability_schema_group)
 compute_root_group.add_command(instance_credentials_group)
 compute_root_group.add_command(capacity_reservation_instance_group)
+compute_root_group.add_command(compute_hpc_island_group)
 compute_root_group.add_command(compute_capacity_reservation_instance_shape_group)
 compute_root_group.add_command(dedicated_vm_host_group)
 compute_root_group.add_command(image_group)
 compute_root_group.add_command(instance_maintenance_reboot_group)
 compute_root_group.add_command(shape_group)
 compute_root_group.add_command(compute_image_capability_schema_group)
+compute_root_group.add_command(compute_network_block_group)
 compute_root_group.add_command(app_catalog_listing_resource_version_group)
 compute_root_group.add_command(image_shape_compatibility_entry_group)
 compute_root_group.add_command(app_catalog_listing_group)
 compute_root_group.add_command(app_catalog_subscription_group)
 compute_root_group.add_command(compute_capacity_report_group)
+compute_root_group.add_command(compute_capacity_topology_group)
 compute_root_group.add_command(compute_cluster_group)
 compute_root_group.add_command(boot_volume_attachment_group)
 compute_root_group.add_command(measured_boot_report_group)
@@ -950,6 +978,71 @@ def change_compute_capacity_reservation_compartment(ctx, from_json, wait_for_sta
     cli_util.render_response(result, ctx)
 
 
+@compute_capacity_topology_group.command(name=cli_util.override('compute.change_compute_capacity_topology_compartment.command_name', 'change-compartment'), help=u"""Moves a compute capacity topology into a different compartment. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeComputeCapacityTopologyCompartment)""")
+@cli_util.option('--compute-capacity-topology-id', required=True, help=u"""The [OCID] of the compute capacity topology.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the compute capacity topology to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_compute_capacity_topology_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_capacity_topology_id, compartment_id, if_match):
+
+    if isinstance(compute_capacity_topology_id, six.string_types) and len(compute_capacity_topology_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-capacity-topology-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.change_compute_capacity_topology_compartment(
+        compute_capacity_topology_id=compute_capacity_topology_id,
+        change_compute_capacity_topology_compartment_details=_details,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @compute_cluster_group.command(name=cli_util.override('compute.change_compute_cluster_compartment.command_name', 'change-compartment'), help=u"""Moves a compute cluster into a different compartment within the same tenancy. A [compute cluster] is a remote direct memory access (RDMA) network group.
 
 For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeComputeClusterCompartment)""")
@@ -1311,6 +1404,161 @@ def create_compute_capacity_reservation(ctx, from_json, wait_for_state, max_wait
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_compute_capacity_reservation(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@compute_capacity_topology_group.command(name=cli_util.override('compute.create_compute_capacity_topology.command_name', 'create'), help=u"""Creates a new compute capacity topology in the specified compartment and availability domain.
+
+Compute capacity topologies provide the RDMA network topology of your bare metal hosts so that you can launch instances on your bare metal hosts with targeted network locations.
+
+Compute capacity topologies report the health status of your bare metal hosts. \n[Command Reference](createComputeCapacityTopology)""")
+@cli_util.option('--availability-domain', required=True, help=u"""The availability domain of this compute capacity topology.
+
+Example: `Uocm:US-CHICAGO-1-AD-2`""")
+@cli_util.option('--capacity-source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains this compute capacity topology.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "UPDATING", "DELETED", "DELETING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'capacity-source': {'module': 'core', 'class': 'CreateCapacitySourceDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'capacity-source': {'module': 'core', 'class': 'CreateCapacitySourceDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'ComputeCapacityTopology'})
+@cli_util.wrap_exceptions
+def create_compute_capacity_topology(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, capacity_source, compartment_id, defined_tags, display_name, freeform_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['capacitySource'] = cli_util.parse_json_parameter("capacity_source", capacity_source)
+    _details['compartmentId'] = compartment_id
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.create_compute_capacity_topology(
+        create_compute_capacity_topology_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_compute_capacity_topology') and callable(getattr(client, 'get_compute_capacity_topology')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_compute_capacity_topology(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@compute_capacity_topology_group.command(name=cli_util.override('compute.create_compute_capacity_topology_create_dedicated_capacity_source_details.command_name', 'create-compute-capacity-topology-create-dedicated-capacity-source-details'), help=u"""Creates a new compute capacity topology in the specified compartment and availability domain.
+
+Compute capacity topologies provide the RDMA network topology of your bare metal hosts so that you can launch instances on your bare metal hosts with targeted network locations.
+
+Compute capacity topologies report the health status of your bare metal hosts. \n[Command Reference](createComputeCapacityTopology)""")
+@cli_util.option('--availability-domain', required=True, help=u"""The availability domain of this compute capacity topology.
+
+Example: `Uocm:US-CHICAGO-1-AD-2`""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains this compute capacity topology.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--capacity-source-compartment-id', help=u"""The [OCID] of the compartment of this capacity source.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "UPDATING", "DELETED", "DELETING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'ComputeCapacityTopology'})
+@cli_util.wrap_exceptions
+def create_compute_capacity_topology_create_dedicated_capacity_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, defined_tags, display_name, freeform_tags, capacity_source_compartment_id):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['capacitySource'] = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['compartmentId'] = compartment_id
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if capacity_source_compartment_id is not None:
+        _details['capacitySource']['compartmentId'] = capacity_source_compartment_id
+
+    _details['capacitySource']['capacityType'] = 'DEDICATED'
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.create_compute_capacity_topology(
+        create_compute_capacity_topology_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_compute_capacity_topology') and callable(getattr(client, 'get_compute_capacity_topology')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_compute_capacity_topology(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -1940,6 +2188,59 @@ def delete_compute_capacity_reservation(ctx, from_json, wait_for_state, max_wait
     client = cli_util.build_client('core', 'compute', ctx)
     result = client.delete_compute_capacity_reservation(
         capacity_reservation_id=capacity_reservation_id,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@compute_capacity_topology_group.command(name=cli_util.override('compute.delete_compute_capacity_topology.command_name', 'delete'), help=u"""Deletes the specified compute capacity topology. \n[Command Reference](deleteComputeCapacityTopology)""")
+@cli_util.option('--compute-capacity-topology-id', required=True, help=u"""The [OCID] of the compute capacity topology.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_compute_capacity_topology(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_capacity_topology_id, if_match):
+
+    if isinstance(compute_capacity_topology_id, six.string_types) and len(compute_capacity_topology_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-capacity-topology-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.delete_compute_capacity_topology(
+        compute_capacity_topology_id=compute_capacity_topology_id,
         **kwargs
     )
     work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
@@ -2825,6 +3126,28 @@ def get_compute_capacity_reservation(ctx, from_json, capacity_reservation_id):
     client = cli_util.build_client('core', 'compute', ctx)
     result = client.get_compute_capacity_reservation(
         capacity_reservation_id=capacity_reservation_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@compute_capacity_topology_group.command(name=cli_util.override('compute.get_compute_capacity_topology.command_name', 'get'), help=u"""Gets information about the specified compute capacity topology. \n[Command Reference](getComputeCapacityTopology)""")
+@cli_util.option('--compute-capacity-topology-id', required=True, help=u"""The [OCID] of the compute capacity topology.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeCapacityTopology'})
+@cli_util.wrap_exceptions
+def get_compute_capacity_topology(ctx, from_json, compute_capacity_topology_id):
+
+    if isinstance(compute_capacity_topology_id, six.string_types) and len(compute_capacity_topology_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-capacity-topology-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.get_compute_capacity_topology(
+        compute_capacity_topology_id=compute_capacity_topology_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -7001,6 +7324,299 @@ def list_compute_capacity_reservations(ctx, from_json, all_pages, page_size, com
     cli_util.render_response(result, ctx)
 
 
+@compute_capacity_topology_group.command(name=cli_util.override('compute.list_compute_capacity_topologies.command_name', 'list'), help=u"""Lists the compute capacity topologies in the specified compartment. You can filter the list by a compute capacity topology display name. \n[Command Reference](listComputeCapacityTopologies)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--availability-domain', help=u"""The name of the availability domain.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeCapacityTopologyCollection'})
+@cli_util.wrap_exceptions
+def list_compute_capacity_topologies(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, display_name, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    if sort_by and not availability_domain and not all_pages:
+        raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
+    kwargs = {}
+    if availability_domain is not None:
+        kwargs['availability_domain'] = availability_domain
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_compute_capacity_topologies,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_compute_capacity_topologies,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_compute_capacity_topologies(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@compute_bare_metal_host_group.command(name=cli_util.override('compute.list_compute_capacity_topology_compute_bare_metal_hosts.command_name', 'list-compute-capacity-topology'), help=u"""Lists compute bare metal hosts in the specified compute capacity topology. \n[Command Reference](listComputeCapacityTopologyComputeBareMetalHosts)""")
+@cli_util.option('--compute-capacity-topology-id', required=True, help=u"""The [OCID] of the compute capacity topology.""")
+@cli_util.option('--availability-domain', help=u"""The name of the availability domain.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compute-hpc-island-id', help=u"""The [OCID] of the compute HPC island.""")
+@cli_util.option('--compute-network-block-id', help=u"""The [OCID] of the compute network block.""")
+@cli_util.option('--compute-local-block-id', help=u"""The [OCID] of the compute local block.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeBareMetalHostCollection'})
+@cli_util.wrap_exceptions
+def list_compute_capacity_topology_compute_bare_metal_hosts(ctx, from_json, all_pages, page_size, compute_capacity_topology_id, availability_domain, compartment_id, compute_hpc_island_id, compute_network_block_id, compute_local_block_id, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    if sort_by and not availability_domain and not all_pages:
+        raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
+    if isinstance(compute_capacity_topology_id, six.string_types) and len(compute_capacity_topology_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-capacity-topology-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if availability_domain is not None:
+        kwargs['availability_domain'] = availability_domain
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if compute_hpc_island_id is not None:
+        kwargs['compute_hpc_island_id'] = compute_hpc_island_id
+    if compute_network_block_id is not None:
+        kwargs['compute_network_block_id'] = compute_network_block_id
+    if compute_local_block_id is not None:
+        kwargs['compute_local_block_id'] = compute_local_block_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_compute_capacity_topology_compute_bare_metal_hosts,
+            compute_capacity_topology_id=compute_capacity_topology_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_compute_capacity_topology_compute_bare_metal_hosts,
+            limit,
+            page_size,
+            compute_capacity_topology_id=compute_capacity_topology_id,
+            **kwargs
+        )
+    else:
+        result = client.list_compute_capacity_topology_compute_bare_metal_hosts(
+            compute_capacity_topology_id=compute_capacity_topology_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@compute_hpc_island_group.command(name=cli_util.override('compute.list_compute_capacity_topology_compute_hpc_islands.command_name', 'list-compute-capacity-topology'), help=u"""Lists compute HPC islands in the specified compute capacity topology. \n[Command Reference](listComputeCapacityTopologyComputeHpcIslands)""")
+@cli_util.option('--compute-capacity-topology-id', required=True, help=u"""The [OCID] of the compute capacity topology.""")
+@cli_util.option('--availability-domain', help=u"""The name of the availability domain.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeHpcIslandCollection'})
+@cli_util.wrap_exceptions
+def list_compute_capacity_topology_compute_hpc_islands(ctx, from_json, all_pages, page_size, compute_capacity_topology_id, availability_domain, compartment_id, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    if sort_by and not availability_domain and not all_pages:
+        raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
+    if isinstance(compute_capacity_topology_id, six.string_types) and len(compute_capacity_topology_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-capacity-topology-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if availability_domain is not None:
+        kwargs['availability_domain'] = availability_domain
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_compute_capacity_topology_compute_hpc_islands,
+            compute_capacity_topology_id=compute_capacity_topology_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_compute_capacity_topology_compute_hpc_islands,
+            limit,
+            page_size,
+            compute_capacity_topology_id=compute_capacity_topology_id,
+            **kwargs
+        )
+    else:
+        result = client.list_compute_capacity_topology_compute_hpc_islands(
+            compute_capacity_topology_id=compute_capacity_topology_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@compute_network_block_group.command(name=cli_util.override('compute.list_compute_capacity_topology_compute_network_blocks.command_name', 'list-compute-capacity-topology'), help=u"""Lists compute network blocks in the specified compute capacity topology. \n[Command Reference](listComputeCapacityTopologyComputeNetworkBlocks)""")
+@cli_util.option('--compute-capacity-topology-id', required=True, help=u"""The [OCID] of the compute capacity topology.""")
+@cli_util.option('--availability-domain', help=u"""The name of the availability domain.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compute-hpc-island-id', help=u"""The [OCID] of the compute HPC island.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeNetworkBlockCollection'})
+@cli_util.wrap_exceptions
+def list_compute_capacity_topology_compute_network_blocks(ctx, from_json, all_pages, page_size, compute_capacity_topology_id, availability_domain, compartment_id, compute_hpc_island_id, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    if sort_by and not availability_domain and not all_pages:
+        raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
+    if isinstance(compute_capacity_topology_id, six.string_types) and len(compute_capacity_topology_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-capacity-topology-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if availability_domain is not None:
+        kwargs['availability_domain'] = availability_domain
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if compute_hpc_island_id is not None:
+        kwargs['compute_hpc_island_id'] = compute_hpc_island_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_compute_capacity_topology_compute_network_blocks,
+            compute_capacity_topology_id=compute_capacity_topology_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_compute_capacity_topology_compute_network_blocks,
+            limit,
+            page_size,
+            compute_capacity_topology_id=compute_capacity_topology_id,
+            **kwargs
+        )
+    else:
+        result = client.list_compute_capacity_topology_compute_network_blocks(
+            compute_capacity_topology_id=compute_capacity_topology_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @compute_cluster_group.command(name=cli_util.override('compute.list_compute_clusters.command_name', 'list'), help=u"""Lists the compute clusters in the specified compartment. A [compute cluster] is a remote direct memory access (RDMA) network group. \n[Command Reference](listComputeClusters)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
@@ -8261,6 +8877,181 @@ def update_compute_capacity_reservation(ctx, from_json, force, wait_for_state, m
     result = client.update_compute_capacity_reservation(
         capacity_reservation_id=capacity_reservation_id,
         update_compute_capacity_reservation_details=_details,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@compute_capacity_topology_group.command(name=cli_util.override('compute.update_compute_capacity_topology.command_name', 'update'), help=u"""Updates the specified compute capacity topology. Fields that are not provided in the request will not be updated. \n[Command Reference](updateComputeCapacityTopology)""")
+@cli_util.option('--compute-capacity-topology-id', required=True, help=u"""The [OCID] of the compute capacity topology.""")
+@cli_util.option('--capacity-source', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'capacity-source': {'module': 'core', 'class': 'UpdateCapacitySourceDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'capacity-source': {'module': 'core', 'class': 'UpdateCapacitySourceDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.wrap_exceptions
+def update_compute_capacity_topology(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_capacity_topology_id, capacity_source, defined_tags, display_name, freeform_tags, if_match):
+
+    if isinstance(compute_capacity_topology_id, six.string_types) and len(compute_capacity_topology_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-capacity-topology-id cannot be whitespace or empty string')
+    if not force:
+        if capacity_source or defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to capacity-source and defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if capacity_source is not None:
+        _details['capacitySource'] = cli_util.parse_json_parameter("capacity_source", capacity_source)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.update_compute_capacity_topology(
+        compute_capacity_topology_id=compute_capacity_topology_id,
+        update_compute_capacity_topology_details=_details,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@compute_capacity_topology_group.command(name=cli_util.override('compute.update_compute_capacity_topology_update_dedicated_capacity_source_details.command_name', 'update-compute-capacity-topology-update-dedicated-capacity-source-details'), help=u"""Updates the specified compute capacity topology. Fields that are not provided in the request will not be updated. \n[Command Reference](updateComputeCapacityTopology)""")
+@cli_util.option('--compute-capacity-topology-id', required=True, help=u"""The [OCID] of the compute capacity topology.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.wrap_exceptions
+def update_compute_capacity_topology_update_dedicated_capacity_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_capacity_topology_id, defined_tags, display_name, freeform_tags, if_match):
+
+    if isinstance(compute_capacity_topology_id, six.string_types) and len(compute_capacity_topology_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-capacity-topology-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['capacitySource'] = {}
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    _details['capacitySource']['capacityType'] = 'DEDICATED'
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.update_compute_capacity_topology(
+        compute_capacity_topology_id=compute_capacity_topology_id,
+        update_compute_capacity_topology_details=_details,
         **kwargs
     )
     work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)

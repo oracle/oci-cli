@@ -48,6 +48,182 @@ compute_cli.compute_capacity_reservation_group.add_command(compute_cli.compute_c
 cli_util.rename_command(compute_cli, compute_cli.compute_capacity_reservation_group, compute_cli.compute_capacity_reservation_instance_shape_group, 'instance-shape')
 # oci compute capacity-reservation instance-shape list-compute ->  oci compute capacity-reservation instance-shape list
 
+
+# starting capacity topology related changes
+# [RENAME COMMAND]
+# oci compute compute-capacity-topology -> oci compute capacity-topology
+cli_util.rename_command(compute_cli, compute_cli.compute_root_group, compute_cli.compute_capacity_topology_group, "capacity-topology")
+
+
+# [REMOVE COMMAND]
+# oci compute capacity-topology create-compute-capacity-topology-create-dedicated-capacity-source-details
+compute_cli.compute_capacity_topology_group.commands.pop(compute_cli.create_compute_capacity_topology_create_dedicated_capacity_source_details.name)
+
+
+# [REMOVE COMMAND]
+# oci compute capacity-topology update-compute-capacity-topology-update-dedicated-capacity-source-details
+compute_cli.compute_capacity_topology_group.commands.pop(compute_cli.update_compute_capacity_topology_update_dedicated_capacity_source_details.name)
+
+
+# [RENAME PARAMETER]
+# oci compute capacity-topology change-compartment --compute-capacity-topology-id -> --capacity-topology-id
+@cli_util.copy_params_from_generated_command(compute_cli.change_compute_capacity_topology_compartment, params_to_exclude=["compute_capacity_topology_id"])
+@compute_cli.compute_capacity_topology_group.command(name='change-compartment', help=compute_cli.change_compute_capacity_topology_compartment.help)
+@cli_util.option("--capacity-topology-id", required=True, help=u"""The [OCID] of the compute capacity topology.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_compute_capacity_topology_compartment(ctx, **kwargs):
+    if "capacity_topology_id" in kwargs:
+        kwargs["compute_capacity_topology_id"] = kwargs["capacity_topology_id"]
+        kwargs.pop("capacity_topology_id")
+    ctx.invoke(compute_cli.change_compute_capacity_topology_compartment, **kwargs)
+
+
+# [RENAME PARAMETER]
+# oci compute capacity-topology delete --compute-capacity-topology-id -> --capacity-topology-id
+@cli_util.copy_params_from_generated_command(compute_cli.delete_compute_capacity_topology, params_to_exclude=["compute_capacity_topology_id"])
+@compute_cli.compute_capacity_topology_group.command(name='delete', help=compute_cli.delete_compute_capacity_topology.help)
+@cli_util.option("--capacity-topology-id", required=True, help=u"""The [OCID] of the compute capacity topology.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_compute_capacity_topology(ctx, **kwargs):
+    if "capacity_topology_id" in kwargs:
+        kwargs["compute_capacity_topology_id"] = kwargs["capacity_topology_id"]
+        kwargs.pop("capacity_topology_id")
+    ctx.invoke(compute_cli.delete_compute_capacity_topology, **kwargs)
+
+
+# [RENAME PARAMETER]
+# oci compute capacity-topology get --compute-capacity-topology-id -> --capacity-topology-id
+@cli_util.copy_params_from_generated_command(compute_cli.get_compute_capacity_topology, params_to_exclude=["compute_capacity_topology_id"])
+@compute_cli.compute_capacity_topology_group.command(name='get', help=compute_cli.get_compute_capacity_topology.help)
+@cli_util.option("--capacity-topology-id", required=True, help=u"""The [OCID] of the compute capacity topology.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeCapacityTopology'})
+@cli_util.wrap_exceptions
+def get_compute_capacity_topology(ctx, **kwargs):
+    if "capacity_topology_id" in kwargs:
+        kwargs["compute_capacity_topology_id"] = kwargs["capacity_topology_id"]
+        kwargs.pop("capacity_topology_id")
+    ctx.invoke(compute_cli.get_compute_capacity_topology, **kwargs)
+
+
+# [RENAME PARAMETER]
+# oci compute capacity-topology update --compute-capacity-topology-id -> --capacity-topology-id
+@cli_util.copy_params_from_generated_command(compute_cli.update_compute_capacity_topology, params_to_exclude=["compute_capacity_topology_id"])
+@compute_cli.compute_capacity_topology_group.command(name='update', help=compute_cli.update_compute_capacity_topology.help)
+@cli_util.option("--capacity-topology-id", required=True, help=u"""The [OCID] of the compute capacity topology.""")
+@json_skeleton_utils.get_cli_json_input_option({'capacity-source': {'module': 'core', 'class': 'UpdateCapacitySourceDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'capacity-source': {'module': 'core', 'class': 'UpdateCapacitySourceDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.wrap_exceptions
+def update_compute_capacity_topology(ctx, **kwargs):
+    if "capacity_topology_id" in kwargs:
+        kwargs["compute_capacity_topology_id"] = kwargs["capacity_topology_id"]
+        kwargs.pop("capacity_topology_id")
+    ctx.invoke(compute_cli.update_compute_capacity_topology, **kwargs)
+
+
+# [RENAME COMMAND]
+# oci compute compute-bare-metal-host list-compute-capacity-topology -> oci compute compute-bare-metal-host list
+# [MOVE COMMAND]
+# oci compute compute-bare-metal-host -> oci compute capacity-topology bare-metal-host
+compute_cli.compute_root_group.commands.pop(compute_cli.compute_bare_metal_host_group.name)
+compute_cli.compute_capacity_topology_group.add_command(compute_cli.compute_bare_metal_host_group)
+cli_util.rename_command(compute_cli, compute_cli.compute_capacity_topology_group, compute_cli.compute_bare_metal_host_group, "bare-metal-host")
+cli_util.rename_command(compute_cli, compute_cli.compute_bare_metal_host_group, compute_cli.list_compute_capacity_topology_compute_bare_metal_hosts, "list")
+
+
+# [RENAME PARAMETER]
+# oci compute compute-bare-metal-host list-compute-capacity-topology --compute-capacity-topology-id --compute-hpc-island-id --compute-network-block-id --compute-local-block-id -> --capacity-topology-id --hpc-island-id --network-block-id --local-block-id
+@cli_util.copy_params_from_generated_command(compute_cli.list_compute_capacity_topology_compute_bare_metal_hosts, params_to_exclude=["compute_capacity_topology_id", "compute_hpc_island_id", "compute_network_block_id", "compute_local_block_id"])
+@compute_cli.compute_bare_metal_host_group.command(name='list', help=compute_cli.list_compute_capacity_topology_compute_bare_metal_hosts.help)
+@cli_util.option("--capacity-topology-id", required=True, help=u"""The [OCID] of the compute capacity topology.""")
+@cli_util.option("--hpc-island-id", help=u"""The [OCID] of the compute HPC island.""")
+@cli_util.option("--network-block-id", help=u"""The [OCID] of the compute network block.""")
+@cli_util.option("--local-block-id", help=u"""The [OCID] of the compute local block.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeBareMetalHostCollection'})
+@cli_util.wrap_exceptions
+def list_compute_capacity_topology_compute_bare_metal_hosts(ctx, **kwargs):
+    if "capacity_topology_id" in kwargs:
+        kwargs["compute_capacity_topology_id"] = kwargs["capacity_topology_id"]
+        kwargs.pop("capacity_topology_id")
+    if "hpc_island_id" in kwargs:
+        kwargs["compute_hpc_island_id"] = kwargs["hpc_island_id"]
+        kwargs.pop("hpc_island_id")
+    if "network_block_id" in kwargs:
+        kwargs["compute_network_block_id"] = kwargs["network_block_id"]
+        kwargs.pop("network_block_id")
+    if "local_block_id" in kwargs:
+        kwargs["compute_local_block_id"] = kwargs["local_block_id"]
+        kwargs.pop("local_block_id")
+    ctx.invoke(compute_cli.list_compute_capacity_topology_compute_bare_metal_hosts, **kwargs)
+
+
+# [RENAME COMMAND]
+# oci compute compute-hpc-island list-compute-capacity-topology -> oci compute compute-hpc-island list
+# [MOVE COMMAND]
+# oci compute compute-hpc-island -> oci compute capacity-topology hpc-island
+compute_cli.compute_root_group.commands.pop(compute_cli.compute_hpc_island_group.name)
+compute_cli.compute_capacity_topology_group.add_command(compute_cli.compute_hpc_island_group)
+cli_util.rename_command(compute_cli, compute_cli.compute_capacity_topology_group, compute_cli.compute_hpc_island_group, "hpc-island")
+cli_util.rename_command(compute_cli, compute_cli.compute_hpc_island_group, compute_cli.list_compute_capacity_topology_compute_hpc_islands, "list")
+
+
+# [RENAME PARAMETER]
+# oci compute capacity-hpc-island list-compute-capacity-topology --compute-capacity-topology-id -> --capacity-topology-id
+@cli_util.copy_params_from_generated_command(compute_cli.list_compute_capacity_topology_compute_hpc_islands, params_to_exclude=["compute_capacity_topology_id"])
+@compute_cli.compute_hpc_island_group.command(name='list', help=compute_cli.list_compute_capacity_topology_compute_hpc_islands.help)
+@cli_util.option("--capacity-topology-id", required=True, help=u"""The [OCID] of the compute capacity topology.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeHpcIslandCollection'})
+@cli_util.wrap_exceptions
+def list_compute_capacity_topology_compute_hpc_islands(ctx, **kwargs):
+    if "capacity_topology_id" in kwargs:
+        kwargs["compute_capacity_topology_id"] = kwargs["capacity_topology_id"]
+        kwargs.pop("capacity_topology_id")
+    ctx.invoke(compute_cli.list_compute_capacity_topology_compute_hpc_islands, **kwargs)
+
+
+# [RENAME COMMAND]
+# oci compute compute-network-block list-compute-capacity-topology -> oci compute compute-network-block list
+# [MOVE COMMAND]
+# oci compute compute-network-block -> oci compute capacity-topology network-block
+compute_cli.compute_root_group.commands.pop(compute_cli.compute_network_block_group.name)
+compute_cli.compute_capacity_topology_group.add_command(compute_cli.compute_network_block_group)
+cli_util.rename_command(compute_cli, compute_cli.compute_capacity_topology_group, compute_cli.compute_network_block_group, "network-block")
+cli_util.rename_command(compute_cli, compute_cli.compute_network_block_group, compute_cli.list_compute_capacity_topology_compute_network_blocks, "list")
+
+
+# [RENAME PARAMETER]
+# oci compute capacity-topology network-block list --compute-capacity-topology-id --compute-hpc-island-id -> --capacity-topology-id --hpc-island-id
+@cli_util.copy_params_from_generated_command(compute_cli.list_compute_capacity_topology_compute_network_blocks, params_to_exclude=["compute_capacity_topology_id", "compute_hpc_island_id"])
+@compute_cli.compute_network_block_group.command(name='list', help=compute_cli.list_compute_capacity_topology_compute_network_blocks.help)
+@cli_util.option("--capacity-topology-id", required=True, help=u"""The [OCID] of the compute capacity topology.""")
+@cli_util.option("--hpc-island-id", help=u"""The [OCID] of the compute HPC island.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeNetworkBlockCollection'})
+@cli_util.wrap_exceptions
+def list_compute_capacity_topology_compute_network_blocks(ctx, **kwargs):
+    if "capacity_topology_id" in kwargs:
+        kwargs["compute_capacity_topology_id"] = kwargs["capacity_topology_id"]
+        kwargs.pop("capacity_topology_id")
+    if "hpc_island_id" in kwargs:
+        kwargs["compute_hpc_island_id"] = kwargs["hpc_island_id"]
+        kwargs.pop("hpc_island_id")
+    ctx.invoke(compute_cli.list_compute_capacity_topology_compute_network_blocks, **kwargs)
+# complete capacity topology related changes
+
+
 # oci compute dedicated-vm-host-instance-shape list to
 # oci compute dedicated-vm-host instance-shape list
 compute_cli.compute_root_group.commands.pop(compute_cli.dedicated_vm_host_instance_shape_group.name)

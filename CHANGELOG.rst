@@ -6,6 +6,63 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.36.2 - 2023-11-14
+--------------------
+Added
+~~~~~
+* Support for new Oracle Database PostgreSQL service
+
+  * ``oci psql``
+
+* Support for enabling, disabling, renewing, and viewing SSL/TLS in the BDS service
+
+  * ``oci bds instance enable-certificate``
+  * ``oci bds instance disable-certificate``
+  * ``oci bds instance renew-certificate``
+  * ``oci bds instance certificate-service-info``
+
+* Identity Domains Service
+
+  * Support for new command
+
+    * ``oci identity-domains approval-workflow``
+    * ``oci identity-domains approval-workflow-assignment``
+    * ``oci identity-domains approval-workflow-step``
+    * ``oci identity-domains branding-setting``
+    * ``oci identity-domains cloud-gate``
+    * ``oci identity-domains cloud-gate-mapping``
+    * ``oci identity-domains cloud-gate-server``
+    * ``oci identity-domains cloud-gates``
+    * ``oci identity-domains condition``
+    * ``oci identity-domains my-completed-approval``
+    * ``oci identity-domains my-pending-approval``
+    * ``oci identity-domains my-pending-approvals list``
+    * ``oci identity-domains my-request``
+    * ``oci identity-domains network-perimeter``
+    * ``oci identity-domains notification-setting``
+    * ``oci identity-domains notification-settings``
+    * ``oci identity-domains o-auth-client-certificate``
+    * ``oci identity-domains o-auth-partner-certificate``
+    * ``oci identity-domains policies``
+    * ``oci identity-domains rule``
+    * ``oci identity-domains rules``
+    * ``oci identity-domains schema``
+    * ``oci identity-domains schemas``
+    * ``oci identity-domains self-registration-profile``
+    * ``oci identity-domains self-registration-profiles``
+    * ``oci identity-domains setting``
+    * ``oci identity-domains settings``
+    
+  * Support for new optional parameter
+
+    * ``oci identity-domains authentication-factors-remover create --token
+    * ``oci identity-domains my-authentication-factors-remover create --token``
+    * ``oci identity-domains my-request create --action --approval-details --expires``
+
+* Support for Capacity Topology API in the Compute service
+
+  * ``oci compute capacity-topology``
+
 3.36.1 - 2023-11-07
 --------------------
 Added

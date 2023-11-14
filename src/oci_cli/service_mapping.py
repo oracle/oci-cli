@@ -528,6 +528,11 @@ service_mapping = {
         "OneSubscription  Usage Computation",
         "Billing & Cost Management"
     ],
+    "psql": [
+        "psql",
+        "PGSQL Control Plane",
+        "Others"
+    ],
     "queue": [
         "queue",
         "Queue",
