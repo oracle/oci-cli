@@ -4,6 +4,8 @@
 
 import click  # noqa: F401
 import json  # noqa: F401
+import os
+import os.path
 from services.opsi.src.oci_cli_operations_insights.generated import operationsinsights_cli
 from oci_cli import cli_util  # noqa: F401
 from oci_cli import custom_types  # noqa: F401
@@ -648,3 +650,80 @@ def query_warehouse_data_object_data_data_object_templatized_query_extended(ctx,
 @cli_util.wrap_exceptions
 def query_warehouse_data_object_data_data_object_standard_query_extended(ctx, **kwargs):
     ctx.invoke(operationsinsights_cli.query_warehouse_data_object_data_data_object_standard_query, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(operationsinsights_cli.delete_awr_hub_object, params_to_exclude=['object_name'])
+@operationsinsights_cli.awr_hub_objects_group.command(name=operationsinsights_cli.delete_awr_hub_object.name, help=operationsinsights_cli.delete_awr_hub_object.help)
+@cli_util.option('--name', required=True, help=u"""Unique Awr Hub Object identifier [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_awr_hub_object_extended(ctx, **kwargs):
+
+    if 'name' in kwargs:
+        kwargs['object_name'] = kwargs['name']
+        kwargs.pop('name')
+
+    ctx.invoke(operationsinsights_cli.delete_awr_hub_object, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(operationsinsights_cli.get_awr_hub_object, params_to_exclude=['object_name'])
+@operationsinsights_cli.awr_hub_objects_group.command(name=operationsinsights_cli.get_awr_hub_object.name, help=operationsinsights_cli.get_awr_hub_object.help)
+@cli_util.option('--name', required=True, help=u"""Unique Awr Hub Object identifier [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def get_awr_hub_object_extended(ctx, **kwargs):
+
+    if 'name' in kwargs:
+        kwargs['object_name'] = kwargs['name']
+        kwargs.pop('name')
+
+    ctx.invoke(operationsinsights_cli.get_awr_hub_object, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(operationsinsights_cli.head_awr_hub_object, params_to_exclude=['object_name'])
+@operationsinsights_cli.awr_hub_objects_group.command(name=operationsinsights_cli.head_awr_hub_object.name, help=operationsinsights_cli.head_awr_hub_object.help)
+@cli_util.option('--name', required=True, help=u"""Unique Awr Hub Object identifier [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def head_awr_hub_object_extended(ctx, **kwargs):
+
+    if 'name' in kwargs:
+        kwargs['object_name'] = kwargs['name']
+        kwargs.pop('name')
+
+    ctx.invoke(operationsinsights_cli.head_awr_hub_object, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(operationsinsights_cli.put_awr_hub_object, params_to_exclude=['object_name', 'put_awr_hub_object_body'])
+@operationsinsights_cli.awr_hub_objects_group.command(name=operationsinsights_cli.put_awr_hub_object.name, help=operationsinsights_cli.put_awr_hub_object.help)
+@cli_util.option('--name', help='The name of the object. Default value is the filename excluding the path. Required if reading object from STDIN.')
+@cli_util.option('--file', type=click.File(mode='rb'), required=True,
+                 help="The file to load as the content of the object, or '-' to read from STDIN.")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def put_awr_hub_object_extended(ctx, **kwargs):
+
+    file = kwargs['file']
+
+    # default object name is filename without path
+    if kwargs['name'] is None:
+        if not hasattr(file, 'name') or file.name == '<stdin>':
+            raise click.UsageError('Option "--name" must be provided when reading object from stdin')
+        kwargs['object_name'] = os.path.basename(file.name)
+
+    if kwargs['name'] is not None:
+        kwargs['object_name'] = kwargs['name']
+
+    kwargs.pop('name')
+
+    if 'file' in kwargs and kwargs['file']:
+        content = kwargs['file'].read()
+        kwargs['put_awr_hub_object_body'] = content
+
+    del kwargs['file']
+
+    ctx.invoke(operationsinsights_cli.put_awr_hub_object, **kwargs)

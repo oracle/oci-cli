@@ -3542,3 +3542,11 @@ def create_pluggable_database_create_pluggable_database_from_remote_clone_detail
         kwargs['pdb_creation_type_details_refreshable_clone_details'] = json.dumps(pdb_creation_type_details_refreshable_clone_details)
 
     ctx.invoke(database_cli.create_pluggable_database_create_pluggable_database_from_remote_clone_details, **kwargs)
+
+
+# oci db system-version-collection list-system-versions -> oci db system-version-collection list
+cli_util.rename_command(database_cli, database_cli.system_version_collection_group, database_cli.list_system_versions, "list")
+
+
+# oci db system-version-collection -> oci db system-version
+cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.system_version_collection_group, "system-version")

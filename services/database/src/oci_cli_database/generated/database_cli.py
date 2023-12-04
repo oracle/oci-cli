@@ -208,6 +208,12 @@ def infrastructure_target_version_group():
     pass
 
 
+@click.command(cli_util.override('db.system_version_collection_group.command_name', 'system-version-collection'), cls=CommandGroupWithAlias, help="""Results of the System version lists. Contains SystemVersionSummary items.""")
+@cli_util.help_option_group
+def system_version_collection_group():
+    pass
+
+
 @click.command(cli_util.override('db.backup_destination_summary_group.command_name', 'backup-destination-summary'), cls=CommandGroupWithAlias, help="""Backup destination details, including the list of databases using the backup destination.""")
 @cli_util.help_option_group
 def backup_destination_summary_group():
@@ -229,6 +235,12 @@ def console_connection_group():
 @click.command(cli_util.override('db.external_database_connector_group.command_name', 'external-database-connector'), cls=CommandGroupWithAlias, help="""An Oracle Cloud Infrastructure resource used to connect to an external Oracle Database. This resource stores the database connection string, user credentials, and related details that allow you to manage your external database using the Oracle Cloud Infrastructure Console and API interfaces.""")
 @cli_util.help_option_group
 def external_database_connector_group():
+    pass
+
+
+@click.command(cli_util.override('db.console_history_group.command_name', 'console-history'), cls=CommandGroupWithAlias, help="""The details of the Db Node console history.""")
+@cli_util.help_option_group
+def console_history_group():
     pass
 
 
@@ -440,10 +452,12 @@ db_root_group.add_command(ocp_us_group)
 db_root_group.add_command(patch_history_entry_group)
 db_root_group.add_command(vm_cluster_network_group)
 db_root_group.add_command(infrastructure_target_version_group)
+db_root_group.add_command(system_version_collection_group)
 db_root_group.add_command(backup_destination_summary_group)
 db_root_group.add_command(db_node_group)
 db_root_group.add_command(console_connection_group)
 db_root_group.add_command(external_database_connector_group)
+db_root_group.add_command(console_history_group)
 db_root_group.add_command(db_server_group)
 db_root_group.add_command(db_system_upgrade_history_entry_group)
 db_root_group.add_command(update_group)
@@ -6083,6 +6097,7 @@ The maximum length of the combined hostname and domain is 63 characters.
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--system-version', help=u"""Operating system version of the image.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -6091,7 +6106,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-servers': {'module': 'database', 'class': 'list[string]'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}}, output_type={'module': 'database', 'class': 'CloudVmCluster'})
 @cli_util.wrap_exceptions
-def create_cloud_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, backup_subnet_id, cpu_core_count, display_name, cloud_exadata_infrastructure_id, hostname, ssh_public_keys, gi_version, ocpu_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, db_servers, cluster_name, data_storage_percentage, domain, license_model, is_sparse_diskgroup_enabled, is_local_backup_enabled, time_zone, scan_listener_port_tcp, scan_listener_port_tcp_ssl, private_zone_id, nsg_ids, backup_network_nsg_ids, freeform_tags, defined_tags, data_collection_options):
+def create_cloud_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, backup_subnet_id, cpu_core_count, display_name, cloud_exadata_infrastructure_id, hostname, ssh_public_keys, gi_version, ocpu_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, db_servers, cluster_name, data_storage_percentage, domain, license_model, is_sparse_diskgroup_enabled, is_local_backup_enabled, time_zone, scan_listener_port_tcp, scan_listener_port_tcp_ssl, private_zone_id, nsg_ids, backup_network_nsg_ids, freeform_tags, defined_tags, data_collection_options, system_version):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -6166,6 +6181,9 @@ def create_cloud_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
     if data_collection_options is not None:
         _details['dataCollectionOptions'] = cli_util.parse_json_parameter("data_collection_options", data_collection_options)
+
+    if system_version is not None:
+        _details['systemVersion'] = system_version
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.create_cloud_vm_cluster(
@@ -6247,6 +6265,70 @@ def create_console_connection(ctx, from_json, wait_for_state, max_wait_seconds, 
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_console_connection(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@console_history_group.command(name=cli_util.override('db.create_console_history.command_name', 'create'), help=u"""Captures the most recent serial console data (up to a megabyte) for the specified database node. \n[Command Reference](createConsoleHistory)""")
+@cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the console history. The name does not need to be unique.""")
+@cli_util.option('--db-node-id', required=True, help=u"""The database node [OCID].""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["REQUESTED", "GETTING_HISTORY", "SUCCEEDED", "FAILED", "DELETED", "DELETING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'ConsoleHistory'})
+@cli_util.wrap_exceptions
+def create_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, db_node_id, freeform_tags, defined_tags):
+
+    if isinstance(db_node_id, six.string_types) and len(db_node_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-node-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.create_console_history(
+        db_node_id=db_node_id,
+        create_console_history_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_console_history') and callable(getattr(client, 'get_console_history')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_console_history(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -8705,6 +8787,7 @@ def create_pluggable_database_create_pluggable_database_from_local_clone_details
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--system-version', help=u"""Operating system version of the image.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -8713,7 +8796,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'db-servers': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}}, output_type={'module': 'database', 'class': 'VmCluster'})
 @cli_util.wrap_exceptions
-def create_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, exadata_infrastructure_id, cpu_core_count, ssh_public_keys, vm_cluster_network_id, gi_version, ocpu_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, data_storage_size_in_gbs, license_model, is_sparse_diskgroup_enabled, is_local_backup_enabled, time_zone, db_servers, freeform_tags, defined_tags, data_collection_options):
+def create_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, exadata_infrastructure_id, cpu_core_count, ssh_public_keys, vm_cluster_network_id, gi_version, ocpu_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, data_storage_size_in_gbs, license_model, is_sparse_diskgroup_enabled, is_local_backup_enabled, time_zone, db_servers, freeform_tags, defined_tags, data_collection_options, system_version):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -8765,6 +8848,9 @@ def create_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
     if data_collection_options is not None:
         _details['dataCollectionOptions'] = cli_util.parse_json_parameter("data_collection_options", data_collection_options)
+
+    if system_version is not None:
+        _details['systemVersion'] = system_version
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.create_vm_cluster(
@@ -9453,6 +9539,64 @@ def delete_console_connection(ctx, from_json, wait_for_state, max_wait_seconds, 
     result = client.delete_console_connection(
         db_node_id=db_node_id,
         console_connection_id=console_connection_id,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@console_history_group.command(name=cli_util.override('db.delete_console_history.command_name', 'delete'), help=u"""Deletes the specified database node console history. \n[Command Reference](deleteConsoleHistory)""")
+@cli_util.option('--db-node-id', required=True, help=u"""The database node [OCID].""")
+@cli_util.option('--console-history-id', required=True, help=u"""The OCID of the console history.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_node_id, console_history_id, if_match):
+
+    if isinstance(db_node_id, six.string_types) and len(db_node_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-node-id cannot be whitespace or empty string')
+
+    if isinstance(console_history_id, six.string_types) and len(console_history_id.strip()) == 0:
+        raise click.UsageError('Parameter --console-history-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.delete_console_history(
+        db_node_id=db_node_id,
+        console_history_id=console_history_id,
         **kwargs
     )
     work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
@@ -12783,6 +12927,83 @@ def get_console_connection(ctx, from_json, db_node_id, console_connection_id):
         **kwargs
     )
     cli_util.render_response(result, ctx)
+
+
+@console_history_group.command(name=cli_util.override('db.get_console_history.command_name', 'get'), help=u"""Gets information about the specified database node console history. \n[Command Reference](getConsoleHistory)""")
+@cli_util.option('--db-node-id', required=True, help=u"""The database node [OCID].""")
+@cli_util.option('--console-history-id', required=True, help=u"""The OCID of the console history.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'ConsoleHistory'})
+@cli_util.wrap_exceptions
+def get_console_history(ctx, from_json, db_node_id, console_history_id):
+
+    if isinstance(db_node_id, six.string_types) and len(db_node_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-node-id cannot be whitespace or empty string')
+
+    if isinstance(console_history_id, six.string_types) and len(console_history_id.strip()) == 0:
+        raise click.UsageError('Parameter --console-history-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.get_console_history(
+        db_node_id=db_node_id,
+        console_history_id=console_history_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@console_history_group.command(name=cli_util.override('db.get_console_history_content.command_name', 'get-console-history-content'), help=u"""Retrieves the specified database node console history contents upto a megabyte. \n[Command Reference](getConsoleHistoryContent)""")
+@cli_util.option('--db-node-id', required=True, help=u"""The database node [OCID].""")
+@cli_util.option('--console-history-id', required=True, help=u"""The OCID of the console history.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def get_console_history_content(ctx, from_json, file, db_node_id, console_history_id):
+
+    if isinstance(db_node_id, six.string_types) and len(db_node_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-node-id cannot be whitespace or empty string')
+
+    if isinstance(console_history_id, six.string_types) and len(console_history_id.strip()) == 0:
+        raise click.UsageError('Parameter --console-history-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.get_console_history_content(
+        db_node_id=db_node_id,
+        console_history_id=console_history_id,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
 
 
 @data_guard_association_group.command(name=cli_util.override('db.get_data_guard_association.command_name', 'get'), help=u"""Gets the specified Data Guard association's configuration information. \n[Command Reference](getDataGuardAssociation)""")
@@ -16123,6 +16344,69 @@ def list_console_connections(ctx, from_json, all_pages, db_node_id):
     cli_util.render_response(result, ctx)
 
 
+@console_history_group.command(name=cli_util.override('db.list_console_histories.command_name', 'list'), help=u"""Lists the console histories for the specified database node. \n[Command Reference](listConsoleHistories)""")
+@cli_util.option('--db-node-id', required=True, help=u"""The database node [OCID].""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["REQUESTED", "GETTING_HISTORY", "SUCCEEDED", "FAILED", "DELETED", "DELETING"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'ConsoleHistoryCollection'})
+@cli_util.wrap_exceptions
+def list_console_histories(ctx, from_json, all_pages, page_size, db_node_id, limit, page, sort_by, sort_order, lifecycle_state, display_name):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(db_node_id, six.string_types) and len(db_node_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-node-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_console_histories,
+            db_node_id=db_node_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_console_histories,
+            limit,
+            page_size,
+            db_node_id=db_node_id,
+            **kwargs
+        )
+    else:
+        result = client.list_console_histories(
+            db_node_id=db_node_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @autonomous_patch_group.command(name=cli_util.override('db.list_container_database_patches.command_name', 'list-container-database-patches'), help=u"""Lists the patches applicable to the requested container database. \n[Command Reference](listContainerDatabasePatches)""")
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
@@ -17914,6 +18198,65 @@ def list_pluggable_databases(ctx, from_json, all_pages, page_size, compartment_i
         )
     else:
         result = client.list_pluggable_databases(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@system_version_collection_group.command(name=cli_util.override('db.list_system_versions.command_name', 'list-system-versions'), help=u"""Gets a list of supported Exadata system versions for a given shape and GI version. \n[Command Reference](listSystemVersions)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--shape', required=True, help=u"""Specifies shape query parameter.""")
+@cli_util.option('--gi-version', required=True, help=u"""Specifies gi version query parameter.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'SystemVersionCollection'})
+@cli_util.wrap_exceptions
+def list_system_versions(ctx, from_json, all_pages, page_size, compartment_id, shape, gi_version, limit, page, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_system_versions,
+            compartment_id=compartment_id,
+            shape=shape,
+            gi_version=gi_version,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_system_versions,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            shape=shape,
+            gi_version=gi_version,
+            **kwargs
+        )
+    else:
+        result = client.list_system_versions(
+            compartment_id=compartment_id,
+            shape=shape,
+            gi_version=gi_version,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -21432,6 +21775,9 @@ def update_autonomous_exadata_infrastructure(ctx, from_json, force, wait_for_sta
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--autonomous-data-storage-size-in-tbs', help=u"""The new scaled up/down value for autonomous data storage in TBs for Autonomous VM cluster.""")
+@cli_util.option('--cpu-core-count-per-node', type=click.INT, help=u"""The new scaled up/down value for cpus per Autonomous VM cluster per node.""")
+@cli_util.option('--total-container-databases', type=click.INT, help=u"""The new scaled up/down value for maxACD count for Autonomous VM cluster.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -21442,7 +21788,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousVmCluster'})
 @cli_util.wrap_exceptions
-def update_autonomous_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_vm_cluster_id, maintenance_window_details, license_model, freeform_tags, defined_tags, if_match):
+def update_autonomous_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_vm_cluster_id, maintenance_window_details, license_model, freeform_tags, defined_tags, autonomous_data_storage_size_in_tbs, cpu_core_count_per_node, total_container_databases, if_match):
 
     if isinstance(autonomous_vm_cluster_id, six.string_types) and len(autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-vm-cluster-id cannot be whitespace or empty string')
@@ -21469,6 +21815,15 @@ def update_autonomous_vm_cluster(ctx, from_json, force, wait_for_state, max_wait
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if autonomous_data_storage_size_in_tbs is not None:
+        _details['autonomousDataStorageSizeInTBs'] = autonomous_data_storage_size_in_tbs
+
+    if cpu_core_count_per_node is not None:
+        _details['cpuCoreCountPerNode'] = cpu_core_count_per_node
+
+    if total_container_databases is not None:
+        _details['totalContainerDatabases'] = total_container_databases
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.update_autonomous_vm_cluster(
@@ -21601,6 +21956,9 @@ def update_backup_destination(ctx, from_json, force, wait_for_state, max_wait_se
 @cli_util.option('--description', help=u"""User defined description of the cloud Autonomous VM cluster.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the cloud Autonomous VM cluster. The name does not need to be unique.""")
 @cli_util.option('--maintenance-window-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--autonomous-data-storage-size-in-tbs', help=u"""The new scaled up/down value for exadata storage in TBs for cloud autonomous VM cluster.""")
+@cli_util.option('--cpu-core-count-per-node', type=click.INT, help=u"""The new scaled up/down value for ocpus for cloud autonomous VM cluster per node.""")
+@cli_util.option('--total-container-databases', type=click.INT, help=u"""The new scaled up/down value for maxACD count for cloud autonomous VM cluster.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Oracle Autonomous Database. Bring your own license (BYOL) allows you to apply your current on-premises Oracle software licenses to equivalent, highly automated Oracle services in the cloud. License Included allows you to subscribe to new Oracle Database software licenses and the Oracle Database service. Note that when provisioning an [Autonomous Database on dedicated Exadata infrastructure], this attribute must be null. It is already set at the Autonomous Exadata Infrastructure level. When provisioning an [Autonomous Database Serverless]  database, if a value is not specified, the system defaults the value to `BRING_YOUR_OWN_LICENSE`.
 
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, maxCpuCoreCount, dataStorageSizeInTBs, adminPassword, isMTLSConnectionRequired, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
@@ -21619,7 +21977,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'CloudAutonomousVmCluster'})
 @cli_util.wrap_exceptions
-def update_cloud_autonomous_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_autonomous_vm_cluster_id, description, display_name, maintenance_window_details, license_model, nsg_ids, freeform_tags, defined_tags, if_match):
+def update_cloud_autonomous_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_autonomous_vm_cluster_id, description, display_name, maintenance_window_details, autonomous_data_storage_size_in_tbs, cpu_core_count_per_node, total_container_databases, license_model, nsg_ids, freeform_tags, defined_tags, if_match):
 
     if isinstance(cloud_autonomous_vm_cluster_id, six.string_types) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-autonomous-vm-cluster-id cannot be whitespace or empty string')
@@ -21643,6 +22001,15 @@ def update_cloud_autonomous_vm_cluster(ctx, from_json, force, wait_for_state, ma
 
     if maintenance_window_details is not None:
         _details['maintenanceWindowDetails'] = cli_util.parse_json_parameter("maintenance_window_details", maintenance_window_details)
+
+    if autonomous_data_storage_size_in_tbs is not None:
+        _details['autonomousDataStorageSizeInTBs'] = autonomous_data_storage_size_in_tbs
+
+    if cpu_core_count_per_node is not None:
+        _details['cpuCoreCountPerNode'] = cpu_core_count_per_node
+
+    if total_container_databases is not None:
+        _details['totalContainerDatabases'] = total_container_databases
 
     if license_model is not None:
         _details['licenseModel'] = license_model
@@ -22011,6 +22378,85 @@ def update_console_connection(ctx, from_json, force, wait_for_state, max_wait_se
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_console_connection(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@console_history_group.command(name=cli_util.override('db.update_console_history.command_name', 'update'), help=u"""Updates the specified database node console history. \n[Command Reference](updateConsoleHistory)""")
+@cli_util.option('--db-node-id', required=True, help=u"""The database node [OCID].""")
+@cli_util.option('--console-history-id', required=True, help=u"""The OCID of the console history.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""The user-friendly name for the console history. The name does not need to be unique.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["REQUESTED", "GETTING_HISTORY", "SUCCEEDED", "FAILED", "DELETED", "DELETING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'ConsoleHistory'})
+@cli_util.wrap_exceptions
+def update_console_history(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_node_id, console_history_id, freeform_tags, defined_tags, display_name, if_match):
+
+    if isinstance(db_node_id, six.string_types) and len(db_node_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-node-id cannot be whitespace or empty string')
+
+    if isinstance(console_history_id, six.string_types) and len(console_history_id.strip()) == 0:
+        raise click.UsageError('Parameter --console-history-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.update_console_history(
+        db_node_id=db_node_id,
+        console_history_id=console_history_id,
+        update_console_history_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_console_history') and callable(getattr(client, 'get_console_history')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_console_history(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -24020,6 +24466,7 @@ def upgrade_database_database_upgrade_with_db_version_details(ctx, from_json, wa
 @cli_util.option('--action', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRECHECK", "ROLLBACK", "UPDATE_SNAPSHOT_RETENTION_DAYS", "UPGRADE"]), help=u"""The operating system upgrade action.""")
 @cli_util.option('--snapshot-retention-period-in-days', type=click.INT, help=u"""The retention period, in days, for the snapshot that allows you to perform a rollback of the upgrade operation. After this number of days passes, you cannot roll back the upgrade.""")
 @cli_util.option('--new-gi-version', help=u"""A valid Oracle Grid Infrastructure (GI) software version.""")
+@cli_util.option('--new-os-version', help=u"""A valid Oracle Software (OS) version eg. Oracle Linux Server release 8""")
 @cli_util.option('--is-snapshot-retention-days-force-updated', type=click.BOOL, help=u"""If true, rollback time is updated even if operating system upgrade history contains errors.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MIGRATED", "MAINTENANCE_IN_PROGRESS", "NEEDS_ATTENTION", "UPGRADING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -24030,7 +24477,7 @@ def upgrade_database_database_upgrade_with_db_version_details(ctx, from_json, wa
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def upgrade_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, action, snapshot_retention_period_in_days, new_gi_version, is_snapshot_retention_days_force_updated, if_match):
+def upgrade_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, action, snapshot_retention_period_in_days, new_gi_version, new_os_version, is_snapshot_retention_days_force_updated, if_match):
 
     if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
@@ -24048,6 +24495,9 @@ def upgrade_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
     if new_gi_version is not None:
         _details['newGiVersion'] = new_gi_version
+
+    if new_os_version is not None:
+        _details['newOsVersion'] = new_os_version
 
     if is_snapshot_retention_days_force_updated is not None:
         _details['isSnapshotRetentionDaysForceUpdated'] = is_snapshot_retention_days_force_updated

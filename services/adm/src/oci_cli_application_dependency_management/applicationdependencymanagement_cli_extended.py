@@ -72,9 +72,9 @@ applicationdependencymanagement_cli.remediation_recipe_group.commands.pop(applic
 @applicationdependencymanagement_cli.vulnerability_audit_group.command(name="create", help=applicationdependencymanagement_cli.create_vulnerability_audit.help)
 @click.pass_context
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'application-dependencies': {'module': 'adm', 'class': 'list[ApplicationDependency]'}, 'configuration': {'module': 'adm', 'class': 'VulnerabilityAuditConfiguration'}, 'source': {'module': 'adm', 'class': 'VulnerabilityAuditSource'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'adm', 'class': 'VulnerabilityAudit'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'application-dependencies': {'module': 'adm', 'class': 'list[ApplicationDependency]'}, 'configuration': {'module': 'adm', 'class': 'VulnerabilityAuditConfiguration'}, 'source': {'module': 'adm', 'class': 'VulnerabilityAuditSource'}, 'usage-data': {'module': 'adm', 'class': 'UsageDataViaObjectStorageTupleDetails'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'adm', 'class': 'VulnerabilityAudit'})
 @cli_util.wrap_exceptions
-def create_vulnerability_audit_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, build_type, compartment_id, application_dependencies, configuration, display_name, source, freeform_tags, defined_tags, if_match):
+def create_vulnerability_audit_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, build_type, compartment_id, application_dependencies, configuration, usage_data, display_name, source, freeform_tags, defined_tags, if_match):
 
     kwargs = {}
     if if_match is not None:
@@ -99,6 +99,9 @@ def create_vulnerability_audit_extended(ctx, from_json, wait_for_state, max_wait
 
     if source is not None:
         _details['source'] = cli_util.parse_json_parameter("source", source)
+
+    if usage_data is not None:
+        _details['usageData'] = cli_util.parse_json_parameter("usage_data", usage_data)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -141,9 +144,9 @@ def create_vulnerability_audit_extended(ctx, from_json, wait_for_state, max_wait
 @applicationdependencymanagement_cli.vulnerability_audit_group.command(name="create-vulnerability-audit-unknown-source-vulnerability-audit-source", help=applicationdependencymanagement_cli.create_vulnerability_audit_unknown_source_vulnerability_audit_source.help)
 @click.pass_context
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'application-dependencies': {'module': 'adm', 'class': 'list[ApplicationDependency]'}, 'configuration': {'module': 'adm', 'class': 'VulnerabilityAuditConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'adm', 'class': 'VulnerabilityAudit'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'application-dependencies': {'module': 'adm', 'class': 'list[ApplicationDependency]'}, 'configuration': {'module': 'adm', 'class': 'VulnerabilityAuditConfiguration'}, 'usage-data': {'module': 'adm', 'class': 'UsageDataViaObjectStorageTupleDetails'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'adm', 'class': 'VulnerabilityAudit'})
 @cli_util.wrap_exceptions
-def create_vulnerability_audit_unknown_source_vulnerability_audit_source_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, build_type, compartment_id, application_dependencies, configuration, display_name, freeform_tags, defined_tags, if_match):
+def create_vulnerability_audit_unknown_source_vulnerability_audit_source_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, build_type, compartment_id, application_dependencies, configuration, usage_data, display_name, freeform_tags, defined_tags, if_match):
 
     kwargs = {}
     if if_match is not None:
@@ -166,6 +169,9 @@ def create_vulnerability_audit_unknown_source_vulnerability_audit_source_extende
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if usage_data is not None:
+        _details['usageData'] = cli_util.parse_json_parameter("usage_data", usage_data)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -210,9 +216,9 @@ def create_vulnerability_audit_unknown_source_vulnerability_audit_source_extende
 @applicationdependencymanagement_cli.vulnerability_audit_group.command(name="create-vulnerability-audit-oci-resource-vulnerability-audit-source", help=applicationdependencymanagement_cli.create_vulnerability_audit_oci_resource_vulnerability_audit_source.help)
 @click.pass_context
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'application-dependencies': {'module': 'adm', 'class': 'list[ApplicationDependency]'}, 'configuration': {'module': 'adm', 'class': 'VulnerabilityAuditConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'adm', 'class': 'VulnerabilityAudit'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'application-dependencies': {'module': 'adm', 'class': 'list[ApplicationDependency]'}, 'configuration': {'module': 'adm', 'class': 'VulnerabilityAuditConfiguration'}, 'usage-data': {'module': 'adm', 'class': 'UsageDataViaObjectStorageTupleDetails'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'adm', 'class': 'VulnerabilityAudit'})
 @cli_util.wrap_exceptions
-def create_vulnerability_audit_oci_resource_vulnerability_audit_source_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, build_type, source_oci_resource_id, compartment_id, application_dependencies, configuration, display_name, freeform_tags, defined_tags, if_match):
+def create_vulnerability_audit_oci_resource_vulnerability_audit_source_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, build_type, source_oci_resource_id, compartment_id, application_dependencies, configuration, usage_data, display_name, freeform_tags, defined_tags, if_match):
 
     kwargs = {}
     if if_match is not None:
@@ -236,6 +242,9 @@ def create_vulnerability_audit_oci_resource_vulnerability_audit_source_extended(
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if usage_data is not None:
+        _details['usageData'] = cli_util.parse_json_parameter("usage_data", usage_data)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -280,9 +289,9 @@ def create_vulnerability_audit_oci_resource_vulnerability_audit_source_extended(
 @applicationdependencymanagement_cli.vulnerability_audit_group.command(name="create-vulnerability-audit-external-resource-vulnerability-audit-source", help=applicationdependencymanagement_cli.create_vulnerability_audit_external_resource_vulnerability_audit_source.help)
 @click.pass_context
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'application-dependencies': {'module': 'adm', 'class': 'list[ApplicationDependency]'}, 'configuration': {'module': 'adm', 'class': 'VulnerabilityAuditConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'adm', 'class': 'VulnerabilityAudit'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'application-dependencies': {'module': 'adm', 'class': 'list[ApplicationDependency]'}, 'configuration': {'module': 'adm', 'class': 'VulnerabilityAuditConfiguration'}, 'usage-data': {'module': 'adm', 'class': 'UsageDataViaObjectStorageTupleDetails'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'adm', 'class': 'VulnerabilityAudit'})
 @cli_util.wrap_exceptions
-def create_vulnerability_audit_external_resource_vulnerability_audit_source_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, build_type, compartment_id, application_dependencies, configuration, display_name, freeform_tags, defined_tags, if_match, source_description):
+def create_vulnerability_audit_external_resource_vulnerability_audit_source_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, build_type, compartment_id, application_dependencies, configuration,usage_data, display_name, freeform_tags, defined_tags, if_match, source_description):
 
     kwargs = {}
     if if_match is not None:
@@ -305,6 +314,9 @@ def create_vulnerability_audit_external_resource_vulnerability_audit_source_exte
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if usage_data is not None:
+        _details['usageData'] = cli_util.parse_json_parameter("usage_data", usage_data)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -346,3 +358,7 @@ def create_vulnerability_audit_external_resource_vulnerability_audit_source_exte
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
+
+
+# Remove create-vulnerability-audit-usage-data-via-object-storage-tuple-details from oci adm vulnerability-audit
+applicationdependencymanagement_cli.vulnerability_audit_group.commands.pop(applicationdependencymanagement_cli.create_vulnerability_audit_usage_data_via_object_storage_tuple_details.name)

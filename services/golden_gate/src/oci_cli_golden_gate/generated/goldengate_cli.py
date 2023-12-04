@@ -34,6 +34,12 @@ def trail_file_summary_group():
     pass
 
 
+@click.command(cli_util.override('goldengate.certificate_group.command_name', 'certificate'), cls=CommandGroupWithAlias, help="""Certificate data.""")
+@cli_util.help_option_group
+def certificate_group():
+    pass
+
+
 @click.command(cli_util.override('goldengate.work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""A log message from the execution of a work request.""")
 @cli_util.help_option_group
 def work_request_log_entry_group():
@@ -106,6 +112,12 @@ def deployment_version_collection_group():
     pass
 
 
+@click.command(cli_util.override('goldengate.certificate_collection_group.command_name', 'certificate-collection'), cls=CommandGroupWithAlias, help="""A list of Certificates.""")
+@cli_util.help_option_group
+def certificate_collection_group():
+    pass
+
+
 @click.command(cli_util.override('goldengate.deployment_group.command_name', 'deployment'), cls=CommandGroupWithAlias, help="""A container for your OCI GoldenGate resources, such as the OCI GoldenGate deployment console.""")
 @cli_util.help_option_group
 def deployment_group():
@@ -114,6 +126,7 @@ def deployment_group():
 
 goldengate_root_group.add_command(deployment_backup_group)
 goldengate_root_group.add_command(trail_file_summary_group)
+goldengate_root_group.add_command(certificate_group)
 goldengate_root_group.add_command(work_request_log_entry_group)
 goldengate_root_group.add_command(work_request_group)
 goldengate_root_group.add_command(message_summary_group)
@@ -126,6 +139,7 @@ goldengate_root_group.add_command(trail_sequence_summary_group)
 goldengate_root_group.add_command(work_request_error_group)
 goldengate_root_group.add_command(connection_group)
 goldengate_root_group.add_command(deployment_version_collection_group)
+goldengate_root_group.add_command(certificate_collection_group)
 goldengate_root_group.add_command(deployment_group)
 
 
@@ -761,6 +775,62 @@ def copy_deployment_backup(ctx, from_json, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
+@certificate_collection_group.command(name=cli_util.override('goldengate.create_certificate.command_name', 'create-certificate'), help=u"""Creates a new certificate to truststore. \n[Command Reference](createCertificate)""")
+@cli_util.option('--key', required=True, help=u"""The identifier key (unique name in the scope of the deployment) of the certificate being referenced. It must be 1 to 32 characters long, must contain only alphanumeric characters and must start with a letter.""")
+@cli_util.option('--certificate-content', required=True, help=u"""A PEM-encoded SSL certificate.""")
+@cli_util.option('--deployment-id', required=True, help=u"""A unique Deployment identifier.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, key, certificate_content, deployment_id):
+
+    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+        raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['key'] = key
+    _details['certificateContent'] = certificate_content
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.create_certificate(
+        deployment_id=deployment_id,
+        create_certificate_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @connection_group.command(name=cli_util.override('goldengate.create_connection.command_name', 'create'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--connection-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY"]), help=u"""The connection type.""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
@@ -871,10 +941,10 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 
 This option is a JSON list with items of type NameValuePair.  For documentation on NameValuePair please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/NameValuePair.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ssl-mode', help=u"""SSL modes for PostgreSQL.""")
-@cli_util.option('--ssl-ca', help=u"""The base64 encoded certificate of the trusted certificate authorities (Trusted CA) for PostgreSQL.""")
-@cli_util.option('--ssl-crl', help=u"""The base64 encoded list of certificates revoked by the trusted certificate authorities (Trusted CA) for PostgreSQL.""")
-@cli_util.option('--ssl-cert', help=u"""The base64 encoded certificate of the PostgreSQL server.""")
-@cli_util.option('--ssl-key', help=u"""The base64 encoded private key of the PostgreSQL server.""")
+@cli_util.option('--ssl-ca', help=u"""The base64 encoded certificate of the trusted certificate authorities (Trusted CA) for PostgreSQL. The supported file formats are .pem and .crt.""")
+@cli_util.option('--ssl-crl', help=u"""The base64 encoded list of certificates revoked by the trusted certificate authorities (Trusted CA).""")
+@cli_util.option('--ssl-cert', help=u"""The base64 encoded certificate of the PostgreSQL server. The supported file formats are .pem and .crt.""")
+@cli_util.option('--ssl-key', help=u"""The base64 encoded private key of the PostgreSQL server. The supported file formats are .pem and .crt.""")
 @cli_util.option('--private-ip', help=u"""The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1122,7 +1192,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--additional-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of name-value pair attribute entries. Used as additional parameters in connection string.
 
 This option is a JSON list with items of type NameValuePair.  For documentation on NameValuePair please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/NameValuePair.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--ssl-ca', help=u"""Database Certificate - The base64 encoded content of pem file containing the server public key (for 1-way SSL).""")
+@cli_util.option('--ssl-ca', help=u"""Database Certificate - The base64 encoded content of a .pem or .crt file. containing the server public key (for 1-way SSL).""")
 @cli_util.option('--should-validate-server-certificate', type=click.BOOL, help=u"""If set to true, the driver validates the certificate that is sent by the database server.""")
 @cli_util.option('--private-ip', help=u"""The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2501,10 +2571,10 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--host', help=u"""The name or address of a host.""")
 @cli_util.option('--port', type=click.INT, help=u"""The port of an endpoint usually specified for a connection.""")
 @cli_util.option('--ssl-mode', help=u"""SSL modes for MySQL.""")
-@cli_util.option('--ssl-ca', help=u"""Database Certificate - The base64 encoded content of mysql.pem file containing the server public key (for 1 and 2-way SSL).""")
-@cli_util.option('--ssl-crl', help=u"""Certificates revoked by certificate authorities (CA). Server certificate must not be on this list (for 1 and 2-way SSL). Note: This is an optional and that too only applicable if TLS/MTLS option is selected.""")
-@cli_util.option('--ssl-cert', help=u"""Client Certificate - The base64 encoded content of client-cert.pem file containing the client public key (for 2-way SSL).""")
-@cli_util.option('--ssl-key', help=u"""Client Key - The client-key.pem containing the client private key (for 2-way SSL).""")
+@cli_util.option('--ssl-ca', help=u"""Database Certificate - The base64 encoded content of a .pem or .crt file. containing the server public key (for 1 and 2-way SSL).""")
+@cli_util.option('--ssl-crl', help=u"""The base64 encoded list of certificates revoked by the trusted certificate authorities (Trusted CA). Note: This is an optional property and only applicable if TLS/MTLS option is selected.""")
+@cli_util.option('--ssl-cert', help=u"""Client Certificate - The base64 encoded content of a .pem or .crt file. containing the client public key (for 2-way SSL).""")
+@cli_util.option('--ssl-key', help=u"""Client Key \u2013 The base64 encoded content of a .pem or .crt file containing the client private key (for 2-way SSL).""")
 @cli_util.option('--private-ip', help=u"""The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
 @cli_util.option('--additional-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of name-value pair attribute entries. Used as additional parameters in connection string.
 
@@ -3693,6 +3763,63 @@ def create_deployment_backup(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
+@certificate_group.command(name=cli_util.override('goldengate.delete_certificate.command_name', 'delete'), help=u"""Deletes the certificate from truststore. \n[Command Reference](deleteCertificate)""")
+@cli_util.option('--deployment-id', required=True, help=u"""A unique Deployment identifier.""")
+@cli_util.option('--certificate-key', required=True, help=u"""A unique certificate identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, certificate_key, if_match):
+
+    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+        raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
+
+    if isinstance(certificate_key, six.string_types) and len(certificate_key.strip()) == 0:
+        raise click.UsageError('Parameter --certificate-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.delete_certificate(
+        deployment_id=deployment_id,
+        certificate_key=certificate_key,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @connection_group.command(name=cli_util.override('goldengate.delete_connection.command_name', 'delete'), help=u"""Deletes a Connection. \n[Command Reference](deleteConnection)""")
 @cli_util.option('--connection-id', required=True, help=u"""The [OCID] of a Connection.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -4080,6 +4207,33 @@ def export_deployment_wallet(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
+@certificate_group.command(name=cli_util.override('goldengate.get_certificate.command_name', 'get'), help=u"""Retrieves a Certificate. \n[Command Reference](getCertificate)""")
+@cli_util.option('--deployment-id', required=True, help=u"""A unique Deployment identifier.""")
+@cli_util.option('--certificate-key', required=True, help=u"""A unique certificate identifier.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'golden_gate', 'class': 'Certificate'})
+@cli_util.wrap_exceptions
+def get_certificate(ctx, from_json, deployment_id, certificate_key):
+
+    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+        raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
+
+    if isinstance(certificate_key, six.string_types) and len(certificate_key.strip()) == 0:
+        raise click.UsageError('Parameter --certificate-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.get_certificate(
+        deployment_id=deployment_id,
+        certificate_key=certificate_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @connection_group.command(name=cli_util.override('goldengate.get_connection.command_name', 'get'), help=u"""Retrieves a Connection. \n[Command Reference](getConnection)""")
 @cli_util.option('--connection-id', required=True, help=u"""The [OCID] of a Connection.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4302,6 +4456,66 @@ def import_deployment_wallet(ctx, from_json, wait_for_state, max_wait_seconds, w
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@certificate_collection_group.command(name=cli_util.override('goldengate.list_certificates.command_name', 'list-certificates'), help=u"""Returns a list of certificates from truststore. \n[Command Reference](listCertificates)""")
+@cli_util.option('--deployment-id', required=True, help=u"""A unique Deployment identifier.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only connections having the 'lifecycleState' given.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order can be provided. Default order for 'timeCreated' is descending.  Default order for 'displayName' is ascending. If no value is specified timeCreated is the default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'golden_gate', 'class': 'CertificateCollection'})
+@cli_util.wrap_exceptions
+def list_certificates(ctx, from_json, all_pages, page_size, deployment_id, lifecycle_state, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+        raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_certificates,
+            deployment_id=deployment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_certificates,
+            limit,
+            page_size,
+            deployment_id=deployment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_certificates(
+            deployment_id=deployment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -7442,10 +7656,10 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 This option is a JSON list with items of type NameValuePair.  For documentation on NameValuePair please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/NameValuePair.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--security-protocol', help=u"""Security protocol for PostgreSQL.""")
 @cli_util.option('--ssl-mode', help=u"""SSL modes for PostgreSQL.""")
-@cli_util.option('--ssl-ca', help=u"""The base64 encoded certificate of the trusted certificate authorities (Trusted CA) for PostgreSQL.""")
-@cli_util.option('--ssl-crl', help=u"""The base64 encoded list of certificates revoked by the trusted certificate authorities (Trusted CA) for PostgreSQL.""")
-@cli_util.option('--ssl-cert', help=u"""The base64 encoded certificate of the PostgreSQL server.""")
-@cli_util.option('--ssl-key', help=u"""The base64 encoded private key of the PostgreSQL server.""")
+@cli_util.option('--ssl-ca', help=u"""The base64 encoded certificate of the trusted certificate authorities (Trusted CA) for PostgreSQL. The supported file formats are .pem and .crt.""")
+@cli_util.option('--ssl-crl', help=u"""The base64 encoded list of certificates revoked by the trusted certificate authorities (Trusted CA).""")
+@cli_util.option('--ssl-cert', help=u"""The base64 encoded certificate of the PostgreSQL server. The supported file formats are .pem and .crt.""")
+@cli_util.option('--ssl-key', help=u"""The base64 encoded private key of the PostgreSQL server. The supported file formats are .pem and .crt.""")
 @cli_util.option('--private-ip', help=u"""The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -7589,7 +7803,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 
 This option is a JSON list with items of type NameValuePair.  For documentation on NameValuePair please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/NameValuePair.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--security-protocol', help=u"""Security Type for Microsoft SQL Server.""")
-@cli_util.option('--ssl-ca', help=u"""Database Certificate - The base64 encoded content of pem file containing the server public key (for 1-way SSL).""")
+@cli_util.option('--ssl-ca', help=u"""Database Certificate - The base64 encoded content of a .pem or .crt file. containing the server public key (for 1-way SSL).""")
 @cli_util.option('--should-validate-server-certificate', type=click.BOOL, help=u"""If set to true, the driver validates the certificate that is sent by the database server.""")
 @cli_util.option('--private-ip', help=u"""The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -8293,10 +8507,10 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--database-name', help=u"""The name of the database.""")
 @cli_util.option('--security-protocol', help=u"""Security Type for MySQL.""")
 @cli_util.option('--ssl-mode', help=u"""SSL modes for MySQL.""")
-@cli_util.option('--ssl-ca', help=u"""Database Certificate - The base64 encoded content of mysql.pem file containing the server public key (for 1 and 2-way SSL).""")
-@cli_util.option('--ssl-crl', help=u"""Certificates revoked by certificate authorities (CA). Server certificate must not be on this list (for 1 and 2-way SSL). Note: This is an optional and that too only applicable if TLS/MTLS option is selected.""")
-@cli_util.option('--ssl-cert', help=u"""Client Certificate - The base64 encoded content of client-cert.pem file containing the client public key (for 2-way SSL).""")
-@cli_util.option('--ssl-key', help=u"""Client Key - The client-key.pem containing the client private key (for 2-way SSL).""")
+@cli_util.option('--ssl-ca', help=u"""Database Certificate - The base64 encoded content of a .pem or .crt file. containing the server public key (for 1 and 2-way SSL).""")
+@cli_util.option('--ssl-crl', help=u"""The base64 encoded list of certificates revoked by the trusted certificate authorities (Trusted CA). Note: This is an optional property and only applicable if TLS/MTLS option is selected.""")
+@cli_util.option('--ssl-cert', help=u"""Client Certificate - The base64 encoded content of a .pem or .crt file. containing the client public key (for 2-way SSL).""")
+@cli_util.option('--ssl-key', help=u"""Client Key \u2013 The base64 encoded content of a .pem or .crt file containing the client private key (for 2-way SSL).""")
 @cli_util.option('--private-ip', help=u"""The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
 @cli_util.option('--additional-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of name-value pair attribute entries. Used as additional parameters in connection string.
 

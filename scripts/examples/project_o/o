@@ -21,8 +21,8 @@ if (sys.platform != "win32"):
     import fcntl
 import errno
 import datetime
-VERSION = "1.10"
-UPDATED = "2023-08-08"
+VERSION = "1.11"
+UPDATED = "2023-11-22"
 
 # ==============================================================================
 # Global variables
@@ -394,8 +394,10 @@ def ocids_file(action, new_ocids={}):
                 for k, v in ocid.items():
                     if 'score' in v:
                         del v['score']
-                    if 'parents' in v:
-                        del v['parents']
+                    # Reduce ocids file size: stop saving tags and fields not used by o
+                    for rm in ('parents', 'defined-tags', 'freeform-tags', 'system-tags', 'lifecycle-state', 'time-created'):
+                        if rm in v:
+                            del v[rm]
 
                 # convert dict to list
                 ocids = [ocid[k] for k in ocid.keys()]
@@ -457,6 +459,11 @@ def get_new_ocids_from_returned_items(items):
             if 'identifier' in i and 'id' not in i:
                 i['id'] = i['identifier']
 
+    if 'oci os multipart list' in oci_command_line:
+        for i in items:
+            if 'upload-id' in i and 'id' not in i:
+                i['id'] = i['upload-id']
+
     collected = {}
     try:
         for item in [i for i in items if 'id' in i]:
@@ -473,8 +480,6 @@ def get_new_ocids_from_returned_items(items):
             if 'retention-rule' in oci_command_line:
                 type = 'retentionrule'
 
-            # Still need to validate with many OCID types:
-            #    cpe, cross-connect, fast-connect, ip-sec, virtual-circuit
             if type == 'availabilitydomain':
                 alias = item['name'][-1:]
             elif 'object-name' in item:
@@ -504,6 +509,9 @@ def get_new_ocids_from_returned_items(items):
                 alias = item['db-name']
             elif 'credential' in type:
                 alias = item['description']
+            elif 'oci os multipart list' in oci_command_line:
+                type = 'upload'
+                alias = item['object']
             else:
                 # Unable to determine data type, don't add to collection
                 # print("type:", type, json.dumps(item, indent=4))
@@ -981,6 +989,9 @@ def value_parameter(option, value):
     if param_type == 'datetime':
         return datetime_parameter(value)
 
+    if option.endswith('-region') and get_region(value)[1]:
+        return(get_region(value)[1])
+
     # Special help with log-search --search-query "search comp1 comp2 | ..."
     # Substitute "ocid1.compartment..." for one or more values.
     if option == '--search-query':
@@ -1193,7 +1204,9 @@ def get_field_from_item(field, item):
             value = str(item[field])
     else:
         f = field.split('.')
-        if not item[f[0]]:
+        if f[0] not in item:
+            value = ''
+        elif not item[f[0]]:
             value = jdump_item(item[f[0]])
         elif f[-1] in item[f[0]]:
             value = jdump_item(item[f[0]][f[1]])
@@ -1220,7 +1233,7 @@ def show_item(item, fields, sep, reg=False):
         value = ''
         value = get_field_from_item(field, item)
 
-        if field not in ('id', 'identifier') and value in ocid and not ocids_in_output:
+        if field not in ('id', 'identifier', 'upload-id') and value in ocid and not ocids_in_output:
             value = ocid[value]['alias']
             out.append(column[field]['format'].format(value[column[field]['offset']:]))
             continue
@@ -2092,9 +2105,11 @@ for a in CLI_params:
         options_out.append(option_parameter(a))
         last_option = options_out[-1]
         # don't match the same parameter more than once
-        remaining_options = re.sub(last_option + ' '
-                                   + r'(\[[A-Za-z0-9-_|\]]* )',
-                                   '', remaining_options)
+        # exception: certain params can be specified multiple times
+        if options_out[-1] not in ('--fields', '--exclude', '--include'):
+            remaining_options = re.sub(last_option + ' '
+                                       + r'(\[[A-Za-z0-9-_|\]]* )',
+                                       '', remaining_options)
     else:
         options_out.append(value_parameter(last_option, a))
 
@@ -2152,7 +2167,7 @@ if (sys.platform != "win32"):
     fcntl.fcntl(cli.stderr, fcntl.F_SETFL, flags | os.O_NONBLOCK)
 
 # Read output from cli - show non-JSON on stdout
-JSONstdout = ''
+outlines = []
 errlines = []
 while True:
     if (sys.platform != "win32"):
@@ -2164,8 +2179,8 @@ while True:
     if stdout == '' and returncode is not None:
         break
     if stdout:
-        if JSONstdout or stdout[0] in '{[':
-            JSONstdout += stdout
+        if outlines or stdout[0] in '{[':
+            outlines.append(stdout)
         else:
             print(stdout, end='', flush=True)
     else:
@@ -2176,11 +2191,11 @@ stderr = ''.join(errlines)
 
 # Interpret output as JSON
 try:
-    jsonOut = json.loads(JSONstdout)
+    jsonOut = json.loads(''.join(outlines))
 except ValueError:
     # json.loads failed, show us what you got
-    if JSONstdout != '':
-        print(JSONstdout)
+    if outlines:
+        print(''.join(outlines))
     if stderr:
         error_out(stderr)
     exit(1)
@@ -2190,13 +2205,13 @@ if os.path.isfile(tmpfile):
     try:
         os.umask(0o077)
         with open(tmpfile, 'w+') as f:
-            f.write(JSONstdout)
+            f.write(''.join(outlines))
     except IOError:
         pass
 
 results = output(jsonOut)
 if results == 1:
-    print(JSONstdout)
+    print(''.join(outlines))
 
 # report stderr from oci cli, if any, AFTER results
 if stderr:
