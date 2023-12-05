@@ -2653,11 +2653,9 @@ def export_custom_content(ctx, from_json, file, namespace_name, field_names, par
 @cli_util.option('--scope-filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of filters to be applied when the query executes. More than one filter per field is not permitted.
 
 This option is a JSON list with items of type ScopeFilter.  For documentation on ScopeFilter please see our API reference: https://docs.cloud.oracle.com/api/#/en/loganalytics/20200601/datatypes/ScopeFilter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--max-total-count', type=click.INT, help=u"""Maximum number of results retrieved from data source.  Note a maximum value will be enforced; if the export results can be streamed, the maximum will be 50000000, otherwise 10000; that is, if not streamed, actualMaxTotalCountUsed = Math.min(maxTotalCount, 10000).
+@cli_util.option('--max-total-count', type=click.INT, help=u"""Maximum number of results retrieved from data source is determined by the specific query used and the maxTotalCount input field. If the export results can be streamed, the maximum will be 1,000,000. If the results cannot be streamed, the maximum limit is 500 for queries that include the link command and 10,000 for the queries that does not include the link command.
 
- Export will incrementally stream results depending on the queryString.
-
-Some commands including head/tail are not compatible with streaming result delivery and therefore enforce a reduced limit on overall maxtotalcount.  no sort command or sort by id, e.g. ' | sort id ' - is streaming compatible  sort by time and id, e.g. ' | sort -time, id ' - is streaming compatible all other cases, e.g. ' | sort -time, id, mtgtguid ' - is not streaming compatible due to the additional sort field""")
+Queries that include certain commands such as head, tail or stats cannot be streamed and are subject to a maximum of 10,000 results. Queries that include the sort command cannot be streamed unless the sort fields are restricted to id and/or time. The maximum number of results retrieved is the lesser of the maxTotalCount input provided and the applicable limit described above.""")
 @cli_util.option('--time-filter', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--query-timeout-in-seconds', type=click.INT, help=u"""Amount of time, in seconds, allowed for a query to execute. If this time expires before the query is complete, any partial results will be returned.""")
 @cli_util.option('--should-include-columns', type=click.BOOL, help=u"""Include columns in response""")
@@ -9658,6 +9656,49 @@ def update_storage(ctx, from_json, force, namespace_name, archiving_configuratio
     result = client.update_storage(
         namespace_name=namespace_name,
         update_storage_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@log_analytics_entity_group.command(name=cli_util.override('log_analytics.upload_discovery_data.command_name', 'upload-discovery-data'), help=u"""Accepts discovery data for processing by Logging Analytics. \n[Command Reference](uploadDiscoveryData)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Logging Analytics namespace used for the request.""")
+@cli_util.option('--upload-discovery-data-details', required=True, help=u"""Discovery data""")
+@cli_util.option('--opc-meta-properties', help=u"""Metadata key and value pairs separated by a semicolon. Example k1:v1;k2:v2;k3:v3""")
+@cli_util.option('--discovery-data-type', type=custom_types.CliCaseInsensitiveChoice(["ENTITY", "K8S_OBJECTS"]), help=u"""Discovery data type""")
+@cli_util.option('--payload-type', type=custom_types.CliCaseInsensitiveChoice(["JSON", "GZIP", "ZIP"]), help=u"""Identifies the type of request payload.""")
+@cli_util.option('--content-type', help=u"""The content type of the log data.""")
+@cli_util.option('--expect', help=u"""A value of `100-continue` requests preliminary verification of the request method, path, and headers before the request body is sent. If no error results from such verification, the server will send a 100 (Continue) interim response to indicate readiness for the request body. The only allowed value for this parameter is \"100-Continue\" (case-insensitive).""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def upload_discovery_data(ctx, from_json, namespace_name, upload_discovery_data_details, opc_meta_properties, discovery_data_type, payload_type, content_type, expect):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if opc_meta_properties is not None:
+        kwargs['opc_meta_properties'] = opc_meta_properties
+    if discovery_data_type is not None:
+        kwargs['discovery_data_type'] = discovery_data_type
+    if payload_type is not None:
+        kwargs['payload_type'] = payload_type
+    if content_type is not None:
+        kwargs['content_type'] = content_type
+    if expect is not None:
+        kwargs['expect'] = expect
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    # do not automatically retry operations with binary inputs
+    kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()
+
+    client = cli_util.build_client('log_analytics', 'log_analytics', ctx)
+    result = client.upload_discovery_data(
+        namespace_name=namespace_name,
+        upload_discovery_data_details=upload_discovery_data_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)

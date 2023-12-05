@@ -22,18 +22,6 @@ def adm_root_group():
     pass
 
 
-@click.command(cli_util.override('adm.remediation_recipe_collection_group.command_name', 'remediation-recipe-collection'), cls=CommandGroupWithAlias, help="""Collection of remediation recipe summaries.""")
-@cli_util.help_option_group
-def remediation_recipe_collection_group():
-    pass
-
-
-@click.command(cli_util.override('adm.application_dependency_recommendation_collection_group.command_name', 'application-dependency-recommendation-collection'), cls=CommandGroupWithAlias, help="""A collection of recommended application dependency changes. Each element consists of an application dependency and its recommendation.""")
-@cli_util.help_option_group
-def application_dependency_recommendation_collection_group():
-    pass
-
-
 @click.command(cli_util.override('adm.remediation_recipe_group.command_name', 'remediation-recipe'), cls=CommandGroupWithAlias, help="""An Application Dependency Management (ADM) remediation recipe contains the basic configuration and the details of each of the remediation stages (Detect, Recommend, Verify, and Apply).""")
 @cli_util.help_option_group
 def remediation_recipe_group():
@@ -64,18 +52,6 @@ def knowledge_base_group():
     pass
 
 
-@click.command(cli_util.override('adm.remediation_run_stage_collection_group.command_name', 'remediation-run-stage-collection'), cls=CommandGroupWithAlias, help="""Collection of remediation run stage summaries.""")
-@cli_util.help_option_group
-def remediation_run_stage_collection_group():
-    pass
-
-
-@click.command(cli_util.override('adm.remediation_run_collection_group.command_name', 'remediation-run-collection'), cls=CommandGroupWithAlias, help="""Collection of remediation run summaries.""")
-@cli_util.help_option_group
-def remediation_run_collection_group():
-    pass
-
-
 @click.command(cli_util.override('adm.work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""A log message from the execution of a work request.""")
 @cli_util.help_option_group
 def work_request_log_entry_group():
@@ -94,15 +70,11 @@ def vulnerability_audit_group():
     pass
 
 
-adm_root_group.add_command(remediation_recipe_collection_group)
-adm_root_group.add_command(application_dependency_recommendation_collection_group)
 adm_root_group.add_command(remediation_recipe_group)
 adm_root_group.add_command(remediation_run_stage_group)
 adm_root_group.add_command(remediation_run_group)
 adm_root_group.add_command(work_request_error_group)
 adm_root_group.add_command(knowledge_base_group)
-adm_root_group.add_command(remediation_run_stage_collection_group)
-adm_root_group.add_command(remediation_run_collection_group)
 adm_root_group.add_command(work_request_log_entry_group)
 adm_root_group.add_command(work_request_group)
 adm_root_group.add_command(vulnerability_audit_group)
@@ -1203,6 +1175,7 @@ def create_remediation_run(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 This option is a JSON list with items of type ApplicationDependency.  For documentation on ApplicationDependency please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationdependencymanagement/20220421/datatypes/ApplicationDependency.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--usage-data', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The name of the vulnerability audit.""")
 @cli_util.option('--source', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1211,12 +1184,12 @@ This option is a JSON list with items of type ApplicationDependency.  For docume
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'application-dependencies': {'module': 'adm', 'class': 'list[ApplicationDependency]'}, 'configuration': {'module': 'adm', 'class': 'VulnerabilityAuditConfiguration'}, 'source': {'module': 'adm', 'class': 'VulnerabilityAuditSource'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'application-dependencies': {'module': 'adm', 'class': 'list[ApplicationDependency]'}, 'configuration': {'module': 'adm', 'class': 'VulnerabilityAuditConfiguration'}, 'usage-data': {'module': 'adm', 'class': 'UsageDataDetails'}, 'source': {'module': 'adm', 'class': 'VulnerabilityAuditSource'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'application-dependencies': {'module': 'adm', 'class': 'list[ApplicationDependency]'}, 'configuration': {'module': 'adm', 'class': 'VulnerabilityAuditConfiguration'}, 'source': {'module': 'adm', 'class': 'VulnerabilityAuditSource'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'adm', 'class': 'VulnerabilityAudit'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'application-dependencies': {'module': 'adm', 'class': 'list[ApplicationDependency]'}, 'configuration': {'module': 'adm', 'class': 'VulnerabilityAuditConfiguration'}, 'usage-data': {'module': 'adm', 'class': 'UsageDataDetails'}, 'source': {'module': 'adm', 'class': 'VulnerabilityAuditSource'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'adm', 'class': 'VulnerabilityAudit'})
 @cli_util.wrap_exceptions
-def create_vulnerability_audit(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, build_type, compartment_id, application_dependencies, configuration, display_name, source, freeform_tags, defined_tags, if_match):
+def create_vulnerability_audit(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, build_type, compartment_id, application_dependencies, configuration, usage_data, display_name, source, freeform_tags, defined_tags, if_match):
 
     kwargs = {}
     if if_match is not None:
@@ -1235,6 +1208,9 @@ def create_vulnerability_audit(ctx, from_json, wait_for_state, max_wait_seconds,
 
     if configuration is not None:
         _details['configuration'] = cli_util.parse_json_parameter("configuration", configuration)
+
+    if usage_data is not None:
+        _details['usageData'] = cli_util.parse_json_parameter("usage_data", usage_data)
 
     if display_name is not None:
         _details['displayName'] = display_name
@@ -1279,6 +1255,99 @@ def create_vulnerability_audit(ctx, from_json, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
+@vulnerability_audit_group.command(name=cli_util.override('adm.create_vulnerability_audit_usage_data_via_object_storage_tuple_details.command_name', 'create-vulnerability-audit-usage-data-via-object-storage-tuple-details'), help=u"""Creates a new Vulnerability Audit by providing a tree of Application Dependencies. \n[Command Reference](createVulnerabilityAudit)""")
+@cli_util.option('--knowledge-base-id', required=True, help=u"""The Oracle Cloud identifier ([OCID]) of the knowledge base.""")
+@cli_util.option('--build-type', required=True, help=u"""The type of the build tool.""")
+@cli_util.option('--usage-data-bucket-name', required=True, help=u"""The Object Storage bucket to read the usage data from.""")
+@cli_util.option('--usage-data-namespace-name', required=True, help=u"""The Object Storage namespace to read the usage data from.""")
+@cli_util.option('--usage-data-object-name', required=True, help=u"""The Object Storage object name to read the usage data from.""")
+@cli_util.option('--compartment-id', help=u"""The compartment Oracle Cloud identifier ([OCID]) of the vulnerability audit. If compartment identifier is not provided the compartment of the associated knowledge base will be used instead.""")
+@cli_util.option('--application-dependencies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of application dependencies (without vulnerabilities).
+
+This option is a JSON list with items of type ApplicationDependency.  For documentation on ApplicationDependency please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationdependencymanagement/20220421/datatypes/ApplicationDependency.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""The name of the vulnerability audit.""")
+@cli_util.option('--source', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'application-dependencies': {'module': 'adm', 'class': 'list[ApplicationDependency]'}, 'configuration': {'module': 'adm', 'class': 'VulnerabilityAuditConfiguration'}, 'source': {'module': 'adm', 'class': 'VulnerabilityAuditSource'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'application-dependencies': {'module': 'adm', 'class': 'list[ApplicationDependency]'}, 'configuration': {'module': 'adm', 'class': 'VulnerabilityAuditConfiguration'}, 'source': {'module': 'adm', 'class': 'VulnerabilityAuditSource'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'adm', 'class': 'VulnerabilityAudit'})
+@cli_util.wrap_exceptions
+def create_vulnerability_audit_usage_data_via_object_storage_tuple_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, build_type, usage_data_bucket_name, usage_data_namespace_name, usage_data_object_name, compartment_id, application_dependencies, configuration, display_name, source, freeform_tags, defined_tags, if_match):
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['usageData'] = {}
+    _details['knowledgeBaseId'] = knowledge_base_id
+    _details['buildType'] = build_type
+    _details['usageData']['bucketName'] = usage_data_bucket_name
+    _details['usageData']['namespaceName'] = usage_data_namespace_name
+    _details['usageData']['objectName'] = usage_data_object_name
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if application_dependencies is not None:
+        _details['applicationDependencies'] = cli_util.parse_json_parameter("application_dependencies", application_dependencies)
+
+    if configuration is not None:
+        _details['configuration'] = cli_util.parse_json_parameter("configuration", configuration)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if source is not None:
+        _details['source'] = cli_util.parse_json_parameter("source", source)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['usageData']['sourceType'] = 'objectStorageTuple'
+
+    client = cli_util.build_client('adm', 'application_dependency_management', ctx)
+    result = client.create_vulnerability_audit(
+        create_vulnerability_audit_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @vulnerability_audit_group.command(name=cli_util.override('adm.create_vulnerability_audit_unknown_source_vulnerability_audit_source.command_name', 'create-vulnerability-audit-unknown-source-vulnerability-audit-source'), help=u"""Creates a new Vulnerability Audit by providing a tree of Application Dependencies. \n[Command Reference](createVulnerabilityAudit)""")
 @cli_util.option('--knowledge-base-id', required=True, help=u"""The Oracle Cloud identifier ([OCID]) of the knowledge base.""")
 @cli_util.option('--build-type', required=True, help=u"""The type of the build tool.""")
@@ -1287,6 +1356,7 @@ def create_vulnerability_audit(ctx, from_json, wait_for_state, max_wait_seconds,
 
 This option is a JSON list with items of type ApplicationDependency.  For documentation on ApplicationDependency please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationdependencymanagement/20220421/datatypes/ApplicationDependency.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--usage-data', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The name of the vulnerability audit.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1294,12 +1364,12 @@ This option is a JSON list with items of type ApplicationDependency.  For docume
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'application-dependencies': {'module': 'adm', 'class': 'list[ApplicationDependency]'}, 'configuration': {'module': 'adm', 'class': 'VulnerabilityAuditConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'application-dependencies': {'module': 'adm', 'class': 'list[ApplicationDependency]'}, 'configuration': {'module': 'adm', 'class': 'VulnerabilityAuditConfiguration'}, 'usage-data': {'module': 'adm', 'class': 'UsageDataDetails'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'application-dependencies': {'module': 'adm', 'class': 'list[ApplicationDependency]'}, 'configuration': {'module': 'adm', 'class': 'VulnerabilityAuditConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'adm', 'class': 'VulnerabilityAudit'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'application-dependencies': {'module': 'adm', 'class': 'list[ApplicationDependency]'}, 'configuration': {'module': 'adm', 'class': 'VulnerabilityAuditConfiguration'}, 'usage-data': {'module': 'adm', 'class': 'UsageDataDetails'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'adm', 'class': 'VulnerabilityAudit'})
 @cli_util.wrap_exceptions
-def create_vulnerability_audit_unknown_source_vulnerability_audit_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, build_type, compartment_id, application_dependencies, configuration, display_name, freeform_tags, defined_tags, if_match):
+def create_vulnerability_audit_unknown_source_vulnerability_audit_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, build_type, compartment_id, application_dependencies, configuration, usage_data, display_name, freeform_tags, defined_tags, if_match):
 
     kwargs = {}
     if if_match is not None:
@@ -1319,6 +1389,9 @@ def create_vulnerability_audit_unknown_source_vulnerability_audit_source(ctx, fr
 
     if configuration is not None:
         _details['configuration'] = cli_util.parse_json_parameter("configuration", configuration)
+
+    if usage_data is not None:
+        _details['usageData'] = cli_util.parse_json_parameter("usage_data", usage_data)
 
     if display_name is not None:
         _details['displayName'] = display_name
@@ -1371,6 +1444,7 @@ def create_vulnerability_audit_unknown_source_vulnerability_audit_source(ctx, fr
 
 This option is a JSON list with items of type ApplicationDependency.  For documentation on ApplicationDependency please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationdependencymanagement/20220421/datatypes/ApplicationDependency.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--usage-data', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The name of the vulnerability audit.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1378,12 +1452,12 @@ This option is a JSON list with items of type ApplicationDependency.  For docume
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'application-dependencies': {'module': 'adm', 'class': 'list[ApplicationDependency]'}, 'configuration': {'module': 'adm', 'class': 'VulnerabilityAuditConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'application-dependencies': {'module': 'adm', 'class': 'list[ApplicationDependency]'}, 'configuration': {'module': 'adm', 'class': 'VulnerabilityAuditConfiguration'}, 'usage-data': {'module': 'adm', 'class': 'UsageDataDetails'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'application-dependencies': {'module': 'adm', 'class': 'list[ApplicationDependency]'}, 'configuration': {'module': 'adm', 'class': 'VulnerabilityAuditConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'adm', 'class': 'VulnerabilityAudit'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'application-dependencies': {'module': 'adm', 'class': 'list[ApplicationDependency]'}, 'configuration': {'module': 'adm', 'class': 'VulnerabilityAuditConfiguration'}, 'usage-data': {'module': 'adm', 'class': 'UsageDataDetails'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'adm', 'class': 'VulnerabilityAudit'})
 @cli_util.wrap_exceptions
-def create_vulnerability_audit_oci_resource_vulnerability_audit_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, build_type, source_oci_resource_id, compartment_id, application_dependencies, configuration, display_name, freeform_tags, defined_tags, if_match):
+def create_vulnerability_audit_oci_resource_vulnerability_audit_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, build_type, source_oci_resource_id, compartment_id, application_dependencies, configuration, usage_data, display_name, freeform_tags, defined_tags, if_match):
 
     kwargs = {}
     if if_match is not None:
@@ -1404,6 +1478,9 @@ def create_vulnerability_audit_oci_resource_vulnerability_audit_source(ctx, from
 
     if configuration is not None:
         _details['configuration'] = cli_util.parse_json_parameter("configuration", configuration)
+
+    if usage_data is not None:
+        _details['usageData'] = cli_util.parse_json_parameter("usage_data", usage_data)
 
     if display_name is not None:
         _details['displayName'] = display_name
@@ -1455,6 +1532,7 @@ def create_vulnerability_audit_oci_resource_vulnerability_audit_source(ctx, from
 
 This option is a JSON list with items of type ApplicationDependency.  For documentation on ApplicationDependency please see our API reference: https://docs.cloud.oracle.com/api/#/en/applicationdependencymanagement/20220421/datatypes/ApplicationDependency.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--usage-data', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The name of the vulnerability audit.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1463,12 +1541,12 @@ This option is a JSON list with items of type ApplicationDependency.  For docume
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'application-dependencies': {'module': 'adm', 'class': 'list[ApplicationDependency]'}, 'configuration': {'module': 'adm', 'class': 'VulnerabilityAuditConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'application-dependencies': {'module': 'adm', 'class': 'list[ApplicationDependency]'}, 'configuration': {'module': 'adm', 'class': 'VulnerabilityAuditConfiguration'}, 'usage-data': {'module': 'adm', 'class': 'UsageDataDetails'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'application-dependencies': {'module': 'adm', 'class': 'list[ApplicationDependency]'}, 'configuration': {'module': 'adm', 'class': 'VulnerabilityAuditConfiguration'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'adm', 'class': 'VulnerabilityAudit'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'application-dependencies': {'module': 'adm', 'class': 'list[ApplicationDependency]'}, 'configuration': {'module': 'adm', 'class': 'VulnerabilityAuditConfiguration'}, 'usage-data': {'module': 'adm', 'class': 'UsageDataDetails'}, 'freeform-tags': {'module': 'adm', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'adm', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'adm', 'class': 'VulnerabilityAudit'})
 @cli_util.wrap_exceptions
-def create_vulnerability_audit_external_resource_vulnerability_audit_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, build_type, compartment_id, application_dependencies, configuration, display_name, freeform_tags, defined_tags, if_match, source_description):
+def create_vulnerability_audit_external_resource_vulnerability_audit_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, build_type, compartment_id, application_dependencies, configuration, usage_data, display_name, freeform_tags, defined_tags, if_match, source_description):
 
     kwargs = {}
     if if_match is not None:
@@ -1488,6 +1566,9 @@ def create_vulnerability_audit_external_resource_vulnerability_audit_source(ctx,
 
     if configuration is not None:
         _details['configuration'] = cli_util.parse_json_parameter("configuration", configuration)
+
+    if usage_data is not None:
+        _details['usageData'] = cli_util.parse_json_parameter("usage_data", usage_data)
 
     if display_name is not None:
         _details['displayName'] = display_name
@@ -1954,7 +2035,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@application_dependency_recommendation_collection_group.command(name=cli_util.override('adm.list_application_dependency_recommendations.command_name', 'list-application-dependency-recommendations'), help=u"""Returns a list of application dependency with their associated recommendations. \n[Command Reference](listApplicationDependencyRecommendations)""")
+@remediation_run_group.command(name=cli_util.override('adm.list_application_dependency_recommendations.command_name', 'list-application-dependency-recommendations'), help=u"""Returns a list of application dependency with their associated recommendations. \n[Command Reference](listApplicationDependencyRecommendations)""")
 @cli_util.option('--remediation-run-id', required=True, help=u"""Unique Remediation Run identifier path parameter.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -2151,7 +2232,7 @@ def list_knowledge_bases(ctx, from_json, all_pages, page_size, id, sort_by, life
     cli_util.render_response(result, ctx)
 
 
-@remediation_recipe_collection_group.command(name=cli_util.override('adm.list_remediation_recipes.command_name', 'list-remediation-recipes'), help=u"""Returns a list of Remediation Recipes based on the specified query parameters. The query parameters `compartmentId` or `id` must be provided. \n[Command Reference](listRemediationRecipes)""")
+@remediation_recipe_group.command(name=cli_util.override('adm.list_remediation_recipes.command_name', 'list'), help=u"""Returns a list of Remediation Recipes based on the specified query parameters. The query parameters `compartmentId` or `id` must be provided. \n[Command Reference](listRemediationRecipes)""")
 @cli_util.option('--id', help=u"""A filter to return only resources that match the specified identifier. Required only if the compartmentId query parameter is not specified.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["DISPLAY_NAME", "LIFECYCLE_STATE", "TIME_CREATED", "TIME_UPDATED", "TYPE"]), help=u"""The field used to sort Remediation Recipes. Only one sort order is allowed. Default order for _displayName_ is **ascending alphabetical order**. Default order for _lifecyleState_ is the following sequence: **CREATING, ACTIVE, UPDATING, INACTIVE, FAILED, DELETING, and DELETED**. Default order for _timeCreated_ is **descending**. Default order for _timeUpdated_ is **descending**. Default order for _type_ is the following sequence: **ADM**.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "INACTIVE", "FAILED", "DELETING", "DELETED", "NEEDS_ATTENTION"]), help=u"""A filter to return only Remediation Recipes that match the specified lifecycleState.""")
@@ -2213,7 +2294,7 @@ def list_remediation_recipes(ctx, from_json, all_pages, page_size, id, sort_by, 
     cli_util.render_response(result, ctx)
 
 
-@remediation_run_collection_group.command(name=cli_util.override('adm.list_remediation_runs.command_name', 'list-remediation-runs'), help=u"""Returns a list of remediation runs contained by a compartment. The query parameter `compartmentId` is required unless the query parameter `id` is specified. \n[Command Reference](listRemediationRuns)""")
+@remediation_run_group.command(name=cli_util.override('adm.list_remediation_runs.command_name', 'list'), help=u"""Returns a list of remediation runs contained by a compartment. The query parameter `compartmentId` is required unless the query parameter `id` is specified. \n[Command Reference](listRemediationRuns)""")
 @cli_util.option('--id', help=u"""A filter to return only resources that match the specified identifier. Required only if the compartmentId query parameter is not specified.""")
 @cli_util.option('--remediation-recipe-id', help=u"""A filter to return only resources that match the specified Remediation Recipe identifier.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "CANCELED", "CANCELING", "FAILED", "IN_PROGRESS", "SUCCEEDED", "DELETING", "DELETED"]), help=u"""A filter to return only Remediation Runs that match the specified lifecycleState.""")
@@ -2278,7 +2359,7 @@ def list_remediation_runs(ctx, from_json, all_pages, page_size, id, remediation_
     cli_util.render_response(result, ctx)
 
 
-@remediation_run_stage_collection_group.command(name=cli_util.override('adm.list_stages.command_name', 'list-stages'), help=u"""Returns a list of Remediation Run Stages based on the specified query parameters and Remediation Run identifier. \n[Command Reference](listStages)""")
+@remediation_run_stage_group.command(name=cli_util.override('adm.list_stages.command_name', 'list-stages'), help=u"""Returns a list of Remediation Run Stages based on the specified query parameters and Remediation Run identifier. \n[Command Reference](listStages)""")
 @cli_util.option('--remediation-run-id', required=True, help=u"""Unique Remediation Run identifier path parameter.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["DETECT", "RECOMMEND", "VERIFY", "APPLY"]), help=u"""A filter to return only Stages that match the specified type.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "IN_PROGRESS", "SUCCEEDED", "FAILED", "CANCELING", "CANCELED"]), help=u"""A filter to return only Stages that match the specified status.""")
@@ -2341,7 +2422,7 @@ def list_stages(ctx, from_json, all_pages, page_size, remediation_run_id, type, 
     cli_util.render_response(result, ctx)
 
 
-@vulnerability_audit_group.command(name=cli_util.override('adm.list_vulnerability_audits.command_name', 'list'), help=u"""Returns a list of Vulnerability Audits based on the specified query parameters. At least one of id, compartmentId or knowledgeBaseId query parameter must be provided. \n[Command Reference](listVulnerabilityAudits)""")
+@vulnerability_audit_group.command(name=cli_util.override('adm.list_vulnerability_audits.command_name', 'list'), help=u"""Returns a list of Vulnerability Audits based on the specified query parameters. At least one of id, compartmentId query parameter must be provided. \n[Command Reference](listVulnerabilityAudits)""")
 @cli_util.option('--id', help=u"""A filter to return only resources that match the specified identifier. Required only if the compartmentId query parameter is not specified.""")
 @cli_util.option('--compartment-id', help=u"""A filter to return only resources that belong to the specified compartment identifier. Required only if the id query param is not specified.""")
 @cli_util.option('--knowledge-base-id', help=u"""A filter to return only Vulnerability Audits that were created against the specified knowledge base.""")

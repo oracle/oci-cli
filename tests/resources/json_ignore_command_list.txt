@@ -270,3 +270,4 @@ identity-domains, self-registration-profile, put
 identity-domains, self-registration-profiles, search
 identity-domains, setting, put
 identity-domains, settings, search
+log-analytics, entity, upload-discovery-data

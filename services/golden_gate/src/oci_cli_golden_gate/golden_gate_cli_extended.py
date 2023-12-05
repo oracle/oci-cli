@@ -592,3 +592,17 @@ cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldeng
 
 # oci goldengate connection update-connection-update-redis-connection-details -> oci goldengate connection update-redis-connection
 cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_redis_connection_details, "update-redis-connection")
+
+
+# oci goldengate certificate-collection create-certificate -> oci goldengate certificate-collection create
+cli_util.rename_command(goldengate_cli, goldengate_cli.certificate_collection_group, goldengate_cli.create_certificate, "create")
+
+
+# oci goldengate certificate-collection list-certificates -> oci goldengate certificate-collection list
+cli_util.rename_command(goldengate_cli, goldengate_cli.certificate_collection_group, goldengate_cli.list_certificates, "list")
+
+
+# Move commands under 'oci goldengate certificate-collection' -> 'oci goldengate certificate'
+goldengate_cli.goldengate_root_group.commands.pop(goldengate_cli.certificate_collection_group.name)
+goldengate_cli.certificate_group.add_command(goldengate_cli.create_certificate)
+goldengate_cli.certificate_group.add_command(goldengate_cli.list_certificates)

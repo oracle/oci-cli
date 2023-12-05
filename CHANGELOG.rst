@@ -6,6 +6,95 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.37.0 - 2023-12-05
+--------------------
+Added
+~~~~~
+
+* Database service
+
+  * Support for the serial console history.
+
+    * ``oci db console-history``
+
+  * Support for new optional parameters, autonomous-data-storage-size-in-tbs, cpu-core-count-per-node and total-container-databases in the cloud autonomous and autonomous vm cluster db resources.
+
+    * ``oci db autonomous-vm-cluster update --autonomous-data-storage-size-in-tbs, --cpu-core-count-per-node, --total-container-databases``
+    * ``oci db cloud-autonomous-vm-cluster update --autonomous-data-storage-size-in-tbs, --cpu-core-count-per-node, --total-container-databases``
+
+  * Support for new list system versions commands.
+
+    * ``oci db system-version list``
+
+  *Support for new optional parameter in cloud-vm-cluster and vm-cluster resources.
+
+    * ``oci db cloud-vm-cluster create --system-version``
+    * ``oci db vm-cluster create --system-version``
+
+* Support for multiple clusters in a SDDC in Oracle Cloud VMware Provisioning service.
+
+  * ``oci ocvs esxi-host replace-host``
+  * ``oci ocvs cluster cluster``
+  * ``oci ocvs sddc retrieve-password``
+
+* Support for upload-discovery-data in Log Analytics service.
+
+  * ``oci log-analytics entity upload-discovery-data --upload-discovery-data-details --namespace-name``
+  * ``oci log-analytics entity upload-discovery-data --file --namespace-name``
+
+* ADM service.
+
+  * Support for new list actions.
+
+    * ``oci adm remediation-recipe list``
+    * ``oci adm remediation-run list``
+    * ``oci adm remediation-run list-application-dependency-recommendations``
+    * ``oci adm remediation-run-stage list-stages``
+
+  * Support for new optional parameters --usage-data.
+
+    * ``oci adm vulnerability-audit create --usage-data``
+    * ``oci adm vulnerability-audit create-vulnerability-audit-external-resource-vulnerability-audit-source --usage-data``
+    * ``oci adm vulnerability-audit create-vulnerability-audit-oci-resource-vulnerability-audit-source --usage-data``
+    * ``oci adm vulnerability-audit create-vulnerability-audit-unknown-source-vulnerability-audit-source --usage-data``
+
+* Support for new AWR Hub Snapshot ingest commands in Operations Insights service.
+
+  * ``oci opsi awr-hub-sources``
+  * ``oci opsi operations-insights-warehouses``
+  * ``oci opsi awr-hub-objects``
+
+* Support for managing available certificates of target servers in Goldengate service.
+
+  * ``oci goldengate certificate``
+
+
+Changed
+~~~~~~~
+
+* [BREAKING] Multiple parameters changes in OCVS service. Few params deleted in sddc resource.
+
+  * ``oci ocvs esxi-host create --cluster-id``
+  * ``oci ocvs esxi-host list --cluster-id``
+  * ``oci ocvs esxi-host update  --next-commitment``
+  * ``oci ocvs sddc``
+
+* Description of export details in the Logging Analytics service
+
+  * ``oci log-analytics query export``
+
+* Description change in Compute Cloud at Customer service
+
+Removed
+~~~~~
+
+* [BREAKING] The following commands have been removed in ADM service.
+
+  * ``oci adm application-dependency-recommendation-collection list-application-dependency-recommendations``
+  * ``oci adm remediation-recipe-collection list-remediation-recipes``
+  * ``oci adm remediation-run-collection list-remediation-runs``
+  * ``oci adm remediation-run-stage-collection list-stages``
+
 3.36.2 - 2023-11-14
 --------------------
 Added

@@ -6,9 +6,9 @@
 import oci
 from oci_cli.cli_clients import CLIENT_MAP
 from oci_cli.cli_clients import MODULE_TO_TYPE_MAPPINGS
-from oci.ocvp import WorkRequestClient
+from oci.ocvp import ClusterClient
 
 MODULE_TO_TYPE_MAPPINGS["ocvp"] = oci.ocvp.models.ocvp_type_mapping
 if CLIENT_MAP.get("ocvp") is None:
     CLIENT_MAP["ocvp"] = {}
-CLIENT_MAP["ocvp"]["work_request"] = WorkRequestClient
+CLIENT_MAP["ocvp"]["cluster"] = ClusterClient

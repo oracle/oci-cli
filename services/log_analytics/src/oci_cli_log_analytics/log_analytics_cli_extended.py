@@ -215,6 +215,22 @@ def upload_log_events_file_extended(ctx, **kwargs):
         ctx.invoke(loganalytics_cli.upload_log_events_file, **kwargs)
 
 
+# upload_discovery_data
+@cli_util.copy_params_from_generated_command(loganalytics_cli.upload_discovery_data, params_to_exclude=['upload_discovery_data_details'])
+@loganalytics_cli.log_analytics_entity_group.command(name='upload-discovery-data', help=loganalytics_cli.upload_discovery_data.help)
+@cli_util.option('--file', required=True, help=u"""Discovery data file. Example: --file /Users/me/myfile.txt""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsEntityCollection'})
+@cli_util.wrap_exceptions
+def upload_discovery_data_extended(ctx, **kwargs):
+    # Set "--upload_discovery_data_details" to file's "--file" handle
+    upload_file = kwargs['file']
+    del kwargs['file']
+    with open(upload_file, 'rb') as ufile:
+        kwargs['upload_discovery_data_details'] = ufile
+        ctx.invoke(loganalytics_cli.upload_discovery_data, **kwargs)
+
+
 # get-unprocessed-bucket
 cli_util.rename_command(loganalytics_cli, loganalytics_cli.upload_group,
                         loganalytics_cli.get_unprocessed_data_bucket, "get-unprocessed-bucket")

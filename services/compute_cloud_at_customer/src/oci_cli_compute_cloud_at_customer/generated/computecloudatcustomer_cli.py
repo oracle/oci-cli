@@ -16,9 +16,8 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('ccc.ccc_root_group.command_name', 'ccc'), cls=CommandGroupWithAlias, help=cli_util.override('ccc.ccc_root_group.help', """Use the Compute Cloud@Customer API to manage Compute Cloud@Customer Infrastructure deployments
-and scheduled upgrades. For more information see
-[Compute Cloud@Customer documentation]."""), short_help=cli_util.override('ccc.ccc_root_group.short_help', """Compute Cloud@Customer API"""))
+@cli.command(cli_util.override('ccc.ccc_root_group.command_name', 'ccc'), cls=CommandGroupWithAlias, help=cli_util.override('ccc.ccc_root_group.help', """Use the Compute Cloud@Customer API to manage Compute Cloud@Customer infrastructures and upgrade schedules.
+For more information see [Compute Cloud@Customer documentation]."""), short_help=cli_util.override('ccc.ccc_root_group.short_help', """Compute Cloud@Customer API"""))
 @cli_util.help_option_group
 def ccc_root_group():
     pass

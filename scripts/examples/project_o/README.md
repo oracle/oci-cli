@@ -198,6 +198,10 @@ This will get a fresh list of all compartments in the tenancy, which is a great 
   - Get a list of groups with user members for each group:<br>
   `o -o display-name/member.name id list groups --attributes name,members -end <domain-name>.`
 
+#### New in version 1.11 (2023-11-22)
+- Improved handling of very long results (especially `o os list objects --all`)
+- Minor bugfixes
+
 ## How **``o``** works  
  - **``o``** compares your input with thousands of ``oci`` commands, and uses an fuzzy matching to find the command you want.
 

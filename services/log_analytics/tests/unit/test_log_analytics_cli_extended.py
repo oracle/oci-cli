@@ -156,6 +156,14 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
         result = util.invoke_command(['log-analytics', 'upload', 'upload-log-events-file', '--file'])
         assert 'Error: Option \'--file\' requires an argument' in result.output
 
+    # upload_discovery_data flattened params
+    def test_upload_upload_discovery_data_flattened_params(self):
+        result = util.invoke_command(['log-analytics', 'entity', 'upload-discovery-data', '--upload-discovery-data-details'])
+        assert 'Error: No such option: --upload-discovery-data-details' in result.output
+
+        result = util.invoke_command(['log-analytics', 'entity', 'upload-discovery-data', '--file'])
+        assert 'Error: Option \'--file\' requires an argument' in result.output
+
     # get-unprocessed-bucket renamed command
     def test_get_unprocessed_bucket_renamed_command(self):
         result = util.invoke_command(['log-analytics', 'upload', 'get-unprocessed-data-bucket'])
