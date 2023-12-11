@@ -271,3 +271,5 @@ identity-domains, self-registration-profiles, search
 identity-domains, setting, put
 identity-domains, settings, search
 log-analytics, entity, upload-discovery-data
+identity-domains, identity-propagation-trust, create
+identity-domains, identity-propagation-trust, put

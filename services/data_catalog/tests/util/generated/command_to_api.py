@@ -2,7 +2,10 @@
 # Copyright (c) 2016, 2023, Oracle and/or its affiliates. All rights reserved.
 
 SDK_client_map = {
+    "data_catalog.add_catalog_lock": "oci.data_catalog.DataCatalogClient.add_catalog_lock",
+    "data_catalog.add_catalog_private_endpoint_lock": "oci.data_catalog.DataCatalogClient.add_catalog_private_endpoint_lock",
     "data_catalog.add_data_selector_patterns": "oci.data_catalog.DataCatalogClient.add_data_selector_patterns",
+    "data_catalog.add_metastore_lock": "oci.data_catalog.DataCatalogClient.add_metastore_lock",
     "data_catalog.associate_custom_property": "oci.data_catalog.DataCatalogClient.associate_custom_property",
     "data_catalog.asynchronous_export_glossary": "oci.data_catalog.DataCatalogClient.asynchronous_export_glossary",
     "data_catalog.attach_catalog_private_endpoint": "oci.data_catalog.DataCatalogClient.attach_catalog_private_endpoint",
@@ -118,7 +121,10 @@ SDK_client_map = {
     "data_catalog.parse_connection": "oci.data_catalog.DataCatalogClient.parse_connection",
     "data_catalog.process_recommendation": "oci.data_catalog.DataCatalogClient.process_recommendation",
     "data_catalog.recommendations": "oci.data_catalog.DataCatalogClient.recommendations",
+    "data_catalog.remove_catalog_lock": "oci.data_catalog.DataCatalogClient.remove_catalog_lock",
+    "data_catalog.remove_catalog_private_endpoint_lock": "oci.data_catalog.DataCatalogClient.remove_catalog_private_endpoint_lock",
     "data_catalog.remove_data_selector_patterns": "oci.data_catalog.DataCatalogClient.remove_data_selector_patterns",
+    "data_catalog.remove_metastore_lock": "oci.data_catalog.DataCatalogClient.remove_metastore_lock",
     "data_catalog.search_criteria": "oci.data_catalog.DataCatalogClient.search_criteria",
     "data_catalog.suggest_matches": "oci.data_catalog.DataCatalogClient.suggest_matches",
     "data_catalog.synchronous_export_data_asset": "oci.data_catalog.DataCatalogClient.synchronous_export_data_asset",
