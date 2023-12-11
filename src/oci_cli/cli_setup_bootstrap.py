@@ -15,6 +15,7 @@ import errno
 import oci._vendor.jwt as jwt
 import oci
 import oci.regions as regions
+import socket
 import os
 import sys
 import uuid
@@ -39,6 +40,25 @@ Note that port {port} must be available in order for this command to complete pr
 @cli_util.help_option
 @click.pass_context
 @cli_util.wrap_exceptions
+def is_port_available(port):
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.bind('',port)
+        return True
+    except OSError as e:
+        return False
+    
+
+def find_port(start_port,max_attempts=100):
+    """Find an available port starting from start_port"""
+    if is_port_available(start_port):
+        return start_port
+    for port in range(start_port+1,start_port+max_attempts+1):
+        if is_port_available(port):
+            return port
+    raise OSError(f"Could not find an available port in the range {start_port + 1} to {start_port + max_attempts}.")
+   
+     
 def bootstrap_oci_cli(ctx, profile_name, config_location):
     region_param = ctx.obj['region'] if ctx.obj['region'] else ''
     user_session = create_user_session(region=region_param)
@@ -114,8 +134,12 @@ def create_user_session(region='', tenancy_name=None):
     if region == '':
         region = cli_setup.prompt_for_region()
 
+    
+
     # try to set up http server so we can fail early if the required port is in use
     try:
+        # Firstly, we will check if PORT is available or not
+        BOOTSTRAP_SERVICE_PORT=is_port_available(BOOTSTRAP_SERVICE_PORT)
         server_address = ('', BOOTSTRAP_SERVICE_PORT)
         httpd = StoppableHttpServer(server_address, StoppableHttpRequestHandler)
     except OSError as e:
