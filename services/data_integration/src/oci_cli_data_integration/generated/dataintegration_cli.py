@@ -7916,12 +7916,13 @@ This option is a JSON list with items of type OutputPort.  For documentation on 
 This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'CreateConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'CreateConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}}, output_type={'module': 'data_integration', 'class': 'Task'})
 @cli_util.wrap_exceptions
-def create_task(ctx, from_json, workspace_id, model_type, name, identifier, registry_metadata, key, model_version, parent_ref, description, object_status, input_ports, output_ports, parameters, op_config_values, config_provider_delegate):
+def create_task(ctx, from_json, workspace_id, model_type, name, identifier, registry_metadata, key, model_version, parent_ref, description, object_status, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -7965,6 +7966,9 @@ def create_task(ctx, from_json, workspace_id, model_type, name, identifier, regi
     if config_provider_delegate is not None:
         _details['configProviderDelegate'] = cli_util.parse_json_parameter("config_provider_delegate", config_provider_delegate)
 
+    if is_concurrent_allowed is not None:
+        _details['isConcurrentAllowed'] = is_concurrent_allowed
+
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.create_task(
         workspace_id=workspace_id,
@@ -7995,13 +7999,14 @@ This option is a JSON list with items of type OutputPort.  For documentation on 
 This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
 @cli_util.option('--data-flow', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'CreateConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-flow': {'module': 'data_integration', 'class': 'DataFlow'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'CreateConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-flow': {'module': 'data_integration', 'class': 'DataFlow'}}, output_type={'module': 'data_integration', 'class': 'Task'})
 @cli_util.wrap_exceptions
-def create_task_create_task_from_integration_task(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, parent_ref, description, object_status, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, data_flow):
+def create_task_create_task_from_integration_task(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, parent_ref, description, object_status, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed, data_flow):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -8043,6 +8048,9 @@ def create_task_create_task_from_integration_task(ctx, from_json, workspace_id, 
 
     if config_provider_delegate is not None:
         _details['configProviderDelegate'] = cli_util.parse_json_parameter("config_provider_delegate", config_provider_delegate)
+
+    if is_concurrent_allowed is not None:
+        _details['isConcurrentAllowed'] = is_concurrent_allowed
 
     if data_flow is not None:
         _details['dataFlow'] = cli_util.parse_json_parameter("data_flow", data_flow)
@@ -8079,6 +8087,7 @@ This option is a JSON list with items of type OutputPort.  For documentation on 
 This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
 @cli_util.option('--data-flow', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--conditional-composite-field-map', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-single-load', type=click.BOOL, help=u"""Defines whether Data Loader task is used for single load or multiple""")
@@ -8088,7 +8097,7 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'CreateConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-flow': {'module': 'data_integration', 'class': 'DataFlow'}, 'conditional-composite-field-map': {'module': 'data_integration', 'class': 'ConditionalCompositeFieldMap'}}, output_type={'module': 'data_integration', 'class': 'Task'})
 @cli_util.wrap_exceptions
-def create_task_create_task_from_data_loader_task(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, parent_ref, description, object_status, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, data_flow, conditional_composite_field_map, is_single_load, parallel_load_limit):
+def create_task_create_task_from_data_loader_task(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, parent_ref, description, object_status, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed, data_flow, conditional_composite_field_map, is_single_load, parallel_load_limit):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -8130,6 +8139,9 @@ def create_task_create_task_from_data_loader_task(ctx, from_json, workspace_id, 
 
     if config_provider_delegate is not None:
         _details['configProviderDelegate'] = cli_util.parse_json_parameter("config_provider_delegate", config_provider_delegate)
+
+    if is_concurrent_allowed is not None:
+        _details['isConcurrentAllowed'] = is_concurrent_allowed
 
     if data_flow is not None:
         _details['dataFlow'] = cli_util.parse_json_parameter("data_flow", data_flow)
@@ -8175,13 +8187,14 @@ This option is a JSON list with items of type OutputPort.  For documentation on 
 This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
 @cli_util.option('--pipeline', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'CreateConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'pipeline': {'module': 'data_integration', 'class': 'Pipeline'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'CreateConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'pipeline': {'module': 'data_integration', 'class': 'Pipeline'}}, output_type={'module': 'data_integration', 'class': 'Task'})
 @cli_util.wrap_exceptions
-def create_task_create_task_from_pipeline_task(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, parent_ref, description, object_status, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, pipeline):
+def create_task_create_task_from_pipeline_task(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, parent_ref, description, object_status, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed, pipeline):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -8223,6 +8236,9 @@ def create_task_create_task_from_pipeline_task(ctx, from_json, workspace_id, nam
 
     if config_provider_delegate is not None:
         _details['configProviderDelegate'] = cli_util.parse_json_parameter("config_provider_delegate", config_provider_delegate)
+
+    if is_concurrent_allowed is not None:
+        _details['isConcurrentAllowed'] = is_concurrent_allowed
 
     if pipeline is not None:
         _details['pipeline'] = cli_util.parse_json_parameter("pipeline", pipeline)
@@ -8259,13 +8275,16 @@ This option is a JSON list with items of type OutputPort.  For documentation on 
 This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
 @cli_util.option('--dataflow-application', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'CreateConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'dataflow-application': {'module': 'data_integration', 'class': 'DataflowApplication'}})
+@cli_util.option('--driver-shape-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--executor-shape-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'CreateConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'dataflow-application': {'module': 'data_integration', 'class': 'DataflowApplication'}, 'driver-shape-details': {'module': 'data_integration', 'class': 'ShapeDetails'}, 'executor-shape-details': {'module': 'data_integration', 'class': 'ShapeDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'CreateConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'dataflow-application': {'module': 'data_integration', 'class': 'DataflowApplication'}}, output_type={'module': 'data_integration', 'class': 'Task'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'CreateConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'dataflow-application': {'module': 'data_integration', 'class': 'DataflowApplication'}, 'driver-shape-details': {'module': 'data_integration', 'class': 'ShapeDetails'}, 'executor-shape-details': {'module': 'data_integration', 'class': 'ShapeDetails'}}, output_type={'module': 'data_integration', 'class': 'Task'})
 @cli_util.wrap_exceptions
-def create_task_create_task_from_oci_dataflow_task(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, parent_ref, description, object_status, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, dataflow_application):
+def create_task_create_task_from_oci_dataflow_task(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, parent_ref, description, object_status, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed, dataflow_application, driver_shape_details, executor_shape_details):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -8308,8 +8327,17 @@ def create_task_create_task_from_oci_dataflow_task(ctx, from_json, workspace_id,
     if config_provider_delegate is not None:
         _details['configProviderDelegate'] = cli_util.parse_json_parameter("config_provider_delegate", config_provider_delegate)
 
+    if is_concurrent_allowed is not None:
+        _details['isConcurrentAllowed'] = is_concurrent_allowed
+
     if dataflow_application is not None:
         _details['dataflowApplication'] = cli_util.parse_json_parameter("dataflow_application", dataflow_application)
+
+    if driver_shape_details is not None:
+        _details['driverShapeDetails'] = cli_util.parse_json_parameter("driver_shape_details", driver_shape_details)
+
+    if executor_shape_details is not None:
+        _details['executorShapeDetails'] = cli_util.parse_json_parameter("executor_shape_details", executor_shape_details)
 
     _details['modelType'] = 'OCI_DATAFLOW_TASK'
 
@@ -8343,6 +8371,7 @@ This option is a JSON list with items of type OutputPort.  For documentation on 
 This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
 @cli_util.option('--script', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--sql-script-type', type=custom_types.CliCaseInsensitiveChoice(["STORED_PROCEDURE", "SQL_CODE"]), help=u"""Indicates whether the task is invoking a custom SQL script or stored procedure.""")
 @cli_util.option('--operation', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Describes the shape of the execution result""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -8351,7 +8380,7 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'CreateConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'script': {'module': 'data_integration', 'class': 'Script'}, 'operation': {'module': 'data_integration', 'class': 'object'}}, output_type={'module': 'data_integration', 'class': 'Task'})
 @cli_util.wrap_exceptions
-def create_task_create_task_from_sql_task(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, parent_ref, description, object_status, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, script, sql_script_type, operation):
+def create_task_create_task_from_sql_task(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, parent_ref, description, object_status, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed, script, sql_script_type, operation):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -8393,6 +8422,9 @@ def create_task_create_task_from_sql_task(ctx, from_json, workspace_id, name, id
 
     if config_provider_delegate is not None:
         _details['configProviderDelegate'] = cli_util.parse_json_parameter("config_provider_delegate", config_provider_delegate)
+
+    if is_concurrent_allowed is not None:
+        _details['isConcurrentAllowed'] = is_concurrent_allowed
 
     if script is not None:
         _details['script'] = cli_util.parse_json_parameter("script", script)
@@ -8435,6 +8467,7 @@ This option is a JSON list with items of type OutputPort.  For documentation on 
 This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
 @cli_util.option('--auth-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--auth-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--endpoint-parameterconflict', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -8455,7 +8488,7 @@ This option is a JSON list with items of type TypedExpression.  For documentatio
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'CreateConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'auth-details': {'module': 'data_integration', 'class': 'AuthDetails'}, 'auth-config': {'module': 'data_integration', 'class': 'AuthConfig'}, 'endpoint-parameterconflict': {'module': 'data_integration', 'class': 'Expression'}, 'headers': {'module': 'data_integration', 'class': 'object'}, 'cancel-endpoint': {'module': 'data_integration', 'class': 'Expression'}, 'execute-rest-call-config': {'module': 'data_integration', 'class': 'ExecuteRestCallConfig'}, 'cancel-rest-call-config': {'module': 'data_integration', 'class': 'CancelRestCallConfig'}, 'poll-rest-call-config': {'module': 'data_integration', 'class': 'PollRestCallConfig'}, 'typed-expressions': {'module': 'data_integration', 'class': 'list[TypedExpression]'}}, output_type={'module': 'data_integration', 'class': 'Task'})
 @cli_util.wrap_exceptions
-def create_task_create_task_from_rest_task(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, parent_ref, description, object_status, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, auth_details, auth_config, endpoint_parameterconflict, method_type, headers, json_data, api_call_mode, cancel_endpoint, cancel_method_type, execute_rest_call_config, cancel_rest_call_config, poll_rest_call_config, typed_expressions):
+def create_task_create_task_from_rest_task(ctx, from_json, workspace_id, name, identifier, registry_metadata, key, model_version, parent_ref, description, object_status, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed, auth_details, auth_config, endpoint_parameterconflict, method_type, headers, json_data, api_call_mode, cancel_endpoint, cancel_method_type, execute_rest_call_config, cancel_rest_call_config, poll_rest_call_config, typed_expressions):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -8497,6 +8530,9 @@ def create_task_create_task_from_rest_task(ctx, from_json, workspace_id, name, i
 
     if config_provider_delegate is not None:
         _details['configProviderDelegate'] = cli_util.parse_json_parameter("config_provider_delegate", config_provider_delegate)
+
+    if is_concurrent_allowed is not None:
+        _details['isConcurrentAllowed'] = is_concurrent_allowed
 
     if auth_details is not None:
         _details['authDetails'] = cli_util.parse_json_parameter("auth_details", auth_details)
@@ -19350,6 +19386,7 @@ This option is a JSON list with items of type OutputPort.  For documentation on 
 This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -19358,7 +19395,7 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'ConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}}, output_type={'module': 'data_integration', 'class': 'Task'})
 @cli_util.wrap_exceptions
-def update_task(ctx, from_json, force, workspace_id, task_key, model_type, key, object_version, model_version, parent_ref, name, description, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, registry_metadata, if_match):
+def update_task(ctx, from_json, force, workspace_id, task_key, model_type, key, object_version, model_version, parent_ref, name, description, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed, registry_metadata, if_match):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -19413,6 +19450,9 @@ def update_task(ctx, from_json, force, workspace_id, task_key, model_type, key, 
     if config_provider_delegate is not None:
         _details['configProviderDelegate'] = cli_util.parse_json_parameter("config_provider_delegate", config_provider_delegate)
 
+    if is_concurrent_allowed is not None:
+        _details['isConcurrentAllowed'] = is_concurrent_allowed
+
     if registry_metadata is not None:
         _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
 
@@ -19448,6 +19488,7 @@ This option is a JSON list with items of type OutputPort.  For documentation on 
 This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--auth-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--auth-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -19472,7 +19513,7 @@ This option is a JSON list with items of type TypedExpression.  For documentatio
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'ConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'auth-details': {'module': 'data_integration', 'class': 'AuthDetails'}, 'auth-config': {'module': 'data_integration', 'class': 'AuthConfig'}, 'endpoint-parameterconflict': {'module': 'data_integration', 'class': 'Expression'}, 'headers': {'module': 'data_integration', 'class': 'object'}, 'cancel-endpoint': {'module': 'data_integration', 'class': 'Expression'}, 'execute-rest-call-config': {'module': 'data_integration', 'class': 'ExecuteRestCallConfig'}, 'cancel-rest-call-config': {'module': 'data_integration', 'class': 'CancelRestCallConfig'}, 'poll-rest-call-config': {'module': 'data_integration', 'class': 'PollRestCallConfig'}, 'typed-expressions': {'module': 'data_integration', 'class': 'list[TypedExpression]'}}, output_type={'module': 'data_integration', 'class': 'Task'})
 @cli_util.wrap_exceptions
-def update_task_update_task_from_rest_task(ctx, from_json, force, workspace_id, task_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, registry_metadata, auth_details, auth_config, endpoint_parameterconflict, method_type, headers, additional_properties, json_data, api_call_mode, cancel_endpoint, cancel_method_type, execute_rest_call_config, cancel_rest_call_config, poll_rest_call_config, typed_expressions, if_match):
+def update_task_update_task_from_rest_task(ctx, from_json, force, workspace_id, task_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed, registry_metadata, auth_details, auth_config, endpoint_parameterconflict, method_type, headers, additional_properties, json_data, api_call_mode, cancel_endpoint, cancel_method_type, execute_rest_call_config, cancel_rest_call_config, poll_rest_call_config, typed_expressions, if_match):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -19525,6 +19566,9 @@ def update_task_update_task_from_rest_task(ctx, from_json, force, workspace_id, 
 
     if config_provider_delegate is not None:
         _details['configProviderDelegate'] = cli_util.parse_json_parameter("config_provider_delegate", config_provider_delegate)
+
+    if is_concurrent_allowed is not None:
+        _details['isConcurrentAllowed'] = is_concurrent_allowed
 
     if registry_metadata is not None:
         _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
@@ -19605,6 +19649,7 @@ This option is a JSON list with items of type OutputPort.  For documentation on 
 This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--pipeline', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
@@ -19614,7 +19659,7 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'ConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'pipeline': {'module': 'data_integration', 'class': 'Pipeline'}}, output_type={'module': 'data_integration', 'class': 'Task'})
 @cli_util.wrap_exceptions
-def update_task_update_task_from_pipeline_task(ctx, from_json, force, workspace_id, task_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, registry_metadata, pipeline, if_match):
+def update_task_update_task_from_pipeline_task(ctx, from_json, force, workspace_id, task_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed, registry_metadata, pipeline, if_match):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -19668,6 +19713,9 @@ def update_task_update_task_from_pipeline_task(ctx, from_json, force, workspace_
     if config_provider_delegate is not None:
         _details['configProviderDelegate'] = cli_util.parse_json_parameter("config_provider_delegate", config_provider_delegate)
 
+    if is_concurrent_allowed is not None:
+        _details['isConcurrentAllowed'] = is_concurrent_allowed
+
     if registry_metadata is not None:
         _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
 
@@ -19708,16 +19756,19 @@ This option is a JSON list with items of type OutputPort.  For documentation on 
 This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dataflow-application', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--driver-shape-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--executor-shape-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'ConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'dataflow-application': {'module': 'data_integration', 'class': 'DataflowApplication'}})
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'ConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'dataflow-application': {'module': 'data_integration', 'class': 'DataflowApplication'}, 'driver-shape-details': {'module': 'data_integration', 'class': 'ShapeDetails'}, 'executor-shape-details': {'module': 'data_integration', 'class': 'ShapeDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'ConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'dataflow-application': {'module': 'data_integration', 'class': 'DataflowApplication'}}, output_type={'module': 'data_integration', 'class': 'Task'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'ConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'dataflow-application': {'module': 'data_integration', 'class': 'DataflowApplication'}, 'driver-shape-details': {'module': 'data_integration', 'class': 'ShapeDetails'}, 'executor-shape-details': {'module': 'data_integration', 'class': 'ShapeDetails'}}, output_type={'module': 'data_integration', 'class': 'Task'})
 @cli_util.wrap_exceptions
-def update_task_update_task_from_oci_dataflow_task(ctx, from_json, force, workspace_id, task_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, registry_metadata, dataflow_application, if_match):
+def update_task_update_task_from_oci_dataflow_task(ctx, from_json, force, workspace_id, task_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed, registry_metadata, dataflow_application, driver_shape_details, executor_shape_details, if_match):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -19725,8 +19776,8 @@ def update_task_update_task_from_oci_dataflow_task(ctx, from_json, force, worksp
     if isinstance(task_key, six.string_types) and len(task_key.strip()) == 0:
         raise click.UsageError('Parameter --task-key cannot be whitespace or empty string')
     if not force:
-        if parent_ref or input_ports or output_ports or parameters or op_config_values or config_provider_delegate or registry_metadata or dataflow_application:
-            if not click.confirm("WARNING: Updates to parent-ref and input-ports and output-ports and parameters and op-config-values and config-provider-delegate and registry-metadata and dataflow-application will replace any existing values. Are you sure you want to continue?"):
+        if parent_ref or input_ports or output_ports or parameters or op_config_values or config_provider_delegate or registry_metadata or dataflow_application or driver_shape_details or executor_shape_details:
+            if not click.confirm("WARNING: Updates to parent-ref and input-ports and output-ports and parameters and op-config-values and config-provider-delegate and registry-metadata and dataflow-application and driver-shape-details and executor-shape-details will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -19771,11 +19822,20 @@ def update_task_update_task_from_oci_dataflow_task(ctx, from_json, force, worksp
     if config_provider_delegate is not None:
         _details['configProviderDelegate'] = cli_util.parse_json_parameter("config_provider_delegate", config_provider_delegate)
 
+    if is_concurrent_allowed is not None:
+        _details['isConcurrentAllowed'] = is_concurrent_allowed
+
     if registry_metadata is not None:
         _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
 
     if dataflow_application is not None:
         _details['dataflowApplication'] = cli_util.parse_json_parameter("dataflow_application", dataflow_application)
+
+    if driver_shape_details is not None:
+        _details['driverShapeDetails'] = cli_util.parse_json_parameter("driver_shape_details", driver_shape_details)
+
+    if executor_shape_details is not None:
+        _details['executorShapeDetails'] = cli_util.parse_json_parameter("executor_shape_details", executor_shape_details)
 
     _details['modelType'] = 'OCI_DATAFLOW_TASK'
 
@@ -19811,6 +19871,7 @@ This option is a JSON list with items of type OutputPort.  For documentation on 
 This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--script', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--sql-script-type', type=custom_types.CliCaseInsensitiveChoice(["STORED_PROCEDURE", "SQL_CODE"]), help=u"""Indicates whether the task is invoking a custom SQL script or stored procedure.""")
@@ -19822,7 +19883,7 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'ConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'script': {'module': 'data_integration', 'class': 'Script'}, 'operation': {'module': 'data_integration', 'class': 'object'}}, output_type={'module': 'data_integration', 'class': 'Task'})
 @cli_util.wrap_exceptions
-def update_task_update_task_from_sql_task(ctx, from_json, force, workspace_id, task_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, registry_metadata, script, sql_script_type, operation, if_match):
+def update_task_update_task_from_sql_task(ctx, from_json, force, workspace_id, task_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed, registry_metadata, script, sql_script_type, operation, if_match):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -19876,6 +19937,9 @@ def update_task_update_task_from_sql_task(ctx, from_json, force, workspace_id, t
     if config_provider_delegate is not None:
         _details['configProviderDelegate'] = cli_util.parse_json_parameter("config_provider_delegate", config_provider_delegate)
 
+    if is_concurrent_allowed is not None:
+        _details['isConcurrentAllowed'] = is_concurrent_allowed
+
     if registry_metadata is not None:
         _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
 
@@ -19922,6 +19986,7 @@ This option is a JSON list with items of type OutputPort.  For documentation on 
 This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-flow', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--conditional-composite-field-map', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -19934,7 +19999,7 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'ConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-flow': {'module': 'data_integration', 'class': 'DataFlow'}, 'conditional-composite-field-map': {'module': 'data_integration', 'class': 'ConditionalCompositeFieldMap'}}, output_type={'module': 'data_integration', 'class': 'Task'})
 @cli_util.wrap_exceptions
-def update_task_update_task_from_data_loader_task(ctx, from_json, force, workspace_id, task_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, registry_metadata, data_flow, conditional_composite_field_map, is_single_load, parallel_load_limit, if_match):
+def update_task_update_task_from_data_loader_task(ctx, from_json, force, workspace_id, task_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed, registry_metadata, data_flow, conditional_composite_field_map, is_single_load, parallel_load_limit, if_match):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -19988,6 +20053,9 @@ def update_task_update_task_from_data_loader_task(ctx, from_json, force, workspa
     if config_provider_delegate is not None:
         _details['configProviderDelegate'] = cli_util.parse_json_parameter("config_provider_delegate", config_provider_delegate)
 
+    if is_concurrent_allowed is not None:
+        _details['isConcurrentAllowed'] = is_concurrent_allowed
+
     if registry_metadata is not None:
         _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
 
@@ -20037,6 +20105,7 @@ This option is a JSON list with items of type OutputPort.  For documentation on 
 This option is a JSON list with items of type Parameter.  For documentation on Parameter please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/Parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--op-config-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-provider-delegate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-concurrent-allowed', type=click.BOOL, help=u"""Whether the same task can be executed concurrently.""")
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-flow', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
@@ -20046,7 +20115,7 @@ This option is a JSON list with items of type Parameter.  For documentation on P
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'input-ports': {'module': 'data_integration', 'class': 'list[InputPort]'}, 'output-ports': {'module': 'data_integration', 'class': 'list[OutputPort]'}, 'parameters': {'module': 'data_integration', 'class': 'list[Parameter]'}, 'op-config-values': {'module': 'data_integration', 'class': 'ConfigValues'}, 'config-provider-delegate': {'module': 'data_integration', 'class': 'ConfigProvider'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'data-flow': {'module': 'data_integration', 'class': 'DataFlow'}}, output_type={'module': 'data_integration', 'class': 'Task'})
 @cli_util.wrap_exceptions
-def update_task_update_task_from_integration_task(ctx, from_json, force, workspace_id, task_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, registry_metadata, data_flow, if_match):
+def update_task_update_task_from_integration_task(ctx, from_json, force, workspace_id, task_key, key, object_version, model_version, parent_ref, name, description, object_status, identifier, input_ports, output_ports, parameters, op_config_values, config_provider_delegate, is_concurrent_allowed, registry_metadata, data_flow, if_match):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -20099,6 +20168,9 @@ def update_task_update_task_from_integration_task(ctx, from_json, force, workspa
 
     if config_provider_delegate is not None:
         _details['configProviderDelegate'] = cli_util.parse_json_parameter("config_provider_delegate", config_provider_delegate)
+
+    if is_concurrent_allowed is not None:
+        _details['isConcurrentAllowed'] = is_concurrent_allowed
 
     if registry_metadata is not None:
         _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)

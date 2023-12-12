@@ -229,17 +229,18 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair applied without any predefined name, type, or namespace. For more information, see [Resource Tags]. Exists for cross-compatibility only.
 
 Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of system tag keys. These predefined keys are scoped to namespaces. Example: `{ \"orcl-cloud\": { \"free-tier-retained\": \"true\" } }`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target-compartments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "FAILED", "INACTIVE", "ATTACHING", "DETACHING", "DELETING", "DELETED", "UPDATING", "CREATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'optimizer', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'optimizer', 'class': 'dict(str, string)'}, 'levels-configuration': {'module': 'optimizer', 'class': 'LevelsConfiguration'}, 'target-compartments': {'module': 'optimizer', 'class': 'TargetCompartments'}, 'target-tags': {'module': 'optimizer', 'class': 'TargetTags'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'optimizer', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'optimizer', 'class': 'dict(str, string)'}, 'system-tags': {'module': 'optimizer', 'class': 'dict(str, dict(str, object))'}, 'levels-configuration': {'module': 'optimizer', 'class': 'LevelsConfiguration'}, 'target-compartments': {'module': 'optimizer', 'class': 'TargetCompartments'}, 'target-tags': {'module': 'optimizer', 'class': 'TargetTags'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'optimizer', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'optimizer', 'class': 'dict(str, string)'}, 'levels-configuration': {'module': 'optimizer', 'class': 'LevelsConfiguration'}, 'target-compartments': {'module': 'optimizer', 'class': 'TargetCompartments'}, 'target-tags': {'module': 'optimizer', 'class': 'TargetTags'}}, output_type={'module': 'optimizer', 'class': 'Profile'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'optimizer', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'optimizer', 'class': 'dict(str, string)'}, 'system-tags': {'module': 'optimizer', 'class': 'dict(str, dict(str, object))'}, 'levels-configuration': {'module': 'optimizer', 'class': 'LevelsConfiguration'}, 'target-compartments': {'module': 'optimizer', 'class': 'TargetCompartments'}, 'target-tags': {'module': 'optimizer', 'class': 'TargetTags'}}, output_type={'module': 'optimizer', 'class': 'Profile'})
 @cli_util.wrap_exceptions
-def create_profile(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, description, levels_configuration, aggregation_interval_in_days, defined_tags, freeform_tags, target_compartments, target_tags):
+def create_profile(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, description, levels_configuration, aggregation_interval_in_days, defined_tags, freeform_tags, system_tags, target_compartments, target_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -258,6 +259,9 @@ def create_profile(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if system_tags is not None:
+        _details['systemTags'] = cli_util.parse_json_parameter("system_tags", system_tags)
 
     if target_compartments is not None:
         _details['targetCompartments'] = cli_util.parse_json_parameter("target_compartments", target_compartments)
@@ -380,6 +384,7 @@ When using this parameter, please make sure to set the compartmentId with the pa
 Please note that this parameter shouldn't be used along with childTenancyIds parameter. If you would like to get results specifically for parent P and only child A, use the childTenancyIds parameter and populate the list with tenancy id of P and A.
 
 When using this parameter, please make sure to set the compartmentId with the parent tenancy ID.""")
+@cli_util.option('--include-resource-metadata', type=click.BOOL, help=u"""Supplement additional resource information in extended metadata response.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @json_skeleton_utils.get_cli_json_input_option({'child-tenancy-ids': {'module': 'optimizer', 'class': 'list[string]'}})
@@ -387,7 +392,7 @@ When using this parameter, please make sure to set the compartmentId with the pa
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'child-tenancy-ids': {'module': 'optimizer', 'class': 'list[string]'}}, output_type={'module': 'optimizer', 'class': 'ResourceActionCollection'})
 @cli_util.wrap_exceptions
-def filter_resource_actions(ctx, from_json, compartment_id, compartment_id_in_subtree, query_parameterconflict, recommendation_id, recommendation_name, child_tenancy_ids, include_organization, limit, page):
+def filter_resource_actions(ctx, from_json, compartment_id, compartment_id_in_subtree, query_parameterconflict, recommendation_id, recommendation_name, child_tenancy_ids, include_organization, include_resource_metadata, limit, page):
 
     kwargs = {}
     if recommendation_id is not None:
@@ -398,6 +403,8 @@ def filter_resource_actions(ctx, from_json, compartment_id, compartment_id_in_su
         kwargs['child_tenancy_ids'] = child_tenancy_ids
     if include_organization is not None:
         kwargs['include_organization'] = include_organization
+    if include_resource_metadata is not None:
+        kwargs['include_resource_metadata'] = include_resource_metadata
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -509,17 +516,20 @@ def get_recommendation(ctx, from_json, recommendation_id):
 
 @resource_action_group.command(name=cli_util.override('optimizer.get_resource_action.command_name', 'get'), help=u"""Gets the resource action that corresponds to the specified OCID. \n[Command Reference](getResourceAction)""")
 @cli_util.option('--resource-action-id', required=True, help=u"""The unique OCID associated with the resource action.""")
+@cli_util.option('--include-resource-metadata', type=click.BOOL, help=u"""Supplement additional resource information in extended metadata response.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'optimizer', 'class': 'ResourceAction'})
 @cli_util.wrap_exceptions
-def get_resource_action(ctx, from_json, resource_action_id):
+def get_resource_action(ctx, from_json, resource_action_id, include_resource_metadata):
 
     if isinstance(resource_action_id, six.string_types) and len(resource_action_id.strip()) == 0:
         raise click.UsageError('Parameter --resource-action-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if include_resource_metadata is not None:
+        kwargs['include_resource_metadata'] = include_resource_metadata
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('optimizer', 'optimizer', ctx)
     result = client.get_resource_action(
@@ -708,6 +718,7 @@ Can only be set to true when performing ListCompartments on the tenancy (root co
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME", "TIMECREATED"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for NAME is ascending. The NAME sort order is case sensitive.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "FAILED", "INACTIVE", "ATTACHING", "DETACHING", "DELETING", "DELETED", "UPDATING", "CREATING"]), help=u"""A filter that returns results that match the lifecycle state specified.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["PENDING", "DISMISSED", "POSTPONED", "IMPLEMENTED"]), help=u"""A filter that returns recommendations that match the status specified.""")
+@cli_util.option('--include-resource-metadata', type=click.BOOL, help=u"""Supplement additional resource information in extended metadata response.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -715,7 +726,7 @@ Can only be set to true when performing ListCompartments on the tenancy (root co
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'optimizer', 'class': 'HistoryCollection'})
 @cli_util.wrap_exceptions
-def list_histories(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, name, recommendation_name, recommendation_id, resource_type, limit, page, sort_order, sort_by, lifecycle_state, status):
+def list_histories(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, name, recommendation_name, recommendation_id, resource_type, limit, page, sort_order, sort_by, lifecycle_state, status, include_resource_metadata):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -741,6 +752,8 @@ def list_histories(ctx, from_json, all_pages, page_size, compartment_id, compart
         kwargs['lifecycle_state'] = lifecycle_state
     if status is not None:
         kwargs['status'] = status
+    if include_resource_metadata is not None:
+        kwargs['include_resource_metadata'] = include_resource_metadata
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('optimizer', 'optimizer', ctx)
     if all_pages:
@@ -1135,6 +1148,7 @@ When using this parameter, please make sure to set the compartmentId with the pa
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME", "TIMECREATED"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for NAME is ascending. The NAME sort order is case sensitive.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "FAILED", "INACTIVE", "ATTACHING", "DETACHING", "DELETING", "DELETED", "UPDATING", "CREATING"]), help=u"""A filter that returns results that match the lifecycle state specified.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["PENDING", "DISMISSED", "POSTPONED", "IMPLEMENTED"]), help=u"""A filter that returns recommendations that match the status specified.""")
+@cli_util.option('--include-resource-metadata', type=click.BOOL, help=u"""Supplement additional resource information in extended metadata response.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({'child-tenancy-ids': {'module': 'optimizer', 'class': 'list[string]'}})
@@ -1142,7 +1156,7 @@ When using this parameter, please make sure to set the compartmentId with the pa
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'child-tenancy-ids': {'module': 'optimizer', 'class': 'list[string]'}}, output_type={'module': 'optimizer', 'class': 'ResourceActionCollection'})
 @cli_util.wrap_exceptions
-def list_resource_actions(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, recommendation_id, recommendation_name, child_tenancy_ids, include_organization, name, resource_type, limit, page, sort_order, sort_by, lifecycle_state, status):
+def list_resource_actions(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, recommendation_id, recommendation_name, child_tenancy_ids, include_organization, name, resource_type, limit, page, sort_order, sort_by, lifecycle_state, status, include_resource_metadata):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1172,6 +1186,8 @@ def list_resource_actions(ctx, from_json, all_pages, page_size, compartment_id, 
         kwargs['lifecycle_state'] = lifecycle_state
     if status is not None:
         kwargs['status'] = status
+    if include_resource_metadata is not None:
+        kwargs['include_resource_metadata'] = include_resource_metadata
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('optimizer', 'optimizer', ctx)
     if all_pages:
@@ -1419,6 +1435,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair applied without any predefined name, type, or namespace. For more information, see [Resource Tags]. Exists for cross-compatibility only.
 
 Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of system tag keys. These predefined keys are scoped to namespaces. Example: `{ \"orcl-cloud\": { \"free-tier-retained\": \"true\" } }`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--levels-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target-compartments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1428,18 +1445,18 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "FAILED", "INACTIVE", "ATTACHING", "DETACHING", "DELETING", "DELETED", "UPDATING", "CREATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'optimizer', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'optimizer', 'class': 'dict(str, string)'}, 'levels-configuration': {'module': 'optimizer', 'class': 'LevelsConfiguration'}, 'target-compartments': {'module': 'optimizer', 'class': 'TargetCompartments'}, 'target-tags': {'module': 'optimizer', 'class': 'TargetTags'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'optimizer', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'optimizer', 'class': 'dict(str, string)'}, 'system-tags': {'module': 'optimizer', 'class': 'dict(str, dict(str, object))'}, 'levels-configuration': {'module': 'optimizer', 'class': 'LevelsConfiguration'}, 'target-compartments': {'module': 'optimizer', 'class': 'TargetCompartments'}, 'target-tags': {'module': 'optimizer', 'class': 'TargetTags'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'optimizer', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'optimizer', 'class': 'dict(str, string)'}, 'levels-configuration': {'module': 'optimizer', 'class': 'LevelsConfiguration'}, 'target-compartments': {'module': 'optimizer', 'class': 'TargetCompartments'}, 'target-tags': {'module': 'optimizer', 'class': 'TargetTags'}}, output_type={'module': 'optimizer', 'class': 'Profile'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'optimizer', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'optimizer', 'class': 'dict(str, string)'}, 'system-tags': {'module': 'optimizer', 'class': 'dict(str, dict(str, object))'}, 'levels-configuration': {'module': 'optimizer', 'class': 'LevelsConfiguration'}, 'target-compartments': {'module': 'optimizer', 'class': 'TargetCompartments'}, 'target-tags': {'module': 'optimizer', 'class': 'TargetTags'}}, output_type={'module': 'optimizer', 'class': 'Profile'})
 @cli_util.wrap_exceptions
-def update_profile(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, profile_id, description, aggregation_interval_in_days, defined_tags, freeform_tags, levels_configuration, target_compartments, target_tags, name, if_match):
+def update_profile(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, profile_id, description, aggregation_interval_in_days, defined_tags, freeform_tags, system_tags, levels_configuration, target_compartments, target_tags, name, if_match):
 
     if isinstance(profile_id, six.string_types) and len(profile_id.strip()) == 0:
         raise click.UsageError('Parameter --profile-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags or levels_configuration or target_compartments or target_tags:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and levels-configuration and target-compartments and target-tags will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or system_tags or levels_configuration or target_compartments or target_tags:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and system-tags and levels-configuration and target-compartments and target-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1460,6 +1477,9 @@ def update_profile(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if system_tags is not None:
+        _details['systemTags'] = cli_util.parse_json_parameter("system_tags", system_tags)
 
     if levels_configuration is not None:
         _details['levelsConfiguration'] = cli_util.parse_json_parameter("levels_configuration", levels_configuration)

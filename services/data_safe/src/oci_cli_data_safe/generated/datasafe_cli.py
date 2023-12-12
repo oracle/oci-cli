@@ -28,7 +28,7 @@ def masked_column_summary_group():
     pass
 
 
-@click.command(cli_util.override('data_safe.sdm_masking_policy_difference_group.command_name', 'sdm-masking-policy-difference'), cls=CommandGroupWithAlias, help="""A SDM masking policy difference resource. It helps track the difference between sensitive columns of SDM and masking columns of the masking policy.""")
+@click.command(cli_util.override('data_safe.sdm_masking_policy_difference_group.command_name', 'sdm-masking-policy-difference'), cls=CommandGroupWithAlias, help="""A resource that tracks the differences between sensitive columns in the sensitive data model and masking columns in the masking policy""")
 @cli_util.help_option_group
 def sdm_masking_policy_difference_group():
     pass
@@ -64,7 +64,7 @@ def on_prem_connector_group():
     pass
 
 
-@click.command(cli_util.override('data_safe.sql_firewall_policy_group.command_name', 'sql-firewall-policy'), cls=CommandGroupWithAlias, help="""The SQL firewall policy resource contains the firewall policy metadata for a single user.""")
+@click.command(cli_util.override('data_safe.sql_firewall_policy_group.command_name', 'sql-firewall-policy'), cls=CommandGroupWithAlias, help="""The SQL Firewall policy resource contains the firewall policy metadata for a single user.""")
 @cli_util.help_option_group
 def sql_firewall_policy_group():
     pass
@@ -130,7 +130,7 @@ def security_policy_group():
     pass
 
 
-@click.command(cli_util.override('data_safe.sql_firewall_allowed_sql_collection_group.command_name', 'sql-firewall-allowed-sql-collection'), cls=CommandGroupWithAlias, help="""Collection of SQL firewall allowed SQL statements.""")
+@click.command(cli_util.override('data_safe.sql_firewall_allowed_sql_collection_group.command_name', 'sql-firewall-allowed-sql-collection'), cls=CommandGroupWithAlias, help="""Collection of SQL Firewall allowed SQL statements.""")
 @cli_util.help_option_group
 def sql_firewall_allowed_sql_collection_group():
     pass
@@ -142,13 +142,13 @@ def discovery_job_result_group():
     pass
 
 
-@click.command(cli_util.override('data_safe.sql_firewall_policy_analytics_collection_group.command_name', 'sql-firewall-policy-analytics-collection'), cls=CommandGroupWithAlias, help="""SQL firewall policy analytics collection.""")
+@click.command(cli_util.override('data_safe.sql_firewall_policy_analytics_collection_group.command_name', 'sql-firewall-policy-analytics-collection'), cls=CommandGroupWithAlias, help="""SQL Firewall policy analytics collection.""")
 @cli_util.help_option_group
 def sql_firewall_policy_analytics_collection_group():
     pass
 
 
-@click.command(cli_util.override('data_safe.sql_firewall_policy_collection_group.command_name', 'sql-firewall-policy-collection'), cls=CommandGroupWithAlias, help="""Collection of SQL firewall policy summary.""")
+@click.command(cli_util.override('data_safe.sql_firewall_policy_collection_group.command_name', 'sql-firewall-policy-collection'), cls=CommandGroupWithAlias, help="""Collection of SQL Firewall policy summary.""")
 @cli_util.help_option_group
 def sql_firewall_policy_collection_group():
     pass
@@ -282,7 +282,7 @@ def sensitive_object_collection_group():
     pass
 
 
-@click.command(cli_util.override('data_safe.sql_firewall_allowed_sql_analytics_collection_group.command_name', 'sql-firewall-allowed-sql-analytics-collection'), cls=CommandGroupWithAlias, help="""SQL firewall allowed SQL analytics collection.""")
+@click.command(cli_util.override('data_safe.sql_firewall_allowed_sql_analytics_collection_group.command_name', 'sql-firewall-allowed-sql-analytics-collection'), cls=CommandGroupWithAlias, help="""SQL Firewall allowed SQL analytics collection.""")
 @cli_util.help_option_group
 def sql_firewall_allowed_sql_analytics_collection_group():
     pass
@@ -360,7 +360,7 @@ def masking_object_collection_group():
     pass
 
 
-@click.command(cli_util.override('data_safe.database_security_config_group.command_name', 'database-security-config'), cls=CommandGroupWithAlias, help="""Database Security Configurations resource represents the target database configurations. Included in the Database Security Configurations are the SQL firewall configurations such as the status of the firewall, the time that the firewall status was last updated, violation log auto purge settings, etc.""")
+@click.command(cli_util.override('data_safe.database_security_config_group.command_name', 'database-security-config'), cls=CommandGroupWithAlias, help="""Database Security Configurations resource represents the target database configurations. Included in the Database Security Configurations are the SQL Firewall configurations such as the status of the firewall, the time that the firewall status was last updated, violation log auto purge settings, etc.""")
 @cli_util.help_option_group
 def database_security_config_group():
     pass
@@ -1816,9 +1816,9 @@ def change_sql_collection_compartment(ctx, from_json, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
-@sql_firewall_policy_group.command(name=cli_util.override('data_safe.change_sql_firewall_policy_compartment.command_name', 'change-compartment'), help=u"""Moves the specified SQL firewall policy and its dependent resources into a different compartment. \n[Command Reference](changeSqlFirewallPolicyCompartment)""")
-@cli_util.option('--sql-firewall-policy-id', required=True, help=u"""The OCID of the SQL firewall policy resource.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to move the SQL firewall policy.""")
+@sql_firewall_policy_group.command(name=cli_util.override('data_safe.change_sql_firewall_policy_compartment.command_name', 'change-compartment'), help=u"""Moves the specified SQL Firewall policy and its dependent resources into a different compartment. \n[Command Reference](changeSqlFirewallPolicyCompartment)""")
+@cli_util.option('--sql-firewall-policy-id', required=True, help=u"""The OCID of the SQL Firewall policy resource.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to move the SQL Firewall policy.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -5167,8 +5167,8 @@ def delete_sql_collection(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@sql_firewall_policy_group.command(name=cli_util.override('data_safe.delete_sql_firewall_policy.command_name', 'delete'), help=u"""Deletes the SQL firewall policy resource. \n[Command Reference](deleteSqlFirewallPolicy)""")
-@cli_util.option('--sql-firewall-policy-id', required=True, help=u"""The OCID of the SQL firewall policy resource.""")
+@sql_firewall_policy_group.command(name=cli_util.override('data_safe.delete_sql_firewall_policy.command_name', 'delete'), help=u"""Deletes the SQL Firewall policy resource. \n[Command Reference](deleteSqlFirewallPolicy)""")
+@cli_util.option('--sql-firewall-policy-id', required=True, help=u"""The OCID of the SQL Firewall policy resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -6129,11 +6129,11 @@ def generate_on_prem_connector_configuration(ctx, from_json, file, password, on_
         file.close()
 
 
-@report_definition_group.command(name=cli_util.override('data_safe.generate_report.command_name', 'generate-report'), help=u"""Generates a PDF or XLS report based on parameters and report definition. \n[Command Reference](generateReport)""")
+@report_definition_group.command(name=cli_util.override('data_safe.generate_report.command_name', 'generate-report'), help=u"""Generates a .xls or .pdf report based on parameters and report definition. \n[Command Reference](generateReport)""")
 @cli_util.option('--report-definition-id', required=True, help=u"""Unique report definition identifier""")
 @cli_util.option('--display-name', required=True, help=u"""The name of the report to be generated""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
-@cli_util.option('--mime-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS"]), help=u"""Specifies the format of report to be excel or pdf""")
+@cli_util.option('--mime-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS"]), help=u"""Specifies the format of report to be .xls or .pdf""")
 @cli_util.option('--target-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of database target OCIDs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""The description of the report to be generated""")
 @cli_util.option('--time-less-than', type=custom_types.CLI_DATETIME, help=u"""Specifies the time until which the data needs to be reported.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -6328,7 +6328,7 @@ def generate_sensitive_data_model_for_download(ctx, from_json, wait_for_state, m
     cli_util.render_response(result, ctx)
 
 
-@sql_collection_group.command(name=cli_util.override('data_safe.generate_sql_firewall_policy.command_name', 'generate-sql-firewall-policy'), help=u"""Generates or appends to the SQL firewall policy using the specified SQL collection. \n[Command Reference](generateSqlFirewallPolicy)""")
+@sql_collection_group.command(name=cli_util.override('data_safe.generate_sql_firewall_policy.command_name', 'generate-sql-firewall-policy'), help=u"""Generates or appends to the SQL Firewall policy using the specified SQL collection. \n[Command Reference](generateSqlFirewallPolicy)""")
 @cli_util.option('--sql-collection-id', required=True, help=u"""The OCID of the SQL collection resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -6931,7 +6931,7 @@ def get_report(ctx, from_json, report_id):
     cli_util.render_response(result, ctx)
 
 
-@report_group.command(name=cli_util.override('data_safe.get_report_content.command_name', 'get-report-content'), help=u"""Downloads the specified report in the form of PDF or XLXS. \n[Command Reference](getReportContent)""")
+@report_group.command(name=cli_util.override('data_safe.get_report_content.command_name', 'get-report-content'), help=u"""Downloads the specified report in the form of .xls or .pdf. \n[Command Reference](getReportContent)""")
 @cli_util.option('--report-id', required=True, help=u"""Unique report identifier""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -7233,8 +7233,8 @@ def get_sql_collection(ctx, from_json, sql_collection_id):
     cli_util.render_response(result, ctx)
 
 
-@sql_firewall_policy_group.command(name=cli_util.override('data_safe.get_sql_firewall_policy.command_name', 'get'), help=u"""Gets a SQL firewall policy by identifier. \n[Command Reference](getSqlFirewallPolicy)""")
-@cli_util.option('--sql-firewall-policy-id', required=True, help=u"""The OCID of the SQL firewall policy resource.""")
+@sql_firewall_policy_group.command(name=cli_util.override('data_safe.get_sql_firewall_policy.command_name', 'get'), help=u"""Gets a SQL Firewall policy by identifier. \n[Command Reference](getSqlFirewallPolicy)""")
+@cli_util.option('--sql-firewall-policy-id', required=True, help=u"""The OCID of the SQL Firewall policy resource.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -8795,11 +8795,13 @@ def list_difference_columns(ctx, from_json, all_pages, page_size, sdm_masking_po
 @sensitive_data_model_group.command(name=cli_util.override('data_safe.list_discovery_analytics.command_name', 'list-discovery-analytics'), help=u"""Gets consolidated discovery analytics data based on the specified query parameters. If CompartmentIdInSubtreeQueryParam is specified as true, the behaviour is equivalent to accessLevel \"ACCESSIBLE\" by default. \n[Command Reference](listDiscoveryAnalytics)""")
 @cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
-@cli_util.option('--group-by', type=custom_types.CliCaseInsensitiveChoice(["targetId", "sensitiveDataModelId"]), help=u"""Attribute by which the discovery analytics data should be grouped.""")
+@cli_util.option('--group-by', type=custom_types.CliCaseInsensitiveChoice(["targetId", "sensitiveDataModelId", "sensitiveTypeId", "targetIdAndSensitiveDataModelId", "sensitiveTypeIdAndTargetId", "sensitiveTypeIdAndSensitiveDataModelId"]), help=u"""Attribute by which the discovery analytics data should be grouped.""")
 @cli_util.option('--target-id', help=u"""A filter to return only items related to a specific target OCID.""")
 @cli_util.option('--sensitive-data-model-id', help=u"""A filter to return only the resources that match the specified sensitive data model OCID.""")
+@cli_util.option('--sensitive-type-id', help=u"""A filter to return only items related to a specific sensitive type OCID.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--is-common', type=click.BOOL, help=u"""A filter to return only the common sensitive type resources. Common sensitive types belong to library sensitive types which are frequently used to perform sensitive data discovery.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -8807,7 +8809,7 @@ def list_difference_columns(ctx, from_json, all_pages, page_size, sdm_masking_po
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'DiscoveryAnalyticsCollection'})
 @cli_util.wrap_exceptions
-def list_discovery_analytics(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, group_by, target_id, sensitive_data_model_id, limit, page):
+def list_discovery_analytics(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, group_by, target_id, sensitive_data_model_id, sensitive_type_id, limit, page, is_common):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -8821,10 +8823,14 @@ def list_discovery_analytics(ctx, from_json, all_pages, page_size, compartment_i
         kwargs['target_id'] = target_id
     if sensitive_data_model_id is not None:
         kwargs['sensitive_data_model_id'] = sensitive_data_model_id
+    if sensitive_type_id is not None:
+        kwargs['sensitive_type_id'] = sensitive_type_id
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if is_common is not None:
+        kwargs['is_common'] = is_common
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     if all_pages:
@@ -9821,7 +9827,7 @@ def list_on_prem_connectors(ctx, from_json, all_pages, page_size, compartment_id
 
 @profile_group.command(name=cli_util.override('data_safe.list_profile_analytics.command_name', 'list-profile-analytics'), help=u"""Gets a list of aggregated user profile details in the specified compartment. This provides information about the overall profiles available. For example, the user profile details include how many users have the profile assigned and do how many use password verification function. This data is especially useful content for dashboards or to support analytics.
 
-When you perform the ListProfileAnalytics operation, if the parameter compartmentIdInSubtree is set to \"true,\" and if the parameter accessLevel is set to ACCESSIBLE, then the operation returns compartments in which the requestor has INSPECT permissions on at least one resource, directly or indirectly (in subcompartments). If the operation is performed at the root compartment. If the requestor does not have access to at least one subcompartment of the compartment specified by compartmentId, then \"Not Authorized\" is returned.
+When you perform the ListProfileAnalytics operation, if the parameter compartmentIdInSubtree is set to \"true,\" and if the parameter accessLevel is set to ACCESSIBLE, then the operation returns compartments in which the requestor has INSPECT permissions on at least one resource, directly or indirectly (in subcompartments). If the operation is performed at the root compartment and the requestor does not have access to at least one subcompartment of the compartment specified by compartmentId, then \"Not Authorized\" is returned.
 
 The parameter compartmentIdInSubtree applies when you perform ListProfileAnalytics on the compartmentId passed and when it is set to true, the entire hierarchy of compartments can be returned.
 
@@ -11020,6 +11026,7 @@ def list_sensitive_schemas(ctx, from_json, all_pages, page_size, sensitive_data_
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only the resources that match the specified lifecycle state.""")
+@cli_util.option('--is-common', type=click.BOOL, help=u"""A filter to return only the common sensitive type resources. Common sensitive types belong to library sensitive types which are frequently used to perform sensitive data discovery.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -11027,7 +11034,7 @@ def list_sensitive_schemas(ctx, from_json, all_pages, page_size, sensitive_data_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'SensitiveTypeCollection'})
 @cli_util.wrap_exceptions
-def list_sensitive_types(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, access_level, display_name, sensitive_type_id, sensitive_type_source, entity_type, parent_category_id, default_masking_format_id, time_created_greater_than_or_equal_to, time_created_less_than, sort_order, sort_by, limit, page, lifecycle_state):
+def list_sensitive_types(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, access_level, display_name, sensitive_type_id, sensitive_type_source, entity_type, parent_category_id, default_masking_format_id, time_created_greater_than_or_equal_to, time_created_less_than, sort_order, sort_by, limit, page, lifecycle_state, is_common):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -11063,6 +11070,8 @@ def list_sensitive_types(ctx, from_json, all_pages, page_size, compartment_id, c
         kwargs['page'] = page
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
+    if is_common is not None:
+        kwargs['is_common'] = is_common
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     if all_pages:
@@ -11318,9 +11327,9 @@ def list_sql_collections(ctx, from_json, all_pages, page_size, compartment_id, c
     cli_util.render_response(result, ctx)
 
 
-@sql_firewall_allowed_sql_analytics_collection_group.command(name=cli_util.override('data_safe.list_sql_firewall_allowed_sql_analytics.command_name', 'list-sql-firewall-allowed-sql-analytics'), help=u"""Returns the aggregation details of all SQL firewall allowed SQL statements.
+@sql_firewall_allowed_sql_analytics_collection_group.command(name=cli_util.override('data_safe.list_sql_firewall_allowed_sql_analytics.command_name', 'list-sql-firewall-allowed-sql-analytics'), help=u"""Returns the aggregation details of all SQL Firewall allowed SQL statements.
 
-The ListSqlFirewallAllowedSqlAnalytics operation returns the aggregates of the SQL firewall allowed SQL statements in the specified `compartmentId`.
+The ListSqlFirewallAllowedSqlAnalytics operation returns the aggregates of the SQL Firewall allowed SQL statements in the specified `compartmentId`.
 
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
@@ -11386,9 +11395,9 @@ def list_sql_firewall_allowed_sql_analytics(ctx, from_json, all_pages, page_size
     cli_util.render_response(result, ctx)
 
 
-@sql_firewall_allowed_sql_collection_group.command(name=cli_util.override('data_safe.list_sql_firewall_allowed_sqls.command_name', 'list-sql-firewall-allowed-sqls'), help=u"""Retrieves a list of all SQL firewall allowed SQL statements.
+@sql_firewall_allowed_sql_collection_group.command(name=cli_util.override('data_safe.list_sql_firewall_allowed_sqls.command_name', 'list-sql-firewall-allowed-sqls'), help=u"""Retrieves a list of all SQL Firewall allowed SQL statements.
 
-The ListSqlFirewallAllowedSqls operation returns only the SQL firewall allowed SQL statements in the specified `compartmentId`.
+The ListSqlFirewallAllowedSqls operation returns only the SQL Firewall allowed SQL statements in the specified `compartmentId`.
 
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
@@ -11457,9 +11466,9 @@ def list_sql_firewall_allowed_sqls(ctx, from_json, all_pages, page_size, compart
     cli_util.render_response(result, ctx)
 
 
-@sql_firewall_policy_collection_group.command(name=cli_util.override('data_safe.list_sql_firewall_policies.command_name', 'list-sql-firewall-policies'), help=u"""Retrieves a list of all SQL firewall policies.
+@sql_firewall_policy_collection_group.command(name=cli_util.override('data_safe.list_sql_firewall_policies.command_name', 'list-sql-firewall-policies'), help=u"""Retrieves a list of all SQL Firewall policies.
 
-The ListSqlFirewallPolicies operation returns only the SQL firewall policies in the specified `compartmentId`.
+The ListSqlFirewallPolicies operation returns only the SQL Firewall policies in the specified `compartmentId`.
 
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
@@ -11471,8 +11480,8 @@ The parameter `compartmentIdInSubtree` applies when you perform ListSqlFirewallP
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--security-policy-id', help=u"""An optional filter to return only resources that match the specified OCID of the security policy resource.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "FAILED", "DELETING", "DELETED", "NEEDS_ATTENTION"]), help=u"""The current state of the SQL firewall policy.""")
-@cli_util.option('--sql-firewall-policy-id', help=u"""An optional filter to return only resources that match the specified OCID of the SQL firewall policy resource.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "FAILED", "DELETING", "DELETED", "NEEDS_ATTENTION"]), help=u"""The current state of the SQL Firewall policy.""")
+@cli_util.option('--sql-firewall-policy-id', help=u"""An optional filter to return only resources that match the specified OCID of the SQL Firewall policy resource.""")
 @cli_util.option('--db-user-name', help=u"""A filter to return only items that match the specified user name.""")
 @cli_util.option('--violation-action', type=custom_types.CliCaseInsensitiveChoice(["block", "observe"]), help=u"""An optional filter to return only resources that match the specified violation action.""")
 @cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter to return only the resources that were created after the specified date and time, as defined by [RFC3339]. Using TimeCreatedGreaterThanOrEqualToQueryParam parameter retrieves all resources created after that date.
@@ -11551,7 +11560,7 @@ def list_sql_firewall_policies(ctx, from_json, all_pages, page_size, compartment
     cli_util.render_response(result, ctx)
 
 
-@sql_firewall_policy_analytics_collection_group.command(name=cli_util.override('data_safe.list_sql_firewall_policy_analytics.command_name', 'list-sql-firewall-policy-analytics'), help=u"""Gets a list of aggregated SQL firewall policy details.
+@sql_firewall_policy_analytics_collection_group.command(name=cli_util.override('data_safe.list_sql_firewall_policy_analytics.command_name', 'list-sql-firewall-policy-analytics'), help=u"""Gets a list of aggregated SQL Firewall policy details.
 
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
@@ -11561,11 +11570,11 @@ The parameter `compartmentIdInSubtree` applies when you perform SummarizedSqlFir
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
-@cli_util.option('--group-by', type=custom_types.CliCaseInsensitiveChoice(["violationAction", "enforcementScope", "securityPolicyId", "lifecycleState"]), multiple=True, help=u"""The group by parameter to summarize SQL firewall policy aggregation.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "FAILED", "DELETING", "DELETED", "NEEDS_ATTENTION"]), help=u"""The current state of the SQL firewall policy.""")
+@cli_util.option('--group-by', type=custom_types.CliCaseInsensitiveChoice(["violationAction", "enforcementScope", "securityPolicyId", "lifecycleState"]), multiple=True, help=u"""The group by parameter to summarize SQL Firewall policy aggregation.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "FAILED", "DELETING", "DELETED", "NEEDS_ATTENTION"]), help=u"""The current state of the SQL Firewall policy.""")
 @cli_util.option('--security-policy-id', help=u"""An optional filter to return only resources that match the specified OCID of the security policy resource.""")
-@cli_util.option('--time-started', type=custom_types.CLI_DATETIME, help=u"""An optional filter to return the summary of the SQL firewall policies created after the date-time specified, in the format defined by [RFC3339].""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-ended', type=custom_types.CLI_DATETIME, help=u"""An optional filter to return the summary of the SQL firewall policies created before the date-time specified, in the format defined by [RFC3339].""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-started', type=custom_types.CLI_DATETIME, help=u"""An optional filter to return the summary of the SQL Firewall policies created after the date-time specified, in the format defined by [RFC3339].""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-ended', type=custom_types.CLI_DATETIME, help=u"""An optional filter to return the summary of the SQL Firewall policies created before the date-time specified, in the format defined by [RFC3339].""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -11624,7 +11633,7 @@ def list_sql_firewall_policy_analytics(ctx, from_json, all_pages, page_size, com
     cli_util.render_response(result, ctx)
 
 
-@sql_firewall_violation_summary_group.command(name=cli_util.override('data_safe.list_sql_firewall_violation_analytics.command_name', 'list-sql-firewall-violation-analytics'), help=u"""Returns the aggregation details of the SQL firewall violations. \n[Command Reference](listSqlFirewallViolationAnalytics)""")
+@sql_firewall_violation_summary_group.command(name=cli_util.override('data_safe.list_sql_firewall_violation_analytics.command_name', 'list-sql-firewall-violation-analytics'), help=u"""Returns the aggregation details of the SQL Firewall violations. \n[Command Reference](listSqlFirewallViolationAnalytics)""")
 @cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
@@ -11704,7 +11713,7 @@ def list_sql_firewall_violation_analytics(ctx, from_json, all_pages, page_size, 
     cli_util.render_response(result, ctx)
 
 
-@sql_firewall_violation_summary_group.command(name=cli_util.override('data_safe.list_sql_firewall_violations.command_name', 'list-sql-firewall-violations'), help=u"""Gets a list of all the SQL firewall violations captured by the firewall. \n[Command Reference](listSqlFirewallViolations)""")
+@sql_firewall_violation_summary_group.command(name=cli_util.override('data_safe.list_sql_firewall_violations.command_name', 'list-sql-firewall-violations'), help=u"""Gets a list of all the SQL Firewall violations captured by the firewall. \n[Command Reference](listSqlFirewallViolations)""")
 @cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
@@ -12000,7 +12009,7 @@ def list_target_databases(ctx, from_json, all_pages, page_size, compartment_id, 
 
 @user_assessment_group.command(name=cli_util.override('data_safe.list_user_analytics.command_name', 'list-user-analytics'), help=u"""Gets a list of aggregated user details from the specified user assessment. This provides information about the overall state. of database user security.  For example, the user details include how many users have the DBA role and how many users are in the critical category. This data is especially useful content for dashboards or to support analytics.
 
-When you perform the ListUserAnalytics operation, if the parameter compartmentIdInSubtree is set to \"true,\" and if the parameter accessLevel is set to ACCESSIBLE, then the operation returns compartments in which the requestor has INSPECT permissions on at least one resource, directly or indirectly (in subcompartments). If the operation is performed at the root compartment. If the requestor does not have access to at least one subcompartment of the compartment specified by compartmentId, then \"Not Authorized\" is returned.
+When you perform the ListUserAnalytics operation, if the parameter compartmentIdInSubtree is set to \"true,\" and if the parameter accessLevel is set to ACCESSIBLE, then the operation returns compartments in which the requestor has INSPECT permissions on at least one resource, directly or indirectly (in subcompartments). If the operation is performed at the root compartment and the requestor does not have access to at least one subcompartment of the compartment specified by compartmentId, then \"Not Authorized\" is returned.
 
 The parameter compartmentIdInSubtree applies when you perform ListUserAnalytics on the compartmentId passed and when it is set to true, the entire hierarchy of compartments can be returned.
 
@@ -12505,9 +12514,9 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, ope
 @cli_util.option('--is-move-interim-tables-enabled', type=click.BOOL, help=u"""Indicates if the interim DMASK tables should be moved to the user-specified tablespace. As interim tables can be large in size, set it to false if moving them causes performance overhead during masking.""")
 @cli_util.option('--is-execute-saved-script-enabled', type=click.BOOL, help=u"""Indicates if data masking should be performed using a saved masking script. Setting this attribute to true skips masking script generation and executes the masking script stored in the Data Safe repository. It helps save time if there are no changes in the database tables and their dependencies.""")
 @cli_util.option('--is-drop-temp-tables-enabled', type=click.BOOL, help=u"""Indicates if the temporary tables created during a masking operation should be dropped after masking. Set this attribute to false to preserve the temporary tables. Masking creates temporary tables that map the original sensitive data values to mask values. These temporary tables are dropped after masking if this attribute is set as true. But, in some cases, you may want to preserve this information to track how masking changed your data. Note that doing so compromises security. These tables must be dropped before the database is available for unprivileged users. If it's not provided, the value of the isDropTempTablesEnabled attribute in the MaskingPolicy resource is used.""")
-@cli_util.option('--is-redo-logging-enabled', type=click.BOOL, help=u"""Indicates if redo logging is enabled during a masking operation. Set this attribute to true to enable redo logging. If set as flase, masking disables redo logging and flashback logging to purge any original unmasked data from logs. However, in certain circumstances when you only want to test masking, rollback changes, and retry masking, you could enable logging and use a flashback database to retrieve the original unmasked data after it has been masked. If it's not provided, the value of the isRedoLoggingEnabled attribute in the MaskingPolicy resource is used.""")
+@cli_util.option('--is-redo-logging-enabled', type=click.BOOL, help=u"""Indicates if redo logging is enabled during a masking operation. Set this attribute to true to enable redo logging. If set as false, masking disables redo logging and flashback logging to purge any original unmasked data from logs. However, in certain circumstances when you only want to test masking, rollback changes, and retry masking, you could enable logging and use a flashback database to retrieve the original unmasked data after it has been masked. If it's not provided, the value of the isRedoLoggingEnabled attribute in the MaskingPolicy resource is used.""")
 @cli_util.option('--is-refresh-stats-enabled', type=click.BOOL, help=u"""Indicates if statistics gathering is enabled. Set this attribute to false to disable statistics gathering. The masking process gathers statistics on masked database tables after masking completes. If it's not provided, the value of the isRefreshStatsEnabled attribute in the MaskingPolicy resource is used.""")
-@cli_util.option('--parallel-degree', help=u"""Specifies options to enable parallel execution when running data masking. Allowed values are 'NONE' (no parallelism), 'DEFAULT' (the Oracle Database computes the optimum degree of parallelism) or an integer value to be used as the degree of parallelism. Parallel execution helps effectively use multiple CPUs and improve masking performance. Refer to the Oracle Database parallel execution framework when choosing an explicit degree of parallelism. If it's not provided, the value of the parallelDegree attribute in the MaskingPolicy resource is used.""")
+@cli_util.option('--parallel-degree', help=u"""Specifies options to enable parallel execution when running data masking. Allowed values are 'NONE' (no parallelism), 'DEFAULT' (the Oracle Database computes the optimum degree of parallelism) or an integer value to be used as the degree of parallelism. Parallel execution helps effectively use multiple CPUs and improve masking performance. Refer to the Oracle Database parallel execution framework when choosing an explicit degree of parallelism. https://www.oracle.com/pls/topic/lookup?ctx=dblatest&en/database/oracle/oracle-database&id=VLDBG-GUID-3E2AE088-2505-465E-A8B2-AC38813EA355 If it's not provided, the value of the parallelDegree attribute in the MaskingPolicy resource is used.""")
 @cli_util.option('--recompile', help=u"""Specifies how to recompile invalid objects post data masking. Allowed values are 'SERIAL' (recompile in serial), 'PARALLEL' (recompile in parallel), 'NONE' (do not recompile). If it's set to PARALLEL, the value of parallelDegree attribute is used. Use the built-in UTL_RECOMP package to recompile any remaining invalid objects after masking completes. If it's not provided, the value of the parallelDegree attribute in the MaskingPolicy resource is used.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -13391,7 +13400,7 @@ def refresh_user_assessment(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@report_definition_group.command(name=cli_util.override('data_safe.remove_schedule_report.command_name', 'remove'), help=u"""Deletes the schedule of a PDF or XLS report. \n[Command Reference](removeScheduleReport)""")
+@report_definition_group.command(name=cli_util.override('data_safe.remove_schedule_report.command_name', 'remove'), help=u"""Deletes the schedule of a .xls or .pdf report. \n[Command Reference](removeScheduleReport)""")
 @cli_util.option('--report-definition-id', required=True, help=u"""Unique report definition identifier""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -13569,12 +13578,12 @@ def retrieve_audit_policies(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@report_definition_group.command(name=cli_util.override('data_safe.schedule_report.command_name', 'schedule-report'), help=u"""Schedules a PDF or XLS report based on parameters and report definition. \n[Command Reference](scheduleReport)""")
+@report_definition_group.command(name=cli_util.override('data_safe.schedule_report.command_name', 'schedule-report'), help=u"""Schedules a .xls or .pdf report based on parameters and report definition. \n[Command Reference](scheduleReport)""")
 @cli_util.option('--report-definition-id', required=True, help=u"""Unique report definition identifier""")
 @cli_util.option('--schedule', required=True, help=u"""The schedule to generate the report periodically in the specified format: <version-string>;<version-specific-schedule>
 
 Allowed version strings - \"v1\" v1's version specific schedule -<ss> <mm> <hh> <day-of-week> <day-of-month> Each of the above fields potentially introduce constraints. A workrequest is created only when clock time satisfies all the constraints. Constraints introduced: 1. seconds = <ss> (So, the allowed range for <ss> is [0, 59]) 2. minutes = <mm> (So, the allowed range for <mm> is [0, 59]) 3. hours = <hh> (So, the allowed range for <hh> is [0, 23]) 4. <day-of-week> can be either '*' (without quotes or a number between 1(Monday) and 7(Sunday)) No constraint introduced when it is '*'. When not, day of week must equal the given value 5. <day-of-month> can be either '*' (without quotes or a number between 1 and 28) No constraint introduced when it is '*'. When not, day of month must equal the given value""")
-@cli_util.option('--mime-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS"]), help=u"""Specifies if the report will be in Excel or PDF format""")
+@cli_util.option('--mime-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS"]), help=u"""Specifies if the report will be in .xls or .pdf format""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which the resource should be created.""")
 @cli_util.option('--report-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The name of the report to be scheduled""")
@@ -13638,12 +13647,12 @@ def schedule_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@report_definition_group.command(name=cli_util.override('data_safe.schedule_report_schedule_audit_report_details.command_name', 'schedule-report-schedule-audit-report-details'), help=u"""Schedules a PDF or XLS report based on parameters and report definition. \n[Command Reference](scheduleReport)""")
+@report_definition_group.command(name=cli_util.override('data_safe.schedule_report_schedule_audit_report_details.command_name', 'schedule-report-schedule-audit-report-details'), help=u"""Schedules a .xls or .pdf report based on parameters and report definition. \n[Command Reference](scheduleReport)""")
 @cli_util.option('--report-definition-id', required=True, help=u"""Unique report definition identifier""")
 @cli_util.option('--schedule', required=True, help=u"""The schedule to generate the report periodically in the specified format: <version-string>;<version-specific-schedule>
 
 Allowed version strings - \"v1\" v1's version specific schedule -<ss> <mm> <hh> <day-of-week> <day-of-month> Each of the above fields potentially introduce constraints. A workrequest is created only when clock time satisfies all the constraints. Constraints introduced: 1. seconds = <ss> (So, the allowed range for <ss> is [0, 59]) 2. minutes = <mm> (So, the allowed range for <mm> is [0, 59]) 3. hours = <hh> (So, the allowed range for <hh> is [0, 23]) 4. <day-of-week> can be either '*' (without quotes or a number between 1(Monday) and 7(Sunday)) No constraint introduced when it is '*'. When not, day of week must equal the given value 5. <day-of-month> can be either '*' (without quotes or a number between 1 and 28) No constraint introduced when it is '*'. When not, day of month must equal the given value""")
-@cli_util.option('--mime-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS"]), help=u"""Specifies if the report will be in Excel or PDF format""")
+@cli_util.option('--mime-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS"]), help=u"""Specifies if the report will be in .xls or .pdf format""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which the resource should be created.""")
 @cli_util.option('--report-details-record-time-span', required=True, help=u"""The time span of records in report to be scheduled. <period-value><period> Allowed period strings - \"H\",\"D\",\"M\",\"Y\" Each of the above fields potentially introduce constraints. A workRequest is created only when period-value satisfies all the constraints. Constraints introduced: 1. period = H (The allowed range for period-value is [1, 23]) 2. period = D (The allowed range for period-value is [1, 30]) 3. period = M (The allowed range for period-value is [1, 11]) 4. period = Y (The minimum period-value is 1)""")
 @cli_util.option('--display-name', help=u"""The name of the report to be scheduled""")
@@ -16378,17 +16387,17 @@ def update_sql_collection(ctx, from_json, force, wait_for_state, max_wait_second
     cli_util.render_response(result, ctx)
 
 
-@sql_firewall_policy_group.command(name=cli_util.override('data_safe.update_sql_firewall_policy.command_name', 'update'), help=u"""Updates the SQL firewall policy. \n[Command Reference](updateSqlFirewallPolicy)""")
-@cli_util.option('--sql-firewall-policy-id', required=True, help=u"""The OCID of the SQL firewall policy resource.""")
-@cli_util.option('--display-name', help=u"""The display name of the SQL firewall policy. The name does not have to be unique, and it is changeable.""")
-@cli_util.option('--description', help=u"""The description of the SQL firewall policy.""")
-@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Specifies whether the SQL firewall policy is enabled or disabled.""")
-@cli_util.option('--enforcement-scope', type=custom_types.CliCaseInsensitiveChoice(["ENFORCE_CONTEXT", "ENFORCE_SQL", "ENFORCE_ALL"]), help=u"""Specifies the SQL firewall policy enforcement option.""")
-@cli_util.option('--violation-action', type=custom_types.CliCaseInsensitiveChoice(["BLOCK", "OBSERVE"]), help=u"""Specifies the SQL firewall action based on detection of SQL firewall violations.""")
-@cli_util.option('--violation-audit', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Specifies whether a unified audit policy should be enabled for auditing the SQL firewall policy violations.""")
-@cli_util.option('--allowed-client-ips', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of allowed ip addresses for the SQL firewall policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--allowed-client-os-usernames', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of allowed operating system user names for the SQL firewall policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--allowed-client-programs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of allowed client programs for the SQL firewall policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@sql_firewall_policy_group.command(name=cli_util.override('data_safe.update_sql_firewall_policy.command_name', 'update'), help=u"""Updates the SQL Firewall policy. \n[Command Reference](updateSqlFirewallPolicy)""")
+@cli_util.option('--sql-firewall-policy-id', required=True, help=u"""The OCID of the SQL Firewall policy resource.""")
+@cli_util.option('--display-name', help=u"""The display name of the SQL Firewall policy. The name does not have to be unique, and it is changeable.""")
+@cli_util.option('--description', help=u"""The description of the SQL Firewall policy.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Specifies whether the SQL Firewall policy is enabled or disabled.""")
+@cli_util.option('--enforcement-scope', type=custom_types.CliCaseInsensitiveChoice(["ENFORCE_CONTEXT", "ENFORCE_SQL", "ENFORCE_ALL"]), help=u"""Specifies the SQL Firewall policy enforcement option.""")
+@cli_util.option('--violation-action', type=custom_types.CliCaseInsensitiveChoice(["BLOCK", "OBSERVE"]), help=u"""Specifies the SQL Firewall action based on detection of SQL Firewall violations.""")
+@cli_util.option('--violation-audit', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Specifies whether a unified audit policy should be enabled for auditing the SQL Firewall policy violations.""")
+@cli_util.option('--allowed-client-ips', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of allowed ip addresses for the SQL Firewall policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--allowed-client-os-usernames', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of allowed operating system user names for the SQL Firewall policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--allowed-client-programs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of allowed client programs for the SQL Firewall policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

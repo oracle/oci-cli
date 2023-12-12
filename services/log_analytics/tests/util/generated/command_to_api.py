@@ -179,6 +179,7 @@ SDK_client_map = {
     "log_analytics.update_resource_categories": "oci.log_analytics.LogAnalyticsClient.update_resource_categories",
     "log_analytics.update_scheduled_task": "oci.log_analytics.LogAnalyticsClient.update_scheduled_task",
     "log_analytics.update_storage": "oci.log_analytics.LogAnalyticsClient.update_storage",
+    "log_analytics.upload_discovery_data": "oci.log_analytics.LogAnalyticsClient.upload_discovery_data",
     "log_analytics.upload_log_events_file": "oci.log_analytics.LogAnalyticsClient.upload_log_events_file",
     "log_analytics.upload_log_file": "oci.log_analytics.LogAnalyticsClient.upload_log_file",
     "log_analytics.upsert_associations": "oci.log_analytics.LogAnalyticsClient.upsert_associations",

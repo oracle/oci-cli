@@ -9520,6 +9520,7 @@ To reboot migrate a bare metal instance, use the [InstanceAction] operation.
 For more information, see [Infrastructure Maintenance].
 
 Example: `2018-05-25T21:10:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on. Supported only if this VM instance was already placed on a dedicated virtual machine host - that is, you can't move an instance from on-demand capacity to dedicated capacity, nor can you move an instance from dedicated capacity to on-demand capacity.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -9530,7 +9531,7 @@ Example: `2018-05-25T21:10:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIM
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'UpdateInstanceAgentConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'shape-config': {'module': 'core', 'class': 'UpdateInstanceShapeConfigDetails'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'launch-options': {'module': 'core', 'class': 'UpdateLaunchOptions'}, 'availability-config': {'module': 'core', 'class': 'UpdateInstanceAvailabilityConfigDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, capacity_reservation_id, defined_tags, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, shape_config, update_operation_constraint, instance_options, fault_domain, launch_options, availability_config, time_maintenance_reboot_due, if_match):
+def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, capacity_reservation_id, defined_tags, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, shape_config, update_operation_constraint, instance_options, fault_domain, launch_options, availability_config, time_maintenance_reboot_due, dedicated_vm_host_id, if_match):
 
     if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
@@ -9589,6 +9590,9 @@ def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
     if time_maintenance_reboot_due is not None:
         _details['timeMaintenanceRebootDue'] = time_maintenance_reboot_due
+
+    if dedicated_vm_host_id is not None:
+        _details['dedicatedVmHostId'] = dedicated_vm_host_id
 
     client = cli_util.build_client('core', 'compute', ctx)
     result = client.update_instance(

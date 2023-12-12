@@ -6,6 +6,82 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.37.1 - 2023-12-12
+--------------------
+Added
+~~~~~
+
+* Support for carbon footprint reporting in the Usage Service
+
+  * ``oci usage-api average-carbon-emission request``
+  * ``oci usage-api clean-energy-usage request``
+  * ``oci usage-api configuration request-usage-carbon-emission-config``
+  * ``oci usage-api usage-carbon-emission-summary request-usage-carbon-emissions``
+  * ``oci usage-api usage-carbon-emissions-query create``
+  * ``oci usage-api usage-carbon-emissions-query delete``
+  * ``oci usage-api usage-carbon-emissions-query get``
+  * ``oci usage-api usage-carbon-emissions-query list``
+  * ``oci usage-api usage-carbon-emissions-query update``
+
+* Support for change compartment of configurations in the PostgreSQL service
+
+  * ``oci psql configuration change-compartment``
+
+* Support for Token Exchange in the IdentityDomains Service
+
+  * ``oci identity-domains identity-propagation-trust``
+
+* Support for resource locking in the Data Catalog Service
+
+  * ``oci data-catalog catalog add``
+  * ``oci data-catalog catalog remove``
+  * ``oci data-catalog catalog-private-endpoint add``
+  * ``oci data-catalog catalog-private-endpoint remove``
+  * ``oci data-catalog metastore add``
+  * ``oci data-catalog metastore remove``
+
+* Support for new optional parameter --dedicated-vm-host-id in the Core Service
+
+  * ``oci compute instance update --dedicated-vm-host-id``
+
+* Support for additional attributes for existing APIs in the Data Safe Service
+
+  * ``oci data-safe sensitive-data-model list-discovery-analytics --is-common, --sensitive-type-id``
+  * ``oci data-safe sensitive-type list --is-common``
+
+* Cloud Advisor Service
+
+  * Support for non root compartment in list commands for resource action summary and history summary
+
+    * ``oci optimizer resource-action-summary list -c <compartment ocid>``
+    * ``oci optimizer history-summary list -c <compartment ocid>``
+
+  * Support for new optional parameter resource metadata in resource actions
+
+    * ``oci optimizer resource-action-summary list -c <compartment ocid> --include-resource-metadata``
+    * ``oci optimizer resource-action get --resource-action-id <resource action ocid> --include-resource-metadata``
+    * ``oci optimizer history-summary list -c <compartment ocid> --include-resource-metadata``
+
+* Data Integration Service
+
+  * Support for concurrency throttling on
+
+    * ``oci data-integration workspace oci data-integration task create``
+
+  * Support for incremental extract, updates to
+
+    * ``oci data-integration workspace oci data-integration dataflow create`
+
+* Goldengate Service
+
+  * Support for routing method for GoldenGate connections
+
+    * ``oci goldengate connection create--connection --routing-method``
+
+  * Support for subnetId update of GoldenGate connections
+
+    * ``oci goldengate connection update--connection --subnet-id``
+
 3.37.0 - 2023-12-05
 --------------------
 Added
