@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2023, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2024, Oracle and/or its affiliates. All rights reserved.
 
 SDK_client_map = {
     "os.abort_multipart_upload": "oci.object_storage.ObjectStorageClient.abort_multipart_upload",

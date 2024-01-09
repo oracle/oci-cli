@@ -353,6 +353,7 @@ def create_config_and_signer_based_on_click_context(ctx):
     resource_principal_auth = 'auth' in ctx.obj and ctx.obj['auth'] == cli_constants.OCI_CLI_AUTH_RESOURCE_PRINCIPAL
     session_token_auth = 'auth' in ctx.obj and ctx.obj['auth'] == cli_constants.OCI_CLI_AUTH_SESSION_TOKEN
     delegation_token_auth = 'auth' in ctx.obj and ctx.obj['auth'] == cli_constants.OCI_CLI_AUTH_INSTANCE_OBO_USER
+    yubikey_auth = 'auth' in ctx.obj and ctx.obj['auth'] == cli_constants.OCI_CLI_AUTH_YUBIKEY
 
     signer = None
     kwargs = {}
@@ -424,6 +425,11 @@ def create_config_and_signer_based_on_click_context(ctx):
         if ctx.obj['debug']:
             logger.debug("auth: resource_principal")
         signer = oci.auth.signers.resource_principals_signer.get_resource_principals_signer()
+    elif yubikey_auth:
+        if ctx.obj['debug']:
+            logger.debug("auth: yubi_key")
+        yk_pin = oci.auth.signers.YubikeyRequestSigner.get_yubikey_pin()
+        signer = oci.auth.signers.YubikeyRequestSigner.get_yubikey_signer(client_config, yk_pin)
     kwargs['signer'] = signer
 
     try:
@@ -452,7 +458,7 @@ def set_request_session_properties_from_context(session, ctx, uses_ssl=True):
         # TODO: Update this once alternate certs are exposed in the SDK.
         session.verify = cert_bundle
 
-    if ctx.obj.get('settings', {}).get('proxy'):
+    if ctx.obj.get('settings', {}).get('proxy') or ctx.obj.get('proxy') is not None:
         # If the proxy is specified explicitly on the command line then use that, otherwise use
         # the one from the cli_rc_file
         proxy_to_use = ctx.obj['proxy']

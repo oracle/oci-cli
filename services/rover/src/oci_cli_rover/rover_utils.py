@@ -24,7 +24,9 @@ from services.object_storage.src.oci_cli_object_storage.object_storage_transfer_
 from services.rover.src.constants import (
     ROVER_UPGRADE_BUNDLE_UPLOAD_BUCKET,
     ROVER_DIAGNOSTIC_BUNDLE_API_BASE_PATH,
-    DEFAULT_ROVER_DEVICE_ENDPOINT)
+    DEFAULT_ROVER_DEVICE_ENDPOINT,
+    TERMINAL_STATES,
+    NON_TERMINAL_STATES)
 
 from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.backends import default_backend
@@ -343,13 +345,12 @@ def check_status(ctx, task_id, should_wait):
 def check_status_for_upgrade(ctx, task_id, endpoint):
     while True:
         status = monitor_import_progress(ctx, endpoint, task_id)
-        if status.upper() == 'FAILURE' or status.upper() == 'IMPORTED':
+        if check_if_state_matches(status.upper(), TERMINAL_STATES):
             print('Import status is: ' + status)
             print("EXITING")
             break
         else:
-            if status.upper() == 'INITIALIZING' or status.upper() == 'VALIDATING_VERSION' or status.upper() == \
-                    'VERIFYING_SIGNATURE' or status.upper() == 'FINALIZING':
+            if check_if_state_matches(status.upper(), NON_TERMINAL_STATES):
                 print("Import status at " + status + '...')
                 time.sleep(15)
             else:
@@ -360,10 +361,9 @@ def check_status_for_upgrade(ctx, task_id, endpoint):
 
 def check_status_for_upgrade_no_poll(ctx, task_id, endpoint):
     status = monitor_import_progress(ctx, endpoint, task_id)
-    if status.upper() == 'FAILURE' or status.upper() == 'IMPORTED':
+    if check_if_state_matches(status.upper(), TERMINAL_STATES):
         print('Import status is: ' + status)
-    elif status.upper() == 'INITIALIZING' or status.upper() == 'VALIDATING_VERSION' or status.upper() == \
-            'VERIFYING_SIGNATURE' or status.upper() == 'FINALIZING':
+    elif check_if_state_matches(status.upper(), NON_TERMINAL_STATES):
         print("Import status at " + status + '...')
     else:
         print('Unknown status is: ' + status)
@@ -823,6 +823,10 @@ def construct_request_headers(object_name):
         "object-name": object_name
     }
     return result_dict
+
+
+def check_if_state_matches(state, list_of_states):
+    return any(state in x for x in list_of_states)
 
 
 class ProgressBar:

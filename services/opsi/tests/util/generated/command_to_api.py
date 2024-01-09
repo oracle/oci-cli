@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2023, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2024, Oracle and/or its affiliates. All rights reserved.
 
 SDK_client_map = {
     "opsi.add_exadata_insight_members": "oci.opsi.OperationsInsightsClient.add_exadata_insight_members",
@@ -147,6 +147,8 @@ SDK_client_map = {
     "opsi.summarize_exadata_insight_resource_usage_aggregated": "oci.opsi.OperationsInsightsClient.summarize_exadata_insight_resource_usage_aggregated",
     "opsi.summarize_exadata_insight_resource_utilization_insight": "oci.opsi.OperationsInsightsClient.summarize_exadata_insight_resource_utilization_insight",
     "opsi.summarize_exadata_members": "oci.opsi.OperationsInsightsClient.summarize_exadata_members",
+    "opsi.summarize_host_insight_disk_statistics": "oci.opsi.OperationsInsightsClient.summarize_host_insight_disk_statistics",
+    "opsi.summarize_host_insight_host_recommendation": "oci.opsi.OperationsInsightsClient.summarize_host_insight_host_recommendation",
     "opsi.summarize_host_insight_network_usage_trend": "oci.opsi.OperationsInsightsClient.summarize_host_insight_network_usage_trend",
     "opsi.summarize_host_insight_resource_capacity_trend": "oci.opsi.OperationsInsightsClient.summarize_host_insight_resource_capacity_trend",
     "opsi.summarize_host_insight_resource_forecast_trend": "oci.opsi.OperationsInsightsClient.summarize_host_insight_resource_forecast_trend",

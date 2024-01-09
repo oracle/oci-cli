@@ -6,6 +6,51 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.37.2 - 2024-01-09
+--------------------
+Added
+~~~~~
+* Support for OCI CLI authentication using PKCS#11 compatible hardware devices like YubiKey
+
+    * ``oci <command> --auth yubi_key``
+
+* Support for summarizing disk Statistics and Host Recommendation in OPSI Host Capacity Service
+
+  * ``oci opsi host-insights summarize-disk-statistics --compartment-id --id --analysis-time-interval``
+  * ``oci opsi host-insights summarize-host-recommendation --compartment-id --id --analysis-time-interval --resource-metric``
+
+* Support for new commands in the Apm Synthetic Service
+
+  * ``oci apm-synthetics monitor create-dns-server-monitor  --apm-domain-id --display-name --monitor-type --vantage-points --repeat-interval-in-seconds  --target --name-server --protocol --record-type``
+  * ``oci apm-synthetics monitor create-dns-sec-monitor  --apm-domain-id  --display-name --monitor-type --vantage-points --repeat-interval-in-seconds --target --name-server --protocol --record-type``
+  * ``oci apm-synthetics monitor create-dns-trace-monitor  --apm-domain-id  --display-name --monitor-type --vantage-points --repeat-interval-in-seconds --target --name-server --protocol --record-type``
+  * ``oci apm-synthetics monitor update-dns-server-monitor  --apm-domain-id --display-name --monitor-type --vantage-points --repeat-interval-in-seconds  --target --name-server --protocol --record-type``
+  * ``oci apm-synthetics monitor update-dns-sec-monitor  --apm-domain-id  --display-name --monitor-type --vantage-points --repeat-interval-in-seconds --target --name-server --protocol --record-type``
+  * ``oci apm-synthetics monitor update-dns-trace-monitor  --apm-domain-id  --display-name --monitor-type --vantage-points --repeat-interval-in-seconds --target --name-server --protocol --record-type``
+  * ``oci apm-synthetics on-premise-vantage-point create --name --description --apm-domain-id``
+  * ``oci apm-synthetics on-premise-vantage-point get  --on-premise-vantage-point-id --apm-domain-id``
+  * ``oci apm-synthetics on-premise-vantage-point-collection list-on-premise-vantage-points  --apm-domain-id``
+
+* Support for creation of up to 60 Containers per Container Instance instead of 10 in Container Instance Service
+
+  * ``oci container-instances container-instance create --containers``
+
+* Support for New Database Type "Golden Gate Stream Analytics (GGSA)" in the GoldenGate Service
+
+  * ``oci goldengate connection list --assignable-deployment-type GGSA``
+  * ``oci goldengate deployment create --deployment-type GGSA``
+  * ``oci goldengate deployment-type-collection list-deployment-types --deployment-type GGSA``
+  * ``oci goldengate deployment-version list --deployment-type GGSA``
+
+* Support for "ORACLE_GOLDENGATE" resource type in Discovery and Monitoring in Stack Monitoring Service
+
+  * ``oci stack-monitoring discovery-job``
+
+* Support for response values "CREATE_BACKUP" and "DELETE_BACKUP" for Work Request Commands in Mysql Database Service
+
+  * ``oci mysql work-request``
+
+
 3.37.1 - 2023-12-12
 --------------------
 Added

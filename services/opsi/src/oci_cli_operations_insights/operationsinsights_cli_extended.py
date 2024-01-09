@@ -518,6 +518,14 @@ cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.host_insi
 # oci opsi host-insights summarize-host-insight-storage-usage-trend -> oci opsi host-insights summarize-storage-usage-trend
 cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.host_insights_group, operationsinsights_cli.summarize_host_insight_storage_usage_trend, "summarize-storage-usage-trend")
 
+
+# oci opsi host-insights summarize-host-insight-disk-statistics -> oci opsi host-insights summarize-disk-statistics
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.host_insights_group, operationsinsights_cli.summarize_host_insight_disk_statistics, "summarize-disk-statistics")
+
+
+# oci opsi host-insights summarize-host-insight-host-recommendation -> oci opsi host-insights summarize-host-recommendation
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.host_insights_group, operationsinsights_cli.summarize_host_insight_host_recommendation, "summarize-host-recommendation")
+
 # Remove change-autonomous-database-insight-advanced-features from oci opsi database-insights
 operationsinsights_cli.database_insights_group.commands.pop(operationsinsights_cli.change_autonomous_database_insight_advanced_features.name)
 

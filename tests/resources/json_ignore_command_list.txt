@@ -273,3 +273,12 @@ identity-domains, settings, search
 log-analytics, entity, upload-discovery-data
 identity-domains, identity-propagation-trust, create
 identity-domains, identity-propagation-trust, put
+goldengate, deployment-type-collection, list-deployment-types
+opsi, host-insights, summarize-disk-statistics
+opsi, host-insights, summarize-host-recommendation
+apm-synthetics, monitor, create-dns-sec-monitor
+apm-synthetics, monitor, create-dns-server-monitor
+apm-synthetics, monitor, create-dns-trace-monitor
+apm-synthetics, monitor, update-dns-sec-monitor
+apm-synthetics, monitor, update-dns-trace-monitor
+apm-synthetics, monitor, update-dns-server-monitor
