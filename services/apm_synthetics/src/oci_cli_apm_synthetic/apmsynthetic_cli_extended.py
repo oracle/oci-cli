@@ -770,3 +770,360 @@ def update_monitor_network_monitor_configuration_extended(ctx, **kwargs):
         kwargs.pop('is_failure_retried')
 
     ctx.invoke(apmsynthetic_cli.update_monitor_network_monitor_configuration, **kwargs)
+
+
+# oci apm-synthetics monitor create-monitor-dns-sec-monitor-configuration -> oci apm-synthetics monitor create-dns-sec-monitor
+cli_util.rename_command(apmsynthetic_cli, apmsynthetic_cli.monitor_group, apmsynthetic_cli.create_monitor_dns_sec_monitor_configuration, "create-dns-sec-monitor")
+
+
+# oci apm-synthetics monitor create-monitor-dns-server-monitor-configuration -> oci apm-synthetics monitor create-dns-server-monitor
+cli_util.rename_command(apmsynthetic_cli, apmsynthetic_cli.monitor_group, apmsynthetic_cli.create_monitor_dns_server_monitor_configuration, "create-dns-server-monitor")
+
+
+# oci apm-synthetics monitor create-monitor-dns-trace-monitor-configuration -> oci apm-synthetics monitor create-dns-trace-monitor
+cli_util.rename_command(apmsynthetic_cli, apmsynthetic_cli.monitor_group, apmsynthetic_cli.create_monitor_dns_trace_monitor_configuration, "create-dns-trace-monitor")
+
+
+# oci apm-synthetics monitor update-monitor-dns-sec-monitor-configuration -> oci apm-synthetics monitor update-dns-sec-monitor
+cli_util.rename_command(apmsynthetic_cli, apmsynthetic_cli.monitor_group, apmsynthetic_cli.update_monitor_dns_sec_monitor_configuration, "update-dns-sec-monitor")
+
+
+# oci apm-synthetics monitor update-monitor-dns-server-monitor-configuration -> oci apm-synthetics monitor update-dns-server-monitor
+cli_util.rename_command(apmsynthetic_cli, apmsynthetic_cli.monitor_group, apmsynthetic_cli.update_monitor_dns_server_monitor_configuration, "update-dns-server-monitor")
+
+
+# oci apm-synthetics monitor update-monitor-dns-trace-monitor-configuration -> oci apm-synthetics monitor update-dns-trace-monitor
+cli_util.rename_command(apmsynthetic_cli, apmsynthetic_cli.monitor_group, apmsynthetic_cli.update_monitor_dns_trace_monitor_configuration, "update-dns-trace-monitor")
+
+
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_dns_sec_monitor_configuration, params_to_exclude=['configuration_dns_configuration', 'configuration_is_failure_retried', 'configuration_record_type', 'configuration_verify_response_content'])
+@apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.create_monitor_dns_sec_monitor_configuration.name, help=apmsynthetic_cli.create_monitor_dns_sec_monitor_configuration.help)
+@cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
+@cli_util.option('--record-type', type=custom_types.CliCaseInsensitiveChoice(["A", "AAAA", "ANY", "CNAME", "DNSKEY", "DS", "MX", "NS", "NSEC", "NULL_REC", "PTR", "RRSIG", "SOA", "TXT"]), help=u"""DNS record type.""")
+@cli_util.option('--verify-response-content', help=u"""Verify response content against regular expression based string. If response content does not match the verifyResponseContent value, then it will be considered a failure.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@cli_util.wrap_exceptions
+def create_monitor_dns_sec_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'dns_configuration' in kwargs:
+        kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
+        kwargs.pop('dns_configuration')
+
+    
+
+    if 'is_failure_retried' in kwargs:
+        kwargs['configuration_is_failure_retried'] = kwargs['is_failure_retried']
+        kwargs.pop('is_failure_retried')
+
+    
+
+    if 'record_type' in kwargs:
+        kwargs['configuration_record_type'] = kwargs['record_type']
+        kwargs.pop('record_type')
+
+    
+
+    if 'verify_response_content' in kwargs:
+        kwargs['configuration_verify_response_content'] = kwargs['verify_response_content']
+        kwargs.pop('verify_response_content')
+
+    ctx.invoke(apmsynthetic_cli.create_monitor_dns_sec_monitor_configuration, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_dns_server_monitor_configuration, params_to_exclude=['configuration_dns_configuration', 'configuration_is_failure_retried', 'configuration_is_query_recursive', 'configuration_name_server', 'configuration_network_configuration', 'configuration_protocol', 'configuration_record_type', 'configuration_verify_response_content'])
+@apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.create_monitor_dns_server_monitor_configuration.name, help=apmsynthetic_cli.create_monitor_dns_server_monitor_configuration.help)
+@cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
+@cli_util.option('--is-query-recursive', type=click.BOOL, help=u"""If isQueryRecursive is enabled, then queries will be sent recursively to the target server.""")
+@cli_util.option('--name-server', help=u"""Name of the server that will be used to perform DNS lookup.""")
+@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--protocol', type=custom_types.CliCaseInsensitiveChoice(["TCP", "UDP"]), help=u"""Type of protocol.""")
+@cli_util.option('--record-type', type=custom_types.CliCaseInsensitiveChoice(["A", "AAAA", "ANY", "CNAME", "DNSKEY", "DS", "MX", "NS", "NSEC", "NULL_REC", "PTR", "RRSIG", "SOA", "TXT"]), help=u"""DNS record type.""")
+@cli_util.option('--verify-response-content', help=u"""Verify response content against regular expression based string. If response content does not match the verifyResponseContent value, then it will be considered a failure.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@cli_util.wrap_exceptions
+def create_monitor_dns_server_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'dns_configuration' in kwargs:
+        kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
+        kwargs.pop('dns_configuration')
+
+    
+
+    if 'is_failure_retried' in kwargs:
+        kwargs['configuration_is_failure_retried'] = kwargs['is_failure_retried']
+        kwargs.pop('is_failure_retried')
+
+    
+
+    if 'is_query_recursive' in kwargs:
+        kwargs['configuration_is_query_recursive'] = kwargs['is_query_recursive']
+        kwargs.pop('is_query_recursive')
+
+    
+
+    if 'name_server' in kwargs:
+        kwargs['configuration_name_server'] = kwargs['name_server']
+        kwargs.pop('name_server')
+
+    
+
+    if 'network_configuration' in kwargs:
+        kwargs['configuration_network_configuration'] = kwargs['network_configuration']
+        kwargs.pop('network_configuration')
+
+    
+
+    if 'protocol' in kwargs:
+        kwargs['configuration_protocol'] = kwargs['protocol']
+        kwargs.pop('protocol')
+
+    
+
+    if 'record_type' in kwargs:
+        kwargs['configuration_record_type'] = kwargs['record_type']
+        kwargs.pop('record_type')
+
+    
+
+    if 'verify_response_content' in kwargs:
+        kwargs['configuration_verify_response_content'] = kwargs['verify_response_content']
+        kwargs.pop('verify_response_content')
+
+    ctx.invoke(apmsynthetic_cli.create_monitor_dns_server_monitor_configuration, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_dns_trace_monitor_configuration, params_to_exclude=['configuration_dns_configuration', 'configuration_is_failure_retried', 'configuration_protocol', 'configuration_record_type', 'configuration_verify_response_content'])
+@apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.create_monitor_dns_trace_monitor_configuration.name, help=apmsynthetic_cli.create_monitor_dns_trace_monitor_configuration.help)
+@cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
+@cli_util.option('--protocol', type=custom_types.CliCaseInsensitiveChoice(["TCP", "UDP"]), help=u"""Type of protocol.""")
+@cli_util.option('--record-type', type=custom_types.CliCaseInsensitiveChoice(["A", "AAAA", "ANY", "CNAME", "DNSKEY", "DS", "MX", "NS", "NSEC", "NULL_REC", "PTR", "RRSIG", "SOA", "TXT"]), help=u"""DNS record type.""")
+@cli_util.option('--verify-response-content', help=u"""Verify response content against regular expression based string. If response content does not match the verifyResponseContent value, then it will be considered a failure.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@cli_util.wrap_exceptions
+def create_monitor_dns_trace_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'dns_configuration' in kwargs:
+        kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
+        kwargs.pop('dns_configuration')
+
+    
+
+    if 'is_failure_retried' in kwargs:
+        kwargs['configuration_is_failure_retried'] = kwargs['is_failure_retried']
+        kwargs.pop('is_failure_retried')
+
+    
+
+    if 'protocol' in kwargs:
+        kwargs['configuration_protocol'] = kwargs['protocol']
+        kwargs.pop('protocol')
+
+    
+
+    if 'record_type' in kwargs:
+        kwargs['configuration_record_type'] = kwargs['record_type']
+        kwargs.pop('record_type')
+
+    
+
+    if 'verify_response_content' in kwargs:
+        kwargs['configuration_verify_response_content'] = kwargs['verify_response_content']
+        kwargs.pop('verify_response_content')
+
+    ctx.invoke(apmsynthetic_cli.create_monitor_dns_trace_monitor_configuration, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_dns_sec_monitor_configuration, params_to_exclude=['configuration_dns_configuration', 'configuration_is_failure_retried', 'configuration_record_type', 'configuration_verify_response_content'])
+@apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.update_monitor_dns_sec_monitor_configuration.name, help=apmsynthetic_cli.update_monitor_dns_sec_monitor_configuration.help)
+@cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
+@cli_util.option('--record-type', type=custom_types.CliCaseInsensitiveChoice(["A", "AAAA", "ANY", "CNAME", "DNSKEY", "DS", "MX", "NS", "NSEC", "NULL_REC", "PTR", "RRSIG", "SOA", "TXT"]), help=u"""DNS record type.""")
+@cli_util.option('--verify-response-content', help=u"""Verify response content against regular expression based string. If response content does not match the verifyResponseContent value, then it will be considered a failure.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@cli_util.wrap_exceptions
+def update_monitor_dns_sec_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'dns_configuration' in kwargs:
+        kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
+        kwargs.pop('dns_configuration')
+
+    
+
+    if 'is_failure_retried' in kwargs:
+        kwargs['configuration_is_failure_retried'] = kwargs['is_failure_retried']
+        kwargs.pop('is_failure_retried')
+
+    
+
+    if 'record_type' in kwargs:
+        kwargs['configuration_record_type'] = kwargs['record_type']
+        kwargs.pop('record_type')
+
+    
+
+    if 'verify_response_content' in kwargs:
+        kwargs['configuration_verify_response_content'] = kwargs['verify_response_content']
+        kwargs.pop('verify_response_content')
+
+    ctx.invoke(apmsynthetic_cli.update_monitor_dns_sec_monitor_configuration, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_dns_server_monitor_configuration, params_to_exclude=['configuration_dns_configuration', 'configuration_is_failure_retried', 'configuration_is_query_recursive', 'configuration_name_server', 'configuration_network_configuration', 'configuration_protocol', 'configuration_record_type', 'configuration_verify_response_content'])
+@apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.update_monitor_dns_server_monitor_configuration.name, help=apmsynthetic_cli.update_monitor_dns_server_monitor_configuration.help)
+@cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
+@cli_util.option('--is-query-recursive', type=click.BOOL, help=u"""If isQueryRecursive is enabled, then queries will be sent recursively to the target server.""")
+@cli_util.option('--name-server', help=u"""Name of the server that will be used to perform DNS lookup.""")
+@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--protocol', type=custom_types.CliCaseInsensitiveChoice(["TCP", "UDP"]), help=u"""Type of protocol.""")
+@cli_util.option('--record-type', type=custom_types.CliCaseInsensitiveChoice(["A", "AAAA", "ANY", "CNAME", "DNSKEY", "DS", "MX", "NS", "NSEC", "NULL_REC", "PTR", "RRSIG", "SOA", "TXT"]), help=u"""DNS record type.""")
+@cli_util.option('--verify-response-content', help=u"""Verify response content against regular expression based string. If response content does not match the verifyResponseContent value, then it will be considered a failure.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@cli_util.wrap_exceptions
+def update_monitor_dns_server_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'dns_configuration' in kwargs:
+        kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
+        kwargs.pop('dns_configuration')
+
+    
+
+    if 'is_failure_retried' in kwargs:
+        kwargs['configuration_is_failure_retried'] = kwargs['is_failure_retried']
+        kwargs.pop('is_failure_retried')
+
+    
+
+    if 'is_query_recursive' in kwargs:
+        kwargs['configuration_is_query_recursive'] = kwargs['is_query_recursive']
+        kwargs.pop('is_query_recursive')
+
+    
+
+    if 'name_server' in kwargs:
+        kwargs['configuration_name_server'] = kwargs['name_server']
+        kwargs.pop('name_server')
+
+    
+
+    if 'network_configuration' in kwargs:
+        kwargs['configuration_network_configuration'] = kwargs['network_configuration']
+        kwargs.pop('network_configuration')
+
+    
+
+    if 'protocol' in kwargs:
+        kwargs['configuration_protocol'] = kwargs['protocol']
+        kwargs.pop('protocol')
+
+    
+
+    if 'record_type' in kwargs:
+        kwargs['configuration_record_type'] = kwargs['record_type']
+        kwargs.pop('record_type')
+
+    
+
+    if 'verify_response_content' in kwargs:
+        kwargs['configuration_verify_response_content'] = kwargs['verify_response_content']
+        kwargs.pop('verify_response_content')
+
+    ctx.invoke(apmsynthetic_cli.update_monitor_dns_server_monitor_configuration, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_dns_trace_monitor_configuration, params_to_exclude=['configuration_dns_configuration', 'configuration_is_failure_retried', 'configuration_protocol', 'configuration_record_type', 'configuration_verify_response_content'])
+@apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.update_monitor_dns_trace_monitor_configuration.name, help=apmsynthetic_cli.update_monitor_dns_trace_monitor_configuration.help)
+@cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
+@cli_util.option('--protocol', type=custom_types.CliCaseInsensitiveChoice(["TCP", "UDP"]), help=u"""Type of protocol.""")
+@cli_util.option('--record-type', type=custom_types.CliCaseInsensitiveChoice(["A", "AAAA", "ANY", "CNAME", "DNSKEY", "DS", "MX", "NS", "NSEC", "NULL_REC", "PTR", "RRSIG", "SOA", "TXT"]), help=u"""DNS record type.""")
+@cli_util.option('--verify-response-content', help=u"""Verify response content against regular expression based string. If response content does not match the verifyResponseContent value, then it will be considered a failure.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@cli_util.wrap_exceptions
+def update_monitor_dns_trace_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'dns_configuration' in kwargs:
+        kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
+        kwargs.pop('dns_configuration')
+
+    
+
+    if 'is_failure_retried' in kwargs:
+        kwargs['configuration_is_failure_retried'] = kwargs['is_failure_retried']
+        kwargs.pop('is_failure_retried')
+
+    
+
+    if 'protocol' in kwargs:
+        kwargs['configuration_protocol'] = kwargs['protocol']
+        kwargs.pop('protocol')
+
+    
+
+    if 'record_type' in kwargs:
+        kwargs['configuration_record_type'] = kwargs['record_type']
+        kwargs.pop('record_type')
+
+    
+
+    if 'verify_response_content' in kwargs:
+        kwargs['configuration_verify_response_content'] = kwargs['verify_response_content']
+        kwargs.pop('verify_response_content')
+
+    ctx.invoke(apmsynthetic_cli.update_monitor_dns_trace_monitor_configuration, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_worker, params_to_exclude=['version_parameterconflict'])
+@apmsynthetic_cli.worker_group.command(name=apmsynthetic_cli.create_worker.name, help=apmsynthetic_cli.create_worker.help)
+@cli_util.option('--worker-version', required=True, help=u"""Image version of the On-premise VP worker. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configuration-details': {'module': 'apm_synthetics', 'class': 'object'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apm_synthetics', 'class': 'Worker'})
+@cli_util.wrap_exceptions
+def create_worker_extended(ctx, **kwargs):
+
+    if 'worker_version' in kwargs:
+        kwargs['version_parameterconflict'] = kwargs['worker_version']
+        kwargs.pop('worker_version')
+
+    ctx.invoke(apmsynthetic_cli.create_worker, **kwargs)
