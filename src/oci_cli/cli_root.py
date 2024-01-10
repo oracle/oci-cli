@@ -43,7 +43,7 @@ from oci_cli.service_mapping import service_mapping    # noqa: E402
 # important security information.
 logging.basicConfig(level=logging.WARN)
 
-OCI_CLI_AUTH_CHOICES = [cli_constants.OCI_CLI_AUTH_API_KEY, cli_constants.OCI_CLI_AUTH_INSTANCE_PRINCIPAL, cli_constants.OCI_CLI_AUTH_SESSION_TOKEN, cli_constants.OCI_CLI_AUTH_INSTANCE_OBO_USER, cli_constants.OCI_CLI_AUTH_RESOURCE_PRINCIPAL, cli_constants.OCI_CLI_AUTH_YUBIKEY]
+OCI_CLI_AUTH_CHOICES = [cli_constants.OCI_CLI_AUTH_API_KEY, cli_constants.OCI_CLI_AUTH_INSTANCE_PRINCIPAL, cli_constants.OCI_CLI_AUTH_SESSION_TOKEN, cli_constants.OCI_CLI_AUTH_INSTANCE_OBO_USER, cli_constants.OCI_CLI_AUTH_RESOURCE_PRINCIPAL]
 
 OCI_HELP = 'Oracle Cloud Infrastructure command line interface'
 

@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.37.3 - 2024-01-10
+--------------------
+Fixed
+~~~~~
+* Reverted YubiKey authentication
+
+
 3.37.2 - 2024-01-09
 --------------------
 Added

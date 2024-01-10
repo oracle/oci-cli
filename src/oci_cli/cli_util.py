@@ -353,7 +353,6 @@ def create_config_and_signer_based_on_click_context(ctx):
     resource_principal_auth = 'auth' in ctx.obj and ctx.obj['auth'] == cli_constants.OCI_CLI_AUTH_RESOURCE_PRINCIPAL
     session_token_auth = 'auth' in ctx.obj and ctx.obj['auth'] == cli_constants.OCI_CLI_AUTH_SESSION_TOKEN
     delegation_token_auth = 'auth' in ctx.obj and ctx.obj['auth'] == cli_constants.OCI_CLI_AUTH_INSTANCE_OBO_USER
-    yubikey_auth = 'auth' in ctx.obj and ctx.obj['auth'] == cli_constants.OCI_CLI_AUTH_YUBIKEY
 
     signer = None
     kwargs = {}
@@ -425,11 +424,6 @@ def create_config_and_signer_based_on_click_context(ctx):
         if ctx.obj['debug']:
             logger.debug("auth: resource_principal")
         signer = oci.auth.signers.resource_principals_signer.get_resource_principals_signer()
-    elif yubikey_auth:
-        if ctx.obj['debug']:
-            logger.debug("auth: yubi_key")
-        yk_pin = oci.auth.signers.YubikeyRequestSigner.get_yubikey_pin()
-        signer = oci.auth.signers.YubikeyRequestSigner.get_yubikey_signer(client_config, yk_pin)
     kwargs['signer'] = signer
 
     try:
