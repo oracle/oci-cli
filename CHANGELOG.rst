@@ -6,6 +6,82 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.37.4 - 2024-01-16
+--------------------
+Added
+~~~~~
+
+* Feature to add filtering support based on the Resource ID for CI service work requests.
+
+  * ``oci container-instances work-request list --resource-id "$resourceid"``
+
+* Support for new optional parameters in ADM service
+
+  * ``oci adm vulnerability-audit create --build-type``
+  * ``oci adm vulnerability-audit create-vulnerability-audit-external-resource-vulnerability-audit-source --build-type``
+  * ``oci adm vulnerability-audit create-vulnerability-audit-oci-resource-vulnerability-audit-source --build-type``
+  * ``oci adm vulnerability-audit create-vulnerability-audit-unknown-source-vulnerability-audit-source --build-type``
+  * ``oci adm remediation-run list-application-dependency-recommendations --purl``
+  * ``oci adm vulnerability-audit list-application-dependency-vulnerabilities --purl``
+  * ``oci adm vulnerability-audit list-application-dependency-vulnerabilities --severity-greater-than-or-equal``
+  * ``oci adm vulnerability-audit list --max-observed-severity-greater-than-or-equal-to``
+
+* Data Safe Service
+
+  * Support for updating risk level of the specified finding
+
+    * ``oci data-safe finding update``
+
+  * Support for listing all changes made by user to risk levels of findings of the specified assessment
+
+    * ``oci data-safe security-assessment list-findings-change-audit-logs``
+
+  * Support for security feature usage
+
+    * ``oci data-safe security-assessment list-security-feature-analytics``
+    * ``oci data-safe security-assessment list-security-features``
+
+  * Support for viewing the top security findings in Data Safe Security Assessment
+
+    * ``oci data-safe security-assessment list-finding-analytics``
+
+  * Support for viewing the schemas that a user can access in Data Safe User Assessment.
+
+    * ``oci data-safe database-table-access-entry get``
+    * ``oci data-safe database-table-access-entry-collection list``
+    * ``oci data-safe database-view-access-entry get``
+    * ``oci data-safe database-view-access-entry-collection list``
+    * ``oci data-safe role-grant-path-collection list``
+    * ``oci data-safe security-policy-report get``
+    * ``oci data-safe security-policy-report-collection list``
+    * ``oci data-safe user-assessment list-user-access-analytics``
+
+  * Support for new commands
+
+    * ``oci data-safe peer-target-database``
+    * ``oci data-safe report update``
+    * ``oci data-safe target-database refresh``
+
+  * Add new param peer-target-database-details
+
+    * ``oci data-safe target-database create --peer-target-database-details``
+
+* Support for new dimension-specific alarm suppression commands in Monitoring service
+
+  * ``oci monitoring alarm-suppression``
+  * ``oci monitoring alarm-suppression-collection list-alarm-suppressions``
+  * ``oci monitoring alarm-suppression summarize-alarm-suppression-history``
+
+
+Modified
+~~~~~~~~
+
+ * Changed trail-locations parameter as optional, added new optional parameters for Data Safe service
+
+  * ``oci data-safe audit-profile calculate-audit-volume-available --trail-locations, --database-unique-name``
+  * ``oci data-safe masking-policy apply-sdm-masking-policy-difference --sdm-masking-policy-difference-id``
+  * ``oci data-safe work-request list --access-level, --compartment-id-in-subtree``
+
 3.37.3 - 2024-01-10
 --------------------
 Fixed

@@ -815,19 +815,13 @@ def create_monitor_dns_sec_monitor_configuration_extended(ctx, **kwargs):
         kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
         kwargs.pop('dns_configuration')
 
-    
-
     if 'is_failure_retried' in kwargs:
         kwargs['configuration_is_failure_retried'] = kwargs['is_failure_retried']
         kwargs.pop('is_failure_retried')
 
-    
-
     if 'record_type' in kwargs:
         kwargs['configuration_record_type'] = kwargs['record_type']
         kwargs.pop('record_type')
-
-    
 
     if 'verify_response_content' in kwargs:
         kwargs['configuration_verify_response_content'] = kwargs['verify_response_content']
@@ -863,43 +857,29 @@ def create_monitor_dns_server_monitor_configuration_extended(ctx, **kwargs):
         kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
         kwargs.pop('dns_configuration')
 
-    
-
     if 'is_failure_retried' in kwargs:
         kwargs['configuration_is_failure_retried'] = kwargs['is_failure_retried']
         kwargs.pop('is_failure_retried')
-
-    
 
     if 'is_query_recursive' in kwargs:
         kwargs['configuration_is_query_recursive'] = kwargs['is_query_recursive']
         kwargs.pop('is_query_recursive')
 
-    
-
     if 'name_server' in kwargs:
         kwargs['configuration_name_server'] = kwargs['name_server']
         kwargs.pop('name_server')
-
-    
 
     if 'network_configuration' in kwargs:
         kwargs['configuration_network_configuration'] = kwargs['network_configuration']
         kwargs.pop('network_configuration')
 
-    
-
     if 'protocol' in kwargs:
         kwargs['configuration_protocol'] = kwargs['protocol']
         kwargs.pop('protocol')
 
-    
-
     if 'record_type' in kwargs:
         kwargs['configuration_record_type'] = kwargs['record_type']
         kwargs.pop('record_type')
-
-    
 
     if 'verify_response_content' in kwargs:
         kwargs['configuration_verify_response_content'] = kwargs['verify_response_content']
@@ -928,25 +908,17 @@ def create_monitor_dns_trace_monitor_configuration_extended(ctx, **kwargs):
         kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
         kwargs.pop('dns_configuration')
 
-    
-
     if 'is_failure_retried' in kwargs:
         kwargs['configuration_is_failure_retried'] = kwargs['is_failure_retried']
         kwargs.pop('is_failure_retried')
-
-    
 
     if 'protocol' in kwargs:
         kwargs['configuration_protocol'] = kwargs['protocol']
         kwargs.pop('protocol')
 
-    
-
     if 'record_type' in kwargs:
         kwargs['configuration_record_type'] = kwargs['record_type']
         kwargs.pop('record_type')
-
-    
 
     if 'verify_response_content' in kwargs:
         kwargs['configuration_verify_response_content'] = kwargs['verify_response_content']
@@ -974,19 +946,13 @@ def update_monitor_dns_sec_monitor_configuration_extended(ctx, **kwargs):
         kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
         kwargs.pop('dns_configuration')
 
-    
-
     if 'is_failure_retried' in kwargs:
         kwargs['configuration_is_failure_retried'] = kwargs['is_failure_retried']
         kwargs.pop('is_failure_retried')
 
-    
-
     if 'record_type' in kwargs:
         kwargs['configuration_record_type'] = kwargs['record_type']
         kwargs.pop('record_type')
-
-    
 
     if 'verify_response_content' in kwargs:
         kwargs['configuration_verify_response_content'] = kwargs['verify_response_content']
@@ -1022,43 +988,29 @@ def update_monitor_dns_server_monitor_configuration_extended(ctx, **kwargs):
         kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
         kwargs.pop('dns_configuration')
 
-    
-
     if 'is_failure_retried' in kwargs:
         kwargs['configuration_is_failure_retried'] = kwargs['is_failure_retried']
         kwargs.pop('is_failure_retried')
-
-    
 
     if 'is_query_recursive' in kwargs:
         kwargs['configuration_is_query_recursive'] = kwargs['is_query_recursive']
         kwargs.pop('is_query_recursive')
 
-    
-
     if 'name_server' in kwargs:
         kwargs['configuration_name_server'] = kwargs['name_server']
         kwargs.pop('name_server')
-
-    
 
     if 'network_configuration' in kwargs:
         kwargs['configuration_network_configuration'] = kwargs['network_configuration']
         kwargs.pop('network_configuration')
 
-    
-
     if 'protocol' in kwargs:
         kwargs['configuration_protocol'] = kwargs['protocol']
         kwargs.pop('protocol')
 
-    
-
     if 'record_type' in kwargs:
         kwargs['configuration_record_type'] = kwargs['record_type']
         kwargs.pop('record_type')
-
-    
 
     if 'verify_response_content' in kwargs:
         kwargs['configuration_verify_response_content'] = kwargs['verify_response_content']
@@ -1087,25 +1039,17 @@ def update_monitor_dns_trace_monitor_configuration_extended(ctx, **kwargs):
         kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
         kwargs.pop('dns_configuration')
 
-    
-
     if 'is_failure_retried' in kwargs:
         kwargs['configuration_is_failure_retried'] = kwargs['is_failure_retried']
         kwargs.pop('is_failure_retried')
-
-    
 
     if 'protocol' in kwargs:
         kwargs['configuration_protocol'] = kwargs['protocol']
         kwargs.pop('protocol')
 
-    
-
     if 'record_type' in kwargs:
         kwargs['configuration_record_type'] = kwargs['record_type']
         kwargs.pop('record_type')
-
-    
 
     if 'verify_response_content' in kwargs:
         kwargs['configuration_verify_response_content'] = kwargs['verify_response_content']
