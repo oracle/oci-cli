@@ -290,3 +290,19 @@ datasafe_cli.data_safe_root_group.commands.pop(datasafe_cli.security_policy_depl
 datasafe_cli.data_safe_root_group.commands.pop(datasafe_cli.security_policy_entry_state_collection_group.name)
 datasafe_cli.data_safe_root_group.commands.pop(datasafe_cli.sql_collection_collection_group.name)
 datasafe_cli.data_safe_root_group.commands.pop(datasafe_cli.sql_firewall_policy_collection_group.name)
+
+
+# Remove create-peer-target-database-autonomous-database-details from oci data-safe peer-target-database
+datasafe_cli.peer_target_database_group.commands.pop(datasafe_cli.create_peer_target_database_autonomous_database_details.name)
+
+
+# Remove create-peer-target-database-installed-database-details from oci data-safe peer-target-database
+datasafe_cli.peer_target_database_group.commands.pop(datasafe_cli.create_peer_target_database_installed_database_details.name)
+
+
+# Remove update-peer-target-database-autonomous-database-details from oci data-safe peer-target-database
+datasafe_cli.peer_target_database_group.commands.pop(datasafe_cli.update_peer_target_database_autonomous_database_details.name)
+
+
+# Remove update-peer-target-database-installed-database-details from oci data-safe peer-target-database
+datasafe_cli.peer_target_database_group.commands.pop(datasafe_cli.update_peer_target_database_installed_database_details.name)

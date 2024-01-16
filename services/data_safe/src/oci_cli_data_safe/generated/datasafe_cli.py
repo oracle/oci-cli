@@ -46,6 +46,12 @@ def data_safe_configuration_group():
     pass
 
 
+@click.command(cli_util.override('data_safe.database_view_access_entry_group.command_name', 'database-view-access-entry'), cls=CommandGroupWithAlias, help="""A DatabaseViewAccessEntry object is a resource corresponding to a row in view authorization report. It's a subresource of Security Policy Report resource and is always associated with a SecurityPolicyReport.""")
+@cli_util.help_option_group
+def database_view_access_entry_group():
+    pass
+
+
 @click.command(cli_util.override('data_safe.sensitive_type_group.command_name', 'sensitive-type'), cls=CommandGroupWithAlias, help="""A sensitive type defines a particular type or class of sensitive data. It can be a basic sensitive type with regular expressions or a sensitive category. While sensitive types are used for data discovery, sensitive categories are used for logically grouping the related or similar sensitive types. [Learn more].""")
 @cli_util.help_option_group
 def sensitive_type_group():
@@ -82,6 +88,12 @@ def difference_column_group():
     pass
 
 
+@click.command(cli_util.override('data_safe.security_policy_report_group.command_name', 'security-policy-report'), cls=CommandGroupWithAlias, help="""The resource represents the security policy report""")
+@cli_util.help_option_group
+def security_policy_report_group():
+    pass
+
+
 @click.command(cli_util.override('data_safe.sql_firewall_violation_summary_group.command_name', 'sql-firewall-violation-summary'), cls=CommandGroupWithAlias, help="""The resource represents the SQL violations collected from the target database by Oracle Data Safe.""")
 @cli_util.help_option_group
 def sql_firewall_violation_summary_group():
@@ -115,6 +127,12 @@ def library_masking_format_summary_group():
 @click.command(cli_util.override('data_safe.alert_summary_group.command_name', 'alert-summary'), cls=CommandGroupWithAlias, help="""Summary of a Data Safe Alert.""")
 @cli_util.help_option_group
 def alert_summary_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.database_view_access_entry_collection_group.command_name', 'database-view-access-entry-collection'), cls=CommandGroupWithAlias, help="""A collection of database view access summary objects.""")
+@cli_util.help_option_group
+def database_view_access_entry_collection_group():
     pass
 
 
@@ -172,6 +190,18 @@ def profile_group():
     pass
 
 
+@click.command(cli_util.override('data_safe.security_policy_report_collection_group.command_name', 'security-policy-report-collection'), cls=CommandGroupWithAlias, help="""Collection of security policy report summary.""")
+@cli_util.help_option_group
+def security_policy_report_collection_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.finding_group.command_name', 'finding'), cls=CommandGroupWithAlias, help="""The particular finding reported by the security assessment.""")
+@cli_util.help_option_group
+def finding_group():
+    pass
+
+
 @click.command(cli_util.override('data_safe.audit_profile_group.command_name', 'audit-profile'), cls=CommandGroupWithAlias, help="""The resource represents audit profile settings and audit configurations for the database target, and helps evaluate the initial audit data volume for configuring collection in Data Safe. The resource is also responsible for auto-discovery of audit trails in the database target during target's registration.""")
 @cli_util.help_option_group
 def audit_profile_group():
@@ -205,6 +235,12 @@ def audit_profile_analytic_collection_group():
 @click.command(cli_util.override('data_safe.sql_collection_analytics_collection_group.command_name', 'sql-collection-analytics-collection'), cls=CommandGroupWithAlias, help="""SQL collection analytics collection.""")
 @cli_util.help_option_group
 def sql_collection_analytics_collection_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.peer_target_database_group.command_name', 'peer-target-database'), cls=CommandGroupWithAlias, help="""The details of the peer target database in Data Safe.""")
+@cli_util.help_option_group
+def peer_target_database_group():
     pass
 
 
@@ -276,6 +312,12 @@ def audit_policy_collection_group():
     pass
 
 
+@click.command(cli_util.override('data_safe.role_grant_path_collection_group.command_name', 'role-grant-path-collection'), cls=CommandGroupWithAlias, help="""A collection of role grant path summary objects.""")
+@cli_util.help_option_group
+def role_grant_path_collection_group():
+    pass
+
+
 @click.command(cli_util.override('data_safe.sensitive_object_collection_group.command_name', 'sensitive-object-collection'), cls=CommandGroupWithAlias, help="""A collection of sensitive object summary objects.""")
 @cli_util.help_option_group
 def sensitive_object_collection_group():
@@ -288,6 +330,12 @@ def sql_firewall_allowed_sql_analytics_collection_group():
     pass
 
 
+@click.command(cli_util.override('data_safe.database_table_access_entry_group.command_name', 'database-table-access-entry'), cls=CommandGroupWithAlias, help="""A DatabaseTableAccess is a resource corresponding to a row in database table access report. It contains information about user's privilege grants that enable table access for the user. It's a subresource of Security Policy Report resource and is always associated with a SecurityPolicyReport.""")
+@cli_util.help_option_group
+def database_table_access_entry_group():
+    pass
+
+
 @click.command(cli_util.override('data_safe.sql_collection_log_insights_collection_group.command_name', 'sql-collection-log-insights-collection'), cls=CommandGroupWithAlias, help="""SQL collection log analytics collection.""")
 @cli_util.help_option_group
 def sql_collection_log_insights_collection_group():
@@ -297,6 +345,12 @@ def sql_collection_log_insights_collection_group():
 @click.command(cli_util.override('data_safe.security_policy_entry_state_group.command_name', 'security-policy-entry-state'), cls=CommandGroupWithAlias, help="""The resource represents the state of a specific entry type deployment on a target.""")
 @cli_util.help_option_group
 def security_policy_entry_state_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.database_table_access_entry_collection_group.command_name', 'database-table-access-entry-collection'), cls=CommandGroupWithAlias, help="""A collection of database table access summary objects.""")
+@cli_util.help_option_group
+def database_table_access_entry_collection_group():
     pass
 
 
@@ -400,18 +454,21 @@ data_safe_root_group.add_command(masked_column_summary_group)
 data_safe_root_group.add_command(sdm_masking_policy_difference_group)
 data_safe_root_group.add_command(security_policy_collection_group)
 data_safe_root_group.add_command(data_safe_configuration_group)
+data_safe_root_group.add_command(database_view_access_entry_group)
 data_safe_root_group.add_command(sensitive_type_group)
 data_safe_root_group.add_command(security_assessment_group)
 data_safe_root_group.add_command(on_prem_connector_group)
 data_safe_root_group.add_command(sql_firewall_policy_group)
 data_safe_root_group.add_command(work_request_group)
 data_safe_root_group.add_command(difference_column_group)
+data_safe_root_group.add_command(security_policy_report_group)
 data_safe_root_group.add_command(sql_firewall_violation_summary_group)
 data_safe_root_group.add_command(database_security_config_collection_group)
 data_safe_root_group.add_command(sql_collection_collection_group)
 data_safe_root_group.add_command(work_request_error_group)
 data_safe_root_group.add_command(library_masking_format_summary_group)
 data_safe_root_group.add_command(alert_summary_group)
+data_safe_root_group.add_command(database_view_access_entry_collection_group)
 data_safe_root_group.add_command(data_safe_private_endpoint_group)
 data_safe_root_group.add_command(security_policy_group)
 data_safe_root_group.add_command(sql_firewall_allowed_sql_collection_group)
@@ -421,12 +478,15 @@ data_safe_root_group.add_command(sql_firewall_policy_collection_group)
 data_safe_root_group.add_command(masking_schema_collection_group)
 data_safe_root_group.add_command(report_definition_group)
 data_safe_root_group.add_command(profile_group)
+data_safe_root_group.add_command(security_policy_report_collection_group)
+data_safe_root_group.add_command(finding_group)
 data_safe_root_group.add_command(audit_profile_group)
 data_safe_root_group.add_command(target_database_group)
 data_safe_root_group.add_command(sensitive_data_model_group)
 data_safe_root_group.add_command(security_policy_deployment_collection_group)
 data_safe_root_group.add_command(audit_profile_analytic_collection_group)
 data_safe_root_group.add_command(sql_collection_analytics_collection_group)
+data_safe_root_group.add_command(peer_target_database_group)
 data_safe_root_group.add_command(security_policy_deployment_group)
 data_safe_root_group.add_command(audit_policy_analytic_collection_group)
 data_safe_root_group.add_command(audit_event_summary_group)
@@ -438,10 +498,13 @@ data_safe_root_group.add_command(sql_collection_group)
 data_safe_root_group.add_command(alert_group)
 data_safe_root_group.add_command(sensitive_schema_collection_group)
 data_safe_root_group.add_command(audit_policy_collection_group)
+data_safe_root_group.add_command(role_grant_path_collection_group)
 data_safe_root_group.add_command(sensitive_object_collection_group)
 data_safe_root_group.add_command(sql_firewall_allowed_sql_analytics_collection_group)
+data_safe_root_group.add_command(database_table_access_entry_group)
 data_safe_root_group.add_command(sql_collection_log_insights_collection_group)
 data_safe_root_group.add_command(security_policy_entry_state_group)
+data_safe_root_group.add_command(database_table_access_entry_collection_group)
 data_safe_root_group.add_command(work_request_log_entry_group)
 data_safe_root_group.add_command(audit_policy_group)
 data_safe_root_group.add_command(audit_trail_analytic_collection_group)
@@ -748,8 +811,9 @@ def apply_sdm_masking_policy_difference(ctx, from_json, wait_for_state, max_wait
 
 @audit_profile_group.command(name=cli_util.override('data_safe.calculate_audit_volume_available.command_name', 'calculate-audit-volume-available'), help=u"""Calculates the volume of audit events available on the target database to be collected. Measurable up to the defined retention period of the audit target resource. \n[Command Reference](calculateAuditVolumeAvailable)""")
 @cli_util.option('--audit-profile-id', required=True, help=u"""The OCID of the audit.""")
-@cli_util.option('--trail-locations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The trail locations for which the audit data volume has to be calculated.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--audit-collection-start-time', type=custom_types.CLI_DATETIME, help=u"""The date from which the audit trail must start collecting data in UTC, in the format defined by RFC3339. If not specified, this will default to the date based on the retention period.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--trail-locations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The trail locations for which the audit data volume has to be calculated.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-unique-name', help=u"""Unique name of the database associated to the peer target database.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -759,7 +823,7 @@ def apply_sdm_masking_policy_difference(ctx, from_json, wait_for_state, max_wait
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'trail-locations': {'module': 'data_safe', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def calculate_audit_volume_available(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, audit_profile_id, trail_locations, audit_collection_start_time, if_match):
+def calculate_audit_volume_available(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, audit_profile_id, audit_collection_start_time, trail_locations, database_unique_name, if_match):
 
     if isinstance(audit_profile_id, six.string_types) and len(audit_profile_id.strip()) == 0:
         raise click.UsageError('Parameter --audit-profile-id cannot be whitespace or empty string')
@@ -770,10 +834,15 @@ def calculate_audit_volume_available(ctx, from_json, wait_for_state, max_wait_se
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['trailLocations'] = cli_util.parse_json_parameter("trail_locations", trail_locations)
 
     if audit_collection_start_time is not None:
         _details['auditCollectionStartTime'] = audit_collection_start_time
+
+    if trail_locations is not None:
+        _details['trailLocations'] = cli_util.parse_json_parameter("trail_locations", trail_locations)
+
+    if database_unique_name is not None:
+        _details['databaseUniqueName'] = database_unique_name
 
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.calculate_audit_volume_available(
@@ -2878,6 +2947,335 @@ def create_on_prem_connector(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
+@peer_target_database_group.command(name=cli_util.override('data_safe.create_peer_target_database.command_name', 'create'), help=u"""Creates the peer target database under the primary target database in Data Safe. \n[Command Reference](createPeerTargetDatabase)""")
+@cli_util.option('--target-database-id', required=True, help=u"""The OCID of the Data Safe target database.""")
+@cli_util.option('--database-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""The display name of the peer target database in Data Safe. The name is modifiable and does not need to be unique.""")
+@cli_util.option('--description', help=u"""The description of the peer target database in Data Safe.""")
+@cli_util.option('--dataguard-association-id', help=u"""The OCID of the Data Guard Association resource in which the database being registered is considered as peer database to the primary database.""")
+@cli_util.option('--tls-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'database-details': {'module': 'data_safe', 'class': 'DatabaseDetails'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-details': {'module': 'data_safe', 'class': 'DatabaseDetails'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}}, output_type={'module': 'data_safe', 'class': 'PeerTargetDatabase'})
+@cli_util.wrap_exceptions
+def create_peer_target_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, database_details, display_name, description, dataguard_association_id, tls_config, if_match):
+
+    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseDetails'] = cli_util.parse_json_parameter("database_details", database_details)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if dataguard_association_id is not None:
+        _details['dataguardAssociationId'] = dataguard_association_id
+
+    if tls_config is not None:
+        _details['tlsConfig'] = cli_util.parse_json_parameter("tls_config", tls_config)
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.create_peer_target_database(
+        target_database_id=target_database_id,
+        create_peer_target_database_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@peer_target_database_group.command(name=cli_util.override('data_safe.create_peer_target_database_installed_database_details.command_name', 'create-peer-target-database-installed-database-details'), help=u"""Creates the peer target database under the primary target database in Data Safe. \n[Command Reference](createPeerTargetDatabase)""")
+@cli_util.option('--target-database-id', required=True, help=u"""The OCID of the Data Safe target database.""")
+@cli_util.option('--database-details-infrastructure-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_CLOUD", "CLOUD_AT_CUSTOMER", "ON_PREMISES", "NON_ORACLE_CLOUD"]), help=u"""The infrastructure type the database is running on.""")
+@cli_util.option('--database-details-listener-port', required=True, type=click.INT, help=u"""The port number of the database listener.""")
+@cli_util.option('--database-details-service-name', required=True, help=u"""The service name of the database registered as target database.""")
+@cli_util.option('--display-name', help=u"""The display name of the peer target database in Data Safe. The name is modifiable and does not need to be unique.""")
+@cli_util.option('--description', help=u"""The description of the peer target database in Data Safe.""")
+@cli_util.option('--dataguard-association-id', help=u"""The OCID of the Data Guard Association resource in which the database being registered is considered as peer database to the primary database.""")
+@cli_util.option('--tls-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--database-details-instance-id', help=u"""The OCID of the compute instance on which the database is running.""")
+@cli_util.option('--database-details-ip-addresses', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of database host IP Addresses. Fully qualified domain names can be used if connectionType is 'ONPREM_CONNECTOR'.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'database-details-ip-addresses': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'database-details-ip-addresses': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'PeerTargetDatabase'})
+@cli_util.wrap_exceptions
+def create_peer_target_database_installed_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, database_details_infrastructure_type, database_details_listener_port, database_details_service_name, display_name, description, dataguard_association_id, tls_config, if_match, database_details_instance_id, database_details_ip_addresses):
+
+    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseDetails'] = {}
+    _details['databaseDetails']['infrastructureType'] = database_details_infrastructure_type
+    _details['databaseDetails']['listenerPort'] = database_details_listener_port
+    _details['databaseDetails']['serviceName'] = database_details_service_name
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if dataguard_association_id is not None:
+        _details['dataguardAssociationId'] = dataguard_association_id
+
+    if tls_config is not None:
+        _details['tlsConfig'] = cli_util.parse_json_parameter("tls_config", tls_config)
+
+    if database_details_instance_id is not None:
+        _details['databaseDetails']['instanceId'] = database_details_instance_id
+
+    if database_details_ip_addresses is not None:
+        _details['databaseDetails']['ipAddresses'] = cli_util.parse_json_parameter("database_details_ip_addresses", database_details_ip_addresses)
+
+    _details['databaseDetails']['databaseType'] = 'INSTALLED_DATABASE'
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.create_peer_target_database(
+        target_database_id=target_database_id,
+        create_peer_target_database_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@peer_target_database_group.command(name=cli_util.override('data_safe.create_peer_target_database_autonomous_database_details.command_name', 'create-peer-target-database-autonomous-database-details'), help=u"""Creates the peer target database under the primary target database in Data Safe. \n[Command Reference](createPeerTargetDatabase)""")
+@cli_util.option('--target-database-id', required=True, help=u"""The OCID of the Data Safe target database.""")
+@cli_util.option('--database-details-infrastructure-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_CLOUD", "CLOUD_AT_CUSTOMER", "ON_PREMISES", "NON_ORACLE_CLOUD"]), help=u"""The infrastructure type the database is running on.""")
+@cli_util.option('--database-details-autonomous-database-id', required=True, help=u"""The OCID of the Autonomous Database registered as a target database in Data Safe.""")
+@cli_util.option('--display-name', help=u"""The display name of the peer target database in Data Safe. The name is modifiable and does not need to be unique.""")
+@cli_util.option('--description', help=u"""The description of the peer target database in Data Safe.""")
+@cli_util.option('--dataguard-association-id', help=u"""The OCID of the Data Guard Association resource in which the database being registered is considered as peer database to the primary database.""")
+@cli_util.option('--tls-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}}, output_type={'module': 'data_safe', 'class': 'PeerTargetDatabase'})
+@cli_util.wrap_exceptions
+def create_peer_target_database_autonomous_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, database_details_infrastructure_type, database_details_autonomous_database_id, display_name, description, dataguard_association_id, tls_config, if_match):
+
+    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseDetails'] = {}
+    _details['databaseDetails']['infrastructureType'] = database_details_infrastructure_type
+    _details['databaseDetails']['autonomousDatabaseId'] = database_details_autonomous_database_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if dataguard_association_id is not None:
+        _details['dataguardAssociationId'] = dataguard_association_id
+
+    if tls_config is not None:
+        _details['tlsConfig'] = cli_util.parse_json_parameter("tls_config", tls_config)
+
+    _details['databaseDetails']['databaseType'] = 'AUTONOMOUS_DATABASE'
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.create_peer_target_database(
+        target_database_id=target_database_id,
+        create_peer_target_database_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@peer_target_database_group.command(name=cli_util.override('data_safe.create_peer_target_database_database_cloud_service_details.command_name', 'create-peer-target-database-database-cloud-service-details'), help=u"""Creates the peer target database under the primary target database in Data Safe. \n[Command Reference](createPeerTargetDatabase)""")
+@cli_util.option('--target-database-id', required=True, help=u"""The OCID of the Data Safe target database.""")
+@cli_util.option('--database-details-infrastructure-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_CLOUD", "CLOUD_AT_CUSTOMER", "ON_PREMISES", "NON_ORACLE_CLOUD"]), help=u"""The infrastructure type the database is running on.""")
+@cli_util.option('--database-details-service-name', required=True, help=u"""The database service name.""")
+@cli_util.option('--display-name', help=u"""The display name of the peer target database in Data Safe. The name is modifiable and does not need to be unique.""")
+@cli_util.option('--description', help=u"""The description of the peer target database in Data Safe.""")
+@cli_util.option('--dataguard-association-id', help=u"""The OCID of the Data Guard Association resource in which the database being registered is considered as peer database to the primary database.""")
+@cli_util.option('--tls-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--database-details-vm-cluster-id', help=u"""The OCID of the VM cluster in which the database is running.""")
+@cli_util.option('--database-details-db-system-id', help=u"""The OCID of the cloud database registered as a target database in Data Safe.""")
+@cli_util.option('--database-details-listener-port', type=click.INT, help=u"""The port number of the database listener.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}}, output_type={'module': 'data_safe', 'class': 'PeerTargetDatabase'})
+@cli_util.wrap_exceptions
+def create_peer_target_database_database_cloud_service_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, database_details_infrastructure_type, database_details_service_name, display_name, description, dataguard_association_id, tls_config, if_match, database_details_vm_cluster_id, database_details_db_system_id, database_details_listener_port):
+
+    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseDetails'] = {}
+    _details['databaseDetails']['infrastructureType'] = database_details_infrastructure_type
+    _details['databaseDetails']['serviceName'] = database_details_service_name
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if dataguard_association_id is not None:
+        _details['dataguardAssociationId'] = dataguard_association_id
+
+    if tls_config is not None:
+        _details['tlsConfig'] = cli_util.parse_json_parameter("tls_config", tls_config)
+
+    if database_details_vm_cluster_id is not None:
+        _details['databaseDetails']['vmClusterId'] = database_details_vm_cluster_id
+
+    if database_details_db_system_id is not None:
+        _details['databaseDetails']['dbSystemId'] = database_details_db_system_id
+
+    if database_details_listener_port is not None:
+        _details['databaseDetails']['listenerPort'] = database_details_listener_port
+
+    _details['databaseDetails']['databaseType'] = 'DATABASE_CLOUD_SERVICE'
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.create_peer_target_database(
+        target_database_id=target_database_id,
+        create_peer_target_database_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @report_definition_group.command(name=cli_util.override('data_safe.create_report_definition.command_name', 'create'), help=u"""Creates a new report definition with parameters specified in the body. The report definition is stored in the specified compartment. \n[Command Reference](createReportDefinition)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the report definition.""")
 @cli_util.option('--display-name', required=True, help=u"""Specifies the name of the report definition.""")
@@ -3717,6 +4115,9 @@ def create_target_alert_policy_association(ctx, from_json, wait_for_state, max_w
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--tls-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-option', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--peer-target-database-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of the database to be registered as a peer target database.
+
+This option is a JSON list with items of type CreatePeerTargetDatabaseDetails.  For documentation on CreatePeerTargetDatabaseDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datasafe/20181201/datatypes/CreatePeerTargetDatabaseDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3726,12 +4127,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'database-details': {'module': 'data_safe', 'class': 'DatabaseDetails'}, 'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'connection-option': {'module': 'data_safe', 'class': 'ConnectionOption'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'database-details': {'module': 'data_safe', 'class': 'DatabaseDetails'}, 'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'connection-option': {'module': 'data_safe', 'class': 'ConnectionOption'}, 'peer-target-database-details': {'module': 'data_safe', 'class': 'list[CreatePeerTargetDatabaseDetails]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-details': {'module': 'data_safe', 'class': 'DatabaseDetails'}, 'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'connection-option': {'module': 'data_safe', 'class': 'ConnectionOption'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'TargetDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-details': {'module': 'data_safe', 'class': 'DatabaseDetails'}, 'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'connection-option': {'module': 'data_safe', 'class': 'ConnectionOption'}, 'peer-target-database-details': {'module': 'data_safe', 'class': 'list[CreatePeerTargetDatabaseDetails]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'TargetDatabase'})
 @cli_util.wrap_exceptions
-def create_target_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_details, display_name, description, credentials, tls_config, connection_option, freeform_tags, defined_tags):
+def create_target_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_details, display_name, description, credentials, tls_config, connection_option, peer_target_database_details, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3754,6 +4155,9 @@ def create_target_database(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
     if connection_option is not None:
         _details['connectionOption'] = cli_util.parse_json_parameter("connection_option", connection_option)
+
+    if peer_target_database_details is not None:
+        _details['peerTargetDatabaseDetails'] = cli_util.parse_json_parameter("peer_target_database_details", peer_target_database_details)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -3802,6 +4206,9 @@ def create_target_database(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--tls-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-option', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--peer-target-database-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of the database to be registered as a peer target database.
+
+This option is a JSON list with items of type CreatePeerTargetDatabaseDetails.  For documentation on CreatePeerTargetDatabaseDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datasafe/20181201/datatypes/CreatePeerTargetDatabaseDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3813,12 +4220,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'connection-option': {'module': 'data_safe', 'class': 'ConnectionOption'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}, 'database-details-ip-addresses': {'module': 'data_safe', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'connection-option': {'module': 'data_safe', 'class': 'ConnectionOption'}, 'peer-target-database-details': {'module': 'data_safe', 'class': 'list[CreatePeerTargetDatabaseDetails]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}, 'database-details-ip-addresses': {'module': 'data_safe', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'connection-option': {'module': 'data_safe', 'class': 'ConnectionOption'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}, 'database-details-ip-addresses': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'TargetDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'connection-option': {'module': 'data_safe', 'class': 'ConnectionOption'}, 'peer-target-database-details': {'module': 'data_safe', 'class': 'list[CreatePeerTargetDatabaseDetails]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}, 'database-details-ip-addresses': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'TargetDatabase'})
 @cli_util.wrap_exceptions
-def create_target_database_installed_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_details_infrastructure_type, database_details_listener_port, database_details_service_name, display_name, description, credentials, tls_config, connection_option, freeform_tags, defined_tags, database_details_instance_id, database_details_ip_addresses):
+def create_target_database_installed_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_details_infrastructure_type, database_details_listener_port, database_details_service_name, display_name, description, credentials, tls_config, connection_option, peer_target_database_details, freeform_tags, defined_tags, database_details_instance_id, database_details_ip_addresses):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3844,6 +4251,9 @@ def create_target_database_installed_database_details(ctx, from_json, wait_for_s
 
     if connection_option is not None:
         _details['connectionOption'] = cli_util.parse_json_parameter("connection_option", connection_option)
+
+    if peer_target_database_details is not None:
+        _details['peerTargetDatabaseDetails'] = cli_util.parse_json_parameter("peer_target_database_details", peer_target_database_details)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -3899,6 +4309,9 @@ def create_target_database_installed_database_details(ctx, from_json, wait_for_s
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--tls-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-option', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--peer-target-database-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of the database to be registered as a peer target database.
+
+This option is a JSON list with items of type CreatePeerTargetDatabaseDetails.  For documentation on CreatePeerTargetDatabaseDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datasafe/20181201/datatypes/CreatePeerTargetDatabaseDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3908,12 +4321,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'connection-option': {'module': 'data_safe', 'class': 'ConnectionOption'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'connection-option': {'module': 'data_safe', 'class': 'ConnectionOption'}, 'peer-target-database-details': {'module': 'data_safe', 'class': 'list[CreatePeerTargetDatabaseDetails]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'connection-option': {'module': 'data_safe', 'class': 'ConnectionOption'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'TargetDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'connection-option': {'module': 'data_safe', 'class': 'ConnectionOption'}, 'peer-target-database-details': {'module': 'data_safe', 'class': 'list[CreatePeerTargetDatabaseDetails]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'TargetDatabase'})
 @cli_util.wrap_exceptions
-def create_target_database_autonomous_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_details_infrastructure_type, database_details_autonomous_database_id, display_name, description, credentials, tls_config, connection_option, freeform_tags, defined_tags):
+def create_target_database_autonomous_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_details_infrastructure_type, database_details_autonomous_database_id, display_name, description, credentials, tls_config, connection_option, peer_target_database_details, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3938,6 +4351,9 @@ def create_target_database_autonomous_database_details(ctx, from_json, wait_for_
 
     if connection_option is not None:
         _details['connectionOption'] = cli_util.parse_json_parameter("connection_option", connection_option)
+
+    if peer_target_database_details is not None:
+        _details['peerTargetDatabaseDetails'] = cli_util.parse_json_parameter("peer_target_database_details", peer_target_database_details)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -3987,6 +4403,9 @@ def create_target_database_autonomous_database_details(ctx, from_json, wait_for_
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--tls-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-option', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--peer-target-database-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of the database to be registered as a peer target database.
+
+This option is a JSON list with items of type CreatePeerTargetDatabaseDetails.  For documentation on CreatePeerTargetDatabaseDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datasafe/20181201/datatypes/CreatePeerTargetDatabaseDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3999,12 +4418,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'connection-option': {'module': 'data_safe', 'class': 'ConnectionOption'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'connection-option': {'module': 'data_safe', 'class': 'ConnectionOption'}, 'peer-target-database-details': {'module': 'data_safe', 'class': 'list[CreatePeerTargetDatabaseDetails]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'connection-option': {'module': 'data_safe', 'class': 'ConnectionOption'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'TargetDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'connection-option': {'module': 'data_safe', 'class': 'ConnectionOption'}, 'peer-target-database-details': {'module': 'data_safe', 'class': 'list[CreatePeerTargetDatabaseDetails]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'TargetDatabase'})
 @cli_util.wrap_exceptions
-def create_target_database_database_cloud_service_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_details_infrastructure_type, database_details_service_name, display_name, description, credentials, tls_config, connection_option, freeform_tags, defined_tags, database_details_vm_cluster_id, database_details_db_system_id, database_details_listener_port):
+def create_target_database_database_cloud_service_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_details_infrastructure_type, database_details_service_name, display_name, description, credentials, tls_config, connection_option, peer_target_database_details, freeform_tags, defined_tags, database_details_vm_cluster_id, database_details_db_system_id, database_details_listener_port):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -4029,6 +4448,9 @@ def create_target_database_database_cloud_service_details(ctx, from_json, wait_f
 
     if connection_option is not None:
         _details['connectionOption'] = cli_util.parse_json_parameter("connection_option", connection_option)
+
+    if peer_target_database_details is not None:
+        _details['peerTargetDatabaseDetails'] = cli_util.parse_json_parameter("peer_target_database_details", peer_target_database_details)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -4086,6 +4508,9 @@ def create_target_database_database_cloud_service_details(ctx, from_json, wait_f
 @cli_util.option('--description', help=u"""The description of the target database in Data Safe.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--tls-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--peer-target-database-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of the database to be registered as a peer target database.
+
+This option is a JSON list with items of type CreatePeerTargetDatabaseDetails.  For documentation on CreatePeerTargetDatabaseDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datasafe/20181201/datatypes/CreatePeerTargetDatabaseDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4095,12 +4520,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'database-details': {'module': 'data_safe', 'class': 'DatabaseDetails'}, 'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'database-details': {'module': 'data_safe', 'class': 'DatabaseDetails'}, 'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'peer-target-database-details': {'module': 'data_safe', 'class': 'list[CreatePeerTargetDatabaseDetails]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-details': {'module': 'data_safe', 'class': 'DatabaseDetails'}, 'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'TargetDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-details': {'module': 'data_safe', 'class': 'DatabaseDetails'}, 'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'peer-target-database-details': {'module': 'data_safe', 'class': 'list[CreatePeerTargetDatabaseDetails]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'TargetDatabase'})
 @cli_util.wrap_exceptions
-def create_target_database_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_details, connection_option_datasafe_private_endpoint_id, display_name, description, credentials, tls_config, freeform_tags, defined_tags):
+def create_target_database_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_details, connection_option_datasafe_private_endpoint_id, display_name, description, credentials, tls_config, peer_target_database_details, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -4122,6 +4547,9 @@ def create_target_database_private_endpoint(ctx, from_json, wait_for_state, max_
 
     if tls_config is not None:
         _details['tlsConfig'] = cli_util.parse_json_parameter("tls_config", tls_config)
+
+    if peer_target_database_details is not None:
+        _details['peerTargetDatabaseDetails'] = cli_util.parse_json_parameter("peer_target_database_details", peer_target_database_details)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -4170,6 +4598,9 @@ def create_target_database_private_endpoint(ctx, from_json, wait_for_state, max_
 @cli_util.option('--description', help=u"""The description of the target database in Data Safe.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--tls-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--peer-target-database-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of the database to be registered as a peer target database.
+
+This option is a JSON list with items of type CreatePeerTargetDatabaseDetails.  For documentation on CreatePeerTargetDatabaseDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datasafe/20181201/datatypes/CreatePeerTargetDatabaseDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4179,12 +4610,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'database-details': {'module': 'data_safe', 'class': 'DatabaseDetails'}, 'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'database-details': {'module': 'data_safe', 'class': 'DatabaseDetails'}, 'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'peer-target-database-details': {'module': 'data_safe', 'class': 'list[CreatePeerTargetDatabaseDetails]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-details': {'module': 'data_safe', 'class': 'DatabaseDetails'}, 'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'TargetDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-details': {'module': 'data_safe', 'class': 'DatabaseDetails'}, 'credentials': {'module': 'data_safe', 'class': 'Credentials'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'peer-target-database-details': {'module': 'data_safe', 'class': 'list[CreatePeerTargetDatabaseDetails]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'TargetDatabase'})
 @cli_util.wrap_exceptions
-def create_target_database_on_premise_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_details, connection_option_on_prem_connector_id, display_name, description, credentials, tls_config, freeform_tags, defined_tags):
+def create_target_database_on_premise_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_details, connection_option_on_prem_connector_id, display_name, description, credentials, tls_config, peer_target_database_details, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -4206,6 +4637,9 @@ def create_target_database_on_premise_connector(ctx, from_json, wait_for_state, 
 
     if tls_config is not None:
         _details['tlsConfig'] = cli_util.parse_json_parameter("tls_config", tls_config)
+
+    if peer_target_database_details is not None:
+        _details['peerTargetDatabaseDetails'] = cli_util.parse_json_parameter("peer_target_database_details", peer_target_database_details)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -4784,6 +5218,63 @@ def delete_on_prem_connector(ctx, from_json, wait_for_state, max_wait_seconds, w
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.delete_on_prem_connector(
         on_prem_connector_id=on_prem_connector_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@peer_target_database_group.command(name=cli_util.override('data_safe.delete_peer_target_database.command_name', 'delete'), help=u"""Removes the specified peer target database from Data Safe. \n[Command Reference](deletePeerTargetDatabase)""")
+@cli_util.option('--target-database-id', required=True, help=u"""The OCID of the Data Safe target database.""")
+@cli_util.option('--peer-target-database-id', required=True, type=click.INT, help=u"""The unique id of the peer target database.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_peer_target_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, peer_target_database_id, if_match):
+
+    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
+
+    if isinstance(peer_target_database_id, six.string_types) and len(peer_target_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --peer-target-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.delete_peer_target_database(
+        target_database_id=target_database_id,
+        peer_target_database_id=peer_target_database_id,
         **kwargs
     )
     if wait_for_state:
@@ -6689,6 +7180,60 @@ def get_database_security_config(ctx, from_json, database_security_config_id):
     cli_util.render_response(result, ctx)
 
 
+@database_table_access_entry_group.command(name=cli_util.override('data_safe.get_database_table_access_entry.command_name', 'get'), help=u"""Gets a database table access entry object by identifier. \n[Command Reference](getDatabaseTableAccessEntry)""")
+@cli_util.option('--security-policy-report-id', required=True, help=u"""The OCID of the security policy report resource.""")
+@cli_util.option('--database-table-access-entry-key', required=True, help=u"""The unique key that identifies the table access object. This is a system-generated identifier.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'DatabaseTableAccessEntry'})
+@cli_util.wrap_exceptions
+def get_database_table_access_entry(ctx, from_json, security_policy_report_id, database_table_access_entry_key):
+
+    if isinstance(security_policy_report_id, six.string_types) and len(security_policy_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --security-policy-report-id cannot be whitespace or empty string')
+
+    if isinstance(database_table_access_entry_key, six.string_types) and len(database_table_access_entry_key.strip()) == 0:
+        raise click.UsageError('Parameter --database-table-access-entry-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.get_database_table_access_entry(
+        security_policy_report_id=security_policy_report_id,
+        database_table_access_entry_key=database_table_access_entry_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@database_view_access_entry_group.command(name=cli_util.override('data_safe.get_database_view_access_entry.command_name', 'get'), help=u"""Gets a database view access object by identifier. \n[Command Reference](getDatabaseViewAccessEntry)""")
+@cli_util.option('--security-policy-report-id', required=True, help=u"""The OCID of the security policy report resource.""")
+@cli_util.option('--database-view-access-entry-key', required=True, help=u"""The unique key that identifies the view access object. This is a system-generated identifier.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'DatabaseViewAccessEntry'})
+@cli_util.wrap_exceptions
+def get_database_view_access_entry(ctx, from_json, security_policy_report_id, database_view_access_entry_key):
+
+    if isinstance(security_policy_report_id, six.string_types) and len(security_policy_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --security-policy-report-id cannot be whitespace or empty string')
+
+    if isinstance(database_view_access_entry_key, six.string_types) and len(database_view_access_entry_key.strip()) == 0:
+        raise click.UsageError('Parameter --database-view-access-entry-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.get_database_view_access_entry(
+        security_policy_report_id=security_policy_report_id,
+        database_view_access_entry_key=database_view_access_entry_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @difference_column_group.command(name=cli_util.override('data_safe.get_difference_column.command_name', 'get'), help=u"""Gets the details of the specified SDM Masking policy difference column. \n[Command Reference](getDifferenceColumn)""")
 @cli_util.option('--sdm-masking-policy-difference-id', required=True, help=u"""The OCID of the SDM masking policy difference.""")
 @cli_util.option('--difference-column-key', required=True, help=u"""The unique key that identifies the difference column.""")
@@ -6875,6 +7420,33 @@ def get_on_prem_connector(ctx, from_json, on_prem_connector_id):
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.get_on_prem_connector(
         on_prem_connector_id=on_prem_connector_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@peer_target_database_group.command(name=cli_util.override('data_safe.get_peer_target_database.command_name', 'get'), help=u"""Returns the details of the specified Data Safe peer target database. \n[Command Reference](getPeerTargetDatabase)""")
+@cli_util.option('--target-database-id', required=True, help=u"""The OCID of the Data Safe target database.""")
+@cli_util.option('--peer-target-database-id', required=True, type=click.INT, help=u"""The unique id of the peer target database.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'PeerTargetDatabase'})
+@cli_util.wrap_exceptions
+def get_peer_target_database(ctx, from_json, target_database_id, peer_target_database_id):
+
+    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
+
+    if isinstance(peer_target_database_id, six.string_types) and len(peer_target_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --peer-target-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.get_peer_target_database(
+        target_database_id=target_database_id,
+        peer_target_database_id=peer_target_database_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -7135,6 +7707,28 @@ def get_security_policy_entry_state(ctx, from_json, security_policy_deployment_i
     result = client.get_security_policy_entry_state(
         security_policy_deployment_id=security_policy_deployment_id,
         security_policy_entry_state_id=security_policy_entry_state_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@security_policy_report_group.command(name=cli_util.override('data_safe.get_security_policy_report.command_name', 'get'), help=u"""Gets a security policy report by the specified OCID of the security policy report resource. \n[Command Reference](getSecurityPolicyReport)""")
+@cli_util.option('--security-policy-report-id', required=True, help=u"""The OCID of the security policy report resource.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'SecurityPolicyReport'})
+@cli_util.wrap_exceptions
+def get_security_policy_report(ctx, from_json, security_policy_report_id):
+
+    if isinstance(security_policy_report_id, six.string_types) and len(security_policy_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --security-policy-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.get_security_policy_report(
+        security_policy_report_id=security_policy_report_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -8717,6 +9311,137 @@ def list_database_security_configs(ctx, from_json, all_pages, page_size, compart
     cli_util.render_response(result, ctx)
 
 
+@database_table_access_entry_collection_group.command(name=cli_util.override('data_safe.list_database_table_access_entries.command_name', 'list-database-table-access-entries'), help=u"""Retrieves a list of all database table access entries in Data Safe.
+
+The ListDatabaseTableAccessEntries operation returns only the database table access reports for the specified security policy report. \n[Command Reference](listDatabaseTableAccessEntries)""")
+@cli_util.option('--security-policy-report-id', required=True, help=u"""The OCID of the security policy report resource.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--scim-query', help=u"""The scimQuery query parameter accepts filter expressions that use the syntax described in Section 3.2.2.2 of the System for Cross-Domain Identity Management (SCIM) specification, which is available at [RFC3339]. In SCIM filtering expressions, text, date, and time values must be enclosed in quotation marks, with date and time values using ISO-8601 format. (Numeric and boolean values should not be quoted.)
+
+**Example:** query=(accessType eq 'SELECT') and (grantee eq 'ADMIN')""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["key", "grantee", "accessType", "tableSchema", "tableName", "privilegeType", "privilege", "privilegeGrantable", "grantFromRole", "accessThroughObject", "columnName", "grantor", "areAllTablesAccessible", "isAccessConstrainedByView", "isAccessConstrainedByLabelSecurity", "isAccessConstrainedByDatabaseVault", "isAccessConstrainedByVirtualPrivateDatabase", "isAccessConstrainedByRedaction", "isAccessConstrainedByRealApplicationSecurity", "isAccessConstrainedBySqlFirewall", "isSensitive"]), help=u"""The field to sort by. Only one sort parameter should be provided.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'DatabaseTableAccessEntryCollection'})
+@cli_util.wrap_exceptions
+def list_database_table_access_entries(ctx, from_json, all_pages, page_size, security_policy_report_id, limit, page, scim_query, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(security_policy_report_id, six.string_types) and len(security_policy_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --security-policy-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if scim_query is not None:
+        kwargs['scim_query'] = scim_query
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_database_table_access_entries,
+            security_policy_report_id=security_policy_report_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_database_table_access_entries,
+            limit,
+            page_size,
+            security_policy_report_id=security_policy_report_id,
+            **kwargs
+        )
+    else:
+        result = client.list_database_table_access_entries(
+            security_policy_report_id=security_policy_report_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@database_view_access_entry_collection_group.command(name=cli_util.override('data_safe.list_database_view_access_entries.command_name', 'list-database-view-access-entries'), help=u"""Retrieves a list of all database view access entries in Data Safe.
+
+The ListDatabaseViewAccessEntries operation returns only the database view access objects for the specified security policy report. \n[Command Reference](listDatabaseViewAccessEntries)""")
+@cli_util.option('--security-policy-report-id', required=True, help=u"""The OCID of the security policy report resource.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--scim-query', help=u"""The scimQuery query parameter accepts filter expressions that use the syntax described in Section 3.2.2.2 of the System for Cross-Domain Identity Management (SCIM) specification, which is available at [RFC3339]. In SCIM filtering expressions, text, date, and time values must be enclosed in quotation marks, with date and time values using ISO-8601 format. (Numeric and boolean values should not be quoted.)
+
+**Example:** query=(accessType eq 'SELECT') and (grantee eq 'ADMIN')""")
+@cli_util.option('--target-id', help=u"""A filter to return only items related to a specific target OCID.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["key", "grantee", "accessType", "tableSchema", "tableName", "viewSchema", "viewName", "privilegeType", "privilege", "privilegeGrantable", "grantFromRole", "accessThroughObject", "columnName", "grantor", "isAccessConstrainedByDatabaseVault", "isAccessConstrainedByVirtualPrivateDatabase", "isAccessConstrainedByRedaction", "isAccessConstrainedByRealApplicationSecurity", "isAccessConstrainedBySqlFirewall"]), help=u"""The field to sort by. Only one sort parameter should be provided.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'DatabaseViewAccessEntryCollection'})
+@cli_util.wrap_exceptions
+def list_database_view_access_entries(ctx, from_json, all_pages, page_size, security_policy_report_id, limit, page, scim_query, target_id, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(security_policy_report_id, six.string_types) and len(security_policy_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --security-policy-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if scim_query is not None:
+        kwargs['scim_query'] = scim_query
+    if target_id is not None:
+        kwargs['target_id'] = target_id
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_database_view_access_entries,
+            security_policy_report_id=security_policy_report_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_database_view_access_entries,
+            limit,
+            page_size,
+            security_policy_report_id=security_policy_report_id,
+            **kwargs
+        )
+    else:
+        result = client.list_database_view_access_entries(
+            security_policy_report_id=security_policy_report_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @sdm_masking_policy_difference_group.command(name=cli_util.override('data_safe.list_difference_columns.command_name', 'list-difference-columns'), help=u"""Gets a list of columns of a SDM masking policy difference resource based on the specified query parameters. \n[Command Reference](listDifferenceColumns)""")
 @cli_util.option('--sdm-masking-policy-difference-id', required=True, help=u"""The OCID of the SDM masking policy difference.""")
 @cli_util.option('--difference-type', type=custom_types.CliCaseInsensitiveChoice(["ALL", "NEW", "MODIFIED", "DELETED"]), help=u"""A filter to return only the SDM masking policy difference columns that match the specified difference type""")
@@ -9008,9 +9733,82 @@ def list_discovery_jobs(ctx, from_json, all_pages, page_size, compartment_id, co
     cli_util.render_response(result, ctx)
 
 
+@security_assessment_group.command(name=cli_util.override('data_safe.list_finding_analytics.command_name', 'list-finding-analytics'), help=u"""Gets a list of findings aggregated details in the specified compartment. This provides information about the overall state of security assessment findings. You can use groupBy to get the count of findings under a certain risk level and with a certain findingKey, and as well as get the list of the targets that match the condition. This data is especially useful content for the statistic chart or to support analytics.
+
+When you perform the ListFindingAnalytics operation, if the parameter compartmentIdInSubtree is set to \"true,\" and if the parameter accessLevel is set to ACCESSIBLE, then the operation returns statistics from the compartments in which the requestor has INSPECT permissions on at least one resource, directly or indirectly (in subcompartments). If the operation is performed at the root compartment and the requestor does not have access to at least one subcompartment of the compartment specified by compartmentId, then \"Not Authorized\" is returned. \n[Command Reference](listFindingAnalytics)""")
+@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
+@cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
+@cli_util.option('--is-top-finding', type=click.BOOL, help=u"""A filter to return only the findings that are marked as top findings.""")
+@cli_util.option('--group-by', type=custom_types.CliCaseInsensitiveChoice(["findingKeyAndTopFindingStatus", "findingKeyAndSeverity"]), help=u"""Attribute by which the finding analytics data should be grouped.""")
+@cli_util.option('--top-finding-status', type=custom_types.CliCaseInsensitiveChoice(["RISK", "EVALUATE", "ADVISORY", "PASS", "DEFERRED"]), help=u"""An optional filter to return only the top finding that match the specified status.""")
+@cli_util.option('--severity', type=custom_types.CliCaseInsensitiveChoice(["HIGH", "MEDIUM", "LOW", "EVALUATE", "ADVISORY", "PASS", "DEFERRED"]), help=u"""A filter to return only findings of a particular risk level.""")
+@cli_util.option('--finding-key', help=u"""The unique key that identifies the finding. It is a string and unique within a security assessment.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'FindingAnalyticsCollection'})
+@cli_util.wrap_exceptions
+def list_finding_analytics(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, access_level, is_top_finding, group_by, top_finding_status, severity, finding_key, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if access_level is not None:
+        kwargs['access_level'] = access_level
+    if is_top_finding is not None:
+        kwargs['is_top_finding'] = is_top_finding
+    if group_by is not None:
+        kwargs['group_by'] = group_by
+    if top_finding_status is not None:
+        kwargs['top_finding_status'] = top_finding_status
+    if severity is not None:
+        kwargs['severity'] = severity
+    if finding_key is not None:
+        kwargs['finding_key'] = finding_key
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_finding_analytics,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_finding_analytics,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_finding_analytics(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @security_assessment_group.command(name=cli_util.override('data_safe.list_findings.command_name', 'list-findings'), help=u"""List all the findings from all the targets in the specified compartment. \n[Command Reference](listFindings)""")
 @cli_util.option('--security-assessment-id', required=True, help=u"""The OCID of the security assessment.""")
-@cli_util.option('--severity', type=custom_types.CliCaseInsensitiveChoice(["HIGH", "MEDIUM", "LOW", "EVALUATE", "ADVISORY", "PASS"]), help=u"""A filter to return only findings of a particular risk level.""")
+@cli_util.option('--is-top-finding', type=click.BOOL, help=u"""A filter to return only the findings that are marked as top findings.""")
+@cli_util.option('--severity', type=custom_types.CliCaseInsensitiveChoice(["HIGH", "MEDIUM", "LOW", "EVALUATE", "ADVISORY", "PASS", "DEFERRED"]), help=u"""A filter to return only findings of a particular risk level.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "UPDATING", "NEEDS_ATTENTION", "FAILED"]), help=u"""A filter to return only the findings that match the specified lifecycle states.""")
 @cli_util.option('--references', type=custom_types.CliCaseInsensitiveChoice(["STIG", "CIS", "GDPR"]), help=u"""An optional filter to return only findings that match the specified reference.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
@@ -9024,7 +9822,7 @@ def list_discovery_jobs(ctx, from_json, all_pages, page_size, compartment_id, co
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'list[FindingSummary]'})
 @cli_util.wrap_exceptions
-def list_findings(ctx, from_json, all_pages, page_size, security_assessment_id, severity, references, limit, page, compartment_id_in_subtree, access_level, finding_key):
+def list_findings(ctx, from_json, all_pages, page_size, security_assessment_id, is_top_finding, severity, lifecycle_state, references, limit, page, compartment_id_in_subtree, access_level, finding_key):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -9033,8 +9831,12 @@ def list_findings(ctx, from_json, all_pages, page_size, security_assessment_id, 
         raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_top_finding is not None:
+        kwargs['is_top_finding'] = is_top_finding
     if severity is not None:
         kwargs['severity'] = severity
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
     if references is not None:
         kwargs['references'] = references
     if limit is not None:
@@ -9068,6 +9870,94 @@ def list_findings(ctx, from_json, all_pages, page_size, security_assessment_id, 
         )
     else:
         result = client.list_findings(
+            security_assessment_id=security_assessment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@security_assessment_group.command(name=cli_util.override('data_safe.list_findings_change_audit_logs.command_name', 'list-findings-change-audit-logs'), help=u"""List all changes made by user to risk level of findings of the specified assessment. \n[Command Reference](listFindingsChangeAuditLogs)""")
+@cli_util.option('--security-assessment-id', required=True, help=u"""The OCID of the security assessment.""")
+@cli_util.option('--severity', type=custom_types.CliCaseInsensitiveChoice(["HIGH", "MEDIUM", "LOW", "EVALUATE", "ADVISORY", "PASS", "DEFERRED"]), help=u"""A filter to return only findings of a particular risk level.""")
+@cli_util.option('--finding-key', help=u"""The unique key that identifies the finding. It is a string and unique within a security assessment.""")
+@cli_util.option('--finding-title', help=u"""The unique title that identifies the finding. It is a string and unique within a security assessment.""")
+@cli_util.option('--is-risk-deferred', type=click.BOOL, help=u"""A filter to check findings whose risks were deferred by the user.""")
+@cli_util.option('--modified-by', help=u"""A filter to check which user modified the risk level of the finding.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeUpdated", "modifiedBy", "isRiskDeferred", "timeValidUntil"]), help=u"""The field to sort by. You can specify only one sort order(sortOrder). The default order for timeUpdated is descending.""")
+@cli_util.option('--time-valid-until-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Specifying `TimeValidUntilGreaterThanOrEqualToQueryParam` parameter will retrieve all items for which the risk level modification by user will no longer be valid greater than the date and time specified, in the format defined by [RFC3339].
+
+**Example:** 2016-12-19T00:00:00.000Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-valid-until-less-than', type=custom_types.CLI_DATETIME, help=u"""Specifying `TimeValidUntilLessThanQueryParam` parameter will retrieve all items for which the risk level modification by user will be valid until less than the date and time specified, in the format defined by [RFC3339].
+
+**Example:** 2016-12-19T00:00:00.000Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-updated-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Search for resources that were updated after a specific date. Specifying this parameter corresponding `timeUpdatedGreaterThanOrEqualTo` parameter will retrieve all resources updated after the specified created date, in \"YYYY-MM-ddThh:mmZ\" format with a Z offset, as defined by RFC 3339.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-updated-less-than', type=custom_types.CLI_DATETIME, help=u"""Search for resources that were updated before a specific date. Specifying this parameter corresponding `timeUpdatedLessThan` parameter will retrieve all resources updated before the specified created date, in \"YYYY-MM-ddThh:mmZ\" format with a Z offset, as defined by RFC 3339.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'FindingsChangeAuditLogCollection'})
+@cli_util.wrap_exceptions
+def list_findings_change_audit_logs(ctx, from_json, all_pages, page_size, security_assessment_id, severity, finding_key, finding_title, is_risk_deferred, modified_by, limit, page, sort_order, sort_by, time_valid_until_greater_than_or_equal_to, time_valid_until_less_than, time_updated_greater_than_or_equal_to, time_updated_less_than):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(security_assessment_id, six.string_types) and len(security_assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if severity is not None:
+        kwargs['severity'] = severity
+    if finding_key is not None:
+        kwargs['finding_key'] = finding_key
+    if finding_title is not None:
+        kwargs['finding_title'] = finding_title
+    if is_risk_deferred is not None:
+        kwargs['is_risk_deferred'] = is_risk_deferred
+    if modified_by is not None:
+        kwargs['modified_by'] = modified_by
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if time_valid_until_greater_than_or_equal_to is not None:
+        kwargs['time_valid_until_greater_than_or_equal_to'] = time_valid_until_greater_than_or_equal_to
+    if time_valid_until_less_than is not None:
+        kwargs['time_valid_until_less_than'] = time_valid_until_less_than
+    if time_updated_greater_than_or_equal_to is not None:
+        kwargs['time_updated_greater_than_or_equal_to'] = time_updated_greater_than_or_equal_to
+    if time_updated_less_than is not None:
+        kwargs['time_updated_less_than'] = time_updated_less_than
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_findings_change_audit_logs,
+            security_assessment_id=security_assessment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_findings_change_audit_logs,
+            limit,
+            page_size,
+            security_assessment_id=security_assessment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_findings_change_audit_logs(
             security_assessment_id=security_assessment_id,
             **kwargs
         )
@@ -9825,6 +10715,60 @@ def list_on_prem_connectors(ctx, from_json, all_pages, page_size, compartment_id
     cli_util.render_response(result, ctx)
 
 
+@peer_target_database_group.command(name=cli_util.override('data_safe.list_peer_target_databases.command_name', 'list'), help=u"""Lists all the peer target databases under the primary target database identified by the OCID passed as path parameter. \n[Command Reference](listPeerTargetDatabases)""")
+@cli_util.option('--target-database-id', required=True, help=u"""The OCID of the Data Safe target database.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'PeerTargetDatabaseCollection'})
+@cli_util.wrap_exceptions
+def list_peer_target_databases(ctx, from_json, all_pages, page_size, target_database_id, if_match, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_peer_target_databases,
+            target_database_id=target_database_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_peer_target_databases,
+            limit,
+            page_size,
+            target_database_id=target_database_id,
+            **kwargs
+        )
+    else:
+        result = client.list_peer_target_databases(
+            target_database_id=target_database_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @profile_group.command(name=cli_util.override('data_safe.list_profile_analytics.command_name', 'list-profile-analytics'), help=u"""Gets a list of aggregated user profile details in the specified compartment. This provides information about the overall profiles available. For example, the user profile details include how many users have the profile assigned and do how many use password verification function. This data is especially useful content for dashboards or to support analytics.
 
 When you perform the ListProfileAnalytics operation, if the parameter compartmentIdInSubtree is set to \"true,\" and if the parameter accessLevel is set to ACCESSIBLE, then the operation returns compartments in which the requestor has INSPECT permissions on at least one resource, directly or indirectly (in subcompartments). If the operation is performed at the root compartment and the requestor does not have access to at least one subcompartment of the compartment specified by compartmentId, then \"Not Authorized\" is returned.
@@ -10166,6 +11110,67 @@ def list_reports(ctx, from_json, all_pages, page_size, compartment_id, compartme
     cli_util.render_response(result, ctx)
 
 
+@role_grant_path_collection_group.command(name=cli_util.override('data_safe.list_role_grant_paths.command_name', 'list-role-grant-paths'), help=u"""Retrieves a list of all role grant paths for a particular user.
+
+The ListRoleGrantPaths operation returns only the role grant paths for the specified security policy report. \n[Command Reference](listRoleGrantPaths)""")
+@cli_util.option('--security-policy-report-id', required=True, help=u"""The OCID of the security policy report resource.""")
+@cli_util.option('--grantee', required=True, help=u"""A filter to return only items that match the specified grantee.""")
+@cli_util.option('--granted-role', required=True, help=u"""A filter to return only items that match the specified role.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'RoleGrantPathCollection'})
+@cli_util.wrap_exceptions
+def list_role_grant_paths(ctx, from_json, all_pages, page_size, security_policy_report_id, grantee, granted_role, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(security_policy_report_id, six.string_types) and len(security_policy_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --security-policy-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_role_grant_paths,
+            security_policy_report_id=security_policy_report_id,
+            grantee=grantee,
+            granted_role=granted_role,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_role_grant_paths,
+            limit,
+            page_size,
+            security_policy_report_id=security_policy_report_id,
+            grantee=grantee,
+            granted_role=granted_role,
+            **kwargs
+        )
+    else:
+        result = client.list_role_grant_paths(
+            security_policy_report_id=security_policy_report_id,
+            grantee=grantee,
+            granted_role=granted_role,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @target_database_group.command(name=cli_util.override('data_safe.list_roles.command_name', 'list-roles'), help=u"""Returns a list of role metadata objects. \n[Command Reference](listRoles)""")
 @cli_util.option('--target-database-id', required=True, help=u"""The OCID of the Data Safe target database.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
@@ -10473,6 +11478,127 @@ def list_security_assessments(ctx, from_json, all_pages, page_size, compartment_
     cli_util.render_response(result, ctx)
 
 
+@security_assessment_group.command(name=cli_util.override('data_safe.list_security_feature_analytics.command_name', 'list-security-feature-analytics'), help=u"""Gets a list of Database security feature usage aggregated details in the specified compartment. This provides information about the overall security controls, by returning the counting number of the target databases using the security features.
+
+When you perform the ListSecurityFeatureAnalytics operation, if the parameter compartmentIdInSubtree is set to \"true,\" and if the parameter accessLevel is set to ACCESSIBLE, then the operation returns statistics from the compartments in which the requestor has INSPECT permissions on at least one resource, directly or indirectly (in subcompartments). If the operation is performed at the root compartment and the requestor does not have access to at least one subcompartment of the compartment specified by compartmentId, then \"Not Authorized\" is returned. \n[Command Reference](listSecurityFeatureAnalytics)""")
+@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
+@cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
+@cli_util.option('--target-id', help=u"""A filter to return only items related to a specific target OCID.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'SecurityFeatureAnalyticsCollection'})
+@cli_util.wrap_exceptions
+def list_security_feature_analytics(ctx, from_json, all_pages, compartment_id, compartment_id_in_subtree, access_level, target_id):
+
+    kwargs = {}
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if access_level is not None:
+        kwargs['access_level'] = access_level
+    if target_id is not None:
+        kwargs['target_id'] = target_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.list_security_feature_analytics(
+        compartment_id=compartment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@security_assessment_group.command(name=cli_util.override('data_safe.list_security_features.command_name', 'list-security-features'), help=u"""Lists the usage of Database security features for a given compartment or a target level, based on the filters provided. \n[Command Reference](listSecurityFeatures)""")
+@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
+@cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
+@cli_util.option('--target-id', help=u"""A filter to return only items related to a specific target OCID.""")
+@cli_util.option('--targets-with-unified-audit', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "NONE"]), help=u"""A filter to return only the targets with the DB security feature - Unified Audit enabled/disabled.""")
+@cli_util.option('--targets-with-fine-grained-audit', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "NONE"]), help=u"""A filter to return only the targets with the DB security feature - Fine Grained Audit enabled/disabled.""")
+@cli_util.option('--targets-with-traditional-audit', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "NONE"]), help=u"""A filter to return only the targets with the DB security feature - Traditional Audit enabled/disabled.""")
+@cli_util.option('--targets-with-database-vault', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "NONE"]), help=u"""A filter to return only the targets with the DB security feature - Database Vault enabled/disabled.""")
+@cli_util.option('--targets-with-privilege-analysis', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "NONE"]), help=u"""A filter to return only the targets with the DB security feature - Privilege Analysis enabled/disabled.""")
+@cli_util.option('--targets-with-tablespace-encryption', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "NONE"]), help=u"""A filter to return only the targets with the DB security feature - Tablespace Encryption enabled/disabled.""")
+@cli_util.option('--targets-with-column-encryption', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "NONE"]), help=u"""A filter to return only the targets that enable the DB security feature - Column Encryption enabled/disabled.""")
+@cli_util.option('--targets-with-network-encryption', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "NONE"]), help=u"""A filter to return only the targets with the DB security feature - Network Encryption enabled/disabled.""")
+@cli_util.option('--targets-with-password-authentication', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "NONE"]), help=u"""A filter to return only the targets with the DB security feature - Password Authentication enabled/disabled.""")
+@cli_util.option('--targets-with-global-authentication', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "NONE"]), help=u"""A filter to return only the targets with the DB security feature - Global Authentication enabled/disabled.""")
+@cli_util.option('--targets-with-external-authentication', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED", "NONE"]), help=u"""A filter to return only the targets with the DB security feature - External Authentication enabled/disabled.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'SecurityFeatureCollection'})
+@cli_util.wrap_exceptions
+def list_security_features(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, access_level, target_id, targets_with_unified_audit, targets_with_fine_grained_audit, targets_with_traditional_audit, targets_with_database_vault, targets_with_privilege_analysis, targets_with_tablespace_encryption, targets_with_column_encryption, targets_with_network_encryption, targets_with_password_authentication, targets_with_global_authentication, targets_with_external_authentication, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if access_level is not None:
+        kwargs['access_level'] = access_level
+    if target_id is not None:
+        kwargs['target_id'] = target_id
+    if targets_with_unified_audit is not None:
+        kwargs['targets_with_unified_audit'] = targets_with_unified_audit
+    if targets_with_fine_grained_audit is not None:
+        kwargs['targets_with_fine_grained_audit'] = targets_with_fine_grained_audit
+    if targets_with_traditional_audit is not None:
+        kwargs['targets_with_traditional_audit'] = targets_with_traditional_audit
+    if targets_with_database_vault is not None:
+        kwargs['targets_with_database_vault'] = targets_with_database_vault
+    if targets_with_privilege_analysis is not None:
+        kwargs['targets_with_privilege_analysis'] = targets_with_privilege_analysis
+    if targets_with_tablespace_encryption is not None:
+        kwargs['targets_with_tablespace_encryption'] = targets_with_tablespace_encryption
+    if targets_with_column_encryption is not None:
+        kwargs['targets_with_column_encryption'] = targets_with_column_encryption
+    if targets_with_network_encryption is not None:
+        kwargs['targets_with_network_encryption'] = targets_with_network_encryption
+    if targets_with_password_authentication is not None:
+        kwargs['targets_with_password_authentication'] = targets_with_password_authentication
+    if targets_with_global_authentication is not None:
+        kwargs['targets_with_global_authentication'] = targets_with_global_authentication
+    if targets_with_external_authentication is not None:
+        kwargs['targets_with_external_authentication'] = targets_with_external_authentication
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_security_features,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_security_features,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_security_features(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @security_policy_collection_group.command(name=cli_util.override('data_safe.list_security_policies.command_name', 'list-security-policies'), help=u"""Retrieves a list of all security policies in Data Safe.
 
 The ListSecurityPolicies operation returns only the security policies in the specified `compartmentId`.
@@ -10683,6 +11809,84 @@ def list_security_policy_entry_states(ctx, from_json, all_pages, page_size, secu
     else:
         result = client.list_security_policy_entry_states(
             security_policy_deployment_id=security_policy_deployment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@security_policy_report_collection_group.command(name=cli_util.override('data_safe.list_security_policy_reports.command_name', 'list-security-policy-reports'), help=u"""Retrieves a list of all security policy reports in Data Safe.
+
+The ListSecurityPolicyReports operation returns only the security policy reports in the specified `compartmentId`.
+
+The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
+
+The parameter `compartmentIdInSubtree` applies when you perform ListSecurityPolicyReports on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listSecurityPolicyReports)""")
+@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
+@cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "SUCCEEDED", "UPDATING", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), help=u"""The current state of the security policy report.""")
+@cli_util.option('--security-policy-report-id', help=u"""An optional filter to return only resources that match the specified OCID of the security policy report resource.""")
+@cli_util.option('--target-id', help=u"""A filter to return only items related to a specific target OCID.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field used for sorting. Only one sorting order (sortOrder) can be specified. The default order for TIMECREATED is descending. The default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'SecurityPolicyReportCollection'})
+@cli_util.wrap_exceptions
+def list_security_policy_reports(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, access_level, display_name, limit, page, lifecycle_state, security_policy_report_id, target_id, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if access_level is not None:
+        kwargs['access_level'] = access_level
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if security_policy_report_id is not None:
+        kwargs['security_policy_report_id'] = security_policy_report_id
+    if target_id is not None:
+        kwargs['target_id'] = target_id
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_security_policy_reports,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_security_policy_reports,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_security_policy_reports(
+            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -12007,6 +13211,63 @@ def list_target_databases(ctx, from_json, all_pages, page_size, compartment_id, 
     cli_util.render_response(result, ctx)
 
 
+@user_assessment_group.command(name=cli_util.override('data_safe.list_user_access_analytics.command_name', 'list-user-access-analytics'), help=u"""Gets a list of aggregated user access analytics in the specified target in a compartment. \n[Command Reference](listUserAccessAnalytics)""")
+@cli_util.option('--user-assessment-id', required=True, help=u"""The OCID of the user assessment.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["USERNAME", "COUNT"]), help=u"""The field to sort by. Only one sort parameter may be provided.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'UserAccessAnalyticsCollection'})
+@cli_util.wrap_exceptions
+def list_user_access_analytics(ctx, from_json, all_pages, page_size, user_assessment_id, sort_by, sort_order, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(user_assessment_id, six.string_types) and len(user_assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-assessment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_user_access_analytics,
+            user_assessment_id=user_assessment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_user_access_analytics,
+            limit,
+            page_size,
+            user_assessment_id=user_assessment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_user_access_analytics(
+            user_assessment_id=user_assessment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @user_assessment_group.command(name=cli_util.override('data_safe.list_user_analytics.command_name', 'list-user-analytics'), help=u"""Gets a list of aggregated user details from the specified user assessment. This provides information about the overall state. of database user security.  For example, the user details include how many users have the DBA role and how many users are in the critical category. This data is especially useful content for dashboards or to support analytics.
 
 When you perform the ListUserAnalytics operation, if the parameter compartmentIdInSubtree is set to \"true,\" and if the parameter accessLevel is set to ACCESSIBLE, then the operation returns compartments in which the requestor has INSPECT permissions on at least one resource, directly or indirectly (in subcompartments). If the operation is performed at the root compartment and the requestor does not have access to at least one subcompartment of the compartment specified by compartmentId, then \"Not Authorized\" is returned.
@@ -12247,14 +13508,16 @@ def list_user_assessments(ctx, from_json, all_pages, page_size, compartment_id, 
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["userName", "userCategory", "accountStatus", "timeLastLogin", "targetId", "timeUserCreated", "authenticationType", "timePasswordChanged"]), help=u"""The field to sort by. You can specify only one sort order (sortOrder). The default order for userName is ascending.""")
+@cli_util.option('--schema-list', multiple=True, help=u"""A filter to return items that contain the specified schema list.""")
+@cli_util.option('--are-all-schemas-accessible', type=click.BOOL, help=u"""A filter to return only items that match the criteria that all schemas can be accessed by a user.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'schema-list': {'module': 'data_safe', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'list[UserSummary]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schema-list': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'list[UserSummary]'})
 @cli_util.wrap_exceptions
-def list_users(ctx, from_json, all_pages, page_size, user_assessment_id, limit, compartment_id_in_subtree, access_level, user_category, user_role, user_profile, user_type, user_key, account_status, authentication_type, user_name, target_id, time_last_login_greater_than_or_equal_to, time_last_login_less_than, time_user_created_greater_than_or_equal_to, time_user_created_less_than, time_password_last_changed_greater_than_or_equal_to, time_password_last_changed_less_than, page, sort_order, sort_by):
+def list_users(ctx, from_json, all_pages, page_size, user_assessment_id, limit, compartment_id_in_subtree, access_level, user_category, user_role, user_profile, user_type, user_key, account_status, authentication_type, user_name, target_id, time_last_login_greater_than_or_equal_to, time_last_login_less_than, time_user_created_greater_than_or_equal_to, time_user_created_less_than, time_password_last_changed_greater_than_or_equal_to, time_password_last_changed_less_than, page, sort_order, sort_by, schema_list, are_all_schemas_accessible):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -12305,6 +13568,10 @@ def list_users(ctx, from_json, all_pages, page_size, user_assessment_id, limit, 
         kwargs['sort_order'] = sort_order
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
+    if schema_list is not None and len(schema_list) > 0:
+        kwargs['schema_list'] = schema_list
+    if are_all_schemas_accessible is not None:
+        kwargs['are_all_schemas_accessible'] = are_all_schemas_accessible
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     if all_pages:
@@ -13293,6 +14560,57 @@ def refresh_sql_collection_log_insights(ctx, from_json, wait_for_state, max_wait
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.refresh_sql_collection_log_insights(
         sql_collection_id=sql_collection_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@target_database_group.command(name=cli_util.override('data_safe.refresh_target_database.command_name', 'refresh'), help=u"""Refreshes the Data Safe target database to update it's state. \n[Command Reference](refreshTargetDatabase)""")
+@cli_util.option('--target-database-id', required=True, help=u"""The OCID of the Data Safe target database.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def refresh_target_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, if_match):
+
+    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.refresh_target_database(
+        target_database_id=target_database_id,
         **kwargs
     )
     if wait_for_state:
@@ -14758,6 +16076,78 @@ def update_database_security_config(ctx, from_json, force, wait_for_state, max_w
     cli_util.render_response(result, ctx)
 
 
+@finding_group.command(name=cli_util.override('data_safe.update_finding.command_name', 'update'), help=u"""Updates one or more attributes of the specified finding. \n[Command Reference](updateFinding)""")
+@cli_util.option('--security-assessment-id', required=True, help=u"""The OCID of the security assessment.""")
+@cli_util.option('--finding-key', required=True, help=u"""The unique key that identifies the finding. It is a string and unique within a security assessment.""")
+@cli_util.option('--severity', help=u"""The severity of the finding as defined or changed by the user.""")
+@cli_util.option('--justification', help=u"""User provided reason for accepting or modifying this finding if they choose to do so.""")
+@cli_util.option('--time-valid-until', type=custom_types.CLI_DATETIME, help=u"""The time until which the change in severity (deferred / modified) got the given finding is valid.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_finding(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_assessment_id, finding_key, severity, justification, time_valid_until, if_match):
+
+    if isinstance(security_assessment_id, six.string_types) and len(security_assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
+
+    if isinstance(finding_key, six.string_types) and len(finding_key.strip()) == 0:
+        raise click.UsageError('Parameter --finding-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if severity is not None:
+        _details['severity'] = severity
+
+    if justification is not None:
+        _details['justification'] = justification
+
+    if time_valid_until is not None:
+        _details['timeValidUntil'] = time_valid_until
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.update_finding(
+        security_assessment_id=security_assessment_id,
+        finding_key=finding_key,
+        update_finding_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @library_masking_format_group.command(name=cli_util.override('data_safe.update_library_masking_format.command_name', 'update'), help=u"""Updates one or more attributes of the specified library masking format. Note that updating the formatEntries attribute replaces all the existing masking format entries with the specified format entries. \n[Command Reference](updateLibraryMaskingFormat)""")
 @cli_util.option('--library-masking-format-id', required=True, help=u"""The OCID of the library masking format.""")
 @cli_util.option('--display-name', help=u"""The display name of the library masking format. The name does not have to be unique, and it's changeable.""")
@@ -15384,6 +16774,433 @@ def update_on_prem_connector_wallet(ctx, from_json, wait_for_state, max_wait_sec
     result = client.update_on_prem_connector_wallet(
         on_prem_connector_id=on_prem_connector_id,
         update_on_prem_connector_wallet_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@peer_target_database_group.command(name=cli_util.override('data_safe.update_peer_target_database.command_name', 'update'), help=u"""Updates one or more attributes of the specified Data Safe peer target database. \n[Command Reference](updatePeerTargetDatabase)""")
+@cli_util.option('--target-database-id', required=True, help=u"""The OCID of the Data Safe target database.""")
+@cli_util.option('--peer-target-database-id', required=True, type=click.INT, help=u"""The unique id of the peer target database.""")
+@cli_util.option('--display-name', help=u"""The display name of the peer target database in Data Safe.""")
+@cli_util.option('--description', help=u"""The description of the peer target database in Data Safe.""")
+@cli_util.option('--database-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--tls-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'database-details': {'module': 'data_safe', 'class': 'DatabaseDetails'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-details': {'module': 'data_safe', 'class': 'DatabaseDetails'}, 'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}})
+@cli_util.wrap_exceptions
+def update_peer_target_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, peer_target_database_id, display_name, description, database_details, tls_config, if_match):
+
+    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
+
+    if isinstance(peer_target_database_id, six.string_types) and len(peer_target_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --peer-target-database-id cannot be whitespace or empty string')
+    if not force:
+        if database_details or tls_config:
+            if not click.confirm("WARNING: Updates to database-details and tls-config will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if database_details is not None:
+        _details['databaseDetails'] = cli_util.parse_json_parameter("database_details", database_details)
+
+    if tls_config is not None:
+        _details['tlsConfig'] = cli_util.parse_json_parameter("tls_config", tls_config)
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.update_peer_target_database(
+        target_database_id=target_database_id,
+        peer_target_database_id=peer_target_database_id,
+        update_peer_target_database_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@peer_target_database_group.command(name=cli_util.override('data_safe.update_peer_target_database_installed_database_details.command_name', 'update-peer-target-database-installed-database-details'), help=u"""Updates one or more attributes of the specified Data Safe peer target database. \n[Command Reference](updatePeerTargetDatabase)""")
+@cli_util.option('--target-database-id', required=True, help=u"""The OCID of the Data Safe target database.""")
+@cli_util.option('--peer-target-database-id', required=True, type=click.INT, help=u"""The unique id of the peer target database.""")
+@cli_util.option('--database-details-infrastructure-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_CLOUD", "CLOUD_AT_CUSTOMER", "ON_PREMISES", "NON_ORACLE_CLOUD"]), help=u"""The infrastructure type the database is running on.""")
+@cli_util.option('--database-details-listener-port', required=True, type=click.INT, help=u"""The port number of the database listener.""")
+@cli_util.option('--database-details-service-name', required=True, help=u"""The service name of the database registered as target database.""")
+@cli_util.option('--display-name', help=u"""The display name of the peer target database in Data Safe.""")
+@cli_util.option('--description', help=u"""The description of the peer target database in Data Safe.""")
+@cli_util.option('--tls-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--database-details-instance-id', help=u"""The OCID of the compute instance on which the database is running.""")
+@cli_util.option('--database-details-ip-addresses', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of database host IP Addresses. Fully qualified domain names can be used if connectionType is 'ONPREM_CONNECTOR'.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'database-details-ip-addresses': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}, 'database-details-ip-addresses': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def update_peer_target_database_installed_database_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, peer_target_database_id, database_details_infrastructure_type, database_details_listener_port, database_details_service_name, display_name, description, tls_config, if_match, database_details_instance_id, database_details_ip_addresses):
+
+    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
+
+    if isinstance(peer_target_database_id, six.string_types) and len(peer_target_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --peer-target-database-id cannot be whitespace or empty string')
+    if not force:
+        if tls_config:
+            if not click.confirm("WARNING: Updates to tls-config will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseDetails'] = {}
+    _details['databaseDetails']['infrastructureType'] = database_details_infrastructure_type
+    _details['databaseDetails']['listenerPort'] = database_details_listener_port
+    _details['databaseDetails']['serviceName'] = database_details_service_name
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if tls_config is not None:
+        _details['tlsConfig'] = cli_util.parse_json_parameter("tls_config", tls_config)
+
+    if database_details_instance_id is not None:
+        _details['databaseDetails']['instanceId'] = database_details_instance_id
+
+    if database_details_ip_addresses is not None:
+        _details['databaseDetails']['ipAddresses'] = cli_util.parse_json_parameter("database_details_ip_addresses", database_details_ip_addresses)
+
+    _details['databaseDetails']['databaseType'] = 'INSTALLED_DATABASE'
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.update_peer_target_database(
+        target_database_id=target_database_id,
+        peer_target_database_id=peer_target_database_id,
+        update_peer_target_database_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@peer_target_database_group.command(name=cli_util.override('data_safe.update_peer_target_database_autonomous_database_details.command_name', 'update-peer-target-database-autonomous-database-details'), help=u"""Updates one or more attributes of the specified Data Safe peer target database. \n[Command Reference](updatePeerTargetDatabase)""")
+@cli_util.option('--target-database-id', required=True, help=u"""The OCID of the Data Safe target database.""")
+@cli_util.option('--peer-target-database-id', required=True, type=click.INT, help=u"""The unique id of the peer target database.""")
+@cli_util.option('--database-details-infrastructure-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_CLOUD", "CLOUD_AT_CUSTOMER", "ON_PREMISES", "NON_ORACLE_CLOUD"]), help=u"""The infrastructure type the database is running on.""")
+@cli_util.option('--database-details-autonomous-database-id', required=True, help=u"""The OCID of the Autonomous Database registered as a target database in Data Safe.""")
+@cli_util.option('--display-name', help=u"""The display name of the peer target database in Data Safe.""")
+@cli_util.option('--description', help=u"""The description of the peer target database in Data Safe.""")
+@cli_util.option('--tls-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}})
+@cli_util.wrap_exceptions
+def update_peer_target_database_autonomous_database_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, peer_target_database_id, database_details_infrastructure_type, database_details_autonomous_database_id, display_name, description, tls_config, if_match):
+
+    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
+
+    if isinstance(peer_target_database_id, six.string_types) and len(peer_target_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --peer-target-database-id cannot be whitespace or empty string')
+    if not force:
+        if tls_config:
+            if not click.confirm("WARNING: Updates to tls-config will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseDetails'] = {}
+    _details['databaseDetails']['infrastructureType'] = database_details_infrastructure_type
+    _details['databaseDetails']['autonomousDatabaseId'] = database_details_autonomous_database_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if tls_config is not None:
+        _details['tlsConfig'] = cli_util.parse_json_parameter("tls_config", tls_config)
+
+    _details['databaseDetails']['databaseType'] = 'AUTONOMOUS_DATABASE'
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.update_peer_target_database(
+        target_database_id=target_database_id,
+        peer_target_database_id=peer_target_database_id,
+        update_peer_target_database_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@peer_target_database_group.command(name=cli_util.override('data_safe.update_peer_target_database_database_cloud_service_details.command_name', 'update-peer-target-database-database-cloud-service-details'), help=u"""Updates one or more attributes of the specified Data Safe peer target database. \n[Command Reference](updatePeerTargetDatabase)""")
+@cli_util.option('--target-database-id', required=True, help=u"""The OCID of the Data Safe target database.""")
+@cli_util.option('--peer-target-database-id', required=True, type=click.INT, help=u"""The unique id of the peer target database.""")
+@cli_util.option('--database-details-infrastructure-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_CLOUD", "CLOUD_AT_CUSTOMER", "ON_PREMISES", "NON_ORACLE_CLOUD"]), help=u"""The infrastructure type the database is running on.""")
+@cli_util.option('--database-details-service-name', required=True, help=u"""The database service name.""")
+@cli_util.option('--display-name', help=u"""The display name of the peer target database in Data Safe.""")
+@cli_util.option('--description', help=u"""The description of the peer target database in Data Safe.""")
+@cli_util.option('--tls-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--database-details-vm-cluster-id', help=u"""The OCID of the VM cluster in which the database is running.""")
+@cli_util.option('--database-details-db-system-id', help=u"""The OCID of the cloud database registered as a target database in Data Safe.""")
+@cli_util.option('--database-details-listener-port', type=click.INT, help=u"""The port number of the database listener.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'tls-config': {'module': 'data_safe', 'class': 'TlsConfig'}})
+@cli_util.wrap_exceptions
+def update_peer_target_database_database_cloud_service_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, peer_target_database_id, database_details_infrastructure_type, database_details_service_name, display_name, description, tls_config, if_match, database_details_vm_cluster_id, database_details_db_system_id, database_details_listener_port):
+
+    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
+
+    if isinstance(peer_target_database_id, six.string_types) and len(peer_target_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --peer-target-database-id cannot be whitespace or empty string')
+    if not force:
+        if tls_config:
+            if not click.confirm("WARNING: Updates to tls-config will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseDetails'] = {}
+    _details['databaseDetails']['infrastructureType'] = database_details_infrastructure_type
+    _details['databaseDetails']['serviceName'] = database_details_service_name
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if tls_config is not None:
+        _details['tlsConfig'] = cli_util.parse_json_parameter("tls_config", tls_config)
+
+    if database_details_vm_cluster_id is not None:
+        _details['databaseDetails']['vmClusterId'] = database_details_vm_cluster_id
+
+    if database_details_db_system_id is not None:
+        _details['databaseDetails']['dbSystemId'] = database_details_db_system_id
+
+    if database_details_listener_port is not None:
+        _details['databaseDetails']['listenerPort'] = database_details_listener_port
+
+    _details['databaseDetails']['databaseType'] = 'DATABASE_CLOUD_SERVICE'
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.update_peer_target_database(
+        target_database_id=target_database_id,
+        peer_target_database_id=peer_target_database_id,
+        update_peer_target_database_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@report_group.command(name=cli_util.override('data_safe.update_report.command_name', 'update'), help=u"""Updates the specified report. Only tags can be updated. \n[Command Reference](updateReport)""")
+@cli_util.option('--report-id', required=True, help=u"""Unique report identifier""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_report(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, report_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(report_id, six.string_types) and len(report_id.strip()) == 0:
+        raise click.UsageError('Parameter --report-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.update_report(
+        report_id=report_id,
+        update_report_details=_details,
         **kwargs
     )
     if wait_for_state:

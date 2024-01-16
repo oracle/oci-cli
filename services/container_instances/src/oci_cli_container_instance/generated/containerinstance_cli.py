@@ -682,6 +682,7 @@ Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return resources with a lifecycleState that matches the given OperationStatus.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeAccepted"]), help=u"""The field to sort by. You can provide one sort order. Default order for timeAccepted is descending.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--resource-id', help=u"""The OCID of the resource affected by the work request.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -689,7 +690,7 @@ Example: `Uocm:PHX-AD-1`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'container_instances', 'class': 'WorkRequestSummaryCollection'})
 @cli_util.wrap_exceptions
-def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, work_request_id, page, limit, availability_domain, status, sort_by, sort_order):
+def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, work_request_id, page, limit, availability_domain, status, sort_by, sort_order, resource_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -711,6 +712,8 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if resource_id is not None:
+        kwargs['resource_id'] = resource_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('container_instances', 'container_instance', ctx)
     if all_pages:
