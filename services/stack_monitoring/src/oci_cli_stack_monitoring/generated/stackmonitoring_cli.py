@@ -46,6 +46,12 @@ def monitored_resource_group():
     pass
 
 
+@click.command(cli_util.override('stack_monitoring.process_set_group.command_name', 'process-set'), cls=CommandGroupWithAlias, help="""The Process Set details.""")
+@cli_util.help_option_group
+def process_set_group():
+    pass
+
+
 @click.command(cli_util.override('stack_monitoring.create_baselineable_metric_details_group.command_name', 'create-baselineable-metric-details'), cls=CommandGroupWithAlias, help="""Summary for the baseline-able metric""")
 @cli_util.help_option_group
 def create_baselineable_metric_details_group():
@@ -79,6 +85,12 @@ def work_request_group():
 @click.command(cli_util.override('stack_monitoring.update_baselineable_metric_details_group.command_name', 'update-baselineable-metric-details'), cls=CommandGroupWithAlias, help="""Summary for the baseline-able metric""")
 @cli_util.help_option_group
 def update_baselineable_metric_details_group():
+    pass
+
+
+@click.command(cli_util.override('stack_monitoring.process_set_collection_group.command_name', 'process-set-collection'), cls=CommandGroupWithAlias, help="""Result of the Process Set fetch.""")
+@cli_util.help_option_group
+def process_set_collection_group():
     pass
 
 
@@ -136,12 +148,14 @@ stack_monitoring_root_group.add_command(baselineable_metric_summary_group)
 stack_monitoring_root_group.add_command(metric_extension_group)
 stack_monitoring_root_group.add_command(discovery_job_collection_group)
 stack_monitoring_root_group.add_command(monitored_resource_group)
+stack_monitoring_root_group.add_command(process_set_group)
 stack_monitoring_root_group.add_command(create_baselineable_metric_details_group)
 stack_monitoring_root_group.add_command(work_request_summary_collection_group)
 stack_monitoring_root_group.add_command(baselineable_metric_group)
 stack_monitoring_root_group.add_command(monitored_resource_type_group)
 stack_monitoring_root_group.add_command(work_request_group)
 stack_monitoring_root_group.add_command(update_baselineable_metric_details_group)
+stack_monitoring_root_group.add_command(process_set_collection_group)
 stack_monitoring_root_group.add_command(monitored_resource_task_group)
 stack_monitoring_root_group.add_command(work_request_error_collection_group)
 stack_monitoring_root_group.add_command(discovery_job_group)
@@ -335,6 +349,37 @@ def change_monitored_resource_task_compartment(ctx, from_json, monitored_resourc
     result = client.change_monitored_resource_task_compartment(
         monitored_resource_task_id=monitored_resource_task_id,
         change_monitored_resource_task_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@process_set_group.command(name=cli_util.override('stack_monitoring.change_process_set_compartment.command_name', 'change-compartment'), help=u"""Moves a ProcessSet resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeProcessSetCompartment)""")
+@cli_util.option('--process-set-id', required=True, help=u"""The Process Set ID""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_process_set_compartment(ctx, from_json, process_set_id, compartment_id, if_match):
+
+    if isinstance(process_set_id, six.string_types) and len(process_set_id.strip()) == 0:
+        raise click.UsageError('Parameter --process-set-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.change_process_set_compartment(
+        process_set_id=process_set_id,
+        change_process_set_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1886,6 +1931,67 @@ def create_monitored_resource_type_system_format_resource_type_metadata_details(
     cli_util.render_response(result, ctx)
 
 
+@process_set_group.command(name=cli_util.override('stack_monitoring.create_process_set.command_name', 'create'), help=u"""API to create Process Set. \n[Command Reference](createProcessSet)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--display-name', required=True, help=u"""Name of the Process Set.""")
+@cli_util.option('--specification', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'specification': {'module': 'stack_monitoring', 'class': 'ProcessSetSpecification'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'specification': {'module': 'stack_monitoring', 'class': 'ProcessSetSpecification'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'stack_monitoring', 'class': 'ProcessSet'})
+@cli_util.wrap_exceptions
+def create_process_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, specification, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['specification'] = cli_util.parse_json_parameter("specification", specification)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.create_process_set(
+        create_process_set_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_process_set') and callable(getattr(client, 'get_process_set')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_process_set(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @baselineable_metric_group.command(name=cli_util.override('stack_monitoring.delete_baselineable_metric.command_name', 'delete'), help=u"""Deletes the Baseline-able metric for the given id \n[Command Reference](deleteBaselineableMetric)""")
 @cli_util.option('--baselineable-metric-id', required=True, help=u"""Identifier for the metric""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2235,6 +2341,70 @@ def delete_monitored_resource_type(ctx, from_json, wait_for_state, max_wait_seco
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, client.get_monitored_resource_type(monitored_resource_type_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@process_set_group.command(name=cli_util.override('stack_monitoring.delete_process_set.command_name', 'delete'), help=u"""Deletes a Process Set \n[Command Reference](deleteProcessSet)""")
+@cli_util.option('--process-set-id', required=True, help=u"""The Process Set ID""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_process_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, process_set_id, if_match):
+
+    if isinstance(process_set_id, six.string_types) and len(process_set_id.strip()) == 0:
+        raise click.UsageError('Parameter --process-set-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.delete_process_set(
+        process_set_id=process_set_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_process_set') and callable(getattr(client, 'get_process_set')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_process_set(process_set_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -2694,6 +2864,28 @@ def get_monitored_resource_type(ctx, from_json, monitored_resource_type_id):
     client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
     result = client.get_monitored_resource_type(
         monitored_resource_type_id=monitored_resource_type_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@process_set_group.command(name=cli_util.override('stack_monitoring.get_process_set.command_name', 'get'), help=u"""API to get the details of a Process Set by identifier. \n[Command Reference](getProcessSet)""")
+@cli_util.option('--process-set-id', required=True, help=u"""The Process Set ID""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'stack_monitoring', 'class': 'ProcessSet'})
+@cli_util.wrap_exceptions
+def get_process_set(ctx, from_json, process_set_id):
+
+    if isinstance(process_set_id, six.string_types) and len(process_set_id.strip()) == 0:
+        raise click.UsageError('Parameter --process-set-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.get_process_set(
+        process_set_id=process_set_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -3220,6 +3412,63 @@ def list_monitored_resources(ctx, from_json, all_pages, page_size, compartment_i
         )
     else:
         result = client.list_monitored_resources(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@process_set_collection_group.command(name=cli_util.override('stack_monitoring.list_process_sets.command_name', 'list-process-sets'), help=u"""API to get the details of all Process Sets. \n[Command Reference](listProcessSets)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which data is listed.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeUpdated", "name"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeUpdated is descending. Default order for name is ascending.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'stack_monitoring', 'class': 'ProcessSetCollection'})
+@cli_util.wrap_exceptions
+def list_process_sets(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_order, sort_by, display_name):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_process_sets,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_process_sets,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_process_sets(
             compartment_id=compartment_id,
             **kwargs
         )
@@ -5461,6 +5710,82 @@ def update_monitored_resource_type_system_format_resource_type_metadata_details(
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_monitored_resource_type(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@process_set_group.command(name=cli_util.override('stack_monitoring.update_process_set.command_name', 'update'), help=u"""API to update a Process Set identified by a given ocid. \n[Command Reference](updateProcessSet)""")
+@cli_util.option('--process-set-id', required=True, help=u"""The Process Set ID""")
+@cli_util.option('--display-name', help=u"""Name of the Process Set.""")
+@cli_util.option('--specification', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'specification': {'module': 'stack_monitoring', 'class': 'ProcessSetSpecification'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'specification': {'module': 'stack_monitoring', 'class': 'ProcessSetSpecification'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'stack_monitoring', 'class': 'ProcessSet'})
+@cli_util.wrap_exceptions
+def update_process_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, process_set_id, display_name, specification, freeform_tags, defined_tags, if_match):
+
+    if isinstance(process_set_id, six.string_types) and len(process_set_id.strip()) == 0:
+        raise click.UsageError('Parameter --process-set-id cannot be whitespace or empty string')
+    if not force:
+        if specification or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to specification and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if specification is not None:
+        _details['specification'] = cli_util.parse_json_parameter("specification", specification)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.update_process_set(
+        process_set_id=process_set_id,
+        update_process_set_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_process_set') and callable(getattr(client, 'get_process_set')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_process_set(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)

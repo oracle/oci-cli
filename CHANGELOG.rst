@@ -6,6 +6,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.37.5 - 2024-01-23
+--------------------
+Added
+~~~~~
+
+* Support for the new Generative AI Service Management
+
+  * ``oci generative-ai``
+
+* Support for Process Sets in Stack Monitoring service
+
+  * ``oci stack-monitoring process-set``
+
 3.37.4 - 2024-01-16
 --------------------
 Added

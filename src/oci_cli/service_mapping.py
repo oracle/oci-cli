@@ -283,6 +283,16 @@ service_mapping = {
         "Fusion Applications Environment Management",
         "Others"
     ],
+    "generative-ai": [
+        "generative_ai",
+        "Generative AI Service Management",
+        "Others"
+    ],
+    "generative-ai-inference": [
+        "generative_ai_inference",
+        "Generative AI Service Inference",
+        "Others"
+    ],
     "goldengate": [
         "golden_gate",
         "GoldenGate",
