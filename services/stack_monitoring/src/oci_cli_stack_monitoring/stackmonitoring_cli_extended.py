@@ -1192,3 +1192,16 @@ def update_metric_extension_sql_update_query_properties_extended(ctx, **kwargs):
         kwargs.pop('out_param_details')
 
     ctx.invoke(stackmonitoring_cli.update_metric_extension_sql_update_query_properties, **kwargs)
+
+
+# oci stack-monitoring process-set-collection list-process-sets -> oci stack-monitoring process-set-collection list
+cli_util.rename_command(stackmonitoring_cli, stackmonitoring_cli.process_set_collection_group, stackmonitoring_cli.list_process_sets, "list")
+
+
+# Remove process-set-collection from oci stack-monitoring
+stackmonitoring_cli.stack_monitoring_root_group.commands.pop(stackmonitoring_cli.process_set_collection_group.name)
+
+
+# oci stack-monitoring process-set-collection list-process-sets -> oci stack-monitoring process-set
+stackmonitoring_cli.process_set_collection_group.commands.pop(stackmonitoring_cli.list_process_sets.name)
+stackmonitoring_cli.process_set_group.add_command(stackmonitoring_cli.list_process_sets)
