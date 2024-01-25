@@ -36,7 +36,7 @@ __ https://docs.oracle.com/iaas/Content/API/SDKDocs/cliusing_topic-Using_Interac
 
 Container Image
 ---------------
-OCI CLI is now available as container images. 
+OCI CLI is now available as container images.
 
 With a standards-compliant container runtime engine, pull and run the latest version of oci-cli from the GitHub Container Registry.
 
@@ -173,7 +173,7 @@ oci-cli is an open source project. See CONTRIBUTING__ for details.
 
 Oracle gratefully acknowledges the contributions to oci-cli that have been made by the community.
 
-__ https://github.com/oracle/oci-cli/blob/master/CONTRIBUTING.rst
+__ https://github.com/oracle/oci-cli/blob/master/CONTRIBUTING.md
 
 
 Known Issues
