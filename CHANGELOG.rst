@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.37.6 - 2024-01-25
+--------------------
+Added
+~~~~~
+* Support for the new Generative AI Service Inference Service 
+
+  * ``oci generative-ai-inference``
+
 3.37.5 - 2024-01-23
 --------------------
 Added
