@@ -750,7 +750,11 @@ def create_view(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @zone_group.command(name=cli_util.override('dns.create_zone.command_name', 'create'), help=u"""Creates a new zone in the specified compartment.
 
 Private zones must have a zone type of `PRIMARY`. Creating a private zone at or under `oraclevcn.com` within the default protected view of a VCN-dedicated resolver is not permitted. \n[Command Reference](createZone)""")
-@cli_util.option('--name', required=True, help=u"""The name of the zone.""")
+@cli_util.option('--name', required=True, help=u"""The name of the zone.
+
+Global zone names must be unique across all other zones within the realm. Private zone names must be unique within their view.
+
+Unicode characters will be converted into punycode, see [RFC 3492].""")
 @cli_util.option('--migration-source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DYNECT"]), help=u"""Discriminator that is used to determine whether to create a new zone (NONE) or to migrate an existing DynECT zone (DYNECT).""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -829,7 +833,11 @@ def create_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @zone_group.command(name=cli_util.override('dns.create_zone_create_zone_details.command_name', 'create-zone-create-zone-details'), help=u"""Creates a new zone in the specified compartment.
 
 Private zones must have a zone type of `PRIMARY`. Creating a private zone at or under `oraclevcn.com` within the default protected view of a VCN-dedicated resolver is not permitted. \n[Command Reference](createZone)""")
-@cli_util.option('--name', required=True, help=u"""The name of the zone.""")
+@cli_util.option('--name', required=True, help=u"""The name of the zone.
+
+Global zone names must be unique across all other zones within the realm. Private zone names must be unique within their view.
+
+Unicode characters will be converted into punycode, see [RFC 3492].""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
  **Example:** `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -928,7 +936,11 @@ def create_zone_create_zone_details(ctx, from_json, wait_for_state, max_wait_sec
 @zone_group.command(name=cli_util.override('dns.create_zone_create_migrated_dynect_zone_details.command_name', 'create-zone-create-migrated-dynect-zone-details'), help=u"""Creates a new zone in the specified compartment.
 
 Private zones must have a zone type of `PRIMARY`. Creating a private zone at or under `oraclevcn.com` within the default protected view of a VCN-dedicated resolver is not permitted. \n[Command Reference](createZone)""")
-@cli_util.option('--name', required=True, help=u"""The name of the zone.""")
+@cli_util.option('--name', required=True, help=u"""The name of the zone.
+
+Global zone names must be unique across all other zones within the realm. Private zone names must be unique within their view.
+
+Unicode characters will be converted into punycode, see [RFC 3492].""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
  **Example:** `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1045,7 +1057,7 @@ When the zone name is provided as a path parameter and `PRIVATE` is used for the
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
-@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the zone is associated with. Required when accessing a private zone by name.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")
@@ -1135,7 +1147,7 @@ When the zone name is provided as a path parameter and `PRIVATE` is used for the
 
 This parameter is deprecated and should be omitted.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
-@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the zone is associated with. Required when accessing a private zone by name.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1466,7 +1478,7 @@ A `204` response indicates that the zone has been successfully deleted. Protecte
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
-@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the zone is associated with. Required when accessing a private zone by name.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")
@@ -1551,7 +1563,7 @@ The results are sorted by `rtype` in alphabetical order by default. You can opti
 @cli_util.option('--zone-version', help=u"""The version of the zone for which data is requested.""")
 @cli_util.option('--rtype', help=u"""Search by record type. Will match any record whose [type] (case-insensitive) equals the provided value.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
-@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the zone is associated with. Required when accessing a private zone by name.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["rtype", "ttl"]), help=u"""The field by which to sort records.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The order to sort the resources.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
@@ -1714,7 +1726,7 @@ The results are sorted by `recordHash` by default. When the zone name is provide
 
 This parameter is deprecated and should be omitted.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
-@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the zone is associated with. Required when accessing a private zone by name.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1919,7 +1931,7 @@ When the zone name is provided as a path parameter and `PRIVATE` is used for the
 @cli_util.option('--if-none-match', help=u"""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
 @cli_util.option('--if-modified-since', help=u"""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
-@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the zone is associated with. Required when accessing a private zone by name.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")
@@ -1959,7 +1971,7 @@ def get_zone(ctx, from_json, zone_name_or_id, if_none_match, if_modified_since, 
 @cli_util.option('--if-none-match', help=u"""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
 @cli_util.option('--if-modified-since', help=u"""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
-@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the zone is associated with. Required when accessing a private zone by name.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2028,7 +2040,7 @@ The results are sorted by `domain` in alphabetical order by default. For more in
 
 This parameter is deprecated and should be omitted.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
-@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the zone is associated with. Required when accessing a private zone by name.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2658,7 +2670,7 @@ This option is a JSON list with items of type RecordOperation.  For documentatio
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
-@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the zone is associated with. Required when accessing a private zone by name.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")
@@ -2715,7 +2727,7 @@ This option is a JSON list with items of type RecordOperation.  For documentatio
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
-@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the zone is associated with. Required when accessing a private zone by name.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")
@@ -2774,7 +2786,7 @@ This option is a JSON list with items of type RecordOperation.  For documentatio
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
-@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the zone is associated with. Required when accessing a private zone by name.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")
@@ -2826,7 +2838,7 @@ This option is a JSON list with items of type RecordDetails.  For documentation 
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
-@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the zone is associated with. Required when accessing a private zone by name.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")
@@ -3129,7 +3141,7 @@ This option is a JSON list with items of type RecordDetails.  For documentation 
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
-@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the zone is associated with. Required when accessing a private zone by name.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")
@@ -3557,7 +3569,7 @@ This option is a JSON list with items of type ExternalDownstream.  For documenta
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
-@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the zone is associated with. Required when accessing a private zone by name.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")
@@ -3648,7 +3660,7 @@ This option is a JSON list with items of type RecordDetails.  For documentation 
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
-@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the zone is associated with. Required when accessing a private zone by name.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the zone belongs to.
 
 This parameter is deprecated and should be omitted.""")

@@ -38,17 +38,20 @@ perfhub_root_group.add_command(managed_database_group)
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--retention', type=click.INT, help=u"""The retention time in minutes. Acceptable values are 0, 1440 to 52596000 (inclusive), and null.""")
 @cli_util.option('--interval', type=click.INT, help=u"""The interval time in minutes. Acceptable values are 0, 10 to 527040 (inclusive), and null.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def modify_snapshot_settings(ctx, from_json, managed_database_id, retention, interval):
+def modify_snapshot_settings(ctx, from_json, managed_database_id, retention, interval, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}

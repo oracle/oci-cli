@@ -6,6 +6,36 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.37.7 - 2024-01-30
+--------------------
+Added
+~~~~~
+* Support for Capacity Management features in OCI Control Center service
+
+  * ``oci capacity-management occ-availability-catalog-collection list``
+  * ``oci capacity-management occ-availability-catalog list``
+  * ``oci capacity-management occ-capacity-request create``
+  * ``oci capacity-management occ-capacity-request delete``
+  * ``oci capacity-management occ-capacity-request get``
+  * ``oci capacity-management occ-capacity-request update``
+
+* Support for Named Credential in the Database Management service
+
+  * ``oci database-management named-credential create``
+  * ``oci database-management named-credential get``
+  * ``oci database-management named-credential list``
+  * ``oci database-management named-credential update``
+  * ``oci database-management named-credential change-compartment``
+  * ``oci database-management named-credential delete``
+  * ``oci database-management managed-database list-users --opc-named-credential-id --managed-database-id``
+
+Modified
+~~~~~~~~
+* Data integration service
+  * Support for REST connectivity with oath2
+    * ``oci data-integration data-asset create``
+
+
 3.37.6 - 2024-01-25
 --------------------
 Added

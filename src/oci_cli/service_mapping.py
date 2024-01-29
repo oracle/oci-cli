@@ -118,6 +118,11 @@ service_mapping = {
         "Block Volume Service",
         "Storage"
     ],
+    "capacity-management": [
+        "capacity_management",
+        "OciControlCenterCp",
+        "Governance & Administration"
+    ],
     "ccc": [
         "compute_cloud_at_customer",
         "Compute Cloud@Customer",

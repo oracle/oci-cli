@@ -45,14 +45,15 @@ sql_tuning_root_group.add_command(sql_tuning_set_group)
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--task-name', required=True, help=u"""The name of the SQL tuning task. The name is unique per user in a database, and it is case-sensitive.""")
 @cli_util.option('--original-task-id', required=True, type=click.INT, help=u"""The identifier of the SQL tuning task being cloned. This is not the [OCID]. It can be retrieved from the following endpoint [ListSqlTuningAdvisorTasks].""")
-@cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--task-description', help=u"""The description of the SQL tuning task.""")
-@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}})
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningTaskReturn'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningTaskReturn'})
 @cli_util.wrap_exceptions
-def clone_sql_tuning_task(ctx, from_json, managed_database_id, task_name, original_task_id, credential_details, task_description):
+def clone_sql_tuning_task(ctx, from_json, managed_database_id, task_name, original_task_id, task_description, credential_details, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -63,10 +64,15 @@ def clone_sql_tuning_task(ctx, from_json, managed_database_id, task_name, origin
     _details = {}
     _details['taskName'] = task_name
     _details['originalTaskId'] = original_task_id
-    _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
 
     if task_description is not None:
         _details['taskDescription'] = task_description
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     client = cli_util.build_client('database_management', 'sql_tuning', ctx)
     result = client.clone_sql_tuning_task(
@@ -85,12 +91,13 @@ def clone_sql_tuning_task(ctx, from_json, managed_database_id, task_name, origin
 @cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credential-details-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
 @cli_util.option('--task-description', help=u"""The description of the SQL tuning task.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlTuningTaskReturn'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningTaskReturn'})
 @cli_util.wrap_exceptions
-def clone_sql_tuning_task_sql_tuning_task_secret_credential_details(ctx, from_json, managed_database_id, task_name, original_task_id, credential_details_username, credential_details_role, credential_details_password_secret_id, task_description):
+def clone_sql_tuning_task_sql_tuning_task_secret_credential_details(ctx, from_json, managed_database_id, task_name, original_task_id, credential_details_username, credential_details_role, credential_details_password_secret_id, task_description, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -108,6 +115,9 @@ def clone_sql_tuning_task_sql_tuning_task_secret_credential_details(ctx, from_js
 
     if task_description is not None:
         _details['taskDescription'] = task_description
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     _details['credentialDetails']['sqlTuningTaskCredentialType'] = 'SECRET'
 
@@ -128,12 +138,13 @@ def clone_sql_tuning_task_sql_tuning_task_secret_credential_details(ctx, from_js
 @cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credential-details-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
 @cli_util.option('--task-description', help=u"""The description of the SQL tuning task.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlTuningTaskReturn'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningTaskReturn'})
 @cli_util.wrap_exceptions
-def clone_sql_tuning_task_sql_tuning_task_password_credential_details(ctx, from_json, managed_database_id, task_name, original_task_id, credential_details_username, credential_details_role, credential_details_password, task_description):
+def clone_sql_tuning_task_sql_tuning_task_password_credential_details(ctx, from_json, managed_database_id, task_name, original_task_id, credential_details_username, credential_details_role, credential_details_password, task_description, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -152,7 +163,155 @@ def clone_sql_tuning_task_sql_tuning_task_password_credential_details(ctx, from_
     if task_description is not None:
         _details['taskDescription'] = task_description
 
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
+
     _details['credentialDetails']['sqlTuningTaskCredentialType'] = 'PASSWORD'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.clone_sql_tuning_task(
+        managed_database_id=managed_database_id,
+        clone_sql_tuning_task_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('sql_tuning.clone_sql_tuning_task_database_secret_credential_details.command_name', 'clone-sql-tuning-task-database-secret-credential-details'), help=u"""Clones and runs a SQL tuning task in the database. \n[Command Reference](cloneSqlTuningTask)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--task-name', required=True, help=u"""The name of the SQL tuning task. The name is unique per user in a database, and it is case-sensitive.""")
+@cli_util.option('--original-task-id', required=True, type=click.INT, help=u"""The identifier of the SQL tuning task being cloned. This is not the [OCID]. It can be retrieved from the following endpoint [ListSqlTuningAdvisorTasks].""")
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--task-description', help=u"""The description of the SQL tuning task.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningTaskReturn'})
+@cli_util.wrap_exceptions
+def clone_sql_tuning_task_database_secret_credential_details(ctx, from_json, managed_database_id, task_name, original_task_id, database_credential_password_secret_id, task_description, credential_details, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['taskName'] = task_name
+    _details['originalTaskId'] = original_task_id
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if task_description is not None:
+        _details['taskDescription'] = task_description
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.clone_sql_tuning_task(
+        managed_database_id=managed_database_id,
+        clone_sql_tuning_task_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('sql_tuning.clone_sql_tuning_task_database_named_credential_details.command_name', 'clone-sql-tuning-task-database-named-credential-details'), help=u"""Clones and runs a SQL tuning task in the database. \n[Command Reference](cloneSqlTuningTask)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--task-name', required=True, help=u"""The name of the SQL tuning task. The name is unique per user in a database, and it is case-sensitive.""")
+@cli_util.option('--original-task-id', required=True, type=click.INT, help=u"""The identifier of the SQL tuning task being cloned. This is not the [OCID]. It can be retrieved from the following endpoint [ListSqlTuningAdvisorTasks].""")
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--task-description', help=u"""The description of the SQL tuning task.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningTaskReturn'})
+@cli_util.wrap_exceptions
+def clone_sql_tuning_task_database_named_credential_details(ctx, from_json, managed_database_id, task_name, original_task_id, database_credential_named_credential_id, task_description, credential_details):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['taskName'] = task_name
+    _details['originalTaskId'] = original_task_id
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if task_description is not None:
+        _details['taskDescription'] = task_description
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.clone_sql_tuning_task(
+        managed_database_id=managed_database_id,
+        clone_sql_tuning_task_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('sql_tuning.clone_sql_tuning_task_database_password_credential_details.command_name', 'clone-sql-tuning-task-database-password-credential-details'), help=u"""Clones and runs a SQL tuning task in the database. \n[Command Reference](cloneSqlTuningTask)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--task-name', required=True, help=u"""The name of the SQL tuning task. The name is unique per user in a database, and it is case-sensitive.""")
+@cli_util.option('--original-task-id', required=True, type=click.INT, help=u"""The identifier of the SQL tuning task being cloned. This is not the [OCID]. It can be retrieved from the following endpoint [ListSqlTuningAdvisorTasks].""")
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--task-description', help=u"""The description of the SQL tuning task.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningTaskReturn'})
+@cli_util.wrap_exceptions
+def clone_sql_tuning_task_database_password_credential_details(ctx, from_json, managed_database_id, task_name, original_task_id, database_credential_password, task_description, credential_details, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['taskName'] = task_name
+    _details['originalTaskId'] = original_task_id
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if task_description is not None:
+        _details['taskDescription'] = task_description
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
 
     client = cli_util.build_client('database_management', 'sql_tuning', ctx)
     result = client.clone_sql_tuning_task(
@@ -165,17 +324,18 @@ def clone_sql_tuning_task_sql_tuning_task_password_credential_details(ctx, from_
 
 @sql_tuning_set_group.command(name=cli_util.override('sql_tuning.create_sql_tuning_set.command_name', 'create'), help=u"""Creates an empty Sql tuning set within the Managed Database specified by managedDatabaseId. \n[Command Reference](createSqlTuningSet)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--name', required=True, help=u"""A unique Sql tuning set name.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--owner', help=u"""Owner of the Sql tuning set.""")
 @cli_util.option('--description', help=u"""The description of the Sql tuning set.""")
 @cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to create the Sql tuning set or just display the plsql used to create Sql tuning set.""")
-@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSet'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSet'})
 @cli_util.wrap_exceptions
-def create_sql_tuning_set(ctx, from_json, managed_database_id, credential_details, name, owner, description, show_sql_only):
+def create_sql_tuning_set(ctx, from_json, managed_database_id, name, credential_details, database_credential, owner, description, show_sql_only):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -184,8 +344,13 @@ def create_sql_tuning_set(ctx, from_json, managed_database_id, credential_detail
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
     _details['name'] = name
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if owner is not None:
         _details['owner'] = owner
@@ -211,15 +376,16 @@ def create_sql_tuning_set(ctx, from_json, managed_database_id, credential_detail
 @cli_util.option('--credential-details-username', required=True, help=u"""The user to connect to the database.""")
 @cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credential-details-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--owner', help=u"""Owner of the Sql tuning set.""")
 @cli_util.option('--description', help=u"""The description of the Sql tuning set.""")
 @cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to create the Sql tuning set or just display the plsql used to create Sql tuning set.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlTuningSet'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSet'})
 @cli_util.wrap_exceptions
-def create_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, from_json, managed_database_id, name, credential_details_username, credential_details_role, credential_details_password, owner, description, show_sql_only):
+def create_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, from_json, managed_database_id, name, credential_details_username, credential_details_role, credential_details_password, database_credential, owner, description, show_sql_only):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -233,6 +399,9 @@ def create_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, 
     _details['credentialDetails']['username'] = credential_details_username
     _details['credentialDetails']['role'] = credential_details_role
     _details['credentialDetails']['password'] = credential_details_password
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if owner is not None:
         _details['owner'] = owner
@@ -260,15 +429,16 @@ def create_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, 
 @cli_util.option('--credential-details-username', required=True, help=u"""The user to connect to the database.""")
 @cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credential-details-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--owner', help=u"""Owner of the Sql tuning set.""")
 @cli_util.option('--description', help=u"""The description of the Sql tuning set.""")
 @cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to create the Sql tuning set or just display the plsql used to create Sql tuning set.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlTuningSet'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSet'})
 @cli_util.wrap_exceptions
-def create_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, from_json, managed_database_id, name, credential_details_username, credential_details_role, credential_details_secret_id, owner, description, show_sql_only):
+def create_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, from_json, managed_database_id, name, credential_details_username, credential_details_role, credential_details_secret_id, database_credential, owner, description, show_sql_only):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -282,6 +452,9 @@ def create_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, fr
     _details['credentialDetails']['username'] = credential_details_username
     _details['credentialDetails']['role'] = credential_details_role
     _details['credentialDetails']['secretId'] = credential_details_secret_id
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if owner is not None:
         _details['owner'] = owner
@@ -303,19 +476,183 @@ def create_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, fr
     cli_util.render_response(result, ctx)
 
 
-@sql_tuning_set_group.command(name=cli_util.override('sql_tuning.drop_sql_tuning_set.command_name', 'drop'), help=u"""Drops the Sql tuning set specified by sqlTuningSet within the Managed Database specified by managedDatabaseId. \n[Command Reference](dropSqlTuningSet)""")
+@sql_tuning_set_group.command(name=cli_util.override('sql_tuning.create_sql_tuning_set_database_secret_credential_details.command_name', 'create-sql-tuning-set-database-secret-credential-details'), help=u"""Creates an empty Sql tuning set within the Managed Database specified by managedDatabaseId. \n[Command Reference](createSqlTuningSet)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--sql-tuning-set-id', required=True, type=click.INT, help=u"""The unique identifier of the Sql tuning set. This is not OCID.""")
-@cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--name', required=True, help=u"""A unique Sql tuning set name.""")
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--owner', help=u"""Owner of the Sql tuning set.""")
-@cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to drop  the Sql tuning set or just display the plsql used to drop Sql tuning set.""")
+@cli_util.option('--description', help=u"""The description of the Sql tuning set.""")
+@cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to create the Sql tuning set or just display the plsql used to create Sql tuning set.""")
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSet'})
 @cli_util.wrap_exceptions
-def drop_sql_tuning_set(ctx, from_json, managed_database_id, sql_tuning_set_id, credential_details, name, owner, show_sql_only):
+def create_sql_tuning_set_database_secret_credential_details(ctx, from_json, managed_database_id, name, database_credential_password_secret_id, credential_details, owner, description, show_sql_only, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['name'] = name
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if owner is not None:
+        _details['owner'] = owner
+
+    if description is not None:
+        _details['description'] = description
+
+    if show_sql_only is not None:
+        _details['showSqlOnly'] = show_sql_only
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.create_sql_tuning_set(
+        managed_database_id=managed_database_id,
+        create_sql_tuning_set_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@sql_tuning_set_group.command(name=cli_util.override('sql_tuning.create_sql_tuning_set_database_named_credential_details.command_name', 'create-sql-tuning-set-database-named-credential-details'), help=u"""Creates an empty Sql tuning set within the Managed Database specified by managedDatabaseId. \n[Command Reference](createSqlTuningSet)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--name', required=True, help=u"""A unique Sql tuning set name.""")
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--owner', help=u"""Owner of the Sql tuning set.""")
+@cli_util.option('--description', help=u"""The description of the Sql tuning set.""")
+@cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to create the Sql tuning set or just display the plsql used to create Sql tuning set.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSet'})
+@cli_util.wrap_exceptions
+def create_sql_tuning_set_database_named_credential_details(ctx, from_json, managed_database_id, name, database_credential_named_credential_id, credential_details, owner, description, show_sql_only):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['name'] = name
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if owner is not None:
+        _details['owner'] = owner
+
+    if description is not None:
+        _details['description'] = description
+
+    if show_sql_only is not None:
+        _details['showSqlOnly'] = show_sql_only
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.create_sql_tuning_set(
+        managed_database_id=managed_database_id,
+        create_sql_tuning_set_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@sql_tuning_set_group.command(name=cli_util.override('sql_tuning.create_sql_tuning_set_database_password_credential_details.command_name', 'create-sql-tuning-set-database-password-credential-details'), help=u"""Creates an empty Sql tuning set within the Managed Database specified by managedDatabaseId. \n[Command Reference](createSqlTuningSet)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--name', required=True, help=u"""A unique Sql tuning set name.""")
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--owner', help=u"""Owner of the Sql tuning set.""")
+@cli_util.option('--description', help=u"""The description of the Sql tuning set.""")
+@cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to create the Sql tuning set or just display the plsql used to create Sql tuning set.""")
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSet'})
+@cli_util.wrap_exceptions
+def create_sql_tuning_set_database_password_credential_details(ctx, from_json, managed_database_id, name, database_credential_password, credential_details, owner, description, show_sql_only, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['name'] = name
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if owner is not None:
+        _details['owner'] = owner
+
+    if description is not None:
+        _details['description'] = description
+
+    if show_sql_only is not None:
+        _details['showSqlOnly'] = show_sql_only
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.create_sql_tuning_set(
+        managed_database_id=managed_database_id,
+        create_sql_tuning_set_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@sql_tuning_set_group.command(name=cli_util.override('sql_tuning.drop_sql_tuning_set.command_name', 'drop'), help=u"""Drops the Sql tuning set specified by sqlTuningSet within the Managed Database specified by managedDatabaseId. \n[Command Reference](dropSqlTuningSet)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--sql-tuning-set-id', required=True, type=click.INT, help=u"""The unique identifier of the Sql tuning set. This is not OCID.""")
+@cli_util.option('--name', required=True, help=u"""A unique Sql tuning set name.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--owner', help=u"""Owner of the Sql tuning set.""")
+@cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to drop  the Sql tuning set or just display the plsql used to drop Sql tuning set.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@cli_util.wrap_exceptions
+def drop_sql_tuning_set(ctx, from_json, managed_database_id, sql_tuning_set_id, name, credential_details, database_credential, owner, show_sql_only):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -327,8 +664,13 @@ def drop_sql_tuning_set(ctx, from_json, managed_database_id, sql_tuning_set_id, 
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
     _details['name'] = name
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if owner is not None:
         _details['owner'] = owner
@@ -353,14 +695,15 @@ def drop_sql_tuning_set(ctx, from_json, managed_database_id, sql_tuning_set_id, 
 @cli_util.option('--credential-details-username', required=True, help=u"""The user to connect to the database.""")
 @cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credential-details-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--owner', help=u"""Owner of the Sql tuning set.""")
 @cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to drop  the Sql tuning set or just display the plsql used to drop Sql tuning set.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
 @cli_util.wrap_exceptions
-def drop_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, credential_details_username, credential_details_role, credential_details_password, owner, show_sql_only):
+def drop_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, credential_details_username, credential_details_role, credential_details_password, database_credential, owner, show_sql_only):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -377,6 +720,9 @@ def drop_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, fr
     _details['credentialDetails']['username'] = credential_details_username
     _details['credentialDetails']['role'] = credential_details_role
     _details['credentialDetails']['password'] = credential_details_password
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if owner is not None:
         _details['owner'] = owner
@@ -403,14 +749,15 @@ def drop_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, fr
 @cli_util.option('--credential-details-username', required=True, help=u"""The user to connect to the database.""")
 @cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credential-details-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--owner', help=u"""Owner of the Sql tuning set.""")
 @cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to drop  the Sql tuning set or just display the plsql used to drop Sql tuning set.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
 @cli_util.wrap_exceptions
-def drop_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, credential_details_username, credential_details_role, credential_details_secret_id, owner, show_sql_only):
+def drop_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, credential_details_username, credential_details_role, credential_details_secret_id, database_credential, owner, show_sql_only):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -427,6 +774,9 @@ def drop_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, from
     _details['credentialDetails']['username'] = credential_details_username
     _details['credentialDetails']['role'] = credential_details_role
     _details['credentialDetails']['secretId'] = credential_details_secret_id
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if owner is not None:
         _details['owner'] = owner
@@ -446,16 +796,183 @@ def drop_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, from
     cli_util.render_response(result, ctx)
 
 
+@sql_tuning_set_group.command(name=cli_util.override('sql_tuning.drop_sql_tuning_set_database_secret_credential_details.command_name', 'drop-sql-tuning-set-database-secret-credential-details'), help=u"""Drops the Sql tuning set specified by sqlTuningSet within the Managed Database specified by managedDatabaseId. \n[Command Reference](dropSqlTuningSet)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--sql-tuning-set-id', required=True, type=click.INT, help=u"""The unique identifier of the Sql tuning set. This is not OCID.""")
+@cli_util.option('--name', required=True, help=u"""A unique Sql tuning set name.""")
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--owner', help=u"""Owner of the Sql tuning set.""")
+@cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to drop  the Sql tuning set or just display the plsql used to drop Sql tuning set.""")
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@cli_util.wrap_exceptions
+def drop_sql_tuning_set_database_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, database_credential_password_secret_id, credential_details, owner, show_sql_only, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['name'] = name
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if owner is not None:
+        _details['owner'] = owner
+
+    if show_sql_only is not None:
+        _details['showSqlOnly'] = show_sql_only
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.drop_sql_tuning_set(
+        managed_database_id=managed_database_id,
+        sql_tuning_set_id=sql_tuning_set_id,
+        drop_sql_tuning_set_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@sql_tuning_set_group.command(name=cli_util.override('sql_tuning.drop_sql_tuning_set_database_named_credential_details.command_name', 'drop-sql-tuning-set-database-named-credential-details'), help=u"""Drops the Sql tuning set specified by sqlTuningSet within the Managed Database specified by managedDatabaseId. \n[Command Reference](dropSqlTuningSet)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--sql-tuning-set-id', required=True, type=click.INT, help=u"""The unique identifier of the Sql tuning set. This is not OCID.""")
+@cli_util.option('--name', required=True, help=u"""A unique Sql tuning set name.""")
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--owner', help=u"""Owner of the Sql tuning set.""")
+@cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to drop  the Sql tuning set or just display the plsql used to drop Sql tuning set.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@cli_util.wrap_exceptions
+def drop_sql_tuning_set_database_named_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, database_credential_named_credential_id, credential_details, owner, show_sql_only):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['name'] = name
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if owner is not None:
+        _details['owner'] = owner
+
+    if show_sql_only is not None:
+        _details['showSqlOnly'] = show_sql_only
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.drop_sql_tuning_set(
+        managed_database_id=managed_database_id,
+        sql_tuning_set_id=sql_tuning_set_id,
+        drop_sql_tuning_set_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@sql_tuning_set_group.command(name=cli_util.override('sql_tuning.drop_sql_tuning_set_database_password_credential_details.command_name', 'drop-sql-tuning-set-database-password-credential-details'), help=u"""Drops the Sql tuning set specified by sqlTuningSet within the Managed Database specified by managedDatabaseId. \n[Command Reference](dropSqlTuningSet)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--sql-tuning-set-id', required=True, type=click.INT, help=u"""The unique identifier of the Sql tuning set. This is not OCID.""")
+@cli_util.option('--name', required=True, help=u"""A unique Sql tuning set name.""")
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--owner', help=u"""Owner of the Sql tuning set.""")
+@cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to drop  the Sql tuning set or just display the plsql used to drop Sql tuning set.""")
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@cli_util.wrap_exceptions
+def drop_sql_tuning_set_database_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, database_credential_password, credential_details, owner, show_sql_only, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['name'] = name
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if owner is not None:
+        _details['owner'] = owner
+
+    if show_sql_only is not None:
+        _details['showSqlOnly'] = show_sql_only
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.drop_sql_tuning_set(
+        managed_database_id=managed_database_id,
+        sql_tuning_set_id=sql_tuning_set_id,
+        drop_sql_tuning_set_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @managed_database_group.command(name=cli_util.override('sql_tuning.drop_sql_tuning_task.command_name', 'drop-sql-tuning-task'), help=u"""Drops a SQL tuning task and its related results from the database. \n[Command Reference](dropSqlTuningTask)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--task-id', required=True, type=click.INT, help=u"""The identifier of the SQL tuning task being dropped. This is not the [OCID]. It can be retrieved from the following endpoint [ListSqlTuningAdvisorTasks].""")
-@cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}})
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def drop_sql_tuning_task(ctx, from_json, managed_database_id, task_id, credential_details):
+def drop_sql_tuning_task(ctx, from_json, managed_database_id, task_id, credential_details, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -465,7 +982,12 @@ def drop_sql_tuning_task(ctx, from_json, managed_database_id, task_id, credentia
 
     _details = {}
     _details['taskId'] = task_id
-    _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     client = cli_util.build_client('database_management', 'sql_tuning', ctx)
     result = client.drop_sql_tuning_task(
@@ -482,12 +1004,13 @@ def drop_sql_tuning_task(ctx, from_json, managed_database_id, task_id, credentia
 @cli_util.option('--credential-details-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credential-details-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def drop_sql_tuning_task_sql_tuning_task_secret_credential_details(ctx, from_json, managed_database_id, task_id, credential_details_username, credential_details_role, credential_details_password_secret_id):
+def drop_sql_tuning_task_sql_tuning_task_secret_credential_details(ctx, from_json, managed_database_id, task_id, credential_details_username, credential_details_role, credential_details_password_secret_id, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -501,6 +1024,9 @@ def drop_sql_tuning_task_sql_tuning_task_secret_credential_details(ctx, from_jso
     _details['credentialDetails']['username'] = credential_details_username
     _details['credentialDetails']['role'] = credential_details_role
     _details['credentialDetails']['passwordSecretId'] = credential_details_password_secret_id
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     _details['credentialDetails']['sqlTuningTaskCredentialType'] = 'SECRET'
 
@@ -519,12 +1045,13 @@ def drop_sql_tuning_task_sql_tuning_task_secret_credential_details(ctx, from_jso
 @cli_util.option('--credential-details-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credential-details-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def drop_sql_tuning_task_sql_tuning_task_password_credential_details(ctx, from_json, managed_database_id, task_id, credential_details_username, credential_details_role, credential_details_password):
+def drop_sql_tuning_task_sql_tuning_task_password_credential_details(ctx, from_json, managed_database_id, task_id, credential_details_username, credential_details_role, credential_details_password, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -539,7 +1066,137 @@ def drop_sql_tuning_task_sql_tuning_task_password_credential_details(ctx, from_j
     _details['credentialDetails']['role'] = credential_details_role
     _details['credentialDetails']['password'] = credential_details_password
 
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
+
     _details['credentialDetails']['sqlTuningTaskCredentialType'] = 'PASSWORD'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.drop_sql_tuning_task(
+        managed_database_id=managed_database_id,
+        drop_sql_tuning_task_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('sql_tuning.drop_sql_tuning_task_database_secret_credential_details.command_name', 'drop-sql-tuning-task-database-secret-credential-details'), help=u"""Drops a SQL tuning task and its related results from the database. \n[Command Reference](dropSqlTuningTask)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--task-id', required=True, type=click.INT, help=u"""The identifier of the SQL tuning task being dropped. This is not the [OCID]. It can be retrieved from the following endpoint [ListSqlTuningAdvisorTasks].""")
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}})
+@cli_util.wrap_exceptions
+def drop_sql_tuning_task_database_secret_credential_details(ctx, from_json, managed_database_id, task_id, database_credential_password_secret_id, credential_details, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['taskId'] = task_id
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.drop_sql_tuning_task(
+        managed_database_id=managed_database_id,
+        drop_sql_tuning_task_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('sql_tuning.drop_sql_tuning_task_database_named_credential_details.command_name', 'drop-sql-tuning-task-database-named-credential-details'), help=u"""Drops a SQL tuning task and its related results from the database. \n[Command Reference](dropSqlTuningTask)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--task-id', required=True, type=click.INT, help=u"""The identifier of the SQL tuning task being dropped. This is not the [OCID]. It can be retrieved from the following endpoint [ListSqlTuningAdvisorTasks].""")
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}})
+@cli_util.wrap_exceptions
+def drop_sql_tuning_task_database_named_credential_details(ctx, from_json, managed_database_id, task_id, database_credential_named_credential_id, credential_details):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['taskId'] = task_id
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.drop_sql_tuning_task(
+        managed_database_id=managed_database_id,
+        drop_sql_tuning_task_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('sql_tuning.drop_sql_tuning_task_database_password_credential_details.command_name', 'drop-sql-tuning-task-database-password-credential-details'), help=u"""Drops a SQL tuning task and its related results from the database. \n[Command Reference](dropSqlTuningTask)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--task-id', required=True, type=click.INT, help=u"""The identifier of the SQL tuning task being dropped. This is not the [OCID]. It can be retrieved from the following endpoint [ListSqlTuningAdvisorTasks].""")
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}})
+@cli_util.wrap_exceptions
+def drop_sql_tuning_task_database_password_credential_details(ctx, from_json, managed_database_id, task_id, database_credential_password, credential_details, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['taskId'] = task_id
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
 
     client = cli_util.build_client('database_management', 'sql_tuning', ctx)
     result = client.drop_sql_tuning_task(
@@ -553,17 +1210,18 @@ def drop_sql_tuning_task_sql_tuning_task_password_credential_details(ctx, from_j
 @sql_tuning_set_group.command(name=cli_util.override('sql_tuning.drop_sqls_in_sql_tuning_set.command_name', 'drop-sqls-in'), help=u"""Deletes the Sqls in the specified Sql tuning set that matches the filter criteria provided in the basicFilter. If basicFilter criteria is not provided, then entire Sqls in the Sql tuning set is deleted. \n[Command Reference](dropSqlsInSqlTuningSet)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--sql-tuning-set-id', required=True, type=click.INT, help=u"""The unique identifier of the Sql tuning set. This is not OCID.""")
-@cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--name', required=True, help=u"""The name of the Sql tuning set.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to drop the Sql statements or just display the plsql used to drop the Sql statements.""")
 @cli_util.option('--owner', help=u"""The owner of the Sql tuning set.""")
 @cli_util.option('--basic-filter', help=u"""Specifies the Sql predicate to filter the Sql from the Sql tuning set defined on attributes of the SQLSET_ROW. User could use any combination of the following columns with appropriate values as Sql predicate Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/18/arpls/DBMS_SQLTUNE.html#GUID-1F4AFB03-7B29-46FC-B3F2-CB01EC36326C""")
-@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
 @cli_util.wrap_exceptions
-def drop_sqls_in_sql_tuning_set(ctx, from_json, managed_database_id, sql_tuning_set_id, credential_details, name, show_sql_only, owner, basic_filter):
+def drop_sqls_in_sql_tuning_set(ctx, from_json, managed_database_id, sql_tuning_set_id, name, credential_details, database_credential, show_sql_only, owner, basic_filter):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -575,8 +1233,13 @@ def drop_sqls_in_sql_tuning_set(ctx, from_json, managed_database_id, sql_tuning_
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
     _details['name'] = name
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if show_sql_only is not None:
         _details['showSqlOnly'] = show_sql_only
@@ -604,15 +1267,16 @@ def drop_sqls_in_sql_tuning_set(ctx, from_json, managed_database_id, sql_tuning_
 @cli_util.option('--credential-details-username', required=True, help=u"""The user to connect to the database.""")
 @cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credential-details-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to drop the Sql statements or just display the plsql used to drop the Sql statements.""")
 @cli_util.option('--owner', help=u"""The owner of the Sql tuning set.""")
 @cli_util.option('--basic-filter', help=u"""Specifies the Sql predicate to filter the Sql from the Sql tuning set defined on attributes of the SQLSET_ROW. User could use any combination of the following columns with appropriate values as Sql predicate Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/18/arpls/DBMS_SQLTUNE.html#GUID-1F4AFB03-7B29-46FC-B3F2-CB01EC36326C""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
 @cli_util.wrap_exceptions
-def drop_sqls_in_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, credential_details_username, credential_details_role, credential_details_password, show_sql_only, owner, basic_filter):
+def drop_sqls_in_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, credential_details_username, credential_details_role, credential_details_password, database_credential, show_sql_only, owner, basic_filter):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -629,6 +1293,9 @@ def drop_sqls_in_sql_tuning_set_sql_tuning_set_admin_password_credential_details
     _details['credentialDetails']['username'] = credential_details_username
     _details['credentialDetails']['role'] = credential_details_role
     _details['credentialDetails']['password'] = credential_details_password
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if show_sql_only is not None:
         _details['showSqlOnly'] = show_sql_only
@@ -658,15 +1325,16 @@ def drop_sqls_in_sql_tuning_set_sql_tuning_set_admin_password_credential_details
 @cli_util.option('--credential-details-username', required=True, help=u"""The user to connect to the database.""")
 @cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credential-details-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to drop the Sql statements or just display the plsql used to drop the Sql statements.""")
 @cli_util.option('--owner', help=u"""The owner of the Sql tuning set.""")
 @cli_util.option('--basic-filter', help=u"""Specifies the Sql predicate to filter the Sql from the Sql tuning set defined on attributes of the SQLSET_ROW. User could use any combination of the following columns with appropriate values as Sql predicate Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/18/arpls/DBMS_SQLTUNE.html#GUID-1F4AFB03-7B29-46FC-B3F2-CB01EC36326C""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
 @cli_util.wrap_exceptions
-def drop_sqls_in_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, credential_details_username, credential_details_role, credential_details_secret_id, show_sql_only, owner, basic_filter):
+def drop_sqls_in_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, credential_details_username, credential_details_role, credential_details_secret_id, database_credential, show_sql_only, owner, basic_filter):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -683,6 +1351,9 @@ def drop_sqls_in_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(c
     _details['credentialDetails']['username'] = credential_details_username
     _details['credentialDetails']['role'] = credential_details_role
     _details['credentialDetails']['secretId'] = credential_details_secret_id
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if show_sql_only is not None:
         _details['showSqlOnly'] = show_sql_only
@@ -705,25 +1376,23 @@ def drop_sqls_in_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(c
     cli_util.render_response(result, ctx)
 
 
-@sql_tuning_set_group.command(name=cli_util.override('sql_tuning.fetch_sql_tuning_set.command_name', 'fetch'), help=u"""Fetch the details of Sql statements in the Sql tuning set specified by name, owner and optional filter parameters. \n[Command Reference](fetchSqlTuningSet)""")
+@sql_tuning_set_group.command(name=cli_util.override('sql_tuning.drop_sqls_in_sql_tuning_set_database_secret_credential_details.command_name', 'drop-sqls-in-sql-tuning-set-database-secret-credential-details'), help=u"""Deletes the Sqls in the specified Sql tuning set that matches the filter criteria provided in the basicFilter. If basicFilter criteria is not provided, then entire Sqls in the Sql tuning set is deleted. \n[Command Reference](dropSqlsInSqlTuningSet)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--sql-tuning-set-id', required=True, type=click.INT, help=u"""The unique identifier of the Sql tuning set. This is not OCID.""")
-@cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--owner', required=True, help=u"""The owner of the Sql tuning set.""")
 @cli_util.option('--name', required=True, help=u"""The name of the Sql tuning set.""")
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to drop the Sql statements or just display the plsql used to drop the Sql statements.""")
+@cli_util.option('--owner', help=u"""The owner of the Sql tuning set.""")
 @cli_util.option('--basic-filter', help=u"""Specifies the Sql predicate to filter the Sql from the Sql tuning set defined on attributes of the SQLSET_ROW. User could use any combination of the following columns with appropriate values as Sql predicate Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/18/arpls/DBMS_SQLTUNE.html#GUID-1F4AFB03-7B29-46FC-B3F2-CB01EC36326C""")
-@cli_util.option('--recursive-sql', type=custom_types.CliCaseInsensitiveChoice(["HAS_RECURSIVE_SQL", "NO_RECURSIVE_SQL"]), help=u"""Specifies that the filter must include recursive Sql in the Sql tuning set.""")
-@cli_util.option('--result-percentage', help=u"""Specifies a filter that picks the top n% according to the supplied ranking measure. Note that this parameter applies only if one ranking measure is supplied.""")
-@cli_util.option('--result-limit', type=click.INT, help=u"""The top limit Sql from the filtered source, ranked by the ranking measure.""")
-@cli_util.option('--ranking-measure1', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
-@cli_util.option('--ranking-measure2', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
-@cli_util.option('--ranking-measure3', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSet'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
 @cli_util.wrap_exceptions
-def fetch_sql_tuning_set(ctx, from_json, managed_database_id, sql_tuning_set_id, credential_details, owner, name, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3):
+def drop_sqls_in_sql_tuning_set_database_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, database_credential_password_secret_id, credential_details, show_sql_only, owner, basic_filter, database_credential_username, database_credential_role):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -735,9 +1404,195 @@ def fetch_sql_tuning_set(ctx, from_json, managed_database_id, sql_tuning_set_id,
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+    _details['databaseCredential'] = {}
+    _details['name'] = name
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if show_sql_only is not None:
+        _details['showSqlOnly'] = show_sql_only
+
+    if owner is not None:
+        _details['owner'] = owner
+
+    if basic_filter is not None:
+        _details['basicFilter'] = basic_filter
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.drop_sqls_in_sql_tuning_set(
+        managed_database_id=managed_database_id,
+        sql_tuning_set_id=sql_tuning_set_id,
+        drop_sqls_in_sql_tuning_set_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@sql_tuning_set_group.command(name=cli_util.override('sql_tuning.drop_sqls_in_sql_tuning_set_database_named_credential_details.command_name', 'drop-sqls-in-sql-tuning-set-database-named-credential-details'), help=u"""Deletes the Sqls in the specified Sql tuning set that matches the filter criteria provided in the basicFilter. If basicFilter criteria is not provided, then entire Sqls in the Sql tuning set is deleted. \n[Command Reference](dropSqlsInSqlTuningSet)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--sql-tuning-set-id', required=True, type=click.INT, help=u"""The unique identifier of the Sql tuning set. This is not OCID.""")
+@cli_util.option('--name', required=True, help=u"""The name of the Sql tuning set.""")
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to drop the Sql statements or just display the plsql used to drop the Sql statements.""")
+@cli_util.option('--owner', help=u"""The owner of the Sql tuning set.""")
+@cli_util.option('--basic-filter', help=u"""Specifies the Sql predicate to filter the Sql from the Sql tuning set defined on attributes of the SQLSET_ROW. User could use any combination of the following columns with appropriate values as Sql predicate Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/18/arpls/DBMS_SQLTUNE.html#GUID-1F4AFB03-7B29-46FC-B3F2-CB01EC36326C""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@cli_util.wrap_exceptions
+def drop_sqls_in_sql_tuning_set_database_named_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, database_credential_named_credential_id, credential_details, show_sql_only, owner, basic_filter):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['name'] = name
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if show_sql_only is not None:
+        _details['showSqlOnly'] = show_sql_only
+
+    if owner is not None:
+        _details['owner'] = owner
+
+    if basic_filter is not None:
+        _details['basicFilter'] = basic_filter
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.drop_sqls_in_sql_tuning_set(
+        managed_database_id=managed_database_id,
+        sql_tuning_set_id=sql_tuning_set_id,
+        drop_sqls_in_sql_tuning_set_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@sql_tuning_set_group.command(name=cli_util.override('sql_tuning.drop_sqls_in_sql_tuning_set_database_password_credential_details.command_name', 'drop-sqls-in-sql-tuning-set-database-password-credential-details'), help=u"""Deletes the Sqls in the specified Sql tuning set that matches the filter criteria provided in the basicFilter. If basicFilter criteria is not provided, then entire Sqls in the Sql tuning set is deleted. \n[Command Reference](dropSqlsInSqlTuningSet)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--sql-tuning-set-id', required=True, type=click.INT, help=u"""The unique identifier of the Sql tuning set. This is not OCID.""")
+@cli_util.option('--name', required=True, help=u"""The name of the Sql tuning set.""")
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to drop the Sql statements or just display the plsql used to drop the Sql statements.""")
+@cli_util.option('--owner', help=u"""The owner of the Sql tuning set.""")
+@cli_util.option('--basic-filter', help=u"""Specifies the Sql predicate to filter the Sql from the Sql tuning set defined on attributes of the SQLSET_ROW. User could use any combination of the following columns with appropriate values as Sql predicate Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/18/arpls/DBMS_SQLTUNE.html#GUID-1F4AFB03-7B29-46FC-B3F2-CB01EC36326C""")
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@cli_util.wrap_exceptions
+def drop_sqls_in_sql_tuning_set_database_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, database_credential_password, credential_details, show_sql_only, owner, basic_filter, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['name'] = name
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if show_sql_only is not None:
+        _details['showSqlOnly'] = show_sql_only
+
+    if owner is not None:
+        _details['owner'] = owner
+
+    if basic_filter is not None:
+        _details['basicFilter'] = basic_filter
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.drop_sqls_in_sql_tuning_set(
+        managed_database_id=managed_database_id,
+        sql_tuning_set_id=sql_tuning_set_id,
+        drop_sqls_in_sql_tuning_set_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@sql_tuning_set_group.command(name=cli_util.override('sql_tuning.fetch_sql_tuning_set.command_name', 'fetch'), help=u"""Fetch the details of Sql statements in the Sql tuning set specified by name, owner and optional filter parameters. \n[Command Reference](fetchSqlTuningSet)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--sql-tuning-set-id', required=True, type=click.INT, help=u"""The unique identifier of the Sql tuning set. This is not OCID.""")
+@cli_util.option('--owner', required=True, help=u"""The owner of the Sql tuning set.""")
+@cli_util.option('--name', required=True, help=u"""The name of the Sql tuning set.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--basic-filter', help=u"""Specifies the Sql predicate to filter the Sql from the Sql tuning set defined on attributes of the SQLSET_ROW. User could use any combination of the following columns with appropriate values as Sql predicate Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/18/arpls/DBMS_SQLTUNE.html#GUID-1F4AFB03-7B29-46FC-B3F2-CB01EC36326C""")
+@cli_util.option('--recursive-sql', type=custom_types.CliCaseInsensitiveChoice(["HAS_RECURSIVE_SQL", "NO_RECURSIVE_SQL"]), help=u"""Specifies that the filter must include recursive Sql in the Sql tuning set.""")
+@cli_util.option('--result-percentage', help=u"""Specifies a filter that picks the top n% according to the supplied ranking measure. Note that this parameter applies only if one ranking measure is supplied.""")
+@cli_util.option('--result-limit', type=click.INT, help=u"""The top limit Sql from the filtered source, ranked by the ranking measure.""")
+@cli_util.option('--ranking-measure1', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--ranking-measure2', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--ranking-measure3', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSet'})
+@cli_util.wrap_exceptions
+def fetch_sql_tuning_set(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, credential_details, database_credential, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
     _details['owner'] = owner
     _details['name'] = name
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if basic_filter is not None:
         _details['basicFilter'] = basic_filter
@@ -778,6 +1633,7 @@ def fetch_sql_tuning_set(ctx, from_json, managed_database_id, sql_tuning_set_id,
 @cli_util.option('--credential-details-username', required=True, help=u"""The user to connect to the database.""")
 @cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credential-details-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--basic-filter', help=u"""Specifies the Sql predicate to filter the Sql from the Sql tuning set defined on attributes of the SQLSET_ROW. User could use any combination of the following columns with appropriate values as Sql predicate Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/18/arpls/DBMS_SQLTUNE.html#GUID-1F4AFB03-7B29-46FC-B3F2-CB01EC36326C""")
 @cli_util.option('--recursive-sql', type=custom_types.CliCaseInsensitiveChoice(["HAS_RECURSIVE_SQL", "NO_RECURSIVE_SQL"]), help=u"""Specifies that the filter must include recursive Sql in the Sql tuning set.""")
 @cli_util.option('--result-percentage', help=u"""Specifies a filter that picks the top n% according to the supplied ranking measure. Note that this parameter applies only if one ranking measure is supplied.""")
@@ -785,12 +1641,12 @@ def fetch_sql_tuning_set(ctx, from_json, managed_database_id, sql_tuning_set_id,
 @cli_util.option('--ranking-measure1', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
 @cli_util.option('--ranking-measure2', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
 @cli_util.option('--ranking-measure3', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlTuningSet'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSet'})
 @cli_util.wrap_exceptions
-def fetch_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, credential_details_username, credential_details_role, credential_details_password, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3):
+def fetch_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, credential_details_username, credential_details_role, credential_details_password, database_credential, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -808,6 +1664,9 @@ def fetch_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, f
     _details['credentialDetails']['username'] = credential_details_username
     _details['credentialDetails']['role'] = credential_details_role
     _details['credentialDetails']['password'] = credential_details_password
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if basic_filter is not None:
         _details['basicFilter'] = basic_filter
@@ -850,6 +1709,7 @@ def fetch_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, f
 @cli_util.option('--credential-details-username', required=True, help=u"""The user to connect to the database.""")
 @cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credential-details-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--basic-filter', help=u"""Specifies the Sql predicate to filter the Sql from the Sql tuning set defined on attributes of the SQLSET_ROW. User could use any combination of the following columns with appropriate values as Sql predicate Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/18/arpls/DBMS_SQLTUNE.html#GUID-1F4AFB03-7B29-46FC-B3F2-CB01EC36326C""")
 @cli_util.option('--recursive-sql', type=custom_types.CliCaseInsensitiveChoice(["HAS_RECURSIVE_SQL", "NO_RECURSIVE_SQL"]), help=u"""Specifies that the filter must include recursive Sql in the Sql tuning set.""")
 @cli_util.option('--result-percentage', help=u"""Specifies a filter that picks the top n% according to the supplied ranking measure. Note that this parameter applies only if one ranking measure is supplied.""")
@@ -857,12 +1717,12 @@ def fetch_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, f
 @cli_util.option('--ranking-measure1', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
 @cli_util.option('--ranking-measure2', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
 @cli_util.option('--ranking-measure3', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlTuningSet'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSet'})
 @cli_util.wrap_exceptions
-def fetch_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, credential_details_username, credential_details_role, credential_details_secret_id, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3):
+def fetch_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, credential_details_username, credential_details_role, credential_details_secret_id, database_credential, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -880,6 +1740,9 @@ def fetch_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, fro
     _details['credentialDetails']['username'] = credential_details_username
     _details['credentialDetails']['role'] = credential_details_role
     _details['credentialDetails']['secretId'] = credential_details_secret_id
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if basic_filter is not None:
         _details['basicFilter'] = basic_filter
@@ -914,17 +1777,250 @@ def fetch_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, fro
     cli_util.render_response(result, ctx)
 
 
+@sql_tuning_set_group.command(name=cli_util.override('sql_tuning.fetch_sql_tuning_set_database_secret_credential_details.command_name', 'fetch-sql-tuning-set-database-secret-credential-details'), help=u"""Fetch the details of Sql statements in the Sql tuning set specified by name, owner and optional filter parameters. \n[Command Reference](fetchSqlTuningSet)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--sql-tuning-set-id', required=True, type=click.INT, help=u"""The unique identifier of the Sql tuning set. This is not OCID.""")
+@cli_util.option('--owner', required=True, help=u"""The owner of the Sql tuning set.""")
+@cli_util.option('--name', required=True, help=u"""The name of the Sql tuning set.""")
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--basic-filter', help=u"""Specifies the Sql predicate to filter the Sql from the Sql tuning set defined on attributes of the SQLSET_ROW. User could use any combination of the following columns with appropriate values as Sql predicate Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/18/arpls/DBMS_SQLTUNE.html#GUID-1F4AFB03-7B29-46FC-B3F2-CB01EC36326C""")
+@cli_util.option('--recursive-sql', type=custom_types.CliCaseInsensitiveChoice(["HAS_RECURSIVE_SQL", "NO_RECURSIVE_SQL"]), help=u"""Specifies that the filter must include recursive Sql in the Sql tuning set.""")
+@cli_util.option('--result-percentage', help=u"""Specifies a filter that picks the top n% according to the supplied ranking measure. Note that this parameter applies only if one ranking measure is supplied.""")
+@cli_util.option('--result-limit', type=click.INT, help=u"""The top limit Sql from the filtered source, ranked by the ranking measure.""")
+@cli_util.option('--ranking-measure1', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--ranking-measure2', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--ranking-measure3', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSet'})
+@cli_util.wrap_exceptions
+def fetch_sql_tuning_set_database_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, database_credential_password_secret_id, credential_details, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['owner'] = owner
+    _details['name'] = name
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if basic_filter is not None:
+        _details['basicFilter'] = basic_filter
+
+    if recursive_sql is not None:
+        _details['recursiveSql'] = recursive_sql
+
+    if result_percentage is not None:
+        _details['resultPercentage'] = result_percentage
+
+    if result_limit is not None:
+        _details['resultLimit'] = result_limit
+
+    if ranking_measure1 is not None:
+        _details['rankingMeasure1'] = ranking_measure1
+
+    if ranking_measure2 is not None:
+        _details['rankingMeasure2'] = ranking_measure2
+
+    if ranking_measure3 is not None:
+        _details['rankingMeasure3'] = ranking_measure3
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.fetch_sql_tuning_set(
+        managed_database_id=managed_database_id,
+        sql_tuning_set_id=sql_tuning_set_id,
+        fetch_sql_tuning_set_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@sql_tuning_set_group.command(name=cli_util.override('sql_tuning.fetch_sql_tuning_set_database_named_credential_details.command_name', 'fetch-sql-tuning-set-database-named-credential-details'), help=u"""Fetch the details of Sql statements in the Sql tuning set specified by name, owner and optional filter parameters. \n[Command Reference](fetchSqlTuningSet)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--sql-tuning-set-id', required=True, type=click.INT, help=u"""The unique identifier of the Sql tuning set. This is not OCID.""")
+@cli_util.option('--owner', required=True, help=u"""The owner of the Sql tuning set.""")
+@cli_util.option('--name', required=True, help=u"""The name of the Sql tuning set.""")
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--basic-filter', help=u"""Specifies the Sql predicate to filter the Sql from the Sql tuning set defined on attributes of the SQLSET_ROW. User could use any combination of the following columns with appropriate values as Sql predicate Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/18/arpls/DBMS_SQLTUNE.html#GUID-1F4AFB03-7B29-46FC-B3F2-CB01EC36326C""")
+@cli_util.option('--recursive-sql', type=custom_types.CliCaseInsensitiveChoice(["HAS_RECURSIVE_SQL", "NO_RECURSIVE_SQL"]), help=u"""Specifies that the filter must include recursive Sql in the Sql tuning set.""")
+@cli_util.option('--result-percentage', help=u"""Specifies a filter that picks the top n% according to the supplied ranking measure. Note that this parameter applies only if one ranking measure is supplied.""")
+@cli_util.option('--result-limit', type=click.INT, help=u"""The top limit Sql from the filtered source, ranked by the ranking measure.""")
+@cli_util.option('--ranking-measure1', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--ranking-measure2', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--ranking-measure3', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSet'})
+@cli_util.wrap_exceptions
+def fetch_sql_tuning_set_database_named_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, database_credential_named_credential_id, credential_details, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['owner'] = owner
+    _details['name'] = name
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if basic_filter is not None:
+        _details['basicFilter'] = basic_filter
+
+    if recursive_sql is not None:
+        _details['recursiveSql'] = recursive_sql
+
+    if result_percentage is not None:
+        _details['resultPercentage'] = result_percentage
+
+    if result_limit is not None:
+        _details['resultLimit'] = result_limit
+
+    if ranking_measure1 is not None:
+        _details['rankingMeasure1'] = ranking_measure1
+
+    if ranking_measure2 is not None:
+        _details['rankingMeasure2'] = ranking_measure2
+
+    if ranking_measure3 is not None:
+        _details['rankingMeasure3'] = ranking_measure3
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.fetch_sql_tuning_set(
+        managed_database_id=managed_database_id,
+        sql_tuning_set_id=sql_tuning_set_id,
+        fetch_sql_tuning_set_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@sql_tuning_set_group.command(name=cli_util.override('sql_tuning.fetch_sql_tuning_set_database_password_credential_details.command_name', 'fetch-sql-tuning-set-database-password-credential-details'), help=u"""Fetch the details of Sql statements in the Sql tuning set specified by name, owner and optional filter parameters. \n[Command Reference](fetchSqlTuningSet)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--sql-tuning-set-id', required=True, type=click.INT, help=u"""The unique identifier of the Sql tuning set. This is not OCID.""")
+@cli_util.option('--owner', required=True, help=u"""The owner of the Sql tuning set.""")
+@cli_util.option('--name', required=True, help=u"""The name of the Sql tuning set.""")
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--basic-filter', help=u"""Specifies the Sql predicate to filter the Sql from the Sql tuning set defined on attributes of the SQLSET_ROW. User could use any combination of the following columns with appropriate values as Sql predicate Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/18/arpls/DBMS_SQLTUNE.html#GUID-1F4AFB03-7B29-46FC-B3F2-CB01EC36326C""")
+@cli_util.option('--recursive-sql', type=custom_types.CliCaseInsensitiveChoice(["HAS_RECURSIVE_SQL", "NO_RECURSIVE_SQL"]), help=u"""Specifies that the filter must include recursive Sql in the Sql tuning set.""")
+@cli_util.option('--result-percentage', help=u"""Specifies a filter that picks the top n% according to the supplied ranking measure. Note that this parameter applies only if one ranking measure is supplied.""")
+@cli_util.option('--result-limit', type=click.INT, help=u"""The top limit Sql from the filtered source, ranked by the ranking measure.""")
+@cli_util.option('--ranking-measure1', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--ranking-measure2', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--ranking-measure3', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSet'})
+@cli_util.wrap_exceptions
+def fetch_sql_tuning_set_database_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, database_credential_password, credential_details, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['owner'] = owner
+    _details['name'] = name
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if basic_filter is not None:
+        _details['basicFilter'] = basic_filter
+
+    if recursive_sql is not None:
+        _details['recursiveSql'] = recursive_sql
+
+    if result_percentage is not None:
+        _details['resultPercentage'] = result_percentage
+
+    if result_limit is not None:
+        _details['resultLimit'] = result_limit
+
+    if ranking_measure1 is not None:
+        _details['rankingMeasure1'] = ranking_measure1
+
+    if ranking_measure2 is not None:
+        _details['rankingMeasure2'] = ranking_measure2
+
+    if ranking_measure3 is not None:
+        _details['rankingMeasure3'] = ranking_measure3
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.fetch_sql_tuning_set(
+        managed_database_id=managed_database_id,
+        sql_tuning_set_id=sql_tuning_set_id,
+        fetch_sql_tuning_set_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @managed_database_group.command(name=cli_util.override('sql_tuning.get_execution_plan_stats_comparision.command_name', 'get-execution-plan-stats-comparision'), help=u"""Retrieves a comparison of the existing SQL execution plan and a new plan. A SQL tuning task may suggest a new execution plan for a SQL, and this API retrieves the comparison report of the statistics of the two plans. \n[Command Reference](getExecutionPlanStatsComparision)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--sql-tuning-advisor-task-id', required=True, type=click.INT, help=u"""The SQL tuning task identifier. This is not the [OCID].""")
 @cli_util.option('--sql-object-id', required=True, type=click.INT, help=u"""The SQL object ID for the SQL tuning task. This is not the [OCID].""")
 @cli_util.option('--execution-id', required=True, type=click.INT, help=u"""The execution ID for an execution of a SQL tuning task. This is not the [OCID].""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExecutionPlanStatsComparision'})
 @cli_util.wrap_exceptions
-def get_execution_plan_stats_comparision(ctx, from_json, managed_database_id, sql_tuning_advisor_task_id, sql_object_id, execution_id):
+def get_execution_plan_stats_comparision(ctx, from_json, managed_database_id, sql_tuning_advisor_task_id, sql_object_id, execution_id, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -933,6 +2029,8 @@ def get_execution_plan_stats_comparision(ctx, from_json, managed_database_id, sq
         raise click.UsageError('Parameter --sql-tuning-advisor-task-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'sql_tuning', ctx)
     result = client.get_execution_plan_stats_comparision(
@@ -950,12 +2048,13 @@ def get_execution_plan_stats_comparision(ctx, from_json, managed_database_id, sq
 @cli_util.option('--sql-tuning-advisor-task-id', required=True, type=click.INT, help=u"""The SQL tuning task identifier. This is not the [OCID].""")
 @cli_util.option('--sql-object-id', required=True, type=click.INT, help=u"""The SQL object ID for the SQL tuning task. This is not the [OCID].""")
 @cli_util.option('--attribute', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORIGINAL", "ORIGINAL_WITH_ADJUSTED_COST", "USING_SQL_PROFILE", "USING_NEW_INDICES", "USING_PARALLEL_EXECUTION"]), help=u"""The attribute of the SQL execution plan.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlTuningAdvisorTaskSqlExecutionPlan'})
 @cli_util.wrap_exceptions
-def get_sql_execution_plan(ctx, from_json, managed_database_id, sql_tuning_advisor_task_id, sql_object_id, attribute):
+def get_sql_execution_plan(ctx, from_json, managed_database_id, sql_tuning_advisor_task_id, sql_object_id, attribute, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -964,6 +2063,8 @@ def get_sql_execution_plan(ctx, from_json, managed_database_id, sql_tuning_advis
         raise click.UsageError('Parameter --sql-tuning-advisor-task-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'sql_tuning', ctx)
     result = client.get_sql_execution_plan(
@@ -984,12 +2085,13 @@ def get_sql_execution_plan(ctx, from_json, managed_database_id, sql_tuning_advis
 @cli_util.option('--time-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional less than or equal to query parameter to filter the timestamp. This is applicable only for Auto SQL Tuning tasks.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--begin-exec-id-greater-than-or-equal-to', type=click.INT, help=u"""The optional greater than or equal to filter on the execution ID related to a specific SQL Tuning Advisor task. This is applicable only for Auto SQL Tuning tasks.""")
 @cli_util.option('--end-exec-id-less-than-or-equal-to', type=click.INT, help=u"""The optional less than or equal to query parameter to filter on the execution ID related to a specific SQL Tuning Advisor task. This is applicable only for Auto SQL Tuning tasks.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlTuningAdvisorTaskSummaryReport'})
 @cli_util.wrap_exceptions
-def get_sql_tuning_advisor_task_summary_report(ctx, from_json, managed_database_id, sql_tuning_advisor_task_id, search_period, time_greater_than_or_equal_to, time_less_than_or_equal_to, begin_exec_id_greater_than_or_equal_to, end_exec_id_less_than_or_equal_to):
+def get_sql_tuning_advisor_task_summary_report(ctx, from_json, managed_database_id, sql_tuning_advisor_task_id, search_period, time_greater_than_or_equal_to, time_less_than_or_equal_to, begin_exec_id_greater_than_or_equal_to, end_exec_id_less_than_or_equal_to, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -1008,6 +2110,8 @@ def get_sql_tuning_advisor_task_summary_report(ctx, from_json, managed_database_
         kwargs['begin_exec_id_greater_than_or_equal_to'] = begin_exec_id_greater_than_or_equal_to
     if end_exec_id_less_than_or_equal_to is not None:
         kwargs['end_exec_id_less_than_or_equal_to'] = end_exec_id_less_than_or_equal_to
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'sql_tuning', ctx)
     result = client.get_sql_tuning_advisor_task_summary_report(
@@ -1031,6 +2135,7 @@ def get_sql_tuning_advisor_task_summary_report(ctx, from_json, managed_database_
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the default order.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1038,7 +2143,7 @@ def get_sql_tuning_advisor_task_summary_report(ctx, from_json, managed_database_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlTuningAdvisorTaskFindingCollection'})
 @cli_util.wrap_exceptions
-def list_sql_tuning_advisor_task_findings(ctx, from_json, all_pages, page_size, managed_database_id, sql_tuning_advisor_task_id, begin_exec_id, end_exec_id, search_period, finding_filter, stats_hash_filter, index_hash_filter, sort_by, sort_order, page, limit):
+def list_sql_tuning_advisor_task_findings(ctx, from_json, all_pages, page_size, managed_database_id, sql_tuning_advisor_task_id, begin_exec_id, end_exec_id, search_period, finding_filter, stats_hash_filter, index_hash_filter, sort_by, sort_order, page, limit, opc_named_credential_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1070,6 +2175,8 @@ def list_sql_tuning_advisor_task_findings(ctx, from_json, all_pages, page_size, 
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'sql_tuning', ctx)
     if all_pages:
@@ -1109,6 +2216,7 @@ def list_sql_tuning_advisor_task_findings(ctx, from_json, all_pages, page_size, 
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the default order.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1116,7 +2224,7 @@ def list_sql_tuning_advisor_task_findings(ctx, from_json, all_pages, page_size, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlTuningAdvisorTaskRecommendationCollection'})
 @cli_util.wrap_exceptions
-def list_sql_tuning_advisor_task_recommendations(ctx, from_json, all_pages, page_size, managed_database_id, sql_tuning_advisor_task_id, sql_object_id, execution_id, sort_by, sort_order, page, limit):
+def list_sql_tuning_advisor_task_recommendations(ctx, from_json, all_pages, page_size, managed_database_id, sql_tuning_advisor_task_id, sql_object_id, execution_id, sort_by, sort_order, page, limit, opc_named_credential_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1136,6 +2244,8 @@ def list_sql_tuning_advisor_task_recommendations(ctx, from_json, all_pages, page
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'sql_tuning', ctx)
     if all_pages:
@@ -1182,6 +2292,7 @@ def list_sql_tuning_advisor_task_recommendations(ctx, from_json, all_pages, page
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME", "START_TIME"]), help=u"""The option to sort the SQL Tuning Advisor task summary data.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the default order.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1189,7 +2300,7 @@ def list_sql_tuning_advisor_task_recommendations(ctx, from_json, all_pages, page
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlTuningAdvisorTaskCollection'})
 @cli_util.wrap_exceptions
-def list_sql_tuning_advisor_tasks(ctx, from_json, all_pages, page_size, managed_database_id, name, status, time_greater_than_or_equal_to, time_less_than_or_equal_to, page, limit, sort_by, sort_order):
+def list_sql_tuning_advisor_tasks(ctx, from_json, all_pages, page_size, managed_database_id, name, status, time_greater_than_or_equal_to, time_less_than_or_equal_to, page, limit, sort_by, sort_order, opc_named_credential_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1214,6 +2325,8 @@ def list_sql_tuning_advisor_tasks(ctx, from_json, all_pages, page_size, managed_
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'sql_tuning', ctx)
     if all_pages:
@@ -1249,6 +2362,7 @@ def list_sql_tuning_advisor_tasks(ctx, from_json, all_pages, page_size, managed_
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1256,7 +2370,7 @@ def list_sql_tuning_advisor_tasks(ctx, from_json, all_pages, page_size, managed_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlTuningSetCollection'})
 @cli_util.wrap_exceptions
-def list_sql_tuning_sets(ctx, from_json, all_pages, page_size, managed_database_id, owner, name_contains, sort_by, sort_order, page, limit):
+def list_sql_tuning_sets(ctx, from_json, all_pages, page_size, managed_database_id, owner, name_contains, sort_by, sort_order, page, limit, opc_named_credential_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1277,6 +2391,8 @@ def list_sql_tuning_sets(ctx, from_json, all_pages, page_size, managed_database_
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'sql_tuning', ctx)
     if all_pages:
@@ -1307,9 +2423,10 @@ def list_sql_tuning_sets(ctx, from_json, all_pages, page_size, managed_database_
 @sql_tuning_set_group.command(name=cli_util.override('sql_tuning.load_sql_tuning_set.command_name', 'load'), help=u"""Load Sql statements into the Sql tuning set specified by name and optional filter parameters within the Managed Database specified by managedDatabaseId. \n[Command Reference](loadSqlTuningSet)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--sql-tuning-set-id', required=True, type=click.INT, help=u"""The unique identifier of the Sql tuning set. This is not OCID.""")
-@cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--name', required=True, help=u"""The name of the Sql tuning set.""")
 @cli_util.option('--load-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["INCREMENTAL_CURSOR_CACHE", "CURRENT_CURSOR_CACHE", "AWR"]), help=u"""Specifies the loading method into the Sql tuning set.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to create the Sql tuning set or just display the plsql used to create Sql tuning set.""")
 @cli_util.option('--owner', help=u"""The owner of the Sql tuning set.""")
 @cli_util.option('--basic-filter', help=u"""Specifies the Sql predicate to filter the Sql from the Sql tuning set defined on attributes of the SQLSET_ROW. User could use any combination of the following columns with appropriate values as Sql predicate Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/18/arpls/DBMS_SQLTUNE.html#GUID-1F4AFB03-7B29-46FC-B3F2-CB01EC36326C""")
@@ -1333,12 +2450,12 @@ def list_sql_tuning_sets(ctx, from_json, all_pages, page_size, managed_database_
 @cli_util.option('--begin-snapshot', type=click.INT, help=u"""Defines the beginning AWR snapshot (non-inclusive).""")
 @cli_util.option('--end-snapshot', type=click.INT, help=u"""Defines the ending AWR snapshot (inclusive).""")
 @cli_util.option('--baseline-name', help=u"""Specifies the name of the AWR baseline period. When loading the sql statements from AWR, following inputs has to be provided: beginSnapshot and endSnapshot OR baselineName""")
-@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
 @cli_util.wrap_exceptions
-def load_sql_tuning_set(ctx, from_json, managed_database_id, sql_tuning_set_id, credential_details, name, load_type, show_sql_only, owner, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, total_time_limit, repeat_interval, capture_option, capture_mode, attribute_list, load_option, update_option, update_attributes, update_condition, is_ignore_null, commit_rows, begin_snapshot, end_snapshot, baseline_name):
+def load_sql_tuning_set(ctx, from_json, managed_database_id, sql_tuning_set_id, name, load_type, credential_details, database_credential, show_sql_only, owner, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, total_time_limit, repeat_interval, capture_option, capture_mode, attribute_list, load_option, update_option, update_attributes, update_condition, is_ignore_null, commit_rows, begin_snapshot, end_snapshot, baseline_name):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -1350,9 +2467,14 @@ def load_sql_tuning_set(ctx, from_json, managed_database_id, sql_tuning_set_id, 
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
     _details['name'] = name
     _details['loadType'] = load_type
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if show_sql_only is not None:
         _details['showSqlOnly'] = show_sql_only
@@ -1441,6 +2563,7 @@ def load_sql_tuning_set(ctx, from_json, managed_database_id, sql_tuning_set_id, 
 @cli_util.option('--credential-details-username', required=True, help=u"""The user to connect to the database.""")
 @cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credential-details-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to create the Sql tuning set or just display the plsql used to create Sql tuning set.""")
 @cli_util.option('--owner', help=u"""The owner of the Sql tuning set.""")
 @cli_util.option('--basic-filter', help=u"""Specifies the Sql predicate to filter the Sql from the Sql tuning set defined on attributes of the SQLSET_ROW. User could use any combination of the following columns with appropriate values as Sql predicate Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/18/arpls/DBMS_SQLTUNE.html#GUID-1F4AFB03-7B29-46FC-B3F2-CB01EC36326C""")
@@ -1464,12 +2587,12 @@ def load_sql_tuning_set(ctx, from_json, managed_database_id, sql_tuning_set_id, 
 @cli_util.option('--begin-snapshot', type=click.INT, help=u"""Defines the beginning AWR snapshot (non-inclusive).""")
 @cli_util.option('--end-snapshot', type=click.INT, help=u"""Defines the ending AWR snapshot (inclusive).""")
 @cli_util.option('--baseline-name', help=u"""Specifies the name of the AWR baseline period. When loading the sql statements from AWR, following inputs has to be provided: beginSnapshot and endSnapshot OR baselineName""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
 @cli_util.wrap_exceptions
-def load_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, load_type, credential_details_username, credential_details_role, credential_details_password, show_sql_only, owner, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, total_time_limit, repeat_interval, capture_option, capture_mode, attribute_list, load_option, update_option, update_attributes, update_condition, is_ignore_null, commit_rows, begin_snapshot, end_snapshot, baseline_name):
+def load_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, load_type, credential_details_username, credential_details_role, credential_details_password, database_credential, show_sql_only, owner, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, total_time_limit, repeat_interval, capture_option, capture_mode, attribute_list, load_option, update_option, update_attributes, update_condition, is_ignore_null, commit_rows, begin_snapshot, end_snapshot, baseline_name):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -1487,6 +2610,9 @@ def load_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, fr
     _details['credentialDetails']['username'] = credential_details_username
     _details['credentialDetails']['role'] = credential_details_role
     _details['credentialDetails']['password'] = credential_details_password
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if show_sql_only is not None:
         _details['showSqlOnly'] = show_sql_only
@@ -1577,6 +2703,7 @@ def load_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, fr
 @cli_util.option('--credential-details-username', required=True, help=u"""The user to connect to the database.""")
 @cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credential-details-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to create the Sql tuning set or just display the plsql used to create Sql tuning set.""")
 @cli_util.option('--owner', help=u"""The owner of the Sql tuning set.""")
 @cli_util.option('--basic-filter', help=u"""Specifies the Sql predicate to filter the Sql from the Sql tuning set defined on attributes of the SQLSET_ROW. User could use any combination of the following columns with appropriate values as Sql predicate Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/18/arpls/DBMS_SQLTUNE.html#GUID-1F4AFB03-7B29-46FC-B3F2-CB01EC36326C""")
@@ -1600,12 +2727,12 @@ def load_sql_tuning_set_sql_tuning_set_admin_password_credential_details(ctx, fr
 @cli_util.option('--begin-snapshot', type=click.INT, help=u"""Defines the beginning AWR snapshot (non-inclusive).""")
 @cli_util.option('--end-snapshot', type=click.INT, help=u"""Defines the ending AWR snapshot (inclusive).""")
 @cli_util.option('--baseline-name', help=u"""Specifies the name of the AWR baseline period. When loading the sql statements from AWR, following inputs has to be provided: beginSnapshot and endSnapshot OR baselineName""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
 @cli_util.wrap_exceptions
-def load_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, load_type, credential_details_username, credential_details_role, credential_details_secret_id, show_sql_only, owner, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, total_time_limit, repeat_interval, capture_option, capture_mode, attribute_list, load_option, update_option, update_attributes, update_condition, is_ignore_null, commit_rows, begin_snapshot, end_snapshot, baseline_name):
+def load_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, load_type, credential_details_username, credential_details_role, credential_details_secret_id, database_credential, show_sql_only, owner, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, total_time_limit, repeat_interval, capture_option, capture_mode, attribute_list, load_option, update_option, update_attributes, update_condition, is_ignore_null, commit_rows, begin_snapshot, end_snapshot, baseline_name):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -1623,6 +2750,9 @@ def load_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, from
     _details['credentialDetails']['username'] = credential_details_username
     _details['credentialDetails']['role'] = credential_details_role
     _details['credentialDetails']['secretId'] = credential_details_secret_id
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if show_sql_only is not None:
         _details['showSqlOnly'] = show_sql_only
@@ -1705,13 +2835,438 @@ def load_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, from
     cli_util.render_response(result, ctx)
 
 
+@sql_tuning_set_group.command(name=cli_util.override('sql_tuning.load_sql_tuning_set_database_secret_credential_details.command_name', 'load-sql-tuning-set-database-secret-credential-details'), help=u"""Load Sql statements into the Sql tuning set specified by name and optional filter parameters within the Managed Database specified by managedDatabaseId. \n[Command Reference](loadSqlTuningSet)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--sql-tuning-set-id', required=True, type=click.INT, help=u"""The unique identifier of the Sql tuning set. This is not OCID.""")
+@cli_util.option('--name', required=True, help=u"""The name of the Sql tuning set.""")
+@cli_util.option('--load-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["INCREMENTAL_CURSOR_CACHE", "CURRENT_CURSOR_CACHE", "AWR"]), help=u"""Specifies the loading method into the Sql tuning set.""")
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to create the Sql tuning set or just display the plsql used to create Sql tuning set.""")
+@cli_util.option('--owner', help=u"""The owner of the Sql tuning set.""")
+@cli_util.option('--basic-filter', help=u"""Specifies the Sql predicate to filter the Sql from the Sql tuning set defined on attributes of the SQLSET_ROW. User could use any combination of the following columns with appropriate values as Sql predicate Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/18/arpls/DBMS_SQLTUNE.html#GUID-1F4AFB03-7B29-46FC-B3F2-CB01EC36326C""")
+@cli_util.option('--recursive-sql', type=custom_types.CliCaseInsensitiveChoice(["HAS_RECURSIVE_SQL", "NO_RECURSIVE_SQL"]), help=u"""Specifies that the filter must include recursive Sql in the Sql tuning set.""")
+@cli_util.option('--result-percentage', help=u"""Specifies a filter that picks the top n% according to the supplied ranking measure. Note that this parameter applies only if one ranking measure is supplied.""")
+@cli_util.option('--result-limit', type=click.INT, help=u"""The top limit Sql from the filtered source, ranked by the ranking measure.""")
+@cli_util.option('--ranking-measure1', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--ranking-measure2', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--ranking-measure3', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--total-time-limit', type=click.INT, help=u"""Defines the total amount of time, in seconds, to execute.""")
+@cli_util.option('--repeat-interval', type=click.INT, help=u"""Defines the amount of time, in seconds, to pause between sampling.""")
+@cli_util.option('--capture-option', type=custom_types.CliCaseInsensitiveChoice(["INSERT", "UPDATE", "MERGE"]), help=u"""Specifies whether to insert new statements, update existing statements, or both.""")
+@cli_util.option('--capture-mode', type=custom_types.CliCaseInsensitiveChoice(["MODE_REPLACE_OLD_STATS", "MODE_ACCUMULATE_STATS"]), help=u"""Specifies the capture mode. Note that this parameter is applicable only for UPDATE and MERGE capture options. Capture mode can take one of the following values  - MODE_REPLACE_OLD_STATS      Replaces statistics when the number of executions is greater than the number stored in the Sql tuning set  - MODE_ACCUMULATE_STATS      Adds new values to current values for Sql that is already stored.      Note that this mode detects if a statement has been aged out, so the final value for a statistics is the sum of the statistics of all cursors that statement existed under.""")
+@cli_util.option('--attribute-list', help=u"""Specifies the list of Sql statement attributes to return in the result. Note that this parameter cannot be made an enum since custom value can take a list of comma separated attribute names. Attribute list can take one of the following values.  TYPICAL - Specifies BASIC plus Sql plan (without row source statistics) and without object reference list (default).  BASIC - Specifies all attributes (such as execution statistics and binds) except the plans. The execution context is always part of the result.  ALL - Specifies all attributes.  CUSTOM - Comma-separated list of the following attribute names.           - EXECUTION_STATISTICS           - BIND_LIST           - OBJECT_LIST           - SQL_PLAN           - SQL_PLAN_STATISTICS Usage examples:   1. \"attributeList\": \"TYPICAL\"   2. \"attributeList\": \"ALL\"   3. \"attributeList\": \"EXECUTION_STATISTICS,OBJECT_LIST,SQL_PLAN\"""")
+@cli_util.option('--load-option', type=custom_types.CliCaseInsensitiveChoice(["INSERT", "UPDATE", "MERGE"]), help=u"""Specifies which statements are loaded into the Sql tuning set. The possible values are.  - INSERT (default)       Adds only new statements.  - UPDATE       Updates existing the Sql statements and ignores any new statements.  - MERGE       Inserts new statements and updates the information of the existing ones.""")
+@cli_util.option('--update-option', type=custom_types.CliCaseInsensitiveChoice(["REPLACE", "ACCUMULATE"]), help=u"""Specifies how existing Sql statements are updated. This parameter is applicable only if load_option is specified with UPDATE or MERGE as an option. Update option can take one of the following values.    REPLACE (default) - Updates the statement using the new statistics, bind list, object list, and so on.    ACCUMULATE - Combines attributes when possible (for example, statistics such as elapsed_time), otherwise replaces the existing values (for example, module and action) with the provided values.    Following Sql statement attributes can be accumulated.        elapsed_time        buffer_gets        direct_writes        disk_reads        row_processed        fetches        executions        end_of_fetch_count        stat_period        active_stat_period""")
+@cli_util.option('--update-attributes', help=u"""Specifies the list of Sql statement attributes to update during a merge or update. Note that this parameter cannot be made an enum since custom value can take a list of comma separated attribute names. Update attributes can take one of the following values.    NULL (default) - Specifies the content of the input cursor except the execution context. On other terms, it is equivalent to ALL without execution contexts such as module and action.    BASIC - Specifies statistics and binds only.    TYPICAL - Specifies BASIC with Sql plans (without row source statistics) and without an object reference list.    ALL - Specifies all attributes, including the execution context attributes such as module and action.    CUSTOM - List of comma separated attribute names to update        EXECUTION_CONTEXT        EXECUTION_STATISTICS        SQL_BINDS        SQL_PLAN        SQL_PLAN_STATISTICS (similar to SQL_PLAN with added row source statistics) Usage examples:   1. \"updateAttributes\": \"TYPICAL\"   2. \"updateAttributes\": \"BASIC\"   3. \"updateAttributes\": \"EXECUTION_STATISTICS,SQL_PLAN_STATISTICS,SQL_PLAN\"   4. \"updateAttributes\": \"EXECUTION_STATISTICS,SQL_PLAN\"""")
+@cli_util.option('--update-condition', type=custom_types.CliCaseInsensitiveChoice(["OLD", "NEW"]), help=u"""Specifies when to perform the update. The procedure only performs the update when the specified condition is satisfied. The condition can refer to either the data source or destination. The condition must use the following prefixes to refer to attributes from the source or the destination: OLD  \u2014 Refers to statement attributes from the SQL tuning set (destination). NEW  \u2014 Refers to statement attributes from the input statements (source). NULL \u2014 No updates are performed.""")
+@cli_util.option('--is-ignore-null', type=click.BOOL, help=u"""Specifies whether to update attributes when the new value is NULL. If TRUE, then the procedure does not update an attribute when the new value is NULL. That is, do not override with NULL values unless intentional. Possible values - true or false""")
+@cli_util.option('--commit-rows', type=click.INT, help=u"""Specifies whether to commit statements after DML. If a value is provided, then the load commits after each specified number of statements is inserted. If NULL is provided, then the load commits only once, at the end of the operation.""")
+@cli_util.option('--begin-snapshot', type=click.INT, help=u"""Defines the beginning AWR snapshot (non-inclusive).""")
+@cli_util.option('--end-snapshot', type=click.INT, help=u"""Defines the ending AWR snapshot (inclusive).""")
+@cli_util.option('--baseline-name', help=u"""Specifies the name of the AWR baseline period. When loading the sql statements from AWR, following inputs has to be provided: beginSnapshot and endSnapshot OR baselineName""")
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@cli_util.wrap_exceptions
+def load_sql_tuning_set_database_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, load_type, database_credential_password_secret_id, credential_details, show_sql_only, owner, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, total_time_limit, repeat_interval, capture_option, capture_mode, attribute_list, load_option, update_option, update_attributes, update_condition, is_ignore_null, commit_rows, begin_snapshot, end_snapshot, baseline_name, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['name'] = name
+    _details['loadType'] = load_type
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if show_sql_only is not None:
+        _details['showSqlOnly'] = show_sql_only
+
+    if owner is not None:
+        _details['owner'] = owner
+
+    if basic_filter is not None:
+        _details['basicFilter'] = basic_filter
+
+    if recursive_sql is not None:
+        _details['recursiveSql'] = recursive_sql
+
+    if result_percentage is not None:
+        _details['resultPercentage'] = result_percentage
+
+    if result_limit is not None:
+        _details['resultLimit'] = result_limit
+
+    if ranking_measure1 is not None:
+        _details['rankingMeasure1'] = ranking_measure1
+
+    if ranking_measure2 is not None:
+        _details['rankingMeasure2'] = ranking_measure2
+
+    if ranking_measure3 is not None:
+        _details['rankingMeasure3'] = ranking_measure3
+
+    if total_time_limit is not None:
+        _details['totalTimeLimit'] = total_time_limit
+
+    if repeat_interval is not None:
+        _details['repeatInterval'] = repeat_interval
+
+    if capture_option is not None:
+        _details['captureOption'] = capture_option
+
+    if capture_mode is not None:
+        _details['captureMode'] = capture_mode
+
+    if attribute_list is not None:
+        _details['attributeList'] = attribute_list
+
+    if load_option is not None:
+        _details['loadOption'] = load_option
+
+    if update_option is not None:
+        _details['updateOption'] = update_option
+
+    if update_attributes is not None:
+        _details['updateAttributes'] = update_attributes
+
+    if update_condition is not None:
+        _details['updateCondition'] = update_condition
+
+    if is_ignore_null is not None:
+        _details['isIgnoreNull'] = is_ignore_null
+
+    if commit_rows is not None:
+        _details['commitRows'] = commit_rows
+
+    if begin_snapshot is not None:
+        _details['beginSnapshot'] = begin_snapshot
+
+    if end_snapshot is not None:
+        _details['endSnapshot'] = end_snapshot
+
+    if baseline_name is not None:
+        _details['baselineName'] = baseline_name
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.load_sql_tuning_set(
+        managed_database_id=managed_database_id,
+        sql_tuning_set_id=sql_tuning_set_id,
+        load_sql_tuning_set_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@sql_tuning_set_group.command(name=cli_util.override('sql_tuning.load_sql_tuning_set_database_named_credential_details.command_name', 'load-sql-tuning-set-database-named-credential-details'), help=u"""Load Sql statements into the Sql tuning set specified by name and optional filter parameters within the Managed Database specified by managedDatabaseId. \n[Command Reference](loadSqlTuningSet)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--sql-tuning-set-id', required=True, type=click.INT, help=u"""The unique identifier of the Sql tuning set. This is not OCID.""")
+@cli_util.option('--name', required=True, help=u"""The name of the Sql tuning set.""")
+@cli_util.option('--load-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["INCREMENTAL_CURSOR_CACHE", "CURRENT_CURSOR_CACHE", "AWR"]), help=u"""Specifies the loading method into the Sql tuning set.""")
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to create the Sql tuning set or just display the plsql used to create Sql tuning set.""")
+@cli_util.option('--owner', help=u"""The owner of the Sql tuning set.""")
+@cli_util.option('--basic-filter', help=u"""Specifies the Sql predicate to filter the Sql from the Sql tuning set defined on attributes of the SQLSET_ROW. User could use any combination of the following columns with appropriate values as Sql predicate Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/18/arpls/DBMS_SQLTUNE.html#GUID-1F4AFB03-7B29-46FC-B3F2-CB01EC36326C""")
+@cli_util.option('--recursive-sql', type=custom_types.CliCaseInsensitiveChoice(["HAS_RECURSIVE_SQL", "NO_RECURSIVE_SQL"]), help=u"""Specifies that the filter must include recursive Sql in the Sql tuning set.""")
+@cli_util.option('--result-percentage', help=u"""Specifies a filter that picks the top n% according to the supplied ranking measure. Note that this parameter applies only if one ranking measure is supplied.""")
+@cli_util.option('--result-limit', type=click.INT, help=u"""The top limit Sql from the filtered source, ranked by the ranking measure.""")
+@cli_util.option('--ranking-measure1', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--ranking-measure2', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--ranking-measure3', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--total-time-limit', type=click.INT, help=u"""Defines the total amount of time, in seconds, to execute.""")
+@cli_util.option('--repeat-interval', type=click.INT, help=u"""Defines the amount of time, in seconds, to pause between sampling.""")
+@cli_util.option('--capture-option', type=custom_types.CliCaseInsensitiveChoice(["INSERT", "UPDATE", "MERGE"]), help=u"""Specifies whether to insert new statements, update existing statements, or both.""")
+@cli_util.option('--capture-mode', type=custom_types.CliCaseInsensitiveChoice(["MODE_REPLACE_OLD_STATS", "MODE_ACCUMULATE_STATS"]), help=u"""Specifies the capture mode. Note that this parameter is applicable only for UPDATE and MERGE capture options. Capture mode can take one of the following values  - MODE_REPLACE_OLD_STATS      Replaces statistics when the number of executions is greater than the number stored in the Sql tuning set  - MODE_ACCUMULATE_STATS      Adds new values to current values for Sql that is already stored.      Note that this mode detects if a statement has been aged out, so the final value for a statistics is the sum of the statistics of all cursors that statement existed under.""")
+@cli_util.option('--attribute-list', help=u"""Specifies the list of Sql statement attributes to return in the result. Note that this parameter cannot be made an enum since custom value can take a list of comma separated attribute names. Attribute list can take one of the following values.  TYPICAL - Specifies BASIC plus Sql plan (without row source statistics) and without object reference list (default).  BASIC - Specifies all attributes (such as execution statistics and binds) except the plans. The execution context is always part of the result.  ALL - Specifies all attributes.  CUSTOM - Comma-separated list of the following attribute names.           - EXECUTION_STATISTICS           - BIND_LIST           - OBJECT_LIST           - SQL_PLAN           - SQL_PLAN_STATISTICS Usage examples:   1. \"attributeList\": \"TYPICAL\"   2. \"attributeList\": \"ALL\"   3. \"attributeList\": \"EXECUTION_STATISTICS,OBJECT_LIST,SQL_PLAN\"""")
+@cli_util.option('--load-option', type=custom_types.CliCaseInsensitiveChoice(["INSERT", "UPDATE", "MERGE"]), help=u"""Specifies which statements are loaded into the Sql tuning set. The possible values are.  - INSERT (default)       Adds only new statements.  - UPDATE       Updates existing the Sql statements and ignores any new statements.  - MERGE       Inserts new statements and updates the information of the existing ones.""")
+@cli_util.option('--update-option', type=custom_types.CliCaseInsensitiveChoice(["REPLACE", "ACCUMULATE"]), help=u"""Specifies how existing Sql statements are updated. This parameter is applicable only if load_option is specified with UPDATE or MERGE as an option. Update option can take one of the following values.    REPLACE (default) - Updates the statement using the new statistics, bind list, object list, and so on.    ACCUMULATE - Combines attributes when possible (for example, statistics such as elapsed_time), otherwise replaces the existing values (for example, module and action) with the provided values.    Following Sql statement attributes can be accumulated.        elapsed_time        buffer_gets        direct_writes        disk_reads        row_processed        fetches        executions        end_of_fetch_count        stat_period        active_stat_period""")
+@cli_util.option('--update-attributes', help=u"""Specifies the list of Sql statement attributes to update during a merge or update. Note that this parameter cannot be made an enum since custom value can take a list of comma separated attribute names. Update attributes can take one of the following values.    NULL (default) - Specifies the content of the input cursor except the execution context. On other terms, it is equivalent to ALL without execution contexts such as module and action.    BASIC - Specifies statistics and binds only.    TYPICAL - Specifies BASIC with Sql plans (without row source statistics) and without an object reference list.    ALL - Specifies all attributes, including the execution context attributes such as module and action.    CUSTOM - List of comma separated attribute names to update        EXECUTION_CONTEXT        EXECUTION_STATISTICS        SQL_BINDS        SQL_PLAN        SQL_PLAN_STATISTICS (similar to SQL_PLAN with added row source statistics) Usage examples:   1. \"updateAttributes\": \"TYPICAL\"   2. \"updateAttributes\": \"BASIC\"   3. \"updateAttributes\": \"EXECUTION_STATISTICS,SQL_PLAN_STATISTICS,SQL_PLAN\"   4. \"updateAttributes\": \"EXECUTION_STATISTICS,SQL_PLAN\"""")
+@cli_util.option('--update-condition', type=custom_types.CliCaseInsensitiveChoice(["OLD", "NEW"]), help=u"""Specifies when to perform the update. The procedure only performs the update when the specified condition is satisfied. The condition can refer to either the data source or destination. The condition must use the following prefixes to refer to attributes from the source or the destination: OLD  \u2014 Refers to statement attributes from the SQL tuning set (destination). NEW  \u2014 Refers to statement attributes from the input statements (source). NULL \u2014 No updates are performed.""")
+@cli_util.option('--is-ignore-null', type=click.BOOL, help=u"""Specifies whether to update attributes when the new value is NULL. If TRUE, then the procedure does not update an attribute when the new value is NULL. That is, do not override with NULL values unless intentional. Possible values - true or false""")
+@cli_util.option('--commit-rows', type=click.INT, help=u"""Specifies whether to commit statements after DML. If a value is provided, then the load commits after each specified number of statements is inserted. If NULL is provided, then the load commits only once, at the end of the operation.""")
+@cli_util.option('--begin-snapshot', type=click.INT, help=u"""Defines the beginning AWR snapshot (non-inclusive).""")
+@cli_util.option('--end-snapshot', type=click.INT, help=u"""Defines the ending AWR snapshot (inclusive).""")
+@cli_util.option('--baseline-name', help=u"""Specifies the name of the AWR baseline period. When loading the sql statements from AWR, following inputs has to be provided: beginSnapshot and endSnapshot OR baselineName""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@cli_util.wrap_exceptions
+def load_sql_tuning_set_database_named_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, load_type, database_credential_named_credential_id, credential_details, show_sql_only, owner, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, total_time_limit, repeat_interval, capture_option, capture_mode, attribute_list, load_option, update_option, update_attributes, update_condition, is_ignore_null, commit_rows, begin_snapshot, end_snapshot, baseline_name):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['name'] = name
+    _details['loadType'] = load_type
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if show_sql_only is not None:
+        _details['showSqlOnly'] = show_sql_only
+
+    if owner is not None:
+        _details['owner'] = owner
+
+    if basic_filter is not None:
+        _details['basicFilter'] = basic_filter
+
+    if recursive_sql is not None:
+        _details['recursiveSql'] = recursive_sql
+
+    if result_percentage is not None:
+        _details['resultPercentage'] = result_percentage
+
+    if result_limit is not None:
+        _details['resultLimit'] = result_limit
+
+    if ranking_measure1 is not None:
+        _details['rankingMeasure1'] = ranking_measure1
+
+    if ranking_measure2 is not None:
+        _details['rankingMeasure2'] = ranking_measure2
+
+    if ranking_measure3 is not None:
+        _details['rankingMeasure3'] = ranking_measure3
+
+    if total_time_limit is not None:
+        _details['totalTimeLimit'] = total_time_limit
+
+    if repeat_interval is not None:
+        _details['repeatInterval'] = repeat_interval
+
+    if capture_option is not None:
+        _details['captureOption'] = capture_option
+
+    if capture_mode is not None:
+        _details['captureMode'] = capture_mode
+
+    if attribute_list is not None:
+        _details['attributeList'] = attribute_list
+
+    if load_option is not None:
+        _details['loadOption'] = load_option
+
+    if update_option is not None:
+        _details['updateOption'] = update_option
+
+    if update_attributes is not None:
+        _details['updateAttributes'] = update_attributes
+
+    if update_condition is not None:
+        _details['updateCondition'] = update_condition
+
+    if is_ignore_null is not None:
+        _details['isIgnoreNull'] = is_ignore_null
+
+    if commit_rows is not None:
+        _details['commitRows'] = commit_rows
+
+    if begin_snapshot is not None:
+        _details['beginSnapshot'] = begin_snapshot
+
+    if end_snapshot is not None:
+        _details['endSnapshot'] = end_snapshot
+
+    if baseline_name is not None:
+        _details['baselineName'] = baseline_name
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.load_sql_tuning_set(
+        managed_database_id=managed_database_id,
+        sql_tuning_set_id=sql_tuning_set_id,
+        load_sql_tuning_set_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@sql_tuning_set_group.command(name=cli_util.override('sql_tuning.load_sql_tuning_set_database_password_credential_details.command_name', 'load-sql-tuning-set-database-password-credential-details'), help=u"""Load Sql statements into the Sql tuning set specified by name and optional filter parameters within the Managed Database specified by managedDatabaseId. \n[Command Reference](loadSqlTuningSet)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--sql-tuning-set-id', required=True, type=click.INT, help=u"""The unique identifier of the Sql tuning set. This is not OCID.""")
+@cli_util.option('--name', required=True, help=u"""The name of the Sql tuning set.""")
+@cli_util.option('--load-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["INCREMENTAL_CURSOR_CACHE", "CURRENT_CURSOR_CACHE", "AWR"]), help=u"""Specifies the loading method into the Sql tuning set.""")
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to create the Sql tuning set or just display the plsql used to create Sql tuning set.""")
+@cli_util.option('--owner', help=u"""The owner of the Sql tuning set.""")
+@cli_util.option('--basic-filter', help=u"""Specifies the Sql predicate to filter the Sql from the Sql tuning set defined on attributes of the SQLSET_ROW. User could use any combination of the following columns with appropriate values as Sql predicate Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/18/arpls/DBMS_SQLTUNE.html#GUID-1F4AFB03-7B29-46FC-B3F2-CB01EC36326C""")
+@cli_util.option('--recursive-sql', type=custom_types.CliCaseInsensitiveChoice(["HAS_RECURSIVE_SQL", "NO_RECURSIVE_SQL"]), help=u"""Specifies that the filter must include recursive Sql in the Sql tuning set.""")
+@cli_util.option('--result-percentage', help=u"""Specifies a filter that picks the top n% according to the supplied ranking measure. Note that this parameter applies only if one ranking measure is supplied.""")
+@cli_util.option('--result-limit', type=click.INT, help=u"""The top limit Sql from the filtered source, ranked by the ranking measure.""")
+@cli_util.option('--ranking-measure1', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--ranking-measure2', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--ranking-measure3', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--total-time-limit', type=click.INT, help=u"""Defines the total amount of time, in seconds, to execute.""")
+@cli_util.option('--repeat-interval', type=click.INT, help=u"""Defines the amount of time, in seconds, to pause between sampling.""")
+@cli_util.option('--capture-option', type=custom_types.CliCaseInsensitiveChoice(["INSERT", "UPDATE", "MERGE"]), help=u"""Specifies whether to insert new statements, update existing statements, or both.""")
+@cli_util.option('--capture-mode', type=custom_types.CliCaseInsensitiveChoice(["MODE_REPLACE_OLD_STATS", "MODE_ACCUMULATE_STATS"]), help=u"""Specifies the capture mode. Note that this parameter is applicable only for UPDATE and MERGE capture options. Capture mode can take one of the following values  - MODE_REPLACE_OLD_STATS      Replaces statistics when the number of executions is greater than the number stored in the Sql tuning set  - MODE_ACCUMULATE_STATS      Adds new values to current values for Sql that is already stored.      Note that this mode detects if a statement has been aged out, so the final value for a statistics is the sum of the statistics of all cursors that statement existed under.""")
+@cli_util.option('--attribute-list', help=u"""Specifies the list of Sql statement attributes to return in the result. Note that this parameter cannot be made an enum since custom value can take a list of comma separated attribute names. Attribute list can take one of the following values.  TYPICAL - Specifies BASIC plus Sql plan (without row source statistics) and without object reference list (default).  BASIC - Specifies all attributes (such as execution statistics and binds) except the plans. The execution context is always part of the result.  ALL - Specifies all attributes.  CUSTOM - Comma-separated list of the following attribute names.           - EXECUTION_STATISTICS           - BIND_LIST           - OBJECT_LIST           - SQL_PLAN           - SQL_PLAN_STATISTICS Usage examples:   1. \"attributeList\": \"TYPICAL\"   2. \"attributeList\": \"ALL\"   3. \"attributeList\": \"EXECUTION_STATISTICS,OBJECT_LIST,SQL_PLAN\"""")
+@cli_util.option('--load-option', type=custom_types.CliCaseInsensitiveChoice(["INSERT", "UPDATE", "MERGE"]), help=u"""Specifies which statements are loaded into the Sql tuning set. The possible values are.  - INSERT (default)       Adds only new statements.  - UPDATE       Updates existing the Sql statements and ignores any new statements.  - MERGE       Inserts new statements and updates the information of the existing ones.""")
+@cli_util.option('--update-option', type=custom_types.CliCaseInsensitiveChoice(["REPLACE", "ACCUMULATE"]), help=u"""Specifies how existing Sql statements are updated. This parameter is applicable only if load_option is specified with UPDATE or MERGE as an option. Update option can take one of the following values.    REPLACE (default) - Updates the statement using the new statistics, bind list, object list, and so on.    ACCUMULATE - Combines attributes when possible (for example, statistics such as elapsed_time), otherwise replaces the existing values (for example, module and action) with the provided values.    Following Sql statement attributes can be accumulated.        elapsed_time        buffer_gets        direct_writes        disk_reads        row_processed        fetches        executions        end_of_fetch_count        stat_period        active_stat_period""")
+@cli_util.option('--update-attributes', help=u"""Specifies the list of Sql statement attributes to update during a merge or update. Note that this parameter cannot be made an enum since custom value can take a list of comma separated attribute names. Update attributes can take one of the following values.    NULL (default) - Specifies the content of the input cursor except the execution context. On other terms, it is equivalent to ALL without execution contexts such as module and action.    BASIC - Specifies statistics and binds only.    TYPICAL - Specifies BASIC with Sql plans (without row source statistics) and without an object reference list.    ALL - Specifies all attributes, including the execution context attributes such as module and action.    CUSTOM - List of comma separated attribute names to update        EXECUTION_CONTEXT        EXECUTION_STATISTICS        SQL_BINDS        SQL_PLAN        SQL_PLAN_STATISTICS (similar to SQL_PLAN with added row source statistics) Usage examples:   1. \"updateAttributes\": \"TYPICAL\"   2. \"updateAttributes\": \"BASIC\"   3. \"updateAttributes\": \"EXECUTION_STATISTICS,SQL_PLAN_STATISTICS,SQL_PLAN\"   4. \"updateAttributes\": \"EXECUTION_STATISTICS,SQL_PLAN\"""")
+@cli_util.option('--update-condition', type=custom_types.CliCaseInsensitiveChoice(["OLD", "NEW"]), help=u"""Specifies when to perform the update. The procedure only performs the update when the specified condition is satisfied. The condition can refer to either the data source or destination. The condition must use the following prefixes to refer to attributes from the source or the destination: OLD  \u2014 Refers to statement attributes from the SQL tuning set (destination). NEW  \u2014 Refers to statement attributes from the input statements (source). NULL \u2014 No updates are performed.""")
+@cli_util.option('--is-ignore-null', type=click.BOOL, help=u"""Specifies whether to update attributes when the new value is NULL. If TRUE, then the procedure does not update an attribute when the new value is NULL. That is, do not override with NULL values unless intentional. Possible values - true or false""")
+@cli_util.option('--commit-rows', type=click.INT, help=u"""Specifies whether to commit statements after DML. If a value is provided, then the load commits after each specified number of statements is inserted. If NULL is provided, then the load commits only once, at the end of the operation.""")
+@cli_util.option('--begin-snapshot', type=click.INT, help=u"""Defines the beginning AWR snapshot (non-inclusive).""")
+@cli_util.option('--end-snapshot', type=click.INT, help=u"""Defines the ending AWR snapshot (inclusive).""")
+@cli_util.option('--baseline-name', help=u"""Specifies the name of the AWR baseline period. When loading the sql statements from AWR, following inputs has to be provided: beginSnapshot and endSnapshot OR baselineName""")
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@cli_util.wrap_exceptions
+def load_sql_tuning_set_database_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, load_type, database_credential_password, credential_details, show_sql_only, owner, basic_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, total_time_limit, repeat_interval, capture_option, capture_mode, attribute_list, load_option, update_option, update_attributes, update_condition, is_ignore_null, commit_rows, begin_snapshot, end_snapshot, baseline_name, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['name'] = name
+    _details['loadType'] = load_type
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if show_sql_only is not None:
+        _details['showSqlOnly'] = show_sql_only
+
+    if owner is not None:
+        _details['owner'] = owner
+
+    if basic_filter is not None:
+        _details['basicFilter'] = basic_filter
+
+    if recursive_sql is not None:
+        _details['recursiveSql'] = recursive_sql
+
+    if result_percentage is not None:
+        _details['resultPercentage'] = result_percentage
+
+    if result_limit is not None:
+        _details['resultLimit'] = result_limit
+
+    if ranking_measure1 is not None:
+        _details['rankingMeasure1'] = ranking_measure1
+
+    if ranking_measure2 is not None:
+        _details['rankingMeasure2'] = ranking_measure2
+
+    if ranking_measure3 is not None:
+        _details['rankingMeasure3'] = ranking_measure3
+
+    if total_time_limit is not None:
+        _details['totalTimeLimit'] = total_time_limit
+
+    if repeat_interval is not None:
+        _details['repeatInterval'] = repeat_interval
+
+    if capture_option is not None:
+        _details['captureOption'] = capture_option
+
+    if capture_mode is not None:
+        _details['captureMode'] = capture_mode
+
+    if attribute_list is not None:
+        _details['attributeList'] = attribute_list
+
+    if load_option is not None:
+        _details['loadOption'] = load_option
+
+    if update_option is not None:
+        _details['updateOption'] = update_option
+
+    if update_attributes is not None:
+        _details['updateAttributes'] = update_attributes
+
+    if update_condition is not None:
+        _details['updateCondition'] = update_condition
+
+    if is_ignore_null is not None:
+        _details['isIgnoreNull'] = is_ignore_null
+
+    if commit_rows is not None:
+        _details['commitRows'] = commit_rows
+
+    if begin_snapshot is not None:
+        _details['beginSnapshot'] = begin_snapshot
+
+    if end_snapshot is not None:
+        _details['endSnapshot'] = end_snapshot
+
+    if baseline_name is not None:
+        _details['baselineName'] = baseline_name
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.load_sql_tuning_set(
+        managed_database_id=managed_database_id,
+        sql_tuning_set_id=sql_tuning_set_id,
+        load_sql_tuning_set_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @sql_tuning_set_group.command(name=cli_util.override('sql_tuning.save_sql_tuning_set_as.command_name', 'save-sql-tuning-set-as'), help=u"""Saves the specified list of Sqls statements into another new Sql tuning set or loads into an existing Sql tuning set'. \n[Command Reference](saveSqlTuningSetAs)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--sql-tuning-set-id', required=True, type=click.INT, help=u"""The unique identifier of the Sql tuning set. This is not OCID.""")
-@cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--name', required=True, help=u"""The name of the Sql tuning set.""")
 @cli_util.option('--destination-sql-tuning-set-name', required=True, help=u"""The name of the destination Sql tuning set.""")
 @cli_util.option('--create-new', required=True, type=click.INT, help=u"""Specifies whether to create a new Sql tuning set or not. Possible values 1 - Create a new Sql tuning set 0 - Do not create a new Sql tuning set""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to save the Sql tuning set or just display the plsql used to save Sql tuning set.""")
 @cli_util.option('--owner', help=u"""The owner of the Sql tuning set.""")
 @cli_util.option('--destination-sql-tuning-set-description', help=u"""The description for the destination Sql tuning set.""")
@@ -1731,12 +3286,12 @@ def load_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, from
 @cli_util.option('--update-attributes', help=u"""Specifies the list of Sql statement attributes to update during a merge or update. Note that this parameter cannot be made an enum since custom value can take a list of comma separated attribute names. Update attributes can take one of the following values.    NULL (default) - Specifies the content of the input cursor except the execution context. On other terms, it is equivalent to ALL without execution contexts such as module and action.    BASIC - Specifies statistics and binds only.    TYPICAL - Specifies BASIC with Sql plans (without row source statistics) and without an object reference list.    ALL - Specifies all attributes, including the execution context attributes such as module and action.    CUSTOM - List of comma separated attribute names to update        EXECUTION_CONTEXT        EXECUTION_STATISTICS        SQL_BINDS        SQL_PLAN        SQL_PLAN_STATISTICS (similar to SQL_PLAN with added row source statistics) Usage examples:   1. \"updateAttributes\": \"TYPICAL\"   2. \"updateAttributes\": \"BASIC\"   3. \"updateAttributes\": \"EXECUTION_STATISTICS,SQL_PLAN_STATISTICS,SQL_PLAN\"   4. \"updateAttributes\": \"EXECUTION_STATISTICS,SQL_PLAN\"""")
 @cli_util.option('--is-ignore-null', type=click.BOOL, help=u"""Specifies whether to update attributes when the new value is NULL. If TRUE, then the procedure does not update an attribute when the new value is NULL. That is, do not override with NULL values unless intentional. Possible values - true or false""")
 @cli_util.option('--commit-rows', type=click.INT, help=u"""Specifies whether to commit statements after DML. If a value is provided, then the load commits after each specified number of statements is inserted. If NULL is provided, then the load commits only once, at the end of the operation.""")
-@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
 @cli_util.wrap_exceptions
-def save_sql_tuning_set_as(ctx, from_json, managed_database_id, sql_tuning_set_id, credential_details, name, destination_sql_tuning_set_name, create_new, show_sql_only, owner, destination_sql_tuning_set_description, destination_sql_tuning_set_owner, basic_filter, plan_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, attribute_list, load_option, update_option, update_condition, update_attributes, is_ignore_null, commit_rows):
+def save_sql_tuning_set_as(ctx, from_json, managed_database_id, sql_tuning_set_id, name, destination_sql_tuning_set_name, create_new, credential_details, database_credential, show_sql_only, owner, destination_sql_tuning_set_description, destination_sql_tuning_set_owner, basic_filter, plan_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, attribute_list, load_option, update_option, update_condition, update_attributes, is_ignore_null, commit_rows):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -1748,10 +3303,15 @@ def save_sql_tuning_set_as(ctx, from_json, managed_database_id, sql_tuning_set_i
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
     _details['name'] = name
     _details['destinationSqlTuningSetName'] = destination_sql_tuning_set_name
     _details['createNew'] = create_new
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if show_sql_only is not None:
         _details['showSqlOnly'] = show_sql_only
@@ -1829,6 +3389,7 @@ def save_sql_tuning_set_as(ctx, from_json, managed_database_id, sql_tuning_set_i
 @cli_util.option('--credential-details-username', required=True, help=u"""The user to connect to the database.""")
 @cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credential-details-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to save the Sql tuning set or just display the plsql used to save Sql tuning set.""")
 @cli_util.option('--owner', help=u"""The owner of the Sql tuning set.""")
 @cli_util.option('--destination-sql-tuning-set-description', help=u"""The description for the destination Sql tuning set.""")
@@ -1848,12 +3409,12 @@ def save_sql_tuning_set_as(ctx, from_json, managed_database_id, sql_tuning_set_i
 @cli_util.option('--update-attributes', help=u"""Specifies the list of Sql statement attributes to update during a merge or update. Note that this parameter cannot be made an enum since custom value can take a list of comma separated attribute names. Update attributes can take one of the following values.    NULL (default) - Specifies the content of the input cursor except the execution context. On other terms, it is equivalent to ALL without execution contexts such as module and action.    BASIC - Specifies statistics and binds only.    TYPICAL - Specifies BASIC with Sql plans (without row source statistics) and without an object reference list.    ALL - Specifies all attributes, including the execution context attributes such as module and action.    CUSTOM - List of comma separated attribute names to update        EXECUTION_CONTEXT        EXECUTION_STATISTICS        SQL_BINDS        SQL_PLAN        SQL_PLAN_STATISTICS (similar to SQL_PLAN with added row source statistics) Usage examples:   1. \"updateAttributes\": \"TYPICAL\"   2. \"updateAttributes\": \"BASIC\"   3. \"updateAttributes\": \"EXECUTION_STATISTICS,SQL_PLAN_STATISTICS,SQL_PLAN\"   4. \"updateAttributes\": \"EXECUTION_STATISTICS,SQL_PLAN\"""")
 @cli_util.option('--is-ignore-null', type=click.BOOL, help=u"""Specifies whether to update attributes when the new value is NULL. If TRUE, then the procedure does not update an attribute when the new value is NULL. That is, do not override with NULL values unless intentional. Possible values - true or false""")
 @cli_util.option('--commit-rows', type=click.INT, help=u"""Specifies whether to commit statements after DML. If a value is provided, then the load commits after each specified number of statements is inserted. If NULL is provided, then the load commits only once, at the end of the operation.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
 @cli_util.wrap_exceptions
-def save_sql_tuning_set_as_sql_tuning_set_admin_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, destination_sql_tuning_set_name, create_new, credential_details_username, credential_details_role, credential_details_password, show_sql_only, owner, destination_sql_tuning_set_description, destination_sql_tuning_set_owner, basic_filter, plan_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, attribute_list, load_option, update_option, update_condition, update_attributes, is_ignore_null, commit_rows):
+def save_sql_tuning_set_as_sql_tuning_set_admin_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, destination_sql_tuning_set_name, create_new, credential_details_username, credential_details_role, credential_details_password, database_credential, show_sql_only, owner, destination_sql_tuning_set_description, destination_sql_tuning_set_owner, basic_filter, plan_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, attribute_list, load_option, update_option, update_condition, update_attributes, is_ignore_null, commit_rows):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -1872,6 +3433,9 @@ def save_sql_tuning_set_as_sql_tuning_set_admin_password_credential_details(ctx,
     _details['credentialDetails']['username'] = credential_details_username
     _details['credentialDetails']['role'] = credential_details_role
     _details['credentialDetails']['password'] = credential_details_password
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if show_sql_only is not None:
         _details['showSqlOnly'] = show_sql_only
@@ -1951,6 +3515,7 @@ def save_sql_tuning_set_as_sql_tuning_set_admin_password_credential_details(ctx,
 @cli_util.option('--credential-details-username', required=True, help=u"""The user to connect to the database.""")
 @cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credential-details-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to save the Sql tuning set or just display the plsql used to save Sql tuning set.""")
 @cli_util.option('--owner', help=u"""The owner of the Sql tuning set.""")
 @cli_util.option('--destination-sql-tuning-set-description', help=u"""The description for the destination Sql tuning set.""")
@@ -1970,12 +3535,12 @@ def save_sql_tuning_set_as_sql_tuning_set_admin_password_credential_details(ctx,
 @cli_util.option('--update-attributes', help=u"""Specifies the list of Sql statement attributes to update during a merge or update. Note that this parameter cannot be made an enum since custom value can take a list of comma separated attribute names. Update attributes can take one of the following values.    NULL (default) - Specifies the content of the input cursor except the execution context. On other terms, it is equivalent to ALL without execution contexts such as module and action.    BASIC - Specifies statistics and binds only.    TYPICAL - Specifies BASIC with Sql plans (without row source statistics) and without an object reference list.    ALL - Specifies all attributes, including the execution context attributes such as module and action.    CUSTOM - List of comma separated attribute names to update        EXECUTION_CONTEXT        EXECUTION_STATISTICS        SQL_BINDS        SQL_PLAN        SQL_PLAN_STATISTICS (similar to SQL_PLAN with added row source statistics) Usage examples:   1. \"updateAttributes\": \"TYPICAL\"   2. \"updateAttributes\": \"BASIC\"   3. \"updateAttributes\": \"EXECUTION_STATISTICS,SQL_PLAN_STATISTICS,SQL_PLAN\"   4. \"updateAttributes\": \"EXECUTION_STATISTICS,SQL_PLAN\"""")
 @cli_util.option('--is-ignore-null', type=click.BOOL, help=u"""Specifies whether to update attributes when the new value is NULL. If TRUE, then the procedure does not update an attribute when the new value is NULL. That is, do not override with NULL values unless intentional. Possible values - true or false""")
 @cli_util.option('--commit-rows', type=click.INT, help=u"""Specifies whether to commit statements after DML. If a value is provided, then the load commits after each specified number of statements is inserted. If NULL is provided, then the load commits only once, at the end of the operation.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
 @cli_util.wrap_exceptions
-def save_sql_tuning_set_as_sql_tuning_set_admin_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, destination_sql_tuning_set_name, create_new, credential_details_username, credential_details_role, credential_details_secret_id, show_sql_only, owner, destination_sql_tuning_set_description, destination_sql_tuning_set_owner, basic_filter, plan_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, attribute_list, load_option, update_option, update_condition, update_attributes, is_ignore_null, commit_rows):
+def save_sql_tuning_set_as_sql_tuning_set_admin_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, destination_sql_tuning_set_name, create_new, credential_details_username, credential_details_role, credential_details_secret_id, database_credential, show_sql_only, owner, destination_sql_tuning_set_description, destination_sql_tuning_set_owner, basic_filter, plan_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, attribute_list, load_option, update_option, update_condition, update_attributes, is_ignore_null, commit_rows):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -1994,6 +3559,9 @@ def save_sql_tuning_set_as_sql_tuning_set_admin_secret_credential_details(ctx, f
     _details['credentialDetails']['username'] = credential_details_username
     _details['credentialDetails']['role'] = credential_details_role
     _details['credentialDetails']['secretId'] = credential_details_secret_id
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if show_sql_only is not None:
         _details['showSqlOnly'] = show_sql_only
@@ -2064,13 +3632,396 @@ def save_sql_tuning_set_as_sql_tuning_set_admin_secret_credential_details(ctx, f
     cli_util.render_response(result, ctx)
 
 
+@sql_tuning_set_group.command(name=cli_util.override('sql_tuning.save_sql_tuning_set_as_database_secret_credential_details.command_name', 'save-sql-tuning-set-as-database-secret-credential-details'), help=u"""Saves the specified list of Sqls statements into another new Sql tuning set or loads into an existing Sql tuning set'. \n[Command Reference](saveSqlTuningSetAs)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--sql-tuning-set-id', required=True, type=click.INT, help=u"""The unique identifier of the Sql tuning set. This is not OCID.""")
+@cli_util.option('--name', required=True, help=u"""The name of the Sql tuning set.""")
+@cli_util.option('--destination-sql-tuning-set-name', required=True, help=u"""The name of the destination Sql tuning set.""")
+@cli_util.option('--create-new', required=True, type=click.INT, help=u"""Specifies whether to create a new Sql tuning set or not. Possible values 1 - Create a new Sql tuning set 0 - Do not create a new Sql tuning set""")
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to save the Sql tuning set or just display the plsql used to save Sql tuning set.""")
+@cli_util.option('--owner', help=u"""The owner of the Sql tuning set.""")
+@cli_util.option('--destination-sql-tuning-set-description', help=u"""The description for the destination Sql tuning set.""")
+@cli_util.option('--destination-sql-tuning-set-owner', help=u"""Owner of the destination Sql tuning set.""")
+@cli_util.option('--basic-filter', help=u"""Specifies the Sql predicate to filter the Sql from the Sql tuning set defined on attributes of the SQLSET_ROW. User could use any combination of the following columns with appropriate values as Sql predicate Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/18/arpls/DBMS_SQLTUNE.html#GUID-1F4AFB03-7B29-46FC-B3F2-CB01EC36326C""")
+@cli_util.option('--plan-filter', type=custom_types.CliCaseInsensitiveChoice(["LAST_GENERATED", "FIRST_GENERATED", "LAST_LOADED", "FIRST_LOADED", "MAX_ELAPSED_TIME", "MAX_BUFFER_GETS", "MAX_DISK_READS", "MAX_DIRECT_WRITES", "MAX_OPTIMIZER_COST"]), help=u"""Specifies the plan filter. This parameter enables you to select a single plan when a statement has multiple plans. Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/19/arpls/DBMS_SQLSET.html#GUID-9D995019-91AB-4B1E-9EAF-031050789B21""")
+@cli_util.option('--recursive-sql', type=custom_types.CliCaseInsensitiveChoice(["HAS_RECURSIVE_SQL", "NO_RECURSIVE_SQL"]), help=u"""Specifies that the filter must include recursive Sql in the Sql tuning set.""")
+@cli_util.option('--result-percentage', help=u"""Specifies a filter that picks the top n% according to the supplied ranking measure. Note that this parameter applies only if one ranking measure is supplied.""")
+@cli_util.option('--result-limit', type=click.INT, help=u"""The top limit Sql from the filtered source, ranked by the ranking measure.""")
+@cli_util.option('--ranking-measure1', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--ranking-measure2', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--ranking-measure3', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--attribute-list', help=u"""Specifies the list of Sql statement attributes to return in the result. Note that this parameter cannot be made an enum since custom value can take a list of comma separated attribute names. Attribute list can take one of the following values.  TYPICAL - Specifies BASIC plus Sql plan (without row source statistics) and without object reference list (default).  BASIC - Specifies all attributes (such as execution statistics and binds) except the plans. The execution context is always part of the result.  ALL - Specifies all attributes.  CUSTOM - Comma-separated list of the following attribute names.           - EXECUTION_STATISTICS           - BIND_LIST           - OBJECT_LIST           - SQL_PLAN           - SQL_PLAN_STATISTICS Usage examples:   1. \"attributeList\": \"TYPICAL\"   2. \"attributeList\": \"ALL\"   3. \"attributeList\": \"EXECUTION_STATISTICS,OBJECT_LIST,SQL_PLAN\"""")
+@cli_util.option('--load-option', type=custom_types.CliCaseInsensitiveChoice(["INSERT", "UPDATE", "MERGE"]), help=u"""Specifies which statements are loaded into the Sql tuning set. The possible values are.   - INSERT (default)     Adds only new statements.   - UPDATE     Updates existing the Sql statements and ignores any new statements.   - MERGE     Inserts new statements and updates the information of the existing ones.""")
+@cli_util.option('--update-option', type=custom_types.CliCaseInsensitiveChoice(["REPLACE", "ACCUMULATE"]), help=u"""Specifies how existing Sql statements are updated. This parameter is applicable only if load_option is specified with UPDATE or MERGE as an option. Update option can take one of the following values.    REPLACE (default) - Updates the statement using the new statistics, bind list, object list, and so on.    ACCUMULATE - Combines attributes when possible (for example, statistics such as elapsed_time), otherwise replaces the existing values (for example, module and action) with the provided values.    Following Sql statement attributes can be accumulated.        elapsed_time        buffer_gets        direct_writes        disk_reads        row_processed        fetches        executions        end_of_fetch_count        stat_period        active_stat_period""")
+@cli_util.option('--update-condition', type=custom_types.CliCaseInsensitiveChoice(["OLD", "NEW"]), help=u"""Specifies when to perform the update. The procedure only performs the update when the specified condition is satisfied. The condition can refer to either the data source or destination. The condition must use the following prefixes to refer to attributes from the source or the destination:   OLD  \u2014 Refers to statement attributes from the SQL tuning set (destination).   NEW  \u2014 Refers to statement attributes from the input statements (source).   NULL \u2014 No updates are performed.""")
+@cli_util.option('--update-attributes', help=u"""Specifies the list of Sql statement attributes to update during a merge or update. Note that this parameter cannot be made an enum since custom value can take a list of comma separated attribute names. Update attributes can take one of the following values.    NULL (default) - Specifies the content of the input cursor except the execution context. On other terms, it is equivalent to ALL without execution contexts such as module and action.    BASIC - Specifies statistics and binds only.    TYPICAL - Specifies BASIC with Sql plans (without row source statistics) and without an object reference list.    ALL - Specifies all attributes, including the execution context attributes such as module and action.    CUSTOM - List of comma separated attribute names to update        EXECUTION_CONTEXT        EXECUTION_STATISTICS        SQL_BINDS        SQL_PLAN        SQL_PLAN_STATISTICS (similar to SQL_PLAN with added row source statistics) Usage examples:   1. \"updateAttributes\": \"TYPICAL\"   2. \"updateAttributes\": \"BASIC\"   3. \"updateAttributes\": \"EXECUTION_STATISTICS,SQL_PLAN_STATISTICS,SQL_PLAN\"   4. \"updateAttributes\": \"EXECUTION_STATISTICS,SQL_PLAN\"""")
+@cli_util.option('--is-ignore-null', type=click.BOOL, help=u"""Specifies whether to update attributes when the new value is NULL. If TRUE, then the procedure does not update an attribute when the new value is NULL. That is, do not override with NULL values unless intentional. Possible values - true or false""")
+@cli_util.option('--commit-rows', type=click.INT, help=u"""Specifies whether to commit statements after DML. If a value is provided, then the load commits after each specified number of statements is inserted. If NULL is provided, then the load commits only once, at the end of the operation.""")
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@cli_util.wrap_exceptions
+def save_sql_tuning_set_as_database_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, destination_sql_tuning_set_name, create_new, database_credential_password_secret_id, credential_details, show_sql_only, owner, destination_sql_tuning_set_description, destination_sql_tuning_set_owner, basic_filter, plan_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, attribute_list, load_option, update_option, update_condition, update_attributes, is_ignore_null, commit_rows, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['name'] = name
+    _details['destinationSqlTuningSetName'] = destination_sql_tuning_set_name
+    _details['createNew'] = create_new
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if show_sql_only is not None:
+        _details['showSqlOnly'] = show_sql_only
+
+    if owner is not None:
+        _details['owner'] = owner
+
+    if destination_sql_tuning_set_description is not None:
+        _details['destinationSqlTuningSetDescription'] = destination_sql_tuning_set_description
+
+    if destination_sql_tuning_set_owner is not None:
+        _details['destinationSqlTuningSetOwner'] = destination_sql_tuning_set_owner
+
+    if basic_filter is not None:
+        _details['basicFilter'] = basic_filter
+
+    if plan_filter is not None:
+        _details['planFilter'] = plan_filter
+
+    if recursive_sql is not None:
+        _details['recursiveSql'] = recursive_sql
+
+    if result_percentage is not None:
+        _details['resultPercentage'] = result_percentage
+
+    if result_limit is not None:
+        _details['resultLimit'] = result_limit
+
+    if ranking_measure1 is not None:
+        _details['rankingMeasure1'] = ranking_measure1
+
+    if ranking_measure2 is not None:
+        _details['rankingMeasure2'] = ranking_measure2
+
+    if ranking_measure3 is not None:
+        _details['rankingMeasure3'] = ranking_measure3
+
+    if attribute_list is not None:
+        _details['attributeList'] = attribute_list
+
+    if load_option is not None:
+        _details['loadOption'] = load_option
+
+    if update_option is not None:
+        _details['updateOption'] = update_option
+
+    if update_condition is not None:
+        _details['updateCondition'] = update_condition
+
+    if update_attributes is not None:
+        _details['updateAttributes'] = update_attributes
+
+    if is_ignore_null is not None:
+        _details['isIgnoreNull'] = is_ignore_null
+
+    if commit_rows is not None:
+        _details['commitRows'] = commit_rows
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.save_sql_tuning_set_as(
+        managed_database_id=managed_database_id,
+        sql_tuning_set_id=sql_tuning_set_id,
+        save_sql_tuning_set_as_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@sql_tuning_set_group.command(name=cli_util.override('sql_tuning.save_sql_tuning_set_as_database_named_credential_details.command_name', 'save-sql-tuning-set-as-database-named-credential-details'), help=u"""Saves the specified list of Sqls statements into another new Sql tuning set or loads into an existing Sql tuning set'. \n[Command Reference](saveSqlTuningSetAs)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--sql-tuning-set-id', required=True, type=click.INT, help=u"""The unique identifier of the Sql tuning set. This is not OCID.""")
+@cli_util.option('--name', required=True, help=u"""The name of the Sql tuning set.""")
+@cli_util.option('--destination-sql-tuning-set-name', required=True, help=u"""The name of the destination Sql tuning set.""")
+@cli_util.option('--create-new', required=True, type=click.INT, help=u"""Specifies whether to create a new Sql tuning set or not. Possible values 1 - Create a new Sql tuning set 0 - Do not create a new Sql tuning set""")
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to save the Sql tuning set or just display the plsql used to save Sql tuning set.""")
+@cli_util.option('--owner', help=u"""The owner of the Sql tuning set.""")
+@cli_util.option('--destination-sql-tuning-set-description', help=u"""The description for the destination Sql tuning set.""")
+@cli_util.option('--destination-sql-tuning-set-owner', help=u"""Owner of the destination Sql tuning set.""")
+@cli_util.option('--basic-filter', help=u"""Specifies the Sql predicate to filter the Sql from the Sql tuning set defined on attributes of the SQLSET_ROW. User could use any combination of the following columns with appropriate values as Sql predicate Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/18/arpls/DBMS_SQLTUNE.html#GUID-1F4AFB03-7B29-46FC-B3F2-CB01EC36326C""")
+@cli_util.option('--plan-filter', type=custom_types.CliCaseInsensitiveChoice(["LAST_GENERATED", "FIRST_GENERATED", "LAST_LOADED", "FIRST_LOADED", "MAX_ELAPSED_TIME", "MAX_BUFFER_GETS", "MAX_DISK_READS", "MAX_DIRECT_WRITES", "MAX_OPTIMIZER_COST"]), help=u"""Specifies the plan filter. This parameter enables you to select a single plan when a statement has multiple plans. Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/19/arpls/DBMS_SQLSET.html#GUID-9D995019-91AB-4B1E-9EAF-031050789B21""")
+@cli_util.option('--recursive-sql', type=custom_types.CliCaseInsensitiveChoice(["HAS_RECURSIVE_SQL", "NO_RECURSIVE_SQL"]), help=u"""Specifies that the filter must include recursive Sql in the Sql tuning set.""")
+@cli_util.option('--result-percentage', help=u"""Specifies a filter that picks the top n% according to the supplied ranking measure. Note that this parameter applies only if one ranking measure is supplied.""")
+@cli_util.option('--result-limit', type=click.INT, help=u"""The top limit Sql from the filtered source, ranked by the ranking measure.""")
+@cli_util.option('--ranking-measure1', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--ranking-measure2', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--ranking-measure3', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--attribute-list', help=u"""Specifies the list of Sql statement attributes to return in the result. Note that this parameter cannot be made an enum since custom value can take a list of comma separated attribute names. Attribute list can take one of the following values.  TYPICAL - Specifies BASIC plus Sql plan (without row source statistics) and without object reference list (default).  BASIC - Specifies all attributes (such as execution statistics and binds) except the plans. The execution context is always part of the result.  ALL - Specifies all attributes.  CUSTOM - Comma-separated list of the following attribute names.           - EXECUTION_STATISTICS           - BIND_LIST           - OBJECT_LIST           - SQL_PLAN           - SQL_PLAN_STATISTICS Usage examples:   1. \"attributeList\": \"TYPICAL\"   2. \"attributeList\": \"ALL\"   3. \"attributeList\": \"EXECUTION_STATISTICS,OBJECT_LIST,SQL_PLAN\"""")
+@cli_util.option('--load-option', type=custom_types.CliCaseInsensitiveChoice(["INSERT", "UPDATE", "MERGE"]), help=u"""Specifies which statements are loaded into the Sql tuning set. The possible values are.   - INSERT (default)     Adds only new statements.   - UPDATE     Updates existing the Sql statements and ignores any new statements.   - MERGE     Inserts new statements and updates the information of the existing ones.""")
+@cli_util.option('--update-option', type=custom_types.CliCaseInsensitiveChoice(["REPLACE", "ACCUMULATE"]), help=u"""Specifies how existing Sql statements are updated. This parameter is applicable only if load_option is specified with UPDATE or MERGE as an option. Update option can take one of the following values.    REPLACE (default) - Updates the statement using the new statistics, bind list, object list, and so on.    ACCUMULATE - Combines attributes when possible (for example, statistics such as elapsed_time), otherwise replaces the existing values (for example, module and action) with the provided values.    Following Sql statement attributes can be accumulated.        elapsed_time        buffer_gets        direct_writes        disk_reads        row_processed        fetches        executions        end_of_fetch_count        stat_period        active_stat_period""")
+@cli_util.option('--update-condition', type=custom_types.CliCaseInsensitiveChoice(["OLD", "NEW"]), help=u"""Specifies when to perform the update. The procedure only performs the update when the specified condition is satisfied. The condition can refer to either the data source or destination. The condition must use the following prefixes to refer to attributes from the source or the destination:   OLD  \u2014 Refers to statement attributes from the SQL tuning set (destination).   NEW  \u2014 Refers to statement attributes from the input statements (source).   NULL \u2014 No updates are performed.""")
+@cli_util.option('--update-attributes', help=u"""Specifies the list of Sql statement attributes to update during a merge or update. Note that this parameter cannot be made an enum since custom value can take a list of comma separated attribute names. Update attributes can take one of the following values.    NULL (default) - Specifies the content of the input cursor except the execution context. On other terms, it is equivalent to ALL without execution contexts such as module and action.    BASIC - Specifies statistics and binds only.    TYPICAL - Specifies BASIC with Sql plans (without row source statistics) and without an object reference list.    ALL - Specifies all attributes, including the execution context attributes such as module and action.    CUSTOM - List of comma separated attribute names to update        EXECUTION_CONTEXT        EXECUTION_STATISTICS        SQL_BINDS        SQL_PLAN        SQL_PLAN_STATISTICS (similar to SQL_PLAN with added row source statistics) Usage examples:   1. \"updateAttributes\": \"TYPICAL\"   2. \"updateAttributes\": \"BASIC\"   3. \"updateAttributes\": \"EXECUTION_STATISTICS,SQL_PLAN_STATISTICS,SQL_PLAN\"   4. \"updateAttributes\": \"EXECUTION_STATISTICS,SQL_PLAN\"""")
+@cli_util.option('--is-ignore-null', type=click.BOOL, help=u"""Specifies whether to update attributes when the new value is NULL. If TRUE, then the procedure does not update an attribute when the new value is NULL. That is, do not override with NULL values unless intentional. Possible values - true or false""")
+@cli_util.option('--commit-rows', type=click.INT, help=u"""Specifies whether to commit statements after DML. If a value is provided, then the load commits after each specified number of statements is inserted. If NULL is provided, then the load commits only once, at the end of the operation.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@cli_util.wrap_exceptions
+def save_sql_tuning_set_as_database_named_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, destination_sql_tuning_set_name, create_new, database_credential_named_credential_id, credential_details, show_sql_only, owner, destination_sql_tuning_set_description, destination_sql_tuning_set_owner, basic_filter, plan_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, attribute_list, load_option, update_option, update_condition, update_attributes, is_ignore_null, commit_rows):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['name'] = name
+    _details['destinationSqlTuningSetName'] = destination_sql_tuning_set_name
+    _details['createNew'] = create_new
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if show_sql_only is not None:
+        _details['showSqlOnly'] = show_sql_only
+
+    if owner is not None:
+        _details['owner'] = owner
+
+    if destination_sql_tuning_set_description is not None:
+        _details['destinationSqlTuningSetDescription'] = destination_sql_tuning_set_description
+
+    if destination_sql_tuning_set_owner is not None:
+        _details['destinationSqlTuningSetOwner'] = destination_sql_tuning_set_owner
+
+    if basic_filter is not None:
+        _details['basicFilter'] = basic_filter
+
+    if plan_filter is not None:
+        _details['planFilter'] = plan_filter
+
+    if recursive_sql is not None:
+        _details['recursiveSql'] = recursive_sql
+
+    if result_percentage is not None:
+        _details['resultPercentage'] = result_percentage
+
+    if result_limit is not None:
+        _details['resultLimit'] = result_limit
+
+    if ranking_measure1 is not None:
+        _details['rankingMeasure1'] = ranking_measure1
+
+    if ranking_measure2 is not None:
+        _details['rankingMeasure2'] = ranking_measure2
+
+    if ranking_measure3 is not None:
+        _details['rankingMeasure3'] = ranking_measure3
+
+    if attribute_list is not None:
+        _details['attributeList'] = attribute_list
+
+    if load_option is not None:
+        _details['loadOption'] = load_option
+
+    if update_option is not None:
+        _details['updateOption'] = update_option
+
+    if update_condition is not None:
+        _details['updateCondition'] = update_condition
+
+    if update_attributes is not None:
+        _details['updateAttributes'] = update_attributes
+
+    if is_ignore_null is not None:
+        _details['isIgnoreNull'] = is_ignore_null
+
+    if commit_rows is not None:
+        _details['commitRows'] = commit_rows
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.save_sql_tuning_set_as(
+        managed_database_id=managed_database_id,
+        sql_tuning_set_id=sql_tuning_set_id,
+        save_sql_tuning_set_as_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@sql_tuning_set_group.command(name=cli_util.override('sql_tuning.save_sql_tuning_set_as_database_password_credential_details.command_name', 'save-sql-tuning-set-as-database-password-credential-details'), help=u"""Saves the specified list of Sqls statements into another new Sql tuning set or loads into an existing Sql tuning set'. \n[Command Reference](saveSqlTuningSetAs)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--sql-tuning-set-id', required=True, type=click.INT, help=u"""The unique identifier of the Sql tuning set. This is not OCID.""")
+@cli_util.option('--name', required=True, help=u"""The name of the Sql tuning set.""")
+@cli_util.option('--destination-sql-tuning-set-name', required=True, help=u"""The name of the destination Sql tuning set.""")
+@cli_util.option('--create-new', required=True, type=click.INT, help=u"""Specifies whether to create a new Sql tuning set or not. Possible values 1 - Create a new Sql tuning set 0 - Do not create a new Sql tuning set""")
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to save the Sql tuning set or just display the plsql used to save Sql tuning set.""")
+@cli_util.option('--owner', help=u"""The owner of the Sql tuning set.""")
+@cli_util.option('--destination-sql-tuning-set-description', help=u"""The description for the destination Sql tuning set.""")
+@cli_util.option('--destination-sql-tuning-set-owner', help=u"""Owner of the destination Sql tuning set.""")
+@cli_util.option('--basic-filter', help=u"""Specifies the Sql predicate to filter the Sql from the Sql tuning set defined on attributes of the SQLSET_ROW. User could use any combination of the following columns with appropriate values as Sql predicate Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/18/arpls/DBMS_SQLTUNE.html#GUID-1F4AFB03-7B29-46FC-B3F2-CB01EC36326C""")
+@cli_util.option('--plan-filter', type=custom_types.CliCaseInsensitiveChoice(["LAST_GENERATED", "FIRST_GENERATED", "LAST_LOADED", "FIRST_LOADED", "MAX_ELAPSED_TIME", "MAX_BUFFER_GETS", "MAX_DISK_READS", "MAX_DIRECT_WRITES", "MAX_OPTIMIZER_COST"]), help=u"""Specifies the plan filter. This parameter enables you to select a single plan when a statement has multiple plans. Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/19/arpls/DBMS_SQLSET.html#GUID-9D995019-91AB-4B1E-9EAF-031050789B21""")
+@cli_util.option('--recursive-sql', type=custom_types.CliCaseInsensitiveChoice(["HAS_RECURSIVE_SQL", "NO_RECURSIVE_SQL"]), help=u"""Specifies that the filter must include recursive Sql in the Sql tuning set.""")
+@cli_util.option('--result-percentage', help=u"""Specifies a filter that picks the top n% according to the supplied ranking measure. Note that this parameter applies only if one ranking measure is supplied.""")
+@cli_util.option('--result-limit', type=click.INT, help=u"""The top limit Sql from the filtered source, ranked by the ranking measure.""")
+@cli_util.option('--ranking-measure1', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--ranking-measure2', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--ranking-measure3', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
+@cli_util.option('--attribute-list', help=u"""Specifies the list of Sql statement attributes to return in the result. Note that this parameter cannot be made an enum since custom value can take a list of comma separated attribute names. Attribute list can take one of the following values.  TYPICAL - Specifies BASIC plus Sql plan (without row source statistics) and without object reference list (default).  BASIC - Specifies all attributes (such as execution statistics and binds) except the plans. The execution context is always part of the result.  ALL - Specifies all attributes.  CUSTOM - Comma-separated list of the following attribute names.           - EXECUTION_STATISTICS           - BIND_LIST           - OBJECT_LIST           - SQL_PLAN           - SQL_PLAN_STATISTICS Usage examples:   1. \"attributeList\": \"TYPICAL\"   2. \"attributeList\": \"ALL\"   3. \"attributeList\": \"EXECUTION_STATISTICS,OBJECT_LIST,SQL_PLAN\"""")
+@cli_util.option('--load-option', type=custom_types.CliCaseInsensitiveChoice(["INSERT", "UPDATE", "MERGE"]), help=u"""Specifies which statements are loaded into the Sql tuning set. The possible values are.   - INSERT (default)     Adds only new statements.   - UPDATE     Updates existing the Sql statements and ignores any new statements.   - MERGE     Inserts new statements and updates the information of the existing ones.""")
+@cli_util.option('--update-option', type=custom_types.CliCaseInsensitiveChoice(["REPLACE", "ACCUMULATE"]), help=u"""Specifies how existing Sql statements are updated. This parameter is applicable only if load_option is specified with UPDATE or MERGE as an option. Update option can take one of the following values.    REPLACE (default) - Updates the statement using the new statistics, bind list, object list, and so on.    ACCUMULATE - Combines attributes when possible (for example, statistics such as elapsed_time), otherwise replaces the existing values (for example, module and action) with the provided values.    Following Sql statement attributes can be accumulated.        elapsed_time        buffer_gets        direct_writes        disk_reads        row_processed        fetches        executions        end_of_fetch_count        stat_period        active_stat_period""")
+@cli_util.option('--update-condition', type=custom_types.CliCaseInsensitiveChoice(["OLD", "NEW"]), help=u"""Specifies when to perform the update. The procedure only performs the update when the specified condition is satisfied. The condition can refer to either the data source or destination. The condition must use the following prefixes to refer to attributes from the source or the destination:   OLD  \u2014 Refers to statement attributes from the SQL tuning set (destination).   NEW  \u2014 Refers to statement attributes from the input statements (source).   NULL \u2014 No updates are performed.""")
+@cli_util.option('--update-attributes', help=u"""Specifies the list of Sql statement attributes to update during a merge or update. Note that this parameter cannot be made an enum since custom value can take a list of comma separated attribute names. Update attributes can take one of the following values.    NULL (default) - Specifies the content of the input cursor except the execution context. On other terms, it is equivalent to ALL without execution contexts such as module and action.    BASIC - Specifies statistics and binds only.    TYPICAL - Specifies BASIC with Sql plans (without row source statistics) and without an object reference list.    ALL - Specifies all attributes, including the execution context attributes such as module and action.    CUSTOM - List of comma separated attribute names to update        EXECUTION_CONTEXT        EXECUTION_STATISTICS        SQL_BINDS        SQL_PLAN        SQL_PLAN_STATISTICS (similar to SQL_PLAN with added row source statistics) Usage examples:   1. \"updateAttributes\": \"TYPICAL\"   2. \"updateAttributes\": \"BASIC\"   3. \"updateAttributes\": \"EXECUTION_STATISTICS,SQL_PLAN_STATISTICS,SQL_PLAN\"   4. \"updateAttributes\": \"EXECUTION_STATISTICS,SQL_PLAN\"""")
+@cli_util.option('--is-ignore-null', type=click.BOOL, help=u"""Specifies whether to update attributes when the new value is NULL. If TRUE, then the procedure does not update an attribute when the new value is NULL. That is, do not override with NULL values unless intentional. Possible values - true or false""")
+@cli_util.option('--commit-rows', type=click.INT, help=u"""Specifies whether to commit statements after DML. If a value is provided, then the load commits after each specified number of statements is inserted. If NULL is provided, then the load commits only once, at the end of the operation.""")
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@cli_util.wrap_exceptions
+def save_sql_tuning_set_as_database_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, name, destination_sql_tuning_set_name, create_new, database_credential_password, credential_details, show_sql_only, owner, destination_sql_tuning_set_description, destination_sql_tuning_set_owner, basic_filter, plan_filter, recursive_sql, result_percentage, result_limit, ranking_measure1, ranking_measure2, ranking_measure3, attribute_list, load_option, update_option, update_condition, update_attributes, is_ignore_null, commit_rows, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['name'] = name
+    _details['destinationSqlTuningSetName'] = destination_sql_tuning_set_name
+    _details['createNew'] = create_new
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if show_sql_only is not None:
+        _details['showSqlOnly'] = show_sql_only
+
+    if owner is not None:
+        _details['owner'] = owner
+
+    if destination_sql_tuning_set_description is not None:
+        _details['destinationSqlTuningSetDescription'] = destination_sql_tuning_set_description
+
+    if destination_sql_tuning_set_owner is not None:
+        _details['destinationSqlTuningSetOwner'] = destination_sql_tuning_set_owner
+
+    if basic_filter is not None:
+        _details['basicFilter'] = basic_filter
+
+    if plan_filter is not None:
+        _details['planFilter'] = plan_filter
+
+    if recursive_sql is not None:
+        _details['recursiveSql'] = recursive_sql
+
+    if result_percentage is not None:
+        _details['resultPercentage'] = result_percentage
+
+    if result_limit is not None:
+        _details['resultLimit'] = result_limit
+
+    if ranking_measure1 is not None:
+        _details['rankingMeasure1'] = ranking_measure1
+
+    if ranking_measure2 is not None:
+        _details['rankingMeasure2'] = ranking_measure2
+
+    if ranking_measure3 is not None:
+        _details['rankingMeasure3'] = ranking_measure3
+
+    if attribute_list is not None:
+        _details['attributeList'] = attribute_list
+
+    if load_option is not None:
+        _details['loadOption'] = load_option
+
+    if update_option is not None:
+        _details['updateOption'] = update_option
+
+    if update_condition is not None:
+        _details['updateCondition'] = update_condition
+
+    if update_attributes is not None:
+        _details['updateAttributes'] = update_attributes
+
+    if is_ignore_null is not None:
+        _details['isIgnoreNull'] = is_ignore_null
+
+    if commit_rows is not None:
+        _details['commitRows'] = commit_rows
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.save_sql_tuning_set_as(
+        managed_database_id=managed_database_id,
+        sql_tuning_set_id=sql_tuning_set_id,
+        save_sql_tuning_set_as_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @managed_database_group.command(name=cli_util.override('sql_tuning.start_sql_tuning_task.command_name', 'start-sql-tuning-task'), help=u"""Starts a SQL tuning task for a given set of SQL statements from the active session history top SQL statements. \n[Command Reference](startSqlTuningTask)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--task-name', required=True, help=u"""The name of the SQL tuning task. The name is unique per user in a database, and it is case-sensitive.""")
-@cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--total-time-limit-in-minutes', required=True, type=click.INT, help=u"""The time limit for running the SQL tuning task.""")
 @cli_util.option('--scope', required=True, type=custom_types.CliCaseInsensitiveChoice(["LIMITED", "COMPREHENSIVE"]), help=u"""The scope for the SQL tuning task. For LIMITED scope, the SQL profile recommendation is excluded, so the task is executed faster. For COMPREHENSIVE scope, the SQL profile recommendation is included.""")
 @cli_util.option('--task-description', help=u"""The description of the SQL tuning task.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--statement-time-limit-in-minutes', type=click.INT, help=u"""The time limit per SQL statement (in minutes). This is for a task with the COMPREHENSIVE scope. The time limit per SQL statement should not be more than the total time limit.""")
 @cli_util.option('--sql-tuning-set', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--sql-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of the SQL statement on which tuning is performed. To obtain the details of the SQL statement, you must provide either the sqlTuningSet or the tuple of sqlDetails/timeStarted/timeEnded.
@@ -2078,12 +4029,12 @@ def save_sql_tuning_set_as_sql_tuning_set_admin_secret_credential_details(ctx, f
 This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For documentation on SqlTuningTaskSqlDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/sqltuning/20201101/datatypes/SqlTuningTaskSqlDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--time-started', type=custom_types.CLI_DATETIME, help=u"""The start time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-ended', type=custom_types.CLI_DATETIME, help=u"""The end time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}, 'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}})
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}, 'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}, 'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}}, output_type={'module': 'database_management', 'class': 'SqlTuningTaskReturn'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}, 'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}}, output_type={'module': 'database_management', 'class': 'SqlTuningTaskReturn'})
 @cli_util.wrap_exceptions
-def start_sql_tuning_task(ctx, from_json, managed_database_id, task_name, credential_details, total_time_limit_in_minutes, scope, task_description, statement_time_limit_in_minutes, sql_tuning_set, sql_details, time_started, time_ended):
+def start_sql_tuning_task(ctx, from_json, managed_database_id, task_name, total_time_limit_in_minutes, scope, task_description, credential_details, database_credential, statement_time_limit_in_minutes, sql_tuning_set, sql_details, time_started, time_ended):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -2093,12 +4044,17 @@ def start_sql_tuning_task(ctx, from_json, managed_database_id, task_name, creden
 
     _details = {}
     _details['taskName'] = task_name
-    _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
     _details['totalTimeLimitInMinutes'] = total_time_limit_in_minutes
     _details['scope'] = scope
 
     if task_description is not None:
         _details['taskDescription'] = task_description
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if statement_time_limit_in_minutes is not None:
         _details['statementTimeLimitInMinutes'] = statement_time_limit_in_minutes
@@ -2133,6 +4089,7 @@ def start_sql_tuning_task(ctx, from_json, managed_database_id, task_name, creden
 @cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credential-details-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
 @cli_util.option('--task-description', help=u"""The description of the SQL tuning task.""")
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--statement-time-limit-in-minutes', type=click.INT, help=u"""The time limit per SQL statement (in minutes). This is for a task with the COMPREHENSIVE scope. The time limit per SQL statement should not be more than the total time limit.""")
 @cli_util.option('--sql-tuning-set', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--sql-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of the SQL statement on which tuning is performed. To obtain the details of the SQL statement, you must provide either the sqlTuningSet or the tuple of sqlDetails/timeStarted/timeEnded.
@@ -2140,12 +4097,12 @@ def start_sql_tuning_task(ctx, from_json, managed_database_id, task_name, creden
 This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For documentation on SqlTuningTaskSqlDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/sqltuning/20201101/datatypes/SqlTuningTaskSqlDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--time-started', type=custom_types.CLI_DATETIME, help=u"""The start time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-ended', type=custom_types.CLI_DATETIME, help=u"""The end time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@json_skeleton_utils.get_cli_json_input_option({'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}})
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}, 'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}}, output_type={'module': 'database_management', 'class': 'SqlTuningTaskReturn'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}, 'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}}, output_type={'module': 'database_management', 'class': 'SqlTuningTaskReturn'})
 @cli_util.wrap_exceptions
-def start_sql_tuning_task_sql_tuning_task_secret_credential_details(ctx, from_json, managed_database_id, task_name, total_time_limit_in_minutes, scope, credential_details_username, credential_details_role, credential_details_password_secret_id, task_description, statement_time_limit_in_minutes, sql_tuning_set, sql_details, time_started, time_ended):
+def start_sql_tuning_task_sql_tuning_task_secret_credential_details(ctx, from_json, managed_database_id, task_name, total_time_limit_in_minutes, scope, credential_details_username, credential_details_role, credential_details_password_secret_id, task_description, database_credential, statement_time_limit_in_minutes, sql_tuning_set, sql_details, time_started, time_ended):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -2164,6 +4121,9 @@ def start_sql_tuning_task_sql_tuning_task_secret_credential_details(ctx, from_js
 
     if task_description is not None:
         _details['taskDescription'] = task_description
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if statement_time_limit_in_minutes is not None:
         _details['statementTimeLimitInMinutes'] = statement_time_limit_in_minutes
@@ -2200,6 +4160,7 @@ def start_sql_tuning_task_sql_tuning_task_secret_credential_details(ctx, from_js
 @cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credential-details-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
 @cli_util.option('--task-description', help=u"""The description of the SQL tuning task.""")
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--statement-time-limit-in-minutes', type=click.INT, help=u"""The time limit per SQL statement (in minutes). This is for a task with the COMPREHENSIVE scope. The time limit per SQL statement should not be more than the total time limit.""")
 @cli_util.option('--sql-tuning-set', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--sql-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of the SQL statement on which tuning is performed. To obtain the details of the SQL statement, you must provide either the sqlTuningSet or the tuple of sqlDetails/timeStarted/timeEnded.
@@ -2207,12 +4168,12 @@ def start_sql_tuning_task_sql_tuning_task_secret_credential_details(ctx, from_js
 This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For documentation on SqlTuningTaskSqlDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/sqltuning/20201101/datatypes/SqlTuningTaskSqlDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--time-started', type=custom_types.CLI_DATETIME, help=u"""The start time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-ended', type=custom_types.CLI_DATETIME, help=u"""The end time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@json_skeleton_utils.get_cli_json_input_option({'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}})
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}, 'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}}, output_type={'module': 'database_management', 'class': 'SqlTuningTaskReturn'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}, 'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}}, output_type={'module': 'database_management', 'class': 'SqlTuningTaskReturn'})
 @cli_util.wrap_exceptions
-def start_sql_tuning_task_sql_tuning_task_password_credential_details(ctx, from_json, managed_database_id, task_name, total_time_limit_in_minutes, scope, credential_details_username, credential_details_role, credential_details_password, task_description, statement_time_limit_in_minutes, sql_tuning_set, sql_details, time_started, time_ended):
+def start_sql_tuning_task_sql_tuning_task_password_credential_details(ctx, from_json, managed_database_id, task_name, total_time_limit_in_minutes, scope, credential_details_username, credential_details_role, credential_details_password, task_description, database_credential, statement_time_limit_in_minutes, sql_tuning_set, sql_details, time_started, time_ended):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -2231,6 +4192,9 @@ def start_sql_tuning_task_sql_tuning_task_password_credential_details(ctx, from_
 
     if task_description is not None:
         _details['taskDescription'] = task_description
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if statement_time_limit_in_minutes is not None:
         _details['statementTimeLimitInMinutes'] = statement_time_limit_in_minutes
@@ -2258,19 +4222,237 @@ def start_sql_tuning_task_sql_tuning_task_password_credential_details(ctx, from_
     cli_util.render_response(result, ctx)
 
 
+@managed_database_group.command(name=cli_util.override('sql_tuning.start_sql_tuning_task_database_secret_credential_details.command_name', 'start-sql-tuning-task-database-secret-credential-details'), help=u"""Starts a SQL tuning task for a given set of SQL statements from the active session history top SQL statements. \n[Command Reference](startSqlTuningTask)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--task-name', required=True, help=u"""The name of the SQL tuning task. The name is unique per user in a database, and it is case-sensitive.""")
+@cli_util.option('--total-time-limit-in-minutes', required=True, type=click.INT, help=u"""The time limit for running the SQL tuning task.""")
+@cli_util.option('--scope', required=True, type=custom_types.CliCaseInsensitiveChoice(["LIMITED", "COMPREHENSIVE"]), help=u"""The scope for the SQL tuning task. For LIMITED scope, the SQL profile recommendation is excluded, so the task is executed faster. For COMPREHENSIVE scope, the SQL profile recommendation is included.""")
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--task-description', help=u"""The description of the SQL tuning task.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--statement-time-limit-in-minutes', type=click.INT, help=u"""The time limit per SQL statement (in minutes). This is for a task with the COMPREHENSIVE scope. The time limit per SQL statement should not be more than the total time limit.""")
+@cli_util.option('--sql-tuning-set', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--sql-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of the SQL statement on which tuning is performed. To obtain the details of the SQL statement, you must provide either the sqlTuningSet or the tuple of sqlDetails/timeStarted/timeEnded.
+
+This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For documentation on SqlTuningTaskSqlDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/sqltuning/20201101/datatypes/SqlTuningTaskSqlDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--time-started', type=custom_types.CLI_DATETIME, help=u"""The start time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-ended', type=custom_types.CLI_DATETIME, help=u"""The end time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}, 'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}, 'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}}, output_type={'module': 'database_management', 'class': 'SqlTuningTaskReturn'})
+@cli_util.wrap_exceptions
+def start_sql_tuning_task_database_secret_credential_details(ctx, from_json, managed_database_id, task_name, total_time_limit_in_minutes, scope, database_credential_password_secret_id, task_description, credential_details, statement_time_limit_in_minutes, sql_tuning_set, sql_details, time_started, time_ended, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['taskName'] = task_name
+    _details['totalTimeLimitInMinutes'] = total_time_limit_in_minutes
+    _details['scope'] = scope
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if task_description is not None:
+        _details['taskDescription'] = task_description
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if statement_time_limit_in_minutes is not None:
+        _details['statementTimeLimitInMinutes'] = statement_time_limit_in_minutes
+
+    if sql_tuning_set is not None:
+        _details['sqlTuningSet'] = cli_util.parse_json_parameter("sql_tuning_set", sql_tuning_set)
+
+    if sql_details is not None:
+        _details['sqlDetails'] = cli_util.parse_json_parameter("sql_details", sql_details)
+
+    if time_started is not None:
+        _details['timeStarted'] = time_started
+
+    if time_ended is not None:
+        _details['timeEnded'] = time_ended
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.start_sql_tuning_task(
+        managed_database_id=managed_database_id,
+        start_sql_tuning_task_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('sql_tuning.start_sql_tuning_task_database_named_credential_details.command_name', 'start-sql-tuning-task-database-named-credential-details'), help=u"""Starts a SQL tuning task for a given set of SQL statements from the active session history top SQL statements. \n[Command Reference](startSqlTuningTask)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--task-name', required=True, help=u"""The name of the SQL tuning task. The name is unique per user in a database, and it is case-sensitive.""")
+@cli_util.option('--total-time-limit-in-minutes', required=True, type=click.INT, help=u"""The time limit for running the SQL tuning task.""")
+@cli_util.option('--scope', required=True, type=custom_types.CliCaseInsensitiveChoice(["LIMITED", "COMPREHENSIVE"]), help=u"""The scope for the SQL tuning task. For LIMITED scope, the SQL profile recommendation is excluded, so the task is executed faster. For COMPREHENSIVE scope, the SQL profile recommendation is included.""")
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--task-description', help=u"""The description of the SQL tuning task.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--statement-time-limit-in-minutes', type=click.INT, help=u"""The time limit per SQL statement (in minutes). This is for a task with the COMPREHENSIVE scope. The time limit per SQL statement should not be more than the total time limit.""")
+@cli_util.option('--sql-tuning-set', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--sql-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of the SQL statement on which tuning is performed. To obtain the details of the SQL statement, you must provide either the sqlTuningSet or the tuple of sqlDetails/timeStarted/timeEnded.
+
+This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For documentation on SqlTuningTaskSqlDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/sqltuning/20201101/datatypes/SqlTuningTaskSqlDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--time-started', type=custom_types.CLI_DATETIME, help=u"""The start time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-ended', type=custom_types.CLI_DATETIME, help=u"""The end time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}, 'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}, 'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}}, output_type={'module': 'database_management', 'class': 'SqlTuningTaskReturn'})
+@cli_util.wrap_exceptions
+def start_sql_tuning_task_database_named_credential_details(ctx, from_json, managed_database_id, task_name, total_time_limit_in_minutes, scope, database_credential_named_credential_id, task_description, credential_details, statement_time_limit_in_minutes, sql_tuning_set, sql_details, time_started, time_ended):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['taskName'] = task_name
+    _details['totalTimeLimitInMinutes'] = total_time_limit_in_minutes
+    _details['scope'] = scope
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if task_description is not None:
+        _details['taskDescription'] = task_description
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if statement_time_limit_in_minutes is not None:
+        _details['statementTimeLimitInMinutes'] = statement_time_limit_in_minutes
+
+    if sql_tuning_set is not None:
+        _details['sqlTuningSet'] = cli_util.parse_json_parameter("sql_tuning_set", sql_tuning_set)
+
+    if sql_details is not None:
+        _details['sqlDetails'] = cli_util.parse_json_parameter("sql_details", sql_details)
+
+    if time_started is not None:
+        _details['timeStarted'] = time_started
+
+    if time_ended is not None:
+        _details['timeEnded'] = time_ended
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.start_sql_tuning_task(
+        managed_database_id=managed_database_id,
+        start_sql_tuning_task_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('sql_tuning.start_sql_tuning_task_database_password_credential_details.command_name', 'start-sql-tuning-task-database-password-credential-details'), help=u"""Starts a SQL tuning task for a given set of SQL statements from the active session history top SQL statements. \n[Command Reference](startSqlTuningTask)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--task-name', required=True, help=u"""The name of the SQL tuning task. The name is unique per user in a database, and it is case-sensitive.""")
+@cli_util.option('--total-time-limit-in-minutes', required=True, type=click.INT, help=u"""The time limit for running the SQL tuning task.""")
+@cli_util.option('--scope', required=True, type=custom_types.CliCaseInsensitiveChoice(["LIMITED", "COMPREHENSIVE"]), help=u"""The scope for the SQL tuning task. For LIMITED scope, the SQL profile recommendation is excluded, so the task is executed faster. For COMPREHENSIVE scope, the SQL profile recommendation is included.""")
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--task-description', help=u"""The description of the SQL tuning task.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--statement-time-limit-in-minutes', type=click.INT, help=u"""The time limit per SQL statement (in minutes). This is for a task with the COMPREHENSIVE scope. The time limit per SQL statement should not be more than the total time limit.""")
+@cli_util.option('--sql-tuning-set', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--sql-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of the SQL statement on which tuning is performed. To obtain the details of the SQL statement, you must provide either the sqlTuningSet or the tuple of sqlDetails/timeStarted/timeEnded.
+
+This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For documentation on SqlTuningTaskSqlDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/sqltuning/20201101/datatypes/SqlTuningTaskSqlDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--time-started', type=custom_types.CLI_DATETIME, help=u"""The start time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-ended', type=custom_types.CLI_DATETIME, help=u"""The end time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}, 'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}, 'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}}, output_type={'module': 'database_management', 'class': 'SqlTuningTaskReturn'})
+@cli_util.wrap_exceptions
+def start_sql_tuning_task_database_password_credential_details(ctx, from_json, managed_database_id, task_name, total_time_limit_in_minutes, scope, database_credential_password, task_description, credential_details, statement_time_limit_in_minutes, sql_tuning_set, sql_details, time_started, time_ended, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['taskName'] = task_name
+    _details['totalTimeLimitInMinutes'] = total_time_limit_in_minutes
+    _details['scope'] = scope
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if task_description is not None:
+        _details['taskDescription'] = task_description
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if statement_time_limit_in_minutes is not None:
+        _details['statementTimeLimitInMinutes'] = statement_time_limit_in_minutes
+
+    if sql_tuning_set is not None:
+        _details['sqlTuningSet'] = cli_util.parse_json_parameter("sql_tuning_set", sql_tuning_set)
+
+    if sql_details is not None:
+        _details['sqlDetails'] = cli_util.parse_json_parameter("sql_details", sql_details)
+
+    if time_started is not None:
+        _details['timeStarted'] = time_started
+
+    if time_ended is not None:
+        _details['timeEnded'] = time_ended
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.start_sql_tuning_task(
+        managed_database_id=managed_database_id,
+        start_sql_tuning_task_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @sql_tuning_set_group.command(name=cli_util.override('sql_tuning.validate_basic_filter.command_name', 'validate-basic-filter'), help=u"""Executes a SQL query to check whether user entered basic filter criteria is valid or not. \n[Command Reference](validateBasicFilter)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--sql-tuning-set-id', required=True, type=click.INT, help=u"""The unique identifier of the Sql tuning set. This is not OCID.""")
-@cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--owner', required=True, help=u"""The owner of the Sql tuning set.""")
 @cli_util.option('--name', required=True, help=u"""The name of the Sql tuning set.""")
 @cli_util.option('--basic-filter', required=True, help=u"""Specifies the Sql predicate to filter the Sql from the Sql tuning set defined on attributes of the SQLSET_ROW. User could use any combination of the following columns with appropriate values as Sql predicate Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/18/arpls/DBMS_SQLTUNE.html#GUID-1F4AFB03-7B29-46FC-B3F2-CB01EC36326C""")
-@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
 @cli_util.wrap_exceptions
-def validate_basic_filter(ctx, from_json, managed_database_id, sql_tuning_set_id, credential_details, owner, name, basic_filter):
+def validate_basic_filter(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, basic_filter, credential_details, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -2282,10 +4464,15 @@ def validate_basic_filter(ctx, from_json, managed_database_id, sql_tuning_set_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
     _details['owner'] = owner
     _details['name'] = name
     _details['basicFilter'] = basic_filter
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     client = cli_util.build_client('database_management', 'sql_tuning', ctx)
     result = client.validate_basic_filter(
@@ -2306,12 +4493,13 @@ def validate_basic_filter(ctx, from_json, managed_database_id, sql_tuning_set_id
 @cli_util.option('--credential-details-username', required=True, help=u"""The user to connect to the database.""")
 @cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credential-details-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
 @cli_util.wrap_exceptions
-def validate_basic_filter_sql_tuning_set_admin_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, basic_filter, credential_details_username, credential_details_role, credential_details_password):
+def validate_basic_filter_sql_tuning_set_admin_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, basic_filter, credential_details_username, credential_details_role, credential_details_password, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -2330,6 +4518,9 @@ def validate_basic_filter_sql_tuning_set_admin_password_credential_details(ctx, 
     _details['credentialDetails']['username'] = credential_details_username
     _details['credentialDetails']['role'] = credential_details_role
     _details['credentialDetails']['password'] = credential_details_password
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     _details['credentialDetails']['sqlTuningSetAdminCredentialType'] = 'PASSWORD'
 
@@ -2352,12 +4543,13 @@ def validate_basic_filter_sql_tuning_set_admin_password_credential_details(ctx, 
 @cli_util.option('--credential-details-username', required=True, help=u"""The user to connect to the database.""")
 @cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credential-details-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
 @cli_util.wrap_exceptions
-def validate_basic_filter_sql_tuning_set_admin_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, basic_filter, credential_details_username, credential_details_role, credential_details_secret_id):
+def validate_basic_filter_sql_tuning_set_admin_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, basic_filter, credential_details_username, credential_details_role, credential_details_secret_id, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -2377,7 +4569,164 @@ def validate_basic_filter_sql_tuning_set_admin_secret_credential_details(ctx, fr
     _details['credentialDetails']['role'] = credential_details_role
     _details['credentialDetails']['secretId'] = credential_details_secret_id
 
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
+
     _details['credentialDetails']['sqlTuningSetAdminCredentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.validate_basic_filter(
+        managed_database_id=managed_database_id,
+        sql_tuning_set_id=sql_tuning_set_id,
+        validate_basic_filter_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@sql_tuning_set_group.command(name=cli_util.override('sql_tuning.validate_basic_filter_database_secret_credential_details.command_name', 'validate-basic-filter-database-secret-credential-details'), help=u"""Executes a SQL query to check whether user entered basic filter criteria is valid or not. \n[Command Reference](validateBasicFilter)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--sql-tuning-set-id', required=True, type=click.INT, help=u"""The unique identifier of the Sql tuning set. This is not OCID.""")
+@cli_util.option('--owner', required=True, help=u"""The owner of the Sql tuning set.""")
+@cli_util.option('--name', required=True, help=u"""The name of the Sql tuning set.""")
+@cli_util.option('--basic-filter', required=True, help=u"""Specifies the Sql predicate to filter the Sql from the Sql tuning set defined on attributes of the SQLSET_ROW. User could use any combination of the following columns with appropriate values as Sql predicate Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/18/arpls/DBMS_SQLTUNE.html#GUID-1F4AFB03-7B29-46FC-B3F2-CB01EC36326C""")
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@cli_util.wrap_exceptions
+def validate_basic_filter_database_secret_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, basic_filter, database_credential_password_secret_id, credential_details, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['owner'] = owner
+    _details['name'] = name
+    _details['basicFilter'] = basic_filter
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.validate_basic_filter(
+        managed_database_id=managed_database_id,
+        sql_tuning_set_id=sql_tuning_set_id,
+        validate_basic_filter_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@sql_tuning_set_group.command(name=cli_util.override('sql_tuning.validate_basic_filter_database_named_credential_details.command_name', 'validate-basic-filter-database-named-credential-details'), help=u"""Executes a SQL query to check whether user entered basic filter criteria is valid or not. \n[Command Reference](validateBasicFilter)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--sql-tuning-set-id', required=True, type=click.INT, help=u"""The unique identifier of the Sql tuning set. This is not OCID.""")
+@cli_util.option('--owner', required=True, help=u"""The owner of the Sql tuning set.""")
+@cli_util.option('--name', required=True, help=u"""The name of the Sql tuning set.""")
+@cli_util.option('--basic-filter', required=True, help=u"""Specifies the Sql predicate to filter the Sql from the Sql tuning set defined on attributes of the SQLSET_ROW. User could use any combination of the following columns with appropriate values as Sql predicate Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/18/arpls/DBMS_SQLTUNE.html#GUID-1F4AFB03-7B29-46FC-B3F2-CB01EC36326C""")
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@cli_util.wrap_exceptions
+def validate_basic_filter_database_named_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, basic_filter, database_credential_named_credential_id, credential_details):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['owner'] = owner
+    _details['name'] = name
+    _details['basicFilter'] = basic_filter
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'sql_tuning', ctx)
+    result = client.validate_basic_filter(
+        managed_database_id=managed_database_id,
+        sql_tuning_set_id=sql_tuning_set_id,
+        validate_basic_filter_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@sql_tuning_set_group.command(name=cli_util.override('sql_tuning.validate_basic_filter_database_password_credential_details.command_name', 'validate-basic-filter-database-password-credential-details'), help=u"""Executes a SQL query to check whether user entered basic filter criteria is valid or not. \n[Command Reference](validateBasicFilter)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--sql-tuning-set-id', required=True, type=click.INT, help=u"""The unique identifier of the Sql tuning set. This is not OCID.""")
+@cli_util.option('--owner', required=True, help=u"""The owner of the Sql tuning set.""")
+@cli_util.option('--name', required=True, help=u"""The name of the Sql tuning set.""")
+@cli_util.option('--basic-filter', required=True, help=u"""Specifies the Sql predicate to filter the Sql from the Sql tuning set defined on attributes of the SQLSET_ROW. User could use any combination of the following columns with appropriate values as Sql predicate Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/18/arpls/DBMS_SQLTUNE.html#GUID-1F4AFB03-7B29-46FC-B3F2-CB01EC36326C""")
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlTuningSetAdminActionStatus'})
+@cli_util.wrap_exceptions
+def validate_basic_filter_database_password_credential_details(ctx, from_json, managed_database_id, sql_tuning_set_id, owner, name, basic_filter, database_credential_password, credential_details, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(sql_tuning_set_id, six.string_types) and len(sql_tuning_set_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-tuning-set-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['owner'] = owner
+    _details['name'] = name
+    _details['basicFilter'] = basic_filter
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
 
     client = cli_util.build_client('database_management', 'sql_tuning', ctx)
     result = client.validate_basic_filter(

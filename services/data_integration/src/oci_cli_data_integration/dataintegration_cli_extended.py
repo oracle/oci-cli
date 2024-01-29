@@ -21,6 +21,7 @@ dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_con
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_oracle_ebs.name)
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_oracle_people_soft.name)
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_oracle_siebel.name)
+dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_o_auth2.name)
 
 create_connection_args = [
     'workspace_id',
@@ -197,6 +198,19 @@ def create_connection_extended(ctx, **kwargs):
             }
         )
         ctx.invoke(dataintegration_cli.create_connection_create_connection_from_oracle_siebel, **temp_args)
+        ctx.invoke(dataintegration_cli.create_connection_create_connection_from_rest_no_auth, **oracle_rest_no_auth_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'OAUTH2_CONNECTION':
+        oracle_o_auth2_auth_args = {}
+        oracle_o_auth2_auth_args.update(common_args)
+        oracle_o_auth2_auth_args.update(
+            {
+                'access_token_url': kwargs['access_token_url'],
+                'client_id': kwargs['client_id'],
+                'client_secret': kwargs['client_secret'],
+                'scope': kwargs['scope']
+            }
+        )
+        ctx.invoke(dataintegration_cli.create_connection_create_connection_from_o_auth2, **oracle_o_auth2_auth_args)
 
 
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_object_storage.name)
@@ -211,6 +225,7 @@ dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_con
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_oracle_ebs.name)
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_oracle_people_soft.name)
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_oracle_siebel.name)
+dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_o_auth2.name)
 
 update_connection_args = [
     'workspace_id',
@@ -391,6 +406,19 @@ def update_connection_extended(ctx, **kwargs):
             }
         )
         ctx.invoke(dataintegration_cli.update_connection_update_connection_from_oracle_siebel, **temp_args)
+        ctx.invoke(dataintegration_cli.update_connection_update_connection_from_rest_no_auth, **oracle_rest_no_auth_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'OAUTH2_CONNECTION':
+        oracle_o_auth2_auth_args = {}
+        oracle_o_auth2_auth_args.update(common_args)
+        oracle_o_auth2_auth_args.update(
+            {
+                'access_token_url': kwargs['access_token_url'],
+                'client_id': kwargs['client_id'],
+                'client_secret': kwargs['client_secret'],
+                'scope': kwargs['scope']
+            }
+        )
+        ctx.invoke(dataintegration_cli.update_connection_update_connection_from_o_auth2, **oracle_o_auth2_auth_args)
 
 
 dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.create_data_asset_create_data_asset_from_object_storage.name)
@@ -1366,6 +1394,7 @@ dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_oracle_siebel.name)
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_data_asset_from_my_sql.name)
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_data_asset_from_jdbc.name)
+dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_o_auth2.name)
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_jdbc.name)
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_my_sql.name)
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_jdbc.name)
