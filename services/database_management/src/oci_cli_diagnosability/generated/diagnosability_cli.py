@@ -46,6 +46,7 @@ diagnosability_root_group.add_command(managed_database_group)
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -53,7 +54,7 @@ diagnosability_root_group.add_command(managed_database_group)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'AlertLogCollection'})
 @cli_util.wrap_exceptions
-def list_alert_logs(ctx, from_json, all_pages, page_size, managed_database_id, time_greater_than_or_equal_to, time_less_than_or_equal_to, level_filter, type_filter, log_search_text, is_regular_expression, sort_by, sort_order, page, limit):
+def list_alert_logs(ctx, from_json, all_pages, page_size, managed_database_id, time_greater_than_or_equal_to, time_less_than_or_equal_to, level_filter, type_filter, log_search_text, is_regular_expression, sort_by, sort_order, page, limit, opc_named_credential_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -82,6 +83,8 @@ def list_alert_logs(ctx, from_json, all_pages, page_size, managed_database_id, t
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'diagnosability', ctx)
     if all_pages:
@@ -121,6 +124,7 @@ def list_alert_logs(ctx, from_json, all_pages, page_size, managed_database_id, t
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -128,7 +132,7 @@ def list_alert_logs(ctx, from_json, all_pages, page_size, managed_database_id, t
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'AttentionLogCollection'})
 @cli_util.wrap_exceptions
-def list_attention_logs(ctx, from_json, all_pages, page_size, managed_database_id, time_greater_than_or_equal_to, time_less_than_or_equal_to, urgency_filter, type_filter, log_search_text, is_regular_expression, sort_by, sort_order, page, limit):
+def list_attention_logs(ctx, from_json, all_pages, page_size, managed_database_id, time_greater_than_or_equal_to, time_less_than_or_equal_to, urgency_filter, type_filter, log_search_text, is_regular_expression, sort_by, sort_order, page, limit, opc_named_credential_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -157,6 +161,8 @@ def list_attention_logs(ctx, from_json, all_pages, page_size, managed_database_i
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'diagnosability', ctx)
     if all_pages:
@@ -195,12 +201,13 @@ def list_attention_logs(ctx, from_json, all_pages, page_size, managed_database_i
 @cli_util.option('--is-regular-expression', type=click.BOOL, help=u"""The flag to indicate whether the search text is regular expression or not.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'AlertLogCountsCollection'})
 @cli_util.wrap_exceptions
-def summarize_alert_log_counts(ctx, from_json, managed_database_id, time_greater_than_or_equal_to, time_less_than_or_equal_to, level_filter, group_by, type_filter, log_search_text, is_regular_expression, page, limit):
+def summarize_alert_log_counts(ctx, from_json, managed_database_id, time_greater_than_or_equal_to, time_less_than_or_equal_to, level_filter, group_by, type_filter, log_search_text, is_regular_expression, page, limit, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -224,6 +231,8 @@ def summarize_alert_log_counts(ctx, from_json, managed_database_id, time_greater
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'diagnosability', ctx)
     result = client.summarize_alert_log_counts(
@@ -244,12 +253,13 @@ def summarize_alert_log_counts(ctx, from_json, managed_database_id, time_greater
 @cli_util.option('--is-regular-expression', type=click.BOOL, help=u"""The flag to indicate whether the search text is regular expression or not.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'AttentionLogCountsCollection'})
 @cli_util.wrap_exceptions
-def summarize_attention_log_counts(ctx, from_json, managed_database_id, time_greater_than_or_equal_to, time_less_than_or_equal_to, urgency_filter, group_by, type_filter, log_search_text, is_regular_expression, page, limit):
+def summarize_attention_log_counts(ctx, from_json, managed_database_id, time_greater_than_or_equal_to, time_less_than_or_equal_to, urgency_filter, group_by, type_filter, log_search_text, is_regular_expression, page, limit, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -273,6 +283,8 @@ def summarize_attention_log_counts(ctx, from_json, managed_database_id, time_gre
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'diagnosability', ctx)
     result = client.summarize_attention_log_counts(

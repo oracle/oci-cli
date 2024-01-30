@@ -150,6 +150,12 @@ def cluster_cache_metric_group():
     pass
 
 
+@click.command(cli_util.override('db_management.named_credential_group.command_name', 'named-credential'), cls=CommandGroupWithAlias, help="""The details of a named credential.""")
+@cli_util.help_option_group
+def named_credential_group():
+    pass
+
+
 @click.command(cli_util.override('db_management.work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""A log message from the execution of a work request.""")
 @cli_util.help_option_group
 def work_request_log_entry_group():
@@ -256,6 +262,7 @@ db_management_root_group.add_command(snapshot_details_group)
 db_management_root_group.add_command(external_asm_instance_group)
 db_management_root_group.add_command(historic_addm_result_group)
 db_management_root_group.add_command(cluster_cache_metric_group)
+db_management_root_group.add_command(named_credential_group)
 db_management_root_group.add_command(work_request_log_entry_group)
 db_management_root_group.add_command(external_listener_group)
 db_management_root_group.add_command(external_asm_group)
@@ -275,8 +282,9 @@ db_management_root_group.add_command(preferred_credential_group)
 @tablespace_group.command(name=cli_util.override('db_management.add_data_files.command_name', 'add'), help=u"""Adds data files or temp files to the tablespace. \n[Command Reference](addDataFiles)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--tablespace-name', required=True, help=u"""The name of the tablespace.""")
-@cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--file-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DATAFILE", "TEMPFILE"]), help=u"""Specifies whether the file is a data file or temp file.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-files', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of data files or temp files added to the tablespace.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--file-count', type=click.INT, help=u"""The number of data files or temp files to be added for the tablespace. This is for Oracle Managed Files only.""")
 @cli_util.option('--file-size', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The size of each data file or temp file.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -285,12 +293,12 @@ db_management_root_group.add_command(preferred_credential_group)
 @cli_util.option('--auto-extend-next-size', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The size of the next increment of disk space to be allocated automatically when more extents are required.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--auto-extend-max-size', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The maximum disk space allowed for automatic extension of the data files or temp files.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-max-size-unlimited', type=click.BOOL, help=u"""Specifies whether the disk space of the data file or temp file can be limited.""")
-@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'data-files': {'module': 'database_management', 'class': 'list[string]'}, 'file-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-next-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-max-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}})
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}, 'data-files': {'module': 'database_management', 'class': 'list[string]'}, 'file-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-next-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-max-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'data-files': {'module': 'database_management', 'class': 'list[string]'}, 'file-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-next-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-max-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}, 'data-files': {'module': 'database_management', 'class': 'list[string]'}, 'file-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-next-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-max-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
 @cli_util.wrap_exceptions
-def add_data_files(ctx, from_json, managed_database_id, tablespace_name, credential_details, file_type, data_files, file_count, file_size, is_reusable, is_auto_extensible, auto_extend_next_size, auto_extend_max_size, is_max_size_unlimited):
+def add_data_files(ctx, from_json, managed_database_id, tablespace_name, file_type, credential_details, database_credential, data_files, file_count, file_size, is_reusable, is_auto_extensible, auto_extend_next_size, auto_extend_max_size, is_max_size_unlimited):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -302,8 +310,13 @@ def add_data_files(ctx, from_json, managed_database_id, tablespace_name, credent
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
     _details['fileType'] = file_type
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if data_files is not None:
         _details['dataFiles'] = cli_util.parse_json_parameter("data_files", data_files)
@@ -375,12 +388,13 @@ def add_managed_database_to_managed_database_group(ctx, from_json, managed_datab
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TASK_NAME", "TASK_ID", "DESCRIPTION", "DB_USER", "STATUS", "TIME_CREATED", "BEGIN_TIME", "END_TIME"]), help=u"""The option to sort the list of ADDM tasks.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the default order.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'AddmTasksCollection'})
 @cli_util.wrap_exceptions
-def addm_tasks(ctx, from_json, managed_database_id, time_start, time_end, page, limit, sort_by, sort_order):
+def addm_tasks(ctx, from_json, managed_database_id, time_start, time_end, page, limit, sort_by, sort_order, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -394,6 +408,8 @@ def addm_tasks(ctx, from_json, managed_database_id, time_start, time_end, page, 
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.addm_tasks(
@@ -411,17 +427,18 @@ def addm_tasks(ctx, from_json, managed_database_id, time_start, time_end, page, 
 
 **Note:** If the instance is started using a text initialization parameter file, the parameter changes are applicable only for the current instance. You must update them manually to be passed to a future instance. \n[Command Reference](changeDatabaseParameters)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--scope', required=True, type=custom_types.CliCaseInsensitiveChoice(["MEMORY", "SPFILE", "BOTH"]), help=u"""The clause used to specify when the parameter change takes effect.
 
 Use `MEMORY` to make the change in memory and affect it immediately. Use `SPFILE` to make the change in the server parameter file. The change takes effect when the database is next shut down and started up again. Use `BOTH` to make the change in memory and in the server parameter file. The change takes effect immediately and persists after the database is shut down and started up again.""")
 @cli_util.option('--parameters', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of database parameters and their values.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'parameters': {'module': 'database_management', 'class': 'list[ChangeDatabaseParameterDetails]'}})
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}, 'parameters': {'module': 'database_management', 'class': 'list[ChangeDatabaseParameterDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'parameters': {'module': 'database_management', 'class': 'list[ChangeDatabaseParameterDetails]'}}, output_type={'module': 'database_management', 'class': 'UpdateDatabaseParametersResult'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}, 'parameters': {'module': 'database_management', 'class': 'list[ChangeDatabaseParameterDetails]'}}, output_type={'module': 'database_management', 'class': 'UpdateDatabaseParametersResult'})
 @cli_util.wrap_exceptions
-def change_database_parameters(ctx, from_json, managed_database_id, credentials, scope, parameters):
+def change_database_parameters(ctx, from_json, managed_database_id, scope, parameters, credentials, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -430,9 +447,165 @@ def change_database_parameters(ctx, from_json, managed_database_id, credentials,
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
     _details['scope'] = scope
     _details['parameters'] = cli_util.parse_json_parameter("parameters", parameters)
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.change_database_parameters(
+        managed_database_id=managed_database_id,
+        change_database_parameters_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.change_database_parameters_database_secret_credential_details.command_name', 'change-database-parameters-database-secret-credential-details'), help=u"""Changes database parameter values. There are two kinds of database parameters:
+
+- Dynamic parameters: They can be changed for the current Oracle Database instance. The changes take effect immediately. - Static parameters: They cannot be changed for the current instance. You must change these parameters and then restart the database before changes take effect.
+
+**Note:** If the instance is started using a text initialization parameter file, the parameter changes are applicable only for the current instance. You must update them manually to be passed to a future instance. \n[Command Reference](changeDatabaseParameters)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--scope', required=True, type=custom_types.CliCaseInsensitiveChoice(["MEMORY", "SPFILE", "BOTH"]), help=u"""The clause used to specify when the parameter change takes effect.
+
+Use `MEMORY` to make the change in memory and affect it immediately. Use `SPFILE` to make the change in the server parameter file. The change takes effect when the database is next shut down and started up again. Use `BOTH` to make the change in memory and in the server parameter file. The change takes effect immediately and persists after the database is shut down and started up again.""")
+@cli_util.option('--parameters', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of database parameters and their values.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'parameters': {'module': 'database_management', 'class': 'list[ChangeDatabaseParameterDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'parameters': {'module': 'database_management', 'class': 'list[ChangeDatabaseParameterDetails]'}}, output_type={'module': 'database_management', 'class': 'UpdateDatabaseParametersResult'})
+@cli_util.wrap_exceptions
+def change_database_parameters_database_secret_credential_details(ctx, from_json, managed_database_id, scope, parameters, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['scope'] = scope
+    _details['parameters'] = cli_util.parse_json_parameter("parameters", parameters)
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.change_database_parameters(
+        managed_database_id=managed_database_id,
+        change_database_parameters_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.change_database_parameters_database_named_credential_details.command_name', 'change-database-parameters-database-named-credential-details'), help=u"""Changes database parameter values. There are two kinds of database parameters:
+
+- Dynamic parameters: They can be changed for the current Oracle Database instance. The changes take effect immediately. - Static parameters: They cannot be changed for the current instance. You must change these parameters and then restart the database before changes take effect.
+
+**Note:** If the instance is started using a text initialization parameter file, the parameter changes are applicable only for the current instance. You must update them manually to be passed to a future instance. \n[Command Reference](changeDatabaseParameters)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--scope', required=True, type=custom_types.CliCaseInsensitiveChoice(["MEMORY", "SPFILE", "BOTH"]), help=u"""The clause used to specify when the parameter change takes effect.
+
+Use `MEMORY` to make the change in memory and affect it immediately. Use `SPFILE` to make the change in the server parameter file. The change takes effect when the database is next shut down and started up again. Use `BOTH` to make the change in memory and in the server parameter file. The change takes effect immediately and persists after the database is shut down and started up again.""")
+@cli_util.option('--parameters', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of database parameters and their values.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'parameters': {'module': 'database_management', 'class': 'list[ChangeDatabaseParameterDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'parameters': {'module': 'database_management', 'class': 'list[ChangeDatabaseParameterDetails]'}}, output_type={'module': 'database_management', 'class': 'UpdateDatabaseParametersResult'})
+@cli_util.wrap_exceptions
+def change_database_parameters_database_named_credential_details(ctx, from_json, managed_database_id, scope, parameters, database_credential_named_credential_id, credentials):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['scope'] = scope
+    _details['parameters'] = cli_util.parse_json_parameter("parameters", parameters)
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.change_database_parameters(
+        managed_database_id=managed_database_id,
+        change_database_parameters_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.change_database_parameters_database_password_credential_details.command_name', 'change-database-parameters-database-password-credential-details'), help=u"""Changes database parameter values. There are two kinds of database parameters:
+
+- Dynamic parameters: They can be changed for the current Oracle Database instance. The changes take effect immediately. - Static parameters: They cannot be changed for the current instance. You must change these parameters and then restart the database before changes take effect.
+
+**Note:** If the instance is started using a text initialization parameter file, the parameter changes are applicable only for the current instance. You must update them manually to be passed to a future instance. \n[Command Reference](changeDatabaseParameters)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--scope', required=True, type=custom_types.CliCaseInsensitiveChoice(["MEMORY", "SPFILE", "BOTH"]), help=u"""The clause used to specify when the parameter change takes effect.
+
+Use `MEMORY` to make the change in memory and affect it immediately. Use `SPFILE` to make the change in the server parameter file. The change takes effect when the database is next shut down and started up again. Use `BOTH` to make the change in memory and in the server parameter file. The change takes effect immediately and persists after the database is shut down and started up again.""")
+@cli_util.option('--parameters', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of database parameters and their values.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'parameters': {'module': 'database_management', 'class': 'list[ChangeDatabaseParameterDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'parameters': {'module': 'database_management', 'class': 'list[ChangeDatabaseParameterDetails]'}}, output_type={'module': 'database_management', 'class': 'UpdateDatabaseParametersResult'})
+@cli_util.wrap_exceptions
+def change_database_parameters_database_password_credential_details(ctx, from_json, managed_database_id, scope, parameters, database_credential_password, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['scope'] = scope
+    _details['parameters'] = cli_util.parse_json_parameter("parameters", parameters)
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.change_database_parameters(
@@ -652,18 +825,50 @@ def change_managed_database_group_compartment(ctx, from_json, managed_database_g
     cli_util.render_response(result, ctx)
 
 
+@named_credential_group.command(name=cli_util.override('db_management.change_named_credential_compartment.command_name', 'change-compartment'), help=u"""Moves a named credential to a different compartment. The destination compartment must not have a named credential with the same name. \n[Command Reference](changeNamedCredentialCompartment)""")
+@cli_util.option('--named-credential-id', required=True, help=u"""The [OCID] of the named credential.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to which the named credential should be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_named_credential_compartment(ctx, from_json, named_credential_id, compartment_id, if_match):
+
+    if isinstance(named_credential_id, six.string_types) and len(named_credential_id.strip()) == 0:
+        raise click.UsageError('Parameter --named-credential-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.change_named_credential_compartment(
+        named_credential_id=named_credential_id,
+        change_named_credential_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @managed_database_group.command(name=cli_util.override('db_management.change_plan_retention.command_name', 'change-plan-retention'), help=u"""Changes the retention period of unused plans. The period can range between 5 and 523 weeks.
 
 The database purges plans that have not been used for longer than the plan retention period. \n[Command Reference](changePlanRetention)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--retention-weeks', required=True, type=click.INT, help=u"""The retention period in weeks. It can range between 5 and 523 weeks.""")
-@cli_util.option('--credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def change_plan_retention(ctx, from_json, managed_database_id, retention_weeks, credentials):
+def change_plan_retention(ctx, from_json, managed_database_id, retention_weeks, credentials, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -673,7 +878,12 @@ def change_plan_retention(ctx, from_json, managed_database_id, retention_weeks, 
 
     _details = {}
     _details['retentionWeeks'] = retention_weeks
-    _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.change_plan_retention(
@@ -692,12 +902,13 @@ The database purges plans that have not been used for longer than the plan reten
 @cli_util.option('--credentials-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credentials-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credentials-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def change_plan_retention_managed_database_password_credential(ctx, from_json, managed_database_id, retention_weeks, credentials_username, credentials_role, credentials_password):
+def change_plan_retention_managed_database_password_credential(ctx, from_json, managed_database_id, retention_weeks, credentials_username, credentials_role, credentials_password, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -711,6 +922,9 @@ def change_plan_retention_managed_database_password_credential(ctx, from_json, m
     _details['credentials']['username'] = credentials_username
     _details['credentials']['role'] = credentials_role
     _details['credentials']['password'] = credentials_password
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     _details['credentials']['credentialType'] = 'PASSWORD'
 
@@ -731,12 +945,13 @@ The database purges plans that have not been used for longer than the plan reten
 @cli_util.option('--credentials-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credentials-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credentials-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def change_plan_retention_managed_database_secret_credential(ctx, from_json, managed_database_id, retention_weeks, credentials_username, credentials_role, credentials_password_secret_id):
+def change_plan_retention_managed_database_secret_credential(ctx, from_json, managed_database_id, retention_weeks, credentials_username, credentials_role, credentials_password_secret_id, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -751,7 +966,143 @@ def change_plan_retention_managed_database_secret_credential(ctx, from_json, man
     _details['credentials']['role'] = credentials_role
     _details['credentials']['passwordSecretId'] = credentials_password_secret_id
 
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
+
     _details['credentials']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.change_plan_retention(
+        managed_database_id=managed_database_id,
+        change_plan_retention_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.change_plan_retention_database_secret_credential_details.command_name', 'change-plan-retention-database-secret-credential-details'), help=u"""Changes the retention period of unused plans. The period can range between 5 and 523 weeks.
+
+The database purges plans that have not been used for longer than the plan retention period. \n[Command Reference](changePlanRetention)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--retention-weeks', required=True, type=click.INT, help=u"""The retention period in weeks. It can range between 5 and 523 weeks.""")
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def change_plan_retention_database_secret_credential_details(ctx, from_json, managed_database_id, retention_weeks, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['retentionWeeks'] = retention_weeks
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.change_plan_retention(
+        managed_database_id=managed_database_id,
+        change_plan_retention_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.change_plan_retention_database_named_credential_details.command_name', 'change-plan-retention-database-named-credential-details'), help=u"""Changes the retention period of unused plans. The period can range between 5 and 523 weeks.
+
+The database purges plans that have not been used for longer than the plan retention period. \n[Command Reference](changePlanRetention)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--retention-weeks', required=True, type=click.INT, help=u"""The retention period in weeks. It can range between 5 and 523 weeks.""")
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def change_plan_retention_database_named_credential_details(ctx, from_json, managed_database_id, retention_weeks, database_credential_named_credential_id, credentials):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['retentionWeeks'] = retention_weeks
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.change_plan_retention(
+        managed_database_id=managed_database_id,
+        change_plan_retention_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.change_plan_retention_database_password_credential_details.command_name', 'change-plan-retention-database-password-credential-details'), help=u"""Changes the retention period of unused plans. The period can range between 5 and 523 weeks.
+
+The database purges plans that have not been used for longer than the plan retention period. \n[Command Reference](changePlanRetention)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--retention-weeks', required=True, type=click.INT, help=u"""The retention period in weeks. It can range between 5 and 523 weeks.""")
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def change_plan_retention_database_password_credential_details(ctx, from_json, managed_database_id, retention_weeks, database_credential_password, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['retentionWeeks'] = retention_weeks
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.change_plan_retention(
@@ -765,13 +1116,14 @@ def change_plan_retention_managed_database_secret_credential(ctx, from_json, man
 @managed_database_group.command(name=cli_util.override('db_management.change_space_budget.command_name', 'change-space-budget'), help=u"""Changes the disk space limit for the SQL Management Base. The allowable range for this limit is between 1% and 50%. \n[Command Reference](changeSpaceBudget)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--space-budget-percent', required=True, help=u"""The maximum percent of `SYSAUX` space that the SQL Management Base can use.""")
-@cli_util.option('--credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def change_space_budget(ctx, from_json, managed_database_id, space_budget_percent, credentials):
+def change_space_budget(ctx, from_json, managed_database_id, space_budget_percent, credentials, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -781,7 +1133,12 @@ def change_space_budget(ctx, from_json, managed_database_id, space_budget_percen
 
     _details = {}
     _details['spaceBudgetPercent'] = space_budget_percent
-    _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.change_space_budget(
@@ -798,12 +1155,13 @@ def change_space_budget(ctx, from_json, managed_database_id, space_budget_percen
 @cli_util.option('--credentials-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credentials-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credentials-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def change_space_budget_managed_database_password_credential(ctx, from_json, managed_database_id, space_budget_percent, credentials_username, credentials_role, credentials_password):
+def change_space_budget_managed_database_password_credential(ctx, from_json, managed_database_id, space_budget_percent, credentials_username, credentials_role, credentials_password, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -817,6 +1175,9 @@ def change_space_budget_managed_database_password_credential(ctx, from_json, man
     _details['credentials']['username'] = credentials_username
     _details['credentials']['role'] = credentials_role
     _details['credentials']['password'] = credentials_password
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     _details['credentials']['credentialType'] = 'PASSWORD'
 
@@ -835,12 +1196,13 @@ def change_space_budget_managed_database_password_credential(ctx, from_json, man
 @cli_util.option('--credentials-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credentials-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credentials-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def change_space_budget_managed_database_secret_credential(ctx, from_json, managed_database_id, space_budget_percent, credentials_username, credentials_role, credentials_password_secret_id):
+def change_space_budget_managed_database_secret_credential(ctx, from_json, managed_database_id, space_budget_percent, credentials_username, credentials_role, credentials_password_secret_id, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -855,7 +1217,137 @@ def change_space_budget_managed_database_secret_credential(ctx, from_json, manag
     _details['credentials']['role'] = credentials_role
     _details['credentials']['passwordSecretId'] = credentials_password_secret_id
 
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
+
     _details['credentials']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.change_space_budget(
+        managed_database_id=managed_database_id,
+        change_space_budget_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.change_space_budget_database_secret_credential_details.command_name', 'change-space-budget-database-secret-credential-details'), help=u"""Changes the disk space limit for the SQL Management Base. The allowable range for this limit is between 1% and 50%. \n[Command Reference](changeSpaceBudget)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--space-budget-percent', required=True, help=u"""The maximum percent of `SYSAUX` space that the SQL Management Base can use.""")
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def change_space_budget_database_secret_credential_details(ctx, from_json, managed_database_id, space_budget_percent, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['spaceBudgetPercent'] = space_budget_percent
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.change_space_budget(
+        managed_database_id=managed_database_id,
+        change_space_budget_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.change_space_budget_database_named_credential_details.command_name', 'change-space-budget-database-named-credential-details'), help=u"""Changes the disk space limit for the SQL Management Base. The allowable range for this limit is between 1% and 50%. \n[Command Reference](changeSpaceBudget)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--space-budget-percent', required=True, help=u"""The maximum percent of `SYSAUX` space that the SQL Management Base can use.""")
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def change_space_budget_database_named_credential_details(ctx, from_json, managed_database_id, space_budget_percent, database_credential_named_credential_id, credentials):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['spaceBudgetPercent'] = space_budget_percent
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.change_space_budget(
+        managed_database_id=managed_database_id,
+        change_space_budget_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.change_space_budget_database_password_credential_details.command_name', 'change-space-budget-database-password-credential-details'), help=u"""Changes the disk space limit for the SQL Management Base. The allowable range for this limit is between 1% and 50%. \n[Command Reference](changeSpaceBudget)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--space-budget-percent', required=True, help=u"""The maximum percent of `SYSAUX` space that the SQL Management Base can use.""")
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def change_space_budget_database_password_credential_details(ctx, from_json, managed_database_id, space_budget_percent, database_credential_password, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['spaceBudgetPercent'] = space_budget_percent
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.change_space_budget(
@@ -868,18 +1360,19 @@ def change_space_budget_managed_database_secret_credential(ctx, from_json, manag
 
 @managed_database_group.command(name=cli_util.override('db_management.change_sql_plan_baselines_attributes.command_name', 'change-sql-plan-baselines-attributes'), help=u"""Changes one or more attributes of a single plan or all plans associated with a SQL statement. \n[Command Reference](changeSqlPlanBaselinesAttributes)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--sql-handle', help=u"""The SQL statement handle. It identifies plans associated with a SQL statement for attribute changes. If `null` then `planName` must be specified.""")
 @cli_util.option('--plan-name', help=u"""Then plan name. It identifies a specific plan. If `null' then all plans associated with a SQL statement identified by `sqlHandle' are considered for attribute changes.""")
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Indicates whether the plan is available for use by the optimizer.""")
 @cli_util.option('--is-fixed', type=click.BOOL, help=u"""Indicates whether the plan baseline is fixed. A fixed plan takes precedence over a non-fixed plan.""")
 @cli_util.option('--is-auto-purged', type=click.BOOL, help=u"""Indicates whether the plan is purged if it is not used for a time period.""")
-@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def change_sql_plan_baselines_attributes(ctx, from_json, managed_database_id, credentials, sql_handle, plan_name, is_enabled, is_fixed, is_auto_purged):
+def change_sql_plan_baselines_attributes(ctx, from_json, managed_database_id, sql_handle, plan_name, is_enabled, is_fixed, is_auto_purged, credentials, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -888,7 +1381,6 @@ def change_sql_plan_baselines_attributes(ctx, from_json, managed_database_id, cr
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
 
     if sql_handle is not None:
         _details['sqlHandle'] = sql_handle
@@ -904,6 +1396,12 @@ def change_sql_plan_baselines_attributes(ctx, from_json, managed_database_id, cr
 
     if is_auto_purged is not None:
         _details['isAutoPurged'] = is_auto_purged
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.change_sql_plan_baselines_attributes(
@@ -924,12 +1422,13 @@ def change_sql_plan_baselines_attributes(ctx, from_json, managed_database_id, cr
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Indicates whether the plan is available for use by the optimizer.""")
 @cli_util.option('--is-fixed', type=click.BOOL, help=u"""Indicates whether the plan baseline is fixed. A fixed plan takes precedence over a non-fixed plan.""")
 @cli_util.option('--is-auto-purged', type=click.BOOL, help=u"""Indicates whether the plan is purged if it is not used for a time period.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def change_sql_plan_baselines_attributes_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password, sql_handle, plan_name, is_enabled, is_fixed, is_auto_purged):
+def change_sql_plan_baselines_attributes_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password, sql_handle, plan_name, is_enabled, is_fixed, is_auto_purged, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -957,6 +1456,9 @@ def change_sql_plan_baselines_attributes_managed_database_password_credential(ct
 
     if is_auto_purged is not None:
         _details['isAutoPurged'] = is_auto_purged
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     _details['credentials']['credentialType'] = 'PASSWORD'
 
@@ -979,12 +1481,13 @@ def change_sql_plan_baselines_attributes_managed_database_password_credential(ct
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Indicates whether the plan is available for use by the optimizer.""")
 @cli_util.option('--is-fixed', type=click.BOOL, help=u"""Indicates whether the plan baseline is fixed. A fixed plan takes precedence over a non-fixed plan.""")
 @cli_util.option('--is-auto-purged', type=click.BOOL, help=u"""Indicates whether the plan is purged if it is not used for a time period.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def change_sql_plan_baselines_attributes_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id, sql_handle, plan_name, is_enabled, is_fixed, is_auto_purged):
+def change_sql_plan_baselines_attributes_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id, sql_handle, plan_name, is_enabled, is_fixed, is_auto_purged, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -1013,7 +1516,191 @@ def change_sql_plan_baselines_attributes_managed_database_secret_credential(ctx,
     if is_auto_purged is not None:
         _details['isAutoPurged'] = is_auto_purged
 
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
+
     _details['credentials']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.change_sql_plan_baselines_attributes(
+        managed_database_id=managed_database_id,
+        change_sql_plan_baselines_attributes_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.change_sql_plan_baselines_attributes_database_secret_credential_details.command_name', 'change-sql-plan-baselines-attributes-database-secret-credential-details'), help=u"""Changes one or more attributes of a single plan or all plans associated with a SQL statement. \n[Command Reference](changeSqlPlanBaselinesAttributes)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--sql-handle', help=u"""The SQL statement handle. It identifies plans associated with a SQL statement for attribute changes. If `null` then `planName` must be specified.""")
+@cli_util.option('--plan-name', help=u"""Then plan name. It identifies a specific plan. If `null' then all plans associated with a SQL statement identified by `sqlHandle' are considered for attribute changes.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Indicates whether the plan is available for use by the optimizer.""")
+@cli_util.option('--is-fixed', type=click.BOOL, help=u"""Indicates whether the plan baseline is fixed. A fixed plan takes precedence over a non-fixed plan.""")
+@cli_util.option('--is-auto-purged', type=click.BOOL, help=u"""Indicates whether the plan is purged if it is not used for a time period.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def change_sql_plan_baselines_attributes_database_secret_credential_details(ctx, from_json, managed_database_id, database_credential_password_secret_id, sql_handle, plan_name, is_enabled, is_fixed, is_auto_purged, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if sql_handle is not None:
+        _details['sqlHandle'] = sql_handle
+
+    if plan_name is not None:
+        _details['planName'] = plan_name
+
+    if is_enabled is not None:
+        _details['isEnabled'] = is_enabled
+
+    if is_fixed is not None:
+        _details['isFixed'] = is_fixed
+
+    if is_auto_purged is not None:
+        _details['isAutoPurged'] = is_auto_purged
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.change_sql_plan_baselines_attributes(
+        managed_database_id=managed_database_id,
+        change_sql_plan_baselines_attributes_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.change_sql_plan_baselines_attributes_database_named_credential_details.command_name', 'change-sql-plan-baselines-attributes-database-named-credential-details'), help=u"""Changes one or more attributes of a single plan or all plans associated with a SQL statement. \n[Command Reference](changeSqlPlanBaselinesAttributes)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--sql-handle', help=u"""The SQL statement handle. It identifies plans associated with a SQL statement for attribute changes. If `null` then `planName` must be specified.""")
+@cli_util.option('--plan-name', help=u"""Then plan name. It identifies a specific plan. If `null' then all plans associated with a SQL statement identified by `sqlHandle' are considered for attribute changes.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Indicates whether the plan is available for use by the optimizer.""")
+@cli_util.option('--is-fixed', type=click.BOOL, help=u"""Indicates whether the plan baseline is fixed. A fixed plan takes precedence over a non-fixed plan.""")
+@cli_util.option('--is-auto-purged', type=click.BOOL, help=u"""Indicates whether the plan is purged if it is not used for a time period.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def change_sql_plan_baselines_attributes_database_named_credential_details(ctx, from_json, managed_database_id, database_credential_named_credential_id, sql_handle, plan_name, is_enabled, is_fixed, is_auto_purged, credentials):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if sql_handle is not None:
+        _details['sqlHandle'] = sql_handle
+
+    if plan_name is not None:
+        _details['planName'] = plan_name
+
+    if is_enabled is not None:
+        _details['isEnabled'] = is_enabled
+
+    if is_fixed is not None:
+        _details['isFixed'] = is_fixed
+
+    if is_auto_purged is not None:
+        _details['isAutoPurged'] = is_auto_purged
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.change_sql_plan_baselines_attributes(
+        managed_database_id=managed_database_id,
+        change_sql_plan_baselines_attributes_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.change_sql_plan_baselines_attributes_database_password_credential_details.command_name', 'change-sql-plan-baselines-attributes-database-password-credential-details'), help=u"""Changes one or more attributes of a single plan or all plans associated with a SQL statement. \n[Command Reference](changeSqlPlanBaselinesAttributes)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--sql-handle', help=u"""The SQL statement handle. It identifies plans associated with a SQL statement for attribute changes. If `null` then `planName` must be specified.""")
+@cli_util.option('--plan-name', help=u"""Then plan name. It identifies a specific plan. If `null' then all plans associated with a SQL statement identified by `sqlHandle' are considered for attribute changes.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Indicates whether the plan is available for use by the optimizer.""")
+@cli_util.option('--is-fixed', type=click.BOOL, help=u"""Indicates whether the plan baseline is fixed. A fixed plan takes precedence over a non-fixed plan.""")
+@cli_util.option('--is-auto-purged', type=click.BOOL, help=u"""Indicates whether the plan is purged if it is not used for a time period.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def change_sql_plan_baselines_attributes_database_password_credential_details(ctx, from_json, managed_database_id, database_credential_password, sql_handle, plan_name, is_enabled, is_fixed, is_auto_purged, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if sql_handle is not None:
+        _details['sqlHandle'] = sql_handle
+
+    if plan_name is not None:
+        _details['planName'] = plan_name
+
+    if is_enabled is not None:
+        _details['isEnabled'] = is_enabled
+
+    if is_fixed is not None:
+        _details['isFixed'] = is_fixed
+
+    if is_auto_purged is not None:
+        _details['isAutoPurged'] = is_auto_purged
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.change_sql_plan_baselines_attributes(
@@ -1103,13 +1790,14 @@ def check_external_exadata_storage_connector(ctx, from_json, external_exadata_st
 @managed_database_group.command(name=cli_util.override('db_management.configure_automatic_capture_filters.command_name', 'configure-automatic-capture-filters'), help=u"""Configures automatic capture filters to capture only those statements that match the filter criteria. \n[Command Reference](configureAutomaticCaptureFilters)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--auto-capture-filters', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The filters used in automatic initial plan capture.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'auto-capture-filters': {'module': 'database_management', 'class': 'list[AutomaticCaptureFilterDetails]'}, 'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'auto-capture-filters': {'module': 'database_management', 'class': 'list[AutomaticCaptureFilterDetails]'}, 'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'auto-capture-filters': {'module': 'database_management', 'class': 'list[AutomaticCaptureFilterDetails]'}, 'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'auto-capture-filters': {'module': 'database_management', 'class': 'list[AutomaticCaptureFilterDetails]'}, 'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def configure_automatic_capture_filters(ctx, from_json, managed_database_id, auto_capture_filters, credentials):
+def configure_automatic_capture_filters(ctx, from_json, managed_database_id, auto_capture_filters, credentials, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -1119,7 +1807,12 @@ def configure_automatic_capture_filters(ctx, from_json, managed_database_id, aut
 
     _details = {}
     _details['autoCaptureFilters'] = cli_util.parse_json_parameter("auto_capture_filters", auto_capture_filters)
-    _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.configure_automatic_capture_filters(
@@ -1136,12 +1829,13 @@ def configure_automatic_capture_filters(ctx, from_json, managed_database_id, aut
 @cli_util.option('--credentials-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credentials-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credentials-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
-@json_skeleton_utils.get_cli_json_input_option({'auto-capture-filters': {'module': 'database_management', 'class': 'list[AutomaticCaptureFilterDetails]'}})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'auto-capture-filters': {'module': 'database_management', 'class': 'list[AutomaticCaptureFilterDetails]'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'auto-capture-filters': {'module': 'database_management', 'class': 'list[AutomaticCaptureFilterDetails]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'auto-capture-filters': {'module': 'database_management', 'class': 'list[AutomaticCaptureFilterDetails]'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def configure_automatic_capture_filters_managed_database_password_credential(ctx, from_json, managed_database_id, auto_capture_filters, credentials_username, credentials_role, credentials_password):
+def configure_automatic_capture_filters_managed_database_password_credential(ctx, from_json, managed_database_id, auto_capture_filters, credentials_username, credentials_role, credentials_password, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -1155,6 +1849,9 @@ def configure_automatic_capture_filters_managed_database_password_credential(ctx
     _details['credentials']['username'] = credentials_username
     _details['credentials']['role'] = credentials_role
     _details['credentials']['password'] = credentials_password
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     _details['credentials']['credentialType'] = 'PASSWORD'
 
@@ -1173,12 +1870,13 @@ def configure_automatic_capture_filters_managed_database_password_credential(ctx
 @cli_util.option('--credentials-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credentials-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credentials-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
-@json_skeleton_utils.get_cli_json_input_option({'auto-capture-filters': {'module': 'database_management', 'class': 'list[AutomaticCaptureFilterDetails]'}})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'auto-capture-filters': {'module': 'database_management', 'class': 'list[AutomaticCaptureFilterDetails]'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'auto-capture-filters': {'module': 'database_management', 'class': 'list[AutomaticCaptureFilterDetails]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'auto-capture-filters': {'module': 'database_management', 'class': 'list[AutomaticCaptureFilterDetails]'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def configure_automatic_capture_filters_managed_database_secret_credential(ctx, from_json, managed_database_id, auto_capture_filters, credentials_username, credentials_role, credentials_password_secret_id):
+def configure_automatic_capture_filters_managed_database_secret_credential(ctx, from_json, managed_database_id, auto_capture_filters, credentials_username, credentials_role, credentials_password_secret_id, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -1193,7 +1891,137 @@ def configure_automatic_capture_filters_managed_database_secret_credential(ctx, 
     _details['credentials']['role'] = credentials_role
     _details['credentials']['passwordSecretId'] = credentials_password_secret_id
 
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
+
     _details['credentials']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.configure_automatic_capture_filters(
+        managed_database_id=managed_database_id,
+        configure_automatic_capture_filters_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.configure_automatic_capture_filters_database_secret_credential_details.command_name', 'configure-automatic-capture-filters-database-secret-credential-details'), help=u"""Configures automatic capture filters to capture only those statements that match the filter criteria. \n[Command Reference](configureAutomaticCaptureFilters)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--auto-capture-filters', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The filters used in automatic initial plan capture.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'auto-capture-filters': {'module': 'database_management', 'class': 'list[AutomaticCaptureFilterDetails]'}, 'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'auto-capture-filters': {'module': 'database_management', 'class': 'list[AutomaticCaptureFilterDetails]'}, 'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def configure_automatic_capture_filters_database_secret_credential_details(ctx, from_json, managed_database_id, auto_capture_filters, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['autoCaptureFilters'] = cli_util.parse_json_parameter("auto_capture_filters", auto_capture_filters)
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.configure_automatic_capture_filters(
+        managed_database_id=managed_database_id,
+        configure_automatic_capture_filters_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.configure_automatic_capture_filters_database_named_credential_details.command_name', 'configure-automatic-capture-filters-database-named-credential-details'), help=u"""Configures automatic capture filters to capture only those statements that match the filter criteria. \n[Command Reference](configureAutomaticCaptureFilters)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--auto-capture-filters', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The filters used in automatic initial plan capture.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'auto-capture-filters': {'module': 'database_management', 'class': 'list[AutomaticCaptureFilterDetails]'}, 'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'auto-capture-filters': {'module': 'database_management', 'class': 'list[AutomaticCaptureFilterDetails]'}, 'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def configure_automatic_capture_filters_database_named_credential_details(ctx, from_json, managed_database_id, auto_capture_filters, database_credential_named_credential_id, credentials):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['autoCaptureFilters'] = cli_util.parse_json_parameter("auto_capture_filters", auto_capture_filters)
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.configure_automatic_capture_filters(
+        managed_database_id=managed_database_id,
+        configure_automatic_capture_filters_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.configure_automatic_capture_filters_database_password_credential_details.command_name', 'configure-automatic-capture-filters-database-password-credential-details'), help=u"""Configures automatic capture filters to capture only those statements that match the filter criteria. \n[Command Reference](configureAutomaticCaptureFilters)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--auto-capture-filters', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The filters used in automatic initial plan capture.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'auto-capture-filters': {'module': 'database_management', 'class': 'list[AutomaticCaptureFilterDetails]'}, 'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'auto-capture-filters': {'module': 'database_management', 'class': 'list[AutomaticCaptureFilterDetails]'}, 'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def configure_automatic_capture_filters_database_password_credential_details(ctx, from_json, managed_database_id, auto_capture_filters, database_credential_password, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['autoCaptureFilters'] = cli_util.parse_json_parameter("auto_capture_filters", auto_capture_filters)
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.configure_automatic_capture_filters(
@@ -1207,13 +2035,14 @@ def configure_automatic_capture_filters_managed_database_secret_credential(ctx, 
 @managed_database_group.command(name=cli_util.override('db_management.configure_automatic_spm_evolve_advisor_task.command_name', 'configure-automatic-spm-evolve-advisor-task'), help=u"""Configures the Automatic SPM Evolve Advisor task `SYS_AUTO_SPM_EVOLVE_TASK` by specifying task parameters. As the task is owned by `SYS`, only `SYS` can set task parameters. \n[Command Reference](configureAutomaticSpmEvolveAdvisorTask)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--task-parameters', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'task-parameters': {'module': 'database_management', 'class': 'SpmEvolveTaskParameters'}, 'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'task-parameters': {'module': 'database_management', 'class': 'SpmEvolveTaskParameters'}, 'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-parameters': {'module': 'database_management', 'class': 'SpmEvolveTaskParameters'}, 'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-parameters': {'module': 'database_management', 'class': 'SpmEvolveTaskParameters'}, 'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def configure_automatic_spm_evolve_advisor_task(ctx, from_json, managed_database_id, task_parameters, credentials):
+def configure_automatic_spm_evolve_advisor_task(ctx, from_json, managed_database_id, task_parameters, credentials, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -1223,7 +2052,12 @@ def configure_automatic_spm_evolve_advisor_task(ctx, from_json, managed_database
 
     _details = {}
     _details['taskParameters'] = cli_util.parse_json_parameter("task_parameters", task_parameters)
-    _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.configure_automatic_spm_evolve_advisor_task(
@@ -1240,12 +2074,13 @@ def configure_automatic_spm_evolve_advisor_task(ctx, from_json, managed_database
 @cli_util.option('--credentials-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credentials-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credentials-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
-@json_skeleton_utils.get_cli_json_input_option({'task-parameters': {'module': 'database_management', 'class': 'SpmEvolveTaskParameters'}})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'task-parameters': {'module': 'database_management', 'class': 'SpmEvolveTaskParameters'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-parameters': {'module': 'database_management', 'class': 'SpmEvolveTaskParameters'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-parameters': {'module': 'database_management', 'class': 'SpmEvolveTaskParameters'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def configure_automatic_spm_evolve_advisor_task_managed_database_password_credential(ctx, from_json, managed_database_id, task_parameters, credentials_username, credentials_role, credentials_password):
+def configure_automatic_spm_evolve_advisor_task_managed_database_password_credential(ctx, from_json, managed_database_id, task_parameters, credentials_username, credentials_role, credentials_password, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -1259,6 +2094,9 @@ def configure_automatic_spm_evolve_advisor_task_managed_database_password_creden
     _details['credentials']['username'] = credentials_username
     _details['credentials']['role'] = credentials_role
     _details['credentials']['password'] = credentials_password
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     _details['credentials']['credentialType'] = 'PASSWORD'
 
@@ -1277,12 +2115,13 @@ def configure_automatic_spm_evolve_advisor_task_managed_database_password_creden
 @cli_util.option('--credentials-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credentials-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credentials-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
-@json_skeleton_utils.get_cli_json_input_option({'task-parameters': {'module': 'database_management', 'class': 'SpmEvolveTaskParameters'}})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'task-parameters': {'module': 'database_management', 'class': 'SpmEvolveTaskParameters'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-parameters': {'module': 'database_management', 'class': 'SpmEvolveTaskParameters'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-parameters': {'module': 'database_management', 'class': 'SpmEvolveTaskParameters'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def configure_automatic_spm_evolve_advisor_task_managed_database_secret_credential(ctx, from_json, managed_database_id, task_parameters, credentials_username, credentials_role, credentials_password_secret_id):
+def configure_automatic_spm_evolve_advisor_task_managed_database_secret_credential(ctx, from_json, managed_database_id, task_parameters, credentials_username, credentials_role, credentials_password_secret_id, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -1297,7 +2136,137 @@ def configure_automatic_spm_evolve_advisor_task_managed_database_secret_credenti
     _details['credentials']['role'] = credentials_role
     _details['credentials']['passwordSecretId'] = credentials_password_secret_id
 
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
+
     _details['credentials']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.configure_automatic_spm_evolve_advisor_task(
+        managed_database_id=managed_database_id,
+        configure_automatic_spm_evolve_advisor_task_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.configure_automatic_spm_evolve_advisor_task_database_secret_credential_details.command_name', 'configure-automatic-spm-evolve-advisor-task-database-secret-credential-details'), help=u"""Configures the Automatic SPM Evolve Advisor task `SYS_AUTO_SPM_EVOLVE_TASK` by specifying task parameters. As the task is owned by `SYS`, only `SYS` can set task parameters. \n[Command Reference](configureAutomaticSpmEvolveAdvisorTask)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--task-parameters', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'task-parameters': {'module': 'database_management', 'class': 'SpmEvolveTaskParameters'}, 'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-parameters': {'module': 'database_management', 'class': 'SpmEvolveTaskParameters'}, 'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def configure_automatic_spm_evolve_advisor_task_database_secret_credential_details(ctx, from_json, managed_database_id, task_parameters, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['taskParameters'] = cli_util.parse_json_parameter("task_parameters", task_parameters)
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.configure_automatic_spm_evolve_advisor_task(
+        managed_database_id=managed_database_id,
+        configure_automatic_spm_evolve_advisor_task_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.configure_automatic_spm_evolve_advisor_task_database_named_credential_details.command_name', 'configure-automatic-spm-evolve-advisor-task-database-named-credential-details'), help=u"""Configures the Automatic SPM Evolve Advisor task `SYS_AUTO_SPM_EVOLVE_TASK` by specifying task parameters. As the task is owned by `SYS`, only `SYS` can set task parameters. \n[Command Reference](configureAutomaticSpmEvolveAdvisorTask)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--task-parameters', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'task-parameters': {'module': 'database_management', 'class': 'SpmEvolveTaskParameters'}, 'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-parameters': {'module': 'database_management', 'class': 'SpmEvolveTaskParameters'}, 'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def configure_automatic_spm_evolve_advisor_task_database_named_credential_details(ctx, from_json, managed_database_id, task_parameters, database_credential_named_credential_id, credentials):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['taskParameters'] = cli_util.parse_json_parameter("task_parameters", task_parameters)
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.configure_automatic_spm_evolve_advisor_task(
+        managed_database_id=managed_database_id,
+        configure_automatic_spm_evolve_advisor_task_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.configure_automatic_spm_evolve_advisor_task_database_password_credential_details.command_name', 'configure-automatic-spm-evolve-advisor-task-database-password-credential-details'), help=u"""Configures the Automatic SPM Evolve Advisor task `SYS_AUTO_SPM_EVOLVE_TASK` by specifying task parameters. As the task is owned by `SYS`, only `SYS` can set task parameters. \n[Command Reference](configureAutomaticSpmEvolveAdvisorTask)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--task-parameters', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'task-parameters': {'module': 'database_management', 'class': 'SpmEvolveTaskParameters'}, 'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-parameters': {'module': 'database_management', 'class': 'SpmEvolveTaskParameters'}, 'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def configure_automatic_spm_evolve_advisor_task_database_password_credential_details(ctx, from_json, managed_database_id, task_parameters, database_credential_password, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['taskParameters'] = cli_util.parse_json_parameter("task_parameters", task_parameters)
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.configure_automatic_spm_evolve_advisor_task(
@@ -1831,6 +2800,7 @@ def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.option('--user-name', help=u"""The database user name used to execute the SQL job. If the job is being executed on a Managed Database Group, then the user name should exist on all the databases in the group with the same password.""")
 @cli_util.option('--password', help=u"""The password for the database user name used to execute the SQL job.""")
 @cli_util.option('--secret-id', help=u"""The [OCID] of the secret containing the user password.""")
+@cli_util.option('--named-credential-id', help=u"""The [OCID] of the Named Credentials containing password secret.""")
 @cli_util.option('--role', help=u"""The role of the database user. Indicates whether the database user is a normal user or sysdba.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1840,7 +2810,7 @@ def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'result-location': {'module': 'database_management', 'class': 'JobExecutionResultLocation'}, 'schedule-details': {'module': 'database_management', 'class': 'JobScheduleDetails'}, 'in-binds': {'module': 'database_management', 'class': 'JobInBindsDetails'}, 'out-binds': {'module': 'database_management', 'class': 'JobOutBindsDetails'}}, output_type={'module': 'database_management', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def create_job_create_sql_job_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, schedule_type, operation_type, description, managed_database_group_id, managed_database_id, database_sub_type, timeout, result_location, schedule_details, sql_text, in_binds, out_binds, sql_type, user_name, password, secret_id, role):
+def create_job_create_sql_job_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, schedule_type, operation_type, description, managed_database_group_id, managed_database_id, database_sub_type, timeout, result_location, schedule_details, sql_text, in_binds, out_binds, sql_type, user_name, password, secret_id, named_credential_id, role):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1892,6 +2862,9 @@ def create_job_create_sql_job_details(ctx, from_json, wait_for_state, max_wait_s
 
     if secret_id is not None:
         _details['secretId'] = secret_id
+
+    if named_credential_id is not None:
+        _details['namedCredentialId'] = named_credential_id
 
     if role is not None:
         _details['role'] = role
@@ -2072,10 +3045,150 @@ def create_managed_database_group(ctx, from_json, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
+@named_credential_group.command(name=cli_util.override('db_management.create_named_credential.command_name', 'create'), help=u"""Creates a named credential. \n[Command Reference](createNamedCredential)""")
+@cli_util.option('--name', required=True, help=u"""The name of the named credential. Valid characters are uppercase or lowercase letters, numbers, and \"_\". The name of the named credential cannot be modified. It must be unique in the compartment and must begin with an alphabetic character.""")
+@cli_util.option('--scope', required=True, type=custom_types.CliCaseInsensitiveChoice(["RESOURCE", "GLOBAL"]), help=u"""The scope of the named credential.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_DB"]), help=u"""The type of resource associated with the named credential.""")
+@cli_util.option('--content', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the named credential resides.""")
+@cli_util.option('--description', help=u"""The information specified by the user about the named credential.""")
+@cli_util.option('--associated-resource', help=u"""The [OCID] of the resource that is associated to the named credential.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'content': {'module': 'database_management', 'class': 'NamedCredentialContent'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'content': {'module': 'database_management', 'class': 'NamedCredentialContent'}}, output_type={'module': 'database_management', 'class': 'NamedCredential'})
+@cli_util.wrap_exceptions
+def create_named_credential(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, scope, type, content, compartment_id, description, associated_resource):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['scope'] = scope
+    _details['type'] = type
+    _details['content'] = cli_util.parse_json_parameter("content", content)
+    _details['compartmentId'] = compartment_id
+
+    if description is not None:
+        _details['description'] = description
+
+    if associated_resource is not None:
+        _details['associatedResource'] = associated_resource
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.create_named_credential(
+        create_named_credential_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_named_credential') and callable(getattr(client, 'get_named_credential')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_named_credential(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@named_credential_group.command(name=cli_util.override('db_management.create_named_credential_basic_named_credential_content.command_name', 'create-named-credential-basic-named-credential-content'), help=u"""Creates a named credential. \n[Command Reference](createNamedCredential)""")
+@cli_util.option('--name', required=True, help=u"""The name of the named credential. Valid characters are uppercase or lowercase letters, numbers, and \"_\". The name of the named credential cannot be modified. It must be unique in the compartment and must begin with an alphabetic character.""")
+@cli_util.option('--scope', required=True, type=custom_types.CliCaseInsensitiveChoice(["RESOURCE", "GLOBAL"]), help=u"""The scope of the named credential.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_DB"]), help=u"""The type of resource associated with the named credential.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the named credential resides.""")
+@cli_util.option('--content-user-name', required=True, help=u"""The user name used to connect to the database.""")
+@cli_util.option('--content-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--content-password-secret-id', required=True, help=u"""The [OCID] of the Vault service secret that contains the database user password.""")
+@cli_util.option('--content-password-secret-access-mode', required=True, type=custom_types.CliCaseInsensitiveChoice(["USER_PRINCIPAL", "RESOURCE_PRINCIPAL"]), help=u"""The mechanism used to access the password plain text value.""")
+@cli_util.option('--description', help=u"""The information specified by the user about the named credential.""")
+@cli_util.option('--associated-resource', help=u"""The [OCID] of the resource that is associated to the named credential.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'NamedCredential'})
+@cli_util.wrap_exceptions
+def create_named_credential_basic_named_credential_content(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, scope, type, compartment_id, content_user_name, content_role, content_password_secret_id, content_password_secret_access_mode, description, associated_resource):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['content'] = {}
+    _details['name'] = name
+    _details['scope'] = scope
+    _details['type'] = type
+    _details['compartmentId'] = compartment_id
+    _details['content']['userName'] = content_user_name
+    _details['content']['role'] = content_role
+    _details['content']['passwordSecretId'] = content_password_secret_id
+    _details['content']['passwordSecretAccessMode'] = content_password_secret_access_mode
+
+    if description is not None:
+        _details['description'] = description
+
+    if associated_resource is not None:
+        _details['associatedResource'] = associated_resource
+
+    _details['content']['credentialType'] = 'BASIC'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.create_named_credential(
+        create_named_credential_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_named_credential') and callable(getattr(client, 'get_named_credential')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_named_credential(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @tablespace_group.command(name=cli_util.override('db_management.create_tablespace.command_name', 'create'), help=u"""Creates a tablespace within the Managed Database specified by managedDatabaseId. \n[Command Reference](createTablespace)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--name', required=True, help=u"""The name of the tablespace. It must be unique within a database.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["PERMANENT", "TEMPORARY"]), help=u"""The type of tablespace.""")
 @cli_util.option('--is-bigfile', type=click.BOOL, help=u"""Specifies whether the tablespace is a bigfile or smallfile tablespace. A bigfile tablespace contains only one data file or temp file, which can contain up to approximately 4 billion (232) blocks. A smallfile tablespace is a traditional Oracle tablespace, which can contain 1022 data files or temp files, each of which can contain up to approximately 4 million (222) blocks.""")
 @cli_util.option('--data-files', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of data files or temp files created for the tablespace.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2095,12 +3208,12 @@ def create_managed_database_group(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.option('--extent-uniform-size', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The size of the extent when the tablespace is managed with uniform extents of a specific size.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--segment-management', type=custom_types.CliCaseInsensitiveChoice(["AUTO", "MANUAL"]), help=u"""Specifies whether tablespace segment management should be automatic or manual.""")
 @cli_util.option('--is-default', type=click.BOOL, help=u"""Specifies whether the tablespace is the default tablespace.""")
-@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'data-files': {'module': 'database_management', 'class': 'list[string]'}, 'file-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-next-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-max-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'extent-uniform-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}})
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}, 'data-files': {'module': 'database_management', 'class': 'list[string]'}, 'file-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-next-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-max-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'extent-uniform-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'data-files': {'module': 'database_management', 'class': 'list[string]'}, 'file-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-next-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-max-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'extent-uniform-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}}, output_type={'module': 'database_management', 'class': 'Tablespace'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}, 'data-files': {'module': 'database_management', 'class': 'list[string]'}, 'file-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-next-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-max-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'extent-uniform-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}}, output_type={'module': 'database_management', 'class': 'Tablespace'})
 @cli_util.wrap_exceptions
-def create_tablespace(ctx, from_json, managed_database_id, credential_details, name, type, is_bigfile, data_files, file_count, file_size, is_reusable, is_auto_extensible, auto_extend_next_size, auto_extend_max_size, is_max_size_unlimited, block_size_in_kilobytes, is_encrypted, encryption_algorithm, default_compress, status, extent_management, extent_uniform_size, segment_management, is_default):
+def create_tablespace(ctx, from_json, managed_database_id, name, credential_details, database_credential, type, is_bigfile, data_files, file_count, file_size, is_reusable, is_auto_extensible, auto_extend_next_size, auto_extend_max_size, is_max_size_unlimited, block_size_in_kilobytes, is_encrypted, encryption_algorithm, default_compress, status, extent_management, extent_uniform_size, segment_management, is_default):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -2109,8 +3222,13 @@ def create_tablespace(ctx, from_json, managed_database_id, credential_details, n
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
     _details['name'] = name
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if type is not None:
         _details['type'] = type
@@ -2654,6 +3772,70 @@ def delete_managed_database_group(ctx, from_json, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
+@named_credential_group.command(name=cli_util.override('db_management.delete_named_credential.command_name', 'delete'), help=u"""Deletes the named credential specified by namedCredentialId. \n[Command Reference](deleteNamedCredential)""")
+@cli_util.option('--named-credential-id', required=True, help=u"""The [OCID] of the named credential.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_named_credential(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, named_credential_id, if_match):
+
+    if isinstance(named_credential_id, six.string_types) and len(named_credential_id.strip()) == 0:
+        raise click.UsageError('Parameter --named-credential-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.delete_named_credential(
+        named_credential_id=named_credential_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_named_credential') and callable(getattr(client, 'get_named_credential')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_named_credential(named_credential_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @preferred_credential_group.command(name=cli_util.override('db_management.delete_preferred_credential.command_name', 'delete'), help=u"""Deletes the preferred credential based on the credentialName. \n[Command Reference](deletePreferredCredential)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential.""")
@@ -2684,13 +3866,14 @@ def delete_preferred_credential(ctx, from_json, managed_database_id, credential_
 
 @managed_database_group.command(name=cli_util.override('db_management.disable_automatic_initial_plan_capture.command_name', 'disable-automatic-initial-plan-capture'), help=u"""Disables automatic initial plan capture. \n[Command Reference](disableAutomaticInitialPlanCapture)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def disable_automatic_initial_plan_capture(ctx, from_json, managed_database_id, credentials):
+def disable_automatic_initial_plan_capture(ctx, from_json, managed_database_id, credentials, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -2699,7 +3882,12 @@ def disable_automatic_initial_plan_capture(ctx, from_json, managed_database_id, 
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.disable_automatic_initial_plan_capture(
@@ -2715,12 +3903,13 @@ def disable_automatic_initial_plan_capture(ctx, from_json, managed_database_id, 
 @cli_util.option('--credentials-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credentials-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credentials-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def disable_automatic_initial_plan_capture_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password):
+def disable_automatic_initial_plan_capture_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -2733,6 +3922,9 @@ def disable_automatic_initial_plan_capture_managed_database_password_credential(
     _details['credentials']['username'] = credentials_username
     _details['credentials']['role'] = credentials_role
     _details['credentials']['password'] = credentials_password
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     _details['credentials']['credentialType'] = 'PASSWORD'
 
@@ -2750,12 +3942,13 @@ def disable_automatic_initial_plan_capture_managed_database_password_credential(
 @cli_util.option('--credentials-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credentials-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credentials-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def disable_automatic_initial_plan_capture_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id):
+def disable_automatic_initial_plan_capture_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -2769,7 +3962,131 @@ def disable_automatic_initial_plan_capture_managed_database_secret_credential(ct
     _details['credentials']['role'] = credentials_role
     _details['credentials']['passwordSecretId'] = credentials_password_secret_id
 
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
+
     _details['credentials']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.disable_automatic_initial_plan_capture(
+        managed_database_id=managed_database_id,
+        disable_automatic_initial_plan_capture_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.disable_automatic_initial_plan_capture_database_secret_credential_details.command_name', 'disable-automatic-initial-plan-capture-database-secret-credential-details'), help=u"""Disables automatic initial plan capture. \n[Command Reference](disableAutomaticInitialPlanCapture)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def disable_automatic_initial_plan_capture_database_secret_credential_details(ctx, from_json, managed_database_id, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.disable_automatic_initial_plan_capture(
+        managed_database_id=managed_database_id,
+        disable_automatic_initial_plan_capture_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.disable_automatic_initial_plan_capture_database_named_credential_details.command_name', 'disable-automatic-initial-plan-capture-database-named-credential-details'), help=u"""Disables automatic initial plan capture. \n[Command Reference](disableAutomaticInitialPlanCapture)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def disable_automatic_initial_plan_capture_database_named_credential_details(ctx, from_json, managed_database_id, database_credential_named_credential_id, credentials):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.disable_automatic_initial_plan_capture(
+        managed_database_id=managed_database_id,
+        disable_automatic_initial_plan_capture_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.disable_automatic_initial_plan_capture_database_password_credential_details.command_name', 'disable-automatic-initial-plan-capture-database-password-credential-details'), help=u"""Disables automatic initial plan capture. \n[Command Reference](disableAutomaticInitialPlanCapture)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def disable_automatic_initial_plan_capture_database_password_credential_details(ctx, from_json, managed_database_id, database_credential_password, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.disable_automatic_initial_plan_capture(
@@ -2784,13 +4101,14 @@ def disable_automatic_initial_plan_capture_managed_database_secret_credential(ct
 
 One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve Advisor. Thus, the same task enables or disables both. \n[Command Reference](disableAutomaticSpmEvolveAdvisorTask)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def disable_automatic_spm_evolve_advisor_task(ctx, from_json, managed_database_id, credentials):
+def disable_automatic_spm_evolve_advisor_task(ctx, from_json, managed_database_id, credentials, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -2799,7 +4117,12 @@ def disable_automatic_spm_evolve_advisor_task(ctx, from_json, managed_database_i
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.disable_automatic_spm_evolve_advisor_task(
@@ -2817,12 +4140,13 @@ One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve A
 @cli_util.option('--credentials-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credentials-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credentials-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def disable_automatic_spm_evolve_advisor_task_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password):
+def disable_automatic_spm_evolve_advisor_task_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -2835,6 +4159,9 @@ def disable_automatic_spm_evolve_advisor_task_managed_database_password_credenti
     _details['credentials']['username'] = credentials_username
     _details['credentials']['role'] = credentials_role
     _details['credentials']['password'] = credentials_password
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     _details['credentials']['credentialType'] = 'PASSWORD'
 
@@ -2854,12 +4181,13 @@ One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve A
 @cli_util.option('--credentials-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credentials-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credentials-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def disable_automatic_spm_evolve_advisor_task_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id):
+def disable_automatic_spm_evolve_advisor_task_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -2873,7 +4201,137 @@ def disable_automatic_spm_evolve_advisor_task_managed_database_secret_credential
     _details['credentials']['role'] = credentials_role
     _details['credentials']['passwordSecretId'] = credentials_password_secret_id
 
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
+
     _details['credentials']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.disable_automatic_spm_evolve_advisor_task(
+        managed_database_id=managed_database_id,
+        disable_automatic_spm_evolve_advisor_task_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.disable_automatic_spm_evolve_advisor_task_database_secret_credential_details.command_name', 'disable-automatic-spm-evolve-advisor-task-database-secret-credential-details'), help=u"""Disables the Automatic SPM Evolve Advisor task.
+
+One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve Advisor. Thus, the same task enables or disables both. \n[Command Reference](disableAutomaticSpmEvolveAdvisorTask)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def disable_automatic_spm_evolve_advisor_task_database_secret_credential_details(ctx, from_json, managed_database_id, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.disable_automatic_spm_evolve_advisor_task(
+        managed_database_id=managed_database_id,
+        disable_automatic_spm_evolve_advisor_task_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.disable_automatic_spm_evolve_advisor_task_database_named_credential_details.command_name', 'disable-automatic-spm-evolve-advisor-task-database-named-credential-details'), help=u"""Disables the Automatic SPM Evolve Advisor task.
+
+One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve Advisor. Thus, the same task enables or disables both. \n[Command Reference](disableAutomaticSpmEvolveAdvisorTask)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def disable_automatic_spm_evolve_advisor_task_database_named_credential_details(ctx, from_json, managed_database_id, database_credential_named_credential_id, credentials):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.disable_automatic_spm_evolve_advisor_task(
+        managed_database_id=managed_database_id,
+        disable_automatic_spm_evolve_advisor_task_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.disable_automatic_spm_evolve_advisor_task_database_password_credential_details.command_name', 'disable-automatic-spm-evolve-advisor-task-database-password-credential-details'), help=u"""Disables the Automatic SPM Evolve Advisor task.
+
+One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve Advisor. Thus, the same task enables or disables both. \n[Command Reference](disableAutomaticSpmEvolveAdvisorTask)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def disable_automatic_spm_evolve_advisor_task_database_password_credential_details(ctx, from_json, managed_database_id, database_credential_password, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.disable_automatic_spm_evolve_advisor_task(
@@ -3045,13 +4503,14 @@ def disable_external_exadata_infrastructure_management(ctx, from_json, wait_for_
 
 It is available only on Oracle Exadata Database Machine, Oracle Database Exadata Cloud Service (ExaCS) and Oracle Database Exadata Cloud@Customer (ExaCC). \n[Command Reference](disableHighFrequencyAutomaticSpmEvolveAdvisorTask)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def disable_high_frequency_automatic_spm_evolve_advisor_task(ctx, from_json, managed_database_id, credentials):
+def disable_high_frequency_automatic_spm_evolve_advisor_task(ctx, from_json, managed_database_id, credentials, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -3060,7 +4519,12 @@ def disable_high_frequency_automatic_spm_evolve_advisor_task(ctx, from_json, man
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.disable_high_frequency_automatic_spm_evolve_advisor_task(
@@ -3078,12 +4542,13 @@ It is available only on Oracle Exadata Database Machine, Oracle Database Exadata
 @cli_util.option('--credentials-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credentials-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credentials-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def disable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password):
+def disable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -3096,6 +4561,9 @@ def disable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_pa
     _details['credentials']['username'] = credentials_username
     _details['credentials']['role'] = credentials_role
     _details['credentials']['password'] = credentials_password
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     _details['credentials']['credentialType'] = 'PASSWORD'
 
@@ -3115,12 +4583,13 @@ It is available only on Oracle Exadata Database Machine, Oracle Database Exadata
 @cli_util.option('--credentials-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credentials-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credentials-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def disable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id):
+def disable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -3134,7 +4603,137 @@ def disable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_se
     _details['credentials']['role'] = credentials_role
     _details['credentials']['passwordSecretId'] = credentials_password_secret_id
 
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
+
     _details['credentials']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.disable_high_frequency_automatic_spm_evolve_advisor_task(
+        managed_database_id=managed_database_id,
+        disable_high_frequency_automatic_spm_evolve_advisor_task_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.disable_high_frequency_automatic_spm_evolve_advisor_task_database_secret_credential_details.command_name', 'disable-high-frequency-automatic-spm-evolve-advisor-task-database-secret-credential-details'), help=u"""Disables the high-frequency Automatic SPM Evolve Advisor task.
+
+It is available only on Oracle Exadata Database Machine, Oracle Database Exadata Cloud Service (ExaCS) and Oracle Database Exadata Cloud@Customer (ExaCC). \n[Command Reference](disableHighFrequencyAutomaticSpmEvolveAdvisorTask)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def disable_high_frequency_automatic_spm_evolve_advisor_task_database_secret_credential_details(ctx, from_json, managed_database_id, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.disable_high_frequency_automatic_spm_evolve_advisor_task(
+        managed_database_id=managed_database_id,
+        disable_high_frequency_automatic_spm_evolve_advisor_task_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.disable_high_frequency_automatic_spm_evolve_advisor_task_database_named_credential_details.command_name', 'disable-high-frequency-automatic-spm-evolve-advisor-task-database-named-credential-details'), help=u"""Disables the high-frequency Automatic SPM Evolve Advisor task.
+
+It is available only on Oracle Exadata Database Machine, Oracle Database Exadata Cloud Service (ExaCS) and Oracle Database Exadata Cloud@Customer (ExaCC). \n[Command Reference](disableHighFrequencyAutomaticSpmEvolveAdvisorTask)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def disable_high_frequency_automatic_spm_evolve_advisor_task_database_named_credential_details(ctx, from_json, managed_database_id, database_credential_named_credential_id, credentials):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.disable_high_frequency_automatic_spm_evolve_advisor_task(
+        managed_database_id=managed_database_id,
+        disable_high_frequency_automatic_spm_evolve_advisor_task_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.disable_high_frequency_automatic_spm_evolve_advisor_task_database_password_credential_details.command_name', 'disable-high-frequency-automatic-spm-evolve-advisor-task-database-password-credential-details'), help=u"""Disables the high-frequency Automatic SPM Evolve Advisor task.
+
+It is available only on Oracle Exadata Database Machine, Oracle Database Exadata Cloud Service (ExaCS) and Oracle Database Exadata Cloud@Customer (ExaCC). \n[Command Reference](disableHighFrequencyAutomaticSpmEvolveAdvisorTask)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def disable_high_frequency_automatic_spm_evolve_advisor_task_database_password_credential_details(ctx, from_json, managed_database_id, database_credential_password, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.disable_high_frequency_automatic_spm_evolve_advisor_task(
@@ -3149,13 +4748,14 @@ def disable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_se
 
 When disabled, the optimizer does not use any SQL plan baselines. \n[Command Reference](disableSqlPlanBaselinesUsage)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def disable_sql_plan_baselines_usage(ctx, from_json, managed_database_id, credentials):
+def disable_sql_plan_baselines_usage(ctx, from_json, managed_database_id, credentials, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -3164,7 +4764,12 @@ def disable_sql_plan_baselines_usage(ctx, from_json, managed_database_id, creden
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.disable_sql_plan_baselines_usage(
@@ -3182,12 +4787,13 @@ When disabled, the optimizer does not use any SQL plan baselines. \n[Command Ref
 @cli_util.option('--credentials-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credentials-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credentials-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def disable_sql_plan_baselines_usage_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password):
+def disable_sql_plan_baselines_usage_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -3200,6 +4806,9 @@ def disable_sql_plan_baselines_usage_managed_database_password_credential(ctx, f
     _details['credentials']['username'] = credentials_username
     _details['credentials']['role'] = credentials_role
     _details['credentials']['password'] = credentials_password
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     _details['credentials']['credentialType'] = 'PASSWORD'
 
@@ -3219,12 +4828,13 @@ When disabled, the optimizer does not use any SQL plan baselines. \n[Command Ref
 @cli_util.option('--credentials-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credentials-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credentials-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def disable_sql_plan_baselines_usage_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id):
+def disable_sql_plan_baselines_usage_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -3238,7 +4848,137 @@ def disable_sql_plan_baselines_usage_managed_database_secret_credential(ctx, fro
     _details['credentials']['role'] = credentials_role
     _details['credentials']['passwordSecretId'] = credentials_password_secret_id
 
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
+
     _details['credentials']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.disable_sql_plan_baselines_usage(
+        managed_database_id=managed_database_id,
+        disable_sql_plan_baselines_usage_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.disable_sql_plan_baselines_usage_database_secret_credential_details.command_name', 'disable-sql-plan-baselines-usage-database-secret-credential-details'), help=u"""Disables the use of SQL plan baselines stored in SQL Management Base.
+
+When disabled, the optimizer does not use any SQL plan baselines. \n[Command Reference](disableSqlPlanBaselinesUsage)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def disable_sql_plan_baselines_usage_database_secret_credential_details(ctx, from_json, managed_database_id, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.disable_sql_plan_baselines_usage(
+        managed_database_id=managed_database_id,
+        disable_sql_plan_baselines_usage_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.disable_sql_plan_baselines_usage_database_named_credential_details.command_name', 'disable-sql-plan-baselines-usage-database-named-credential-details'), help=u"""Disables the use of SQL plan baselines stored in SQL Management Base.
+
+When disabled, the optimizer does not use any SQL plan baselines. \n[Command Reference](disableSqlPlanBaselinesUsage)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def disable_sql_plan_baselines_usage_database_named_credential_details(ctx, from_json, managed_database_id, database_credential_named_credential_id, credentials):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.disable_sql_plan_baselines_usage(
+        managed_database_id=managed_database_id,
+        disable_sql_plan_baselines_usage_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.disable_sql_plan_baselines_usage_database_password_credential_details.command_name', 'disable-sql-plan-baselines-usage-database-password-credential-details'), help=u"""Disables the use of SQL plan baselines stored in SQL Management Base.
+
+When disabled, the optimizer does not use any SQL plan baselines. \n[Command Reference](disableSqlPlanBaselinesUsage)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def disable_sql_plan_baselines_usage_database_password_credential_details(ctx, from_json, managed_database_id, database_credential_password, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.disable_sql_plan_baselines_usage(
@@ -3293,15 +5033,16 @@ def discover_external_exadata_infrastructure(ctx, from_json, compartment_id, dis
 
 @managed_database_group.command(name=cli_util.override('db_management.drop_sql_plan_baselines.command_name', 'drop-sql-plan-baselines'), help=u"""Drops a single plan or all plans associated with a SQL statement. \n[Command Reference](dropSqlPlanBaselines)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--sql-handle', help=u"""The SQL statement handle. It identifies plans associated with a SQL statement that are to be dropped. If `null` then `planName` must be specified.""")
 @cli_util.option('--plan-name', help=u"""The plan name. It identifies a specific plan. If `null' then all plans associated with the SQL statement identified by `sqlHandle' are dropped.""")
-@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def drop_sql_plan_baselines(ctx, from_json, managed_database_id, credentials, sql_handle, plan_name):
+def drop_sql_plan_baselines(ctx, from_json, managed_database_id, sql_handle, plan_name, credentials, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -3310,13 +5051,18 @@ def drop_sql_plan_baselines(ctx, from_json, managed_database_id, credentials, sq
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
 
     if sql_handle is not None:
         _details['sqlHandle'] = sql_handle
 
     if plan_name is not None:
         _details['planName'] = plan_name
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.drop_sql_plan_baselines(
@@ -3334,12 +5080,13 @@ def drop_sql_plan_baselines(ctx, from_json, managed_database_id, credentials, sq
 @cli_util.option('--credentials-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
 @cli_util.option('--sql-handle', help=u"""The SQL statement handle. It identifies plans associated with a SQL statement that are to be dropped. If `null` then `planName` must be specified.""")
 @cli_util.option('--plan-name', help=u"""The plan name. It identifies a specific plan. If `null' then all plans associated with the SQL statement identified by `sqlHandle' are dropped.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def drop_sql_plan_baselines_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password, sql_handle, plan_name):
+def drop_sql_plan_baselines_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password, sql_handle, plan_name, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -3359,6 +5106,9 @@ def drop_sql_plan_baselines_managed_database_password_credential(ctx, from_json,
     if plan_name is not None:
         _details['planName'] = plan_name
 
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
+
     _details['credentials']['credentialType'] = 'PASSWORD'
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
@@ -3377,12 +5127,13 @@ def drop_sql_plan_baselines_managed_database_password_credential(ctx, from_json,
 @cli_util.option('--credentials-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
 @cli_util.option('--sql-handle', help=u"""The SQL statement handle. It identifies plans associated with a SQL statement that are to be dropped. If `null` then `planName` must be specified.""")
 @cli_util.option('--plan-name', help=u"""The plan name. It identifies a specific plan. If `null' then all plans associated with the SQL statement identified by `sqlHandle' are dropped.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def drop_sql_plan_baselines_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id, sql_handle, plan_name):
+def drop_sql_plan_baselines_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id, sql_handle, plan_name, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -3402,7 +5153,155 @@ def drop_sql_plan_baselines_managed_database_secret_credential(ctx, from_json, m
     if plan_name is not None:
         _details['planName'] = plan_name
 
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
+
     _details['credentials']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.drop_sql_plan_baselines(
+        managed_database_id=managed_database_id,
+        drop_sql_plan_baselines_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.drop_sql_plan_baselines_database_secret_credential_details.command_name', 'drop-sql-plan-baselines-database-secret-credential-details'), help=u"""Drops a single plan or all plans associated with a SQL statement. \n[Command Reference](dropSqlPlanBaselines)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--sql-handle', help=u"""The SQL statement handle. It identifies plans associated with a SQL statement that are to be dropped. If `null` then `planName` must be specified.""")
+@cli_util.option('--plan-name', help=u"""The plan name. It identifies a specific plan. If `null' then all plans associated with the SQL statement identified by `sqlHandle' are dropped.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def drop_sql_plan_baselines_database_secret_credential_details(ctx, from_json, managed_database_id, database_credential_password_secret_id, sql_handle, plan_name, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if sql_handle is not None:
+        _details['sqlHandle'] = sql_handle
+
+    if plan_name is not None:
+        _details['planName'] = plan_name
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.drop_sql_plan_baselines(
+        managed_database_id=managed_database_id,
+        drop_sql_plan_baselines_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.drop_sql_plan_baselines_database_named_credential_details.command_name', 'drop-sql-plan-baselines-database-named-credential-details'), help=u"""Drops a single plan or all plans associated with a SQL statement. \n[Command Reference](dropSqlPlanBaselines)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--sql-handle', help=u"""The SQL statement handle. It identifies plans associated with a SQL statement that are to be dropped. If `null` then `planName` must be specified.""")
+@cli_util.option('--plan-name', help=u"""The plan name. It identifies a specific plan. If `null' then all plans associated with the SQL statement identified by `sqlHandle' are dropped.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def drop_sql_plan_baselines_database_named_credential_details(ctx, from_json, managed_database_id, database_credential_named_credential_id, sql_handle, plan_name, credentials):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if sql_handle is not None:
+        _details['sqlHandle'] = sql_handle
+
+    if plan_name is not None:
+        _details['planName'] = plan_name
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.drop_sql_plan_baselines(
+        managed_database_id=managed_database_id,
+        drop_sql_plan_baselines_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.drop_sql_plan_baselines_database_password_credential_details.command_name', 'drop-sql-plan-baselines-database-password-credential-details'), help=u"""Drops a single plan or all plans associated with a SQL statement. \n[Command Reference](dropSqlPlanBaselines)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--sql-handle', help=u"""The SQL statement handle. It identifies plans associated with a SQL statement that are to be dropped. If `null` then `planName` must be specified.""")
+@cli_util.option('--plan-name', help=u"""The plan name. It identifies a specific plan. If `null' then all plans associated with the SQL statement identified by `sqlHandle' are dropped.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def drop_sql_plan_baselines_database_password_credential_details(ctx, from_json, managed_database_id, database_credential_password, sql_handle, plan_name, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if sql_handle is not None:
+        _details['sqlHandle'] = sql_handle
+
+    if plan_name is not None:
+        _details['planName'] = plan_name
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.drop_sql_plan_baselines(
@@ -3416,16 +5315,17 @@ def drop_sql_plan_baselines_managed_database_secret_credential(ctx, from_json, m
 @tablespace_group.command(name=cli_util.override('db_management.drop_tablespace.command_name', 'drop'), help=u"""Drops the tablespace specified by tablespaceName within the Managed Database specified by managedDatabaseId. \n[Command Reference](dropTablespace)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--tablespace-name', required=True, help=u"""The name of the tablespace.""")
-@cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-including-contents', type=click.BOOL, help=u"""Specifies whether all the contents of the tablespace being dropped should be dropped.""")
 @cli_util.option('--is-dropping-data-files', type=click.BOOL, help=u"""Specifies whether all the associated data files of the tablespace being dropped should be dropped.""")
 @cli_util.option('--is-cascade-constraints', type=click.BOOL, help=u"""Specifies whether all the constraints on the tablespace being dropped should be dropped.""")
-@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
 @cli_util.wrap_exceptions
-def drop_tablespace(ctx, from_json, managed_database_id, tablespace_name, credential_details, is_including_contents, is_dropping_data_files, is_cascade_constraints):
+def drop_tablespace(ctx, from_json, managed_database_id, tablespace_name, credential_details, database_credential, is_including_contents, is_dropping_data_files, is_cascade_constraints):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -3437,7 +5337,12 @@ def drop_tablespace(ctx, from_json, managed_database_id, tablespace_name, creden
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if is_including_contents is not None:
         _details['isIncludingContents'] = is_including_contents
@@ -3464,15 +5369,16 @@ def drop_tablespace(ctx, from_json, managed_database_id, tablespace_name, creden
 @cli_util.option('--credential-details-username', required=True, help=u"""The user to connect to the database.""")
 @cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credential-details-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-including-contents', type=click.BOOL, help=u"""Specifies whether all the contents of the tablespace being dropped should be dropped.""")
 @cli_util.option('--is-dropping-data-files', type=click.BOOL, help=u"""Specifies whether all the associated data files of the tablespace being dropped should be dropped.""")
 @cli_util.option('--is-cascade-constraints', type=click.BOOL, help=u"""Specifies whether all the constraints on the tablespace being dropped should be dropped.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
 @cli_util.wrap_exceptions
-def drop_tablespace_tablespace_admin_password_credential_details(ctx, from_json, managed_database_id, tablespace_name, credential_details_username, credential_details_role, credential_details_password, is_including_contents, is_dropping_data_files, is_cascade_constraints):
+def drop_tablespace_tablespace_admin_password_credential_details(ctx, from_json, managed_database_id, tablespace_name, credential_details_username, credential_details_role, credential_details_password, database_credential, is_including_contents, is_dropping_data_files, is_cascade_constraints):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -3488,6 +5394,9 @@ def drop_tablespace_tablespace_admin_password_credential_details(ctx, from_json,
     _details['credentialDetails']['username'] = credential_details_username
     _details['credentialDetails']['role'] = credential_details_role
     _details['credentialDetails']['password'] = credential_details_password
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if is_including_contents is not None:
         _details['isIncludingContents'] = is_including_contents
@@ -3516,15 +5425,16 @@ def drop_tablespace_tablespace_admin_password_credential_details(ctx, from_json,
 @cli_util.option('--credential-details-username', required=True, help=u"""The user to connect to the database.""")
 @cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credential-details-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-including-contents', type=click.BOOL, help=u"""Specifies whether all the contents of the tablespace being dropped should be dropped.""")
 @cli_util.option('--is-dropping-data-files', type=click.BOOL, help=u"""Specifies whether all the associated data files of the tablespace being dropped should be dropped.""")
 @cli_util.option('--is-cascade-constraints', type=click.BOOL, help=u"""Specifies whether all the constraints on the tablespace being dropped should be dropped.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
 @cli_util.wrap_exceptions
-def drop_tablespace_tablespace_admin_secret_credential_details(ctx, from_json, managed_database_id, tablespace_name, credential_details_username, credential_details_role, credential_details_password_secret_id, is_including_contents, is_dropping_data_files, is_cascade_constraints):
+def drop_tablespace_tablespace_admin_secret_credential_details(ctx, from_json, managed_database_id, tablespace_name, credential_details_username, credential_details_role, credential_details_password_secret_id, database_credential, is_including_contents, is_dropping_data_files, is_cascade_constraints):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -3540,6 +5450,9 @@ def drop_tablespace_tablespace_admin_secret_credential_details(ctx, from_json, m
     _details['credentialDetails']['username'] = credential_details_username
     _details['credentialDetails']['role'] = credential_details_role
     _details['credentialDetails']['passwordSecretId'] = credential_details_password_secret_id
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if is_including_contents is not None:
         _details['isIncludingContents'] = is_including_contents
@@ -3562,17 +5475,190 @@ def drop_tablespace_tablespace_admin_secret_credential_details(ctx, from_json, m
     cli_util.render_response(result, ctx)
 
 
+@tablespace_group.command(name=cli_util.override('db_management.drop_tablespace_database_secret_credential_details.command_name', 'drop-tablespace-database-secret-credential-details'), help=u"""Drops the tablespace specified by tablespaceName within the Managed Database specified by managedDatabaseId. \n[Command Reference](dropTablespace)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--tablespace-name', required=True, help=u"""The name of the tablespace.""")
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-including-contents', type=click.BOOL, help=u"""Specifies whether all the contents of the tablespace being dropped should be dropped.""")
+@cli_util.option('--is-dropping-data-files', type=click.BOOL, help=u"""Specifies whether all the associated data files of the tablespace being dropped should be dropped.""")
+@cli_util.option('--is-cascade-constraints', type=click.BOOL, help=u"""Specifies whether all the constraints on the tablespace being dropped should be dropped.""")
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
+@cli_util.wrap_exceptions
+def drop_tablespace_database_secret_credential_details(ctx, from_json, managed_database_id, tablespace_name, database_credential_password_secret_id, credential_details, is_including_contents, is_dropping_data_files, is_cascade_constraints, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if is_including_contents is not None:
+        _details['isIncludingContents'] = is_including_contents
+
+    if is_dropping_data_files is not None:
+        _details['isDroppingDataFiles'] = is_dropping_data_files
+
+    if is_cascade_constraints is not None:
+        _details['isCascadeConstraints'] = is_cascade_constraints
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.drop_tablespace(
+        managed_database_id=managed_database_id,
+        tablespace_name=tablespace_name,
+        drop_tablespace_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@tablespace_group.command(name=cli_util.override('db_management.drop_tablespace_database_named_credential_details.command_name', 'drop-tablespace-database-named-credential-details'), help=u"""Drops the tablespace specified by tablespaceName within the Managed Database specified by managedDatabaseId. \n[Command Reference](dropTablespace)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--tablespace-name', required=True, help=u"""The name of the tablespace.""")
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-including-contents', type=click.BOOL, help=u"""Specifies whether all the contents of the tablespace being dropped should be dropped.""")
+@cli_util.option('--is-dropping-data-files', type=click.BOOL, help=u"""Specifies whether all the associated data files of the tablespace being dropped should be dropped.""")
+@cli_util.option('--is-cascade-constraints', type=click.BOOL, help=u"""Specifies whether all the constraints on the tablespace being dropped should be dropped.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
+@cli_util.wrap_exceptions
+def drop_tablespace_database_named_credential_details(ctx, from_json, managed_database_id, tablespace_name, database_credential_named_credential_id, credential_details, is_including_contents, is_dropping_data_files, is_cascade_constraints):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if is_including_contents is not None:
+        _details['isIncludingContents'] = is_including_contents
+
+    if is_dropping_data_files is not None:
+        _details['isDroppingDataFiles'] = is_dropping_data_files
+
+    if is_cascade_constraints is not None:
+        _details['isCascadeConstraints'] = is_cascade_constraints
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.drop_tablespace(
+        managed_database_id=managed_database_id,
+        tablespace_name=tablespace_name,
+        drop_tablespace_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@tablespace_group.command(name=cli_util.override('db_management.drop_tablespace_database_password_credential_details.command_name', 'drop-tablespace-database-password-credential-details'), help=u"""Drops the tablespace specified by tablespaceName within the Managed Database specified by managedDatabaseId. \n[Command Reference](dropTablespace)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--tablespace-name', required=True, help=u"""The name of the tablespace.""")
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-including-contents', type=click.BOOL, help=u"""Specifies whether all the contents of the tablespace being dropped should be dropped.""")
+@cli_util.option('--is-dropping-data-files', type=click.BOOL, help=u"""Specifies whether all the associated data files of the tablespace being dropped should be dropped.""")
+@cli_util.option('--is-cascade-constraints', type=click.BOOL, help=u"""Specifies whether all the constraints on the tablespace being dropped should be dropped.""")
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
+@cli_util.wrap_exceptions
+def drop_tablespace_database_password_credential_details(ctx, from_json, managed_database_id, tablespace_name, database_credential_password, credential_details, is_including_contents, is_dropping_data_files, is_cascade_constraints, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if is_including_contents is not None:
+        _details['isIncludingContents'] = is_including_contents
+
+    if is_dropping_data_files is not None:
+        _details['isDroppingDataFiles'] = is_dropping_data_files
+
+    if is_cascade_constraints is not None:
+        _details['isCascadeConstraints'] = is_cascade_constraints
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.drop_tablespace(
+        managed_database_id=managed_database_id,
+        tablespace_name=tablespace_name,
+        drop_tablespace_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @managed_database_group.command(name=cli_util.override('db_management.enable_automatic_initial_plan_capture.command_name', 'enable-automatic-initial-plan-capture'), help=u"""Enables automatic initial plan capture. When enabled, the database checks whether executed SQL statements are eligible for automatic capture. It creates initial plan baselines for eligible statements.
 
 By default, the database creates a SQL plan baseline for every eligible repeatable statement, including all recursive SQL and monitoring SQL. Thus, automatic capture may result in the creation of an extremely large number of plan baselines. To limit the statements that are eligible for plan baselines, configure filters. \n[Command Reference](enableAutomaticInitialPlanCapture)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def enable_automatic_initial_plan_capture(ctx, from_json, managed_database_id, credentials):
+def enable_automatic_initial_plan_capture(ctx, from_json, managed_database_id, credentials, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -3581,7 +5667,12 @@ def enable_automatic_initial_plan_capture(ctx, from_json, managed_database_id, c
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.enable_automatic_initial_plan_capture(
@@ -3599,12 +5690,13 @@ By default, the database creates a SQL plan baseline for every eligible repeatab
 @cli_util.option('--credentials-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credentials-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credentials-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def enable_automatic_initial_plan_capture_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password):
+def enable_automatic_initial_plan_capture_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -3617,6 +5709,9 @@ def enable_automatic_initial_plan_capture_managed_database_password_credential(c
     _details['credentials']['username'] = credentials_username
     _details['credentials']['role'] = credentials_role
     _details['credentials']['password'] = credentials_password
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     _details['credentials']['credentialType'] = 'PASSWORD'
 
@@ -3636,12 +5731,13 @@ By default, the database creates a SQL plan baseline for every eligible repeatab
 @cli_util.option('--credentials-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credentials-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credentials-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def enable_automatic_initial_plan_capture_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id):
+def enable_automatic_initial_plan_capture_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -3655,7 +5751,137 @@ def enable_automatic_initial_plan_capture_managed_database_secret_credential(ctx
     _details['credentials']['role'] = credentials_role
     _details['credentials']['passwordSecretId'] = credentials_password_secret_id
 
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
+
     _details['credentials']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.enable_automatic_initial_plan_capture(
+        managed_database_id=managed_database_id,
+        enable_automatic_initial_plan_capture_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.enable_automatic_initial_plan_capture_database_secret_credential_details.command_name', 'enable-automatic-initial-plan-capture-database-secret-credential-details'), help=u"""Enables automatic initial plan capture. When enabled, the database checks whether executed SQL statements are eligible for automatic capture. It creates initial plan baselines for eligible statements.
+
+By default, the database creates a SQL plan baseline for every eligible repeatable statement, including all recursive SQL and monitoring SQL. Thus, automatic capture may result in the creation of an extremely large number of plan baselines. To limit the statements that are eligible for plan baselines, configure filters. \n[Command Reference](enableAutomaticInitialPlanCapture)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def enable_automatic_initial_plan_capture_database_secret_credential_details(ctx, from_json, managed_database_id, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.enable_automatic_initial_plan_capture(
+        managed_database_id=managed_database_id,
+        enable_automatic_initial_plan_capture_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.enable_automatic_initial_plan_capture_database_named_credential_details.command_name', 'enable-automatic-initial-plan-capture-database-named-credential-details'), help=u"""Enables automatic initial plan capture. When enabled, the database checks whether executed SQL statements are eligible for automatic capture. It creates initial plan baselines for eligible statements.
+
+By default, the database creates a SQL plan baseline for every eligible repeatable statement, including all recursive SQL and monitoring SQL. Thus, automatic capture may result in the creation of an extremely large number of plan baselines. To limit the statements that are eligible for plan baselines, configure filters. \n[Command Reference](enableAutomaticInitialPlanCapture)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def enable_automatic_initial_plan_capture_database_named_credential_details(ctx, from_json, managed_database_id, database_credential_named_credential_id, credentials):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.enable_automatic_initial_plan_capture(
+        managed_database_id=managed_database_id,
+        enable_automatic_initial_plan_capture_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.enable_automatic_initial_plan_capture_database_password_credential_details.command_name', 'enable-automatic-initial-plan-capture-database-password-credential-details'), help=u"""Enables automatic initial plan capture. When enabled, the database checks whether executed SQL statements are eligible for automatic capture. It creates initial plan baselines for eligible statements.
+
+By default, the database creates a SQL plan baseline for every eligible repeatable statement, including all recursive SQL and monitoring SQL. Thus, automatic capture may result in the creation of an extremely large number of plan baselines. To limit the statements that are eligible for plan baselines, configure filters. \n[Command Reference](enableAutomaticInitialPlanCapture)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def enable_automatic_initial_plan_capture_database_password_credential_details(ctx, from_json, managed_database_id, database_credential_password, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.enable_automatic_initial_plan_capture(
@@ -3674,13 +5900,14 @@ The SPM Evolve Advisor performs the following tasks:
 
 One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve Advisor. Thus, the same task enables or disables both. \n[Command Reference](enableAutomaticSpmEvolveAdvisorTask)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def enable_automatic_spm_evolve_advisor_task(ctx, from_json, managed_database_id, credentials):
+def enable_automatic_spm_evolve_advisor_task(ctx, from_json, managed_database_id, credentials, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -3689,7 +5916,12 @@ def enable_automatic_spm_evolve_advisor_task(ctx, from_json, managed_database_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.enable_automatic_spm_evolve_advisor_task(
@@ -3711,12 +5943,13 @@ One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve A
 @cli_util.option('--credentials-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credentials-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credentials-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def enable_automatic_spm_evolve_advisor_task_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password):
+def enable_automatic_spm_evolve_advisor_task_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -3729,6 +5962,9 @@ def enable_automatic_spm_evolve_advisor_task_managed_database_password_credentia
     _details['credentials']['username'] = credentials_username
     _details['credentials']['role'] = credentials_role
     _details['credentials']['password'] = credentials_password
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     _details['credentials']['credentialType'] = 'PASSWORD'
 
@@ -3752,12 +5988,13 @@ One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve A
 @cli_util.option('--credentials-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credentials-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credentials-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def enable_automatic_spm_evolve_advisor_task_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id):
+def enable_automatic_spm_evolve_advisor_task_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -3771,7 +6008,149 @@ def enable_automatic_spm_evolve_advisor_task_managed_database_secret_credential(
     _details['credentials']['role'] = credentials_role
     _details['credentials']['passwordSecretId'] = credentials_password_secret_id
 
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
+
     _details['credentials']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.enable_automatic_spm_evolve_advisor_task(
+        managed_database_id=managed_database_id,
+        enable_automatic_spm_evolve_advisor_task_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.enable_automatic_spm_evolve_advisor_task_database_secret_credential_details.command_name', 'enable-automatic-spm-evolve-advisor-task-database-secret-credential-details'), help=u"""Enables the Automatic SPM Evolve Advisor task. By default, the automatic task `SYS_AUTO_SPM_EVOLVE_TASK` runs every day in the scheduled maintenance window.
+
+The SPM Evolve Advisor performs the following tasks:
+
+- Checks AWR for top SQL - Looks for alternative plans in all available sources - Adds unaccepted plans to the plan history - Tests the execution of as many plans as possible during the maintenance window - Adds the alternative plan to the baseline if it performs better than the current plan
+
+One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve Advisor. Thus, the same task enables or disables both. \n[Command Reference](enableAutomaticSpmEvolveAdvisorTask)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def enable_automatic_spm_evolve_advisor_task_database_secret_credential_details(ctx, from_json, managed_database_id, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.enable_automatic_spm_evolve_advisor_task(
+        managed_database_id=managed_database_id,
+        enable_automatic_spm_evolve_advisor_task_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.enable_automatic_spm_evolve_advisor_task_database_named_credential_details.command_name', 'enable-automatic-spm-evolve-advisor-task-database-named-credential-details'), help=u"""Enables the Automatic SPM Evolve Advisor task. By default, the automatic task `SYS_AUTO_SPM_EVOLVE_TASK` runs every day in the scheduled maintenance window.
+
+The SPM Evolve Advisor performs the following tasks:
+
+- Checks AWR for top SQL - Looks for alternative plans in all available sources - Adds unaccepted plans to the plan history - Tests the execution of as many plans as possible during the maintenance window - Adds the alternative plan to the baseline if it performs better than the current plan
+
+One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve Advisor. Thus, the same task enables or disables both. \n[Command Reference](enableAutomaticSpmEvolveAdvisorTask)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def enable_automatic_spm_evolve_advisor_task_database_named_credential_details(ctx, from_json, managed_database_id, database_credential_named_credential_id, credentials):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.enable_automatic_spm_evolve_advisor_task(
+        managed_database_id=managed_database_id,
+        enable_automatic_spm_evolve_advisor_task_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.enable_automatic_spm_evolve_advisor_task_database_password_credential_details.command_name', 'enable-automatic-spm-evolve-advisor-task-database-password-credential-details'), help=u"""Enables the Automatic SPM Evolve Advisor task. By default, the automatic task `SYS_AUTO_SPM_EVOLVE_TASK` runs every day in the scheduled maintenance window.
+
+The SPM Evolve Advisor performs the following tasks:
+
+- Checks AWR for top SQL - Looks for alternative plans in all available sources - Adds unaccepted plans to the plan history - Tests the execution of as many plans as possible during the maintenance window - Adds the alternative plan to the baseline if it performs better than the current plan
+
+One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve Advisor. Thus, the same task enables or disables both. \n[Command Reference](enableAutomaticSpmEvolveAdvisorTask)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def enable_automatic_spm_evolve_advisor_task_database_password_credential_details(ctx, from_json, managed_database_id, database_credential_password, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.enable_automatic_spm_evolve_advisor_task(
@@ -3965,13 +6344,14 @@ The high-frequency task complements the standard Automatic SPM Evolve Advisor ta
 
 It is available only on Oracle Exadata Database Machine, Oracle Database Exadata Cloud Service (ExaCS) and Oracle Database Exadata Cloud@Customer (ExaCC). \n[Command Reference](enableHighFrequencyAutomaticSpmEvolveAdvisorTask)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def enable_high_frequency_automatic_spm_evolve_advisor_task(ctx, from_json, managed_database_id, credentials):
+def enable_high_frequency_automatic_spm_evolve_advisor_task(ctx, from_json, managed_database_id, credentials, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -3980,7 +6360,12 @@ def enable_high_frequency_automatic_spm_evolve_advisor_task(ctx, from_json, mana
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.enable_high_frequency_automatic_spm_evolve_advisor_task(
@@ -4000,12 +6385,13 @@ It is available only on Oracle Exadata Database Machine, Oracle Database Exadata
 @cli_util.option('--credentials-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credentials-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credentials-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def enable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password):
+def enable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -4018,6 +6404,9 @@ def enable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_pas
     _details['credentials']['username'] = credentials_username
     _details['credentials']['role'] = credentials_role
     _details['credentials']['password'] = credentials_password
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     _details['credentials']['credentialType'] = 'PASSWORD'
 
@@ -4039,12 +6428,13 @@ It is available only on Oracle Exadata Database Machine, Oracle Database Exadata
 @cli_util.option('--credentials-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credentials-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credentials-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def enable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id):
+def enable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -4058,7 +6448,143 @@ def enable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_sec
     _details['credentials']['role'] = credentials_role
     _details['credentials']['passwordSecretId'] = credentials_password_secret_id
 
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
+
     _details['credentials']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.enable_high_frequency_automatic_spm_evolve_advisor_task(
+        managed_database_id=managed_database_id,
+        enable_high_frequency_automatic_spm_evolve_advisor_task_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.enable_high_frequency_automatic_spm_evolve_advisor_task_database_secret_credential_details.command_name', 'enable-high-frequency-automatic-spm-evolve-advisor-task-database-secret-credential-details'), help=u"""Enables the high-frequency Automatic SPM Evolve Advisor task. The high-frequency task runs every hour and runs for no longer than 30 minutes. These settings are not configurable.
+
+The high-frequency task complements the standard Automatic SPM Evolve Advisor task. They are independent and are scheduled through two different frameworks.
+
+It is available only on Oracle Exadata Database Machine, Oracle Database Exadata Cloud Service (ExaCS) and Oracle Database Exadata Cloud@Customer (ExaCC). \n[Command Reference](enableHighFrequencyAutomaticSpmEvolveAdvisorTask)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def enable_high_frequency_automatic_spm_evolve_advisor_task_database_secret_credential_details(ctx, from_json, managed_database_id, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.enable_high_frequency_automatic_spm_evolve_advisor_task(
+        managed_database_id=managed_database_id,
+        enable_high_frequency_automatic_spm_evolve_advisor_task_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.enable_high_frequency_automatic_spm_evolve_advisor_task_database_named_credential_details.command_name', 'enable-high-frequency-automatic-spm-evolve-advisor-task-database-named-credential-details'), help=u"""Enables the high-frequency Automatic SPM Evolve Advisor task. The high-frequency task runs every hour and runs for no longer than 30 minutes. These settings are not configurable.
+
+The high-frequency task complements the standard Automatic SPM Evolve Advisor task. They are independent and are scheduled through two different frameworks.
+
+It is available only on Oracle Exadata Database Machine, Oracle Database Exadata Cloud Service (ExaCS) and Oracle Database Exadata Cloud@Customer (ExaCC). \n[Command Reference](enableHighFrequencyAutomaticSpmEvolveAdvisorTask)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def enable_high_frequency_automatic_spm_evolve_advisor_task_database_named_credential_details(ctx, from_json, managed_database_id, database_credential_named_credential_id, credentials):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.enable_high_frequency_automatic_spm_evolve_advisor_task(
+        managed_database_id=managed_database_id,
+        enable_high_frequency_automatic_spm_evolve_advisor_task_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.enable_high_frequency_automatic_spm_evolve_advisor_task_database_password_credential_details.command_name', 'enable-high-frequency-automatic-spm-evolve-advisor-task-database-password-credential-details'), help=u"""Enables the high-frequency Automatic SPM Evolve Advisor task. The high-frequency task runs every hour and runs for no longer than 30 minutes. These settings are not configurable.
+
+The high-frequency task complements the standard Automatic SPM Evolve Advisor task. They are independent and are scheduled through two different frameworks.
+
+It is available only on Oracle Exadata Database Machine, Oracle Database Exadata Cloud Service (ExaCS) and Oracle Database Exadata Cloud@Customer (ExaCC). \n[Command Reference](enableHighFrequencyAutomaticSpmEvolveAdvisorTask)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def enable_high_frequency_automatic_spm_evolve_advisor_task_database_password_credential_details(ctx, from_json, managed_database_id, database_credential_password, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.enable_high_frequency_automatic_spm_evolve_advisor_task(
@@ -4073,13 +6599,14 @@ def enable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_sec
 
 When enabled, the optimizer uses SQL plan baselines to select plans to avoid potential performance regressions. \n[Command Reference](enableSqlPlanBaselinesUsage)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def enable_sql_plan_baselines_usage(ctx, from_json, managed_database_id, credentials):
+def enable_sql_plan_baselines_usage(ctx, from_json, managed_database_id, credentials, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -4088,7 +6615,12 @@ def enable_sql_plan_baselines_usage(ctx, from_json, managed_database_id, credent
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.enable_sql_plan_baselines_usage(
@@ -4106,12 +6638,13 @@ When enabled, the optimizer uses SQL plan baselines to select plans to avoid pot
 @cli_util.option('--credentials-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credentials-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credentials-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def enable_sql_plan_baselines_usage_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password):
+def enable_sql_plan_baselines_usage_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -4124,6 +6657,9 @@ def enable_sql_plan_baselines_usage_managed_database_password_credential(ctx, fr
     _details['credentials']['username'] = credentials_username
     _details['credentials']['role'] = credentials_role
     _details['credentials']['password'] = credentials_password
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     _details['credentials']['credentialType'] = 'PASSWORD'
 
@@ -4143,12 +6679,13 @@ When enabled, the optimizer uses SQL plan baselines to select plans to avoid pot
 @cli_util.option('--credentials-username', required=True, help=u"""The user name used to connect to the database.""")
 @cli_util.option('--credentials-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credentials-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.wrap_exceptions
-def enable_sql_plan_baselines_usage_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id):
+def enable_sql_plan_baselines_usage_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -4162,7 +6699,137 @@ def enable_sql_plan_baselines_usage_managed_database_secret_credential(ctx, from
     _details['credentials']['role'] = credentials_role
     _details['credentials']['passwordSecretId'] = credentials_password_secret_id
 
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
+
     _details['credentials']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.enable_sql_plan_baselines_usage(
+        managed_database_id=managed_database_id,
+        enable_sql_plan_baselines_usage_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.enable_sql_plan_baselines_usage_database_secret_credential_details.command_name', 'enable-sql-plan-baselines-usage-database-secret-credential-details'), help=u"""Enables the use of SQL plan baselines stored in SQL Management Base.
+
+When enabled, the optimizer uses SQL plan baselines to select plans to avoid potential performance regressions. \n[Command Reference](enableSqlPlanBaselinesUsage)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def enable_sql_plan_baselines_usage_database_secret_credential_details(ctx, from_json, managed_database_id, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.enable_sql_plan_baselines_usage(
+        managed_database_id=managed_database_id,
+        enable_sql_plan_baselines_usage_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.enable_sql_plan_baselines_usage_database_named_credential_details.command_name', 'enable-sql-plan-baselines-usage-database-named-credential-details'), help=u"""Enables the use of SQL plan baselines stored in SQL Management Base.
+
+When enabled, the optimizer uses SQL plan baselines to select plans to avoid potential performance regressions. \n[Command Reference](enableSqlPlanBaselinesUsage)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def enable_sql_plan_baselines_usage_database_named_credential_details(ctx, from_json, managed_database_id, database_credential_named_credential_id, credentials):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.enable_sql_plan_baselines_usage(
+        managed_database_id=managed_database_id,
+        enable_sql_plan_baselines_usage_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.enable_sql_plan_baselines_usage_database_password_credential_details.command_name', 'enable-sql-plan-baselines-usage-database-password-credential-details'), help=u"""Enables the use of SQL plan baselines stored in SQL Management Base.
+
+When enabled, the optimizer uses SQL plan baselines to select plans to avoid potential performance regressions. \n[Command Reference](enableSqlPlanBaselinesUsage)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.wrap_exceptions
+def enable_sql_plan_baselines_usage_database_password_credential_details(ctx, from_json, managed_database_id, database_credential_password, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.enable_sql_plan_baselines_usage(
@@ -4175,17 +6842,20 @@ def enable_sql_plan_baselines_usage_managed_database_secret_credential(ctx, from
 
 @snapshot_details_group.command(name=cli_util.override('db_management.generate_awr_snapshot.command_name', 'generate-awr-snapshot'), help=u"""Creates an AWR snapshot for the target database. \n[Command Reference](generateAwrSnapshot)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SnapshotDetails'})
 @cli_util.wrap_exceptions
-def generate_awr_snapshot(ctx, from_json, managed_database_id):
+def generate_awr_snapshot(ctx, from_json, managed_database_id, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.generate_awr_snapshot(
@@ -4206,12 +6876,13 @@ def generate_awr_snapshot(ctx, from_json, managed_database_id):
 @cli_util.option('--report-type', type=custom_types.CliCaseInsensitiveChoice(["AWR", "ASH"]), help=u"""The query parameter to filter the AWR report types.""")
 @cli_util.option('--container-id', type=click.INT, help=u"""The optional query parameter to filter the database container by an exact ID value. Note that the database container ID can be retrieved from the following endpoint: /managedDatabases/{managedDatabaseId}/awrDbSnapshotRanges""")
 @cli_util.option('--report-format', type=custom_types.CliCaseInsensitiveChoice(["HTML", "TEXT"]), help=u"""The format of the AWR report.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({'inst-nums': {'module': 'database_management', 'class': 'list[integer]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'inst-nums': {'module': 'database_management', 'class': 'list[integer]'}}, output_type={'module': 'database_management', 'class': 'AwrDbReport'})
 @cli_util.wrap_exceptions
-def get_awr_db_report(ctx, from_json, managed_database_id, awr_db_id, inst_nums, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, report_type, container_id, report_format):
+def get_awr_db_report(ctx, from_json, managed_database_id, awr_db_id, inst_nums, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, report_type, container_id, report_format, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -4236,6 +6907,8 @@ def get_awr_db_report(ctx, from_json, managed_database_id, awr_db_id, inst_nums,
         kwargs['container_id'] = container_id
     if report_format is not None:
         kwargs['report_format'] = report_format
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.get_awr_db_report(
@@ -4257,12 +6930,13 @@ def get_awr_db_report(ctx, from_json, managed_database_id, awr_db_id, inst_nums,
 @cli_util.option('--time-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The optional less than or equal to query parameter to filter the timestamp.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--report-format', type=custom_types.CliCaseInsensitiveChoice(["HTML", "TEXT"]), help=u"""The format of the AWR report.""")
 @cli_util.option('--container-id', type=click.INT, help=u"""The optional query parameter to filter the database container by an exact ID value. Note that the database container ID can be retrieved from the following endpoint: /managedDatabases/{managedDatabaseId}/awrDbSnapshotRanges""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'AwrDbSqlReport'})
 @cli_util.wrap_exceptions
-def get_awr_db_sql_report(ctx, from_json, managed_database_id, awr_db_id, sql_id, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, report_format, container_id):
+def get_awr_db_sql_report(ctx, from_json, managed_database_id, awr_db_id, sql_id, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, report_format, container_id, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -4285,6 +6959,8 @@ def get_awr_db_sql_report(ctx, from_json, managed_database_id, awr_db_id, sql_id
         kwargs['report_format'] = report_format
     if container_id is not None:
         kwargs['container_id'] = container_id
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.get_awr_db_sql_report(
@@ -4436,17 +7112,20 @@ def get_external_asm(ctx, from_json, external_asm_id):
 
 @external_asm_group.command(name=cli_util.override('db_management.get_external_asm_configuration.command_name', 'get-external-asm-configuration'), help=u"""Gets configuration details including disk groups for the external ASM specified by `externalAsmId`. \n[Command Reference](getExternalAsmConfiguration)""")
 @cli_util.option('--external-asm-id', required=True, help=u"""The [OCID] of the external ASM.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalAsmConfiguration'})
 @cli_util.wrap_exceptions
-def get_external_asm_configuration(ctx, from_json, external_asm_id):
+def get_external_asm_configuration(ctx, from_json, external_asm_id, opc_named_credential_id):
 
     if isinstance(external_asm_id, six.string_types) and len(external_asm_id.strip()) == 0:
         raise click.UsageError('Parameter --external-asm-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.get_external_asm_configuration(
@@ -4874,6 +7553,28 @@ def get_managed_database_group(ctx, from_json, managed_database_group_id):
     cli_util.render_response(result, ctx)
 
 
+@named_credential_group.command(name=cli_util.override('db_management.get_named_credential.command_name', 'get'), help=u"""Gets the details for the named credential specified by namedCredentialId. \n[Command Reference](getNamedCredential)""")
+@cli_util.option('--named-credential-id', required=True, help=u"""The [OCID] of the named credential.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'NamedCredential'})
+@cli_util.wrap_exceptions
+def get_named_credential(ctx, from_json, named_credential_id):
+
+    if isinstance(named_credential_id, six.string_types) and len(named_credential_id.strip()) == 0:
+        raise click.UsageError('Parameter --named-credential-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_named_credential(
+        named_credential_id=named_credential_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @external_exadata_storage_server_group.command(name=cli_util.override('db_management.get_open_alert_history.command_name', 'get-open-alert-history'), help=u"""Gets the open alerts from the specified Exadata storage server. \n[Command Reference](getOpenAlertHistory)""")
 @cli_util.option('--external-exadata-storage-server-id', required=True, help=u"""The [OCID] of the Exadata storage server.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4900,12 +7601,13 @@ def get_open_alert_history(ctx, from_json, external_exadata_storage_server_id):
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--execution-name', required=True, help=u"""The name of the Optimizer Statistics Advisor execution.""")
 @cli_util.option('--task-name', required=True, help=u"""The name of the optimizer statistics collection execution task.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'OptimizerStatisticsAdvisorExecution'})
 @cli_util.wrap_exceptions
-def get_optimizer_statistics_advisor_execution(ctx, from_json, managed_database_id, execution_name, task_name):
+def get_optimizer_statistics_advisor_execution(ctx, from_json, managed_database_id, execution_name, task_name, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -4914,6 +7616,8 @@ def get_optimizer_statistics_advisor_execution(ctx, from_json, managed_database_
         raise click.UsageError('Parameter --execution-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.get_optimizer_statistics_advisor_execution(
@@ -4929,12 +7633,13 @@ def get_optimizer_statistics_advisor_execution(ctx, from_json, managed_database_
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--execution-name', required=True, help=u"""The name of the Optimizer Statistics Advisor execution.""")
 @cli_util.option('--task-name', required=True, help=u"""The name of the optimizer statistics collection execution task.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'OptimizerStatisticsAdvisorExecutionScript'})
 @cli_util.wrap_exceptions
-def get_optimizer_statistics_advisor_execution_script(ctx, from_json, managed_database_id, execution_name, task_name):
+def get_optimizer_statistics_advisor_execution_script(ctx, from_json, managed_database_id, execution_name, task_name, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -4943,6 +7648,8 @@ def get_optimizer_statistics_advisor_execution_script(ctx, from_json, managed_da
         raise click.UsageError('Parameter --execution-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.get_optimizer_statistics_advisor_execution_script(
@@ -4957,12 +7664,13 @@ def get_optimizer_statistics_advisor_execution_script(ctx, from_json, managed_da
 @managed_database_group.command(name=cli_util.override('db_management.get_optimizer_statistics_collection_operation.command_name', 'get-optimizer-statistics-collection-operation'), help=u"""Gets a detailed report of the Optimizer Statistics Collection operation for the specified Managed Database. \n[Command Reference](getOptimizerStatisticsCollectionOperation)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--optimizer-statistics-collection-operation-id', required=True, type=click.FLOAT, help=u"""The ID of the Optimizer Statistics Collection operation.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'OptimizerStatisticsCollectionOperation'})
 @cli_util.wrap_exceptions
-def get_optimizer_statistics_collection_operation(ctx, from_json, managed_database_id, optimizer_statistics_collection_operation_id):
+def get_optimizer_statistics_collection_operation(ctx, from_json, managed_database_id, optimizer_statistics_collection_operation_id, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -4971,6 +7679,8 @@ def get_optimizer_statistics_collection_operation(ctx, from_json, managed_databa
         raise click.UsageError('Parameter --optimizer-statistics-collection-operation-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.get_optimizer_statistics_collection_operation(
@@ -5046,12 +7756,13 @@ def get_preferred_credential(ctx, from_json, managed_database_id, credential_nam
 @managed_database_group.command(name=cli_util.override('db_management.get_sql_plan_baseline.command_name', 'get-sql-plan-baseline'), help=u"""Gets the SQL plan baseline details for the specified planName. \n[Command Reference](getSqlPlanBaseline)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--plan-name', required=True, help=u"""The plan name of the SQL plan baseline.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlPlanBaseline'})
 @cli_util.wrap_exceptions
-def get_sql_plan_baseline(ctx, from_json, managed_database_id, plan_name):
+def get_sql_plan_baseline(ctx, from_json, managed_database_id, plan_name, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -5060,6 +7771,8 @@ def get_sql_plan_baseline(ctx, from_json, managed_database_id, plan_name):
         raise click.UsageError('Parameter --plan-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.get_sql_plan_baseline(
@@ -5072,17 +7785,20 @@ def get_sql_plan_baseline(ctx, from_json, managed_database_id, plan_name):
 
 @managed_database_group.command(name=cli_util.override('db_management.get_sql_plan_baseline_configuration.command_name', 'get-sql-plan-baseline-configuration'), help=u"""Gets the configuration details of SQL plan baselines for the specified Managed Database. The details include the settings for the capture and use of SQL plan baselines, SPM Evolve Advisor task, and SQL Management Base. \n[Command Reference](getSqlPlanBaselineConfiguration)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlPlanBaselineConfiguration'})
 @cli_util.wrap_exceptions
-def get_sql_plan_baseline_configuration(ctx, from_json, managed_database_id):
+def get_sql_plan_baseline_configuration(ctx, from_json, managed_database_id, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.get_sql_plan_baseline_configuration(
@@ -5095,12 +7811,13 @@ def get_sql_plan_baseline_configuration(ctx, from_json, managed_database_id):
 @tablespace_group.command(name=cli_util.override('db_management.get_tablespace.command_name', 'get'), help=u"""Gets the details of the tablespace specified by tablespaceName within the Managed Database specified by managedDatabaseId. \n[Command Reference](getTablespace)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--tablespace-name', required=True, help=u"""The name of the tablespace.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'Tablespace'})
 @cli_util.wrap_exceptions
-def get_tablespace(ctx, from_json, managed_database_id, tablespace_name):
+def get_tablespace(ctx, from_json, managed_database_id, tablespace_name, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -5109,6 +7826,8 @@ def get_tablespace(ctx, from_json, managed_database_id, tablespace_name):
         raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.get_tablespace(
@@ -5144,12 +7863,13 @@ def get_top_sql_cpu_activity(ctx, from_json, external_exadata_storage_server_id)
 @managed_database_group.command(name=cli_util.override('db_management.get_user.command_name', 'get-user'), help=u"""Gets the details of the user specified by managedDatabaseId and userName. \n[Command Reference](getUser)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--user-name', required=True, help=u"""The name of the user whose details are to be viewed.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'User'})
 @cli_util.wrap_exceptions
-def get_user(ctx, from_json, managed_database_id, user_name):
+def get_user(ctx, from_json, managed_database_id, user_name, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -5158,6 +7878,8 @@ def get_user(ctx, from_json, managed_database_id, user_name):
         raise click.UsageError('Parameter --user-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.get_user(
@@ -5359,6 +8081,7 @@ def list_associated_databases(ctx, from_json, all_pages, page_size, db_managemen
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_BEGIN", "SNAPSHOT_ID"]), help=u"""The option to sort the AWR snapshot summary data.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the default order.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -5366,7 +8089,7 @@ def list_associated_databases(ctx, from_json, all_pages, page_size, db_managemen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'AwrDbSnapshotCollection'})
 @cli_util.wrap_exceptions
-def list_awr_db_snapshots(ctx, from_json, all_pages, page_size, managed_database_id, awr_db_id, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, container_id, page, limit, sort_by, sort_order):
+def list_awr_db_snapshots(ctx, from_json, all_pages, page_size, managed_database_id, awr_db_id, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, container_id, page, limit, sort_by, sort_order, opc_named_credential_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -5398,6 +8121,8 @@ def list_awr_db_snapshots(ctx, from_json, all_pages, page_size, managed_database
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     if all_pages:
@@ -5437,6 +8162,7 @@ def list_awr_db_snapshots(ctx, from_json, all_pages, page_size, managed_database
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["END_INTERVAL_TIME", "NAME"]), help=u"""The option to sort the AWR summary data.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the default order.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -5444,7 +8170,7 @@ def list_awr_db_snapshots(ctx, from_json, all_pages, page_size, managed_database
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'AwrDbCollection'})
 @cli_util.wrap_exceptions
-def list_awr_dbs(ctx, from_json, all_pages, page_size, managed_database_id, name, time_greater_than_or_equal_to, time_less_than_or_equal_to, page, limit, sort_by, sort_order):
+def list_awr_dbs(ctx, from_json, all_pages, page_size, managed_database_id, name, time_greater_than_or_equal_to, time_less_than_or_equal_to, page, limit, sort_by, sort_order, opc_named_credential_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -5467,6 +8193,8 @@ def list_awr_dbs(ctx, from_json, all_pages, page_size, managed_database_id, name
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     if all_pages:
@@ -5502,6 +8230,7 @@ def list_awr_dbs(ctx, from_json, all_pages, page_size, managed_database_id, name
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -5509,7 +8238,7 @@ def list_awr_dbs(ctx, from_json, all_pages, page_size, managed_database_id, name
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ConsumerGroupPrivilegeCollection'})
 @cli_util.wrap_exceptions
-def list_consumer_group_privileges(ctx, from_json, all_pages, page_size, managed_database_id, user_name, name, sort_by, sort_order, limit, page):
+def list_consumer_group_privileges(ctx, from_json, all_pages, page_size, managed_database_id, user_name, name, sort_by, sort_order, limit, page, opc_named_credential_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -5531,6 +8260,8 @@ def list_consumer_group_privileges(ctx, from_json, all_pages, page_size, managed
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     if all_pages:
@@ -5568,6 +8299,7 @@ def list_consumer_group_privileges(ctx, from_json, all_pages, page_size, managed
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["sqlId", "schema"]), help=u"""The option to sort the SQL statement summary data.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -5575,7 +8307,7 @@ def list_consumer_group_privileges(ctx, from_json, all_pages, page_size, managed
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CursorCacheStatementCollection'})
 @cli_util.wrap_exceptions
-def list_cursor_cache_statements(ctx, from_json, all_pages, page_size, managed_database_id, sql_text, page, limit, sort_by, sort_order):
+def list_cursor_cache_statements(ctx, from_json, all_pages, page_size, managed_database_id, sql_text, page, limit, sort_by, sort_order, opc_named_credential_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -5594,6 +8326,8 @@ def list_cursor_cache_statements(ctx, from_json, all_pages, page_size, managed_d
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     if all_pages:
@@ -5629,6 +8363,7 @@ def list_cursor_cache_statements(ctx, from_json, all_pages, page_size, managed_d
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -5636,7 +8371,7 @@ def list_cursor_cache_statements(ctx, from_json, all_pages, page_size, managed_d
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'DataAccessContainerCollection'})
 @cli_util.wrap_exceptions
-def list_data_access_containers(ctx, from_json, all_pages, page_size, managed_database_id, user_name, name, sort_by, sort_order, limit, page):
+def list_data_access_containers(ctx, from_json, all_pages, page_size, managed_database_id, user_name, name, sort_by, sort_order, limit, page, opc_named_credential_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -5658,6 +8393,8 @@ def list_data_access_containers(ctx, from_json, all_pages, page_size, managed_da
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     if all_pages:
@@ -5695,13 +8432,14 @@ def list_data_access_containers(ctx, from_json, all_pages, page_size, managed_da
 @cli_util.option('--is-allowed-values-included', type=click.BOOL, help=u"""When true, results include a list of valid values for parameters (if applicable).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `NAME` is ascending and it is case-sensitive.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'DatabaseParametersCollection'})
 @cli_util.wrap_exceptions
-def list_database_parameters(ctx, from_json, all_pages, managed_database_id, source, name, is_allowed_values_included, sort_by, sort_order):
+def list_database_parameters(ctx, from_json, all_pages, managed_database_id, source, name, is_allowed_values_included, sort_by, sort_order, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -5717,6 +8455,8 @@ def list_database_parameters(ctx, from_json, all_pages, managed_database_id, sou
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.list_database_parameters(
@@ -5798,6 +8538,7 @@ def list_db_management_private_endpoints(ctx, from_json, all_pages, page_size, c
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `NAME` is ascending and it is case-sensitive.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -5805,7 +8546,7 @@ def list_db_management_private_endpoints(ctx, from_json, all_pages, page_size, c
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalAsmDiskGroupCollection'})
 @cli_util.wrap_exceptions
-def list_external_asm_disk_groups(ctx, from_json, all_pages, page_size, external_asm_id, page, limit, sort_by, sort_order):
+def list_external_asm_disk_groups(ctx, from_json, all_pages, page_size, external_asm_id, page, limit, sort_by, sort_order, opc_named_credential_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -5822,6 +8563,8 @@ def list_external_asm_disk_groups(ctx, from_json, all_pages, page_size, external
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     if all_pages:
@@ -5914,6 +8657,7 @@ def list_external_asm_instances(ctx, from_json, all_pages, page_size, compartmen
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `NAME` is ascending and it is case-sensitive.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -5921,7 +8665,7 @@ def list_external_asm_instances(ctx, from_json, all_pages, page_size, compartmen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalAsmUserCollection'})
 @cli_util.wrap_exceptions
-def list_external_asm_users(ctx, from_json, all_pages, page_size, external_asm_id, page, limit, sort_by, sort_order):
+def list_external_asm_users(ctx, from_json, all_pages, page_size, external_asm_id, page, limit, sort_by, sort_order, opc_named_credential_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -5938,6 +8682,8 @@ def list_external_asm_users(ctx, from_json, all_pages, page_size, external_asm_i
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     if all_pages:
@@ -6678,6 +9424,7 @@ def list_external_exadata_storage_servers(ctx, from_json, all_pages, page_size, 
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `NAME` is ascending and it is case-sensitive.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -6685,7 +9432,7 @@ def list_external_exadata_storage_servers(ctx, from_json, all_pages, page_size, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalListenerServiceCollection'})
 @cli_util.wrap_exceptions
-def list_external_listener_services(ctx, from_json, all_pages, page_size, external_listener_id, managed_database_id, page, limit, sort_by, sort_order):
+def list_external_listener_services(ctx, from_json, all_pages, page_size, external_listener_id, managed_database_id, page, limit, sort_by, sort_order, opc_named_credential_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -6702,6 +9449,8 @@ def list_external_listener_services(ctx, from_json, all_pages, page_size, extern
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     if all_pages:
@@ -7139,6 +9888,72 @@ def list_managed_databases(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
+@named_credential_group.command(name=cli_util.override('db_management.list_named_credentials.command_name', 'list'), help=u"""Gets a single named credential specified by the name or all the named credentials in a specific compartment. \n[Command Reference](listNamedCredentials)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--associated-resource', help=u"""The resource associated to the named credential.""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_DB"]), help=u"""The type of database that is associated to the named credential.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["RESOURCE", "GLOBAL"]), help=u"""The scope of named credential.""")
+@cli_util.option('--name', help=u"""The name of the named credential.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for \u2018TIMECREATED\u2019 is descending and the default sort order for \u2018NAME\u2019 is ascending. The \u2018NAME\u2019 sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'NamedCredentialCollection'})
+@cli_util.wrap_exceptions
+def list_named_credentials(ctx, from_json, all_pages, page_size, compartment_id, associated_resource, type, scope, name, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if associated_resource is not None:
+        kwargs['associated_resource'] = associated_resource
+    if type is not None:
+        kwargs['type'] = type
+    if scope is not None:
+        kwargs['scope'] = scope
+    if name is not None:
+        kwargs['name'] = name
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_named_credentials,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_named_credentials,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_named_credentials(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @managed_database_group.command(name=cli_util.override('db_management.list_object_privileges.command_name', 'list-object-privileges'), help=u"""Gets the list of object privileges granted to a specific user. \n[Command Reference](listObjectPrivileges)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--user-name', required=True, help=u"""The name of the user whose details are to be viewed.""")
@@ -7147,6 +9962,7 @@ def list_managed_databases(ctx, from_json, all_pages, page_size, compartment_id,
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -7154,7 +9970,7 @@ def list_managed_databases(ctx, from_json, all_pages, page_size, compartment_id,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ObjectPrivilegeCollection'})
 @cli_util.wrap_exceptions
-def list_object_privileges(ctx, from_json, all_pages, page_size, managed_database_id, user_name, name, sort_by, sort_order, limit, page):
+def list_object_privileges(ctx, from_json, all_pages, page_size, managed_database_id, user_name, name, sort_by, sort_order, limit, page, opc_named_credential_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -7176,6 +9992,8 @@ def list_object_privileges(ctx, from_json, all_pages, page_size, managed_databas
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     if all_pages:
@@ -7210,13 +10028,14 @@ def list_object_privileges(ctx, from_json, all_pages, page_size, managed_databas
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--start-time-greater-than-or-equal-to', help=u"""The start time of the time range to retrieve the optimizer statistics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
 @cli_util.option('--end-time-less-than-or-equal-to', help=u"""The end time of the time range to retrieve the optimizer statistics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'OptimizerStatisticsAdvisorExecutionsCollection'})
 @cli_util.wrap_exceptions
-def list_optimizer_statistics_advisor_executions(ctx, from_json, all_pages, managed_database_id, start_time_greater_than_or_equal_to, end_time_less_than_or_equal_to):
+def list_optimizer_statistics_advisor_executions(ctx, from_json, all_pages, managed_database_id, start_time_greater_than_or_equal_to, end_time_less_than_or_equal_to, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -7226,6 +10045,8 @@ def list_optimizer_statistics_advisor_executions(ctx, from_json, all_pages, mana
         kwargs['start_time_greater_than_or_equal_to'] = start_time_greater_than_or_equal_to
     if end_time_less_than_or_equal_to is not None:
         kwargs['end_time_less_than_or_equal_to'] = end_time_less_than_or_equal_to
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.list_optimizer_statistics_advisor_executions(
@@ -7243,6 +10064,7 @@ def list_optimizer_statistics_advisor_executions(ctx, from_json, all_pages, mana
 @cli_util.option('--task-type', type=custom_types.CliCaseInsensitiveChoice(["ALL", "MANUAL", "AUTO"]), help=u"""The filter types of the optimizer statistics tasks.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -7250,7 +10072,7 @@ def list_optimizer_statistics_advisor_executions(ctx, from_json, all_pages, mana
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'OptimizerStatisticsCollectionAggregationsCollection'})
 @cli_util.wrap_exceptions
-def list_optimizer_statistics_collection_aggregations(ctx, from_json, all_pages, page_size, managed_database_id, group_type, start_time_greater_than_or_equal_to, end_time_less_than_or_equal_to, task_type, limit, page):
+def list_optimizer_statistics_collection_aggregations(ctx, from_json, all_pages, page_size, managed_database_id, group_type, start_time_greater_than_or_equal_to, end_time_less_than_or_equal_to, task_type, limit, page, opc_named_credential_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -7269,6 +10091,8 @@ def list_optimizer_statistics_collection_aggregations(ctx, from_json, all_pages,
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     if all_pages:
@@ -7309,6 +10133,7 @@ def list_optimizer_statistics_collection_aggregations(ctx, from_json, all_pages,
 @cli_util.option('--filter-by', help=u"""The parameter used to filter the optimizer statistics operations. Any property of the OptimizerStatisticsCollectionOperationSummary can be used to define the filter condition. The allowed conditional operators are AND or OR, and the allowed binary operators are are >, < and =. Any other operator is regarded invalid. Example: jobName=<replace with job name> AND status=<replace with status>""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["START_TIME", "END_TIME", "STATUS"]), help=u"""Sorts the list of optimizer statistics operations based on a specific attribute.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -7316,7 +10141,7 @@ def list_optimizer_statistics_collection_aggregations(ctx, from_json, all_pages,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'OptimizerStatisticsCollectionOperationsCollection'})
 @cli_util.wrap_exceptions
-def list_optimizer_statistics_collection_operations(ctx, from_json, all_pages, page_size, managed_database_id, start_time_greater_than_or_equal_to, end_time_less_than_or_equal_to, task_type, limit, page, filter_by, sort_by, sort_order):
+def list_optimizer_statistics_collection_operations(ctx, from_json, all_pages, page_size, managed_database_id, start_time_greater_than_or_equal_to, end_time_less_than_or_equal_to, task_type, limit, page, filter_by, sort_by, sort_order, opc_named_credential_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -7341,6 +10166,8 @@ def list_optimizer_statistics_collection_operations(ctx, from_json, all_pages, p
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     if all_pages:
@@ -7399,6 +10226,7 @@ def list_preferred_credentials(ctx, from_json, all_pages, managed_database_id):
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -7406,7 +10234,7 @@ def list_preferred_credentials(ctx, from_json, all_pages, managed_database_id):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ProxiedForUserCollection'})
 @cli_util.wrap_exceptions
-def list_proxied_for_users(ctx, from_json, all_pages, page_size, managed_database_id, user_name, name, sort_by, sort_order, limit, page):
+def list_proxied_for_users(ctx, from_json, all_pages, page_size, managed_database_id, user_name, name, sort_by, sort_order, limit, page, opc_named_credential_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -7428,6 +10256,8 @@ def list_proxied_for_users(ctx, from_json, all_pages, page_size, managed_databas
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     if all_pages:
@@ -7466,6 +10296,7 @@ def list_proxied_for_users(ctx, from_json, all_pages, page_size, managed_databas
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -7473,7 +10304,7 @@ def list_proxied_for_users(ctx, from_json, all_pages, page_size, managed_databas
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ProxyUserCollection'})
 @cli_util.wrap_exceptions
-def list_proxy_users(ctx, from_json, all_pages, page_size, managed_database_id, user_name, name, sort_by, sort_order, limit, page):
+def list_proxy_users(ctx, from_json, all_pages, page_size, managed_database_id, user_name, name, sort_by, sort_order, limit, page, opc_named_credential_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -7495,6 +10326,8 @@ def list_proxy_users(ctx, from_json, all_pages, page_size, managed_database_id, 
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     if all_pages:
@@ -7533,6 +10366,7 @@ def list_proxy_users(ctx, from_json, all_pages, page_size, managed_database_id, 
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -7540,7 +10374,7 @@ def list_proxy_users(ctx, from_json, all_pages, page_size, managed_database_id, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'RoleCollection'})
 @cli_util.wrap_exceptions
-def list_roles(ctx, from_json, all_pages, page_size, managed_database_id, user_name, name, sort_by, sort_order, limit, page):
+def list_roles(ctx, from_json, all_pages, page_size, managed_database_id, user_name, name, sort_by, sort_order, limit, page, opc_named_credential_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -7562,6 +10396,8 @@ def list_roles(ctx, from_json, all_pages, page_size, managed_database_id, user_n
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     if all_pages:
@@ -7599,6 +10435,7 @@ def list_roles(ctx, from_json, all_pages, page_size, managed_database_id, user_n
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for \u2018TIMECREATED\u2019 is descending and the default sort order for \u2018NAME\u2019 is ascending. The \u2018NAME\u2019 sort order is case-sensitive.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -7606,7 +10443,7 @@ def list_roles(ctx, from_json, all_pages, page_size, managed_database_id, user_n
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlPlanBaselineJobCollection'})
 @cli_util.wrap_exceptions
-def list_sql_plan_baseline_jobs(ctx, from_json, all_pages, page_size, managed_database_id, name, page, limit, sort_by, sort_order):
+def list_sql_plan_baseline_jobs(ctx, from_json, all_pages, page_size, managed_database_id, name, page, limit, sort_by, sort_order, opc_named_credential_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -7625,6 +10462,8 @@ def list_sql_plan_baseline_jobs(ctx, from_json, all_pages, page_size, managed_da
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     if all_pages:
@@ -7665,8 +10504,13 @@ def list_sql_plan_baseline_jobs(ctx, from_json, all_pages, page_size, managed_da
 @cli_util.option('--origin', type=custom_types.CliCaseInsensitiveChoice(["ADDM_SQLTUNE", "AUTO_CAPTURE", "AUTO_SQLTUNE", "EVOLVE_AUTO_INDEX_LOAD", "EVOLVE_CREATE_FROM_ADAPTIVE", "EVOLVE_LOAD_FROM_STS", "EVOLVE_LOAD_FROM_AWR", "EVOLVE_LOAD_FROM_CURSOR_CACHE", "MANUAL_LOAD", "MANUAL_LOAD_FROM_AWR", "MANUAL_LOAD_FROM_CURSOR_CACHE", "MANUAL_LOAD_FROM_STS", "MANUAL_SQLTUNE", "STORED_OUTLINE", "UNKNOWN"]), help=u"""A filter to return all the SQL plan baselines that match the origin.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "timeLastModified"]), help=u"""The option to sort the SQL plan baseline summary data.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "timeLastModified", "timeLastExecuted"]), help=u"""The option to sort the SQL plan baseline summary data.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the default order.""")
+@cli_util.option('--is-auto-purged', type=click.BOOL, help=u"""A filter to return only SQL plan baselines that are either auto-purged or not auto-purged. By default, all SQL plan baselines are returned.""")
+@cli_util.option('--time-last-executed-greater-than', type=custom_types.CLI_DATETIME, help=u"""A filter to return only SQL plan baselines whose last execution time is after the specified value. By default, all SQL plan baselines are returned.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-last-executed-less-than', type=custom_types.CLI_DATETIME, help=u"""A filter to return only SQL plan baselines whose last execution time is before the specified value. By default, all SQL plan baselines are returned.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--is-never-executed', type=click.BOOL, help=u"""A filter to return only SQL plan baselines that are not executed till now. By default, all SQL plan baselines are returned.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -7674,7 +10518,7 @@ def list_sql_plan_baseline_jobs(ctx, from_json, all_pages, page_size, managed_da
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlPlanBaselineCollection'})
 @cli_util.wrap_exceptions
-def list_sql_plan_baselines(ctx, from_json, all_pages, page_size, managed_database_id, plan_name, sql_handle, sql_text, is_enabled, is_accepted, is_reproduced, is_fixed, is_adaptive, origin, page, limit, sort_by, sort_order):
+def list_sql_plan_baselines(ctx, from_json, all_pages, page_size, managed_database_id, plan_name, sql_handle, sql_text, is_enabled, is_accepted, is_reproduced, is_fixed, is_adaptive, origin, page, limit, sort_by, sort_order, is_auto_purged, time_last_executed_greater_than, time_last_executed_less_than, is_never_executed, opc_named_credential_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -7709,6 +10553,16 @@ def list_sql_plan_baselines(ctx, from_json, all_pages, page_size, managed_databa
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if is_auto_purged is not None:
+        kwargs['is_auto_purged'] = is_auto_purged
+    if time_last_executed_greater_than is not None:
+        kwargs['time_last_executed_greater_than'] = time_last_executed_greater_than
+    if time_last_executed_less_than is not None:
+        kwargs['time_last_executed_less_than'] = time_last_executed_less_than
+    if is_never_executed is not None:
+        kwargs['is_never_executed'] = is_never_executed
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     if all_pages:
@@ -7744,6 +10598,7 @@ def list_sql_plan_baselines(ctx, from_json, all_pages, page_size, managed_databa
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -7751,7 +10606,7 @@ def list_sql_plan_baselines(ctx, from_json, all_pages, page_size, managed_databa
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SystemPrivilegeCollection'})
 @cli_util.wrap_exceptions
-def list_system_privileges(ctx, from_json, all_pages, page_size, managed_database_id, user_name, name, sort_by, sort_order, limit, page):
+def list_system_privileges(ctx, from_json, all_pages, page_size, managed_database_id, user_name, name, sort_by, sort_order, limit, page, opc_named_credential_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -7773,6 +10628,8 @@ def list_system_privileges(ctx, from_json, all_pages, page_size, managed_databas
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     if all_pages:
@@ -7805,18 +10662,21 @@ def list_system_privileges(ctx, from_json, all_pages, page_size, managed_databas
 
 @managed_database_group.command(name=cli_util.override('db_management.list_table_statistics.command_name', 'list-table-statistics'), help=u"""Lists the database table statistics grouped by different statuses such as Not Stale Stats, Stale Stats, and No Stats. This also includes the percentage of each status. \n[Command Reference](listTableStatistics)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'TableStatisticsCollection'})
 @cli_util.wrap_exceptions
-def list_table_statistics(ctx, from_json, all_pages, managed_database_id):
+def list_table_statistics(ctx, from_json, all_pages, managed_database_id, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.list_table_statistics(
@@ -7833,6 +10693,7 @@ def list_table_statistics(ctx, from_json, all_pages, managed_database_id):
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -7840,7 +10701,7 @@ def list_table_statistics(ctx, from_json, all_pages, managed_database_id):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'TablespaceCollection'})
 @cli_util.wrap_exceptions
-def list_tablespaces(ctx, from_json, all_pages, page_size, managed_database_id, name, sort_by, sort_order, page, limit):
+def list_tablespaces(ctx, from_json, all_pages, page_size, managed_database_id, name, sort_by, sort_order, page, limit, opc_named_credential_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -7859,6 +10720,8 @@ def list_tablespaces(ctx, from_json, all_pages, page_size, managed_database_id, 
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     if all_pages:
@@ -7893,6 +10756,7 @@ def list_tablespaces(ctx, from_json, all_pages, page_size, managed_database_id, 
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -7900,7 +10764,7 @@ def list_tablespaces(ctx, from_json, all_pages, page_size, managed_database_id, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'UserCollection'})
 @cli_util.wrap_exceptions
-def list_users(ctx, from_json, all_pages, page_size, managed_database_id, name, sort_by, sort_order, limit, page):
+def list_users(ctx, from_json, all_pages, page_size, managed_database_id, name, sort_by, sort_order, limit, page, opc_named_credential_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -7919,6 +10783,8 @@ def list_users(ctx, from_json, all_pages, page_size, managed_database_id, name, 
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     if all_pages:
@@ -8128,17 +10994,18 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
 @cli_util.option('--job-name', required=True, help=u"""The name of the database job used for loading SQL plan baselines.""")
 @cli_util.option('--begin-snapshot', required=True, type=click.INT, help=u"""The begin snapshot.""")
 @cli_util.option('--end-snapshot', required=True, type=click.INT, help=u"""The end snapshot.""")
-@cli_util.option('--credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-description', help=u"""The description of the job.""")
 @cli_util.option('--sql-text-filter', help=u"""A filter applied to AWR to select only qualifying plans to be loaded. By default all plans in AWR are selected. The filter can take the form of any `WHERE` clause predicate that can be specified against the column `DBA_HIST_SQLTEXT.SQL_TEXT`. An example is `sql_text like 'SELECT %'`.""")
 @cli_util.option('--is-fixed', type=click.BOOL, help=u"""Indicates whether the plans are loaded as fixed plans (`true`) or non-fixed plans (`false`). By default, they are loaded as non-fixed plans.""")
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Indicates whether the loaded plans are enabled (`true`) or not (`false`). By default, they are enabled.""")
-@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}}, output_type={'module': 'database_management', 'class': 'SqlPlanBaselineJob'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlPlanBaselineJob'})
 @cli_util.wrap_exceptions
-def load_sql_plan_baselines_from_awr(ctx, from_json, managed_database_id, job_name, begin_snapshot, end_snapshot, credentials, job_description, sql_text_filter, is_fixed, is_enabled):
+def load_sql_plan_baselines_from_awr(ctx, from_json, managed_database_id, job_name, begin_snapshot, end_snapshot, job_description, sql_text_filter, is_fixed, is_enabled, credentials, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -8150,7 +11017,6 @@ def load_sql_plan_baselines_from_awr(ctx, from_json, managed_database_id, job_na
     _details['jobName'] = job_name
     _details['beginSnapshot'] = begin_snapshot
     _details['endSnapshot'] = end_snapshot
-    _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
 
     if job_description is not None:
         _details['jobDescription'] = job_description
@@ -8163,6 +11029,12 @@ def load_sql_plan_baselines_from_awr(ctx, from_json, managed_database_id, job_na
 
     if is_enabled is not None:
         _details['isEnabled'] = is_enabled
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.load_sql_plan_baselines_from_awr(
@@ -8185,12 +11057,13 @@ def load_sql_plan_baselines_from_awr(ctx, from_json, managed_database_id, job_na
 @cli_util.option('--sql-text-filter', help=u"""A filter applied to AWR to select only qualifying plans to be loaded. By default all plans in AWR are selected. The filter can take the form of any `WHERE` clause predicate that can be specified against the column `DBA_HIST_SQLTEXT.SQL_TEXT`. An example is `sql_text like 'SELECT %'`.""")
 @cli_util.option('--is-fixed', type=click.BOOL, help=u"""Indicates whether the plans are loaded as fixed plans (`true`) or non-fixed plans (`false`). By default, they are loaded as non-fixed plans.""")
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Indicates whether the loaded plans are enabled (`true`) or not (`false`). By default, they are enabled.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlPlanBaselineJob'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlPlanBaselineJob'})
 @cli_util.wrap_exceptions
-def load_sql_plan_baselines_from_awr_managed_database_password_credential(ctx, from_json, managed_database_id, job_name, begin_snapshot, end_snapshot, credentials_username, credentials_role, credentials_password, job_description, sql_text_filter, is_fixed, is_enabled):
+def load_sql_plan_baselines_from_awr_managed_database_password_credential(ctx, from_json, managed_database_id, job_name, begin_snapshot, end_snapshot, credentials_username, credentials_role, credentials_password, job_description, sql_text_filter, is_fixed, is_enabled, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -8219,6 +11092,9 @@ def load_sql_plan_baselines_from_awr_managed_database_password_credential(ctx, f
     if is_enabled is not None:
         _details['isEnabled'] = is_enabled
 
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
+
     _details['credentials']['credentialType'] = 'PASSWORD'
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
@@ -8242,12 +11118,13 @@ def load_sql_plan_baselines_from_awr_managed_database_password_credential(ctx, f
 @cli_util.option('--sql-text-filter', help=u"""A filter applied to AWR to select only qualifying plans to be loaded. By default all plans in AWR are selected. The filter can take the form of any `WHERE` clause predicate that can be specified against the column `DBA_HIST_SQLTEXT.SQL_TEXT`. An example is `sql_text like 'SELECT %'`.""")
 @cli_util.option('--is-fixed', type=click.BOOL, help=u"""Indicates whether the plans are loaded as fixed plans (`true`) or non-fixed plans (`false`). By default, they are loaded as non-fixed plans.""")
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Indicates whether the loaded plans are enabled (`true`) or not (`false`). By default, they are enabled.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlPlanBaselineJob'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlPlanBaselineJob'})
 @cli_util.wrap_exceptions
-def load_sql_plan_baselines_from_awr_managed_database_secret_credential(ctx, from_json, managed_database_id, job_name, begin_snapshot, end_snapshot, credentials_username, credentials_role, credentials_password_secret_id, job_description, sql_text_filter, is_fixed, is_enabled):
+def load_sql_plan_baselines_from_awr_managed_database_secret_credential(ctx, from_json, managed_database_id, job_name, begin_snapshot, end_snapshot, credentials_username, credentials_role, credentials_password_secret_id, job_description, sql_text_filter, is_fixed, is_enabled, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -8276,7 +11153,197 @@ def load_sql_plan_baselines_from_awr_managed_database_secret_credential(ctx, fro
     if is_enabled is not None:
         _details['isEnabled'] = is_enabled
 
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
+
     _details['credentials']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.load_sql_plan_baselines_from_awr(
+        managed_database_id=managed_database_id,
+        load_sql_plan_baselines_from_awr_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.load_sql_plan_baselines_from_awr_database_secret_credential_details.command_name', 'load-sql-plan-baselines-from-awr-database-secret-credential-details'), help=u"""Loads plans from Automatic Workload Repository (AWR) snapshots. You must specify the beginning and ending of the snapshot range. Optionally, you can apply a filter to load only plans that meet specified criteria. By default, the optimizer uses the loaded plans the next time that the database executes the SQL statements. \n[Command Reference](loadSqlPlanBaselinesFromAwr)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--job-name', required=True, help=u"""The name of the database job used for loading SQL plan baselines.""")
+@cli_util.option('--begin-snapshot', required=True, type=click.INT, help=u"""The begin snapshot.""")
+@cli_util.option('--end-snapshot', required=True, type=click.INT, help=u"""The end snapshot.""")
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--job-description', help=u"""The description of the job.""")
+@cli_util.option('--sql-text-filter', help=u"""A filter applied to AWR to select only qualifying plans to be loaded. By default all plans in AWR are selected. The filter can take the form of any `WHERE` clause predicate that can be specified against the column `DBA_HIST_SQLTEXT.SQL_TEXT`. An example is `sql_text like 'SELECT %'`.""")
+@cli_util.option('--is-fixed', type=click.BOOL, help=u"""Indicates whether the plans are loaded as fixed plans (`true`) or non-fixed plans (`false`). By default, they are loaded as non-fixed plans.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Indicates whether the loaded plans are enabled (`true`) or not (`false`). By default, they are enabled.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}}, output_type={'module': 'database_management', 'class': 'SqlPlanBaselineJob'})
+@cli_util.wrap_exceptions
+def load_sql_plan_baselines_from_awr_database_secret_credential_details(ctx, from_json, managed_database_id, job_name, begin_snapshot, end_snapshot, database_credential_password_secret_id, job_description, sql_text_filter, is_fixed, is_enabled, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['jobName'] = job_name
+    _details['beginSnapshot'] = begin_snapshot
+    _details['endSnapshot'] = end_snapshot
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if job_description is not None:
+        _details['jobDescription'] = job_description
+
+    if sql_text_filter is not None:
+        _details['sqlTextFilter'] = sql_text_filter
+
+    if is_fixed is not None:
+        _details['isFixed'] = is_fixed
+
+    if is_enabled is not None:
+        _details['isEnabled'] = is_enabled
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.load_sql_plan_baselines_from_awr(
+        managed_database_id=managed_database_id,
+        load_sql_plan_baselines_from_awr_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.load_sql_plan_baselines_from_awr_database_named_credential_details.command_name', 'load-sql-plan-baselines-from-awr-database-named-credential-details'), help=u"""Loads plans from Automatic Workload Repository (AWR) snapshots. You must specify the beginning and ending of the snapshot range. Optionally, you can apply a filter to load only plans that meet specified criteria. By default, the optimizer uses the loaded plans the next time that the database executes the SQL statements. \n[Command Reference](loadSqlPlanBaselinesFromAwr)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--job-name', required=True, help=u"""The name of the database job used for loading SQL plan baselines.""")
+@cli_util.option('--begin-snapshot', required=True, type=click.INT, help=u"""The begin snapshot.""")
+@cli_util.option('--end-snapshot', required=True, type=click.INT, help=u"""The end snapshot.""")
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--job-description', help=u"""The description of the job.""")
+@cli_util.option('--sql-text-filter', help=u"""A filter applied to AWR to select only qualifying plans to be loaded. By default all plans in AWR are selected. The filter can take the form of any `WHERE` clause predicate that can be specified against the column `DBA_HIST_SQLTEXT.SQL_TEXT`. An example is `sql_text like 'SELECT %'`.""")
+@cli_util.option('--is-fixed', type=click.BOOL, help=u"""Indicates whether the plans are loaded as fixed plans (`true`) or non-fixed plans (`false`). By default, they are loaded as non-fixed plans.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Indicates whether the loaded plans are enabled (`true`) or not (`false`). By default, they are enabled.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}}, output_type={'module': 'database_management', 'class': 'SqlPlanBaselineJob'})
+@cli_util.wrap_exceptions
+def load_sql_plan_baselines_from_awr_database_named_credential_details(ctx, from_json, managed_database_id, job_name, begin_snapshot, end_snapshot, database_credential_named_credential_id, job_description, sql_text_filter, is_fixed, is_enabled, credentials):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['jobName'] = job_name
+    _details['beginSnapshot'] = begin_snapshot
+    _details['endSnapshot'] = end_snapshot
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if job_description is not None:
+        _details['jobDescription'] = job_description
+
+    if sql_text_filter is not None:
+        _details['sqlTextFilter'] = sql_text_filter
+
+    if is_fixed is not None:
+        _details['isFixed'] = is_fixed
+
+    if is_enabled is not None:
+        _details['isEnabled'] = is_enabled
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.load_sql_plan_baselines_from_awr(
+        managed_database_id=managed_database_id,
+        load_sql_plan_baselines_from_awr_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.load_sql_plan_baselines_from_awr_database_password_credential_details.command_name', 'load-sql-plan-baselines-from-awr-database-password-credential-details'), help=u"""Loads plans from Automatic Workload Repository (AWR) snapshots. You must specify the beginning and ending of the snapshot range. Optionally, you can apply a filter to load only plans that meet specified criteria. By default, the optimizer uses the loaded plans the next time that the database executes the SQL statements. \n[Command Reference](loadSqlPlanBaselinesFromAwr)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--job-name', required=True, help=u"""The name of the database job used for loading SQL plan baselines.""")
+@cli_util.option('--begin-snapshot', required=True, type=click.INT, help=u"""The begin snapshot.""")
+@cli_util.option('--end-snapshot', required=True, type=click.INT, help=u"""The end snapshot.""")
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--job-description', help=u"""The description of the job.""")
+@cli_util.option('--sql-text-filter', help=u"""A filter applied to AWR to select only qualifying plans to be loaded. By default all plans in AWR are selected. The filter can take the form of any `WHERE` clause predicate that can be specified against the column `DBA_HIST_SQLTEXT.SQL_TEXT`. An example is `sql_text like 'SELECT %'`.""")
+@cli_util.option('--is-fixed', type=click.BOOL, help=u"""Indicates whether the plans are loaded as fixed plans (`true`) or non-fixed plans (`false`). By default, they are loaded as non-fixed plans.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Indicates whether the loaded plans are enabled (`true`) or not (`false`). By default, they are enabled.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}}, output_type={'module': 'database_management', 'class': 'SqlPlanBaselineJob'})
+@cli_util.wrap_exceptions
+def load_sql_plan_baselines_from_awr_database_password_credential_details(ctx, from_json, managed_database_id, job_name, begin_snapshot, end_snapshot, database_credential_password, job_description, sql_text_filter, is_fixed, is_enabled, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['jobName'] = job_name
+    _details['beginSnapshot'] = begin_snapshot
+    _details['endSnapshot'] = end_snapshot
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if job_description is not None:
+        _details['jobDescription'] = job_description
+
+    if sql_text_filter is not None:
+        _details['sqlTextFilter'] = sql_text_filter
+
+    if is_fixed is not None:
+        _details['isFixed'] = is_fixed
+
+    if is_enabled is not None:
+        _details['isEnabled'] = is_enabled
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.load_sql_plan_baselines_from_awr(
@@ -8290,7 +11357,6 @@ def load_sql_plan_baselines_from_awr_managed_database_secret_credential(ctx, fro
 @managed_database_group.command(name=cli_util.override('db_management.load_sql_plan_baselines_from_cursor_cache.command_name', 'load-sql-plan-baselines-from-cursor-cache'), help=u"""Loads plans for statements directly from the shared SQL area, also called the cursor cache. By applying a filter on the module name, the schema, or the SQL ID you identify the SQL statement or set of SQL statements to load. \n[Command Reference](loadSqlPlanBaselinesFromCursorCache)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--job-name', required=True, help=u"""The name of the database job used for loading SQL plan baselines.""")
-@cli_util.option('--credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-description', help=u"""The description of the job.""")
 @cli_util.option('--sql-id', help=u"""The SQL statement identifier. Identifies a SQL statement in the cursor cache.""")
 @cli_util.option('--plan-hash', type=click.FLOAT, help=u"""The plan identifier. By default, all plans present in the cursor cache for the SQL statement identified by `sqlId` are captured.""")
@@ -8302,12 +11368,14 @@ def load_sql_plan_baselines_from_awr_managed_database_secret_credential(ctx, fro
 @cli_util.option('--filter-value', help=u"""The filter value. It is upper-cased except when it is enclosed in double quotes or filter name is `SQL_TEXT`.""")
 @cli_util.option('--is-fixed', type=click.BOOL, help=u"""Indicates whether the plans are loaded as fixed plans (`true`) or non-fixed plans (`false`). By default, they are loaded as non-fixed plans.""")
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Indicates whether the loaded plans are enabled (`true`) or not (`false`). By default, they are enabled.""")
-@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}}, output_type={'module': 'database_management', 'class': 'SqlPlanBaselineJob'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlPlanBaselineJob'})
 @cli_util.wrap_exceptions
-def load_sql_plan_baselines_from_cursor_cache(ctx, from_json, managed_database_id, job_name, credentials, job_description, sql_id, plan_hash, sql_text, sql_handle, filter_name, filter_value, is_fixed, is_enabled):
+def load_sql_plan_baselines_from_cursor_cache(ctx, from_json, managed_database_id, job_name, job_description, sql_id, plan_hash, sql_text, sql_handle, filter_name, filter_value, is_fixed, is_enabled, credentials, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -8317,7 +11385,6 @@ def load_sql_plan_baselines_from_cursor_cache(ctx, from_json, managed_database_i
 
     _details = {}
     _details['jobName'] = job_name
-    _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
 
     if job_description is not None:
         _details['jobDescription'] = job_description
@@ -8346,6 +11413,12 @@ def load_sql_plan_baselines_from_cursor_cache(ctx, from_json, managed_database_i
     if is_enabled is not None:
         _details['isEnabled'] = is_enabled
 
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
+
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.load_sql_plan_baselines_from_cursor_cache(
         managed_database_id=managed_database_id,
@@ -8372,12 +11445,13 @@ def load_sql_plan_baselines_from_cursor_cache(ctx, from_json, managed_database_i
 @cli_util.option('--filter-value', help=u"""The filter value. It is upper-cased except when it is enclosed in double quotes or filter name is `SQL_TEXT`.""")
 @cli_util.option('--is-fixed', type=click.BOOL, help=u"""Indicates whether the plans are loaded as fixed plans (`true`) or non-fixed plans (`false`). By default, they are loaded as non-fixed plans.""")
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Indicates whether the loaded plans are enabled (`true`) or not (`false`). By default, they are enabled.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlPlanBaselineJob'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlPlanBaselineJob'})
 @cli_util.wrap_exceptions
-def load_sql_plan_baselines_from_cursor_cache_managed_database_password_credential(ctx, from_json, managed_database_id, job_name, credentials_username, credentials_role, credentials_password, job_description, sql_id, plan_hash, sql_text, sql_handle, filter_name, filter_value, is_fixed, is_enabled):
+def load_sql_plan_baselines_from_cursor_cache_managed_database_password_credential(ctx, from_json, managed_database_id, job_name, credentials_username, credentials_role, credentials_password, job_description, sql_id, plan_hash, sql_text, sql_handle, filter_name, filter_value, is_fixed, is_enabled, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -8418,6 +11492,9 @@ def load_sql_plan_baselines_from_cursor_cache_managed_database_password_credenti
 
     if is_enabled is not None:
         _details['isEnabled'] = is_enabled
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     _details['credentials']['credentialType'] = 'PASSWORD'
 
@@ -8447,12 +11524,13 @@ def load_sql_plan_baselines_from_cursor_cache_managed_database_password_credenti
 @cli_util.option('--filter-value', help=u"""The filter value. It is upper-cased except when it is enclosed in double quotes or filter name is `SQL_TEXT`.""")
 @cli_util.option('--is-fixed', type=click.BOOL, help=u"""Indicates whether the plans are loaded as fixed plans (`true`) or non-fixed plans (`false`). By default, they are loaded as non-fixed plans.""")
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Indicates whether the loaded plans are enabled (`true`) or not (`false`). By default, they are enabled.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlPlanBaselineJob'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'SqlPlanBaselineJob'})
 @cli_util.wrap_exceptions
-def load_sql_plan_baselines_from_cursor_cache_managed_database_secret_credential(ctx, from_json, managed_database_id, job_name, credentials_username, credentials_role, credentials_password_secret_id, job_description, sql_id, plan_hash, sql_text, sql_handle, filter_name, filter_value, is_fixed, is_enabled):
+def load_sql_plan_baselines_from_cursor_cache_managed_database_secret_credential(ctx, from_json, managed_database_id, job_name, credentials_username, credentials_role, credentials_password_secret_id, job_description, sql_id, plan_hash, sql_text, sql_handle, filter_name, filter_value, is_fixed, is_enabled, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -8494,7 +11572,251 @@ def load_sql_plan_baselines_from_cursor_cache_managed_database_secret_credential
     if is_enabled is not None:
         _details['isEnabled'] = is_enabled
 
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
+
     _details['credentials']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.load_sql_plan_baselines_from_cursor_cache(
+        managed_database_id=managed_database_id,
+        load_sql_plan_baselines_from_cursor_cache_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.load_sql_plan_baselines_from_cursor_cache_database_secret_credential_details.command_name', 'load-sql-plan-baselines-from-cursor-cache-database-secret-credential-details'), help=u"""Loads plans for statements directly from the shared SQL area, also called the cursor cache. By applying a filter on the module name, the schema, or the SQL ID you identify the SQL statement or set of SQL statements to load. \n[Command Reference](loadSqlPlanBaselinesFromCursorCache)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--job-name', required=True, help=u"""The name of the database job used for loading SQL plan baselines.""")
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--job-description', help=u"""The description of the job.""")
+@cli_util.option('--sql-id', help=u"""The SQL statement identifier. Identifies a SQL statement in the cursor cache.""")
+@cli_util.option('--plan-hash', type=click.FLOAT, help=u"""The plan identifier. By default, all plans present in the cursor cache for the SQL statement identified by `sqlId` are captured.""")
+@cli_util.option('--sql-text', help=u"""The SQL text to use in identifying the SQL plan baseline into which the plans are loaded. If the SQL plan baseline does not exist, it is created.""")
+@cli_util.option('--sql-handle', help=u"""The SQL handle to use in identifying the SQL plan baseline into which the plans are loaded.""")
+@cli_util.option('--filter-name', type=custom_types.CliCaseInsensitiveChoice(["SQL_TEXT", "PARSING_SCHEMA_NAME", "MODULE", "ACTION"]), help=u"""The name of the filter.
+
+- SQL_TEXT: Search pattern to apply to SQL text. - PARSING_SCHEMA_NAME: Name of the parsing schema. - MODULE: Name of the module. - ACTION: Name of the action.""")
+@cli_util.option('--filter-value', help=u"""The filter value. It is upper-cased except when it is enclosed in double quotes or filter name is `SQL_TEXT`.""")
+@cli_util.option('--is-fixed', type=click.BOOL, help=u"""Indicates whether the plans are loaded as fixed plans (`true`) or non-fixed plans (`false`). By default, they are loaded as non-fixed plans.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Indicates whether the loaded plans are enabled (`true`) or not (`false`). By default, they are enabled.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}}, output_type={'module': 'database_management', 'class': 'SqlPlanBaselineJob'})
+@cli_util.wrap_exceptions
+def load_sql_plan_baselines_from_cursor_cache_database_secret_credential_details(ctx, from_json, managed_database_id, job_name, database_credential_password_secret_id, job_description, sql_id, plan_hash, sql_text, sql_handle, filter_name, filter_value, is_fixed, is_enabled, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['jobName'] = job_name
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if job_description is not None:
+        _details['jobDescription'] = job_description
+
+    if sql_id is not None:
+        _details['sqlId'] = sql_id
+
+    if plan_hash is not None:
+        _details['planHash'] = plan_hash
+
+    if sql_text is not None:
+        _details['sqlText'] = sql_text
+
+    if sql_handle is not None:
+        _details['sqlHandle'] = sql_handle
+
+    if filter_name is not None:
+        _details['filterName'] = filter_name
+
+    if filter_value is not None:
+        _details['filterValue'] = filter_value
+
+    if is_fixed is not None:
+        _details['isFixed'] = is_fixed
+
+    if is_enabled is not None:
+        _details['isEnabled'] = is_enabled
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.load_sql_plan_baselines_from_cursor_cache(
+        managed_database_id=managed_database_id,
+        load_sql_plan_baselines_from_cursor_cache_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.load_sql_plan_baselines_from_cursor_cache_database_named_credential_details.command_name', 'load-sql-plan-baselines-from-cursor-cache-database-named-credential-details'), help=u"""Loads plans for statements directly from the shared SQL area, also called the cursor cache. By applying a filter on the module name, the schema, or the SQL ID you identify the SQL statement or set of SQL statements to load. \n[Command Reference](loadSqlPlanBaselinesFromCursorCache)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--job-name', required=True, help=u"""The name of the database job used for loading SQL plan baselines.""")
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--job-description', help=u"""The description of the job.""")
+@cli_util.option('--sql-id', help=u"""The SQL statement identifier. Identifies a SQL statement in the cursor cache.""")
+@cli_util.option('--plan-hash', type=click.FLOAT, help=u"""The plan identifier. By default, all plans present in the cursor cache for the SQL statement identified by `sqlId` are captured.""")
+@cli_util.option('--sql-text', help=u"""The SQL text to use in identifying the SQL plan baseline into which the plans are loaded. If the SQL plan baseline does not exist, it is created.""")
+@cli_util.option('--sql-handle', help=u"""The SQL handle to use in identifying the SQL plan baseline into which the plans are loaded.""")
+@cli_util.option('--filter-name', type=custom_types.CliCaseInsensitiveChoice(["SQL_TEXT", "PARSING_SCHEMA_NAME", "MODULE", "ACTION"]), help=u"""The name of the filter.
+
+- SQL_TEXT: Search pattern to apply to SQL text. - PARSING_SCHEMA_NAME: Name of the parsing schema. - MODULE: Name of the module. - ACTION: Name of the action.""")
+@cli_util.option('--filter-value', help=u"""The filter value. It is upper-cased except when it is enclosed in double quotes or filter name is `SQL_TEXT`.""")
+@cli_util.option('--is-fixed', type=click.BOOL, help=u"""Indicates whether the plans are loaded as fixed plans (`true`) or non-fixed plans (`false`). By default, they are loaded as non-fixed plans.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Indicates whether the loaded plans are enabled (`true`) or not (`false`). By default, they are enabled.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}}, output_type={'module': 'database_management', 'class': 'SqlPlanBaselineJob'})
+@cli_util.wrap_exceptions
+def load_sql_plan_baselines_from_cursor_cache_database_named_credential_details(ctx, from_json, managed_database_id, job_name, database_credential_named_credential_id, job_description, sql_id, plan_hash, sql_text, sql_handle, filter_name, filter_value, is_fixed, is_enabled, credentials):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['jobName'] = job_name
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if job_description is not None:
+        _details['jobDescription'] = job_description
+
+    if sql_id is not None:
+        _details['sqlId'] = sql_id
+
+    if plan_hash is not None:
+        _details['planHash'] = plan_hash
+
+    if sql_text is not None:
+        _details['sqlText'] = sql_text
+
+    if sql_handle is not None:
+        _details['sqlHandle'] = sql_handle
+
+    if filter_name is not None:
+        _details['filterName'] = filter_name
+
+    if filter_value is not None:
+        _details['filterValue'] = filter_value
+
+    if is_fixed is not None:
+        _details['isFixed'] = is_fixed
+
+    if is_enabled is not None:
+        _details['isEnabled'] = is_enabled
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.load_sql_plan_baselines_from_cursor_cache(
+        managed_database_id=managed_database_id,
+        load_sql_plan_baselines_from_cursor_cache_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.load_sql_plan_baselines_from_cursor_cache_database_password_credential_details.command_name', 'load-sql-plan-baselines-from-cursor-cache-database-password-credential-details'), help=u"""Loads plans for statements directly from the shared SQL area, also called the cursor cache. By applying a filter on the module name, the schema, or the SQL ID you identify the SQL statement or set of SQL statements to load. \n[Command Reference](loadSqlPlanBaselinesFromCursorCache)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--job-name', required=True, help=u"""The name of the database job used for loading SQL plan baselines.""")
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--job-description', help=u"""The description of the job.""")
+@cli_util.option('--sql-id', help=u"""The SQL statement identifier. Identifies a SQL statement in the cursor cache.""")
+@cli_util.option('--plan-hash', type=click.FLOAT, help=u"""The plan identifier. By default, all plans present in the cursor cache for the SQL statement identified by `sqlId` are captured.""")
+@cli_util.option('--sql-text', help=u"""The SQL text to use in identifying the SQL plan baseline into which the plans are loaded. If the SQL plan baseline does not exist, it is created.""")
+@cli_util.option('--sql-handle', help=u"""The SQL handle to use in identifying the SQL plan baseline into which the plans are loaded.""")
+@cli_util.option('--filter-name', type=custom_types.CliCaseInsensitiveChoice(["SQL_TEXT", "PARSING_SCHEMA_NAME", "MODULE", "ACTION"]), help=u"""The name of the filter.
+
+- SQL_TEXT: Search pattern to apply to SQL text. - PARSING_SCHEMA_NAME: Name of the parsing schema. - MODULE: Name of the module. - ACTION: Name of the action.""")
+@cli_util.option('--filter-value', help=u"""The filter value. It is upper-cased except when it is enclosed in double quotes or filter name is `SQL_TEXT`.""")
+@cli_util.option('--is-fixed', type=click.BOOL, help=u"""Indicates whether the plans are loaded as fixed plans (`true`) or non-fixed plans (`false`). By default, they are loaded as non-fixed plans.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Indicates whether the loaded plans are enabled (`true`) or not (`false`). By default, they are enabled.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}}, output_type={'module': 'database_management', 'class': 'SqlPlanBaselineJob'})
+@cli_util.wrap_exceptions
+def load_sql_plan_baselines_from_cursor_cache_database_password_credential_details(ctx, from_json, managed_database_id, job_name, database_credential_password, job_description, sql_id, plan_hash, sql_text, sql_handle, filter_name, filter_value, is_fixed, is_enabled, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['jobName'] = job_name
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if job_description is not None:
+        _details['jobDescription'] = job_description
+
+    if sql_id is not None:
+        _details['sqlId'] = sql_id
+
+    if plan_hash is not None:
+        _details['planHash'] = plan_hash
+
+    if sql_text is not None:
+        _details['sqlText'] = sql_text
+
+    if sql_handle is not None:
+        _details['sqlHandle'] = sql_handle
+
+    if filter_name is not None:
+        _details['filterName'] = filter_name
+
+    if filter_value is not None:
+        _details['filterValue'] = filter_value
+
+    if is_fixed is not None:
+        _details['isFixed'] = is_fixed
+
+    if is_enabled is not None:
+        _details['isEnabled'] = is_enabled
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.load_sql_plan_baselines_from_cursor_cache(
@@ -8543,15 +11865,16 @@ def patch_external_db_system_discovery(ctx, from_json, external_db_system_discov
 @tablespace_group.command(name=cli_util.override('db_management.remove_data_file.command_name', 'remove'), help=u"""Removes a data file or temp file from the tablespace. \n[Command Reference](removeDataFile)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--tablespace-name', required=True, help=u"""The name of the tablespace.""")
-@cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--file-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DATAFILE", "TEMPFILE"]), help=u"""Specifies whether the file is a data file or temp file.""")
 @cli_util.option('--data-file', required=True, help=u"""Name of the data file or temp file to be removed from the tablespace.""")
-@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}})
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
 @cli_util.wrap_exceptions
-def remove_data_file(ctx, from_json, managed_database_id, tablespace_name, credential_details, file_type, data_file):
+def remove_data_file(ctx, from_json, managed_database_id, tablespace_name, file_type, data_file, credential_details, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -8563,9 +11886,14 @@ def remove_data_file(ctx, from_json, managed_database_id, tablespace_name, crede
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
     _details['fileType'] = file_type
     _details['dataFile'] = data_file
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.remove_data_file(
@@ -8585,12 +11913,13 @@ def remove_data_file(ctx, from_json, managed_database_id, tablespace_name, crede
 @cli_util.option('--credential-details-username', required=True, help=u"""The user to connect to the database.""")
 @cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credential-details-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
 @cli_util.wrap_exceptions
-def remove_data_file_tablespace_admin_password_credential_details(ctx, from_json, managed_database_id, tablespace_name, file_type, data_file, credential_details_username, credential_details_role, credential_details_password):
+def remove_data_file_tablespace_admin_password_credential_details(ctx, from_json, managed_database_id, tablespace_name, file_type, data_file, credential_details_username, credential_details_role, credential_details_password, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -8608,6 +11937,9 @@ def remove_data_file_tablespace_admin_password_credential_details(ctx, from_json
     _details['credentialDetails']['username'] = credential_details_username
     _details['credentialDetails']['role'] = credential_details_role
     _details['credentialDetails']['password'] = credential_details_password
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     _details['credentialDetails']['tablespaceAdminCredentialType'] = 'PASSWORD'
 
@@ -8629,12 +11961,13 @@ def remove_data_file_tablespace_admin_password_credential_details(ctx, from_json
 @cli_util.option('--credential-details-username', required=True, help=u"""The user to connect to the database.""")
 @cli_util.option('--credential-details-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
 @cli_util.option('--credential-details-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
 @cli_util.wrap_exceptions
-def remove_data_file_tablespace_admin_secret_credential_details(ctx, from_json, managed_database_id, tablespace_name, file_type, data_file, credential_details_username, credential_details_role, credential_details_password_secret_id):
+def remove_data_file_tablespace_admin_secret_credential_details(ctx, from_json, managed_database_id, tablespace_name, file_type, data_file, credential_details_username, credential_details_role, credential_details_password_secret_id, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -8653,7 +11986,158 @@ def remove_data_file_tablespace_admin_secret_credential_details(ctx, from_json, 
     _details['credentialDetails']['role'] = credential_details_role
     _details['credentialDetails']['passwordSecretId'] = credential_details_password_secret_id
 
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
+
     _details['credentialDetails']['tablespaceAdminCredentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.remove_data_file(
+        managed_database_id=managed_database_id,
+        tablespace_name=tablespace_name,
+        remove_data_file_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@tablespace_group.command(name=cli_util.override('db_management.remove_data_file_database_secret_credential_details.command_name', 'remove-data-file-database-secret-credential-details'), help=u"""Removes a data file or temp file from the tablespace. \n[Command Reference](removeDataFile)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--tablespace-name', required=True, help=u"""The name of the tablespace.""")
+@cli_util.option('--file-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DATAFILE", "TEMPFILE"]), help=u"""Specifies whether the file is a data file or temp file.""")
+@cli_util.option('--data-file', required=True, help=u"""Name of the data file or temp file to be removed from the tablespace.""")
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
+@cli_util.wrap_exceptions
+def remove_data_file_database_secret_credential_details(ctx, from_json, managed_database_id, tablespace_name, file_type, data_file, database_credential_password_secret_id, credential_details, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['fileType'] = file_type
+    _details['dataFile'] = data_file
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.remove_data_file(
+        managed_database_id=managed_database_id,
+        tablespace_name=tablespace_name,
+        remove_data_file_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@tablespace_group.command(name=cli_util.override('db_management.remove_data_file_database_named_credential_details.command_name', 'remove-data-file-database-named-credential-details'), help=u"""Removes a data file or temp file from the tablespace. \n[Command Reference](removeDataFile)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--tablespace-name', required=True, help=u"""The name of the tablespace.""")
+@cli_util.option('--file-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DATAFILE", "TEMPFILE"]), help=u"""Specifies whether the file is a data file or temp file.""")
+@cli_util.option('--data-file', required=True, help=u"""Name of the data file or temp file to be removed from the tablespace.""")
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
+@cli_util.wrap_exceptions
+def remove_data_file_database_named_credential_details(ctx, from_json, managed_database_id, tablespace_name, file_type, data_file, database_credential_named_credential_id, credential_details):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['fileType'] = file_type
+    _details['dataFile'] = data_file
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.remove_data_file(
+        managed_database_id=managed_database_id,
+        tablespace_name=tablespace_name,
+        remove_data_file_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@tablespace_group.command(name=cli_util.override('db_management.remove_data_file_database_password_credential_details.command_name', 'remove-data-file-database-password-credential-details'), help=u"""Removes a data file or temp file from the tablespace. \n[Command Reference](removeDataFile)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--tablespace-name', required=True, help=u"""The name of the tablespace.""")
+@cli_util.option('--file-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DATAFILE", "TEMPFILE"]), help=u"""Specifies whether the file is a data file or temp file.""")
+@cli_util.option('--data-file', required=True, help=u"""Name of the data file or temp file to be removed from the tablespace.""")
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
+@cli_util.wrap_exceptions
+def remove_data_file_database_password_credential_details(ctx, from_json, managed_database_id, tablespace_name, file_type, data_file, database_credential_password, credential_details, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['fileType'] = file_type
+    _details['dataFile'] = data_file
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.remove_data_file(
@@ -8695,17 +12179,18 @@ def remove_managed_database_from_managed_database_group(ctx, from_json, managed_
 
 @managed_database_group.command(name=cli_util.override('db_management.reset_database_parameters.command_name', 'reset-database-parameters'), help=u"""Resets database parameter values to their default or startup values. \n[Command Reference](resetDatabaseParameters)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
-@cli_util.option('--credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--scope', required=True, type=custom_types.CliCaseInsensitiveChoice(["MEMORY", "SPFILE", "BOTH"]), help=u"""The clause used to specify when the parameter change takes effect.
 
 Use `MEMORY` to make the change in memory and ensure that it takes effect immediately. Use `SPFILE` to make the change in the server parameter file. The change takes effect when the database is next shut down and started up again. Use `BOTH` to make the change in memory and in the server parameter file. The change takes effect immediately and persists after the database is shut down and started up again.""")
 @cli_util.option('--parameters', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of database parameter names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'parameters': {'module': 'database_management', 'class': 'list[string]'}})
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}, 'parameters': {'module': 'database_management', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'parameters': {'module': 'database_management', 'class': 'list[string]'}}, output_type={'module': 'database_management', 'class': 'UpdateDatabaseParametersResult'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}, 'parameters': {'module': 'database_management', 'class': 'list[string]'}}, output_type={'module': 'database_management', 'class': 'UpdateDatabaseParametersResult'})
 @cli_util.wrap_exceptions
-def reset_database_parameters(ctx, from_json, managed_database_id, credentials, scope, parameters):
+def reset_database_parameters(ctx, from_json, managed_database_id, scope, parameters, credentials, database_credential):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -8714,9 +12199,153 @@ def reset_database_parameters(ctx, from_json, managed_database_id, credentials, 
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
     _details['scope'] = scope
     _details['parameters'] = cli_util.parse_json_parameter("parameters", parameters)
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.reset_database_parameters(
+        managed_database_id=managed_database_id,
+        reset_database_parameters_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.reset_database_parameters_database_secret_credential_details.command_name', 'reset-database-parameters-database-secret-credential-details'), help=u"""Resets database parameter values to their default or startup values. \n[Command Reference](resetDatabaseParameters)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--scope', required=True, type=custom_types.CliCaseInsensitiveChoice(["MEMORY", "SPFILE", "BOTH"]), help=u"""The clause used to specify when the parameter change takes effect.
+
+Use `MEMORY` to make the change in memory and ensure that it takes effect immediately. Use `SPFILE` to make the change in the server parameter file. The change takes effect when the database is next shut down and started up again. Use `BOTH` to make the change in memory and in the server parameter file. The change takes effect immediately and persists after the database is shut down and started up again.""")
+@cli_util.option('--parameters', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of database parameter names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'parameters': {'module': 'database_management', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'parameters': {'module': 'database_management', 'class': 'list[string]'}}, output_type={'module': 'database_management', 'class': 'UpdateDatabaseParametersResult'})
+@cli_util.wrap_exceptions
+def reset_database_parameters_database_secret_credential_details(ctx, from_json, managed_database_id, scope, parameters, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['scope'] = scope
+    _details['parameters'] = cli_util.parse_json_parameter("parameters", parameters)
+    _details['databaseCredential']['passwordSecretId'] = database_credential_password_secret_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'SECRET'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.reset_database_parameters(
+        managed_database_id=managed_database_id,
+        reset_database_parameters_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.reset_database_parameters_database_named_credential_details.command_name', 'reset-database-parameters-database-named-credential-details'), help=u"""Resets database parameter values to their default or startup values. \n[Command Reference](resetDatabaseParameters)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--scope', required=True, type=custom_types.CliCaseInsensitiveChoice(["MEMORY", "SPFILE", "BOTH"]), help=u"""The clause used to specify when the parameter change takes effect.
+
+Use `MEMORY` to make the change in memory and ensure that it takes effect immediately. Use `SPFILE` to make the change in the server parameter file. The change takes effect when the database is next shut down and started up again. Use `BOTH` to make the change in memory and in the server parameter file. The change takes effect immediately and persists after the database is shut down and started up again.""")
+@cli_util.option('--parameters', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of database parameter names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-named-credential-id', required=True, help=u"""The [OCID] of the named credential where the database password metadata is stored.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'parameters': {'module': 'database_management', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'parameters': {'module': 'database_management', 'class': 'list[string]'}}, output_type={'module': 'database_management', 'class': 'UpdateDatabaseParametersResult'})
+@cli_util.wrap_exceptions
+def reset_database_parameters_database_named_credential_details(ctx, from_json, managed_database_id, scope, parameters, database_credential_named_credential_id, credentials):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['scope'] = scope
+    _details['parameters'] = cli_util.parse_json_parameter("parameters", parameters)
+    _details['databaseCredential']['namedCredentialId'] = database_credential_named_credential_id
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    _details['databaseCredential']['credentialType'] = 'NAMED_CREDENTIAL'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.reset_database_parameters(
+        managed_database_id=managed_database_id,
+        reset_database_parameters_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.reset_database_parameters_database_password_credential_details.command_name', 'reset-database-parameters-database-password-credential-details'), help=u"""Resets database parameter values to their default or startup values. \n[Command Reference](resetDatabaseParameters)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--scope', required=True, type=custom_types.CliCaseInsensitiveChoice(["MEMORY", "SPFILE", "BOTH"]), help=u"""The clause used to specify when the parameter change takes effect.
+
+Use `MEMORY` to make the change in memory and ensure that it takes effect immediately. Use `SPFILE` to make the change in the server parameter file. The change takes effect when the database is next shut down and started up again. Use `BOTH` to make the change in memory and in the server parameter file. The change takes effect immediately and persists after the database is shut down and started up again.""")
+@cli_util.option('--parameters', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of database parameter names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'parameters': {'module': 'database_management', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'parameters': {'module': 'database_management', 'class': 'list[string]'}}, output_type={'module': 'database_management', 'class': 'UpdateDatabaseParametersResult'})
+@cli_util.wrap_exceptions
+def reset_database_parameters_database_password_credential_details(ctx, from_json, managed_database_id, scope, parameters, database_credential_password, credentials, database_credential_username, database_credential_role):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseCredential'] = {}
+    _details['scope'] = scope
+    _details['parameters'] = cli_util.parse_json_parameter("parameters", parameters)
+    _details['databaseCredential']['password'] = database_credential_password
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if database_credential_username is not None:
+        _details['databaseCredential']['username'] = database_credential_username
+
+    if database_credential_role is not None:
+        _details['databaseCredential']['role'] = database_credential_role
+
+    _details['databaseCredential']['credentialType'] = 'PASSWORD'
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.reset_database_parameters(
@@ -8730,20 +12359,21 @@ def reset_database_parameters(ctx, from_json, managed_database_id, credentials, 
 @tablespace_group.command(name=cli_util.override('db_management.resize_data_file.command_name', 'resize-data-file'), help=u"""Resizes a data file or temp file within the tablespace. \n[Command Reference](resizeDataFile)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--tablespace-name', required=True, help=u"""The name of the tablespace.""")
-@cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--file-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DATAFILE", "TEMPFILE"]), help=u"""Specifies whether the file is a data file or temp file.""")
 @cli_util.option('--data-file', required=True, help=u"""Name of the data file or temp file to be resized.""")
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--file-size', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The new size of the data file or temp file.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-auto-extensible', type=click.BOOL, help=u"""Specifies whether the data file or temp file can be extended automatically.""")
 @cli_util.option('--auto-extend-next-size', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The size of the next increment of disk space to be allocated automatically when more extents are required.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--auto-extend-max-size', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The maximum disk space allowed for automatic extension of the data files or temp files.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-max-size-unlimited', type=click.BOOL, help=u"""Specifies whether the disk space of the data file or temp file can be limited.""")
-@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'file-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-next-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-max-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}})
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}, 'file-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-next-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-max-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'file-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-next-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-max-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}, 'file-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-next-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-max-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}}, output_type={'module': 'database_management', 'class': 'TablespaceAdminStatus'})
 @cli_util.wrap_exceptions
-def resize_data_file(ctx, from_json, managed_database_id, tablespace_name, credential_details, file_type, data_file, file_size, is_auto_extensible, auto_extend_next_size, auto_extend_max_size, is_max_size_unlimited):
+def resize_data_file(ctx, from_json, managed_database_id, tablespace_name, file_type, data_file, credential_details, database_credential, file_size, is_auto_extensible, auto_extend_next_size, auto_extend_max_size, is_max_size_unlimited):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -8755,9 +12385,14 @@ def resize_data_file(ctx, from_json, managed_database_id, tablespace_name, crede
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
     _details['fileType'] = file_type
     _details['dataFile'] = data_file
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if file_size is not None:
         _details['fileSize'] = cli_util.parse_json_parameter("file_size", file_size)
@@ -8788,17 +12423,20 @@ def resize_data_file(ctx, from_json, managed_database_id, tablespace_name, crede
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--start-snapshot-id', required=True, type=click.INT, help=u"""The ID number of the beginning AWR snapshot.""")
 @cli_util.option('--end-snapshot-id', required=True, type=click.INT, help=u"""The ID of the ending AWR snapshot.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'HistoricAddmResult'})
 @cli_util.wrap_exceptions
-def run_historic_addm(ctx, from_json, managed_database_id, start_snapshot_id, end_snapshot_id):
+def run_historic_addm(ctx, from_json, managed_database_id, start_snapshot_id, end_snapshot_id, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -8828,12 +12466,13 @@ def run_historic_addm(ctx, from_json, managed_database_id, start_snapshot_id, en
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in large paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_SAMPLED", "AVG_VALUE"]), help=u"""The option to sort the AWR CPU usage summary data.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the default order.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'AwrDbCpuUsageCollection'})
 @cli_util.wrap_exceptions
-def summarize_awr_db_cpu_usages(ctx, from_json, managed_database_id, awr_db_id, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, session_type, container_id, page, limit, sort_by, sort_order):
+def summarize_awr_db_cpu_usages(ctx, from_json, managed_database_id, awr_db_id, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, session_type, container_id, page, limit, sort_by, sort_order, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -8864,6 +12503,8 @@ def summarize_awr_db_cpu_usages(ctx, from_json, managed_database_id, awr_db_id, 
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.summarize_awr_db_cpu_usages(
@@ -8888,12 +12529,13 @@ def summarize_awr_db_cpu_usages(ctx, from_json, managed_database_id, awr_db_id, 
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in large paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMESTAMP", "NAME"]), help=u"""The option to sort the AWR time series summary data.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the default order.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({'name': {'module': 'database_management', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'name': {'module': 'database_management', 'class': 'list[string]'}}, output_type={'module': 'database_management', 'class': 'AwrDbMetricCollection'})
 @cli_util.wrap_exceptions
-def summarize_awr_db_metrics(ctx, from_json, managed_database_id, awr_db_id, name, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, container_id, page, limit, sort_by, sort_order):
+def summarize_awr_db_metrics(ctx, from_json, managed_database_id, awr_db_id, name, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, container_id, page, limit, sort_by, sort_order, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -8922,6 +12564,8 @@ def summarize_awr_db_metrics(ctx, from_json, managed_database_id, awr_db_id, nam
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.summarize_awr_db_metrics(
@@ -8947,12 +12591,13 @@ def summarize_awr_db_metrics(ctx, from_json, managed_database_id, awr_db_id, nam
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in large paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["IS_CHANGED", "NAME"]), help=u"""The option to sort the AWR database parameter change history data.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the default order.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'AwrDbParameterChangeCollection'})
 @cli_util.wrap_exceptions
-def summarize_awr_db_parameter_changes(ctx, from_json, managed_database_id, awr_db_id, name, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, container_id, page, limit, sort_by, sort_order):
+def summarize_awr_db_parameter_changes(ctx, from_json, managed_database_id, awr_db_id, name, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, container_id, page, limit, sort_by, sort_order, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -8981,6 +12626,8 @@ def summarize_awr_db_parameter_changes(ctx, from_json, managed_database_id, awr_
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.summarize_awr_db_parameter_changes(
@@ -9014,12 +12661,13 @@ Note that this API does not return information on the number of times each datab
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in large paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["IS_CHANGED", "NAME"]), help=u"""The option to sort the AWR database parameter change history data.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the default order.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({'name': {'module': 'database_management', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'name': {'module': 'database_management', 'class': 'list[string]'}}, output_type={'module': 'database_management', 'class': 'AwrDbParameterCollection'})
 @cli_util.wrap_exceptions
-def summarize_awr_db_parameters(ctx, from_json, managed_database_id, awr_db_id, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, container_id, name, name_contains, value_changed, value_default, value_modified, page, limit, sort_by, sort_order):
+def summarize_awr_db_parameters(ctx, from_json, managed_database_id, awr_db_id, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, container_id, name, name_contains, value_changed, value_default, value_modified, page, limit, sort_by, sort_order, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -9058,6 +12706,8 @@ def summarize_awr_db_parameters(ctx, from_json, managed_database_id, awr_db_id, 
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.summarize_awr_db_parameters(
@@ -9077,12 +12727,13 @@ def summarize_awr_db_parameters(ctx, from_json, managed_database_id, awr_db_id, 
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["END_INTERVAL_TIME", "NAME"]), help=u"""The option to sort the AWR summary data.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the default order.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'AwrDbSnapshotRangeCollection'})
 @cli_util.wrap_exceptions
-def summarize_awr_db_snapshot_ranges(ctx, from_json, managed_database_id, name, time_greater_than_or_equal_to, time_less_than_or_equal_to, page, limit, sort_by, sort_order):
+def summarize_awr_db_snapshot_ranges(ctx, from_json, managed_database_id, name, time_greater_than_or_equal_to, time_less_than_or_equal_to, page, limit, sort_by, sort_order, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -9102,6 +12753,8 @@ def summarize_awr_db_snapshot_ranges(ctx, from_json, managed_database_id, name, 
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.summarize_awr_db_snapshot_ranges(
@@ -9125,12 +12778,13 @@ def summarize_awr_db_snapshot_ranges(ctx, from_json, managed_database_id, name, 
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in large paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_BEGIN", "NAME"]), help=u"""The option to sort the data within a time period.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the default order.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({'name': {'module': 'database_management', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'name': {'module': 'database_management', 'class': 'list[string]'}}, output_type={'module': 'database_management', 'class': 'AwrDbSysstatCollection'})
 @cli_util.wrap_exceptions
-def summarize_awr_db_sysstats(ctx, from_json, managed_database_id, awr_db_id, name, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, container_id, page, limit, sort_by, sort_order):
+def summarize_awr_db_sysstats(ctx, from_json, managed_database_id, awr_db_id, name, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, container_id, page, limit, sort_by, sort_order, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -9159,6 +12813,8 @@ def summarize_awr_db_sysstats(ctx, from_json, managed_database_id, awr_db_id, na
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.summarize_awr_db_sysstats(
@@ -9183,12 +12839,13 @@ def summarize_awr_db_sysstats(ctx, from_json, managed_database_id, awr_db_id, na
 @cli_util.option('--top-n', type=click.INT, help=u"""The optional query parameter to filter the number of top categories to be returned.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["WAITS_PERSEC", "AVG_WAIT_TIME_PERSEC"]), help=u"""The option to sort the AWR top event summary data.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the default order.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'AwrDbTopWaitEventCollection'})
 @cli_util.wrap_exceptions
-def summarize_awr_db_top_wait_events(ctx, from_json, managed_database_id, awr_db_id, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, session_type, container_id, top_n, sort_by, sort_order):
+def summarize_awr_db_top_wait_events(ctx, from_json, managed_database_id, awr_db_id, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, session_type, container_id, top_n, sort_by, sort_order, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -9217,6 +12874,8 @@ def summarize_awr_db_top_wait_events(ctx, from_json, managed_database_id, awr_db
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.summarize_awr_db_top_wait_events(
@@ -9244,12 +12903,13 @@ def summarize_awr_db_top_wait_events(ctx, from_json, managed_database_id, awr_db
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in large paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["CATEGORY", "PERCENTAGE"]), help=u"""The option to sort distribution data.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'AwrDbWaitEventBucketCollection'})
 @cli_util.wrap_exceptions
-def summarize_awr_db_wait_event_buckets(ctx, from_json, managed_database_id, awr_db_id, name, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, num_bucket, min_value, max_value, container_id, page, limit, sort_by, sort_order):
+def summarize_awr_db_wait_event_buckets(ctx, from_json, managed_database_id, awr_db_id, name, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, num_bucket, min_value, max_value, container_id, page, limit, sort_by, sort_order, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -9284,6 +12944,8 @@ def summarize_awr_db_wait_event_buckets(ctx, from_json, managed_database_id, awr
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.summarize_awr_db_wait_event_buckets(
@@ -9310,12 +12972,13 @@ def summarize_awr_db_wait_event_buckets(ctx, from_json, managed_database_id, awr
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in large paginated response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_BEGIN", "NAME"]), help=u"""The option to sort the data within a time period.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Descending order is the default order.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({'name': {'module': 'database_management', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'name': {'module': 'database_management', 'class': 'list[string]'}}, output_type={'module': 'database_management', 'class': 'AwrDbWaitEventCollection'})
 @cli_util.wrap_exceptions
-def summarize_awr_db_wait_events(ctx, from_json, managed_database_id, awr_db_id, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, name, session_type, container_id, page, limit, sort_by, sort_order):
+def summarize_awr_db_wait_events(ctx, from_json, managed_database_id, awr_db_id, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, name, session_type, container_id, page, limit, sort_by, sort_order, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -9348,6 +13011,8 @@ def summarize_awr_db_wait_events(ctx, from_json, managed_database_id, awr_db_id,
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.summarize_awr_db_wait_events(
@@ -9609,12 +13274,13 @@ def summarize_managed_database_availability_metrics(ctx, from_json, managed_data
 @managed_database_group.command(name=cli_util.override('db_management.summarize_sql_plan_baselines.command_name', 'summarize-sql-plan-baselines'), help=u"""Gets the number of SQL plan baselines aggregated by their attributes. \n[Command Reference](summarizeSqlPlanBaselines)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlPlanBaselineAggregationCollection'})
 @cli_util.wrap_exceptions
-def summarize_sql_plan_baselines(ctx, from_json, managed_database_id, page):
+def summarize_sql_plan_baselines(ctx, from_json, managed_database_id, page, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -9622,6 +13288,8 @@ def summarize_sql_plan_baselines(ctx, from_json, managed_database_id, page):
     kwargs = {}
     if page is not None:
         kwargs['page'] = page
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.summarize_sql_plan_baselines(
@@ -9634,12 +13302,13 @@ def summarize_sql_plan_baselines(ctx, from_json, managed_database_id, page):
 @managed_database_group.command(name=cli_util.override('db_management.summarize_sql_plan_baselines_by_last_execution.command_name', 'summarize-sql-plan-baselines-by-last-execution'), help=u"""Gets the number of SQL plan baselines aggregated by the age of their last execution in weeks. \n[Command Reference](summarizeSqlPlanBaselinesByLastExecution)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'SqlPlanBaselineAggregationCollection'})
 @cli_util.wrap_exceptions
-def summarize_sql_plan_baselines_by_last_execution(ctx, from_json, managed_database_id, page):
+def summarize_sql_plan_baselines_by_last_execution(ctx, from_json, managed_database_id, page, opc_named_credential_id):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -9647,6 +13316,8 @@ def summarize_sql_plan_baselines_by_last_execution(ctx, from_json, managed_datab
     kwargs = {}
     if page is not None:
         kwargs['page'] = page
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.summarize_sql_plan_baselines_by_last_execution(
@@ -9656,10 +13327,40 @@ def summarize_sql_plan_baselines_by_last_execution(ctx, from_json, managed_datab
     cli_util.render_response(result, ctx)
 
 
+@named_credential_group.command(name=cli_util.override('db_management.test_named_credential.command_name', 'test'), help=u"""Tests the named credential. \n[Command Reference](testNamedCredential)""")
+@cli_util.option('--named-credential-id', required=True, help=u"""The [OCID] of the named credential.""")
+@cli_util.option('--managed-database-id', help=u"""The [OCID] of the Managed Database.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'TestNamedCredentialStatus'})
+@cli_util.wrap_exceptions
+def test_named_credential(ctx, from_json, named_credential_id, managed_database_id):
+
+    if isinstance(named_credential_id, six.string_types) and len(named_credential_id.strip()) == 0:
+        raise click.UsageError('Parameter --named-credential-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if managed_database_id is not None:
+        _details['managedDatabaseId'] = managed_database_id
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.test_named_credential(
+        named_credential_id=named_credential_id,
+        test_named_credential_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @preferred_credential_group.command(name=cli_util.override('db_management.test_preferred_credential.command_name', 'test'), help=u"""Tests the preferred credential. \n[Command Reference](testPreferredCredential)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential.""")
-@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BASIC"]), help=u"""The type of preferred credential. Only 'BASIC' is supported currently.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BASIC", "NAMED_CREDENTIAL"]), help=u"""The type of preferred credential. Only 'BASIC' is supported currently.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -9678,6 +13379,43 @@ def test_preferred_credential(ctx, from_json, managed_database_id, credential_na
 
     _details = {}
     _details['type'] = type
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.test_preferred_credential(
+        managed_database_id=managed_database_id,
+        credential_name=credential_name,
+        test_preferred_credential_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@preferred_credential_group.command(name=cli_util.override('db_management.test_preferred_credential_test_named_preferred_credential_details.command_name', 'test-preferred-credential-test-named-preferred-credential-details'), help=u"""Tests the preferred credential. \n[Command Reference](testPreferredCredential)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential.""")
+@cli_util.option('--named-credential-id', help=u"""The [OCID] of the Named Credential that contains the database user password metadata.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'TestPreferredCredentialStatus'})
+@cli_util.wrap_exceptions
+def test_preferred_credential_test_named_preferred_credential_details(ctx, from_json, managed_database_id, credential_name, named_credential_id):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(credential_name, six.string_types) and len(credential_name.strip()) == 0:
+        raise click.UsageError('Parameter --credential-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if named_credential_id is not None:
+        _details['namedCredentialId'] = named_credential_id
+
+    _details['type'] = 'NAMED_CREDENTIAL'
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.test_preferred_credential(
@@ -10589,6 +14327,7 @@ def update_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--user-name', help=u"""The database user name used to execute the SQL job. If the job is being executed on a Managed Database Group, then the user name should exist on all the databases in the group with the same password.""")
 @cli_util.option('--password', help=u"""The password for the database user name used to execute the SQL job.""")
 @cli_util.option('--secret-id', help=u"""The [OCID] of the secret containing the user password.""")
+@cli_util.option('--named-credential-id', help=u"""The [OCID] of the Named Credentials containing password secret.""")
 @cli_util.option('--role', help=u"""The role of the database user. Indicates whether the database user is a normal user or sysdba.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -10600,7 +14339,7 @@ def update_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'result-location': {'module': 'database_management', 'class': 'JobExecutionResultLocation'}, 'schedule-details': {'module': 'database_management', 'class': 'JobScheduleDetails'}, 'in-binds': {'module': 'database_management', 'class': 'JobInBindsDetails'}, 'out-binds': {'module': 'database_management', 'class': 'JobOutBindsDetails'}}, output_type={'module': 'database_management', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def update_job_update_sql_job_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, description, timeout, result_location, schedule_details, sql_text, in_binds, out_binds, sql_type, user_name, password, secret_id, role, if_match):
+def update_job_update_sql_job_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, description, timeout, result_location, schedule_details, sql_text, in_binds, out_binds, sql_type, user_name, password, secret_id, named_credential_id, role, if_match):
 
     if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
@@ -10648,6 +14387,9 @@ def update_job_update_sql_job_details(ctx, from_json, force, wait_for_state, max
 
     if secret_id is not None:
         _details['secretId'] = secret_id
+
+    if named_credential_id is not None:
+        _details['namedCredentialId'] = named_credential_id
 
     if role is not None:
         _details['role'] = role
@@ -10828,10 +14570,164 @@ def update_managed_database_group(ctx, from_json, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
+@named_credential_group.command(name=cli_util.override('db_management.update_named_credential.command_name', 'update'), help=u"""Updates the named credential specified by namedCredentialId. \n[Command Reference](updateNamedCredential)""")
+@cli_util.option('--named-credential-id', required=True, help=u"""The [OCID] of the named credential.""")
+@cli_util.option('--description', help=u"""The information specified by the user about the named credential.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["RESOURCE", "GLOBAL"]), help=u"""The scope of the named credential.""")
+@cli_util.option('--content', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--associated-resource', help=u"""The [OCID] of the resource that is associated to the named credential.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'content': {'module': 'database_management', 'class': 'NamedCredentialContent'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'content': {'module': 'database_management', 'class': 'NamedCredentialContent'}}, output_type={'module': 'database_management', 'class': 'NamedCredential'})
+@cli_util.wrap_exceptions
+def update_named_credential(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, named_credential_id, description, scope, content, associated_resource, if_match):
+
+    if isinstance(named_credential_id, six.string_types) and len(named_credential_id.strip()) == 0:
+        raise click.UsageError('Parameter --named-credential-id cannot be whitespace or empty string')
+    if not force:
+        if content:
+            if not click.confirm("WARNING: Updates to content will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if description is not None:
+        _details['description'] = description
+
+    if scope is not None:
+        _details['scope'] = scope
+
+    if content is not None:
+        _details['content'] = cli_util.parse_json_parameter("content", content)
+
+    if associated_resource is not None:
+        _details['associatedResource'] = associated_resource
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_named_credential(
+        named_credential_id=named_credential_id,
+        update_named_credential_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_named_credential') and callable(getattr(client, 'get_named_credential')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_named_credential(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@named_credential_group.command(name=cli_util.override('db_management.update_named_credential_basic_named_credential_content.command_name', 'update-named-credential-basic-named-credential-content'), help=u"""Updates the named credential specified by namedCredentialId. \n[Command Reference](updateNamedCredential)""")
+@cli_util.option('--named-credential-id', required=True, help=u"""The [OCID] of the named credential.""")
+@cli_util.option('--content-user-name', required=True, help=u"""The user name used to connect to the database.""")
+@cli_util.option('--content-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--content-password-secret-id', required=True, help=u"""The [OCID] of the Vault service secret that contains the database user password.""")
+@cli_util.option('--content-password-secret-access-mode', required=True, type=custom_types.CliCaseInsensitiveChoice(["USER_PRINCIPAL", "RESOURCE_PRINCIPAL"]), help=u"""The mechanism used to access the password plain text value.""")
+@cli_util.option('--description', help=u"""The information specified by the user about the named credential.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["RESOURCE", "GLOBAL"]), help=u"""The scope of the named credential.""")
+@cli_util.option('--associated-resource', help=u"""The [OCID] of the resource that is associated to the named credential.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'NamedCredential'})
+@cli_util.wrap_exceptions
+def update_named_credential_basic_named_credential_content(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, named_credential_id, content_user_name, content_role, content_password_secret_id, content_password_secret_access_mode, description, scope, associated_resource, if_match):
+
+    if isinstance(named_credential_id, six.string_types) and len(named_credential_id.strip()) == 0:
+        raise click.UsageError('Parameter --named-credential-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['content'] = {}
+    _details['content']['userName'] = content_user_name
+    _details['content']['role'] = content_role
+    _details['content']['passwordSecretId'] = content_password_secret_id
+    _details['content']['passwordSecretAccessMode'] = content_password_secret_access_mode
+
+    if description is not None:
+        _details['description'] = description
+
+    if scope is not None:
+        _details['scope'] = scope
+
+    if associated_resource is not None:
+        _details['associatedResource'] = associated_resource
+
+    _details['content']['credentialType'] = 'BASIC'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_named_credential(
+        named_credential_id=named_credential_id,
+        update_named_credential_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_named_credential') and callable(getattr(client, 'get_named_credential')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_named_credential(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @preferred_credential_group.command(name=cli_util.override('db_management.update_preferred_credential.command_name', 'update'), help=u"""Updates the preferred credential based on the credentialName. \n[Command Reference](updatePreferredCredential)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential.""")
-@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BASIC"]), help=u"""The type of preferred credential.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BASIC", "NAMED_CREDENTIAL"]), help=u"""The type of preferred credential.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -10853,6 +14749,46 @@ def update_preferred_credential(ctx, from_json, managed_database_id, credential_
 
     _details = {}
     _details['type'] = type
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_preferred_credential(
+        managed_database_id=managed_database_id,
+        credential_name=credential_name,
+        update_preferred_credential_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@preferred_credential_group.command(name=cli_util.override('db_management.update_preferred_credential_update_named_preferred_credential_details.command_name', 'update-preferred-credential-update-named-preferred-credential-details'), help=u"""Updates the preferred credential based on the credentialName. \n[Command Reference](updatePreferredCredential)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential.""")
+@cli_util.option('--named-credential-id', help=u"""The [OCID] of the Named Credential that contains the database user password.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'PreferredCredential'})
+@cli_util.wrap_exceptions
+def update_preferred_credential_update_named_preferred_credential_details(ctx, from_json, managed_database_id, credential_name, named_credential_id, if_match):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    if isinstance(credential_name, six.string_types) and len(credential_name.strip()) == 0:
+        raise click.UsageError('Parameter --credential-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if named_credential_id is not None:
+        _details['namedCredentialId'] = named_credential_id
+
+    _details['type'] = 'NAMED_CREDENTIAL'
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.update_preferred_credential(
@@ -10915,7 +14851,8 @@ def update_preferred_credential_update_basic_preferred_credential_details(ctx, f
 @tablespace_group.command(name=cli_util.override('db_management.update_tablespace.command_name', 'update'), help=u"""Updates the attributes of the tablespace specified by tablespaceName within the Managed Database specified by managedDatabaseId. \n[Command Reference](updateTablespace)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--tablespace-name', required=True, help=u"""The name of the tablespace.""")
-@cli_util.option('--credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-credential', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--name', help=u"""The name of the tablespace. It must be unique within a database.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["PERMANENT", "TEMPORARY"]), help=u"""The type of tablespace.""")
 @cli_util.option('--file-size', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The size of each data file or temp file.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -10926,12 +14863,12 @@ def update_preferred_credential_update_basic_preferred_credential_details(ctx, f
 @cli_util.option('--is-max-size-unlimited', type=click.BOOL, help=u"""Specifies whether the disk space of the data file or temp file can be limited.""")
 @cli_util.option('--is-default', type=click.BOOL, help=u"""Specifies whether the tablespace is the default tablespace.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'file-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-next-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-max-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}})
+@json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}, 'file-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-next-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-max-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'file-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-next-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-max-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}}, output_type={'module': 'database_management', 'class': 'Tablespace'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}, 'database-credential': {'module': 'database_management', 'class': 'DatabaseCredentialDetails'}, 'file-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-next-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}, 'auto-extend-max-size': {'module': 'database_management', 'class': 'TablespaceStorageSize'}}, output_type={'module': 'database_management', 'class': 'Tablespace'})
 @cli_util.wrap_exceptions
-def update_tablespace(ctx, from_json, force, managed_database_id, tablespace_name, credential_details, name, type, file_size, status, is_auto_extensible, auto_extend_next_size, auto_extend_max_size, is_max_size_unlimited, is_default):
+def update_tablespace(ctx, from_json, force, managed_database_id, tablespace_name, credential_details, database_credential, name, type, file_size, status, is_auto_extensible, auto_extend_next_size, auto_extend_max_size, is_max_size_unlimited, is_default):
 
     if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
@@ -10939,15 +14876,20 @@ def update_tablespace(ctx, from_json, force, managed_database_id, tablespace_nam
     if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
         raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
     if not force:
-        if credential_details or file_size or auto_extend_next_size or auto_extend_max_size:
-            if not click.confirm("WARNING: Updates to credential-details and file-size and auto-extend-next-size and auto-extend-max-size will replace any existing values. Are you sure you want to continue?"):
+        if credential_details or database_credential or file_size or auto_extend_next_size or auto_extend_max_size:
+            if not click.confirm("WARNING: Updates to credential-details and database-credential and file-size and auto-extend-next-size and auto-extend-max-size will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if credential_details is not None:
+        _details['credentialDetails'] = cli_util.parse_json_parameter("credential_details", credential_details)
+
+    if database_credential is not None:
+        _details['databaseCredential'] = cli_util.parse_json_parameter("database_credential", database_credential)
 
     if name is not None:
         _details['name'] = name

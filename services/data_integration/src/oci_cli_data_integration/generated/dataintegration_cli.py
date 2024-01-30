@@ -573,7 +573,7 @@ def create_application_detailed_description(ctx, from_json, workspace_id, applic
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
 @cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
-@cli_util.option('--model-type', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_ADWC_CONNECTION", "ORACLE_ATP_CONNECTION", "ORACLE_OBJECT_STORAGE_CONNECTION", "ORACLEDB_CONNECTION", "MYSQL_CONNECTION", "GENERIC_JDBC_CONNECTION", "BICC_CONNECTION", "AMAZON_S3_CONNECTION", "BIP_CONNECTION", "LAKE_CONNECTION", "ORACLE_PEOPLESOFT_CONNECTION", "ORACLE_EBS_CONNECTION", "ORACLE_SIEBEL_CONNECTION", "HDFS_CONNECTION", "MYSQL_HEATWAVE_CONNECTION", "REST_NO_AUTH_CONNECTION", "REST_BASIC_AUTH_CONNECTION"]), help=u"""The type of the connection.""")
+@cli_util.option('--model-type', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_ADWC_CONNECTION", "ORACLE_ATP_CONNECTION", "ORACLE_OBJECT_STORAGE_CONNECTION", "ORACLEDB_CONNECTION", "MYSQL_CONNECTION", "GENERIC_JDBC_CONNECTION", "BICC_CONNECTION", "AMAZON_S3_CONNECTION", "BIP_CONNECTION", "LAKE_CONNECTION", "ORACLE_PEOPLESOFT_CONNECTION", "ORACLE_EBS_CONNECTION", "ORACLE_SIEBEL_CONNECTION", "HDFS_CONNECTION", "MYSQL_HEATWAVE_CONNECTION", "REST_NO_AUTH_CONNECTION", "REST_BASIC_AUTH_CONNECTION", "OAUTH2_CONNECTION"]), help=u"""The type of the connection.""")
 @cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
 @cli_util.option('--model-version', help=u"""The model version of an object.""")
 @cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1571,6 +1571,86 @@ def create_connection_create_connection_from_bip(ctx, from_json, workspace_id, n
         _details['passwordSecret'] = cli_util.parse_json_parameter("password_secret", password_secret)
 
     _details['modelType'] = 'BIP_CONNECTION'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_connection(
+        workspace_id=workspace_id,
+        create_connection_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('data_integration.create_connection_create_connection_from_o_auth2.command_name', 'create-connection-create-connection-from-o-auth2'), help=u"""Creates a connection under an existing data asset. \n[Command Reference](createConnection)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--access-token-url', required=True, help=u"""Specifies the endpoint used to exchange authentication credentials for access tokens""")
+@cli_util.option('--key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--client-id', help=u"""Specifies the client ID key for specific application""")
+@cli_util.option('--client-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--scope', help=u"""Specifies the OAuth scopes that limit the permissions granted by an access token.""")
+@cli_util.option('--grant-type', type=custom_types.CliCaseInsensitiveChoice(["CLIENT_CREDENTIALS"]), help=u"""Specifies the OAuth2 grant mechanism. Example CLIENT_CREDENTIALS, Implicit Flow etc.""")
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'client-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'client-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def create_connection_create_connection_from_o_auth2(ctx, from_json, workspace_id, name, identifier, access_token_url, key, model_version, parent_ref, description, object_status, connection_properties, registry_metadata, client_id, client_secret, scope, grant_type):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['identifier'] = identifier
+    _details['accessTokenUrl'] = access_token_url
+
+    if key is not None:
+        _details['key'] = key
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if connection_properties is not None:
+        _details['connectionProperties'] = cli_util.parse_json_parameter("connection_properties", connection_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if client_id is not None:
+        _details['clientId'] = client_id
+
+    if client_secret is not None:
+        _details['clientSecret'] = cli_util.parse_json_parameter("client_secret", client_secret)
+
+    if scope is not None:
+        _details['scope'] = scope
+
+    if grant_type is not None:
+        _details['grantType'] = grant_type
+
+    _details['modelType'] = 'OAUTH2_CONNECTION'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.create_connection(
@@ -4341,6 +4421,95 @@ def create_connection_validation_create_connection_from_bip(ctx, from_json, work
     cli_util.render_response(result, ctx)
 
 
+@connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_connection_from_o_auth2.command_name', 'create-connection-validation-create-connection-from-o-auth2'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--connection-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--connection-identifier', required=True, help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--connection-access-token-url', required=True, help=u"""Specifies the endpoint used to exchange authentication credentials for access tokens""")
+@cli_util.option('--data-asset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-key', help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--connection-model-version', help=u"""The model version of an object.""")
+@cli_util.option('--connection-parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--connection-object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--connection-connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-client-id', help=u"""Specifies the client ID key for specific application""")
+@cli_util.option('--connection-client-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-scope', help=u"""Specifies the OAuth scopes that limit the permissions granted by an access token.""")
+@cli_util.option('--connection-grant-type', type=custom_types.CliCaseInsensitiveChoice(["CLIENT_CREDENTIALS"]), help=u"""Specifies the OAuth2 grant mechanism. Example CLIENT_CREDENTIALS, Implicit Flow etc.""")
+@json_skeleton_utils.get_cli_json_input_option({'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-client-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-asset': {'module': 'data_integration', 'class': 'CreateDataAssetDetails'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'connection-registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'connection-client-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'ConnectionValidation'})
+@cli_util.wrap_exceptions
+def create_connection_validation_create_connection_from_o_auth2(ctx, from_json, workspace_id, connection_name, connection_identifier, connection_access_token_url, data_asset, registry_metadata, connection_key, connection_model_version, connection_parent_ref, connection_description, connection_object_status, connection_connection_properties, connection_registry_metadata, connection_client_id, connection_client_secret, connection_scope, connection_grant_type):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['connection'] = {}
+    _details['connection']['name'] = connection_name
+    _details['connection']['identifier'] = connection_identifier
+    _details['connection']['accessTokenUrl'] = connection_access_token_url
+
+    if data_asset is not None:
+        _details['dataAsset'] = cli_util.parse_json_parameter("data_asset", data_asset)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if connection_key is not None:
+        _details['connection']['key'] = connection_key
+
+    if connection_model_version is not None:
+        _details['connection']['modelVersion'] = connection_model_version
+
+    if connection_parent_ref is not None:
+        _details['connection']['parentRef'] = cli_util.parse_json_parameter("connection_parent_ref", connection_parent_ref)
+
+    if connection_description is not None:
+        _details['connection']['description'] = connection_description
+
+    if connection_object_status is not None:
+        _details['connection']['objectStatus'] = connection_object_status
+
+    if connection_connection_properties is not None:
+        _details['connection']['connectionProperties'] = cli_util.parse_json_parameter("connection_connection_properties", connection_connection_properties)
+
+    if connection_registry_metadata is not None:
+        _details['connection']['registryMetadata'] = cli_util.parse_json_parameter("connection_registry_metadata", connection_registry_metadata)
+
+    if connection_client_id is not None:
+        _details['connection']['clientId'] = connection_client_id
+
+    if connection_client_secret is not None:
+        _details['connection']['clientSecret'] = cli_util.parse_json_parameter("connection_client_secret", connection_client_secret)
+
+    if connection_scope is not None:
+        _details['connection']['scope'] = connection_scope
+
+    if connection_grant_type is not None:
+        _details['connection']['grantType'] = connection_grant_type
+
+    _details['connection']['modelType'] = 'OAUTH2_CONNECTION'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.create_connection_validation(
+        workspace_id=workspace_id,
+        create_connection_validation_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @connection_validation_group.command(name=cli_util.override('data_integration.create_connection_validation_create_connection_from_adwc.command_name', 'create-connection-validation-create-connection-from-adwc'), help=u"""Creates a connection validation. \n[Command Reference](createConnectionValidation)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--connection-name', required=True, help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
@@ -6979,6 +7148,7 @@ def create_function_library(ctx, from_json, workspace_id, name, identifier, regi
 @cli_util.option('--object-storage-tenancy-id', help=u"""Optional parameter to point to object storage tenancy (if using Object Storage of different tenancy)""")
 @cli_util.option('--object-storage-region', help=u"""Region of the object storage (if using object storage of different region)""")
 @cli_util.option('--object-key-for-import', help=u"""Key of the object inside which all the objects will be imported""")
+@cli_util.option('--are-data-asset-references-included', type=click.BOOL, help=u"""This field controls if the data asset references will be included during import.""")
 @cli_util.option('--import-conflict-resolution', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -6988,7 +7158,7 @@ def create_function_library(ctx, from_json, workspace_id, name, identifier, regi
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'import-conflict-resolution': {'module': 'data_integration', 'class': 'ImportConflictResolution'}}, output_type={'module': 'data_integration', 'class': 'ImportRequest'})
 @cli_util.wrap_exceptions
-def create_import_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, workspace_id, bucket_name, file_name, object_storage_tenancy_id, object_storage_region, object_key_for_import, import_conflict_resolution):
+def create_import_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, workspace_id, bucket_name, file_name, object_storage_tenancy_id, object_storage_region, object_key_for_import, are_data_asset_references_included, import_conflict_resolution):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
@@ -7008,6 +7178,9 @@ def create_import_request(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
     if object_key_for_import is not None:
         _details['objectKeyForImport'] = object_key_for_import
+
+    if are_data_asset_references_included is not None:
+        _details['areDataAssetReferencesIncluded'] = are_data_asset_references_included
 
     if import_conflict_resolution is not None:
         _details['importConflictResolution'] = cli_util.parse_json_parameter("import_conflict_resolution", import_conflict_resolution)
@@ -14720,7 +14893,7 @@ def update_application_detailed_description(ctx, from_json, workspace_id, applic
 @connection_group.command(name=cli_util.override('data_integration.update_connection.command_name', 'update'), help=u"""Updates a connection under a data asset. \n[Command Reference](updateConnection)""")
 @cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
 @cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
-@cli_util.option('--model-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_ADWC_CONNECTION", "ORACLE_ATP_CONNECTION", "ORACLE_OBJECT_STORAGE_CONNECTION", "ORACLEDB_CONNECTION", "MYSQL_CONNECTION", "GENERIC_JDBC_CONNECTION", "BICC_CONNECTION", "AMAZON_S3_CONNECTION", "BIP_CONNECTION", "LAKE_CONNECTION", "ORACLE_PEOPLESOFT_CONNECTION", "ORACLE_EBS_CONNECTION", "ORACLE_SIEBEL_CONNECTION", "HDFS_CONNECTION", "MYSQL_HEATWAVE_CONNECTION", "REST_NO_AUTH_CONNECTION", "REST_BASIC_AUTH_CONNECTION"]), help=u"""The type of the connection.""")
+@cli_util.option('--model-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_ADWC_CONNECTION", "ORACLE_ATP_CONNECTION", "ORACLE_OBJECT_STORAGE_CONNECTION", "ORACLEDB_CONNECTION", "MYSQL_CONNECTION", "GENERIC_JDBC_CONNECTION", "BICC_CONNECTION", "AMAZON_S3_CONNECTION", "BIP_CONNECTION", "LAKE_CONNECTION", "ORACLE_PEOPLESOFT_CONNECTION", "ORACLE_EBS_CONNECTION", "ORACLE_SIEBEL_CONNECTION", "HDFS_CONNECTION", "MYSQL_HEATWAVE_CONNECTION", "REST_NO_AUTH_CONNECTION", "REST_BASIC_AUTH_CONNECTION", "OAUTH2_CONNECTION"]), help=u"""The type of the connection.""")
 @cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
 @cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
 @cli_util.option('--model-version', help=u"""The model version of an object.""")
@@ -15313,6 +15486,103 @@ def update_connection_update_connection_from_hdfs(ctx, from_json, force, workspa
         _details['keyTabContent'] = cli_util.parse_json_parameter("key_tab_content", key_tab_content)
 
     _details['modelType'] = 'HDFS_CONNECTION'
+
+    client = cli_util.build_client('data_integration', 'data_integration', ctx)
+    result = client.update_connection(
+        workspace_id=workspace_id,
+        connection_key=connection_key,
+        update_connection_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('data_integration.update_connection_update_connection_from_o_auth2.command_name', 'update-connection-update-connection-from-o-auth2'), help=u"""Updates a connection under a data asset. \n[Command Reference](updateConnection)""")
+@cli_util.option('--workspace-id', required=True, help=u"""The workspace ID.""")
+@cli_util.option('--connection-key', required=True, help=u"""The connection key.""")
+@cli_util.option('--key', required=True, help=u"""Generated key that can be used in API calls to identify connection. On scenarios where reference to the connection is needed, a value can be passed in create.""")
+@cli_util.option('--object-version', required=True, type=click.INT, help=u"""The version of the object that is used to track changes in the object instance.""")
+@cli_util.option('--access-token-url', required=True, help=u"""Specifies the endpoint used to exchange authentication credentials for access tokens""")
+@cli_util.option('--model-version', help=u"""The model version of an object.""")
+@cli_util.option('--parent-ref', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', help=u"""Free form text without any restriction on permitted characters. Name can have letters, numbers, and special characters. The value is editable and is restricted to 1000 characters.""")
+@cli_util.option('--description', help=u"""User-defined description for the connection.""")
+@cli_util.option('--object-status', type=click.INT, help=u"""The status of an object that can be set to value 1 for shallow references across objects, other values reserved.""")
+@cli_util.option('--identifier', help=u"""Value can only contain upper case letters, underscore, and numbers. It should begin with upper case letter or underscore. The value can be modified.""")
+@cli_util.option('--connection-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The properties for the connection.
+
+This option is a JSON list with items of type ConnectionProperty.  For documentation on ConnectionProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/dataintegration/20200430/datatypes/ConnectionProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--client-id', help=u"""Specifies the client ID key for specific application""")
+@cli_util.option('--client-secret', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--scope', help=u"""Specifies the OAuth scopes that limit the permissions granted by an access token.""")
+@cli_util.option('--grant-type', type=custom_types.CliCaseInsensitiveChoice(["CLIENT_CREDENTIALS"]), help=u"""Specifies the OAuth2 grant mechanism. Example CLIENT_CREDENTIALS, Implicit Flow etc.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'client-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'connection-properties': {'module': 'data_integration', 'class': 'list[ConnectionProperty]'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'client-secret': {'module': 'data_integration', 'class': 'SensitiveAttribute'}}, output_type={'module': 'data_integration', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def update_connection_update_connection_from_o_auth2(ctx, from_json, force, workspace_id, connection_key, key, object_version, access_token_url, model_version, parent_ref, name, description, object_status, identifier, connection_properties, registry_metadata, client_id, client_secret, scope, grant_type, if_match):
+
+    if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
+        raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
+
+    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+        raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
+    if not force:
+        if parent_ref or connection_properties or registry_metadata or client_secret:
+            if not click.confirm("WARNING: Updates to parent-ref and connection-properties and registry-metadata and client-secret will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['key'] = key
+    _details['objectVersion'] = object_version
+    _details['accessTokenUrl'] = access_token_url
+
+    if model_version is not None:
+        _details['modelVersion'] = model_version
+
+    if parent_ref is not None:
+        _details['parentRef'] = cli_util.parse_json_parameter("parent_ref", parent_ref)
+
+    if name is not None:
+        _details['name'] = name
+
+    if description is not None:
+        _details['description'] = description
+
+    if object_status is not None:
+        _details['objectStatus'] = object_status
+
+    if identifier is not None:
+        _details['identifier'] = identifier
+
+    if connection_properties is not None:
+        _details['connectionProperties'] = cli_util.parse_json_parameter("connection_properties", connection_properties)
+
+    if registry_metadata is not None:
+        _details['registryMetadata'] = cli_util.parse_json_parameter("registry_metadata", registry_metadata)
+
+    if client_id is not None:
+        _details['clientId'] = client_id
+
+    if client_secret is not None:
+        _details['clientSecret'] = cli_util.parse_json_parameter("client_secret", client_secret)
+
+    if scope is not None:
+        _details['scope'] = scope
+
+    if grant_type is not None:
+        _details['grantType'] = grant_type
+
+    _details['modelType'] = 'OAUTH2_CONNECTION'
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.update_connection(
