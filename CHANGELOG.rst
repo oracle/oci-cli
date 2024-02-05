@@ -6,6 +6,57 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.37.8 - 2024-02-06
+--------------------
+Added
+~~~~~
+
+* Support for the Globally Distributed Database Service
+
+  * ``oci gdd``
+
+* Support for Data Sources, including Prometheus Emitter, in the Management Agent Service
+
+  * ``oci management-agent agent create-prometheus-emitter``
+
+* Support for Bring Your Own Certificates in MySQL HeatWave Database Service
+
+  * ``oci mysql db-system clone --secure-connections``
+  * ``oci mysql db-system create --secure-connections``
+  * ``oci mysql db-system import --secure-connections``
+  * ``oci mysql db-system update --secure-connections``
+
+* Support for resource locking operations in the Digital Media Services
+
+  * ``oci media-services media-asset add --type full``
+
+* Vault Secret Management Service
+
+  * Support for the secret rotation
+
+    * ``oci vault secret rotate``
+
+  * Support for cancelling the ongoing rotation
+
+    * ``oci vault secret cancelrotation``
+
+* Vault Key Management Service
+
+  * Support for Dedicated KMS
+
+    * ``oci kms kms-hsm-cluster hsm-cluster cancel-hsm-cluster-deletion --hsm-cluster-id``
+    * ``oci kms kms-hsm-cluster hsm-cluster change-compartment --compartment-id``
+    * ``oci kms kms-hsm-cluster hsm-cluster create --compartment-id``
+    * ``oci kms kms-hsm-cluster hsm-cluster download-certificate-signing-request --hsm-cluster-id``
+    * ``oci kms kms-hsm-cluster hsm-cluster get --hsm-cluster-id``
+    * ``oci kms kms-hsm-cluster hsm-cluster list --compartment-id``
+    * ``oci kms kms-hsm-cluster hsm-cluster schedule-hsm-cluster-deletion --hsm-cluster-id, --time-of-deletion``
+    * ``oci kms kms-hsm-cluster hsm-cluster update --hsm-cluster-id, --defined-tags, --display-name, --force, --freeform-tags``
+    * ``oci kms kms-hsm-cluster hsm-cluster upload-partition-certificates --hsm-cluster-id, --partition-certificate, --partition-owner-certificate``
+    * ``oci kms kms-hsm-cluster hsm-partition get --hsm-cluster-id, --hsm-partition-id``
+    * ``oci kms kms-hsm-cluster hsm-partition get-pre-co-user-credentials --hsm-cluster-id``
+    * ``oci kms kms-hsm-cluster hsm-partition list --hsm-cluster-id, --all``
+
 3.37.7 - 2024-01-30
 --------------------
 Added

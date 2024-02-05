@@ -36,12 +36,6 @@ def media_asset_group():
     pass
 
 
-@click.command(cli_util.override('media_services.media_workflow_job_fact_group.command_name', 'media-workflow-job-fact'), cls=CommandGroupWithAlias, help="""One fact of a list of facts associated to a MediaWorkflowJob that presents a point-in-time snapshot of the resources, data and events that were composed to generate a runnable job. This information will be used internally to trouble-shoot problematic workflows or jobs.""")
-@cli_util.help_option_group
-def media_workflow_job_fact_group():
-    pass
-
-
 @click.command(cli_util.override('media_services.media_workflow_job_group.command_name', 'media-workflow-job'), cls=CommandGroupWithAlias, help="""A MediaWorkflowJob represents a run of a MediaWorkflow for a specific set of parameters and configurations.""")
 @cli_util.help_option_group
 def media_workflow_job_group():
@@ -99,7 +93,6 @@ def media_workflow_configuration_collection_group():
 media_services_service_cli.media_services_service_group.add_command(media_services_root_group)
 media_services_root_group.add_command(stream_packaging_config_group)
 media_services_root_group.add_command(media_asset_group)
-media_services_root_group.add_command(media_workflow_job_fact_group)
 media_services_root_group.add_command(media_workflow_job_group)
 media_services_root_group.add_command(stream_cdn_config_group)
 media_services_root_group.add_command(stream_distribution_channel_group)
@@ -113,7 +106,6 @@ media_services_root_group.add_command(media_workflow_configuration_collection_gr
 media_services_service_cli.media_services_service_group.commands.pop(media_services_root_group.name)
 media_services_service_cli.media_services_service_group.add_command(stream_packaging_config_group)
 media_services_service_cli.media_services_service_group.add_command(media_asset_group)
-media_services_service_cli.media_services_service_group.add_command(media_workflow_job_fact_group)
 media_services_service_cli.media_services_service_group.add_command(media_workflow_job_group)
 media_services_service_cli.media_services_service_group.add_command(stream_cdn_config_group)
 media_services_service_cli.media_services_service_group.add_command(stream_distribution_channel_group)
@@ -125,21 +117,521 @@ media_services_service_cli.media_services_service_group.add_command(media_workfl
 media_services_service_cli.media_services_service_group.add_command(media_workflow_configuration_collection_group)
 
 
+@media_asset_group.command(name=cli_util.override('media_services.add_media_asset_lock.command_name', 'add'), help=u"""Add a lock to an MediaAsset. \n[Command Reference](addMediaAssetLock)""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--media-asset-id', required=True, help=u"""Unique MediaAsset identifier""")
+@cli_util.option('--related-resource-id', help=u"""The ID of the Target that is locking this Target. Indicates that deleting this Target will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""When the lock was created.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'media_services', 'class': 'MediaAsset'})
+@cli_util.wrap_exceptions
+def add_media_asset_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, media_asset_id, related_resource_id, message, time_created, if_match):
+
+    if isinstance(media_asset_id, six.string_types) and len(media_asset_id.strip()) == 0:
+        raise click.UsageError('Parameter --media-asset-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+    _details['compartmentId'] = compartment_id
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    if time_created is not None:
+        _details['timeCreated'] = time_created
+
+    client = cli_util.build_client('media_services', 'media_services', ctx)
+    result = client.add_media_asset_lock(
+        media_asset_id=media_asset_id,
+        add_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_media_asset') and callable(getattr(client, 'get_media_asset')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_media_asset(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@media_workflow_configuration_group.command(name=cli_util.override('media_services.add_media_workflow_configuration_lock.command_name', 'add'), help=u"""Add a lock to a MediaWorkflowConfiguration. \n[Command Reference](addMediaWorkflowConfigurationLock)""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--media-workflow-configuration-id', required=True, help=u"""Unique MediaWorkflowConfiguration identifier.""")
+@cli_util.option('--related-resource-id', help=u"""The ID of the Target that is locking this Target. Indicates that deleting this Target will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""When the lock was created.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'media_services', 'class': 'MediaWorkflowConfiguration'})
+@cli_util.wrap_exceptions
+def add_media_workflow_configuration_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, media_workflow_configuration_id, related_resource_id, message, time_created, if_match):
+
+    if isinstance(media_workflow_configuration_id, six.string_types) and len(media_workflow_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --media-workflow-configuration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+    _details['compartmentId'] = compartment_id
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    if time_created is not None:
+        _details['timeCreated'] = time_created
+
+    client = cli_util.build_client('media_services', 'media_services', ctx)
+    result = client.add_media_workflow_configuration_lock(
+        media_workflow_configuration_id=media_workflow_configuration_id,
+        add_resource_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_media_workflow_configuration') and callable(getattr(client, 'get_media_workflow_configuration')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_media_workflow_configuration(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@media_workflow_job_group.command(name=cli_util.override('media_services.add_media_workflow_job_lock.command_name', 'add'), help=u"""Add a lock to a MediaWorkflowJob. \n[Command Reference](addMediaWorkflowJobLock)""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--media-workflow-job-id', required=True, help=u"""Unique MediaWorkflowJob identifier.""")
+@cli_util.option('--related-resource-id', help=u"""The ID of the Target that is locking this Target. Indicates that deleting this Target will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""When the lock was created.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "REJECTED", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'media_services', 'class': 'MediaWorkflowJob'})
+@cli_util.wrap_exceptions
+def add_media_workflow_job_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, media_workflow_job_id, related_resource_id, message, time_created, if_match):
+
+    if isinstance(media_workflow_job_id, six.string_types) and len(media_workflow_job_id.strip()) == 0:
+        raise click.UsageError('Parameter --media-workflow-job-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+    _details['compartmentId'] = compartment_id
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    if time_created is not None:
+        _details['timeCreated'] = time_created
+
+    client = cli_util.build_client('media_services', 'media_services', ctx)
+    result = client.add_media_workflow_job_lock(
+        media_workflow_job_id=media_workflow_job_id,
+        add_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_media_workflow_job') and callable(getattr(client, 'get_media_workflow_job')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_media_workflow_job(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@media_workflow_group.command(name=cli_util.override('media_services.add_media_workflow_lock.command_name', 'add'), help=u"""Add a lock to a MediaWorkflow. \n[Command Reference](addMediaWorkflowLock)""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--media-workflow-id', required=True, help=u"""Unique MediaWorkflow identifier.""")
+@cli_util.option('--related-resource-id', help=u"""The ID of the Target that is locking this Target. Indicates that deleting this Target will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""When the lock was created.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'media_services', 'class': 'MediaWorkflow'})
+@cli_util.wrap_exceptions
+def add_media_workflow_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, media_workflow_id, related_resource_id, message, time_created, if_match):
+
+    if isinstance(media_workflow_id, six.string_types) and len(media_workflow_id.strip()) == 0:
+        raise click.UsageError('Parameter --media-workflow-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+    _details['compartmentId'] = compartment_id
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    if time_created is not None:
+        _details['timeCreated'] = time_created
+
+    client = cli_util.build_client('media_services', 'media_services', ctx)
+    result = client.add_media_workflow_lock(
+        media_workflow_id=media_workflow_id,
+        add_resource_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_media_workflow') and callable(getattr(client, 'get_media_workflow')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_media_workflow(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@stream_cdn_config_group.command(name=cli_util.override('media_services.add_stream_cdn_config_lock.command_name', 'add'), help=u"""Add a lock to a StreamCdnConfig. \n[Command Reference](addStreamCdnConfigLock)""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--stream-cdn-config-id', required=True, help=u"""Unique StreamCdnConfig identifier.""")
+@cli_util.option('--related-resource-id', help=u"""The ID of the Target that is locking this Target. Indicates that deleting this Target will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""When the lock was created.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'media_services', 'class': 'StreamCdnConfig'})
+@cli_util.wrap_exceptions
+def add_stream_cdn_config_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, stream_cdn_config_id, related_resource_id, message, time_created, if_match):
+
+    if isinstance(stream_cdn_config_id, six.string_types) and len(stream_cdn_config_id.strip()) == 0:
+        raise click.UsageError('Parameter --stream-cdn-config-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+    _details['compartmentId'] = compartment_id
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    if time_created is not None:
+        _details['timeCreated'] = time_created
+
+    client = cli_util.build_client('media_services', 'media_services', ctx)
+    result = client.add_stream_cdn_config_lock(
+        stream_cdn_config_id=stream_cdn_config_id,
+        add_resource_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_stream_cdn_config') and callable(getattr(client, 'get_stream_cdn_config')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_stream_cdn_config(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@stream_distribution_channel_group.command(name=cli_util.override('media_services.add_stream_distribution_channel_lock.command_name', 'add'), help=u"""Add a lock to a StreamDistributionChannel. \n[Command Reference](addStreamDistributionChannelLock)""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--stream-distribution-channel-id', required=True, help=u"""Unique Stream Distribution Channel path identifier.""")
+@cli_util.option('--related-resource-id', help=u"""The ID of the Target that is locking this Target. Indicates that deleting this Target will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""When the lock was created.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'media_services', 'class': 'StreamDistributionChannel'})
+@cli_util.wrap_exceptions
+def add_stream_distribution_channel_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, stream_distribution_channel_id, related_resource_id, message, time_created, if_match):
+
+    if isinstance(stream_distribution_channel_id, six.string_types) and len(stream_distribution_channel_id.strip()) == 0:
+        raise click.UsageError('Parameter --stream-distribution-channel-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+    _details['compartmentId'] = compartment_id
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    if time_created is not None:
+        _details['timeCreated'] = time_created
+
+    client = cli_util.build_client('media_services', 'media_services', ctx)
+    result = client.add_stream_distribution_channel_lock(
+        stream_distribution_channel_id=stream_distribution_channel_id,
+        add_resource_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_stream_distribution_channel') and callable(getattr(client, 'get_stream_distribution_channel')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_stream_distribution_channel(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@stream_packaging_config_group.command(name=cli_util.override('media_services.add_stream_packaging_config_lock.command_name', 'add'), help=u"""Add a lock to a StreamPackagingConfig. \n[Command Reference](addStreamPackagingConfigLock)""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--stream-packaging-config-id', required=True, help=u"""Unique Stream Packaging Configuration path identifier.""")
+@cli_util.option('--related-resource-id', help=u"""The ID of the Target that is locking this Target. Indicates that deleting this Target will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""When the lock was created.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'media_services', 'class': 'StreamPackagingConfig'})
+@cli_util.wrap_exceptions
+def add_stream_packaging_config_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, stream_packaging_config_id, related_resource_id, message, time_created, if_match):
+
+    if isinstance(stream_packaging_config_id, six.string_types) and len(stream_packaging_config_id.strip()) == 0:
+        raise click.UsageError('Parameter --stream-packaging-config-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+    _details['compartmentId'] = compartment_id
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    if time_created is not None:
+        _details['timeCreated'] = time_created
+
+    client = cli_util.build_client('media_services', 'media_services', ctx)
+    result = client.add_stream_packaging_config_lock(
+        stream_packaging_config_id=stream_packaging_config_id,
+        add_resource_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_stream_packaging_config') and callable(getattr(client, 'get_stream_packaging_config')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_stream_packaging_config(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @media_asset_group.command(name=cli_util.override('media_services.change_media_asset_compartment.command_name', 'change-compartment'), help=u"""Moves a MediaAsset resource from one compartment identifier to another. \n[Command Reference](changeMediaAssetCompartment)""")
 @cli_util.option('--media-asset-id', required=True, help=u"""Unique MediaAsset identifier""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def change_media_asset_compartment(ctx, from_json, media_asset_id, compartment_id, if_match):
+def change_media_asset_compartment(ctx, from_json, media_asset_id, compartment_id, is_lock_override, if_match):
 
     if isinstance(media_asset_id, six.string_types) and len(media_asset_id.strip()) == 0:
         raise click.UsageError('Parameter --media-asset-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -159,18 +651,21 @@ def change_media_asset_compartment(ctx, from_json, media_asset_id, compartment_i
 @media_workflow_group.command(name=cli_util.override('media_services.change_media_workflow_compartment.command_name', 'change-compartment'), help=u"""Moves a MediaWorkflow resource from one compartment identifier to another. \n[Command Reference](changeMediaWorkflowCompartment)""")
 @cli_util.option('--media-workflow-id', required=True, help=u"""Unique MediaWorkflow identifier.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def change_media_workflow_compartment(ctx, from_json, media_workflow_id, compartment_id, if_match):
+def change_media_workflow_compartment(ctx, from_json, media_workflow_id, compartment_id, is_lock_override, if_match):
 
     if isinstance(media_workflow_id, six.string_types) and len(media_workflow_id.strip()) == 0:
         raise click.UsageError('Parameter --media-workflow-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -190,18 +685,21 @@ def change_media_workflow_compartment(ctx, from_json, media_workflow_id, compart
 @media_workflow_configuration_group.command(name=cli_util.override('media_services.change_media_workflow_configuration_compartment.command_name', 'change-compartment'), help=u"""Moves a MediaWorkflowConfiguration resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeMediaWorkflowConfigurationCompartment)""")
 @cli_util.option('--media-workflow-configuration-id', required=True, help=u"""Unique MediaWorkflowConfiguration identifier.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def change_media_workflow_configuration_compartment(ctx, from_json, media_workflow_configuration_id, compartment_id, if_match):
+def change_media_workflow_configuration_compartment(ctx, from_json, media_workflow_configuration_id, compartment_id, is_lock_override, if_match):
 
     if isinstance(media_workflow_configuration_id, six.string_types) and len(media_workflow_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --media-workflow-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -221,18 +719,21 @@ def change_media_workflow_configuration_compartment(ctx, from_json, media_workfl
 @media_workflow_job_group.command(name=cli_util.override('media_services.change_media_workflow_job_compartment.command_name', 'change-compartment'), help=u"""Moves a MediaWorkflowJob resource from one compartment identifier to another. \n[Command Reference](changeMediaWorkflowJobCompartment)""")
 @cli_util.option('--media-workflow-job-id', required=True, help=u"""Unique MediaWorkflowJob identifier.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def change_media_workflow_job_compartment(ctx, from_json, media_workflow_job_id, compartment_id, if_match):
+def change_media_workflow_job_compartment(ctx, from_json, media_workflow_job_id, compartment_id, is_lock_override, if_match):
 
     if isinstance(media_workflow_job_id, six.string_types) and len(media_workflow_job_id.strip()) == 0:
         raise click.UsageError('Parameter --media-workflow-job-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -252,18 +753,21 @@ def change_media_workflow_job_compartment(ctx, from_json, media_workflow_job_id,
 @stream_distribution_channel_group.command(name=cli_util.override('media_services.change_stream_distribution_channel_compartment.command_name', 'change-compartment'), help=u"""Moves a Stream Distribution Channel resource from one compartment identifier to another. \n[Command Reference](changeStreamDistributionChannelCompartment)""")
 @cli_util.option('--stream-distribution-channel-id', required=True, help=u"""Unique Stream Distribution Channel path identifier.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def change_stream_distribution_channel_compartment(ctx, from_json, stream_distribution_channel_id, compartment_id, if_match):
+def change_stream_distribution_channel_compartment(ctx, from_json, stream_distribution_channel_id, compartment_id, is_lock_override, if_match):
 
     if isinstance(stream_distribution_channel_id, six.string_types) and len(stream_distribution_channel_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-distribution-channel-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -303,15 +807,18 @@ This option is a JSON list with items of type Metadata.  For documentation on Me
 This option is a JSON list with items of type MediaAssetTag.  For documentation on MediaAssetTag please see our API reference: https://docs.cloud.oracle.com/api/#/en/mediaservices/20211101/datatypes/MediaAssetTag.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.cloud.oracle.com/api/#/en/mediaservices/20211101/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'media_services', 'class': 'list[Metadata]'}, 'media-asset-tags': {'module': 'media_services', 'class': 'list[MediaAssetTag]'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'media_services', 'class': 'list[Metadata]'}, 'media-asset-tags': {'module': 'media_services', 'class': 'list[MediaAssetTag]'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'media_services', 'class': 'list[ResourceLock]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'media_services', 'class': 'list[Metadata]'}, 'media-asset-tags': {'module': 'media_services', 'class': 'list[MediaAssetTag]'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'media_services', 'class': 'MediaAsset'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'media_services', 'class': 'list[Metadata]'}, 'media-asset-tags': {'module': 'media_services', 'class': 'list[MediaAssetTag]'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'media_services', 'class': 'list[ResourceLock]'}}, output_type={'module': 'media_services', 'class': 'MediaAsset'})
 @cli_util.wrap_exceptions
-def create_media_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, source_media_workflow_id, media_workflow_job_id, source_media_workflow_version, display_name, parent_media_asset_id, master_media_asset_id, bucket_name, namespace_name, object_name, object_etag, metadata, segment_range_start_index, segment_range_end_index, media_asset_tags, freeform_tags, defined_tags):
+def create_media_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, source_media_workflow_id, media_workflow_job_id, source_media_workflow_version, display_name, parent_media_asset_id, master_media_asset_id, bucket_name, namespace_name, object_name, object_etag, metadata, segment_range_start_index, segment_range_end_index, media_asset_tags, freeform_tags, defined_tags, locks):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -368,6 +875,9 @@ def create_media_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
+
     client = cli_util.build_client('media_services', 'media_services', ctx)
     result = client.create_media_asset(
         create_media_asset_details=_details,
@@ -409,15 +919,18 @@ This option is a JSON list with items of type MediaWorkflowTask.  For documentat
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""JSON object representing named parameters and their default values that can be referenced throughout this workflow. The values declared here can be overridden by the MediaWorkflowConfigurations or parameters supplied when creating MediaWorkflowJobs from this MediaWorkflow.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.cloud.oracle.com/api/#/en/mediaservices/20211101/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'tasks': {'module': 'media_services', 'class': 'list[MediaWorkflowTask]'}, 'media-workflow-configuration-ids': {'module': 'media_services', 'class': 'list[string]'}, 'parameters': {'module': 'media_services', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'tasks': {'module': 'media_services', 'class': 'list[MediaWorkflowTask]'}, 'media-workflow-configuration-ids': {'module': 'media_services', 'class': 'list[string]'}, 'parameters': {'module': 'media_services', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'media_services', 'class': 'list[ResourceLock]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'tasks': {'module': 'media_services', 'class': 'list[MediaWorkflowTask]'}, 'media-workflow-configuration-ids': {'module': 'media_services', 'class': 'list[string]'}, 'parameters': {'module': 'media_services', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'media_services', 'class': 'MediaWorkflow'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'tasks': {'module': 'media_services', 'class': 'list[MediaWorkflowTask]'}, 'media-workflow-configuration-ids': {'module': 'media_services', 'class': 'list[string]'}, 'parameters': {'module': 'media_services', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'media_services', 'class': 'list[ResourceLock]'}}, output_type={'module': 'media_services', 'class': 'MediaWorkflow'})
 @cli_util.wrap_exceptions
-def create_media_workflow(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, tasks, media_workflow_configuration_ids, parameters, freeform_tags, defined_tags):
+def create_media_workflow(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, tasks, media_workflow_configuration_ids, parameters, freeform_tags, defined_tags, locks):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -440,6 +953,9 @@ def create_media_workflow(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
 
     client = cli_util.build_client('media_services', 'media_services', ctx)
     result = client.create_media_workflow(
@@ -478,15 +994,18 @@ def create_media_workflow(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.cloud.oracle.com/api/#/en/mediaservices/20211101/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'parameters': {'module': 'media_services', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'parameters': {'module': 'media_services', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'media_services', 'class': 'list[ResourceLock]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parameters': {'module': 'media_services', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'media_services', 'class': 'MediaWorkflowConfiguration'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parameters': {'module': 'media_services', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'media_services', 'class': 'list[ResourceLock]'}}, output_type={'module': 'media_services', 'class': 'MediaWorkflowConfiguration'})
 @cli_util.wrap_exceptions
-def create_media_workflow_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, parameters, compartment_id, freeform_tags, defined_tags):
+def create_media_workflow_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, parameters, compartment_id, freeform_tags, defined_tags, locks):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -501,6 +1020,9 @@ def create_media_workflow_configuration(ctx, from_json, wait_for_state, max_wait
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
 
     client = cli_util.build_client('media_services', 'media_services', ctx)
     result = client.create_media_workflow_configuration(
@@ -541,15 +1063,18 @@ def create_media_workflow_configuration(ctx, from_json, wait_for_state, max_wait
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Parameters that override parameters specified in MediaWorkflowTaskDeclarations, the MediaWorkflow, the MediaWorkflow's MediaWorkflowConfigurations and the MediaWorkflowConfigurations of this MediaWorkflowJob. The parameters are given as JSON. The top level and 2nd level elements must be JSON objects (vs arrays, scalars, etc). The top level keys refer to a task's key and the 2nd level keys refer to a parameter's name.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.cloud.oracle.com/api/#/en/mediaservices/20211101/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "REJECTED", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'media-workflow-configuration-ids': {'module': 'media_services', 'class': 'list[string]'}, 'parameters': {'module': 'media_services', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'media-workflow-configuration-ids': {'module': 'media_services', 'class': 'list[string]'}, 'parameters': {'module': 'media_services', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'media_services', 'class': 'list[ResourceLock]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'media-workflow-configuration-ids': {'module': 'media_services', 'class': 'list[string]'}, 'parameters': {'module': 'media_services', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'media_services', 'class': 'MediaWorkflowJob'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'media-workflow-configuration-ids': {'module': 'media_services', 'class': 'list[string]'}, 'parameters': {'module': 'media_services', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'media_services', 'class': 'list[ResourceLock]'}}, output_type={'module': 'media_services', 'class': 'MediaWorkflowJob'})
 @cli_util.wrap_exceptions
-def create_media_workflow_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, workflow_identifier_type, compartment_id, media_workflow_configuration_ids, display_name, parameters, freeform_tags, defined_tags):
+def create_media_workflow_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, workflow_identifier_type, compartment_id, media_workflow_configuration_ids, display_name, parameters, freeform_tags, defined_tags, locks):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -572,6 +1097,9 @@ def create_media_workflow_job(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
 
     client = cli_util.build_client('media_services', 'media_services', ctx)
     result = client.create_media_workflow_job(
@@ -611,16 +1139,19 @@ def create_media_workflow_job(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Parameters that override parameters specified in MediaWorkflowTaskDeclarations, the MediaWorkflow, the MediaWorkflow's MediaWorkflowConfigurations and the MediaWorkflowConfigurations of this MediaWorkflowJob. The parameters are given as JSON. The top level and 2nd level elements must be JSON objects (vs arrays, scalars, etc). The top level keys refer to a task's key and the 2nd level keys refer to a parameter's name.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.cloud.oracle.com/api/#/en/mediaservices/20211101/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--media-workflow-name', help=u"""Name of the system MediaWorkflow that should be run.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "REJECTED", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'media-workflow-configuration-ids': {'module': 'media_services', 'class': 'list[string]'}, 'parameters': {'module': 'media_services', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'media-workflow-configuration-ids': {'module': 'media_services', 'class': 'list[string]'}, 'parameters': {'module': 'media_services', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'media_services', 'class': 'list[ResourceLock]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'media-workflow-configuration-ids': {'module': 'media_services', 'class': 'list[string]'}, 'parameters': {'module': 'media_services', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'media_services', 'class': 'MediaWorkflowJob'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'media-workflow-configuration-ids': {'module': 'media_services', 'class': 'list[string]'}, 'parameters': {'module': 'media_services', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'media_services', 'class': 'list[ResourceLock]'}}, output_type={'module': 'media_services', 'class': 'MediaWorkflowJob'})
 @cli_util.wrap_exceptions
-def create_media_workflow_job_create_media_workflow_job_by_name_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, media_workflow_configuration_ids, display_name, parameters, freeform_tags, defined_tags, media_workflow_name):
+def create_media_workflow_job_create_media_workflow_job_by_name_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, media_workflow_configuration_ids, display_name, parameters, freeform_tags, defined_tags, locks, media_workflow_name):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -642,6 +1173,9 @@ def create_media_workflow_job_create_media_workflow_job_by_name_details(ctx, fro
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
 
     if media_workflow_name is not None:
         _details['mediaWorkflowName'] = media_workflow_name
@@ -686,16 +1220,19 @@ def create_media_workflow_job_create_media_workflow_job_by_name_details(ctx, fro
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Parameters that override parameters specified in MediaWorkflowTaskDeclarations, the MediaWorkflow, the MediaWorkflow's MediaWorkflowConfigurations and the MediaWorkflowConfigurations of this MediaWorkflowJob. The parameters are given as JSON. The top level and 2nd level elements must be JSON objects (vs arrays, scalars, etc). The top level keys refer to a task's key and the 2nd level keys refer to a parameter's name.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.cloud.oracle.com/api/#/en/mediaservices/20211101/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--media-workflow-id', help=u"""OCID of the MediaWorkflow that should be run.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "REJECTED", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'media-workflow-configuration-ids': {'module': 'media_services', 'class': 'list[string]'}, 'parameters': {'module': 'media_services', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'media-workflow-configuration-ids': {'module': 'media_services', 'class': 'list[string]'}, 'parameters': {'module': 'media_services', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'media_services', 'class': 'list[ResourceLock]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'media-workflow-configuration-ids': {'module': 'media_services', 'class': 'list[string]'}, 'parameters': {'module': 'media_services', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'media_services', 'class': 'MediaWorkflowJob'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'media-workflow-configuration-ids': {'module': 'media_services', 'class': 'list[string]'}, 'parameters': {'module': 'media_services', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'media_services', 'class': 'list[ResourceLock]'}}, output_type={'module': 'media_services', 'class': 'MediaWorkflowJob'})
 @cli_util.wrap_exceptions
-def create_media_workflow_job_create_media_workflow_job_by_id_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, media_workflow_configuration_ids, display_name, parameters, freeform_tags, defined_tags, media_workflow_id):
+def create_media_workflow_job_create_media_workflow_job_by_id_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, media_workflow_configuration_ids, display_name, parameters, freeform_tags, defined_tags, locks, media_workflow_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -717,6 +1254,9 @@ def create_media_workflow_job_create_media_workflow_job_by_id_details(ctx, from_
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
 
     if media_workflow_id is not None:
         _details['mediaWorkflowId'] = media_workflow_id
@@ -761,15 +1301,18 @@ def create_media_workflow_job_create_media_workflow_job_by_id_details(ctx, from_
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether publishing to CDN is enabled.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.cloud.oracle.com/api/#/en/mediaservices/20211101/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'media_services', 'class': 'StreamCdnConfigSection'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'media_services', 'class': 'StreamCdnConfigSection'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'media_services', 'class': 'list[ResourceLock]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'media_services', 'class': 'StreamCdnConfigSection'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'media_services', 'class': 'StreamCdnConfig'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'media_services', 'class': 'StreamCdnConfigSection'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'media_services', 'class': 'list[ResourceLock]'}}, output_type={'module': 'media_services', 'class': 'StreamCdnConfig'})
 @cli_util.wrap_exceptions
-def create_stream_cdn_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, distribution_channel_id, config, is_enabled, freeform_tags, defined_tags):
+def create_stream_cdn_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, distribution_channel_id, config, is_enabled, freeform_tags, defined_tags, locks):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -787,6 +1330,9 @@ def create_stream_cdn_config(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
 
     client = cli_util.build_client('media_services', 'media_services', ctx)
     result = client.create_stream_cdn_config(
@@ -825,6 +1371,9 @@ def create_stream_cdn_config(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether publishing to CDN is enabled.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.cloud.oracle.com/api/#/en/mediaservices/20211101/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-origin-auth-sign-type', type=custom_types.CliCaseInsensitiveChoice(["ForwardURL"]), help=u"""The type of data used to compute the signature.""")
 @cli_util.option('--config-origin-auth-sign-encryption', type=custom_types.CliCaseInsensitiveChoice(["SHA256-HMAC"]), help=u"""The type of encryption used to compute the signature.""")
 @cli_util.option('--config-origin-auth-secret-key-a', help=u"""The shared secret key A, two for errorless key rotation.""")
@@ -839,12 +1388,12 @@ def create_stream_cdn_config(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'media_services', 'class': 'list[ResourceLock]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'media_services', 'class': 'StreamCdnConfig'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'media_services', 'class': 'list[ResourceLock]'}}, output_type={'module': 'media_services', 'class': 'StreamCdnConfig'})
 @cli_util.wrap_exceptions
-def create_stream_cdn_config_akamai_manual_stream_cdn_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, distribution_channel_id, is_enabled, freeform_tags, defined_tags, config_origin_auth_sign_type, config_origin_auth_sign_encryption, config_origin_auth_secret_key_a, config_origin_auth_secret_key_nonce_a, config_origin_auth_secret_key_b, config_origin_auth_secret_key_nonce_b, config_edge_hostname, config_edge_path_prefix, config_is_edge_token_auth, config_edge_token_key, config_edge_token_salt):
+def create_stream_cdn_config_akamai_manual_stream_cdn_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, distribution_channel_id, is_enabled, freeform_tags, defined_tags, locks, config_origin_auth_sign_type, config_origin_auth_sign_encryption, config_origin_auth_secret_key_a, config_origin_auth_secret_key_nonce_a, config_origin_auth_secret_key_b, config_origin_auth_secret_key_nonce_b, config_edge_hostname, config_edge_path_prefix, config_is_edge_token_auth, config_edge_token_key, config_edge_token_salt):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -862,6 +1411,9 @@ def create_stream_cdn_config_akamai_manual_stream_cdn_config(ctx, from_json, wai
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
 
     if config_origin_auth_sign_type is not None:
         _details['config']['originAuthSignType'] = config_origin_auth_sign_type
@@ -935,15 +1487,18 @@ def create_stream_cdn_config_akamai_manual_stream_cdn_config(ctx, from_json, wai
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether publishing to CDN is enabled.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.cloud.oracle.com/api/#/en/mediaservices/20211101/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'media_services', 'class': 'list[ResourceLock]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'media_services', 'class': 'StreamCdnConfig'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'media_services', 'class': 'list[ResourceLock]'}}, output_type={'module': 'media_services', 'class': 'StreamCdnConfig'})
 @cli_util.wrap_exceptions
-def create_stream_cdn_config_edge_stream_cdn_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, distribution_channel_id, is_enabled, freeform_tags, defined_tags):
+def create_stream_cdn_config_edge_stream_cdn_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, distribution_channel_id, is_enabled, freeform_tags, defined_tags, locks):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -961,6 +1516,9 @@ def create_stream_cdn_config_edge_stream_cdn_config(ctx, from_json, wait_for_sta
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
 
     _details['config']['type'] = 'EDGE'
 
@@ -1000,15 +1558,18 @@ def create_stream_cdn_config_edge_stream_cdn_config(ctx, from_json, wait_for_sta
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.cloud.oracle.com/api/#/en/mediaservices/20211101/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'media_services', 'class': 'list[ResourceLock]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'media_services', 'class': 'StreamDistributionChannel'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'media_services', 'class': 'list[ResourceLock]'}}, output_type={'module': 'media_services', 'class': 'StreamDistributionChannel'})
 @cli_util.wrap_exceptions
-def create_stream_distribution_channel(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, freeform_tags, defined_tags):
+def create_stream_distribution_channel(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, freeform_tags, defined_tags, locks):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1022,6 +1583,9 @@ def create_stream_distribution_channel(ctx, from_json, wait_for_state, max_wait_
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
 
     client = cli_util.build_client('media_services', 'media_services', ctx)
     result = client.create_stream_distribution_channel(
@@ -1062,15 +1626,18 @@ def create_stream_distribution_channel(ctx, from_json, wait_for_state, max_wait_
 @cli_util.option('--encryption', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.cloud.oracle.com/api/#/en/mediaservices/20211101/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'encryption': {'module': 'media_services', 'class': 'StreamPackagingConfigEncryption'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'encryption': {'module': 'media_services', 'class': 'StreamPackagingConfigEncryption'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'media_services', 'class': 'list[ResourceLock]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'encryption': {'module': 'media_services', 'class': 'StreamPackagingConfigEncryption'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'media_services', 'class': 'StreamPackagingConfig'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'encryption': {'module': 'media_services', 'class': 'StreamPackagingConfigEncryption'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'media_services', 'class': 'list[ResourceLock]'}}, output_type={'module': 'media_services', 'class': 'StreamPackagingConfig'})
 @cli_util.wrap_exceptions
-def create_stream_packaging_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distribution_channel_id, display_name, stream_packaging_format, segment_time_in_seconds, encryption, freeform_tags, defined_tags):
+def create_stream_packaging_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distribution_channel_id, display_name, stream_packaging_format, segment_time_in_seconds, encryption, freeform_tags, defined_tags, locks):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1089,6 +1656,9 @@ def create_stream_packaging_config(ctx, from_json, wait_for_state, max_wait_seco
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
 
     client = cli_util.build_client('media_services', 'media_services', ctx)
     result = client.create_stream_packaging_config(
@@ -1128,16 +1698,19 @@ def create_stream_packaging_config(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.option('--segment-time-in-seconds', required=True, type=click.INT, help=u"""The duration in seconds for each fragment.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.cloud.oracle.com/api/#/en/mediaservices/20211101/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--encryption-kms-key-id', help=u"""The identifier of the customer managed Vault KMS symmetric encryption key (null if Oracle managed).""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'media_services', 'class': 'list[ResourceLock]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'media_services', 'class': 'StreamPackagingConfig'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'media_services', 'class': 'list[ResourceLock]'}}, output_type={'module': 'media_services', 'class': 'StreamPackagingConfig'})
 @cli_util.wrap_exceptions
-def create_stream_packaging_config_stream_packaging_config_encryption_aes128(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distribution_channel_id, display_name, stream_packaging_format, segment_time_in_seconds, freeform_tags, defined_tags, encryption_kms_key_id):
+def create_stream_packaging_config_stream_packaging_config_encryption_aes128(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distribution_channel_id, display_name, stream_packaging_format, segment_time_in_seconds, freeform_tags, defined_tags, locks, encryption_kms_key_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1154,6 +1727,9 @@ def create_stream_packaging_config_stream_packaging_config_encryption_aes128(ctx
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
 
     if encryption_kms_key_id is not None:
         _details['encryption']['kmsKeyId'] = encryption_kms_key_id
@@ -1198,15 +1774,18 @@ def create_stream_packaging_config_stream_packaging_config_encryption_aes128(ctx
 @cli_util.option('--segment-time-in-seconds', required=True, type=click.INT, help=u"""The duration in seconds for each fragment.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.cloud.oracle.com/api/#/en/mediaservices/20211101/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'media_services', 'class': 'list[ResourceLock]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'media_services', 'class': 'StreamPackagingConfig'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'media_services', 'class': 'list[ResourceLock]'}}, output_type={'module': 'media_services', 'class': 'StreamPackagingConfig'})
 @cli_util.wrap_exceptions
-def create_stream_packaging_config_stream_packaging_config_encryption_none(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distribution_channel_id, display_name, stream_packaging_format, segment_time_in_seconds, freeform_tags, defined_tags):
+def create_stream_packaging_config_stream_packaging_config_encryption_none(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distribution_channel_id, display_name, stream_packaging_format, segment_time_in_seconds, freeform_tags, defined_tags, locks):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1223,6 +1802,9 @@ def create_stream_packaging_config_stream_packaging_config_encryption_none(ctx, 
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
 
     _details['encryption']['algorithm'] = 'NONE'
 
@@ -1259,6 +1841,7 @@ def create_stream_packaging_config_stream_packaging_config_encryption_none(ctx, 
 
 @media_asset_group.command(name=cli_util.override('media_services.delete_media_asset.command_name', 'delete'), help=u"""Deletes a MediaAsset resource by identifier. If DeleteChildren is passed in as the mode, all the assets with the parentMediaAssetId matching the ID will be deleted. If DeleteDerivatives is set as the mode, all the assets with the masterMediaAssetId matching the ID will be deleted. \n[Command Reference](deleteMediaAsset)""")
 @cli_util.option('--media-asset-id', required=True, help=u"""Unique MediaAsset identifier""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--delete-mode', type=custom_types.CliCaseInsensitiveChoice(["DELETE_CHILDREN", "DELETE_DERIVATIONS"]), help=u"""DeleteMode decides whether to delete all the immediate children or all assets with the asset's ID as their masterMediaAssetId.""")
 @cli_util.confirm_delete_option
@@ -1270,12 +1853,14 @@ def create_stream_packaging_config_stream_packaging_config_encryption_none(ctx, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_media_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, media_asset_id, if_match, delete_mode):
+def delete_media_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, media_asset_id, is_lock_override, if_match, delete_mode):
 
     if isinstance(media_asset_id, six.string_types) and len(media_asset_id.strip()) == 0:
         raise click.UsageError('Parameter --media-asset-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     if if_match is not None:
         kwargs['if_match'] = if_match
     if delete_mode is not None:
@@ -1327,6 +1912,7 @@ def delete_media_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @media_asset_distribution_channel_attachment_group.command(name=cli_util.override('media_services.delete_media_asset_distribution_channel_attachment.command_name', 'delete'), help=u"""Deletes a MediaAsset from the DistributionChannel by identifiers. \n[Command Reference](deleteMediaAssetDistributionChannelAttachment)""")
 @cli_util.option('--media-asset-id', required=True, help=u"""Unique MediaAsset identifier""")
 @cli_util.option('--distribution-channel-id', required=True, help=u"""Unique DistributionChannel identifier.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--version-parameterconflict', type=click.INT, help=u"""Version of the attachment.""")
 @cli_util.confirm_delete_option
@@ -1335,7 +1921,7 @@ def delete_media_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_media_asset_distribution_channel_attachment(ctx, from_json, media_asset_id, distribution_channel_id, if_match, version_parameterconflict):
+def delete_media_asset_distribution_channel_attachment(ctx, from_json, media_asset_id, distribution_channel_id, is_lock_override, if_match, version_parameterconflict):
 
     if isinstance(media_asset_id, six.string_types) and len(media_asset_id.strip()) == 0:
         raise click.UsageError('Parameter --media-asset-id cannot be whitespace or empty string')
@@ -1344,6 +1930,8 @@ def delete_media_asset_distribution_channel_attachment(ctx, from_json, media_ass
         raise click.UsageError('Parameter --distribution-channel-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     if if_match is not None:
         kwargs['if_match'] = if_match
     if version_parameterconflict is not None:
@@ -1360,6 +1948,7 @@ def delete_media_asset_distribution_channel_attachment(ctx, from_json, media_ass
 
 @media_workflow_group.command(name=cli_util.override('media_services.delete_media_workflow.command_name', 'delete'), help=u"""The MediaWorkflow lifecycleState will change to DELETED. \n[Command Reference](deleteMediaWorkflow)""")
 @cli_util.option('--media-workflow-id', required=True, help=u"""Unique MediaWorkflow identifier.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1370,12 +1959,14 @@ def delete_media_asset_distribution_channel_attachment(ctx, from_json, media_ass
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_media_workflow(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, media_workflow_id, if_match):
+def delete_media_workflow(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, media_workflow_id, is_lock_override, if_match):
 
     if isinstance(media_workflow_id, six.string_types) and len(media_workflow_id.strip()) == 0:
         raise click.UsageError('Parameter --media-workflow-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1424,6 +2015,7 @@ def delete_media_workflow(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 @media_workflow_configuration_group.command(name=cli_util.override('media_services.delete_media_workflow_configuration.command_name', 'delete'), help=u"""Deletes a MediaWorkflowConfiguration resource by identifier. \n[Command Reference](deleteMediaWorkflowConfiguration)""")
 @cli_util.option('--media-workflow-configuration-id', required=True, help=u"""Unique MediaWorkflowConfiguration identifier.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1434,12 +2026,14 @@ def delete_media_workflow(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_media_workflow_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, media_workflow_configuration_id, if_match):
+def delete_media_workflow_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, media_workflow_configuration_id, is_lock_override, if_match):
 
     if isinstance(media_workflow_configuration_id, six.string_types) and len(media_workflow_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --media-workflow-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1488,9 +2082,10 @@ def delete_media_workflow_configuration(ctx, from_json, wait_for_state, max_wait
 
 @media_workflow_job_group.command(name=cli_util.override('media_services.delete_media_workflow_job.command_name', 'delete'), help=u"""This is an asynchronous operation. The MediaWorkflowJob lifecycleState will change to CANCELING temporarily until the job is completely CANCELED. \n[Command Reference](deleteMediaWorkflowJob)""")
 @cli_util.option('--media-workflow-job-id', required=True, help=u"""Unique MediaWorkflowJob identifier.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "REJECTED", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1498,12 +2093,14 @@ def delete_media_workflow_configuration(ctx, from_json, wait_for_state, max_wait
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_media_workflow_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, media_workflow_job_id, if_match):
+def delete_media_workflow_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, media_workflow_job_id, is_lock_override, if_match):
 
     if isinstance(media_workflow_job_id, six.string_types) and len(media_workflow_job_id.strip()) == 0:
         raise click.UsageError('Parameter --media-workflow-job-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1552,6 +2149,7 @@ def delete_media_workflow_job(ctx, from_json, wait_for_state, max_wait_seconds, 
 
 @stream_cdn_config_group.command(name=cli_util.override('media_services.delete_stream_cdn_config.command_name', 'delete'), help=u"""The StreamCdnConfig lifecycleState will change to DELETED. \n[Command Reference](deleteStreamCdnConfig)""")
 @cli_util.option('--stream-cdn-config-id', required=True, help=u"""Unique StreamCdnConfig identifier.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1562,12 +2160,14 @@ def delete_media_workflow_job(ctx, from_json, wait_for_state, max_wait_seconds, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_stream_cdn_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_cdn_config_id, if_match):
+def delete_stream_cdn_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_cdn_config_id, is_lock_override, if_match):
 
     if isinstance(stream_cdn_config_id, six.string_types) and len(stream_cdn_config_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-cdn-config-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1616,6 +2216,7 @@ def delete_stream_cdn_config(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 @stream_distribution_channel_group.command(name=cli_util.override('media_services.delete_stream_distribution_channel.command_name', 'delete'), help=u"""The Stream Distribution Channel lifecycleState will change to DELETED. \n[Command Reference](deleteStreamDistributionChannel)""")
 @cli_util.option('--stream-distribution-channel-id', required=True, help=u"""Unique Stream Distribution Channel path identifier.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1626,12 +2227,14 @@ def delete_stream_cdn_config(ctx, from_json, wait_for_state, max_wait_seconds, w
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_stream_distribution_channel(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_distribution_channel_id, if_match):
+def delete_stream_distribution_channel(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_distribution_channel_id, is_lock_override, if_match):
 
     if isinstance(stream_distribution_channel_id, six.string_types) and len(stream_distribution_channel_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-distribution-channel-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1680,6 +2283,7 @@ def delete_stream_distribution_channel(ctx, from_json, wait_for_state, max_wait_
 
 @stream_packaging_config_group.command(name=cli_util.override('media_services.delete_stream_packaging_config.command_name', 'delete'), help=u"""The Stream Packaging Configuration lifecycleState will change to DELETED. \n[Command Reference](deleteStreamPackagingConfig)""")
 @cli_util.option('--stream-packaging-config-id', required=True, help=u"""Unique Stream Packaging Configuration path identifier.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1690,12 +2294,14 @@ def delete_stream_distribution_channel(ctx, from_json, wait_for_state, max_wait_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_stream_packaging_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_packaging_config_id, if_match):
+def delete_stream_packaging_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_packaging_config_id, is_lock_override, if_match):
 
     if isinstance(stream_packaging_config_id, six.string_types) and len(stream_packaging_config_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-packaging-config-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1855,33 +2461,6 @@ def get_media_workflow_job(ctx, from_json, media_workflow_job_id):
     client = cli_util.build_client('media_services', 'media_services', ctx)
     result = client.get_media_workflow_job(
         media_workflow_job_id=media_workflow_job_id,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
-@media_workflow_job_fact_group.command(name=cli_util.override('media_services.get_media_workflow_job_fact.command_name', 'get'), help=u"""Get the MediaWorkflowJobFact identified by the mediaWorkflowJobId and Fact ID. \n[Command Reference](getMediaWorkflowJobFact)""")
-@cli_util.option('--media-workflow-job-id', required=True, help=u"""Unique MediaWorkflowJob identifier.""")
-@cli_util.option('--key', required=True, type=click.INT, help=u"""Identifier of the MediaWorkflowJobFact within a MediaWorkflowJob.""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'media_services', 'class': 'MediaWorkflowJobFact'})
-@cli_util.wrap_exceptions
-def get_media_workflow_job_fact(ctx, from_json, media_workflow_job_id, key):
-
-    if isinstance(media_workflow_job_id, six.string_types) and len(media_workflow_job_id.strip()) == 0:
-        raise click.UsageError('Parameter --media-workflow-job-id cannot be whitespace or empty string')
-
-    if isinstance(key, six.string_types) and len(key.strip()) == 0:
-        raise click.UsageError('Parameter --key cannot be whitespace or empty string')
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('media_services', 'media_services', ctx)
-    result = client.get_media_workflow_job_fact(
-        media_workflow_job_id=media_workflow_job_id,
-        key=key,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2226,75 +2805,12 @@ def list_media_workflow_configurations(ctx, from_json, all_pages, page_size, com
     cli_util.render_response(result, ctx)
 
 
-@media_workflow_job_fact_group.command(name=cli_util.override('media_services.list_media_workflow_job_facts.command_name', 'list'), help=u"""Internal API to get a point-in-time snapshot of a MediaWorkflowJob. \n[Command Reference](listMediaWorkflowJobFacts)""")
-@cli_util.option('--media-workflow-job-id', required=True, help=u"""Unique MediaWorkflowJob identifier.""")
-@cli_util.option('--key', type=click.INT, help=u"""Filter by MediaWorkflowJob ID and MediaWorkflowJobFact key.""")
-@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["runnableJob", "taskDeclaration", "workflow", "configuration", "parameterResolutionEvent"]), help=u"""Types of details to include.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["key"]), help=u"""Types of details to include.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
-@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
-@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'media_services', 'class': 'MediaWorkflowJobFactCollection'})
-@cli_util.wrap_exceptions
-def list_media_workflow_job_facts(ctx, from_json, all_pages, page_size, media_workflow_job_id, key, type, sort_by, sort_order, page, limit):
-
-    if all_pages and limit:
-        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
-
-    if isinstance(media_workflow_job_id, six.string_types) and len(media_workflow_job_id.strip()) == 0:
-        raise click.UsageError('Parameter --media-workflow-job-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    if key is not None:
-        kwargs['key'] = key
-    if type is not None:
-        kwargs['type'] = type
-    if sort_by is not None:
-        kwargs['sort_by'] = sort_by
-    if sort_order is not None:
-        kwargs['sort_order'] = sort_order
-    if page is not None:
-        kwargs['page'] = page
-    if limit is not None:
-        kwargs['limit'] = limit
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('media_services', 'media_services', ctx)
-    if all_pages:
-        if page_size:
-            kwargs['limit'] = page_size
-
-        result = cli_util.list_call_get_all_results(
-            client.list_media_workflow_job_facts,
-            media_workflow_job_id=media_workflow_job_id,
-            **kwargs
-        )
-    elif limit is not None:
-        result = cli_util.list_call_get_up_to_limit(
-            client.list_media_workflow_job_facts,
-            limit,
-            page_size,
-            media_workflow_job_id=media_workflow_job_id,
-            **kwargs
-        )
-    else:
-        result = client.list_media_workflow_job_facts(
-            media_workflow_job_id=media_workflow_job_id,
-            **kwargs
-        )
-    cli_util.render_response(result, ctx)
-
-
 @media_workflow_job_group.command(name=cli_util.override('media_services.list_media_workflow_jobs.command_name', 'list'), help=u"""Lists the MediaWorkflowJobs. \n[Command Reference](listMediaWorkflowJobs)""")
 @cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""unique MediaWorkflowJob identifier""")
 @cli_util.option('--media-workflow-id', help=u"""Unique MediaWorkflow identifier.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire display name given.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only the resources with lifecycleState matching the given lifecycleState.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "REJECTED", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only the resources with lifecycleState matching the given lifecycleState.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "workflowId", "lifecycleState"]), help=u"""The parameter sort by.""")
@@ -2719,6 +3235,503 @@ def list_system_media_workflows(ctx, from_json, all_pages, page_size, compartmen
     cli_util.render_response(result, ctx)
 
 
+@media_asset_group.command(name=cli_util.override('media_services.remove_media_asset_lock.command_name', 'remove'), help=u"""Remove a lock to an MediaAsset. \n[Command Reference](removeMediaAssetLock)""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--media-asset-id', required=True, help=u"""Unique MediaAsset identifier""")
+@cli_util.option('--related-resource-id', help=u"""The ID of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""When the lock was created.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'media_services', 'class': 'MediaAsset'})
+@cli_util.wrap_exceptions
+def remove_media_asset_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, media_asset_id, related_resource_id, message, time_created, if_match):
+
+    if isinstance(media_asset_id, six.string_types) and len(media_asset_id.strip()) == 0:
+        raise click.UsageError('Parameter --media-asset-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+    _details['compartmentId'] = compartment_id
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    if time_created is not None:
+        _details['timeCreated'] = time_created
+
+    client = cli_util.build_client('media_services', 'media_services', ctx)
+    result = client.remove_media_asset_lock(
+        media_asset_id=media_asset_id,
+        remove_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_media_asset') and callable(getattr(client, 'get_media_asset')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_media_asset(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@media_workflow_configuration_group.command(name=cli_util.override('media_services.remove_media_workflow_configuration_lock.command_name', 'remove'), help=u"""Remove a lock from a MediaWorkflowConfiguration. \n[Command Reference](removeMediaWorkflowConfigurationLock)""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--media-workflow-configuration-id', required=True, help=u"""Unique MediaWorkflowConfiguration identifier.""")
+@cli_util.option('--related-resource-id', help=u"""The ID of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""When the lock was created.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'media_services', 'class': 'MediaWorkflowConfiguration'})
+@cli_util.wrap_exceptions
+def remove_media_workflow_configuration_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, media_workflow_configuration_id, related_resource_id, message, time_created, if_match):
+
+    if isinstance(media_workflow_configuration_id, six.string_types) and len(media_workflow_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --media-workflow-configuration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+    _details['compartmentId'] = compartment_id
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    if time_created is not None:
+        _details['timeCreated'] = time_created
+
+    client = cli_util.build_client('media_services', 'media_services', ctx)
+    result = client.remove_media_workflow_configuration_lock(
+        media_workflow_configuration_id=media_workflow_configuration_id,
+        remove_resource_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_media_workflow_configuration') and callable(getattr(client, 'get_media_workflow_configuration')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_media_workflow_configuration(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@media_workflow_job_group.command(name=cli_util.override('media_services.remove_media_workflow_job_lock.command_name', 'remove'), help=u"""Remove a lock from a MediaWorkflowJob. \n[Command Reference](removeMediaWorkflowJobLock)""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--media-workflow-job-id', required=True, help=u"""Unique MediaWorkflowJob identifier.""")
+@cli_util.option('--related-resource-id', help=u"""The ID of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""When the lock was created.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "REJECTED", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'media_services', 'class': 'MediaWorkflowJob'})
+@cli_util.wrap_exceptions
+def remove_media_workflow_job_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, media_workflow_job_id, related_resource_id, message, time_created, if_match):
+
+    if isinstance(media_workflow_job_id, six.string_types) and len(media_workflow_job_id.strip()) == 0:
+        raise click.UsageError('Parameter --media-workflow-job-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+    _details['compartmentId'] = compartment_id
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    if time_created is not None:
+        _details['timeCreated'] = time_created
+
+    client = cli_util.build_client('media_services', 'media_services', ctx)
+    result = client.remove_media_workflow_job_lock(
+        media_workflow_job_id=media_workflow_job_id,
+        remove_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_media_workflow_job') and callable(getattr(client, 'get_media_workflow_job')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_media_workflow_job(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@media_workflow_group.command(name=cli_util.override('media_services.remove_media_workflow_lock.command_name', 'remove'), help=u"""Remove a lock from a MediaWorkflow. \n[Command Reference](removeMediaWorkflowLock)""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--media-workflow-id', required=True, help=u"""Unique MediaWorkflow identifier.""")
+@cli_util.option('--related-resource-id', help=u"""The ID of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""When the lock was created.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'media_services', 'class': 'MediaWorkflow'})
+@cli_util.wrap_exceptions
+def remove_media_workflow_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, media_workflow_id, related_resource_id, message, time_created, if_match):
+
+    if isinstance(media_workflow_id, six.string_types) and len(media_workflow_id.strip()) == 0:
+        raise click.UsageError('Parameter --media-workflow-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+    _details['compartmentId'] = compartment_id
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    if time_created is not None:
+        _details['timeCreated'] = time_created
+
+    client = cli_util.build_client('media_services', 'media_services', ctx)
+    result = client.remove_media_workflow_lock(
+        media_workflow_id=media_workflow_id,
+        remove_resource_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_media_workflow') and callable(getattr(client, 'get_media_workflow')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_media_workflow(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@stream_cdn_config_group.command(name=cli_util.override('media_services.remove_stream_cdn_config_lock.command_name', 'remove'), help=u"""Remove a lock from a StreamCdnConfig. \n[Command Reference](removeStreamCdnConfigLock)""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--stream-cdn-config-id', required=True, help=u"""Unique StreamCdnConfig identifier.""")
+@cli_util.option('--related-resource-id', help=u"""The ID of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""When the lock was created.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'media_services', 'class': 'StreamCdnConfig'})
+@cli_util.wrap_exceptions
+def remove_stream_cdn_config_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, stream_cdn_config_id, related_resource_id, message, time_created, if_match):
+
+    if isinstance(stream_cdn_config_id, six.string_types) and len(stream_cdn_config_id.strip()) == 0:
+        raise click.UsageError('Parameter --stream-cdn-config-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+    _details['compartmentId'] = compartment_id
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    if time_created is not None:
+        _details['timeCreated'] = time_created
+
+    client = cli_util.build_client('media_services', 'media_services', ctx)
+    result = client.remove_stream_cdn_config_lock(
+        stream_cdn_config_id=stream_cdn_config_id,
+        remove_resource_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_stream_cdn_config') and callable(getattr(client, 'get_stream_cdn_config')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_stream_cdn_config(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@stream_distribution_channel_group.command(name=cli_util.override('media_services.remove_stream_distribution_channel_lock.command_name', 'remove'), help=u"""Remove a lock to a StreamDistributionChannel. \n[Command Reference](removeStreamDistributionChannelLock)""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--stream-distribution-channel-id', required=True, help=u"""Unique Stream Distribution Channel path identifier.""")
+@cli_util.option('--related-resource-id', help=u"""The ID of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""When the lock was created.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'media_services', 'class': 'StreamDistributionChannel'})
+@cli_util.wrap_exceptions
+def remove_stream_distribution_channel_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, stream_distribution_channel_id, related_resource_id, message, time_created, if_match):
+
+    if isinstance(stream_distribution_channel_id, six.string_types) and len(stream_distribution_channel_id.strip()) == 0:
+        raise click.UsageError('Parameter --stream-distribution-channel-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+    _details['compartmentId'] = compartment_id
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    if time_created is not None:
+        _details['timeCreated'] = time_created
+
+    client = cli_util.build_client('media_services', 'media_services', ctx)
+    result = client.remove_stream_distribution_channel_lock(
+        stream_distribution_channel_id=stream_distribution_channel_id,
+        remove_resource_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_stream_distribution_channel') and callable(getattr(client, 'get_stream_distribution_channel')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_stream_distribution_channel(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@stream_packaging_config_group.command(name=cli_util.override('media_services.remove_stream_packaging_config_lock.command_name', 'remove'), help=u"""Remove a lock from a StreamPackagingConfig. \n[Command Reference](removeStreamPackagingConfigLock)""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID of the lock.""")
+@cli_util.option('--stream-packaging-config-id', required=True, help=u"""Unique Stream Packaging Configuration path identifier.""")
+@cli_util.option('--related-resource-id', help=u"""The ID of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""When the lock was created.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'media_services', 'class': 'StreamPackagingConfig'})
+@cli_util.wrap_exceptions
+def remove_stream_packaging_config_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, stream_packaging_config_id, related_resource_id, message, time_created, if_match):
+
+    if isinstance(stream_packaging_config_id, six.string_types) and len(stream_packaging_config_id.strip()) == 0:
+        raise click.UsageError('Parameter --stream-packaging-config-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+    _details['compartmentId'] = compartment_id
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    if time_created is not None:
+        _details['timeCreated'] = time_created
+
+    client = cli_util.build_client('media_services', 'media_services', ctx)
+    result = client.remove_stream_packaging_config_lock(
+        stream_packaging_config_id=stream_packaging_config_id,
+        remove_resource_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_stream_packaging_config') and callable(getattr(client, 'get_stream_packaging_config')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_stream_packaging_config(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @media_asset_group.command(name=cli_util.override('media_services.update_media_asset.command_name', 'update'), help=u"""Updates the MediaAsset. \n[Command Reference](updateMediaAsset)""")
 @cli_util.option('--media-asset-id', required=True, help=u"""Unique MediaAsset identifier""")
 @cli_util.option('--display-name', help=u"""Display name for the Media Asset. Does not have to be unique. Avoid entering confidential information.""")
@@ -2733,6 +3746,7 @@ This option is a JSON list with items of type Metadata.  For documentation on Me
 This option is a JSON list with items of type MediaAssetTag.  For documentation on MediaAssetTag please see our API reference: https://docs.cloud.oracle.com/api/#/en/mediaservices/20211101/datatypes/MediaAssetTag.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2743,7 +3757,7 @@ This option is a JSON list with items of type MediaAssetTag.  For documentation 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'media_services', 'class': 'list[Metadata]'}, 'media-asset-tags': {'module': 'media_services', 'class': 'list[MediaAssetTag]'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'media_services', 'class': 'MediaAsset'})
 @cli_util.wrap_exceptions
-def update_media_asset(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, media_asset_id, display_name, type, parent_media_asset_id, master_media_asset_id, metadata, media_asset_tags, freeform_tags, defined_tags, if_match):
+def update_media_asset(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, media_asset_id, display_name, type, parent_media_asset_id, master_media_asset_id, metadata, media_asset_tags, freeform_tags, defined_tags, is_lock_override, if_match):
 
     if isinstance(media_asset_id, six.string_types) and len(media_asset_id.strip()) == 0:
         raise click.UsageError('Parameter --media-asset-id cannot be whitespace or empty string')
@@ -2753,6 +3767,8 @@ def update_media_asset(ctx, from_json, force, wait_for_state, max_wait_seconds, 
                 ctx.abort()
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2825,6 +3841,7 @@ This option is a JSON list with items of type MediaWorkflowTask.  For documentat
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""JSON object representing named parameters and their default values that can be referenced throughout this workflow. The values declared here can be overridden by the MediaWorkflowConfigurations or parameters supplied when creating MediaWorkflowJobs from this MediaWorkflow.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2835,7 +3852,7 @@ This option is a JSON list with items of type MediaWorkflowTask.  For documentat
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'tasks': {'module': 'media_services', 'class': 'list[MediaWorkflowTask]'}, 'media-workflow-configuration-ids': {'module': 'media_services', 'class': 'list[string]'}, 'parameters': {'module': 'media_services', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'media_services', 'class': 'MediaWorkflow'})
 @cli_util.wrap_exceptions
-def update_media_workflow(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, media_workflow_id, display_name, tasks, media_workflow_configuration_ids, parameters, freeform_tags, defined_tags, if_match):
+def update_media_workflow(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, media_workflow_id, display_name, tasks, media_workflow_configuration_ids, parameters, freeform_tags, defined_tags, is_lock_override, if_match):
 
     if isinstance(media_workflow_id, six.string_types) and len(media_workflow_id.strip()) == 0:
         raise click.UsageError('Parameter --media-workflow-id cannot be whitespace or empty string')
@@ -2845,6 +3862,8 @@ def update_media_workflow(ctx, from_json, force, wait_for_state, max_wait_second
                 ctx.abort()
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2907,6 +3926,7 @@ def update_media_workflow(ctx, from_json, force, wait_for_state, max_wait_second
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Reuseable parameter values encoded as a JSON; the top and second level JSON elements are objects. Each key of the top level object refer to a task key that is unqiue to the workflow, each of the second level objects' keys refer to the name of a parameter that is unique to the task. taskKey -> parameterName -> parameterValue""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2917,7 +3937,7 @@ def update_media_workflow(ctx, from_json, force, wait_for_state, max_wait_second
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parameters': {'module': 'media_services', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'media_services', 'class': 'MediaWorkflowConfiguration'})
 @cli_util.wrap_exceptions
-def update_media_workflow_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, media_workflow_configuration_id, display_name, parameters, freeform_tags, defined_tags, if_match):
+def update_media_workflow_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, media_workflow_configuration_id, display_name, parameters, freeform_tags, defined_tags, is_lock_override, if_match):
 
     if isinstance(media_workflow_configuration_id, six.string_types) and len(media_workflow_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --media-workflow-configuration-id cannot be whitespace or empty string')
@@ -2927,6 +3947,8 @@ def update_media_workflow_configuration(ctx, from_json, force, wait_for_state, m
                 ctx.abort()
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2982,9 +4004,10 @@ def update_media_workflow_configuration(ctx, from_json, force, wait_for_state, m
 @cli_util.option('--display-name', help=u"""Name for the MediaWorkflowJob. Does not have to be unique. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "REJECTED", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}})
@@ -2992,7 +4015,7 @@ def update_media_workflow_configuration(ctx, from_json, force, wait_for_state, m
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'media_services', 'class': 'MediaWorkflowJob'})
 @cli_util.wrap_exceptions
-def update_media_workflow_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, media_workflow_job_id, display_name, freeform_tags, defined_tags, if_match):
+def update_media_workflow_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, media_workflow_job_id, display_name, freeform_tags, defined_tags, is_lock_override, if_match):
 
     if isinstance(media_workflow_job_id, six.string_types) and len(media_workflow_job_id.strip()) == 0:
         raise click.UsageError('Parameter --media-workflow-job-id cannot be whitespace or empty string')
@@ -3002,6 +4025,8 @@ def update_media_workflow_job(ctx, from_json, force, wait_for_state, max_wait_se
                 ctx.abort()
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3056,6 +4081,7 @@ def update_media_workflow_job(ctx, from_json, force, wait_for_state, max_wait_se
 @cli_util.option('--config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3066,7 +4092,7 @@ def update_media_workflow_job(ctx, from_json, force, wait_for_state, max_wait_se
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'media_services', 'class': 'StreamCdnConfigSection'}, 'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'media_services', 'class': 'StreamCdnConfig'})
 @cli_util.wrap_exceptions
-def update_stream_cdn_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_cdn_config_id, display_name, is_enabled, config, freeform_tags, defined_tags, if_match):
+def update_stream_cdn_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_cdn_config_id, display_name, is_enabled, config, freeform_tags, defined_tags, is_lock_override, if_match):
 
     if isinstance(stream_cdn_config_id, six.string_types) and len(stream_cdn_config_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-cdn-config-id cannot be whitespace or empty string')
@@ -3076,6 +4102,8 @@ def update_stream_cdn_config(ctx, from_json, force, wait_for_state, max_wait_sec
                 ctx.abort()
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3135,6 +4163,7 @@ def update_stream_cdn_config(ctx, from_json, force, wait_for_state, max_wait_sec
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether CDN is enabled for publishing.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--config-origin-auth-sign-type', type=custom_types.CliCaseInsensitiveChoice(["ForwardURL"]), help=u"""The type of data used to compute the signature.""")
 @cli_util.option('--config-origin-auth-sign-encryption', type=custom_types.CliCaseInsensitiveChoice(["SHA256-HMAC"]), help=u"""The type of encryption used to compute the signature.""")
@@ -3156,7 +4185,7 @@ def update_stream_cdn_config(ctx, from_json, force, wait_for_state, max_wait_sec
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'media_services', 'class': 'StreamCdnConfig'})
 @cli_util.wrap_exceptions
-def update_stream_cdn_config_akamai_manual_stream_cdn_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_cdn_config_id, display_name, is_enabled, freeform_tags, defined_tags, if_match, config_origin_auth_sign_type, config_origin_auth_sign_encryption, config_origin_auth_secret_key_a, config_origin_auth_secret_key_nonce_a, config_origin_auth_secret_key_b, config_origin_auth_secret_key_nonce_b, config_edge_hostname, config_edge_path_prefix, config_is_edge_token_auth, config_edge_token_key, config_edge_token_salt):
+def update_stream_cdn_config_akamai_manual_stream_cdn_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_cdn_config_id, display_name, is_enabled, freeform_tags, defined_tags, is_lock_override, if_match, config_origin_auth_sign_type, config_origin_auth_sign_encryption, config_origin_auth_secret_key_a, config_origin_auth_secret_key_nonce_a, config_origin_auth_secret_key_b, config_origin_auth_secret_key_nonce_b, config_edge_hostname, config_edge_path_prefix, config_is_edge_token_auth, config_edge_token_key, config_edge_token_salt):
 
     if isinstance(stream_cdn_config_id, six.string_types) and len(stream_cdn_config_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-cdn-config-id cannot be whitespace or empty string')
@@ -3166,6 +4195,8 @@ def update_stream_cdn_config_akamai_manual_stream_cdn_config(ctx, from_json, for
                 ctx.abort()
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3258,6 +4289,7 @@ def update_stream_cdn_config_akamai_manual_stream_cdn_config(ctx, from_json, for
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether CDN is enabled for publishing.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3268,7 +4300,7 @@ def update_stream_cdn_config_akamai_manual_stream_cdn_config(ctx, from_json, for
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'media_services', 'class': 'StreamCdnConfig'})
 @cli_util.wrap_exceptions
-def update_stream_cdn_config_edge_stream_cdn_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_cdn_config_id, display_name, is_enabled, freeform_tags, defined_tags, if_match):
+def update_stream_cdn_config_edge_stream_cdn_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_cdn_config_id, display_name, is_enabled, freeform_tags, defined_tags, is_lock_override, if_match):
 
     if isinstance(stream_cdn_config_id, six.string_types) and len(stream_cdn_config_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-cdn-config-id cannot be whitespace or empty string')
@@ -3278,6 +4310,8 @@ def update_stream_cdn_config_edge_stream_cdn_config(ctx, from_json, force, wait_
                 ctx.abort()
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3336,6 +4370,7 @@ def update_stream_cdn_config_edge_stream_cdn_config(ctx, from_json, force, wait_
 @cli_util.option('--display-name', help=u"""Stream Distribution channel display name. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3346,7 +4381,7 @@ def update_stream_cdn_config_edge_stream_cdn_config(ctx, from_json, force, wait_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'media_services', 'class': 'StreamDistributionChannel'})
 @cli_util.wrap_exceptions
-def update_stream_distribution_channel(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_distribution_channel_id, display_name, freeform_tags, defined_tags, if_match):
+def update_stream_distribution_channel(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_distribution_channel_id, display_name, freeform_tags, defined_tags, is_lock_override, if_match):
 
     if isinstance(stream_distribution_channel_id, six.string_types) and len(stream_distribution_channel_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-distribution-channel-id cannot be whitespace or empty string')
@@ -3356,6 +4391,8 @@ def update_stream_distribution_channel(ctx, from_json, force, wait_for_state, ma
                 ctx.abort()
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3408,6 +4445,7 @@ def update_stream_distribution_channel(ctx, from_json, force, wait_for_state, ma
 @cli_util.option('--display-name', help=u"""The name of the stream Packaging Configuration. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3418,7 +4456,7 @@ def update_stream_distribution_channel(ctx, from_json, force, wait_for_state, ma
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'media_services', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'media_services', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'media_services', 'class': 'StreamPackagingConfig'})
 @cli_util.wrap_exceptions
-def update_stream_packaging_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_packaging_config_id, display_name, freeform_tags, defined_tags, if_match):
+def update_stream_packaging_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_packaging_config_id, display_name, freeform_tags, defined_tags, is_lock_override, if_match):
 
     if isinstance(stream_packaging_config_id, six.string_types) and len(stream_packaging_config_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-packaging-config-id cannot be whitespace or empty string')
@@ -3428,6 +4466,8 @@ def update_stream_packaging_config(ctx, from_json, force, wait_for_state, max_wa
                 ctx.abort()
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
