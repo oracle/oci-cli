@@ -283,3 +283,4 @@ apm-synthetics, monitor, update-dns-sec-monitor
 apm-synthetics, monitor, update-dns-trace-monitor
 apm-synthetics, monitor, update-dns-server-monitor
 adm, remediation-run, list-application-dependency-recommendations
+management-agent, work-request, list

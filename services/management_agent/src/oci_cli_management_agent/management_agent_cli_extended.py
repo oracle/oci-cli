@@ -170,3 +170,49 @@ def summarize_management_agent_plugin_counts(ctx, **kwargs):
         kwargs['group_by'] = kwargs['plugin_group_by']
         kwargs.pop('plugin_group_by')
     ctx.invoke(managementagent_cli.summarize_management_agent_plugin_counts, **kwargs)
+
+
+# oci management-agent agent create-data-source-create-prometheus-emitter-data-source-details -> oci management-agent agent create-prometheus-datasource
+cli_util.rename_command(managementagent_cli, managementagent_cli.management_agent_group, managementagent_cli.create_data_source_create_prometheus_emitter_data_source_details, "create-prometheus-datasource")
+
+
+# oci management-agent agent update-data-source-update-prometheus-emitter-data-source-details -> oci management-agent agent update-prometheus-datasource
+cli_util.rename_command(managementagent_cli, managementagent_cli.management_agent_group, managementagent_cli.update_data_source_update_prometheus_emitter_data_source_details, "update-prometheus-datasource")
+
+
+@cli_util.copy_params_from_generated_command(managementagent_cli.create_data_source_create_prometheus_emitter_data_source_details, params_to_exclude=['read_data_limit_in_kilobytes'])
+@managementagent_cli.management_agent_group.command(name=managementagent_cli.create_data_source_create_prometheus_emitter_data_source_details.name, help=managementagent_cli.create_data_source_create_prometheus_emitter_data_source_details.help)
+@cli_util.option('--read-data-limit', help=u"""Number in kilobytes. The limit on the data being sent, not to exceed the agent's fixed limit of 400 (KB).""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metric-dimensions': {'module': 'management_agent', 'class': 'list[MetricDimension]'}})
+@cli_util.wrap_exceptions
+def create_data_source_create_prometheus_emitter_data_source_details_extended(ctx, **kwargs):
+
+    if 'read_data_limit' in kwargs:
+        kwargs['read_data_limit_in_kilobytes'] = kwargs['read_data_limit']
+        kwargs.pop('read_data_limit')
+
+    ctx.invoke(managementagent_cli.create_data_source_create_prometheus_emitter_data_source_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(managementagent_cli.update_data_source_update_prometheus_emitter_data_source_details, params_to_exclude=['read_data_limit_in_kilobytes'])
+@managementagent_cli.management_agent_group.command(name=managementagent_cli.update_data_source_update_prometheus_emitter_data_source_details.name, help=managementagent_cli.update_data_source_update_prometheus_emitter_data_source_details.help)
+@cli_util.option('--read-data-limit', help=u"""Number in kilobytes. The limit on the data being sent, not to exceed the agent's fixed limit of 400 (KB).""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metric-dimensions': {'module': 'management_agent', 'class': 'list[MetricDimension]'}})
+@cli_util.wrap_exceptions
+def update_data_source_update_prometheus_emitter_data_source_details_extended(ctx, **kwargs):
+
+    if 'read_data_limit' in kwargs:
+        kwargs['read_data_limit_in_kilobytes'] = kwargs['read_data_limit']
+        kwargs.pop('read_data_limit')
+
+    ctx.invoke(managementagent_cli.update_data_source_update_prometheus_emitter_data_source_details, **kwargs)
+
+
+# Remove create-data-source from oci management-agent agent
+managementagent_cli.management_agent_group.commands.pop(managementagent_cli.create_data_source.name)
+
+
+# Remove update-data-source from oci management-agent agent
+managementagent_cli.management_agent_group.commands.pop(managementagent_cli.update_data_source.name)

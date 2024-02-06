@@ -234,12 +234,13 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.option('--signing-algorithm', required=True, type=custom_types.CliCaseInsensitiveChoice(["SHA_224_RSA_PKCS_PSS", "SHA_256_RSA_PKCS_PSS", "SHA_384_RSA_PKCS_PSS", "SHA_512_RSA_PKCS_PSS", "SHA_224_RSA_PKCS1_V1_5", "SHA_256_RSA_PKCS1_V1_5", "SHA_384_RSA_PKCS1_V1_5", "SHA_512_RSA_PKCS1_V1_5", "ECDSA_SHA_256", "ECDSA_SHA_384", "ECDSA_SHA_512"]), help=u"""The algorithm to use to sign the message or message digest. For RSA keys, supported signature schemes include PKCS #1 and RSASSA-PSS, along with different hashing algorithms. For ECDSA keys, ECDSA is the supported signature scheme with different hashing algorithms. When you pass a message digest for signing, ensure that you specify the same hashing algorithm as used when creating the message digest.""")
 @cli_util.option('--key-version-id', help=u"""The OCID of the key version used to sign the message.""")
 @cli_util.option('--message-type', type=custom_types.CliCaseInsensitiveChoice(["RAW", "DIGEST"]), help=u"""Denotes whether the value of the message parameter is a raw message or a message digest. The default value, `RAW`, indicates a message. To indicate a message digest, use `DIGEST`.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--logging-context', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Information that can be used to provide context for audit logging. It is a map that contains any additional data that you provide to include with audit logs, if audit logging is enabled.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'logging-context': {'module': 'key_management', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'key_management', 'class': 'SignedData'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'logging-context': {'module': 'key_management', 'class': 'dict(str, string)'}}, output_type={'module': 'key_management', 'class': 'SignedData'})
 @cli_util.wrap_exceptions
-def sign(ctx, from_json, message, key_id, signing_algorithm, key_version_id, message_type):
+def sign(ctx, from_json, message, key_id, signing_algorithm, key_version_id, message_type, logging_context):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -254,6 +255,9 @@ def sign(ctx, from_json, message, key_id, signing_algorithm, key_version_id, mes
 
     if message_type is not None:
         _details['messageType'] = message_type
+
+    if logging_context is not None:
+        _details['loggingContext'] = cli_util.parse_json_parameter("logging_context", logging_context)
 
     client = cli_util.build_client('key_management', 'kms_crypto', ctx)
     result = client.sign(

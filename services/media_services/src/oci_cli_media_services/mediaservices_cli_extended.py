@@ -6,9 +6,6 @@ from oci_cli import json_skeleton_utils, cli_util
 
 from services.media_services.src.oci_cli_media_services.generated import mediaservices_cli
 
-# exclude media-workflow-job-fact command
-mediaservices_cli.media_services_service_cli.media_services_service_group.commands.pop(mediaservices_cli.media_workflow_job_fact_group.name)
-
 
 # Rename the version-parameterconflict to avoid conflict
 @cli_util.copy_params_from_generated_command(mediaservices_cli.delete_media_asset_distribution_channel_attachment,

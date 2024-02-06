@@ -6,6 +6,7 @@ from services.key_management.src.oci_cli_key_management.generated import kms_ser
 from services.key_management.src.oci_cli_kms_management.generated import kmsmanagement_cli
 from services.key_management.src.oci_cli_kms_crypto.generated import kmscrypto_cli
 from services.key_management.src.oci_cli_kms_vault.generated import kmsvault_cli
+from services.key_management.src.oci_cli_kms_hsm_cluster.generated import kmshsmcluster_cli
 from oci_cli import cli_util
 
 # move kms vault commands under kms management vault
@@ -39,6 +40,7 @@ cli_util.override_command_short_help_and_help(kmsvault_cli.vault_group, "A logic
 cli_util.override_command_short_help_and_help(kmsmanagement_cli.kms_management_root_group, "Operations for managing keys and vaults.")
 cli_util.override_command_short_help_and_help(kmscrypto_cli.kms_crypto_root_group, "Operations for performing data encryption, decryption and generation of data encryption keys.")
 cli_util.override_command_short_help_and_help(kms_service_cli.kms_service_group, "Key Management")
+cli_util.override_command_short_help_and_help(kmshsmcluster_cli.kms_hsm_cluster_root_group, "Operations for managing dedicated KMS HSM cluster")
 
 cli_util.rename_command(kmsmanagement_cli, kmsmanagement_cli.key_group, kmsmanagement_cli.schedule_key_deletion, "schedule-deletion")
 cli_util.rename_command(kmsmanagement_cli, kmsmanagement_cli.key_group, kmsmanagement_cli.cancel_key_deletion, "cancel-deletion")

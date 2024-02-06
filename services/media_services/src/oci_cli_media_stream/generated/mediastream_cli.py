@@ -34,7 +34,7 @@ media_services_service_cli.media_services_service_group.add_command(media_stream
 media_stream_root_group.add_command(stream_distribution_channel_group)
 
 
-@stream_distribution_channel_group.command(name=cli_util.override('media_stream.generate_playlist.command_name', 'generate-playlist'), help=u"""Gets the playlist content for the specified Packaging Configuration and Media Asset combination. \n[Command Reference](generatePlaylist)""")
+@stream_distribution_channel_group.command(name=cli_util.override('media_stream.generate_playlist.command_name', 'generate-playlist'), help=u"""Gets the playlist content for the specified Packaging Configuration and Media Asset combination. This API call is made using the MediaStreamsClient, which requires the endpoint to be set with the value of the distribution channel domain name (for example, https://example_channel.dc.mediaservices.example_region.oci.oraclecloud.com) to generate a session token or playlist for a media asset registered in this distribution channel. \n[Command Reference](generatePlaylist)""")
 @cli_util.option('--stream-packaging-config-id', required=True, help=u"""Unique Stream Packaging Configuration identifier.""")
 @cli_util.option('--media-asset-id', required=True, help=u"""Unique MediaAsset identifier.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
@@ -81,7 +81,7 @@ def generate_playlist(ctx, from_json, file, stream_packaging_config_id, media_as
         file.close()
 
 
-@stream_distribution_channel_group.command(name=cli_util.override('media_stream.generate_session_token.command_name', 'generate-session-token'), help=u"""Generate a new streaming session token. \n[Command Reference](generateSessionToken)""")
+@stream_distribution_channel_group.command(name=cli_util.override('media_stream.generate_session_token.command_name', 'generate-session-token'), help=u"""Generate a new streaming session token. This API call is made using the MediaStreamsClient, which requires the endpoint to be set with the value of the distribution channel domain name (for example, https://example_channel.dc.mediaservices.example_region.oci.oraclecloud.com) to generate a session token or playlist for a media asset registered in this distribution channel. \n[Command Reference](generateSessionToken)""")
 @cli_util.option('--scopes', required=True, type=custom_types.CliCaseInsensitiveChoice(["PLAYLIST", "EDGE"]), help=u"""Array of scopes the token can act upon.""")
 @cli_util.option('--packaging-config-id', required=True, help=u"""The packaging config resource identifier used to limit the scope of the token.""")
 @cli_util.option('--time-expires', type=custom_types.CLI_DATETIME, help=u"""Token expiry time. An RFC3339 formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
