@@ -128,15 +128,15 @@ def create_user_session(env_port,region='', tenancy_name=None,):
     try:
         env_port1 = os.getenv('BOOTSTRAP_PORT')
         port_number=env_port1 or env_port
+
         if not port_number.isdigit():
             click.echo("Invalid port number")
             raise ValueError("Invalid port number")
         
-        
         if env_port is None:
             boot_strap_service_port = is_port_available(BOOTSTRAP_SERVICE_PORT)
-            click.echo("Default port {} is available, establishing connection...".format(BOOTSTRAP_SERVICE_PORT))
             if boot_strap_service_port:
+                click.echo("Default port {} is available, establishing connection...".format(BOOTSTRAP_SERVICE_PORT))
                 server_address = ('', int(BOOTSTRAP_SERVICE_PORT))
                 httpd = StoppableHttpServer(server_address, StoppableHttpRequestHandler)
                 click.echo("Connected to default port {}.".format(BOOTSTRAP_SERVICE_PORT))
@@ -145,7 +145,7 @@ def create_user_session(env_port,region='', tenancy_name=None,):
                     BOOTSTRAP_SERVICE_PORT))
         elif env_port1:
             if is_port_available(int(env_port1)):
-                click.echo("Environment port {} is available, establishing connection...".format(env_port1))
+                click.echo("Port {} passed as env. variable is available, establishing connection...".format(env_port1))
                 server_address = ('', int(env_port1))
                 httpd = StoppableHttpServer(server_address, StoppableHttpRequestHandler)
                 click.echo("Connected to port {}".format(env_port1))
@@ -154,7 +154,7 @@ def create_user_session(env_port,region='', tenancy_name=None,):
 
         elif env_port:
             if is_port_available(int(env_port)):
-                click.echo("Environment port {} is available, establishing connection...".format(env_port))
+                click.echo("Port {} passed as env. variable is available, establishing connection...".format(env_port))
                 server_address = ('', int(env_port))
                 httpd = StoppableHttpServer(server_address, StoppableHttpRequestHandler)
                 click.echo("Connected to port {}".format(env_port))
