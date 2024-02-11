@@ -135,11 +135,11 @@ def create_user_session(env_port,region='', tenancy_name=None,):
         
         if env_port is None:
             boot_strap_service_port = is_port_available(BOOTSTRAP_SERVICE_PORT)
-            click.echo("Port {} is available, establishing connection...".format(BOOTSTRAP_SERVICE_PORT))
+            click.echo("Default port {} is available, establishing connection...".format(BOOTSTRAP_SERVICE_PORT))
             if boot_strap_service_port:
                 server_address = ('', int(BOOTSTRAP_SERVICE_PORT))
                 httpd = StoppableHttpServer(server_address, StoppableHttpRequestHandler)
-                click.echo("Connected to port {}.".format(BOOTSTRAP_SERVICE_PORT))
+                click.echo("Connected to default port {}.".format(BOOTSTRAP_SERVICE_PORT))
             else:
                 click.echo("Could not complete bootstrap process because default port {} is already in use.".format(
                     BOOTSTRAP_SERVICE_PORT))
