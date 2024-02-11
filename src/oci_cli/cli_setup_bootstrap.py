@@ -43,22 +43,12 @@ Note that port {port} must be available in order for this command to complete pr
 def is_port_available(port):
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.bind('',port)
+            s.bind(('',port))
         return True
     except OSError as e:
-        return False
-    
-
-def find_port(start_port,max_attempts=100):
-    """Find an available port starting from start_port"""
-    if is_port_available(start_port):
-        return start_port
-    for port in range(start_port+1,start_port+max_attempts+1):
-        if is_port_available(port):
-            return port
-    raise OSError(f"Could not find an available port in the range {start_port + 1} to {start_port + max_attempts}.")
-   
-     
+        return False    
+        
+                
 def bootstrap_oci_cli(ctx, profile_name, config_location):
     region_param = ctx.obj['region'] if ctx.obj['region'] else ''
     user_session = create_user_session(region=region_param)
@@ -129,28 +119,50 @@ def bootstrap_oci_cli(ctx, profile_name, config_location):
     oci iam region list --config-file {config_file} --profile {profile}
 """.format(config_file=config_location, profile=profile_name))
 
-
-def create_user_session(region='', tenancy_name=None):
+@click.command()
+@click.option('-e', '--env-port', default=None, envvar='BOOTSTRAP_PORT', help='Specify the port to use (can be set via BOOTSTRAP_PORT environment variable)')
+def create_user_session(env_port,region='', tenancy_name=None,):
     if region == '':
         region = cli_setup.prompt_for_region()
-
-    
-
-    # try to set up http server so we can fail early if the required port is in use
+        
     try:
-        # Firstly, we will check if PORT is available or not
-        BOOTSTRAP_SERVICE_PORT=is_port_available(BOOTSTRAP_SERVICE_PORT)
-        server_address = ('', BOOTSTRAP_SERVICE_PORT)
-        httpd = StoppableHttpServer(server_address, StoppableHttpRequestHandler)
+        env_port1 = os.getenv('BOOTSTRAP_PORT')
+        if env_port is None:
+            boot_strap_service_port = is_port_available(BOOTSTRAP_SERVICE_PORT)
+            click.echo("Port {} is available, establishing connection...".format(BOOTSTRAP_SERVICE_PORT))
+            if boot_strap_service_port:
+                server_address = ('', int(BOOTSTRAP_SERVICE_PORT))
+                httpd = StoppableHttpServer(server_address, StoppableHttpRequestHandler)
+                click.echo("Connected to port {}.".format(BOOTSTRAP_SERVICE_PORT))
+            else:
+                click.echo("Could not complete bootstrap process because default port {} is already in use.".format(
+                    BOOTSTRAP_SERVICE_PORT))
+        elif env_port1:
+            if (is_port_available(int(env_port1)) and env_port1.isdigit()):
+                click.echo("Environment port {} is available, establishing connection...".format(env_port1))
+                server_address = ('', int(env_port1))
+                httpd = StoppableHttpServer(server_address, StoppableHttpRequestHandler)
+                click.echo("Connected to port {}".format(env_port1))
+            else:
+                click.echo("Could not complete bootstrap process because port {} is already in use.".format(env_port))
+
+        elif env_port:
+            if is_port_available(int(env_port)) and env_port.isdigit():
+                click.echo("Environment port {} is available, establishing connection...".format(env_port))
+                server_address = ('', int(env_port))
+                httpd = StoppableHttpServer(server_address, StoppableHttpRequestHandler)
+                click.echo("Connected to port {}".format(env_port))
+
+            else:
+                click.echo("Could not complete bootstrap process because port {} is already in use.".format(env_port))
+
+        else:
+            click.echo("No input of port received. Exiting...")
+            sys.exit(0)
     except OSError as e:
         if e.errno == errno.EADDRINUSE:
-            click.echo("Could not complete bootstrap process because port {port} is already in use.".format(
-                port=BOOTSTRAP_SERVICE_PORT)
-            )
-
-            sys.exit(1)
-
-        raise e
+            click.echo("Could not complete bootstrap process. Failed to find an empty port")
+            sys.exit(0)
 
     # create new key pair
     # this key pair is used to get the initial token and also uploaded as a new API key for the user
