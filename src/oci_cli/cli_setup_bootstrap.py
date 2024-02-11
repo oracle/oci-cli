@@ -127,6 +127,12 @@ def create_user_session(env_port,region='', tenancy_name=None,):
         
     try:
         env_port1 = os.getenv('BOOTSTRAP_PORT')
+        port_number=env_port1 or env_port
+        if not port_number.isdigit():
+            click.echo("Invalid port number")
+            raise ValueError("Invalid port number")
+        
+        
         if env_port is None:
             boot_strap_service_port = is_port_available(BOOTSTRAP_SERVICE_PORT)
             click.echo("Port {} is available, establishing connection...".format(BOOTSTRAP_SERVICE_PORT))
@@ -138,7 +144,7 @@ def create_user_session(env_port,region='', tenancy_name=None,):
                 click.echo("Could not complete bootstrap process because default port {} is already in use.".format(
                     BOOTSTRAP_SERVICE_PORT))
         elif env_port1:
-            if (is_port_available(int(env_port1)) and env_port1.isdigit()):
+            if is_port_available(int(env_port1)):
                 click.echo("Environment port {} is available, establishing connection...".format(env_port1))
                 server_address = ('', int(env_port1))
                 httpd = StoppableHttpServer(server_address, StoppableHttpRequestHandler)
@@ -147,7 +153,7 @@ def create_user_session(env_port,region='', tenancy_name=None,):
                 click.echo("Could not complete bootstrap process because port {} is already in use.".format(env_port))
 
         elif env_port:
-            if is_port_available(int(env_port)) and env_port.isdigit():
+            if is_port_available(int(env_port)):
                 click.echo("Environment port {} is available, establishing connection...".format(env_port))
                 server_address = ('', int(env_port))
                 httpd = StoppableHttpServer(server_address, StoppableHttpRequestHandler)
