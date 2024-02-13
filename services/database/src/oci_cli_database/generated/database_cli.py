@@ -1637,6 +1637,7 @@ def change_db_system_compartment(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.option('--disaster-recovery-type', type=custom_types.CliCaseInsensitiveChoice(["ADG", "BACKUP_BASED"]), help=u"""Indicates the disaster recovery (DR) type of the Autonomous Database Serverless instance. Autonomous Data Guard (ADG) DR type provides business critical DR with a faster recovery time objective (RTO) during failover or switchover. Backup-based DR type provides lower cost DR with a slower RTO during failover or switchover.""")
 @cli_util.option('--time-snapshot-standby-enabled-till', type=custom_types.CLI_DATETIME, help=u"""Time and date stored as an RFC 3339 formatted timestamp string. For example, 2022-01-01T12:00:00.000Z would set a limit for the snapshot standby to be converted back to a cross-region standby database.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--is-snapshot-standby', type=click.BOOL, help=u"""Indicates if user wants to convert to a snapshot standby. For example, true would set a standby database to snapshot standby database. False would set a snapshot standby database back to regular standby database.""")
+@cli_util.option('--is-replicate-automatic-backups', type=click.BOOL, help=u"""If true, 7 days worth of backups are replicated across regions for Cross-Region ADB or Backup-Based DR between Primary and Standby. If false, the backups taken on the Primary are not replicated to the Standby database.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING", "MAINTENANCE_IN_PROGRESS", "RESTARTING", "RECREATING", "ROLE_CHANGE_IN_PROGRESS", "UPGRADING", "INACCESSIBLE", "STANDBY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1646,7 +1647,7 @@ def change_db_system_compartment(ctx, from_json, wait_for_state, max_wait_second
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def change_disaster_recovery_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, disaster_recovery_type, time_snapshot_standby_enabled_till, is_snapshot_standby, if_match):
+def change_disaster_recovery_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, disaster_recovery_type, time_snapshot_standby_enabled_till, is_snapshot_standby, is_replicate_automatic_backups, if_match):
 
     if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
@@ -1666,6 +1667,9 @@ def change_disaster_recovery_configuration(ctx, from_json, wait_for_state, max_w
 
     if is_snapshot_standby is not None:
         _details['isSnapshotStandby'] = is_snapshot_standby
+
+    if is_replicate_automatic_backups is not None:
+        _details['isReplicateAutomaticBackups'] = is_replicate_automatic_backups
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.change_disaster_recovery_configuration(
@@ -4389,6 +4393,7 @@ This option is a JSON list with items of type DatabaseTool.  For documentation o
 
 This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
+@cli_util.option('--is-replicate-automatic-backups', type=click.BOOL, help=u"""If true, 7 days worth of backups are replicated across regions for Cross-Region ADB or Backup-Based DR between Primary and Standby. If false, the backups taken on the Primary are not replicated to the Standby database.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING", "MAINTENANCE_IN_PROGRESS", "RESTARTING", "RECREATING", "ROLE_CHANGE_IN_PROGRESS", "UPGRADING", "INACCESSIBLE", "STANDBY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -4397,7 +4402,7 @@ This cannot be used in conjunction with adminPassword.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'resource-pool-summary': {'module': 'database', 'class': 'ResourcePoolSummary'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}, 'db-tools-details': {'module': 'database', 'class': 'list[DatabaseTool]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_database_create_cross_region_disaster_recovery_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_id, remote_disaster_recovery_type, character_set, ncharacter_set, db_name, cpu_core_count, backup_retention_period_in_days, compute_model, compute_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, in_memory_percentage, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, is_local_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, private_endpoint_ip, db_version, customer_contacts, is_mtls_connection_required, resource_pool_leader_id, resource_pool_summary, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled, max_cpu_core_count, database_edition, db_tools_details, secret_id, secret_version_number):
+def create_autonomous_database_create_cross_region_disaster_recovery_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_id, remote_disaster_recovery_type, character_set, ncharacter_set, db_name, cpu_core_count, backup_retention_period_in_days, compute_model, compute_count, ocpu_count, db_workload, data_storage_size_in_tbs, data_storage_size_in_gbs, is_free_tier, kms_key_id, vault_id, admin_password, display_name, license_model, is_preview_version_with_service_terms_accepted, is_auto_scaling_enabled, is_dedicated, autonomous_container_database_id, in_memory_percentage, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_data_guard_enabled, is_local_data_guard_enabled, subnet_id, nsg_ids, private_endpoint_label, freeform_tags, defined_tags, private_endpoint_ip, db_version, customer_contacts, is_mtls_connection_required, resource_pool_leader_id, resource_pool_summary, autonomous_maintenance_schedule_type, scheduled_operations, is_auto_scaling_for_storage_enabled, max_cpu_core_count, database_edition, db_tools_details, secret_id, secret_version_number, is_replicate_automatic_backups):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -4547,6 +4552,9 @@ def create_autonomous_database_create_cross_region_disaster_recovery_details(ctx
 
     if secret_version_number is not None:
         _details['secretVersionNumber'] = secret_version_number
+
+    if is_replicate_automatic_backups is not None:
+        _details['isReplicateAutomaticBackups'] = is_replicate_automatic_backups
 
     _details['source'] = 'CROSS_REGION_DISASTER_RECOVERY'
 

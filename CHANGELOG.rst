@@ -6,6 +6,60 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.37.9 - 2024-02-13
+-------------------
+Added
+~~~~~
+
+* Support for new optional parameter isReplicateAutomaticBackups in the Database Service
+
+  * ``oci db autonomous-database change-disaster-recovery-configuration --is-replicate-automatic-backups``
+  * ``oci db autonomous-database create-autonomous-database-create-cross-region-disaster-recovery-details --is-replicate-automatic-backups``
+ 
+Changed
+~~~~~~~
+* Loganalytics service
+
+  * Support for additional attributes in entity and topology
+
+    * ``oci log-analytics entity create --metadata, --time-last-discovered``
+    * ``oci log-analytics entity list --metadata-equals``
+    * ``oci log-analytics entity update --metadata, --time-last-discovered``
+    * ``oci log-analytics entity upload-discovery-data --log-group-id``
+    * ``oci log-analytics entity-topology list --metadata-equals``
+
+  * Support for historic collection and log type while creating object collection rule
+
+    * ``oci log-analytics object-collection-rule create --is-force-historic-collection, --log-type``
+
+  * Support for position aware parsers
+
+    * ``oci log-analytics parser extract-structured-log-field-paths --is-position-aware``
+    * ``oci log-analytics parser extract-structured-log-header-paths --is-position-aware``
+    * ``oci log-analytics parser test-parser --is-position-aware``
+    * ``oci log-analytics parser upsert-parser --is-position-aware``
+
+  * Support for filtering detection rules based on target service
+
+    * ``oci log-analytics rule list --target-service``
+
+  * Support for filtering scheduled tasks based on target service
+
+    * ``oci log-analytics scheduled-task list --target-service``
+
+  * Support for filtering log sources based on their type
+
+    * ``oci log-analytics source list-sources --source-type``
+
+  * Support for additional recall and release attributes
+
+    * ``oci log-analytics storage recall-archived-data --is-use-recommended-data-set``
+    * ``oci log-analytics storage release-recalled-data --collection-id``
+
+  * Support for opc-meta-properties header while uploading log events
+
+    * ``oci log-analytics upload upload-log-events-file --opc-meta-properties``
+
 3.37.8 - 2024-02-06
 --------------------
 Added

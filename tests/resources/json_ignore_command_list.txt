@@ -284,3 +284,11 @@ apm-synthetics, monitor, update-dns-trace-monitor
 apm-synthetics, monitor, update-dns-server-monitor
 adm, remediation-run, list-application-dependency-recommendations
 management-agent, work-request, list
+log-analytics, entity, create
+log-analytics, entity, update
+log-analytics, parser, extract-structured-log-field-paths
+log-analytics, parser, extract-structured-log-header-paths
+log-analytics, entity, list
+log-analytics, entity-topology, list
+log-analytics, rule, list
+log-analytics, source, list-sources
