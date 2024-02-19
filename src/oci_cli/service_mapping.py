@@ -233,6 +233,11 @@ service_mapping = {
         "Database Tools",
         "Developer Services"
     ],
+    "desktops": [
+        "desktops",
+        "Secure Desktops",
+        "Others"
+    ],
     "devops": [
         "devops",
         "DevOps",

@@ -292,3 +292,4 @@ log-analytics, entity, list
 log-analytics, entity-topology, list
 log-analytics, rule, list
 log-analytics, source, list-sources
+data-science, job-run, create

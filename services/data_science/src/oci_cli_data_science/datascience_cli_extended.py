@@ -457,6 +457,14 @@ datascience_cli.job_group.commands.pop(datascience_cli.create_job_default_job_co
 datascience_cli.job_run_group.commands.pop(datascience_cli.create_job_run_default_job_configuration_details.name)
 
 
+# Remove create-job-ocir-container-job-environment-configuration-details from oci data-science job
+datascience_cli.job_group.commands.pop(datascience_cli.create_job_ocir_container_job_environment_configuration_details.name)
+
+
+# Remove create-job-run-ocir-container-job-environment-configuration-details from oci data-science job-run
+datascience_cli.job_run_group.commands.pop(datascience_cli.create_job_run_ocir_container_job_environment_configuration_details.name)
+
+
 # oci data-science job get-job-artifact-content -> oci data-science job get-artifact-content
 cli_util.rename_command(datascience_cli, datascience_cli.job_group, datascience_cli.get_job_artifact_content, "get-artifact-content")
 
