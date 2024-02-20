@@ -6,6 +6,37 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.37.10 - 2024-02-20
+--------------------
+Added
+~~~~~
+* Support for Bring Your Own Container Jobs (v2) in the Data Science service
+
+  * ``oci data-science job create --job-environment-configuration-details``
+  * ``oci data-science job-run create --job-environment-configuration-override-details``
+
+* Support for Secure Desktops Service
+
+  * ``oci desktops``
+
+* Support for new optional parameter in Language Service
+
+  * ``oci ai language batch-detect-language --should-ignore-transliteration --chars-to-consider --endpoint-id``
+  * ``oci ai language batch-detect-pii-entities --endpoint-id``
+  * ``oci ai language batch-detect-key-phrases --endpoint-id``
+  * ``oci ai language batch-detect-sentiments --endpoint-id``
+
+* Core Service
+
+  * Support for new optional parameter
+
+    * ``oci compute instance update --platform-config``
+
+  * Support for new commands
+
+    * ``oci compute instance update-instance-amd-vm-update-instance-platform-config``
+    * ``oci compute instance update-instance-intel-vm-update-instance-platform-config``
+
 3.37.9 - 2024-02-13
 -------------------
 Added
