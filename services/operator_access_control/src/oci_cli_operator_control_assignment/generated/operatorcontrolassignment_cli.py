@@ -83,6 +83,7 @@ def change_operator_control_assignment_compartment(ctx, from_json, operator_cont
 @cli_util.option('--remote-syslog-server-address', help=u"""The address of the remote syslog server where the audit logs will be forwarded to. Address in host or IP format.""")
 @cli_util.option('--remote-syslog-server-port', type=click.INT, help=u"""The listening port of the remote syslog server. The port range is 0 - 65535. Only TCP supported.""")
 @cli_util.option('--remote-syslog-server-ca-cert', help=u"""The CA certificate of the remote syslog server. Identity of the remote syslog server will be asserted based on this certificate.""")
+@cli_util.option('--is-hypervisor-log-forwarded', type=click.BOOL, help=u"""If set, then the hypervisor audit logs will be forwarded to the relevant remote syslog server""")
 @cli_util.option('--is-auto-approve-during-maintenance', type=click.BOOL, help=u"""The boolean if true would autoApprove during maintenance.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -94,7 +95,7 @@ def change_operator_control_assignment_compartment(ctx, from_json, operator_cont
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'operator_access_control', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'operator_access_control', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'operator_access_control', 'class': 'OperatorControlAssignment'})
 @cli_util.wrap_exceptions
-def create_operator_control_assignment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, operator_control_id, resource_id, resource_name, resource_type, resource_compartment_id, compartment_id, is_enforced_always, time_assignment_from, time_assignment_to, comment, is_log_forwarded, remote_syslog_server_address, remote_syslog_server_port, remote_syslog_server_ca_cert, is_auto_approve_during_maintenance, freeform_tags, defined_tags):
+def create_operator_control_assignment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, operator_control_id, resource_id, resource_name, resource_type, resource_compartment_id, compartment_id, is_enforced_always, time_assignment_from, time_assignment_to, comment, is_log_forwarded, remote_syslog_server_address, remote_syslog_server_port, remote_syslog_server_ca_cert, is_hypervisor_log_forwarded, is_auto_approve_during_maintenance, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -128,6 +129,9 @@ def create_operator_control_assignment(ctx, from_json, wait_for_state, max_wait_
 
     if remote_syslog_server_ca_cert is not None:
         _details['remoteSyslogServerCACert'] = remote_syslog_server_ca_cert
+
+    if is_hypervisor_log_forwarded is not None:
+        _details['isHypervisorLogForwarded'] = is_hypervisor_log_forwarded
 
     if is_auto_approve_during_maintenance is not None:
         _details['isAutoApproveDuringMaintenance'] = is_auto_approve_during_maintenance
@@ -236,6 +240,28 @@ def delete_operator_control_assignment(ctx, from_json, wait_for_state, max_wait_
     cli_util.render_response(result, ctx)
 
 
+@operator_control_assignment_group.command(name=cli_util.override('operator_control_assignment.get_assignment_validation_status.command_name', 'get-assignment-validation-status'), help=u"""Returns the status of assignment validation associated with the assignmentId and the executionId. \n[Command Reference](getAssignmentValidationStatus)""")
+@cli_util.option('--operator-control-assignment-id', required=True, help=u"""unique OperatorControl identifier""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'operator_access_control', 'class': 'AssignmentValidationStatus'})
+@cli_util.wrap_exceptions
+def get_assignment_validation_status(ctx, from_json, operator_control_assignment_id):
+
+    if isinstance(operator_control_assignment_id, six.string_types) and len(operator_control_assignment_id.strip()) == 0:
+        raise click.UsageError('Parameter --operator-control-assignment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('operator_access_control', 'operator_control_assignment', ctx)
+    result = client.get_assignment_validation_status(
+        operator_control_assignment_id=operator_control_assignment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @operator_control_assignment_group.command(name=cli_util.override('operator_control_assignment.get_operator_control_assignment.command_name', 'get'), help=u"""Gets the details of an Operator Control Assignment of the specified ID. \n[Command Reference](getOperatorControlAssignment)""")
 @cli_util.option('--operator-control-assignment-id', required=True, help=u"""unique OperatorControl identifier""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -334,6 +360,7 @@ def list_operator_control_assignments(ctx, from_json, all_pages, page_size, comp
 @cli_util.option('--remote-syslog-server-address', help=u"""The address of the remote syslog server where the audit logs will be forwarded to. Address in host or IP format.""")
 @cli_util.option('--remote-syslog-server-port', type=click.INT, help=u"""The listening port of the remote syslog server. The port range is 0 - 65535. Only TCP supported.""")
 @cli_util.option('--remote-syslog-server-ca-cert', help=u"""The CA certificate of the remote syslog server. Identity of the remote syslog server will be asserted based on this certificate.""")
+@cli_util.option('--is-hypervisor-log-forwarded', type=click.BOOL, help=u"""If set, then the hypervisor audit logs will be forwarded to the relevant remote syslog server""")
 @cli_util.option('--is-auto-approve-during-maintenance', type=click.BOOL, help=u"""The boolean if true would autoApprove during maintenance.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -347,7 +374,7 @@ def list_operator_control_assignments(ctx, from_json, all_pages, page_size, comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'operator_access_control', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'operator_access_control', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'operator_access_control', 'class': 'OperatorControlAssignment'})
 @cli_util.wrap_exceptions
-def update_operator_control_assignment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, operator_control_assignment_id, is_enforced_always, time_assignment_from, time_assignment_to, comment, is_log_forwarded, remote_syslog_server_address, remote_syslog_server_port, remote_syslog_server_ca_cert, is_auto_approve_during_maintenance, freeform_tags, defined_tags, if_match):
+def update_operator_control_assignment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, operator_control_assignment_id, is_enforced_always, time_assignment_from, time_assignment_to, comment, is_log_forwarded, remote_syslog_server_address, remote_syslog_server_port, remote_syslog_server_ca_cert, is_hypervisor_log_forwarded, is_auto_approve_during_maintenance, freeform_tags, defined_tags, if_match):
 
     if isinstance(operator_control_assignment_id, six.string_types) and len(operator_control_assignment_id.strip()) == 0:
         raise click.UsageError('Parameter --operator-control-assignment-id cannot be whitespace or empty string')
@@ -384,6 +411,9 @@ def update_operator_control_assignment(ctx, from_json, force, wait_for_state, ma
 
     if remote_syslog_server_ca_cert is not None:
         _details['remoteSyslogServerCACert'] = remote_syslog_server_ca_cert
+
+    if is_hypervisor_log_forwarded is not None:
+        _details['isHypervisorLogForwarded'] = is_hypervisor_log_forwarded
 
     if is_auto_approve_during_maintenance is not None:
         _details['isAutoApproveDuringMaintenance'] = is_auto_approve_during_maintenance
@@ -423,4 +453,37 @@ def update_operator_control_assignment(ctx, from_json, force, wait_for_state, ma
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@operator_control_assignment_group.command(name=cli_util.override('operator_control_assignment.validate_operator_assignment.command_name', 'validate-operator-assignment'), help=u"""Validates the assignment for the specified Operator Control Assignment ID. \n[Command Reference](validateOperatorAssignment)""")
+@cli_util.option('--operator-control-assignment-id', required=True, help=u"""unique OperatorControl identifier""")
+@cli_util.option('--action-name', help=u"""Specifies the name of the operator action name for creating accessRequest.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def validate_operator_assignment(ctx, from_json, operator_control_assignment_id, action_name, if_match):
+
+    if isinstance(operator_control_assignment_id, six.string_types) and len(operator_control_assignment_id.strip()) == 0:
+        raise click.UsageError('Parameter --operator-control-assignment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if action_name is not None:
+        _details['actionName'] = action_name
+
+    client = cli_util.build_client('operator_access_control', 'operator_control_assignment', ctx)
+    result = client.validate_operator_assignment(
+        operator_control_assignment_id=operator_control_assignment_id,
+        validate_operator_assignment_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)

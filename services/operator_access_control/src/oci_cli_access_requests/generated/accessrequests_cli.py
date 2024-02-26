@@ -25,6 +25,12 @@ def access_requests_root_group():
     pass
 
 
+@click.command(cli_util.override('access_requests.audit_log_report_group.command_name', 'audit-log-report'), cls=CommandGroupWithAlias, help="""The auditLog report details.""")
+@cli_util.help_option_group
+def audit_log_report_group():
+    pass
+
+
 @click.command(cli_util.override('access_requests.access_request_group.command_name', 'access-request'), cls=CommandGroupWithAlias, help="""An Oracle operator raises access request when they need access to any infrastructure resource governed by Operator Access Control. The access request identifies the target resource and the set of operator actions. Access request handling depends upon the Operator Control that governs the target resource, and the set of operator actions listed for approval in the access request. If all of the operator actions listed in the access request are in the pre-approved list in the Operator Control that governs the target resource, then the access request is automatically approved. If not, then the access request requires explicit approval from the approver group specified by the Operator Control governing the target resource.
 
 You can approve or reject an access request. You can also revoke the approval of an already approved access request. While creating an access request, the operator specifies the duration of access. You have the option to approve the entire duration or reduce or even increase the time duration. An operator can also request for an extension. The approval for such an extension is processed the same way the original access request was processed.""")
@@ -34,6 +40,7 @@ def access_request_group():
 
 
 opctl_service_cli.opctl_service_group.add_command(access_requests_root_group)
+access_requests_root_group.add_command(audit_log_report_group)
 access_requests_root_group.add_command(access_request_group)
 
 
@@ -98,6 +105,31 @@ def get_access_request(ctx, from_json, access_request_id):
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('operator_access_control', 'access_requests', ctx)
     result = client.get_access_request(
+        access_request_id=access_request_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@audit_log_report_group.command(name=cli_util.override('access_requests.get_audit_log_report.command_name', 'get'), help=u"""Gets the Audit Log Report for the given access requestId. \n[Command Reference](getAuditLogReport)""")
+@cli_util.option('--access-request-id', required=True, help=u"""unique AccessRequest identifier""")
+@cli_util.option('--enable-process-tree', type=click.INT, help=u"""To enable process tree computation in audit report""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'operator_access_control', 'class': 'AuditLogReport'})
+@cli_util.wrap_exceptions
+def get_audit_log_report(ctx, from_json, access_request_id, enable_process_tree):
+
+    if isinstance(access_request_id, six.string_types) and len(access_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --access-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if enable_process_tree is not None:
+        kwargs['enable_process_tree'] = enable_process_tree
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('operator_access_control', 'access_requests', ctx)
+    result = client.get_audit_log_report(
         access_request_id=access_request_id,
         **kwargs
     )

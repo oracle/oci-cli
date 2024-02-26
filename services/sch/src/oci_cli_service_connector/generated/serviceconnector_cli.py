@@ -8,58 +8,60 @@ import click
 import oci  # noqa: F401
 import six  # noqa: F401
 import sys  # noqa: F401
-from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
+from services.sch.src.oci_cli_sch.generated import sch_service_cli
 
 
-@cli.command(cli_util.override('sch.sch_root_group.command_name', 'sch'), cls=CommandGroupWithAlias, help=cli_util.override('sch.sch_root_group.help', """Use the Service Connector Hub API to transfer data between services in Oracle Cloud Infrastructure.
-For more information about Service Connector Hub, see
-[Service Connector Hub Overview]."""), short_help=cli_util.override('sch.sch_root_group.short_help', """Service Connector Hub API"""))
+@click.command(cli_util.override('service_connector.service_connector_root_group.command_name', 'service-connector'), cls=CommandGroupWithAlias, help=cli_util.override('service_connector.service_connector_root_group.help', """Use the Connector Hub API to transfer data between services in Oracle Cloud Infrastructure.
+For more information about Connector Hub, see
+[the Connector Hub documentation].
+Connector Hub is formerly known as Service Connector Hub."""), short_help=cli_util.override('service_connector.service_connector_root_group.short_help', """Connector Hub API"""))
 @cli_util.help_option_group
-def sch_root_group():
+def service_connector_root_group():
     pass
 
 
-@click.command(cli_util.override('sch.service_connector_group.command_name', 'service-connector'), cls=CommandGroupWithAlias, help="""The configuration details of the flow defined by the service connector. For more information about flows defined by service connectors, see [Service Connector Hub Overview].""")
+@click.command(cli_util.override('service_connector.service_connector_group.command_name', 'service-connector'), cls=CommandGroupWithAlias, help="""The configuration details of the flow defined by the connector. For more information about flows defined by connectors, see [Overview of Connector Hub].""")
 @cli_util.help_option_group
 def service_connector_group():
     pass
 
 
-@click.command(cli_util.override('sch.work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""An error encountered while executing a work request.""")
+@click.command(cli_util.override('service_connector.work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""An error encountered while executing a work request.""")
 @cli_util.help_option_group
 def work_request_error_group():
     pass
 
 
-@click.command(cli_util.override('sch.work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""A log message from the execution of a work request.""")
+@click.command(cli_util.override('service_connector.work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""A log message from the execution of a work request.""")
 @cli_util.help_option_group
 def work_request_log_entry_group():
     pass
 
 
-@click.command(cli_util.override('sch.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""An object representing an asynchronous work flow.
+@click.command(cli_util.override('service_connector.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""An object representing an asynchronous work flow.
 
-Many of the API requests you use to create and configure service connectors do not take effect immediately. In these cases, the request spawns an asynchronous work flow to fulfill the request. WorkRequest objects provide visibility for in-progress work flows. For more information about work requests, see [Viewing the State of a Work Request].""")
+Many of the API requests you use to create and configure connectors do not take effect immediately. In these cases, the request spawns an asynchronous work flow to fulfill the request. WorkRequest objects provide visibility for in-progress work flows. For more information about work requests, see [Viewing the State of a Work Request].""")
 @cli_util.help_option_group
 def work_request_group():
     pass
 
 
-sch_root_group.add_command(service_connector_group)
-sch_root_group.add_command(work_request_error_group)
-sch_root_group.add_command(work_request_log_entry_group)
-sch_root_group.add_command(work_request_group)
+sch_service_cli.sch_service_group.add_command(service_connector_root_group)
+service_connector_root_group.add_command(service_connector_group)
+service_connector_root_group.add_command(work_request_error_group)
+service_connector_root_group.add_command(work_request_log_entry_group)
+service_connector_root_group.add_command(work_request_group)
 
 
-@service_connector_group.command(name=cli_util.override('sch.activate_service_connector.command_name', 'activate'), help=u"""Activates the specified service connector.
+@service_connector_group.command(name=cli_util.override('service_connector.activate_service_connector.command_name', 'activate'), help=u"""Activates the specified connector.
 
-After you send your request, the service connector's state is temporarily UPDATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on activating service connectors, see [To activate a service connector]. \n[Command Reference](activateServiceConnector)""")
-@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
+After you send your request, the connector's state is temporarily UPDATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For more information, see [Activating a Connector]. \n[Command Reference](activateServiceConnector)""")
+@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the connector.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -92,10 +94,6 @@ def activate_service_connector(ctx, from_json, wait_for_state, max_wait_seconds,
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
@@ -113,11 +111,11 @@ def activate_service_connector(ctx, from_json, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.change_service_connector_compartment.command_name', 'change-compartment'), help=u"""Moves a service connector into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].
+@service_connector_group.command(name=cli_util.override('service_connector.change_service_connector_compartment.command_name', 'change-compartment'), help=u"""Moves a connector into a different compartment within the same tenancy. For more information, see [Moving a Connector].
 
 When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeServiceConnectorCompartment)""")
-@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the service connector to.""")
+@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the connector.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the connector to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -155,10 +153,6 @@ def change_service_connector_compartment(ctx, from_json, wait_for_state, max_wai
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
@@ -176,13 +170,13 @@ def change_service_connector_compartment(ctx, from_json, wait_for_state, max_wai
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.create_service_connector.command_name', 'create'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For instructions, see [To create a service connector]. For general information about service connectors, see [Service Connector Hub Overview].
+@service_connector_group.command(name=cli_util.override('service_connector.create_service_connector.command_name', 'create'), help=u"""Creates a new connector in the specified compartment. A connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For more information, see [Creating a Connector]. For general information about connectors, see [Overview of Connector Hub].
 
-For purposes of access control, you must provide the [OCID] of the compartment where you want the service connector to reside. Notice that the service connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
+For purposes of access control, you must provide the [OCID] of the compartment where you want the connector to reside. Notice that the connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
 
-After you send your request, the new service connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector]. \n[Command Reference](createServiceConnector)""")
+After you send your request, the new connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating connectors, see [Activating a Connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the service connector in.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the connector in.""")
 @cli_util.option('--source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
@@ -236,10 +230,6 @@ def create_service_connector(ctx, from_json, wait_for_state, max_wait_seconds, w
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
@@ -257,13 +247,13 @@ def create_service_connector(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.create_service_connector_logging_source_details.command_name', 'create-service-connector-logging-source-details'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For instructions, see [To create a service connector]. For general information about service connectors, see [Service Connector Hub Overview].
+@service_connector_group.command(name=cli_util.override('service_connector.create_service_connector_logging_source_details.command_name', 'create-service-connector-logging-source-details'), help=u"""Creates a new connector in the specified compartment. A connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For more information, see [Creating a Connector]. For general information about connectors, see [Overview of Connector Hub].
 
-For purposes of access control, you must provide the [OCID] of the compartment where you want the service connector to reside. Notice that the service connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
+For purposes of access control, you must provide the [OCID] of the compartment where you want the connector to reside. Notice that the connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
 
-After you send your request, the new service connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector]. \n[Command Reference](createServiceConnector)""")
+After you send your request, the new connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating connectors, see [Activating a Connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the service connector in.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the connector in.""")
 @cli_util.option('--target', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-log-sources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The logs for this Logging source.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
@@ -320,10 +310,6 @@ def create_service_connector_logging_source_details(ctx, from_json, wait_for_sta
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
@@ -341,15 +327,15 @@ def create_service_connector_logging_source_details(ctx, from_json, wait_for_sta
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.create_service_connector_monitoring_source_details.command_name', 'create-service-connector-monitoring-source-details'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For instructions, see [To create a service connector]. For general information about service connectors, see [Service Connector Hub Overview].
+@service_connector_group.command(name=cli_util.override('service_connector.create_service_connector_monitoring_source_details.command_name', 'create-service-connector-monitoring-source-details'), help=u"""Creates a new connector in the specified compartment. A connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For more information, see [Creating a Connector]. For general information about connectors, see [Overview of Connector Hub].
 
-For purposes of access control, you must provide the [OCID] of the compartment where you want the service connector to reside. Notice that the service connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
+For purposes of access control, you must provide the [OCID] of the compartment where you want the connector to reside. Notice that the connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
 
-After you send your request, the new service connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector]. \n[Command Reference](createServiceConnector)""")
+After you send your request, the new connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating connectors, see [Activating a Connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the service connector in.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the connector in.""")
 @cli_util.option('--target', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--source-monitoring-sources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of metric namespaces to retrieve data from.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source-monitoring-sources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""One or more compartment-specific lists of metric namespaces to retrieve data from.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
 @cli_util.option('--tasks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of tasks.
 
@@ -404,10 +390,6 @@ def create_service_connector_monitoring_source_details(ctx, from_json, wait_for_
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
@@ -425,13 +407,13 @@ def create_service_connector_monitoring_source_details(ctx, from_json, wait_for_
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.create_service_connector_streaming_source_details.command_name', 'create-service-connector-streaming-source-details'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For instructions, see [To create a service connector]. For general information about service connectors, see [Service Connector Hub Overview].
+@service_connector_group.command(name=cli_util.override('service_connector.create_service_connector_streaming_source_details.command_name', 'create-service-connector-streaming-source-details'), help=u"""Creates a new connector in the specified compartment. A connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For more information, see [Creating a Connector]. For general information about connectors, see [Overview of Connector Hub].
 
-For purposes of access control, you must provide the [OCID] of the compartment where you want the service connector to reside. Notice that the service connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
+For purposes of access control, you must provide the [OCID] of the compartment where you want the connector to reside. Notice that the connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
 
-After you send your request, the new service connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector]. \n[Command Reference](createServiceConnector)""")
+After you send your request, the new connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating connectors, see [Activating a Connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the service connector in.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the connector in.""")
 @cli_util.option('--target', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-stream-id', required=True, help=u"""The [OCID] of the stream.""")
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
@@ -492,10 +474,6 @@ def create_service_connector_streaming_source_details(ctx, from_json, wait_for_s
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
@@ -513,13 +491,95 @@ def create_service_connector_streaming_source_details(ctx, from_json, wait_for_s
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.create_service_connector_notifications_target_details.command_name', 'create-service-connector-notifications-target-details'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For instructions, see [To create a service connector]. For general information about service connectors, see [Service Connector Hub Overview].
+@service_connector_group.command(name=cli_util.override('service_connector.create_service_connector_plugin_source_details.command_name', 'create-service-connector-plugin-source-details'), help=u"""Creates a new connector in the specified compartment. A connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For more information, see [Creating a Connector]. For general information about connectors, see [Overview of Connector Hub].
 
-For purposes of access control, you must provide the [OCID] of the compartment where you want the service connector to reside. Notice that the service connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
+For purposes of access control, you must provide the [OCID] of the compartment where you want the connector to reside. Notice that the connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
 
-After you send your request, the new service connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector]. \n[Command Reference](createServiceConnector)""")
+After you send your request, the new connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating connectors, see [Activating a Connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the service connector in.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the connector in.""")
+@cli_util.option('--target', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source-plugin-name', required=True, help=u"""The name of the connector plugin. This name indicates the service to be called by the connector plugin. For example, `QueueSource` indicates the Queue service. To find names of connector plugins, list the plugin using (ListConnectorPlugin)[#/en/serviceconnectors/latest/ConnectorPluginSummary/ListConnectorPlugins].""")
+@cli_util.option('--source-config-map', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The configuration map for the connector plugin. This map includes parameters specific to the connector plugin type. For example, for `QueueSource`, the map lists the OCID of the selected queue. To find the parameters for a connector plugin, get the plugin using (GetConnectorPlugin)[#/en/serviceconnectors/latest/ConnectorPlugin/GetConnectorPlugin] and review its schema value.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
+@cli_util.option('--tasks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of tasks.
+
+This option is a JSON list with items of type TaskDetails.  For documentation on TaskDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/serviceconnector/20200909/datatypes/TaskDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'tasks': {'module': 'sch', 'class': 'list[TaskDetails]'}, 'target': {'module': 'sch', 'class': 'TargetDetails'}, 'freeform-tags': {'module': 'sch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'sch', 'class': 'dict(str, dict(str, object))'}, 'source-config-map': {'module': 'sch', 'class': 'object'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'tasks': {'module': 'sch', 'class': 'list[TaskDetails]'}, 'target': {'module': 'sch', 'class': 'TargetDetails'}, 'freeform-tags': {'module': 'sch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'sch', 'class': 'dict(str, dict(str, object))'}, 'source-config-map': {'module': 'sch', 'class': 'object'}})
+@cli_util.wrap_exceptions
+def create_service_connector_plugin_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, target, source_plugin_name, source_config_map, description, tasks, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['source'] = {}
+    _details['displayName'] = display_name
+    _details['compartmentId'] = compartment_id
+    _details['target'] = cli_util.parse_json_parameter("target", target)
+    _details['source']['pluginName'] = source_plugin_name
+    _details['source']['configMap'] = cli_util.parse_json_parameter("source_config_map", source_config_map)
+
+    if description is not None:
+        _details['description'] = description
+
+    if tasks is not None:
+        _details['tasks'] = cli_util.parse_json_parameter("tasks", tasks)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['source']['kind'] = 'plugin'
+
+    client = cli_util.build_client('sch', 'service_connector', ctx)
+    result = client.create_service_connector(
+        create_service_connector_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@service_connector_group.command(name=cli_util.override('service_connector.create_service_connector_notifications_target_details.command_name', 'create-service-connector-notifications-target-details'), help=u"""Creates a new connector in the specified compartment. A connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For more information, see [Creating a Connector]. For general information about connectors, see [Overview of Connector Hub].
+
+For purposes of access control, you must provide the [OCID] of the compartment where you want the connector to reside. Notice that the connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
+
+After you send your request, the new connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating connectors, see [Activating a Connector]. \n[Command Reference](createServiceConnector)""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the connector in.""")
 @cli_util.option('--source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target-topic-id', required=True, help=u"""The [OCID] of the topic.""")
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
@@ -528,7 +588,7 @@ After you send your request, the new service connector's state is temporarily CR
 This option is a JSON list with items of type TaskDetails.  For documentation on TaskDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/serviceconnector/20200909/datatypes/TaskDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--target-enable-formatted-messaging', type=click.BOOL, help=u"""Whether to apply a simplified, user-friendly format to the message. Applies only when friendly formatting is supported by the service connector source and the subscription protocol.
+@cli_util.option('--target-enable-formatted-messaging', type=click.BOOL, help=u"""Whether to apply a simplified, user-friendly format to the message. Applies only when friendly formatting is supported by the connector source and the subscription protocol.
 
 Example: `true`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -582,10 +642,6 @@ def create_service_connector_notifications_target_details(ctx, from_json, wait_f
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
@@ -603,15 +659,15 @@ def create_service_connector_notifications_target_details(ctx, from_json, wait_f
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.create_service_connector_object_storage_target_details.command_name', 'create-service-connector-object-storage-target-details'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For instructions, see [To create a service connector]. For general information about service connectors, see [Service Connector Hub Overview].
+@service_connector_group.command(name=cli_util.override('service_connector.create_service_connector_object_storage_target_details.command_name', 'create-service-connector-object-storage-target-details'), help=u"""Creates a new connector in the specified compartment. A connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For more information, see [Creating a Connector]. For general information about connectors, see [Overview of Connector Hub].
 
-For purposes of access control, you must provide the [OCID] of the compartment where you want the service connector to reside. Notice that the service connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
+For purposes of access control, you must provide the [OCID] of the compartment where you want the connector to reside. Notice that the connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
 
-After you send your request, the new service connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector]. \n[Command Reference](createServiceConnector)""")
+After you send your request, the new connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating connectors, see [Activating a Connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the service connector in.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the connector in.""")
 @cli_util.option('--source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--target-bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information.""")
+@cli_util.option('--target-bucket-name', required=True, help=u"""The name of the bucket. Valid characters are letters (upper or lower case), numbers, hyphens (-), underscores(_), and periods (.). Bucket names must be unique within an Object Storage namespace. Avoid entering confidential information. Example: my-new-bucket1""")
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
 @cli_util.option('--tasks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of tasks.
 
@@ -682,10 +738,6 @@ def create_service_connector_object_storage_target_details(ctx, from_json, wait_
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
@@ -703,13 +755,13 @@ def create_service_connector_object_storage_target_details(ctx, from_json, wait_
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.create_service_connector_monitoring_target_details.command_name', 'create-service-connector-monitoring-target-details'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For instructions, see [To create a service connector]. For general information about service connectors, see [Service Connector Hub Overview].
+@service_connector_group.command(name=cli_util.override('service_connector.create_service_connector_monitoring_target_details.command_name', 'create-service-connector-monitoring-target-details'), help=u"""Creates a new connector in the specified compartment. A connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For more information, see [Creating a Connector]. For general information about connectors, see [Overview of Connector Hub].
 
-For purposes of access control, you must provide the [OCID] of the compartment where you want the service connector to reside. Notice that the service connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
+For purposes of access control, you must provide the [OCID] of the compartment where you want the connector to reside. Notice that the connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
 
-After you send your request, the new service connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector]. \n[Command Reference](createServiceConnector)""")
+After you send your request, the new connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating connectors, see [Activating a Connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the service connector in.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the connector in.""")
 @cli_util.option('--source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target-compartment-id', required=True, help=u"""The [OCID] of the compartment containing the metric.""")
 @cli_util.option('--target-metric-namespace', required=True, help=u"""The namespace of the metric.
@@ -780,10 +832,6 @@ def create_service_connector_monitoring_target_details(ctx, from_json, wait_for_
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
@@ -801,13 +849,13 @@ def create_service_connector_monitoring_target_details(ctx, from_json, wait_for_
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.create_service_connector_functions_target_details.command_name', 'create-service-connector-functions-target-details'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For instructions, see [To create a service connector]. For general information about service connectors, see [Service Connector Hub Overview].
+@service_connector_group.command(name=cli_util.override('service_connector.create_service_connector_functions_target_details.command_name', 'create-service-connector-functions-target-details'), help=u"""Creates a new connector in the specified compartment. A connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For more information, see [Creating a Connector]. For general information about connectors, see [Overview of Connector Hub].
 
-For purposes of access control, you must provide the [OCID] of the compartment where you want the service connector to reside. Notice that the service connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
+For purposes of access control, you must provide the [OCID] of the compartment where you want the connector to reside. Notice that the connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
 
-After you send your request, the new service connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector]. \n[Command Reference](createServiceConnector)""")
+After you send your request, the new connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating connectors, see [Activating a Connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the service connector in.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the connector in.""")
 @cli_util.option('--source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target-function-id', required=True, help=u"""The [OCID] of the function.""")
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
@@ -816,6 +864,9 @@ After you send your request, the new service connector's state is temporarily CR
 This option is a JSON list with items of type TaskDetails.  For documentation on TaskDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/serviceconnector/20200909/datatypes/TaskDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--target-batch-size-in-kbs', type=click.INT, help=u"""The batch rollover size in kilobytes.""")
+@cli_util.option('--target-batch-size-in-num', type=click.INT, help=u"""The batch rollover size in number of messages.""")
+@cli_util.option('--target-batch-time-in-sec', type=click.INT, help=u"""The batch rollover time in seconds.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -824,7 +875,7 @@ This option is a JSON list with items of type TaskDetails.  For documentation on
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source': {'module': 'sch', 'class': 'SourceDetails'}, 'tasks': {'module': 'sch', 'class': 'list[TaskDetails]'}, 'freeform-tags': {'module': 'sch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'sch', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_service_connector_functions_target_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, source, target_function_id, description, tasks, freeform_tags, defined_tags):
+def create_service_connector_functions_target_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, source, target_function_id, description, tasks, freeform_tags, defined_tags, target_batch_size_in_kbs, target_batch_size_in_num, target_batch_time_in_sec):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -848,6 +899,15 @@ def create_service_connector_functions_target_details(ctx, from_json, wait_for_s
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
+    if target_batch_size_in_kbs is not None:
+        _details['target']['batchSizeInKbs'] = target_batch_size_in_kbs
+
+    if target_batch_size_in_num is not None:
+        _details['target']['batchSizeInNum'] = target_batch_size_in_num
+
+    if target_batch_time_in_sec is not None:
+        _details['target']['batchTimeInSec'] = target_batch_time_in_sec
+
     _details['target']['kind'] = 'functions'
 
     client = cli_util.build_client('sch', 'service_connector', ctx)
@@ -864,10 +924,6 @@ def create_service_connector_functions_target_details(ctx, from_json, wait_for_s
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
@@ -885,13 +941,13 @@ def create_service_connector_functions_target_details(ctx, from_json, wait_for_s
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.create_service_connector_logging_analytics_target_details.command_name', 'create-service-connector-logging-analytics-target-details'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For instructions, see [To create a service connector]. For general information about service connectors, see [Service Connector Hub Overview].
+@service_connector_group.command(name=cli_util.override('service_connector.create_service_connector_logging_analytics_target_details.command_name', 'create-service-connector-logging-analytics-target-details'), help=u"""Creates a new connector in the specified compartment. A connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For more information, see [Creating a Connector]. For general information about connectors, see [Overview of Connector Hub].
 
-For purposes of access control, you must provide the [OCID] of the compartment where you want the service connector to reside. Notice that the service connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
+For purposes of access control, you must provide the [OCID] of the compartment where you want the connector to reside. Notice that the connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
 
-After you send your request, the new service connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector]. \n[Command Reference](createServiceConnector)""")
+After you send your request, the new connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating connectors, see [Activating a Connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the service connector in.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the connector in.""")
 @cli_util.option('--source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target-log-group-id', required=True, help=u"""The [OCID] of the Logging Analytics log group.""")
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
@@ -900,7 +956,7 @@ After you send your request, the new service connector's state is temporarily CR
 This option is a JSON list with items of type TaskDetails.  For documentation on TaskDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/serviceconnector/20200909/datatypes/TaskDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--target-log-source-identifier', help=u"""Identifier of the log source that you want to use for processing data received from the service connector source. Applies to `StreamingSource` only. Equivalent to `name` at [LogAnalyticsSource].""")
+@cli_util.option('--target-log-source-identifier', help=u"""Identifier of the log source that you want to use for processing data received from the connector source. Applies to `StreamingSource` only. Equivalent to `name` at [LogAnalyticsSource].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -952,10 +1008,6 @@ def create_service_connector_logging_analytics_target_details(ctx, from_json, wa
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
@@ -973,13 +1025,13 @@ def create_service_connector_logging_analytics_target_details(ctx, from_json, wa
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.create_service_connector_streaming_target_details.command_name', 'create-service-connector-streaming-target-details'), help=u"""Creates a new service connector in the specified compartment. A service connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For instructions, see [To create a service connector]. For general information about service connectors, see [Service Connector Hub Overview].
+@service_connector_group.command(name=cli_util.override('service_connector.create_service_connector_streaming_target_details.command_name', 'create-service-connector-streaming-target-details'), help=u"""Creates a new connector in the specified compartment. A connector is a logically defined flow for moving data from a source service to a destination service in Oracle Cloud Infrastructure. For more information, see [Creating a Connector]. For general information about connectors, see [Overview of Connector Hub].
 
-For purposes of access control, you must provide the [OCID] of the compartment where you want the service connector to reside. Notice that the service connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
+For purposes of access control, you must provide the [OCID] of the compartment where you want the connector to reside. Notice that the connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
 
-After you send your request, the new service connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector]. \n[Command Reference](createServiceConnector)""")
+After you send your request, the new connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating connectors, see [Activating a Connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the service connector in.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the connector in.""")
 @cli_util.option('--source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target-stream-id', required=True, help=u"""The [OCID] of the stream.""")
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
@@ -1036,10 +1088,6 @@ def create_service_connector_streaming_target_details(ctx, from_json, wait_for_s
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
@@ -1057,10 +1105,10 @@ def create_service_connector_streaming_target_details(ctx, from_json, wait_for_s
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.deactivate_service_connector.command_name', 'deactivate'), help=u"""Deactivates the specified service connector.
+@service_connector_group.command(name=cli_util.override('service_connector.deactivate_service_connector.command_name', 'deactivate'), help=u"""Deactivates the specified connector.
 
-After you send your request, the service connector's state is temporarily UPDATING and any data transfer stops. The state then changes to INACTIVE. For instructions on deactivating service connectors, see [To deactivate a service connector]. \n[Command Reference](deactivateServiceConnector)""")
-@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
+After you send your request, the connector's state is temporarily UPDATING and any data transfer stops. The state then changes to INACTIVE. For more information, see [Deactivating a Connector]. \n[Command Reference](deactivateServiceConnector)""")
+@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the connector.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1093,10 +1141,6 @@ def deactivate_service_connector(ctx, from_json, wait_for_state, max_wait_second
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
@@ -1114,10 +1158,10 @@ def deactivate_service_connector(ctx, from_json, wait_for_state, max_wait_second
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.delete_service_connector.command_name', 'delete'), help=u"""Deletes the specified service connector.
+@service_connector_group.command(name=cli_util.override('service_connector.delete_service_connector.command_name', 'delete'), help=u"""Deletes the specified connector. For more information, see [Deleting a Connector].
 
-After you send your request, the service connector's state is temporarily DELETING and any data transfer stops. The state then changes to DELETED. \n[Command Reference](deleteServiceConnector)""")
-@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
+After you send your request, the connector's state is temporarily DELETING and any data transfer stops. The state then changes to DELETED. \n[Command Reference](deleteServiceConnector)""")
+@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the connector.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1151,10 +1195,6 @@ def delete_service_connector(ctx, from_json, wait_for_state, max_wait_seconds, w
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
@@ -1172,8 +1212,8 @@ def delete_service_connector(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.get_service_connector.command_name', 'get'), help=u"""Gets the specified service connector's configuration information. \n[Command Reference](getServiceConnector)""")
-@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
+@service_connector_group.command(name=cli_util.override('service_connector.get_service_connector.command_name', 'get'), help=u"""Gets the specified connector's configuration information. For more information, see [Getting a Connector]. \n[Command Reference](getServiceConnector)""")
+@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the connector.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1194,7 +1234,7 @@ def get_service_connector(ctx, from_json, service_connector_id):
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('sch.get_work_request.command_name', 'get'), help=u"""Gets the details of the specified work request. \n[Command Reference](getWorkRequest)""")
+@work_request_group.command(name=cli_util.override('service_connector.get_work_request.command_name', 'get'), help=u"""Gets the details of the specified work request. For more information, see [Getting a Work Request's Details]. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1216,7 +1256,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.list_service_connectors.command_name', 'list'), help=u"""Lists service connectors in the specified compartment. \n[Command Reference](listServiceConnectors)""")
+@service_connector_group.command(name=cli_util.override('service_connector.list_service_connectors.command_name', 'list'), help=u"""Lists connectors in the specified compartment. For more information, see [Listing Connectors]. \n[Command Reference](listServiceConnectors)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment for this request.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state.
 
@@ -1280,7 +1320,7 @@ def list_service_connectors(ctx, from_json, all_pages, page_size, compartment_id
     cli_util.render_response(result, ctx)
 
 
-@work_request_error_group.command(name=cli_util.override('sch.list_work_request_errors.command_name', 'list'), help=u"""Lists work request errors for the specified work request. Results are paginated. \n[Command Reference](listWorkRequestErrors)""")
+@work_request_error_group.command(name=cli_util.override('service_connector.list_work_request_errors.command_name', 'list'), help=u"""Lists work request errors for the specified work request. Results are paginated. For more information, see [Listing Work Request Errors]. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -1331,7 +1371,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     cli_util.render_response(result, ctx)
 
 
-@work_request_log_entry_group.command(name=cli_util.override('sch.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Lists logs for the specified work request. Results are paginated. \n[Command Reference](listWorkRequestLogs)""")
+@work_request_log_entry_group.command(name=cli_util.override('service_connector.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Lists logs for the specified work request. Results are paginated. For more information, see [Listing Work Request Log Entries]. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -1382,7 +1422,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('sch.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in the specified compartment. \n[Command Reference](listWorkRequests)""")
+@work_request_group.command(name=cli_util.override('service_connector.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in the specified compartment. For more information, see [Listing Work Requests]. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment for this request.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -1430,10 +1470,10 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.update_service_connector.command_name', 'update'), help=u"""Updates the configuration information for the specified service connector.
+@service_connector_group.command(name=cli_util.override('service_connector.update_service_connector.command_name', 'update'), help=u"""Updates the configuration information for the specified connector. For more information, see [Updating a Connector].
 
-After you send your request, the service connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
-@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
+After you send your request, the connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
+@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the connector.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
 @cli_util.option('--source', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1505,10 +1545,6 @@ def update_service_connector(ctx, from_json, force, wait_for_state, max_wait_sec
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
@@ -1526,10 +1562,10 @@ def update_service_connector(ctx, from_json, force, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.update_service_connector_logging_source_details.command_name', 'update-service-connector-logging-source-details'), help=u"""Updates the configuration information for the specified service connector.
+@service_connector_group.command(name=cli_util.override('service_connector.update_service_connector_logging_source_details.command_name', 'update-service-connector-logging-source-details'), help=u"""Updates the configuration information for the specified connector. For more information, see [Updating a Connector].
 
-After you send your request, the service connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
-@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
+After you send your request, the connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
+@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the connector.""")
 @cli_util.option('--source-log-sources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The logs for this Logging source.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
@@ -1602,10 +1638,6 @@ def update_service_connector_logging_source_details(ctx, from_json, force, wait_
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
@@ -1623,11 +1655,11 @@ def update_service_connector_logging_source_details(ctx, from_json, force, wait_
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.update_service_connector_monitoring_source_details.command_name', 'update-service-connector-monitoring-source-details'), help=u"""Updates the configuration information for the specified service connector.
+@service_connector_group.command(name=cli_util.override('service_connector.update_service_connector_monitoring_source_details.command_name', 'update-service-connector-monitoring-source-details'), help=u"""Updates the configuration information for the specified connector. For more information, see [Updating a Connector].
 
-After you send your request, the service connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
-@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
-@cli_util.option('--source-monitoring-sources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of metric namespaces to retrieve data from.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+After you send your request, the connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
+@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the connector.""")
+@cli_util.option('--source-monitoring-sources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""One or more compartment-specific lists of metric namespaces to retrieve data from.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
 @cli_util.option('--tasks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of the tasks.
@@ -1699,10 +1731,6 @@ def update_service_connector_monitoring_source_details(ctx, from_json, force, wa
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
@@ -1720,10 +1748,10 @@ def update_service_connector_monitoring_source_details(ctx, from_json, force, wa
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.update_service_connector_streaming_source_details.command_name', 'update-service-connector-streaming-source-details'), help=u"""Updates the configuration information for the specified service connector.
+@service_connector_group.command(name=cli_util.override('service_connector.update_service_connector_streaming_source_details.command_name', 'update-service-connector-streaming-source-details'), help=u"""Updates the configuration information for the specified connector. For more information, see [Updating a Connector].
 
-After you send your request, the service connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
-@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
+After you send your request, the connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
+@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the connector.""")
 @cli_util.option('--source-stream-id', required=True, help=u"""The [OCID] of the stream.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
@@ -1800,10 +1828,6 @@ def update_service_connector_streaming_source_details(ctx, from_json, force, wai
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
@@ -1821,10 +1845,105 @@ def update_service_connector_streaming_source_details(ctx, from_json, force, wai
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.update_service_connector_notifications_target_details.command_name', 'update-service-connector-notifications-target-details'), help=u"""Updates the configuration information for the specified service connector.
+@service_connector_group.command(name=cli_util.override('service_connector.update_service_connector_plugin_source_details.command_name', 'update-service-connector-plugin-source-details'), help=u"""Updates the configuration information for the specified connector. For more information, see [Updating a Connector].
 
-After you send your request, the service connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
-@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
+After you send your request, the connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
+@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the connector.""")
+@cli_util.option('--source-plugin-name', required=True, help=u"""The name of the connector plugin. This name indicates the service to be called by the connector plugin. For example, `QueueSource` indicates the Queue service. To find names of connector plugins, list the plugin using (ListConnectorPlugin)[#/en/serviceconnectors/latest/ConnectorPluginSummary/ListConnectorPlugins].""")
+@cli_util.option('--source-config-map', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The configuration map for the connector plugin. This map includes parameters specific to the connector plugin type. For example, for `QueueSource`, the map lists the OCID of the selected queue. To find the parameters for a connector plugin, get the plugin using (GetConnectorPlugin)[#/en/serviceconnectors/latest/ConnectorPlugin/GetConnectorPlugin] and review its schema value.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
+@cli_util.option('--tasks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of the tasks.
+
+This option is a JSON list with items of type TaskDetails.  For documentation on TaskDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/serviceconnector/20200909/datatypes/TaskDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--target', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'tasks': {'module': 'sch', 'class': 'list[TaskDetails]'}, 'target': {'module': 'sch', 'class': 'TargetDetails'}, 'freeform-tags': {'module': 'sch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'sch', 'class': 'dict(str, dict(str, object))'}, 'source-config-map': {'module': 'sch', 'class': 'object'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'tasks': {'module': 'sch', 'class': 'list[TaskDetails]'}, 'target': {'module': 'sch', 'class': 'TargetDetails'}, 'freeform-tags': {'module': 'sch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'sch', 'class': 'dict(str, dict(str, object))'}, 'source-config-map': {'module': 'sch', 'class': 'object'}})
+@cli_util.wrap_exceptions
+def update_service_connector_plugin_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, service_connector_id, source_plugin_name, source_config_map, display_name, description, tasks, target, freeform_tags, defined_tags, if_match):
+
+    if isinstance(service_connector_id, six.string_types) and len(service_connector_id.strip()) == 0:
+        raise click.UsageError('Parameter --service-connector-id cannot be whitespace or empty string')
+    if not force:
+        if tasks or target or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to tasks and target and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['source'] = {}
+    _details['source']['pluginName'] = source_plugin_name
+    _details['source']['configMap'] = cli_util.parse_json_parameter("source_config_map", source_config_map)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if tasks is not None:
+        _details['tasks'] = cli_util.parse_json_parameter("tasks", tasks)
+
+    if target is not None:
+        _details['target'] = cli_util.parse_json_parameter("target", target)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['source']['kind'] = 'plugin'
+
+    client = cli_util.build_client('sch', 'service_connector', ctx)
+    result = client.update_service_connector(
+        service_connector_id=service_connector_id,
+        update_service_connector_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@service_connector_group.command(name=cli_util.override('service_connector.update_service_connector_notifications_target_details.command_name', 'update-service-connector-notifications-target-details'), help=u"""Updates the configuration information for the specified connector. For more information, see [Updating a Connector].
+
+After you send your request, the connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
+@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the connector.""")
 @cli_util.option('--target-topic-id', required=True, help=u"""The [OCID] of the topic.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
@@ -1835,7 +1954,7 @@ This option is a JSON list with items of type TaskDetails.  For documentation on
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--target-enable-formatted-messaging', type=click.BOOL, help=u"""Whether to apply a simplified, user-friendly format to the message. Applies only when friendly formatting is supported by the service connector source and the subscription protocol.
+@cli_util.option('--target-enable-formatted-messaging', type=click.BOOL, help=u"""Whether to apply a simplified, user-friendly format to the message. Applies only when friendly formatting is supported by the connector source and the subscription protocol.
 
 Example: `true`""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -1903,10 +2022,6 @@ def update_service_connector_notifications_target_details(ctx, from_json, force,
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
@@ -1924,11 +2039,11 @@ def update_service_connector_notifications_target_details(ctx, from_json, force,
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.update_service_connector_object_storage_target_details.command_name', 'update-service-connector-object-storage-target-details'), help=u"""Updates the configuration information for the specified service connector.
+@service_connector_group.command(name=cli_util.override('service_connector.update_service_connector_object_storage_target_details.command_name', 'update-service-connector-object-storage-target-details'), help=u"""Updates the configuration information for the specified connector. For more information, see [Updating a Connector].
 
-After you send your request, the service connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
-@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
-@cli_util.option('--target-bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information.""")
+After you send your request, the connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
+@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the connector.""")
+@cli_util.option('--target-bucket-name', required=True, help=u"""The name of the bucket. Valid characters are letters (upper or lower case), numbers, hyphens (-), underscores(_), and periods (.). Bucket names must be unique within an Object Storage namespace. Avoid entering confidential information. Example: my-new-bucket1""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
 @cli_util.option('--source', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2016,10 +2131,6 @@ def update_service_connector_object_storage_target_details(ctx, from_json, force
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
@@ -2037,10 +2148,10 @@ def update_service_connector_object_storage_target_details(ctx, from_json, force
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.update_service_connector_monitoring_target_details.command_name', 'update-service-connector-monitoring-target-details'), help=u"""Updates the configuration information for the specified service connector.
+@service_connector_group.command(name=cli_util.override('service_connector.update_service_connector_monitoring_target_details.command_name', 'update-service-connector-monitoring-target-details'), help=u"""Updates the configuration information for the specified connector. For more information, see [Updating a Connector].
 
-After you send your request, the service connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
-@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
+After you send your request, the connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
+@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the connector.""")
 @cli_util.option('--target-compartment-id', required=True, help=u"""The [OCID] of the compartment containing the metric.""")
 @cli_util.option('--target-metric-namespace', required=True, help=u"""The namespace of the metric.
 
@@ -2127,10 +2238,6 @@ def update_service_connector_monitoring_target_details(ctx, from_json, force, wa
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
@@ -2148,10 +2255,10 @@ def update_service_connector_monitoring_target_details(ctx, from_json, force, wa
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.update_service_connector_functions_target_details.command_name', 'update-service-connector-functions-target-details'), help=u"""Updates the configuration information for the specified service connector.
+@service_connector_group.command(name=cli_util.override('service_connector.update_service_connector_functions_target_details.command_name', 'update-service-connector-functions-target-details'), help=u"""Updates the configuration information for the specified connector. For more information, see [Updating a Connector].
 
-After you send your request, the service connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
-@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
+After you send your request, the connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
+@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the connector.""")
 @cli_util.option('--target-function-id', required=True, help=u"""The [OCID] of the function.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
@@ -2162,6 +2269,9 @@ This option is a JSON list with items of type TaskDetails.  For documentation on
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--target-batch-size-in-kbs', type=click.INT, help=u"""The batch rollover size in kilobytes.""")
+@cli_util.option('--target-batch-size-in-num', type=click.INT, help=u"""The batch rollover size in number of messages.""")
+@cli_util.option('--target-batch-time-in-sec', type=click.INT, help=u"""The batch rollover time in seconds.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2171,7 +2281,7 @@ This option is a JSON list with items of type TaskDetails.  For documentation on
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source': {'module': 'sch', 'class': 'SourceDetails'}, 'tasks': {'module': 'sch', 'class': 'list[TaskDetails]'}, 'freeform-tags': {'module': 'sch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'sch', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_service_connector_functions_target_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, service_connector_id, target_function_id, display_name, description, source, tasks, freeform_tags, defined_tags, if_match):
+def update_service_connector_functions_target_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, service_connector_id, target_function_id, display_name, description, source, tasks, freeform_tags, defined_tags, if_match, target_batch_size_in_kbs, target_batch_size_in_num, target_batch_time_in_sec):
 
     if isinstance(service_connector_id, six.string_types) and len(service_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --service-connector-id cannot be whitespace or empty string')
@@ -2207,6 +2317,15 @@ def update_service_connector_functions_target_details(ctx, from_json, force, wai
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
+    if target_batch_size_in_kbs is not None:
+        _details['target']['batchSizeInKbs'] = target_batch_size_in_kbs
+
+    if target_batch_size_in_num is not None:
+        _details['target']['batchSizeInNum'] = target_batch_size_in_num
+
+    if target_batch_time_in_sec is not None:
+        _details['target']['batchTimeInSec'] = target_batch_time_in_sec
+
     _details['target']['kind'] = 'functions'
 
     client = cli_util.build_client('sch', 'service_connector', ctx)
@@ -2224,10 +2343,6 @@ def update_service_connector_functions_target_details(ctx, from_json, force, wai
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
@@ -2245,10 +2360,10 @@ def update_service_connector_functions_target_details(ctx, from_json, force, wai
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.update_service_connector_logging_analytics_target_details.command_name', 'update-service-connector-logging-analytics-target-details'), help=u"""Updates the configuration information for the specified service connector.
+@service_connector_group.command(name=cli_util.override('service_connector.update_service_connector_logging_analytics_target_details.command_name', 'update-service-connector-logging-analytics-target-details'), help=u"""Updates the configuration information for the specified connector. For more information, see [Updating a Connector].
 
-After you send your request, the service connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
-@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
+After you send your request, the connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
+@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the connector.""")
 @cli_util.option('--target-log-group-id', required=True, help=u"""The [OCID] of the Logging Analytics log group.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
@@ -2259,7 +2374,7 @@ This option is a JSON list with items of type TaskDetails.  For documentation on
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--target-log-source-identifier', help=u"""Identifier of the log source that you want to use for processing data received from the service connector source. Applies to `StreamingSource` only. Equivalent to `name` at [LogAnalyticsSource].""")
+@cli_util.option('--target-log-source-identifier', help=u"""Identifier of the log source that you want to use for processing data received from the connector source. Applies to `StreamingSource` only. Equivalent to `name` at [LogAnalyticsSource].""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2325,10 +2440,6 @@ def update_service_connector_logging_analytics_target_details(ctx, from_json, fo
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
@@ -2346,10 +2457,10 @@ def update_service_connector_logging_analytics_target_details(ctx, from_json, fo
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.update_service_connector_streaming_target_details.command_name', 'update-service-connector-streaming-target-details'), help=u"""Updates the configuration information for the specified service connector.
+@service_connector_group.command(name=cli_util.override('service_connector.update_service_connector_streaming_target_details.command_name', 'update-service-connector-streaming-target-details'), help=u"""Updates the configuration information for the specified connector. For more information, see [Updating a Connector].
 
-After you send your request, the service connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
-@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
+After you send your request, the connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
+@cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the connector.""")
 @cli_util.option('--target-stream-id', required=True, help=u"""The [OCID] of the stream.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
@@ -2422,10 +2533,6 @@ def update_service_connector_streaming_target_details(ctx, from_json, force, wai
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)

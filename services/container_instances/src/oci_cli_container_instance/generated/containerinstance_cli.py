@@ -811,17 +811,20 @@ def restart_container_instance(ctx, from_json, wait_for_state, max_wait_seconds,
 @container_group.command(name=cli_util.override('container_instances.retrieve_logs.command_name', 'retrieve-logs'), help=u"""Retrieves recent logs from the specified container. The most recent 256 KB of logs are returned. \n[Command Reference](retrieveLogs)""")
 @cli_util.option('--container-id', required=True, help=u"""The [OCID] of the container.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@cli_util.option('--is-previous', type=click.BOOL, help=u"""Returns the logs for the previous run of the container in a pod if the pod exists. If the container fails for some reason, this parameter is useful to determine the root cause of the failure.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def retrieve_logs(ctx, from_json, file, container_id):
+def retrieve_logs(ctx, from_json, file, container_id, is_previous):
 
     if isinstance(container_id, six.string_types) and len(container_id.strip()) == 0:
         raise click.UsageError('Parameter --container-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_previous is not None:
+        kwargs['is_previous'] = is_previous
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('container_instances', 'container_instance', ctx)
     result = client.retrieve_logs(

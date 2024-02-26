@@ -404,17 +404,19 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.option('--key-shape', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-auto-rotation-enabled', type=click.BOOL, help=u"""A parameter specifying whether the auto key rotation is enabled or not.""")
+@cli_util.option('--auto-key-rotation-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--protection-mode', type=custom_types.CliCaseInsensitiveChoice(["HSM", "SOFTWARE", "EXTERNAL"]), help=u"""The key's protection mode indicates how the key persists and where cryptographic operations that use the key are performed. A protection mode of `HSM` means that the key persists on a hardware security module (HSM) and all cryptographic operations are performed inside the HSM. A protection mode of `SOFTWARE` means that the key persists on the server, protected by the vault's RSA wrapping key which persists on the HSM. All cryptographic operations that use a key with a protection mode of `SOFTWARE` are performed on the server. By default, a key's protection mode is set to `HSM`. You can't change a key's protection mode after the key is created or imported. A protection mode of `EXTERNAL` mean that the key persists on the customer's external key manager which is hosted externally outside of oracle. Oracle only hold a reference to that key. All cryptographic operations that use a key with a protection mode of `EXTERNAL` are performed by external key manager.""")
 @cli_util.option('--external-key-reference', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION", "UPDATING", "BACKUP_IN_PROGRESS", "RESTORING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'key_management', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'key_management', 'class': 'dict(str, string)'}, 'key-shape': {'module': 'key_management', 'class': 'KeyShape'}, 'external-key-reference': {'module': 'key_management', 'class': 'ExternalKeyReference'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'key_management', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'key_management', 'class': 'dict(str, string)'}, 'key-shape': {'module': 'key_management', 'class': 'KeyShape'}, 'auto-key-rotation-details': {'module': 'key_management', 'class': 'AutoKeyRotationDetails'}, 'external-key-reference': {'module': 'key_management', 'class': 'ExternalKeyReference'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'key_management', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'key_management', 'class': 'dict(str, string)'}, 'key-shape': {'module': 'key_management', 'class': 'KeyShape'}, 'external-key-reference': {'module': 'key_management', 'class': 'ExternalKeyReference'}}, output_type={'module': 'key_management', 'class': 'Key'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'key_management', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'key_management', 'class': 'dict(str, string)'}, 'key-shape': {'module': 'key_management', 'class': 'KeyShape'}, 'auto-key-rotation-details': {'module': 'key_management', 'class': 'AutoKeyRotationDetails'}, 'external-key-reference': {'module': 'key_management', 'class': 'ExternalKeyReference'}}, output_type={'module': 'key_management', 'class': 'Key'})
 @cli_util.wrap_exceptions
-def create_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, key_shape, defined_tags, freeform_tags, protection_mode, external_key_reference):
+def create_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, key_shape, defined_tags, freeform_tags, is_auto_rotation_enabled, auto_key_rotation_details, protection_mode, external_key_reference):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -429,6 +431,12 @@ def create_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if is_auto_rotation_enabled is not None:
+        _details['isAutoRotationEnabled'] = is_auto_rotation_enabled
+
+    if auto_key_rotation_details is not None:
+        _details['autoKeyRotationDetails'] = cli_util.parse_json_parameter("auto_key_rotation_details", auto_key_rotation_details)
 
     if protection_mode is not None:
         _details['protectionMode'] = protection_mode
@@ -744,15 +752,17 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the key. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--key-shape', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wrapped-import-key', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-auto-rotation-enabled', type=click.BOOL, help=u"""A parameter specifying whether the auto key rotation is enabled or not.""")
+@cli_util.option('--auto-key-rotation-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"foo-value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--protection-mode', type=custom_types.CliCaseInsensitiveChoice(["HSM", "SOFTWARE"]), help=u"""The key's protection mode indicates how the key persists and where cryptographic operations that use the key are performed. A protection mode of `HSM` means that the key persists on a hardware security module (HSM) and all cryptographic operations are performed inside the HSM. A protection mode of `SOFTWARE` means that the key persists on the server, protected by the vault's RSA wrapping key which persists on the HSM. All cryptographic operations that use a key with a protection mode of `SOFTWARE` are performed on the server. By default, a key's protection mode is set to `HSM`. You can't change a key's protection mode after the key is created or imported.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'key_management', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'key_management', 'class': 'dict(str, string)'}, 'key-shape': {'module': 'key_management', 'class': 'KeyShape'}, 'wrapped-import-key': {'module': 'key_management', 'class': 'WrappedImportKey'}})
+@json_skeleton_utils.get_cli_json_input_option({'auto-key-rotation-details': {'module': 'key_management', 'class': 'AutoKeyRotationDetails'}, 'defined-tags': {'module': 'key_management', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'key_management', 'class': 'dict(str, string)'}, 'key-shape': {'module': 'key_management', 'class': 'KeyShape'}, 'wrapped-import-key': {'module': 'key_management', 'class': 'WrappedImportKey'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'key_management', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'key_management', 'class': 'dict(str, string)'}, 'key-shape': {'module': 'key_management', 'class': 'KeyShape'}, 'wrapped-import-key': {'module': 'key_management', 'class': 'WrappedImportKey'}}, output_type={'module': 'key_management', 'class': 'Key'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'auto-key-rotation-details': {'module': 'key_management', 'class': 'AutoKeyRotationDetails'}, 'defined-tags': {'module': 'key_management', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'key_management', 'class': 'dict(str, string)'}, 'key-shape': {'module': 'key_management', 'class': 'KeyShape'}, 'wrapped-import-key': {'module': 'key_management', 'class': 'WrappedImportKey'}}, output_type={'module': 'key_management', 'class': 'Key'})
 @cli_util.wrap_exceptions
-def import_key(ctx, from_json, compartment_id, display_name, key_shape, wrapped_import_key, defined_tags, freeform_tags, protection_mode):
+def import_key(ctx, from_json, compartment_id, display_name, key_shape, wrapped_import_key, is_auto_rotation_enabled, auto_key_rotation_details, defined_tags, freeform_tags, protection_mode):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -762,6 +772,12 @@ def import_key(ctx, from_json, compartment_id, display_name, key_shape, wrapped_
     _details['displayName'] = display_name
     _details['keyShape'] = cli_util.parse_json_parameter("key_shape", key_shape)
     _details['wrappedImportKey'] = cli_util.parse_json_parameter("wrapped_import_key", wrapped_import_key)
+
+    if is_auto_rotation_enabled is not None:
+        _details['isAutoRotationEnabled'] = is_auto_rotation_enabled
+
+    if auto_key_rotation_details is not None:
+        _details['autoKeyRotationDetails'] = cli_util.parse_json_parameter("auto_key_rotation_details", auto_key_rotation_details)
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
@@ -1216,6 +1232,8 @@ As a management operation, this call is subject to a Key Management limit that a
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](updateKey)""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
+@cli_util.option('--is-auto-rotation-enabled', type=click.BOOL, help=u"""A parameter specifying whether the auto key rotation is enabled or not.""")
+@cli_util.option('--auto-key-rotation-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name for the key. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1224,18 +1242,18 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION", "UPDATING", "BACKUP_IN_PROGRESS", "RESTORING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'key_management', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'key_management', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'auto-key-rotation-details': {'module': 'key_management', 'class': 'AutoKeyRotationDetails'}, 'defined-tags': {'module': 'key_management', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'key_management', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'key_management', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'key_management', 'class': 'dict(str, string)'}}, output_type={'module': 'key_management', 'class': 'Key'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'auto-key-rotation-details': {'module': 'key_management', 'class': 'AutoKeyRotationDetails'}, 'defined-tags': {'module': 'key_management', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'key_management', 'class': 'dict(str, string)'}}, output_type={'module': 'key_management', 'class': 'Key'})
 @cli_util.wrap_exceptions
-def update_key(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, key_id, defined_tags, display_name, freeform_tags, if_match):
+def update_key(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, key_id, is_auto_rotation_enabled, auto_key_rotation_details, defined_tags, display_name, freeform_tags, if_match):
 
     if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+        if auto_key_rotation_details or defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to auto-key-rotation-details and defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1244,6 +1262,12 @@ def update_key(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
+
+    if is_auto_rotation_enabled is not None:
+        _details['isAutoRotationEnabled'] = is_auto_rotation_enabled
+
+    if auto_key_rotation_details is not None:
+        _details['autoKeyRotationDetails'] = cli_util.parse_json_parameter("auto_key_rotation_details", auto_key_rotation_details)
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)

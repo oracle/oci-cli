@@ -224,7 +224,7 @@ def create_oda_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 To monitor the status of the job, take the `opc-work-request-id` response header value and use it to call `GET /workRequests/{workRequestId}`. \n[Command Reference](createOdaInstanceAttachment)""")
 @cli_util.option('--oda-instance-id', required=True, help=u"""Unique Digital Assistant instance identifier.""")
 @cli_util.option('--attach-to-id', required=True, help=u"""The OCID of the target instance (which could be any other OCI PaaS/SaaS resource), to which this ODA instance is being attached.""")
-@cli_util.option('--attachment-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FUSION"]), help=u"""The type of target instance which this ODA instance is being attached.""")
+@cli_util.option('--attachment-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FUSION", "MAX"]), help=u"""The type of target instance which this ODA instance is being attached.""")
 @cli_util.option('--owner', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--attachment-metadata', help=u"""Attachment specific metadata. Defined by the target service.""")
 @cli_util.option('--restricted-operations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of operations that are restricted while this instance is attached.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
