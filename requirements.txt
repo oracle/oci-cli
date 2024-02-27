@@ -8,18 +8,18 @@ certifi
 cffi>=1.9.1
 click==8.0.4
 coverage==4.5.2
-cryptography>=3.2.1,<42.0.0
+cryptography>=3.2.1,<43.0.0
 httpsig-cffi==15.0.0
 Jinja2==3.0.3
 jmespath==0.10.0
 ndg-httpsclient==0.4.2
 mock==2.0.0
-oci==2.122.0
+oci==2.123.0
 packaging==20.2
 pluggy==0.13.0
 py==1.11.0
 pyasn1==0.2.3
-pyOpenSSL>=17.5.0,<24.0.0
+pyOpenSSL>=17.5.0,<25.0.0
 pycparser==2.20
 pyparsing==2.2.0
 pytest==4.6.10; python_version <= '3.9'

@@ -2292,15 +2292,17 @@ def configure_automatic_spm_evolve_advisor_task_database_password_credential_det
 @cli_util.option('--is-cluster', type=click.BOOL, help=u"""Specifies whether the Database Management private endpoint will be used for Oracle Databases in a cluster.""")
 @cli_util.option('--description', help=u"""The description of the private endpoint.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the Network Security Groups to which the Database Management private endpoint belongs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'database_management', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'database_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'database_management', 'class': 'list[string]'}}, output_type={'module': 'database_management', 'class': 'DbManagementPrivateEndpoint'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'database_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'DbManagementPrivateEndpoint'})
 @cli_util.wrap_exceptions
-def create_db_management_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, subnet_id, is_cluster, description, nsg_ids):
+def create_db_management_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, subnet_id, is_cluster, description, nsg_ids, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2318,6 +2320,12 @@ def create_db_management_private_endpoint(ctx, from_json, wait_for_state, max_wa
 
     if nsg_ids is not None:
         _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.create_db_management_private_endpoint(
@@ -2360,15 +2368,17 @@ def create_db_management_private_endpoint(ctx, from_json, wait_for_state, max_wa
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB system. The name does not have to be unique.""")
 @cli_util.option('--database-management-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--stack-monitoring-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'database-management-config': {'module': 'database_management', 'class': 'ExternalDbSystemDatabaseManagementConfigDetails'}, 'stack-monitoring-config': {'module': 'database_management', 'class': 'AssociatedServiceDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'database-management-config': {'module': 'database_management', 'class': 'ExternalDbSystemDatabaseManagementConfigDetails'}, 'stack-monitoring-config': {'module': 'database_management', 'class': 'AssociatedServiceDetails'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-management-config': {'module': 'database_management', 'class': 'ExternalDbSystemDatabaseManagementConfigDetails'}, 'stack-monitoring-config': {'module': 'database_management', 'class': 'AssociatedServiceDetails'}}, output_type={'module': 'database_management', 'class': 'ExternalDbSystem'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-management-config': {'module': 'database_management', 'class': 'ExternalDbSystemDatabaseManagementConfigDetails'}, 'stack-monitoring-config': {'module': 'database_management', 'class': 'AssociatedServiceDetails'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'ExternalDbSystem'})
 @cli_util.wrap_exceptions
-def create_external_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_system_discovery_id, display_name, database_management_config, stack_monitoring_config):
+def create_external_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_system_discovery_id, display_name, database_management_config, stack_monitoring_config, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2385,6 +2395,12 @@ def create_external_db_system(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     if stack_monitoring_config is not None:
         _details['stackMonitoringConfig'] = cli_util.parse_json_parameter("stack_monitoring_config", stack_monitoring_config)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.create_external_db_system(
@@ -2481,15 +2497,17 @@ def create_external_db_system_connector(ctx, from_json, wait_for_state, max_wait
 @cli_util.option('--agent-id', required=True, help=u"""The [OCID] of the management agent used for the external DB system connector.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the external connector. The name does not have to be unique.""")
 @cli_util.option('--connection-info', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "NOT_CONNECTED", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'connection-info': {'module': 'database_management', 'class': 'ExternalDbSystemConnectionInfo'}})
+@json_skeleton_utils.get_cli_json_input_option({'connection-info': {'module': 'database_management', 'class': 'ExternalDbSystemConnectionInfo'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-info': {'module': 'database_management', 'class': 'ExternalDbSystemConnectionInfo'}}, output_type={'module': 'database_management', 'class': 'ExternalDbSystemConnector'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-info': {'module': 'database_management', 'class': 'ExternalDbSystemConnectionInfo'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'ExternalDbSystemConnector'})
 @cli_util.wrap_exceptions
-def create_external_db_system_connector_create_external_db_system_macs_connector_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_id, agent_id, display_name, connection_info):
+def create_external_db_system_connector_create_external_db_system_macs_connector_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_id, agent_id, display_name, connection_info, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2503,6 +2521,12 @@ def create_external_db_system_connector_create_external_db_system_macs_connector
 
     if connection_info is not None:
         _details['connectionInfo'] = cli_util.parse_json_parameter("connection_info", connection_info)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['connectorType'] = 'MACS'
 
@@ -2541,15 +2565,17 @@ def create_external_db_system_connector_create_external_db_system_macs_connector
 @cli_util.option('--agent-id', required=True, help=u"""The [OCID] of the management agent used for the external DB system discovery.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the external DB system resides.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB system. The name does not have to be unique.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalDbSystemDiscovery'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'ExternalDbSystemDiscovery'})
 @cli_util.wrap_exceptions
-def create_external_db_system_discovery(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, agent_id, compartment_id, display_name):
+def create_external_db_system_discovery(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, agent_id, compartment_id, display_name, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2560,6 +2586,12 @@ def create_external_db_system_discovery(ctx, from_json, wait_for_state, max_wait
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.create_external_db_system_discovery(
@@ -2603,15 +2635,17 @@ def create_external_db_system_discovery(ctx, from_json, wait_for_state, max_wait
 @cli_util.option('--discovery-key', help=u"""The unique key of the discovery request.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the database management resources.""")
 @cli_util.option('--storage-server-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of all the Exadata storage server names to be included for monitoring purposes. If not specified, all the Exadata storage servers associated with the DB systems are included.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'db-system-ids': {'module': 'database_management', 'class': 'list[string]'}, 'storage-server-names': {'module': 'database_management', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'db-system-ids': {'module': 'database_management', 'class': 'list[string]'}, 'storage-server-names': {'module': 'database_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-system-ids': {'module': 'database_management', 'class': 'list[string]'}, 'storage-server-names': {'module': 'database_management', 'class': 'list[string]'}}, output_type={'module': 'database_management', 'class': 'ExternalExadataInfrastructure'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-system-ids': {'module': 'database_management', 'class': 'list[string]'}, 'storage-server-names': {'module': 'database_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'ExternalExadataInfrastructure'})
 @cli_util.wrap_exceptions
-def create_external_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, db_system_ids, discovery_key, license_model, storage_server_names):
+def create_external_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, db_system_ids, discovery_key, license_model, storage_server_names, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2629,6 +2663,12 @@ def create_external_exadata_infrastructure(ctx, from_json, wait_for_state, max_w
 
     if storage_server_names is not None:
         _details['storageServerNames'] = cli_util.parse_json_parameter("storage_server_names", storage_server_names)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.create_external_exadata_infrastructure(
@@ -2667,15 +2707,17 @@ def create_external_exadata_infrastructure(ctx, from_json, wait_for_state, max_w
 @cli_util.option('--connector-name', required=True, help=u"""The name of the Exadata storage server connector.""")
 @cli_util.option('--connection-uri', required=True, help=u"""The unique string of the connection. For example, \"https://<storage-server-name>/MS/RESTService/\".""")
 @cli_util.option('--credential-info', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'credential-info': {'module': 'database_management', 'class': 'RestCredential'}})
+@json_skeleton_utils.get_cli_json_input_option({'credential-info': {'module': 'database_management', 'class': 'RestCredential'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-info': {'module': 'database_management', 'class': 'RestCredential'}}, output_type={'module': 'database_management', 'class': 'ExternalExadataStorageConnector'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-info': {'module': 'database_management', 'class': 'RestCredential'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'ExternalExadataStorageConnector'})
 @cli_util.wrap_exceptions
-def create_external_exadata_storage_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, storage_server_id, agent_id, connector_name, connection_uri, credential_info):
+def create_external_exadata_storage_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, storage_server_id, agent_id, connector_name, connection_uri, credential_info, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2686,6 +2728,12 @@ def create_external_exadata_storage_connector(ctx, from_json, wait_for_state, ma
     _details['connectorName'] = connector_name
     _details['connectionUri'] = connection_uri
     _details['credentialInfo'] = cli_util.parse_json_parameter("credential_info", credential_info)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.create_external_exadata_storage_connector(
@@ -2822,15 +2870,17 @@ def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.option('--secret-id', help=u"""The [OCID] of the secret containing the user password.""")
 @cli_util.option('--named-credential-id', help=u"""The [OCID] of the Named Credentials containing password secret.""")
 @cli_util.option('--role', help=u"""The role of the database user. Indicates whether the database user is a normal user or sysdba.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'result-location': {'module': 'database_management', 'class': 'JobExecutionResultLocation'}, 'schedule-details': {'module': 'database_management', 'class': 'JobScheduleDetails'}, 'in-binds': {'module': 'database_management', 'class': 'JobInBindsDetails'}, 'out-binds': {'module': 'database_management', 'class': 'JobOutBindsDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'result-location': {'module': 'database_management', 'class': 'JobExecutionResultLocation'}, 'schedule-details': {'module': 'database_management', 'class': 'JobScheduleDetails'}, 'in-binds': {'module': 'database_management', 'class': 'JobInBindsDetails'}, 'out-binds': {'module': 'database_management', 'class': 'JobOutBindsDetails'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'result-location': {'module': 'database_management', 'class': 'JobExecutionResultLocation'}, 'schedule-details': {'module': 'database_management', 'class': 'JobScheduleDetails'}, 'in-binds': {'module': 'database_management', 'class': 'JobInBindsDetails'}, 'out-binds': {'module': 'database_management', 'class': 'JobOutBindsDetails'}}, output_type={'module': 'database_management', 'class': 'Job'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'result-location': {'module': 'database_management', 'class': 'JobExecutionResultLocation'}, 'schedule-details': {'module': 'database_management', 'class': 'JobScheduleDetails'}, 'in-binds': {'module': 'database_management', 'class': 'JobInBindsDetails'}, 'out-binds': {'module': 'database_management', 'class': 'JobOutBindsDetails'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def create_job_create_sql_job_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, schedule_type, operation_type, description, managed_database_group_id, managed_database_id, database_sub_type, timeout, result_location, schedule_details, sql_text, in_binds, out_binds, sql_type, user_name, password, secret_id, named_credential_id, role):
+def create_job_create_sql_job_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, schedule_type, operation_type, description, managed_database_group_id, managed_database_id, database_sub_type, timeout, result_location, schedule_details, sql_text, in_binds, out_binds, sql_type, user_name, password, secret_id, named_credential_id, role, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2888,6 +2938,12 @@ def create_job_create_sql_job_details(ctx, from_json, wait_for_state, max_wait_s
 
     if role is not None:
         _details['role'] = role
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['jobType'] = 'SQL'
 
@@ -3014,15 +3070,17 @@ def create_job_object_storage_job_execution_result_location(ctx, from_json, wait
 @cli_util.option('--name', required=True, help=u"""The name of the Managed Database Group. Valid characters are uppercase or lowercase letters, numbers, and \"_\". The name of the Managed Database Group cannot be modified. It must be unique in the compartment and must begin with an alphabetic character.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the Managed Database Group resides.""")
 @cli_util.option('--description', help=u"""The information specified by the user about the Managed Database Group.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ManagedDatabaseGroup'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'ManagedDatabaseGroup'})
 @cli_util.wrap_exceptions
-def create_managed_database_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, description):
+def create_managed_database_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, description, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3033,6 +3091,12 @@ def create_managed_database_group(ctx, from_json, wait_for_state, max_wait_secon
 
     if description is not None:
         _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.create_managed_database_group(
@@ -3073,15 +3137,17 @@ def create_managed_database_group(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the named credential resides.""")
 @cli_util.option('--description', help=u"""The information specified by the user about the named credential.""")
 @cli_util.option('--associated-resource', help=u"""The [OCID] of the resource that is associated to the named credential.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'content': {'module': 'database_management', 'class': 'NamedCredentialContent'}})
+@json_skeleton_utils.get_cli_json_input_option({'content': {'module': 'database_management', 'class': 'NamedCredentialContent'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'content': {'module': 'database_management', 'class': 'NamedCredentialContent'}}, output_type={'module': 'database_management', 'class': 'NamedCredential'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'content': {'module': 'database_management', 'class': 'NamedCredentialContent'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'NamedCredential'})
 @cli_util.wrap_exceptions
-def create_named_credential(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, scope, type, content, compartment_id, description, associated_resource):
+def create_named_credential(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, scope, type, content, compartment_id, description, associated_resource, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3098,6 +3164,12 @@ def create_named_credential(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
     if associated_resource is not None:
         _details['associatedResource'] = associated_resource
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.create_named_credential(
@@ -3141,15 +3213,17 @@ def create_named_credential(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--content-password-secret-access-mode', required=True, type=custom_types.CliCaseInsensitiveChoice(["USER_PRINCIPAL", "RESOURCE_PRINCIPAL"]), help=u"""The mechanism used to access the password plain text value.""")
 @cli_util.option('--description', help=u"""The information specified by the user about the named credential.""")
 @cli_util.option('--associated-resource', help=u"""The [OCID] of the resource that is associated to the named credential.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'NamedCredential'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'NamedCredential'})
 @cli_util.wrap_exceptions
-def create_named_credential_basic_named_credential_content(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, scope, type, compartment_id, content_user_name, content_role, content_password_secret_id, content_password_secret_access_mode, description, associated_resource):
+def create_named_credential_basic_named_credential_content(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, scope, type, compartment_id, content_user_name, content_role, content_password_secret_id, content_password_secret_access_mode, description, associated_resource, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3170,6 +3244,12 @@ def create_named_credential_basic_named_credential_content(ctx, from_json, wait_
 
     if associated_resource is not None:
         _details['associatedResource'] = associated_resource
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['content']['credentialType'] = 'BASIC'
 
@@ -7063,14 +7143,22 @@ def get_cluster_cache_metric(ctx, from_json, managed_database_id, start_time, en
 @cli_util.option('--filter-by-metric-names', help=u"""The filter used to retrieve a specific set of metrics by passing the desired metric names with a comma separator. Note that, by default, the service returns all supported metrics.""")
 @cli_util.option('--filter-by-database-type', help=u"""The filter used to filter the databases in the fleet by a specific Oracle Database type.""")
 @cli_util.option('--filter-by-database-sub-type', help=u"""The filter used to filter the databases in the fleet by a specific Oracle Database subtype.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for \u2018TIMECREATED\u2019 is descending and the default sort order for \u2018NAME\u2019 is ascending. The \u2018NAME\u2019 sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
 @cli_util.option('--filter-by-database-deployment-type', help=u"""The filter used to filter the databases in the fleet by a specific Oracle Database deployment type.""")
 @cli_util.option('--filter-by-database-version', help=u"""The filter used to filter the databases in the fleet by a specific Oracle Database version.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--defined-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a defined tag matching the value will be returned. Each item in the list has the format \"{namespace}.{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a freeform tag matching the value will be returned. The key for each tag is \"{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same tag name are interpreted as \"OR\".  Values for different tag names are interpreted as \"AND\".""")
+@cli_util.option('--defined-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified defined tags exist will be returned. Each item in the list has the format \"{namespace}.{tagName}.true\" (for checking existence of a defined tag) or \"{namespace}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--freeform-tag-exists', multiple=True, help=u"""A list of tag existence filters to apply.  Only resources for which the specified freeform tags exist the value will be returned. The key for each tag is \"{tagName}.true\".  All inputs are case-insensitive. Currently, only existence (\"true\" at the end) is supported. Absence (\"false\" at the end) is not supported. Multiple values for different tag names are interpreted as \"AND\".""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tag-equals': {'module': 'database_management', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'database_management', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'database_management', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'database_management', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'DatabaseFleetHealthMetrics'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tag-equals': {'module': 'database_management', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'database_management', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'database_management', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'database_management', 'class': 'list[string]'}}, output_type={'module': 'database_management', 'class': 'DatabaseFleetHealthMetrics'})
 @cli_util.wrap_exceptions
-def get_database_fleet_health_metrics(ctx, from_json, compare_baseline_time, compare_target_time, managed_database_group_id, compartment_id, compare_type, filter_by_metric_names, filter_by_database_type, filter_by_database_sub_type, filter_by_database_deployment_type, filter_by_database_version):
+def get_database_fleet_health_metrics(ctx, from_json, compare_baseline_time, compare_target_time, managed_database_group_id, compartment_id, compare_type, filter_by_metric_names, filter_by_database_type, filter_by_database_sub_type, page, limit, sort_by, sort_order, filter_by_database_deployment_type, filter_by_database_version, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists):
 
     kwargs = {}
     if managed_database_group_id is not None:
@@ -7085,10 +7173,26 @@ def get_database_fleet_health_metrics(ctx, from_json, compare_baseline_time, com
         kwargs['filter_by_database_type'] = filter_by_database_type
     if filter_by_database_sub_type is not None:
         kwargs['filter_by_database_sub_type'] = filter_by_database_sub_type
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
     if filter_by_database_deployment_type is not None:
         kwargs['filter_by_database_deployment_type'] = filter_by_database_deployment_type
     if filter_by_database_version is not None:
         kwargs['filter_by_database_version'] = filter_by_database_version
+    if defined_tag_equals is not None and len(defined_tag_equals) > 0:
+        kwargs['defined_tag_equals'] = defined_tag_equals
+    if freeform_tag_equals is not None and len(freeform_tag_equals) > 0:
+        kwargs['freeform_tag_equals'] = freeform_tag_equals
+    if defined_tag_exists is not None and len(defined_tag_exists) > 0:
+        kwargs['defined_tag_exists'] = defined_tag_exists
+    if freeform_tag_exists is not None and len(freeform_tag_exists) > 0:
+        kwargs['freeform_tag_exists'] = freeform_tag_exists
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.get_database_fleet_health_metrics(
@@ -13533,23 +13637,25 @@ def test_preferred_credential_test_basic_preferred_credential_details(ctx, from_
 @cli_util.option('--name', help=u"""The display name of the private endpoint.""")
 @cli_util.option('--description', help=u"""The description of the private endpoint.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the Network Security Groups to which the Database Management private endpoint belongs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'database_management', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'database_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'database_management', 'class': 'list[string]'}}, output_type={'module': 'database_management', 'class': 'DbManagementPrivateEndpoint'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'database_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'DbManagementPrivateEndpoint'})
 @cli_util.wrap_exceptions
-def update_db_management_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_management_private_endpoint_id, name, description, nsg_ids, if_match):
+def update_db_management_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_management_private_endpoint_id, name, description, nsg_ids, freeform_tags, defined_tags, if_match):
 
     if isinstance(db_management_private_endpoint_id, six.string_types) and len(db_management_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --db-management-private-endpoint-id cannot be whitespace or empty string')
     if not force:
-        if nsg_ids:
-            if not click.confirm("WARNING: Updates to nsg-ids will replace any existing values. Are you sure you want to continue?"):
+        if nsg_ids or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to nsg-ids and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -13567,6 +13673,12 @@ def update_db_management_private_endpoint(ctx, from_json, force, wait_for_state,
 
     if nsg_ids is not None:
         _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.update_db_management_private_endpoint(
@@ -13603,19 +13715,26 @@ def update_db_management_private_endpoint(ctx, from_json, force, wait_for_state,
 @external_asm_group.command(name=cli_util.override('db_management.update_external_asm.command_name', 'update'), help=u"""Updates the external ASM specified by `externalAsmId`. \n[Command Reference](updateExternalAsm)""")
 @cli_util.option('--external-asm-id', required=True, help=u"""The [OCID] of the external ASM.""")
 @cli_util.option('--external-connector-id', help=u"""The [OCID] of the external connector.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_external_asm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_asm_id, external_connector_id, if_match):
+def update_external_asm(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_asm_id, external_connector_id, freeform_tags, defined_tags, if_match):
 
     if isinstance(external_asm_id, six.string_types) and len(external_asm_id.strip()) == 0:
         raise click.UsageError('Parameter --external-asm-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -13626,6 +13745,12 @@ def update_external_asm(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
     if external_connector_id is not None:
         _details['externalConnectorId'] = external_connector_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.update_external_asm(
@@ -13663,22 +13788,97 @@ def update_external_asm(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
+@external_asm_instance_group.command(name=cli_util.override('db_management.update_external_asm_instance.command_name', 'update'), help=u"""Updates the external ASM instance specified by `externalAsmInstanceId`. \n[Command Reference](updateExternalAsmInstance)""")
+@cli_util.option('--external-asm-instance-id', required=True, help=u"""The [OCID] of the external ASM instance.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'ExternalAsmInstance'})
+@cli_util.wrap_exceptions
+def update_external_asm_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_asm_instance_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(external_asm_instance_id, six.string_types) and len(external_asm_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-asm-instance-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_external_asm_instance(
+        external_asm_instance_id=external_asm_instance_id,
+        update_external_asm_instance_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_external_asm_instance') and callable(getattr(client, 'get_external_asm_instance')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_external_asm_instance(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @external_cluster_group.command(name=cli_util.override('db_management.update_external_cluster.command_name', 'update'), help=u"""Updates the external cluster specified by `externalClusterId`. \n[Command Reference](updateExternalCluster)""")
 @cli_util.option('--external-cluster-id', required=True, help=u"""The [OCID] of the external cluster.""")
 @cli_util.option('--external-connector-id', help=u"""The [OCID] of the external connector.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_external_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_cluster_id, external_connector_id, if_match):
+def update_external_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_cluster_id, external_connector_id, freeform_tags, defined_tags, if_match):
 
     if isinstance(external_cluster_id, six.string_types) and len(external_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --external-cluster-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -13689,6 +13889,12 @@ def update_external_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
     if external_connector_id is not None:
         _details['externalConnectorId'] = external_connector_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.update_external_cluster(
@@ -13729,19 +13935,26 @@ def update_external_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @external_cluster_instance_group.command(name=cli_util.override('db_management.update_external_cluster_instance.command_name', 'update'), help=u"""Updates the external cluster instance specified by `externalClusterInstanceId`. \n[Command Reference](updateExternalClusterInstance)""")
 @cli_util.option('--external-cluster-instance-id', required=True, help=u"""The [OCID] of the external cluster instance.""")
 @cli_util.option('--external-connector-id', help=u"""The [OCID] of the external connector.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_external_cluster_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_cluster_instance_id, external_connector_id, if_match):
+def update_external_cluster_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_cluster_instance_id, external_connector_id, freeform_tags, defined_tags, if_match):
 
     if isinstance(external_cluster_instance_id, six.string_types) and len(external_cluster_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --external-cluster-instance-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -13752,6 +13965,12 @@ def update_external_cluster_instance(ctx, from_json, wait_for_state, max_wait_se
 
     if external_connector_id is not None:
         _details['externalConnectorId'] = external_connector_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.update_external_cluster_instance(
@@ -13789,22 +14008,97 @@ def update_external_cluster_instance(ctx, from_json, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
+@external_db_home_group.command(name=cli_util.override('db_management.update_external_db_home.command_name', 'update'), help=u"""Updates the external DB home specified by `externalDbHomeId`. \n[Command Reference](updateExternalDbHome)""")
+@cli_util.option('--external-db-home-id', required=True, help=u"""The [OCID] of the external database home.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'ExternalDbHome'})
+@cli_util.wrap_exceptions
+def update_external_db_home(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_home_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(external_db_home_id, six.string_types) and len(external_db_home_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-db-home-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_external_db_home(
+        external_db_home_id=external_db_home_id,
+        update_external_db_home_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_external_db_home') and callable(getattr(client, 'get_external_db_home')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_external_db_home(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @external_db_node_group.command(name=cli_util.override('db_management.update_external_db_node.command_name', 'update'), help=u"""Updates the external DB node specified by `externalDbNodeId`. \n[Command Reference](updateExternalDbNode)""")
 @cli_util.option('--external-db-node-id', required=True, help=u"""The [OCID] of the external database node.""")
 @cli_util.option('--external-connector-id', help=u"""The [OCID] of the external connector.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_external_db_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_node_id, external_connector_id, if_match):
+def update_external_db_node(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_node_id, external_connector_id, freeform_tags, defined_tags, if_match):
 
     if isinstance(external_db_node_id, six.string_types) and len(external_db_node_id.strip()) == 0:
         raise click.UsageError('Parameter --external-db-node-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -13815,6 +14109,12 @@ def update_external_db_node(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
     if external_connector_id is not None:
         _details['externalConnectorId'] = external_connector_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.update_external_db_node(
@@ -13855,19 +14155,26 @@ def update_external_db_node(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @external_db_system_group.command(name=cli_util.override('db_management.update_external_db_system.command_name', 'update'), help=u"""Updates the external DB system specified by `externalDbSystemId`. \n[Command Reference](updateExternalDbSystem)""")
 @cli_util.option('--external-db-system-id', required=True, help=u"""The [OCID] of the external DB system.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB system. The name does not have to be unique.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalDbSystem'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'ExternalDbSystem'})
 @cli_util.wrap_exceptions
-def update_external_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_id, display_name, if_match):
+def update_external_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_id, display_name, freeform_tags, defined_tags, if_match):
 
     if isinstance(external_db_system_id, six.string_types) and len(external_db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --external-db-system-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -13878,6 +14185,12 @@ def update_external_db_system(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.update_external_db_system(
@@ -13975,23 +14288,25 @@ def update_external_db_system_connector(ctx, from_json, wait_for_state, max_wait
 @external_db_system_connector_group.command(name=cli_util.override('db_management.update_external_db_system_connector_update_external_db_system_macs_connector_details.command_name', 'update-external-db-system-connector-update-external-db-system-macs-connector-details'), help=u"""Updates the external connector specified by `externalDbSystemConnectorId`. \n[Command Reference](updateExternalDbSystemConnector)""")
 @cli_util.option('--external-db-system-connector-id', required=True, help=u"""The [OCID] of the external connector.""")
 @cli_util.option('--connection-info', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'connection-info': {'module': 'database_management', 'class': 'ExternalDbSystemConnectionInfo'}})
+@json_skeleton_utils.get_cli_json_input_option({'connection-info': {'module': 'database_management', 'class': 'ExternalDbSystemConnectionInfo'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-info': {'module': 'database_management', 'class': 'ExternalDbSystemConnectionInfo'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-info': {'module': 'database_management', 'class': 'ExternalDbSystemConnectionInfo'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_external_db_system_connector_update_external_db_system_macs_connector_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_connector_id, connection_info, if_match):
+def update_external_db_system_connector_update_external_db_system_macs_connector_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_connector_id, connection_info, freeform_tags, defined_tags, if_match):
 
     if isinstance(external_db_system_connector_id, six.string_types) and len(external_db_system_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --external-db-system-connector-id cannot be whitespace or empty string')
     if not force:
-        if connection_info:
-            if not click.confirm("WARNING: Updates to connection-info will replace any existing values. Are you sure you want to continue?"):
+        if connection_info or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to connection-info and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -14003,6 +14318,12 @@ def update_external_db_system_connector_update_external_db_system_macs_connector
 
     if connection_info is not None:
         _details['connectionInfo'] = cli_util.parse_json_parameter("connection_info", connection_info)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['connectorType'] = 'MACS'
 
@@ -14045,19 +14366,26 @@ def update_external_db_system_connector_update_external_db_system_macs_connector
 @external_db_system_discovery_group.command(name=cli_util.override('db_management.update_external_db_system_discovery.command_name', 'update'), help=u"""Updates the external DB system discovery specified by `externalDbSystemDiscoveryId`. \n[Command Reference](updateExternalDbSystemDiscovery)""")
 @cli_util.option('--external-db-system-discovery-id', required=True, help=u"""The [OCID] of the external DB system discovery.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB system. The name does not have to be unique.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ExternalDbSystemDiscovery'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'ExternalDbSystemDiscovery'})
 @cli_util.wrap_exceptions
-def update_external_db_system_discovery(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_discovery_id, display_name, if_match):
+def update_external_db_system_discovery(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_discovery_id, display_name, freeform_tags, defined_tags, if_match):
 
     if isinstance(external_db_system_discovery_id, six.string_types) and len(external_db_system_discovery_id.strip()) == 0:
         raise click.UsageError('Parameter --external-db-system-discovery-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -14068,6 +14396,12 @@ def update_external_db_system_discovery(ctx, from_json, wait_for_state, max_wait
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.update_external_db_system_discovery(
@@ -14109,23 +14443,25 @@ def update_external_db_system_discovery(ctx, from_json, wait_for_state, max_wait
 @cli_util.option('--display-name', help=u"""The name of the Exadata infrastructure.""")
 @cli_util.option('--db-system-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of all the DB systems OCIDs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--storage-server-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of the names of Exadata storage servers to be monitored. If not specified, it includes all Exadata storage servers associated with the monitored DB systems.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'db-system-ids': {'module': 'database_management', 'class': 'list[string]'}, 'storage-server-names': {'module': 'database_management', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'db-system-ids': {'module': 'database_management', 'class': 'list[string]'}, 'storage-server-names': {'module': 'database_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-system-ids': {'module': 'database_management', 'class': 'list[string]'}, 'storage-server-names': {'module': 'database_management', 'class': 'list[string]'}}, output_type={'module': 'database_management', 'class': 'ExternalExadataInfrastructure'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-system-ids': {'module': 'database_management', 'class': 'list[string]'}, 'storage-server-names': {'module': 'database_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'ExternalExadataInfrastructure'})
 @cli_util.wrap_exceptions
-def update_external_exadata_infrastructure(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_exadata_infrastructure_id, compartment_id, discovery_key, license_model, display_name, db_system_ids, storage_server_names, if_match):
+def update_external_exadata_infrastructure(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_exadata_infrastructure_id, compartment_id, discovery_key, license_model, display_name, db_system_ids, storage_server_names, freeform_tags, defined_tags, if_match):
 
     if isinstance(external_exadata_infrastructure_id, six.string_types) and len(external_exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --external-exadata-infrastructure-id cannot be whitespace or empty string')
     if not force:
-        if db_system_ids or storage_server_names:
-            if not click.confirm("WARNING: Updates to db-system-ids and storage-server-names will replace any existing values. Are you sure you want to continue?"):
+        if db_system_ids or storage_server_names or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to db-system-ids and storage-server-names and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -14150,6 +14486,12 @@ def update_external_exadata_infrastructure(ctx, from_json, force, wait_for_state
 
     if storage_server_names is not None:
         _details['storageServerNames'] = cli_util.parse_json_parameter("storage_server_names", storage_server_names)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.update_external_exadata_infrastructure(
@@ -14188,23 +14530,25 @@ def update_external_exadata_infrastructure(ctx, from_json, force, wait_for_state
 @cli_util.option('--connector-name', help=u"""The name of the Exadata storage server connector.""")
 @cli_util.option('--connection-uri', help=u"""The unique string of the connection. For example, \"https://<storage-server-name>/MS/RESTService/\".""")
 @cli_util.option('--credential-info', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'credential-info': {'module': 'database_management', 'class': 'RestCredential'}})
+@json_skeleton_utils.get_cli_json_input_option({'credential-info': {'module': 'database_management', 'class': 'RestCredential'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-info': {'module': 'database_management', 'class': 'RestCredential'}}, output_type={'module': 'database_management', 'class': 'ExternalExadataStorageConnector'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credential-info': {'module': 'database_management', 'class': 'RestCredential'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'ExternalExadataStorageConnector'})
 @cli_util.wrap_exceptions
-def update_external_exadata_storage_connector(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_exadata_storage_connector_id, connector_name, connection_uri, credential_info, if_match):
+def update_external_exadata_storage_connector(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_exadata_storage_connector_id, connector_name, connection_uri, credential_info, freeform_tags, defined_tags, if_match):
 
     if isinstance(external_exadata_storage_connector_id, six.string_types) and len(external_exadata_storage_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --external-exadata-storage-connector-id cannot be whitespace or empty string')
     if not force:
-        if credential_info:
-            if not click.confirm("WARNING: Updates to credential-info will replace any existing values. Are you sure you want to continue?"):
+        if credential_info or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to credential-info and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -14222,6 +14566,12 @@ def update_external_exadata_storage_connector(ctx, from_json, force, wait_for_st
 
     if credential_info is not None:
         _details['credentialInfo'] = cli_util.parse_json_parameter("credential_info", credential_info)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.update_external_exadata_storage_connector(
@@ -14255,22 +14605,165 @@ def update_external_exadata_storage_connector(ctx, from_json, force, wait_for_st
     cli_util.render_response(result, ctx)
 
 
+@external_exadata_storage_grid_group.command(name=cli_util.override('db_management.update_external_exadata_storage_grid.command_name', 'update'), help=u"""Updates the Exadata storage server grid specified by exadataStorageGridId. \n[Command Reference](updateExternalExadataStorageGrid)""")
+@cli_util.option('--external-exadata-storage-grid-id', required=True, help=u"""The [OCID] of the Exadata storage grid.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'ExternalExadataStorageGrid'})
+@cli_util.wrap_exceptions
+def update_external_exadata_storage_grid(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_exadata_storage_grid_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(external_exadata_storage_grid_id, six.string_types) and len(external_exadata_storage_grid_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-exadata-storage-grid-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_external_exadata_storage_grid(
+        external_exadata_storage_grid_id=external_exadata_storage_grid_id,
+        update_external_exadata_storage_grid_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_external_exadata_storage_grid') and callable(getattr(client, 'get_external_exadata_storage_grid')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_external_exadata_storage_grid(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@external_exadata_storage_server_group.command(name=cli_util.override('db_management.update_external_exadata_storage_server.command_name', 'update'), help=u"""Updates the Exadata storage server specified by exadataStorageServerId. \n[Command Reference](updateExternalExadataStorageServer)""")
+@cli_util.option('--external-exadata-storage-server-id', required=True, help=u"""The [OCID] of the Exadata storage server.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'ExternalExadataStorageServer'})
+@cli_util.wrap_exceptions
+def update_external_exadata_storage_server(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_exadata_storage_server_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(external_exadata_storage_server_id, six.string_types) and len(external_exadata_storage_server_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-exadata-storage-server-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_external_exadata_storage_server(
+        external_exadata_storage_server_id=external_exadata_storage_server_id,
+        update_external_exadata_storage_server_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_external_exadata_storage_server') and callable(getattr(client, 'get_external_exadata_storage_server')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_external_exadata_storage_server(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @external_listener_group.command(name=cli_util.override('db_management.update_external_listener.command_name', 'update'), help=u"""Updates the external listener specified by `externalListenerId`. \n[Command Reference](updateExternalListener)""")
 @cli_util.option('--external-listener-id', required=True, help=u"""The [OCID] of the external listener.""")
 @cli_util.option('--external-connector-id', help=u"""The [OCID] of the external connector.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_external_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_listener_id, external_connector_id, if_match):
+def update_external_listener(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_listener_id, external_connector_id, freeform_tags, defined_tags, if_match):
 
     if isinstance(external_listener_id, six.string_types) and len(external_listener_id.strip()) == 0:
         raise click.UsageError('Parameter --external-listener-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -14281,6 +14774,12 @@ def update_external_listener(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     if external_connector_id is not None:
         _details['externalConnectorId'] = external_connector_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.update_external_listener(
@@ -14413,23 +14912,25 @@ def update_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--secret-id', help=u"""The [OCID] of the secret containing the user password.""")
 @cli_util.option('--named-credential-id', help=u"""The [OCID] of the Named Credentials containing password secret.""")
 @cli_util.option('--role', help=u"""The role of the database user. Indicates whether the database user is a normal user or sysdba.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'result-location': {'module': 'database_management', 'class': 'JobExecutionResultLocation'}, 'schedule-details': {'module': 'database_management', 'class': 'JobScheduleDetails'}, 'in-binds': {'module': 'database_management', 'class': 'JobInBindsDetails'}, 'out-binds': {'module': 'database_management', 'class': 'JobOutBindsDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'result-location': {'module': 'database_management', 'class': 'JobExecutionResultLocation'}, 'schedule-details': {'module': 'database_management', 'class': 'JobScheduleDetails'}, 'in-binds': {'module': 'database_management', 'class': 'JobInBindsDetails'}, 'out-binds': {'module': 'database_management', 'class': 'JobOutBindsDetails'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'result-location': {'module': 'database_management', 'class': 'JobExecutionResultLocation'}, 'schedule-details': {'module': 'database_management', 'class': 'JobScheduleDetails'}, 'in-binds': {'module': 'database_management', 'class': 'JobInBindsDetails'}, 'out-binds': {'module': 'database_management', 'class': 'JobOutBindsDetails'}}, output_type={'module': 'database_management', 'class': 'Job'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'result-location': {'module': 'database_management', 'class': 'JobExecutionResultLocation'}, 'schedule-details': {'module': 'database_management', 'class': 'JobScheduleDetails'}, 'in-binds': {'module': 'database_management', 'class': 'JobInBindsDetails'}, 'out-binds': {'module': 'database_management', 'class': 'JobOutBindsDetails'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def update_job_update_sql_job_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, description, timeout, result_location, schedule_details, sql_text, in_binds, out_binds, sql_type, user_name, password, secret_id, named_credential_id, role, if_match):
+def update_job_update_sql_job_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, description, timeout, result_location, schedule_details, sql_text, in_binds, out_binds, sql_type, user_name, password, secret_id, named_credential_id, role, freeform_tags, defined_tags, if_match):
 
     if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
     if not force:
-        if result_location or schedule_details or in_binds or out_binds:
-            if not click.confirm("WARNING: Updates to result-location and schedule-details and in-binds and out-binds will replace any existing values. Are you sure you want to continue?"):
+        if result_location or schedule_details or in_binds or out_binds or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to result-location and schedule-details and in-binds and out-binds and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -14477,6 +14978,12 @@ def update_job_update_sql_job_details(ctx, from_json, force, wait_for_state, max
 
     if role is not None:
         _details['role'] = role
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['jobType'] = 'SQL'
 
@@ -14595,22 +15102,71 @@ def update_job_object_storage_job_execution_result_location(ctx, from_json, forc
     cli_util.render_response(result, ctx)
 
 
+@managed_database_group.command(name=cli_util.override('db_management.update_managed_database.command_name', 'update'), help=u"""Updates the Managed Database specified by managedDatabaseId. \n[Command Reference](updateManagedDatabase)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'ManagedDatabase'})
+@cli_util.wrap_exceptions
+def update_managed_database(ctx, from_json, force, managed_database_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_managed_database(
+        managed_database_id=managed_database_id,
+        update_managed_database_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @managed_database_group_group.command(name=cli_util.override('db_management.update_managed_database_group.command_name', 'update'), help=u"""Updates the Managed Database Group specified by managedDatabaseGroupId. \n[Command Reference](updateManagedDatabaseGroup)""")
 @cli_util.option('--managed-database-group-id', required=True, help=u"""The [OCID] of the Managed Database Group.""")
 @cli_util.option('--description', help=u"""The information specified by the user about the Managed Database Group.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ManagedDatabaseGroup'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'ManagedDatabaseGroup'})
 @cli_util.wrap_exceptions
-def update_managed_database_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_database_group_id, description, if_match):
+def update_managed_database_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_database_group_id, description, freeform_tags, defined_tags, if_match):
 
     if isinstance(managed_database_group_id, six.string_types) and len(managed_database_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-group-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -14621,6 +15177,12 @@ def update_managed_database_group(ctx, from_json, wait_for_state, max_wait_secon
 
     if description is not None:
         _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.update_managed_database_group(
@@ -14660,23 +15222,25 @@ def update_managed_database_group(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["RESOURCE", "GLOBAL"]), help=u"""The scope of the named credential.""")
 @cli_util.option('--content', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--associated-resource', help=u"""The [OCID] of the resource that is associated to the named credential.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'content': {'module': 'database_management', 'class': 'NamedCredentialContent'}})
+@json_skeleton_utils.get_cli_json_input_option({'content': {'module': 'database_management', 'class': 'NamedCredentialContent'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'content': {'module': 'database_management', 'class': 'NamedCredentialContent'}}, output_type={'module': 'database_management', 'class': 'NamedCredential'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'content': {'module': 'database_management', 'class': 'NamedCredentialContent'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'NamedCredential'})
 @cli_util.wrap_exceptions
-def update_named_credential(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, named_credential_id, description, scope, content, associated_resource, if_match):
+def update_named_credential(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, named_credential_id, description, scope, content, associated_resource, freeform_tags, defined_tags, if_match):
 
     if isinstance(named_credential_id, six.string_types) and len(named_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --named-credential-id cannot be whitespace or empty string')
     if not force:
-        if content:
-            if not click.confirm("WARNING: Updates to content will replace any existing values. Are you sure you want to continue?"):
+        if content or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to content and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -14697,6 +15261,12 @@ def update_named_credential(ctx, from_json, force, wait_for_state, max_wait_seco
 
     if associated_resource is not None:
         _details['associatedResource'] = associated_resource
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.update_named_credential(
@@ -14739,19 +15309,26 @@ def update_named_credential(ctx, from_json, force, wait_for_state, max_wait_seco
 @cli_util.option('--description', help=u"""The information specified by the user about the named credential.""")
 @cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["RESOURCE", "GLOBAL"]), help=u"""The scope of the named credential.""")
 @cli_util.option('--associated-resource', help=u"""The [OCID] of the resource that is associated to the named credential.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'NamedCredential'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'NamedCredential'})
 @cli_util.wrap_exceptions
-def update_named_credential_basic_named_credential_content(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, named_credential_id, content_user_name, content_role, content_password_secret_id, content_password_secret_access_mode, description, scope, associated_resource, if_match):
+def update_named_credential_basic_named_credential_content(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, named_credential_id, content_user_name, content_role, content_password_secret_id, content_password_secret_access_mode, description, scope, associated_resource, freeform_tags, defined_tags, if_match):
 
     if isinstance(named_credential_id, six.string_types) and len(named_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --named-credential-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -14773,6 +15350,12 @@ def update_named_credential_basic_named_credential_content(ctx, from_json, wait_
 
     if associated_resource is not None:
         _details['associatedResource'] = associated_resource
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['content']['credentialType'] = 'BASIC'
 

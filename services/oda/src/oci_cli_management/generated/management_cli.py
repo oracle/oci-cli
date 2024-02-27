@@ -102,6 +102,129 @@ management_root_group.add_command(oda_private_endpoint_group)
 management_root_group.add_command(channel_group)
 
 
+@skill_group.command(name=cli_util.override('management.bulk_create_skill_entities.command_name', 'bulk-create-skill-entities'), help=u"""Bulk create composite and value list entities into a skill. \n[Command Reference](bulkCreateSkillEntities)""")
+@cli_util.option('--oda-instance-id', required=True, help=u"""Unique Digital Assistant instance identifier.""")
+@cli_util.option('--skill-id', required=True, help=u"""Unique Skill identifier.""")
+@cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of the skill entity objects to create.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "SUCCEEDED", "FAILED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'oda', 'class': 'list[CreateSkillEntityDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'oda', 'class': 'list[CreateSkillEntityDetails]'}})
+@cli_util.wrap_exceptions
+def bulk_create_skill_entities(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, skill_id, items):
+
+    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
+
+    if isinstance(skill_id, six.string_types) and len(skill_id.strip()) == 0:
+        raise click.UsageError('Parameter --skill-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    client = cli_util.build_client('oda', 'management', ctx)
+    result = client.bulk_create_skill_entities(
+        oda_instance_id=oda_instance_id,
+        skill_id=skill_id,
+        bulk_create_skill_entities_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@skill_group.command(name=cli_util.override('management.cascading_delete_skill_custom_entities.command_name', 'cascading-delete-skill-custom-entities'), help=u"""Cascading delete of the custom entities in a skill. \n[Command Reference](cascadingDeleteSkillCustomEntities)""")
+@cli_util.option('--oda-instance-id', required=True, help=u"""Unique Digital Assistant instance identifier.""")
+@cli_util.option('--skill-id', required=True, help=u"""Unique Skill identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control in a PUT or DELETE call for a Digital Assistant instance, set the `if-match` query parameter to the value of the `ETAG` header from a previous GET or POST response for that instance. The service updates or deletes the instance only if the etag that you provide matches the instance's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "SUCCEEDED", "FAILED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def cascading_delete_skill_custom_entities(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, skill_id, if_match):
+
+    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
+
+    if isinstance(skill_id, six.string_types) and len(skill_id.strip()) == 0:
+        raise click.UsageError('Parameter --skill-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('oda', 'management', ctx)
+    result = client.cascading_delete_skill_custom_entities(
+        oda_instance_id=oda_instance_id,
+        skill_id=skill_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @oda_private_endpoint_group.command(name=cli_util.override('management.change_oda_private_endpoint_compartment.command_name', 'change-compartment'), help=u"""Starts an asynchronous job to move the specified ODA Private Endpoint into a different compartment.
 
 To monitor the status of the job, take the `opc-work-request-id` response header value and use it to call `GET /workRequests/{workRequestID}`. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeOdaPrivateEndpointCompartment)""")
@@ -1837,6 +1960,7 @@ def create_oda_private_endpoint_scan_proxy(ctx, from_json, wait_for_state, max_w
 @cli_util.option('--category', help=u"""The resource's category.  This is used to group resource's together.""")
 @cli_util.option('--description', help=u"""A short description of the resource.""")
 @cli_util.option('--platform-version', help=u"""The ODA Platform Version for this resource.""")
+@cli_util.option('--dialog-version', help=u"""The resource's dialog version.""")
 @cli_util.option('--multilingual-mode', type=custom_types.CliCaseInsensitiveChoice(["NATIVE", "TRANSLATION"]), help=u"""The multilingual mode for the resource.""")
 @cli_util.option('--primary-language-tag', help=u"""The primary language for the resource.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1849,7 +1973,7 @@ def create_oda_private_endpoint_scan_proxy(ctx, from_json, wait_for_state, max_w
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'oda', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'oda', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_skill(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, kind, category, description, platform_version, multilingual_mode, primary_language_tag, freeform_tags, defined_tags):
+def create_skill(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, kind, category, description, platform_version, dialog_version, multilingual_mode, primary_language_tag, freeform_tags, defined_tags):
 
     if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
@@ -1868,6 +1992,9 @@ def create_skill(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
     if platform_version is not None:
         _details['platformVersion'] = platform_version
+
+    if dialog_version is not None:
+        _details['dialogVersion'] = dialog_version
 
     if multilingual_mode is not None:
         _details['multilingualMode'] = multilingual_mode
@@ -1925,6 +2052,7 @@ def create_skill(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.option('--category', help=u"""The resource's category.  This is used to group resource's together.""")
 @cli_util.option('--description', help=u"""A short description of the resource.""")
 @cli_util.option('--platform-version', help=u"""The ODA Platform Version for this resource.""")
+@cli_util.option('--dialog-version', help=u"""The resource's dialog version.""")
 @cli_util.option('--multilingual-mode', type=custom_types.CliCaseInsensitiveChoice(["NATIVE", "TRANSLATION"]), help=u"""The multilingual mode for the resource.""")
 @cli_util.option('--primary-language-tag', help=u"""The primary language for the resource.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1938,7 +2066,7 @@ def create_skill(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'oda', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'oda', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_skill_clone_skill_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, id, name, display_name, category, description, platform_version, multilingual_mode, primary_language_tag, freeform_tags, defined_tags, version_parameterconflict):
+def create_skill_clone_skill_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, id, name, display_name, category, description, platform_version, dialog_version, multilingual_mode, primary_language_tag, freeform_tags, defined_tags, version_parameterconflict):
 
     if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
@@ -1959,6 +2087,9 @@ def create_skill_clone_skill_details(ctx, from_json, wait_for_state, max_wait_se
 
     if platform_version is not None:
         _details['platformVersion'] = platform_version
+
+    if dialog_version is not None:
+        _details['dialogVersion'] = dialog_version
 
     if multilingual_mode is not None:
         _details['multilingualMode'] = multilingual_mode
@@ -2021,6 +2152,7 @@ def create_skill_clone_skill_details(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.option('--category', help=u"""The resource's category.  This is used to group resource's together.""")
 @cli_util.option('--description', help=u"""A short description of the resource.""")
 @cli_util.option('--platform-version', help=u"""The ODA Platform Version for this resource.""")
+@cli_util.option('--dialog-version', help=u"""The resource's dialog version.""")
 @cli_util.option('--multilingual-mode', type=custom_types.CliCaseInsensitiveChoice(["NATIVE", "TRANSLATION"]), help=u"""The multilingual mode for the resource.""")
 @cli_util.option('--primary-language-tag', help=u"""The primary language for the resource.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2034,7 +2166,7 @@ def create_skill_clone_skill_details(ctx, from_json, wait_for_state, max_wait_se
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'oda', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'oda', 'class': 'dict(str, dict(str, object))'}, 'native-language-tags': {'module': 'oda', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def create_skill_create_new_skill_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, name, display_name, version_parameterconflict, category, description, platform_version, multilingual_mode, primary_language_tag, freeform_tags, defined_tags, native_language_tags):
+def create_skill_create_new_skill_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, name, display_name, version_parameterconflict, category, description, platform_version, dialog_version, multilingual_mode, primary_language_tag, freeform_tags, defined_tags, native_language_tags):
 
     if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
@@ -2055,6 +2187,9 @@ def create_skill_create_new_skill_details(ctx, from_json, wait_for_state, max_wa
 
     if platform_version is not None:
         _details['platformVersion'] = platform_version
+
+    if dialog_version is not None:
+        _details['dialogVersion'] = dialog_version
 
     if multilingual_mode is not None:
         _details['multilingualMode'] = multilingual_mode
@@ -2116,6 +2251,7 @@ def create_skill_create_new_skill_details(ctx, from_json, wait_for_state, max_wa
 @cli_util.option('--category', help=u"""The resource's category.  This is used to group resource's together.""")
 @cli_util.option('--description', help=u"""A short description of the resource.""")
 @cli_util.option('--platform-version', help=u"""The ODA Platform Version for this resource.""")
+@cli_util.option('--dialog-version', help=u"""The resource's dialog version.""")
 @cli_util.option('--multilingual-mode', type=custom_types.CliCaseInsensitiveChoice(["NATIVE", "TRANSLATION"]), help=u"""The multilingual mode for the resource.""")
 @cli_util.option('--primary-language-tag', help=u"""The primary language for the resource.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2128,7 +2264,7 @@ def create_skill_create_new_skill_details(ctx, from_json, wait_for_state, max_wa
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'oda', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'oda', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_skill_create_skill_version_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, id, version_parameterconflict, category, description, platform_version, multilingual_mode, primary_language_tag, freeform_tags, defined_tags):
+def create_skill_create_skill_version_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, id, version_parameterconflict, category, description, platform_version, dialog_version, multilingual_mode, primary_language_tag, freeform_tags, defined_tags):
 
     if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
@@ -2148,6 +2284,9 @@ def create_skill_create_skill_version_details(ctx, from_json, wait_for_state, ma
 
     if platform_version is not None:
         _details['platformVersion'] = platform_version
+
+    if dialog_version is not None:
+        _details['dialogVersion'] = dialog_version
 
     if multilingual_mode is not None:
         _details['multilingualMode'] = multilingual_mode
@@ -2207,6 +2346,7 @@ def create_skill_create_skill_version_details(ctx, from_json, wait_for_state, ma
 @cli_util.option('--category', help=u"""The resource's category.  This is used to group resource's together.""")
 @cli_util.option('--description', help=u"""A short description of the resource.""")
 @cli_util.option('--platform-version', help=u"""The ODA Platform Version for this resource.""")
+@cli_util.option('--dialog-version', help=u"""The resource's dialog version.""")
 @cli_util.option('--multilingual-mode', type=custom_types.CliCaseInsensitiveChoice(["NATIVE", "TRANSLATION"]), help=u"""The multilingual mode for the resource.""")
 @cli_util.option('--primary-language-tag', help=u"""The primary language for the resource.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2220,7 +2360,7 @@ def create_skill_create_skill_version_details(ctx, from_json, wait_for_state, ma
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'oda', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'oda', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_skill_extend_skill_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, id, name, display_name, category, description, platform_version, multilingual_mode, primary_language_tag, freeform_tags, defined_tags, version_parameterconflict):
+def create_skill_extend_skill_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, id, name, display_name, category, description, platform_version, dialog_version, multilingual_mode, primary_language_tag, freeform_tags, defined_tags, version_parameterconflict):
 
     if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
@@ -2241,6 +2381,9 @@ def create_skill_extend_skill_details(ctx, from_json, wait_for_state, max_wait_s
 
     if platform_version is not None:
         _details['platformVersion'] = platform_version
+
+    if dialog_version is not None:
+        _details['dialogVersion'] = dialog_version
 
     if multilingual_mode is not None:
         _details['multilingualMode'] = multilingual_mode
@@ -4317,6 +4460,72 @@ def stop_channel(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@skill_group.command(name=cli_util.override('management.train_skill.command_name', 'train'), help=u"""Train a skill. \n[Command Reference](trainSkill)""")
+@cli_util.option('--oda-instance-id', required=True, help=u"""Unique Digital Assistant instance identifier.""")
+@cli_util.option('--skill-id', required=True, help=u"""Unique Skill identifier.""")
+@cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of parameters for training the skill.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control in a PUT or DELETE call for a Digital Assistant instance, set the `if-match` query parameter to the value of the `ETAG` header from a previous GET or POST response for that instance. The service updates or deletes the instance only if the etag that you provide matches the instance's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "SUCCEEDED", "FAILED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'oda', 'class': 'list[TrainSkillParameter]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'oda', 'class': 'list[TrainSkillParameter]'}})
+@cli_util.wrap_exceptions
+def train_skill(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, skill_id, items, if_match):
+
+    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
+
+    if isinstance(skill_id, six.string_types) and len(skill_id.strip()) == 0:
+        raise click.UsageError('Parameter --skill-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    client = cli_util.build_client('oda', 'management', ctx)
+    result = client.train_skill(
+        oda_instance_id=oda_instance_id,
+        skill_id=skill_id,
+        train_skill_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

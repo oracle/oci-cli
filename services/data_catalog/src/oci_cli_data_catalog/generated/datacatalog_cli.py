@@ -670,6 +670,49 @@ def associate_custom_property(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
+@data_asset_group.command(name=cli_util.override('data_catalog.asynchronous_export_data_asset.command_name', 'asynchronous-export'), help=u"""Export technical objects from a Data Asset in Excel format. Returns details about the job which actually performs the export. \n[Command Reference](asynchronousExportDataAsset)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
+@cli_util.option('--export-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["CUSTOM_PROPERTY_VALUES", "ALL"]), multiple=True, help=u"""Type of export.""")
+@cli_util.option('--export-scope', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of objects and their child types to be selected for export.
+
+This option is a JSON list with items of type DataAssetExportScope.  For documentation on DataAssetExportScope please see our API reference: https://docs.cloud.oracle.com/api/#/en/datacatalog/20190325/datatypes/DataAssetExportScope.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--object-storage-target', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'export-scope': {'module': 'data_catalog', 'class': 'list[DataAssetExportScope]'}, 'object-storage-target': {'module': 'data_catalog', 'class': 'ObjectStorageObjectReference'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'export-scope': {'module': 'data_catalog', 'class': 'list[DataAssetExportScope]'}, 'object-storage-target': {'module': 'data_catalog', 'class': 'ObjectStorageObjectReference'}}, output_type={'module': 'data_catalog', 'class': 'AsynchronousExportDataAssetResult'})
+@cli_util.wrap_exceptions
+def asynchronous_export_data_asset(ctx, from_json, catalog_id, data_asset_key, export_type, export_scope, object_storage_target):
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+        raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if export_scope is not None:
+        _details['exportScope'] = cli_util.parse_json_parameter("export_scope", export_scope)
+
+    if object_storage_target is not None:
+        _details['objectStorageTarget'] = cli_util.parse_json_parameter("object_storage_target", object_storage_target)
+
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.asynchronous_export_data_asset(
+        catalog_id=catalog_id,
+        data_asset_key=data_asset_key,
+        export_type=export_type,
+        asynchronous_export_data_asset_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @glossary_group.command(name=cli_util.override('data_catalog.asynchronous_export_glossary.command_name', 'asynchronous-export'), help=u"""Exports the contents of a glossary in Excel format. Returns details about the job which actually performs the export. \n[Command Reference](asynchronousExportGlossary)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--glossary-key', required=True, help=u"""Unique glossary key.""")
@@ -2120,7 +2163,7 @@ def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @job_definition_group.command(name=cli_util.override('data_catalog.create_job_definition.command_name', 'create'), help=u"""Creates a new job definition. \n[Command Reference](createJobDefinition)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--job-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE", "IMPORT_DATA_ASSET", "CREATE_SCAN_PROXY", "ASYNC_EXPORT_GLOSSARY"]), help=u"""Type of the job definition.""")
+@cli_util.option('--job-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE", "IMPORT_DATA_ASSET", "CREATE_SCAN_PROXY", "ASYNC_EXPORT_GLOSSARY", "ASYNC_EXPORT_DATA_ASSET"]), help=u"""Type of the job definition.""")
 @cli_util.option('--description', help=u"""Detailed description of the job definition.""")
 @cli_util.option('--is-incremental', type=click.BOOL, help=u"""Specifies if the job definition is incremental or full.""")
 @cli_util.option('--data-asset-key', help=u"""The key of the data asset for which the job is defined.""")
@@ -2209,7 +2252,7 @@ def create_job_definition(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--job-key', required=True, help=u"""Unique job key.""")
 @cli_util.option('--sub-type', help=u"""Sub-type of this job execution.""")
-@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE", "IMPORT_DATA_ASSET", "CREATE_SCAN_PROXY", "ASYNC_EXPORT_GLOSSARY"]), help=u"""Type of the job execution.""")
+@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE", "IMPORT_DATA_ASSET", "CREATE_SCAN_PROXY", "ASYNC_EXPORT_GLOSSARY", "ASYNC_EXPORT_DATA_ASSET"]), help=u"""Type of the job execution.""")
 @cli_util.option('--parent-key', help=u"""The unique key of the parent execution or null if this job execution has no parent.""")
 @cli_util.option('--time-started', type=custom_types.CLI_DATETIME, help=u"""Time that job execution started. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-ended', type=custom_types.CLI_DATETIME, help=u"""Time that the job execution ended or null if it hasn't yet completed. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -6048,7 +6091,7 @@ def list_glossaries(ctx, from_json, all_pages, page_size, catalog_id, display_na
 @cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\" or has the pattern \"Cu\" anywhere in between.""")
 @cli_util.option('--job-execution-state', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "IN_PROGRESS", "INACTIVE", "FAILED", "SUCCEEDED", "CANCELED", "SUCCEEDED_WITH_WARNINGS"]), help=u"""Job execution state.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
-@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE", "IMPORT_DATA_ASSET", "CREATE_SCAN_PROXY", "ASYNC_EXPORT_GLOSSARY"]), help=u"""Job type.""")
+@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE", "IMPORT_DATA_ASSET", "CREATE_SCAN_PROXY", "ASYNC_EXPORT_GLOSSARY", "ASYNC_EXPORT_DATA_ASSET"]), help=u"""Job type.""")
 @cli_util.option('--is-incremental', type=click.BOOL, help=u"""Whether job definition is an incremental harvest (true) or a full harvest (false).""")
 @cli_util.option('--data-asset-key', help=u"""Unique data asset key.""")
 @cli_util.option('--glossary-key', help=u"""Unique glossary key.""")
@@ -6152,7 +6195,7 @@ def list_job_definitions(ctx, from_json, all_pages, page_size, catalog_id, displ
 @cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--created-by-id', help=u"""OCID of the user who created the resource.""")
 @cli_util.option('--updated-by-id', help=u"""OCID of the user who updated the resource.""")
-@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE", "IMPORT_DATA_ASSET", "CREATE_SCAN_PROXY", "ASYNC_EXPORT_GLOSSARY"]), help=u"""Job type.""")
+@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE", "IMPORT_DATA_ASSET", "CREATE_SCAN_PROXY", "ASYNC_EXPORT_GLOSSARY", "ASYNC_EXPORT_DATA_ASSET"]), help=u"""Job type.""")
 @cli_util.option('--sub-type', help=u"""Sub-type of this job execution.""")
 @cli_util.option('--parent-key', help=u"""The unique key of the parent execution or null if this job execution has no parent.""")
 @cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""Time that the job execution was started or in the case of a future time, the time when the job will start. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -6470,7 +6513,7 @@ def list_job_metrics(ctx, from_json, all_pages, page_size, catalog_id, job_key, 
 @cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--created-by-id', help=u"""OCID of the user who created the resource.""")
 @cli_util.option('--updated-by-id', help=u"""OCID of the user who updated the resource.""")
-@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE", "IMPORT_DATA_ASSET", "CREATE_SCAN_PROXY", "ASYNC_EXPORT_GLOSSARY"]), help=u"""Job type.""")
+@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE", "ASYNC_DELETE", "IMPORT_DATA_ASSET", "CREATE_SCAN_PROXY", "ASYNC_EXPORT_GLOSSARY", "ASYNC_EXPORT_DATA_ASSET"]), help=u"""Job type.""")
 @cli_util.option('--job-definition-key', help=u"""Unique job definition key.""")
 @cli_util.option('--data-asset-key', help=u"""Unique data asset key.""")
 @cli_util.option('--glossary-key', help=u"""Unique glossary key.""")

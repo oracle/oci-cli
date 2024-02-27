@@ -7,6 +7,7 @@ SDK_client_map = {
     "data_catalog.add_data_selector_patterns": "oci.data_catalog.DataCatalogClient.add_data_selector_patterns",
     "data_catalog.add_metastore_lock": "oci.data_catalog.DataCatalogClient.add_metastore_lock",
     "data_catalog.associate_custom_property": "oci.data_catalog.DataCatalogClient.associate_custom_property",
+    "data_catalog.asynchronous_export_data_asset": "oci.data_catalog.DataCatalogClient.asynchronous_export_data_asset",
     "data_catalog.asynchronous_export_glossary": "oci.data_catalog.DataCatalogClient.asynchronous_export_glossary",
     "data_catalog.attach_catalog_private_endpoint": "oci.data_catalog.DataCatalogClient.attach_catalog_private_endpoint",
     "data_catalog.change_catalog_compartment": "oci.data_catalog.DataCatalogClient.change_catalog_compartment",

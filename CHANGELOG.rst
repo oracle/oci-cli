@@ -6,6 +6,104 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.37.11 - 2024-02-27
+--------------------
+Added
+~~~~~
+* Support for retrieving logs in Container Instance Service.
+
+  * ``oci container-instances container retrieve-logs --is-previous``
+
+* Support for queue source feature in Connector Hub Service.
+
+  * ``oci och queue-source``
+
+* Support for asynchronous data asset export in Data Catalog Service.
+
+  * ``oci data-catalog data-asset asynchronous-export``
+
+* Support for the secret auto-generation in Vault Secret Management Service.
+
+  * ``oci vault secret create-base64 --enable-auto-generation --secret-generation-context``
+  * ``oci vault secret update --enable-auto-generation --secret-generation-context``
+  * ``oci vault secret update-base64 --enable-auto-generation --secret-generation-context``
+
+* Support for new optional parameters in key commands to enable or modify automatic key rotation settings in Key Management Service.
+
+  * ``oci kms management key create --is-auto-rotation-enabled``
+  * ``oci kms management key create --is-auto-rotation-enabled --auto-key-rotation-details``
+  * ``oci kms management key import --is-auto-rotation-enabled``
+  * ``oci kms management key import --is-auto-rotation-enabled --is-auto-rotation-enabled``
+  * ``oci kms management key update --is-auto-rotation-enabled``
+  * ``oci kms management key update --is-auto-rotation-enabled --auto-key-rotation-details``
+
+* Support for tagging for following commands in Database Management Service.
+
+  * ``oci database-management managed-database``
+  * ``oci database-management managed-database-group``
+  * ``oci database-management external-db-system-discovery``
+  * ``oci database-management external-db-system``
+  * ``oci database-management external-cluster``
+  * ``oci database-management external-cluster-instance``
+  * ``oci database-management external-asm``
+  * ``oci database-management external-asm-instance``
+  * ``oci database-management external-listener``
+  * ``oci database-management external-db-node``
+  * ``oci database-management external-db-home``
+  * ``oci database-management external-db-system-connector``
+  * ``oci database-management external-exadata-infrastructure``
+  * ``oci database-management external-exadata-storage-connector``
+  * ``oci database-management external-exadata-storage-grid``
+  * ``oci database-management external-exadata-storage-server``
+  * ``oci database-management job``
+  * ``oci database-management private-endpoint``
+
+* Operator Access Control Service
+
+  * Support for multiple approvals (two approvals).
+
+    * ``oci opctl operator-control create --number-of-approvers``
+    * ``oci opctl operator-control update --number-of-approvers``
+
+  * Support for forwarding Hypervisor logs.
+
+    * ``oci opctl operator-control-assignment create --is-hypervisor-log-forwarded``
+    * ``oci opctl operator-control-assignment update --is-hypervisor-log-forwarded``
+
+  * Support for Assignment health check.
+
+    * ``oci opctl operator-control-assignment get-assignment-validation-status --operator-control-assignment-id``
+    * ``oci opctl operator-control-assignment validate-operator-assignment --operator-control-assignment-id --action-name``
+
+* Database Service
+
+  * Support for the cluster placement group feature in Cloud Exadata Infrastructure.
+
+    * ``oci db cloud-exa-infra create --cluster-placement-group-id``
+    * ``oci db cloud-exa-infra list --cluster-placement-group-id``
+
+  * Support for Create Autonomous Dataguard Association.
+
+    * ``oci db autonomous-container-database-dataguard create --peer-autonomous-vm-cluster-id --peer-cloud-autonomous-vm-cluster-id --peer-db-unique-name``
+
+* Digital Assistant Service
+
+  * Support for specifying dialog version when creating skills.
+
+    * ``oci oda management skill create --dialog-version``
+
+  * Support for bulk creation of skill entities.
+
+    * ``oci oda management skill bulk-create-skill-entities --items --oda-instance-id --skill-id``
+
+  * Support for training skill query entities.
+
+    * ``oci oda management skill train --items --oda-instance-id``
+
+  * Support for cascading delete of skill custom entities.
+
+    * ``oci oda management skill cascading-delete-skill-custom-entities --oda-instance-id --skill-id``
+
 3.37.10 - 2024-02-20
 --------------------
 Added

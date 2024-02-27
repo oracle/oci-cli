@@ -585,7 +585,7 @@ service_mapping = {
     ],
     "sch": [
         "sch",
-        "Service Connector Hub",
+        "Connector Hub",
         "Observability & Management"
     ],
     "search": [
