@@ -34,6 +34,7 @@ from timeit import default_timer as timer
 from oci_cli.util import pymd5
 import codecs
 import webbrowser
+import time
 
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import rsa
@@ -651,8 +652,29 @@ def build_config(command_args):
     return client_config
 
 
+def check_header_content_type(headers, value):
+    if headers.get("content-type", "empty").lower() == value:
+        return True
+    return False
+
+
 def render_response(response, ctx):
-    render(response.data, response.headers, ctx)
+    if check_header_content_type(response.headers, cli_constants.SSE_RESPONSE_HEADER_VALUE):
+        event_read_timeout = ctx.obj.get('read_timeout') if ctx.obj.get(
+            'read_timeout') else cli_constants.READ_TIMEOUT_SSE
+        # To Do - optimize algorithm for event_read_timeout
+        last_event_time = time.time()
+        try:
+            for event in response.data.events():
+                render(json.loads(event.data), response.headers, ctx)
+                elapsed_time = time.time() - last_event_time
+                if elapsed_time > event_read_timeout:
+                    raise TimeoutError
+                last_event_time = time.time()
+        except TimeoutError:
+            print('Event-Read-Timeout: Connection stopped as no further events were recieved from server')
+    else:
+        render(response.data, response.headers, ctx)
 
 
 def render(data, headers, ctx, display_all_headers=False, nest_data_in_data_attribute=True):
@@ -699,7 +721,11 @@ def render(data, headers, ctx, display_all_headers=False, nest_data_in_data_attr
                 print(display_data)
             else:
                 start_format = timer()
-                print(pretty_print_format(display_data))
+                # print sse response
+                if headers and check_header_content_type(headers, cli_constants.SSE_RESPONSE_HEADER_VALUE) and 'data' in display_data and not expression:
+                    print(pretty_print_format(display_data['data']))
+                else:
+                    print(pretty_print_format(display_data))
                 if ctx.obj['debug']:
                     end_format = timer()
                     logger.debug(oci.base_client.utc_now() + 'Time elapsed printing response data: {}'.format(convert_time_elapsed(end_format - start_format)))

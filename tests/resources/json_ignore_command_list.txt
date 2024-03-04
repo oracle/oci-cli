@@ -295,3 +295,4 @@ log-analytics, source, list-sources
 data-science, job-run, create
 vault, secret, create-base64
 database-management, private-endpoint, update
+speech, transcription-job, delete
