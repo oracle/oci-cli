@@ -6,6 +6,47 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.37.12 - 2024-03-05
+--------------------
+Added
+~~~~~
+* Support for server streaming events in the Generative AI Inference Service when `inference-request-is-stream` is set to true
+
+  * ``oci generative-ai-inference generate-text-result generate-text-cohere-llm-inference-request --inference-request-is-stream``
+  * ``oci generative-ai-inference generate-text-result generate-text-llama-llm-inference-request --inference-request-is-stream``
+
+* Speech service
+
+  * Support for Whisper Models in creation of transcription job
+
+    * ``oci speech transcription-job create --model-details``
+
+  * Support for Delete Job API in transcription job
+
+    * ``oci speech transcription-job delete --transcription-job-id``
+
+* Operations Insights service
+
+  * Support for updating host-insights
+
+    * ``oci opsi host-insights update-pe-comanaged-host``
+
+  * Support to receive insights from resources in child compartments for news reports
+
+    * ``oci opsi news-reports create --are-child-compartments-included, --day-of-week``
+
+  * Support to update more parameters for news reports
+
+    * ``oci opsi news-reports update --are-child-compartments-included, --day-of-week, --description, --name``
+
+  * Support to choose the day of the week the report is received for news reports
+
+    * ``oci opsi news-reports update --are-child-compartments-included, --day-of-week, --description, --name``
+
+Changed
+~~~~~~~
+* Upgraded the cryptography version to (>=3.2.1,<43.0.0) and pyOpenSSL version to (>=17.5.0,<25.0.0)
+
 3.37.11 - 2024-02-27
 --------------------
 Added

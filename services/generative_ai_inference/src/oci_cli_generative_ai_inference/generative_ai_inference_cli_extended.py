@@ -20,27 +20,3 @@ generativeaiinference_cli.summarize_text_result_group.commands.pop(generativeaii
 # EmbedText API: embed_text_on_demand_serving_mode, embed_text_dedicated_serving_mode
 generativeaiinference_cli.embed_text_result_group.commands.pop(generativeaiinference_cli.embed_text_on_demand_serving_mode.name)
 generativeaiinference_cli.embed_text_result_group.commands.pop(generativeaiinference_cli.embed_text_dedicated_serving_mode.name)
-
-
-@cli_util.copy_params_from_generated_command(generativeaiinference_cli.generate_text_cohere_llm_inference_request, params_to_exclude=['inference_request_is_stream'])
-@generativeaiinference_cli.generate_text_result_group.command(name='generate-text-cohere-llm-inference-request', help=generativeaiinference_cli.generate_text_cohere_llm_inference_request.help)
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'inference-request-stop-sequences': {'module': 'generative_ai_inference', 'class': 'list[string]'}}, output_type={'module': 'generative_ai_inference', 'class': 'GenerateTextResult'})
-@cli_util.wrap_exceptions
-def generate_text_cohere_llm_inference_request_extended(ctx, **kwargs):
-
-    kwargs['inference_request_is_stream'] = False
-
-    ctx.invoke(generativeaiinference_cli.generate_text_cohere_llm_inference_request, **kwargs)
-
-
-@cli_util.copy_params_from_generated_command(generativeaiinference_cli.generate_text_llama_llm_inference_request, params_to_exclude=['inference_request_is_stream'])
-@generativeaiinference_cli.generate_text_result_group.command(name='generate-text-llama-llm-inference-request', help=generativeaiinference_cli.generate_text_llama_llm_inference_request.help)
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'inference-request-stop': {'module': 'generative_ai_inference', 'class': 'list[string]'}}, output_type={'module': 'generative_ai_inference', 'class': 'GenerateTextResult'})
-@cli_util.wrap_exceptions
-def generate_text_llama_llm_inference_request_extended(ctx, **kwargs):
-
-    kwargs['inference_request_is_stream'] = False
-
-    ctx.invoke(generativeaiinference_cli.generate_text_llama_llm_inference_request, **kwargs)

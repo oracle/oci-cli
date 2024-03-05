@@ -82,3 +82,5 @@ INTERACTIVE_CLI_SUGGESTION_MESSAGE = 'For OCI CLI commands and parameters sugges
                                      'other useful features, try the Interactive mode by typing `oci -i`.'
 
 NO_SUCH_COMMAND_ERROR_STRING = "{}\n\nError: No such command {}"
+SSE_RESPONSE_HEADER_VALUE = 'text/event-stream'
+READ_TIMEOUT_SSE = 60
