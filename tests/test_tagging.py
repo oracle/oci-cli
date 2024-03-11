@@ -86,7 +86,7 @@ def test_launch_update_instance_with_tags(tag_namespace_and_tags, network_resour
                     '--display-name', util.random_name('cli_tag_test_instance'),
                     '--subnet-id', network_resources[1],
                     '--image-id', util.oracle_linux_image(),
-                    '--shape', 'VM.Standard1.1',
+                    '--shape', 'VM.Standard3.Flex',
                     '--wait-for-state', 'RUNNING',
                     '--wait-interval-seconds', util.WAIT_INTERVAL_SECONDS,
                     '--freeform-tags', 'file://tests/resources/tagging/freeform_tags_1.json',
