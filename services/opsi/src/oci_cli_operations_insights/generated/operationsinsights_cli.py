@@ -174,7 +174,7 @@ def add_exadata_insight_members(ctx, from_json, wait_for_state, max_wait_seconds
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -241,7 +241,7 @@ def add_exadata_insight_members_add_pe_comanaged_exadata_insight_members_details
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -308,7 +308,7 @@ def add_exadata_insight_members_add_em_managed_external_exadata_insight_members_
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -375,7 +375,7 @@ def change_autonomous_database_insight_advanced_features(ctx, from_json, wait_fo
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -445,7 +445,7 @@ def change_autonomous_database_insight_advanced_features_credentials_by_source(c
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -531,7 +531,7 @@ def change_autonomous_database_insight_advanced_features_credential_by_vault(ctx
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -592,7 +592,7 @@ def change_awr_hub_source_compartment(ctx, from_json, wait_for_state, max_wait_s
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -653,7 +653,7 @@ def change_database_insight_compartment(ctx, from_json, wait_for_state, max_wait
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -714,7 +714,7 @@ def change_enterprise_manager_bridge_compartment(ctx, from_json, wait_for_state,
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -775,7 +775,7 @@ def change_exadata_insight_compartment(ctx, from_json, wait_for_state, max_wait_
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -836,7 +836,7 @@ def change_host_insight_compartment(ctx, from_json, wait_for_state, max_wait_sec
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -897,7 +897,7 @@ def change_news_report_compartment(ctx, from_json, wait_for_state, max_wait_seco
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -960,7 +960,7 @@ def change_operations_insights_private_endpoint_compartment(ctx, from_json, wait
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1021,7 +1021,7 @@ def change_operations_insights_warehouse_compartment(ctx, from_json, wait_for_st
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1082,7 +1082,7 @@ def change_opsi_configuration_compartment(ctx, from_json, wait_for_state, max_wa
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1151,7 +1151,7 @@ def change_pe_comanaged_database_insight(ctx, from_json, wait_for_state, max_wai
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1223,7 +1223,7 @@ def change_pe_comanaged_database_insight_credentials_by_source(ctx, from_json, w
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1311,7 +1311,7 @@ def change_pe_comanaged_database_insight_credential_by_vault(ctx, from_json, wai
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1380,7 +1380,7 @@ def create_awr_hub(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1455,7 +1455,7 @@ def create_awr_hub_source(ctx, from_json, wait_for_state, max_wait_seconds, wait
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1518,7 +1518,7 @@ def create_database_insight(ctx, from_json, wait_for_state, max_wait_seconds, wa
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1591,7 +1591,7 @@ def create_database_insight_create_em_managed_external_database_insight_details(
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1680,7 +1680,7 @@ def create_database_insight_create_pe_comanaged_database_insight_details(ctx, fr
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1749,7 +1749,7 @@ def create_enterprise_manager_bridge(ctx, from_json, wait_for_state, max_wait_se
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1812,7 +1812,7 @@ def create_exadata_insight(ctx, from_json, wait_for_state, max_wait_seconds, wai
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1891,7 +1891,7 @@ def create_exadata_insight_create_em_managed_external_exadata_insight_details(ct
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1962,7 +1962,7 @@ def create_exadata_insight_create_pe_comanaged_exadata_insight_details(ctx, from
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2025,7 +2025,7 @@ def create_host_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2090,7 +2090,7 @@ def create_host_insight_create_macs_managed_cloud_host_insight_details(ctx, from
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2155,7 +2155,7 @@ def create_host_insight_create_macs_managed_external_host_insight_details(ctx, f
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2228,7 +2228,7 @@ def create_host_insight_create_em_managed_external_host_insight_details(ctx, fro
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2313,7 +2313,7 @@ def create_news_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2390,7 +2390,7 @@ def create_operations_insights_private_endpoint(ctx, from_json, wait_for_state, 
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2459,7 +2459,7 @@ def create_operations_insights_warehouse(ctx, from_json, wait_for_state, max_wai
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2536,7 +2536,7 @@ def create_operations_insights_warehouse_user(ctx, from_json, wait_for_state, ma
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2631,7 +2631,7 @@ def create_opsi_configuration(ctx, from_json, wait_for_state, max_wait_seconds, 
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2726,7 +2726,7 @@ def create_opsi_configuration_create_opsi_ux_configuration_details(ctx, from_jso
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2782,7 +2782,7 @@ def delete_awr_hub(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2869,7 +2869,7 @@ def delete_awr_hub_source(ctx, from_json, wait_for_state, max_wait_seconds, wait
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2925,7 +2925,7 @@ def delete_database_insight(ctx, from_json, wait_for_state, max_wait_seconds, wa
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2981,7 +2981,7 @@ def delete_enterprise_manager_bridge(ctx, from_json, wait_for_state, max_wait_se
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -3037,7 +3037,7 @@ def delete_exadata_insight(ctx, from_json, wait_for_state, max_wait_seconds, wai
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -3093,7 +3093,7 @@ def delete_host_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -3149,7 +3149,7 @@ def delete_news_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -3205,7 +3205,7 @@ def delete_operations_insights_private_endpoint(ctx, from_json, wait_for_state, 
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -3261,7 +3261,7 @@ def delete_operations_insights_warehouse(ctx, from_json, wait_for_state, max_wai
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -3317,7 +3317,7 @@ def delete_operations_insights_warehouse_user(ctx, from_json, wait_for_state, ma
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -3373,7 +3373,7 @@ def delete_opsi_configuration(ctx, from_json, wait_for_state, max_wait_seconds, 
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -3428,7 +3428,7 @@ def disable_autonomous_database_insight_advanced_features(ctx, from_json, wait_f
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -3483,7 +3483,7 @@ def disable_awr_hub_source(ctx, from_json, wait_for_state, max_wait_seconds, wai
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -3538,7 +3538,7 @@ def disable_database_insight(ctx, from_json, wait_for_state, max_wait_seconds, w
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -3593,7 +3593,7 @@ def disable_exadata_insight(ctx, from_json, wait_for_state, max_wait_seconds, wa
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -3648,7 +3648,7 @@ def disable_host_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -3766,7 +3766,7 @@ def enable_autonomous_database_insight_advanced_features(ctx, from_json, wait_fo
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -3836,7 +3836,7 @@ def enable_autonomous_database_insight_advanced_features_credentials_by_source(c
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -3922,7 +3922,7 @@ def enable_autonomous_database_insight_advanced_features_credential_by_vault(ctx
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -3977,7 +3977,7 @@ def enable_awr_hub_source(ctx, from_json, wait_for_state, max_wait_seconds, wait
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -4038,7 +4038,7 @@ def enable_database_insight(ctx, from_json, wait_for_state, max_wait_seconds, wa
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -4099,7 +4099,7 @@ def enable_database_insight_enable_em_managed_external_database_insight_details(
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -4184,7 +4184,7 @@ def enable_database_insight_enable_pe_comanaged_database_insight_details(ctx, fr
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -4245,7 +4245,7 @@ def enable_exadata_insight(ctx, from_json, wait_for_state, max_wait_seconds, wai
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -4306,7 +4306,7 @@ def enable_exadata_insight_enable_pe_comanaged_exadata_insight_details(ctx, from
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -4367,7 +4367,7 @@ def enable_exadata_insight_enable_em_managed_external_exadata_insight_details(ct
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -4428,7 +4428,7 @@ def enable_host_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -4489,7 +4489,7 @@ def enable_host_insight_enable_macs_managed_external_host_insight_details(ctx, f
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -4550,7 +4550,7 @@ def enable_host_insight_enable_macs_managed_cloud_host_insight_details(ctx, from
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -4611,7 +4611,7 @@ def enable_host_insight_enable_em_managed_external_host_insight_details(ctx, fro
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -8355,7 +8355,7 @@ def rotate_operations_insights_warehouse_wallet(ctx, from_json, wait_for_state, 
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -11576,7 +11576,7 @@ def update_awr_hub(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -11652,7 +11652,7 @@ def update_awr_hub_source(ctx, from_json, force, wait_for_state, max_wait_second
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -11726,7 +11726,7 @@ def update_database_insight(ctx, from_json, force, wait_for_state, max_wait_seco
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -11800,7 +11800,7 @@ def update_database_insight_update_macs_managed_external_database_insight_detail
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -11874,7 +11874,7 @@ def update_database_insight_update_em_managed_external_database_insight_details(
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -11948,7 +11948,7 @@ def update_database_insight_update_pe_comanaged_database_insight_details(ctx, fr
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -12022,7 +12022,7 @@ def update_database_insight_update_autonomous_database_insight_details(ctx, from
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -12102,7 +12102,7 @@ def update_enterprise_manager_bridge(ctx, from_json, force, wait_for_state, max_
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -12176,7 +12176,7 @@ def update_exadata_insight(ctx, from_json, force, wait_for_state, max_wait_secon
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -12250,7 +12250,7 @@ def update_exadata_insight_update_pe_comanaged_exadata_insight_details(ctx, from
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -12328,7 +12328,7 @@ def update_exadata_insight_update_em_managed_external_exadata_insight_details(ct
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -12402,7 +12402,7 @@ def update_host_insight(ctx, from_json, force, wait_for_state, max_wait_seconds,
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -12476,7 +12476,7 @@ def update_host_insight_update_em_managed_external_host_insight_details(ctx, fro
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -12550,7 +12550,7 @@ def update_host_insight_update_macs_managed_external_host_insight_details(ctx, f
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -12624,7 +12624,7 @@ def update_host_insight_update_macs_managed_cloud_host_insight_details(ctx, from
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -12632,6 +12632,10 @@ def update_host_insight_update_macs_managed_cloud_host_insight_details(ctx, from
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
                 if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
@@ -12649,7 +12653,7 @@ def update_host_insight_update_macs_managed_cloud_host_insight_details(ctx, from
     cli_util.render_response(result, ctx)
 
 
-@host_insights_group.command(name=cli_util.override('opsi.update_host_insight_update_pe_comanaged_host_insight_details.command_name', 'update-pe-comanaged-host'), help=u"""Updates configuration of a host insight. \n[Command Reference](updateHostInsight)""")
+@host_insights_group.command(name=cli_util.override('opsi.update_host_insight_update_pe_comanaged_host_insight_details.command_name', 'update-host-insight-update-pe-comanaged-host-insight-details'), help=u"""Updates configuration of a host insight. \n[Command Reference](updateHostInsight)""")
 @cli_util.option('--host-insight-id', required=True, help=u"""Unique host insight identifier""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -12694,7 +12698,7 @@ def update_host_insight_update_pe_comanaged_host_insight_details(ctx, from_json,
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -12802,7 +12806,7 @@ def update_news_report(ctx, from_json, force, wait_for_state, max_wait_seconds, 
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -12886,7 +12890,7 @@ def update_operations_insights_private_endpoint(ctx, from_json, force, wait_for_
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -12970,7 +12974,7 @@ def update_operations_insights_warehouse(ctx, from_json, force, wait_for_state, 
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -13058,7 +13062,7 @@ def update_operations_insights_warehouse_user(ctx, from_json, force, wait_for_st
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -13150,7 +13154,7 @@ def update_opsi_configuration(ctx, from_json, force, wait_for_state, max_wait_se
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -13242,7 +13246,7 @@ def update_opsi_configuration_update_opsi_ux_configuration_details(ctx, from_jso
         **kwargs
     )
     if wait_for_state:
-        
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}

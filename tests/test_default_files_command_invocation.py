@@ -55,7 +55,7 @@ class TestDefaultFilesCommandInvocation(unittest.TestCase):
             try:
                 instance_name = util.random_name('cli_test_instance_options')
                 image_id = util.oracle_linux_image()
-                shape = 'VM.Standard1.2'
+                shape = 'VM.Standard3.Flex'
                 hostname_label = util.random_name('bminstance', insert_underscore=False)
                 vnic_display_name = 'vnic_display_name'
                 private_ip = '10.0.0.15'

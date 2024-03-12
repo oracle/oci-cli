@@ -177,4 +177,3 @@ SDK_client_map = {
     "opsi.update_operations_insights_warehouse_user": "oci.opsi.OperationsInsightsClient.update_operations_insights_warehouse_user",
     "opsi.update_opsi_configuration": "oci.opsi.OperationsInsightsClient.update_opsi_configuration",
 }
-

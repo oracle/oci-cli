@@ -268,7 +268,7 @@ def test_launch_instance(network_resources):
     with test_config_container.create_vcr().use_cassette('json_skeleton_command_invoke_launch_instance.yml'):
         launch_instance_json = 'file://{}'.format(os.path.join('tests', 'resources', 'json_input', 'launch_instance.json'))
         image_id = util.oracle_linux_image()
-        shape = 'VM.Standard1.1'  # This overrides the shape in the JSON which is VM.Standard1.2
+        shape = 'VM.Standard3.Flex'  # This overrides the shape in the JSON which is VM.Standard1.2
         hostname_label = util.random_name('bminstance', insert_underscore=False)
         private_ip = '10.0.0.15'
 

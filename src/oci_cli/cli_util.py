@@ -709,7 +709,8 @@ def render(data, headers, ctx, display_all_headers=False, nest_data_in_data_attr
                 end_search = timer()
                 logger.debug(oci.base_client.utc_now() + 'time elapsed evaluating expression: {}'.format(str(end_search - start_search)))
 
-            if not display_data:
+            if display_data is None:
+                # The condition is true if display_data is None ,null .
                 click.echo("Query returned empty result, no output to show.", file=sys.stderr)
                 return
 

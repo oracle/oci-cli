@@ -2741,7 +2741,7 @@ def enable_external_pluggable_database_operations_insights_extended(ctx, **kwarg
         kwargs.pop('external_db_connector_id')
 
     if 'external_pdb_id' in kwargs:
-        kwargs['external_database_connector_id'] = kwargs['external_pdb_id']
+        kwargs['external_pluggable_database_id'] = kwargs['external_pdb_id']
         kwargs.pop('external_pdb_id')
 
     ctx.invoke(database_cli.enable_external_pluggable_database_operations_insights, **kwargs)

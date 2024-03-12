@@ -6,6 +6,31 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.37.13 - 2024-03-12
+--------------------
+Added
+~~~~~
+* Database Service
+
+  * Support for New Dev License Type in Oracle Autonomous Database (on Dedicated Infrastructure)
+
+    * ``oci db autonomous-database create --is-dev-tier``
+    * ``oci db autonomous-database create-adb-cross-region-data-guard-details --is-dev-tier``
+    * ``oci db autonomous-database create-autonomous-database-create-cross-region-disaster-recovery-details --is-dev-tier``
+    * ``oci db autonomous-database create-autonomous-database-create-cross-tenancy-disaster-recovery-details --is-dev-tier``
+    * ``oci db autonomous-database create-from-backup-id --is-dev-tier``
+    * ``oci db autonomous-database create-from-backup-timestamp --is-dev-tier``
+    * ``oci db autonomous-database create-from-clone --is-dev-tier``
+    * ``oci db autonomous-database create-refreshable-clone --is-dev-tier``
+    * ``oci db autonomous-database create-virtual-clone --is-dev-tier``
+    * ``oci db autonomous-database update --is-dev-tier``
+
+  * Support for new optional parameters to create Autonomous Container Database
+
+    * ``oci db autonomous-container-database create --db-split-threshold --distribution-affinity --net-services-architecture --vm-failover-reservation``
+
+* Support for Autoscaling in the Data Science Model Deployment service
+
 3.37.12 - 2024-03-05
 --------------------
 Added
