@@ -6,6 +6,40 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.37.14 - 2024-03-19
+--------------------
+Added
+~~~~~
+* The AI Language service
+
+  * Support for async jobs and document translation
+
+    * ``oci ai language job create --compartment-id --input-location --model-metadata-details --output-location --description, --display-name --input-configuration``
+    * ``oci ai language job update --job-id --description --display-name``
+    * ``oci ai language job list --compartment-id  --all --display-name --id``
+    * ``oci ai language job get --job-id``
+    * ``oci ai language job delete --job-id``
+    * ``oci ai language job cancel --job-id``
+    * ``oci ai language job change-compartment --compartment-id --job-id``
+
+* Application Performance Monitoring Trace service
+
+  * Support for attribute management for trace and synthetic
+
+    * ``oci apm-traces attributes activate ``
+    * ``oci apm-traces attributes deactivate ``
+    * ``oci apm-traces attributes auto-activate-status ``
+    * ``oci apm-traces attributes pin ``
+    * ``oci apm-traces attributes unpin ``
+    * ``oci apm-traces attributes update-auto-activate ``
+    * ``oci apm-traces attributes update-notes ``
+    * ``oci apm-traces attributes update-attribute ``
+
+  * Support for new optional parameters in the get trace and get span
+
+    * ``oci apm-traces trace trace get --time-trace-started-gte --time-trace-started-lt --trace-namespace ``
+    * ``oci apm-traces trace span get --time-trace-started-gte --time-trace-started-lt --trace-namespace ``
+
 3.37.13 - 2024-03-12
 --------------------
 Added

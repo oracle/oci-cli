@@ -22,12 +22,6 @@ def stack_monitoring_root_group():
     pass
 
 
-@click.command(cli_util.override('stack_monitoring.baselineable_metric_summary_group.command_name', 'baselineable-metric-summary'), cls=CommandGroupWithAlias, help="""Summary for the baseline-able metric""")
-@cli_util.help_option_group
-def baselineable_metric_summary_group():
-    pass
-
-
 @click.command(cli_util.override('stack_monitoring.metric_extension_group.command_name', 'metric-extension'), cls=CommandGroupWithAlias, help="""Detailed information of the Metric Extension resource""")
 @cli_util.help_option_group
 def metric_extension_group():
@@ -52,12 +46,6 @@ def process_set_group():
     pass
 
 
-@click.command(cli_util.override('stack_monitoring.create_baselineable_metric_details_group.command_name', 'create-baselineable-metric-details'), cls=CommandGroupWithAlias, help="""Summary for the baseline-able metric""")
-@cli_util.help_option_group
-def create_baselineable_metric_details_group():
-    pass
-
-
 @click.command(cli_util.override('stack_monitoring.work_request_summary_collection_group.command_name', 'work-request-summary-collection'), cls=CommandGroupWithAlias, help="""Results of a workRequest search. Contains both WorkRequest items and other information, such as metadata.""")
 @cli_util.help_option_group
 def work_request_summary_collection_group():
@@ -79,12 +67,6 @@ def monitored_resource_type_group():
 @click.command(cli_util.override('stack_monitoring.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""A description of workrequest status""")
 @cli_util.help_option_group
 def work_request_group():
-    pass
-
-
-@click.command(cli_util.override('stack_monitoring.update_baselineable_metric_details_group.command_name', 'update-baselineable-metric-details'), cls=CommandGroupWithAlias, help="""Summary for the baseline-able metric""")
-@cli_util.help_option_group
-def update_baselineable_metric_details_group():
     pass
 
 
@@ -118,12 +100,6 @@ def config_collection_group():
     pass
 
 
-@click.command(cli_util.override('stack_monitoring.evaluate_baselineable_metric_result_group.command_name', 'evaluate-baselineable-metric-result'), cls=CommandGroupWithAlias, help="""Result for Baseline Metric Data evaluation""")
-@cli_util.help_option_group
-def evaluate_baselineable_metric_result_group():
-    pass
-
-
 @click.command(cli_util.override('stack_monitoring.config_group.command_name', 'config'), cls=CommandGroupWithAlias, help="""A configuration item that, for example defines whether resources of a specific type should be discovered automatically.
 
 In this case, the 'configType' is set to 'AUTO_PROMOTE' and additional fields like 'resourceType' and 'isEnabled' determine if such resources are to be discovered automatically (also referred to as 'Automatic Promotion').""")
@@ -144,23 +120,19 @@ def work_request_log_entry_collection_group():
     pass
 
 
-stack_monitoring_root_group.add_command(baselineable_metric_summary_group)
 stack_monitoring_root_group.add_command(metric_extension_group)
 stack_monitoring_root_group.add_command(discovery_job_collection_group)
 stack_monitoring_root_group.add_command(monitored_resource_group)
 stack_monitoring_root_group.add_command(process_set_group)
-stack_monitoring_root_group.add_command(create_baselineable_metric_details_group)
 stack_monitoring_root_group.add_command(work_request_summary_collection_group)
 stack_monitoring_root_group.add_command(baselineable_metric_group)
 stack_monitoring_root_group.add_command(monitored_resource_type_group)
 stack_monitoring_root_group.add_command(work_request_group)
-stack_monitoring_root_group.add_command(update_baselineable_metric_details_group)
 stack_monitoring_root_group.add_command(process_set_collection_group)
 stack_monitoring_root_group.add_command(monitored_resource_task_group)
 stack_monitoring_root_group.add_command(work_request_error_collection_group)
 stack_monitoring_root_group.add_command(discovery_job_group)
 stack_monitoring_root_group.add_command(config_collection_group)
-stack_monitoring_root_group.add_command(evaluate_baselineable_metric_result_group)
 stack_monitoring_root_group.add_command(config_group)
 stack_monitoring_root_group.add_command(discovery_job_log_collection_group)
 stack_monitoring_root_group.add_command(work_request_log_entry_collection_group)
@@ -389,7 +361,7 @@ def change_process_set_compartment(ctx, from_json, process_set_id, compartment_i
     cli_util.render_response(result, ctx)
 
 
-@create_baselineable_metric_details_group.command(name=cli_util.override('stack_monitoring.create_baselineable_metric.command_name', 'create-baselineable-metric'), help=u"""Creates the specified Baseline-able metric \n[Command Reference](createBaselineableMetric)""")
+@baselineable_metric_group.command(name=cli_util.override('stack_monitoring.create_baselineable_metric.command_name', 'create'), help=u"""Creates the specified Baseline-able metric \n[Command Reference](createBaselineableMetric)""")
 @cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment""")
 @cli_util.option('--name', required=True, help=u"""name of the metric""")
 @cli_util.option('--column', required=True, help=u"""metric column name""")
@@ -2678,7 +2650,7 @@ def enable_metric_extension(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@evaluate_baselineable_metric_result_group.command(name=cli_util.override('stack_monitoring.evaluate_baselineable_metric.command_name', 'evaluate-baselineable-metric'), help=u"""Evaluates metric for anomalies for the given data points \n[Command Reference](evaluateBaselineableMetric)""")
+@baselineable_metric_group.command(name=cli_util.override('stack_monitoring.evaluate_baselineable_metric.command_name', 'evaluate'), help=u"""Evaluates metric for anomalies for the given data points \n[Command Reference](evaluateBaselineableMetric)""")
 @cli_util.option('--resource-id', required=True, help=u"""OCID of the resource""")
 @cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Metric data""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--baselineable-metric-id', required=True, help=u"""Identifier for the metric""")
@@ -2957,7 +2929,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@baselineable_metric_summary_group.command(name=cli_util.override('stack_monitoring.list_baselineable_metrics.command_name', 'list-baselineable-metrics'), help=u"""List of summary of baseline-able metrics for a given resource group if specified. \n[Command Reference](listBaselineableMetrics)""")
+@baselineable_metric_group.command(name=cli_util.override('stack_monitoring.list_baselineable_metrics.command_name', 'list'), help=u"""List of summary of baseline-able metrics for a given resource group if specified. \n[Command Reference](listBaselineableMetrics)""")
 @cli_util.option('--resource-group', help=u"""Resource Group""")
 @cli_util.option('--name', help=u"""Metric Name""")
 @cli_util.option('--metric-namespace', help=u"""A filter to return monitored resource types that has the matching namespace.""")
@@ -4235,7 +4207,7 @@ def update_and_propagate_tags(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@update_baselineable_metric_details_group.command(name=cli_util.override('stack_monitoring.update_baselineable_metric.command_name', 'update-baselineable-metric'), help=u"""Updates the Baseline-able metric for the given id \n[Command Reference](updateBaselineableMetric)""")
+@baselineable_metric_group.command(name=cli_util.override('stack_monitoring.update_baselineable_metric.command_name', 'update'), help=u"""Updates the Baseline-able metric for the given id \n[Command Reference](updateBaselineableMetric)""")
 @cli_util.option('--id', required=True, help=u"""OCID of the metric""")
 @cli_util.option('--name', required=True, help=u"""name of the metric""")
 @cli_util.option('--column', required=True, help=u"""metric column name""")

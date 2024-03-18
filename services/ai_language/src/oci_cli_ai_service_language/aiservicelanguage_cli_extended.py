@@ -128,3 +128,14 @@ language_group.add_command(aiservicelanguage_cli.model_type_info_group)
 # Add work-request error and logs messages to work-request group
 aiservicelanguage_cli.work_request_group.add_command(aiservicelanguage_cli.work_request_error_group)
 aiservicelanguage_cli.work_request_group.add_command(aiservicelanguage_cli.work_request_log_group)
+
+
+# Remove polymorphic job group commands
+aiservicelanguage_cli.job_group.commands.pop(aiservicelanguage_cli.create_job_object_storage_file_name_location.name)
+aiservicelanguage_cli.job_group.commands.pop(aiservicelanguage_cli.create_job_object_storage_prefix_location.name)
+
+# Remove job group from root
+aiservicelanguage_cli.ai_root_group.commands.pop(aiservicelanguage_cli.job_group.name)
+
+# Add Job group to language group
+language_group.add_command(aiservicelanguage_cli.job_group)

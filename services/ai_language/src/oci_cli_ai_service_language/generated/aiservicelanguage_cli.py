@@ -66,6 +66,12 @@ def work_request_group():
     pass
 
 
+@click.command(cli_util.override('ai.job_group.command_name', 'job'), cls=CommandGroupWithAlias, help="""Job details which contain input document details on which prediction need to run, features (which and all language services ) need to run and where to store results""")
+@cli_util.help_option_group
+def job_group():
+    pass
+
+
 @click.command(cli_util.override('ai.evaluation_result_collection_group.command_name', 'evaluation-result-collection'), cls=CommandGroupWithAlias, help="""Results of a model evaluation analysis search. Contains EvaluationResultSummary items.""")
 @cli_util.help_option_group
 def evaluation_result_collection_group():
@@ -151,6 +157,7 @@ ai_root_group.add_command(project_group)
 ai_root_group.add_command(model_type_info_group)
 ai_root_group.add_command(model_group)
 ai_root_group.add_command(work_request_group)
+ai_root_group.add_command(job_group)
 ai_root_group.add_command(evaluation_result_collection_group)
 ai_root_group.add_command(detect_language_sentiments_group)
 ai_root_group.add_command(batch_detect_language_pii_entities_group)
@@ -426,6 +433,31 @@ def batch_language_translation(ctx, from_json, documents, compartment_id, target
     cli_util.render_response(result, ctx)
 
 
+@job_group.command(name=cli_util.override('ai.cancel_job.command_name', 'cancel'), help=u"""Canceling the job cancels all the tasks under it. \n[Command Reference](cancelJob)""")
+@cli_util.option('--job-id', required=True, help=u"""Unique Transcription Job identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def cancel_job(ctx, from_json, job_id, if_match):
+
+    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+        raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ai_language', 'ai_service_language', ctx)
+    result = client.cancel_job(
+        job_id=job_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @endpoint_group.command(name=cli_util.override('ai.change_endpoint_compartment.command_name', 'change-compartment'), help=u"""Moves a Endpoint into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeEndpointCompartment)""")
 @cli_util.option('--endpoint-id', required=True, help=u"""The OCID of the endpoint.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
@@ -452,6 +484,37 @@ def change_endpoint_compartment(ctx, from_json, endpoint_id, compartment_id, if_
     result = client.change_endpoint_compartment(
         endpoint_id=endpoint_id,
         change_endpoint_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@job_group.command(name=cli_util.override('ai.change_job_compartment.command_name', 'change-compartment'), help=u"""Moves a Job into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeJobCompartment)""")
+@cli_util.option('--job-id', required=True, help=u"""unique job OCID.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where the resource should be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_job_compartment(ctx, from_json, job_id, compartment_id, if_match):
+
+    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+        raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('ai_language', 'ai_service_language', ctx)
+    result = client.change_job_compartment(
+        job_id=job_id,
+        change_job_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -562,6 +625,235 @@ def create_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     client = cli_util.build_client('ai_language', 'ai_service_language', ctx)
     result = client.create_endpoint(
         create_endpoint_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@job_group.command(name=cli_util.override('ai.create_job.command_name', 'create'), help=u"""Creates a new language service async job. \n[Command Reference](createJob)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--input-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--model-metadata-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""training model details For this release only one model is allowed to be input here. One of the three modelType, ModelId, endpointId should be given other wise error will be thrown from API""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the job.""")
+@cli_util.option('--description', help=u"""A short description of the job.""")
+@cli_util.option('--input-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "WAITING", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'input-location': {'module': 'ai_language', 'class': 'InputLocation'}, 'input-configuration': {'module': 'ai_language', 'class': 'InputConfiguration'}, 'model-metadata-details': {'module': 'ai_language', 'class': 'list[ModelMetadataDetails]'}, 'output-location': {'module': 'ai_language', 'class': 'ObjectPrefixOutputLocation'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'input-location': {'module': 'ai_language', 'class': 'InputLocation'}, 'input-configuration': {'module': 'ai_language', 'class': 'InputConfiguration'}, 'model-metadata-details': {'module': 'ai_language', 'class': 'list[ModelMetadataDetails]'}, 'output-location': {'module': 'ai_language', 'class': 'ObjectPrefixOutputLocation'}}, output_type={'module': 'ai_language', 'class': 'Job'})
+@cli_util.wrap_exceptions
+def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, input_location, model_metadata_details, output_location, display_name, description, input_configuration):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['inputLocation'] = cli_util.parse_json_parameter("input_location", input_location)
+    _details['modelMetadataDetails'] = cli_util.parse_json_parameter("model_metadata_details", model_metadata_details)
+    _details['outputLocation'] = cli_util.parse_json_parameter("output_location", output_location)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if input_configuration is not None:
+        _details['inputConfiguration'] = cli_util.parse_json_parameter("input_configuration", input_configuration)
+
+    client = cli_util.build_client('ai_language', 'ai_service_language', ctx)
+    result = client.create_job(
+        create_job_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@job_group.command(name=cli_util.override('ai.create_job_object_storage_prefix_location.command_name', 'create-job-object-storage-prefix-location'), help=u"""Creates a new language service async job. \n[Command Reference](createJob)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--model-metadata-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""training model details For this release only one model is allowed to be input here. One of the three modelType, ModelId, endpointId should be given other wise error will be thrown from API""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--input-location-namespace-name', required=True, help=u"""Object Storage namespace name.""")
+@cli_util.option('--input-location-bucket-name', required=True, help=u"""Object Storage bucket name.""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the job.""")
+@cli_util.option('--description', help=u"""A short description of the job.""")
+@cli_util.option('--input-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--input-location-prefix', help=u"""The prefix (directory) in an Object Storage bucket.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "WAITING", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'input-configuration': {'module': 'ai_language', 'class': 'InputConfiguration'}, 'model-metadata-details': {'module': 'ai_language', 'class': 'list[ModelMetadataDetails]'}, 'output-location': {'module': 'ai_language', 'class': 'ObjectPrefixOutputLocation'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'input-configuration': {'module': 'ai_language', 'class': 'InputConfiguration'}, 'model-metadata-details': {'module': 'ai_language', 'class': 'list[ModelMetadataDetails]'}, 'output-location': {'module': 'ai_language', 'class': 'ObjectPrefixOutputLocation'}}, output_type={'module': 'ai_language', 'class': 'Job'})
+@cli_util.wrap_exceptions
+def create_job_object_storage_prefix_location(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, model_metadata_details, output_location, input_location_namespace_name, input_location_bucket_name, display_name, description, input_configuration, input_location_prefix):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['inputLocation'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['modelMetadataDetails'] = cli_util.parse_json_parameter("model_metadata_details", model_metadata_details)
+    _details['outputLocation'] = cli_util.parse_json_parameter("output_location", output_location)
+    _details['inputLocation']['namespaceName'] = input_location_namespace_name
+    _details['inputLocation']['bucketName'] = input_location_bucket_name
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if input_configuration is not None:
+        _details['inputConfiguration'] = cli_util.parse_json_parameter("input_configuration", input_configuration)
+
+    if input_location_prefix is not None:
+        _details['inputLocation']['prefix'] = input_location_prefix
+
+    _details['inputLocation']['locationType'] = 'OBJECT_STORAGE_PREFIX'
+
+    client = cli_util.build_client('ai_language', 'ai_service_language', ctx)
+    result = client.create_job(
+        create_job_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@job_group.command(name=cli_util.override('ai.create_job_object_storage_file_name_location.command_name', 'create-job-object-storage-file-name-location'), help=u"""Creates a new language service async job. \n[Command Reference](createJob)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--model-metadata-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""training model details For this release only one model is allowed to be input here. One of the three modelType, ModelId, endpointId should be given other wise error will be thrown from API""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--input-location-namespace-name', required=True, help=u"""Object Storage namespace name.""")
+@cli_util.option('--input-location-bucket-name', required=True, help=u"""Object Storage bucket name.""")
+@cli_util.option('--input-location-object-names', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of objects to be processed""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the job.""")
+@cli_util.option('--description', help=u"""A short description of the job.""")
+@cli_util.option('--input-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "WAITING", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'input-configuration': {'module': 'ai_language', 'class': 'InputConfiguration'}, 'model-metadata-details': {'module': 'ai_language', 'class': 'list[ModelMetadataDetails]'}, 'output-location': {'module': 'ai_language', 'class': 'ObjectPrefixOutputLocation'}, 'input-location-object-names': {'module': 'ai_language', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'input-configuration': {'module': 'ai_language', 'class': 'InputConfiguration'}, 'model-metadata-details': {'module': 'ai_language', 'class': 'list[ModelMetadataDetails]'}, 'output-location': {'module': 'ai_language', 'class': 'ObjectPrefixOutputLocation'}, 'input-location-object-names': {'module': 'ai_language', 'class': 'list[string]'}}, output_type={'module': 'ai_language', 'class': 'Job'})
+@cli_util.wrap_exceptions
+def create_job_object_storage_file_name_location(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, model_metadata_details, output_location, input_location_namespace_name, input_location_bucket_name, input_location_object_names, display_name, description, input_configuration):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['inputLocation'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['modelMetadataDetails'] = cli_util.parse_json_parameter("model_metadata_details", model_metadata_details)
+    _details['outputLocation'] = cli_util.parse_json_parameter("output_location", output_location)
+    _details['inputLocation']['namespaceName'] = input_location_namespace_name
+    _details['inputLocation']['bucketName'] = input_location_bucket_name
+    _details['inputLocation']['objectNames'] = cli_util.parse_json_parameter("input_location_object_names", input_location_object_names)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if input_configuration is not None:
+        _details['inputConfiguration'] = cli_util.parse_json_parameter("input_configuration", input_configuration)
+
+    _details['inputLocation']['locationType'] = 'OBJECT_STORAGE_FILE_LIST'
+
+    client = cli_util.build_client('ai_language', 'ai_service_language', ctx)
+    result = client.create_job(
+        create_job_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -2040,6 +2332,62 @@ def delete_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
+@job_group.command(name=cli_util.override('ai.delete_job.command_name', 'delete'), help=u"""Deletes the language service async Job \n[Command Reference](deleteJob)""")
+@cli_util.option('--job-id', required=True, help=u"""Unique Transcription Job identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "WAITING", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, if_match):
+
+    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+        raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ai_language', 'ai_service_language', ctx)
+    result = client.delete_job(
+        job_id=job_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @model_group.command(name=cli_util.override('ai.delete_model.command_name', 'delete'), help=u"""Deletes a provisioned model resource by identifier. This operation fails with a 409 error unless all associated resources are in a DELETED state. You must delete all associated resources before deleting a model. \n[Command Reference](deleteModel)""")
 @cli_util.option('--model-id', required=True, help=u"""unique model OCID.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2323,6 +2671,28 @@ def get_endpoint(ctx, from_json, endpoint_id):
     cli_util.render_response(result, ctx)
 
 
+@job_group.command(name=cli_util.override('ai.get_job.command_name', 'get'), help=u"""Gets a language service async job \n[Command Reference](getJob)""")
+@cli_util.option('--job-id', required=True, help=u"""Unique Transcription Job identifier.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ai_language', 'class': 'Job'})
+@cli_util.wrap_exceptions
+def get_job(ctx, from_json, job_id):
+
+    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+        raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ai_language', 'ai_service_language', ctx)
+    result = client.get_job(
+        job_id=job_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @model_group.command(name=cli_util.override('ai.get_model.command_name', 'get'), help=u"""Gets a model by identifier \n[Command Reference](getModel)""")
 @cli_util.option('--model-id', required=True, help=u"""unique model OCID.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2526,6 +2896,69 @@ def list_evaluation_results(ctx, from_json, all_pages, page_size, model_id, limi
     else:
         result = client.list_evaluation_results(
             model_id=model_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@job_group.command(name=cli_util.override('ai.list_jobs.command_name', 'list'), help=u"""Returns a list of language service async Jobs. \n[Command Reference](listJobs)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "SUCCEEDED", "FAILED", "CANCELING", "CANCELED", "DELETING", "DELETED"]), help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleState.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--id', help=u"""Unique identifier(OCID).""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ai_language', 'class': 'JobCollection'})
+@cli_util.wrap_exceptions
+def list_jobs(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, display_name, id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if id is not None:
+        kwargs['id'] = id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ai_language', 'ai_service_language', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_jobs,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_jobs,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_jobs(
+            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -2919,6 +3352,69 @@ def update_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@job_group.command(name=cli_util.override('ai.update_job.command_name', 'update'), help=u"""Updates the language service async Job \n[Command Reference](updateJob)""")
+@cli_util.option('--job-id', required=True, help=u"""Unique Transcription Job identifier.""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the job.""")
+@cli_util.option('--description', help=u"""A short description of the job.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "SUCCEEDED", "FAILED", "CANCELING", "CANCELED", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ai_language', 'class': 'Job'})
+@cli_util.wrap_exceptions
+def update_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, display_name, description, if_match):
+
+    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+        raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    client = cli_util.build_client('ai_language', 'ai_service_language', ctx)
+    result = client.update_job(
+        job_id=job_id,
+        update_job_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_job') and callable(getattr(client, 'get_job')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_job(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
