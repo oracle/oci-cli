@@ -278,96 +278,6 @@ def manage_license_extended(ctx, **kwargs):
     ctx.invoke(stackmonitoring_cli.manage_license, **kwargs)
 
 
-# oci stack-monitoring create-baselineable-metric-details create-baselineable-metric -> oci stack-monitoring baselineable-metric
-stackmonitoring_cli.create_baselineable_metric_details_group.commands.pop(stackmonitoring_cli.create_baselineable_metric.name)
-stackmonitoring_cli.baselineable_metric_group.add_command(stackmonitoring_cli.create_baselineable_metric)
-
-
-# oci stack-monitoring update-baselineable-metric-details update-baselineable-metric -> oci stack-monitoring baselineable-metric
-stackmonitoring_cli.update_baselineable_metric_details_group.commands.pop(stackmonitoring_cli.update_baselineable_metric.name)
-stackmonitoring_cli.baselineable_metric_group.add_command(stackmonitoring_cli.update_baselineable_metric)
-
-
-# oci stack-monitoring evaluate-baselineable-metric-result evaluate-baselineable-metric -> oci stack-monitoring baselineable-metric
-stackmonitoring_cli.evaluate_baselineable_metric_result_group.commands.pop(stackmonitoring_cli.evaluate_baselineable_metric.name)
-stackmonitoring_cli.baselineable_metric_group.add_command(stackmonitoring_cli.evaluate_baselineable_metric)
-
-
-# oci stack-monitoring baselineable-metric-summary list-baselineable-metrics -> oci stack-monitoring baselineable-metric
-stackmonitoring_cli.baselineable_metric_summary_group.commands.pop(stackmonitoring_cli.list_baselineable_metrics.name)
-stackmonitoring_cli.baselineable_metric_group.add_command(stackmonitoring_cli.list_baselineable_metrics)
-
-
-# oci stack-monitoring baselineable-metric create-baselineable-metric -> oci stack-monitoring baselineable-metric create
-cli_util.rename_command(stackmonitoring_cli, stackmonitoring_cli.baselineable_metric_group, stackmonitoring_cli.create_baselineable_metric, "create")
-
-
-# oci stack-monitoring baselineable update-baselineable-metric -> oci stack-monitoring baselineable-metr update
-cli_util.rename_command(stackmonitoring_cli, stackmonitoring_cli.baselineable_metric_group, stackmonitoring_cli.update_baselineable_metric, "update")
-
-
-# oci stack-monitoring baselineable-metric evaluate-baselineable-metric -> oci stack-monitoring baselineable-metr evaluate
-cli_util.rename_command(stackmonitoring_cli, stackmonitoring_cli.baselineable_metric_group, stackmonitoring_cli.evaluate_baselineable_metric, "evaluate")
-
-
-# oci stack-monitoring baselineable-metric list-baselineable-metrics -> oci stack-monitoring baselineable-metr list
-cli_util.rename_command(stackmonitoring_cli, stackmonitoring_cli.baselineable_metric_group, stackmonitoring_cli.list_baselineable_metrics, "list")
-
-
-# Remove create-baselineable-metric-details from oci stack-monitoring
-stackmonitoring_cli.stack_monitoring_root_group.commands.pop(stackmonitoring_cli.create_baselineable_metric_details_group.name)
-
-
-# Remove update-baselineable-metric-details from oci stack-monitoring
-stackmonitoring_cli.stack_monitoring_root_group.commands.pop(stackmonitoring_cli.update_baselineable_metric_details_group.name)
-
-
-# Remove evaluate-baselineable-metric-result from oci stack-monitoring
-stackmonitoring_cli.stack_monitoring_root_group.commands.pop(stackmonitoring_cli.evaluate_baselineable_metric_result_group.name)
-
-
-# Remove baselineable-metric-summary from oci stack-monitoring
-stackmonitoring_cli.stack_monitoring_root_group.commands.pop(stackmonitoring_cli.baselineable_metric_summary_group.name)
-
-
-# oci stack-monitoring update-baselineable-metric-details update-baselineable-metric --baselineable-metric-id -> oci stack-monitoring baselineable-metric update --metric-id
-# oci stack-monitoring update-baselineable-metric-details update-baselineable-metric --namespace -> oci stack-monitoring baselineable-metric update --metric-namespace
-@cli_util.copy_params_from_generated_command(stackmonitoring_cli.update_baselineable_metric, params_to_exclude=['baselineable_metric_id', 'namespace'])
-@stackmonitoring_cli.baselineable_metric_group.command(name=stackmonitoring_cli.update_baselineable_metric.name, help=stackmonitoring_cli.update_baselineable_metric.help)
-@cli_util.option('--metric-id', required=True, help=u"""Identifier for the metric [required]""")
-@cli_util.option('--metric-namespace', required=True, help=u"""namespace of the metric [required]""")
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'stack_monitoring', 'class': 'BaselineableMetric'})
-@cli_util.wrap_exceptions
-def update_baselineable_metric_extended(ctx, **kwargs):
-
-    if 'metric_id' in kwargs:
-        kwargs['baselineable_metric_id'] = kwargs['metric_id']
-        kwargs.pop('metric_id')
-
-    if 'metric_namespace' in kwargs:
-        kwargs['namespace'] = kwargs['metric_namespace']
-        kwargs.pop('metric_namespace')
-
-    ctx.invoke(stackmonitoring_cli.update_baselineable_metric, **kwargs)
-
-
-# oci stack-monitoring evaluate-baselineable-metric-result evaluate-baselineable-metric --baselineable-metric-id -> oci stack-monitoring baselineable-metric evaluate --metric-id
-@cli_util.copy_params_from_generated_command(stackmonitoring_cli.evaluate_baselineable_metric, params_to_exclude=['baselineable_metric_id'])
-@stackmonitoring_cli.baselineable_metric_group.command(name=stackmonitoring_cli.evaluate_baselineable_metric.name, help=stackmonitoring_cli.evaluate_baselineable_metric.help)
-@cli_util.option('--metric-id', required=True, help=u"""Identifier for the metric [required]""")
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'items': {'module': 'stack_monitoring', 'class': 'list[MetricData]'}}, output_type={'module': 'stack_monitoring', 'class': 'BaselineableMetric'})
-@cli_util.wrap_exceptions
-def evaluate_baselineable_metric_extended(ctx, **kwargs):
-
-    if 'metric_id' in kwargs:
-        kwargs['baselineable_metric_id'] = kwargs['metric_id']
-        kwargs.pop('metric_id')
-
-    ctx.invoke(stackmonitoring_cli.evaluate_baselineable_metric, **kwargs)
-
-
 # oci stack-monitoring baselineable-metric get --baselineable-metric-id -> oci stack-monitoring baselineable-metric get --metric-id
 @cli_util.copy_params_from_generated_command(stackmonitoring_cli.delete_baselineable_metric, params_to_exclude=['baselineable_metric_id'])
 @stackmonitoring_cli.baselineable_metric_group.command(name=stackmonitoring_cli.delete_baselineable_metric.name, help=stackmonitoring_cli.delete_baselineable_metric.help)
@@ -398,38 +308,6 @@ def get_baselineable_metric_extended(ctx, **kwargs):
         kwargs.pop('metric_id')
 
     ctx.invoke(stackmonitoring_cli.get_baselineable_metric, **kwargs)
-
-
-# oci stack-monitoring create-baselineable-metric-details create-baselineable-metric --namespace -> oci stack-monitoring baselineable-metric create --metric-namespace
-@cli_util.copy_params_from_generated_command(stackmonitoring_cli.create_baselineable_metric, params_to_exclude=['namespace'])
-@stackmonitoring_cli.baselineable_metric_group.command(name=stackmonitoring_cli.create_baselineable_metric.name, help=stackmonitoring_cli.create_baselineable_metric.help)
-@cli_util.option('--metric-namespace', required=True, help=u"""namespace of the metric [required]""")
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'stack_monitoring', 'class': 'BaselineableMetric'})
-@cli_util.wrap_exceptions
-def create_baselineable_metric_extended(ctx, **kwargs):
-
-    if 'metric_namespace' in kwargs:
-        kwargs['namespace'] = kwargs['metric_namespace']
-        kwargs.pop('metric_namespace')
-
-    ctx.invoke(stackmonitoring_cli.create_baselineable_metric, **kwargs)
-
-
-# oci stack-monitoring baselineable-metric list-baselineable-metrics --baselineable-metric-id -> oci stack-monitoring baselineable-metric list --metric-id
-@cli_util.copy_params_from_generated_command(stackmonitoring_cli.list_baselineable_metrics, params_to_exclude=['baselineable_metric_id'])
-@stackmonitoring_cli.baselineable_metric_group.command(name=stackmonitoring_cli.list_baselineable_metrics.name, help=stackmonitoring_cli.list_baselineable_metrics.help)
-@cli_util.option('--metric-id', help=u"""Identifier for the metric""")
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'items': {'module': 'stack_monitoring', 'class': 'list[MetricData]'}}, output_type={'module': 'stack_monitoring', 'class': 'BaselineableMetric'})
-@cli_util.wrap_exceptions
-def list_baselineable_metrics_extended(ctx, **kwargs):
-
-    if 'metric_id' in kwargs:
-        kwargs['baselineable_metric_id'] = kwargs['metric_id']
-        kwargs.pop('metric_id')
-
-    ctx.invoke(stackmonitoring_cli.list_baselineable_metrics, **kwargs)
 
 
 # oci stack-monitoring monitored-resource-task create-monitored-resource-task-import-oci-telemetry-resources-task-details -> oci stack-monitoring monitored- import-telemetry-resources
@@ -1205,3 +1083,68 @@ stackmonitoring_cli.stack_monitoring_root_group.commands.pop(stackmonitoring_cli
 # oci stack-monitoring process-set-collection list-process-sets -> oci stack-monitoring process-set
 stackmonitoring_cli.process_set_collection_group.commands.pop(stackmonitoring_cli.list_process_sets.name)
 stackmonitoring_cli.process_set_group.add_command(stackmonitoring_cli.list_process_sets)
+
+
+@cli_util.copy_params_from_generated_command(stackmonitoring_cli.create_baselineable_metric, params_to_exclude=['namespace'])
+@stackmonitoring_cli.baselineable_metric_group.command(name=stackmonitoring_cli.create_baselineable_metric.name, help=stackmonitoring_cli.create_baselineable_metric.help)
+@cli_util.option('--metric-namespace', required=True, help=u"""namespace of the metric [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'stack_monitoring', 'class': 'BaselineableMetric'})
+@cli_util.wrap_exceptions
+def create_baselineable_metric_extended(ctx, **kwargs):
+
+    if 'metric_namespace' in kwargs:
+        kwargs['namespace'] = kwargs['metric_namespace']
+        kwargs.pop('metric_namespace')
+
+    ctx.invoke(stackmonitoring_cli.create_baselineable_metric, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(stackmonitoring_cli.update_baselineable_metric, params_to_exclude=['baselineable_metric_id', 'namespace'])
+@stackmonitoring_cli.baselineable_metric_group.command(name=stackmonitoring_cli.update_baselineable_metric.name, help=stackmonitoring_cli.update_baselineable_metric.help)
+@cli_util.option('--metric-namespace', required=True, help="""namespace of the metric [required]""")
+@cli_util.option('--metric-id', required=True, help=u"""Identifier for the metric [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'stack_monitoring', 'class': 'BaselineableMetric'})
+@cli_util.wrap_exceptions
+def update_baselineable_metric_extended(ctx, **kwargs):
+
+    if 'metric_namespace' in kwargs:
+        kwargs['namespace'] = kwargs['metric_namespace']
+        kwargs.pop('metric_namespace')
+
+    if 'metric_id' in kwargs:
+        kwargs['baselineable_metric_id'] = kwargs['metric_id']
+        kwargs.pop('metric_id')
+
+    ctx.invoke(stackmonitoring_cli.update_baselineable_metric, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(stackmonitoring_cli.evaluate_baselineable_metric, params_to_exclude=['baselineable_metric_id'])
+@stackmonitoring_cli.baselineable_metric_group.command(name=stackmonitoring_cli.evaluate_baselineable_metric.name, help=stackmonitoring_cli.evaluate_baselineable_metric.help)
+@cli_util.option('--metric-id', required=True, help=u"""Identifier for the metric [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'stack_monitoring', 'class': 'list[MetricData]'}}, output_type={'module': 'stack_monitoring', 'class': 'EvaluateBaselineableMetricResult'})
+@cli_util.wrap_exceptions
+def evaluate_baselineable_metric_extended(ctx, **kwargs):
+
+    if 'metric_id' in kwargs:
+        kwargs['baselineable_metric_id'] = kwargs['metric_id']
+        kwargs.pop('metric_id')
+
+    ctx.invoke(stackmonitoring_cli.evaluate_baselineable_metric, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(stackmonitoring_cli.list_baselineable_metrics, params_to_exclude=['baselineable_metric_id'])
+@stackmonitoring_cli.baselineable_metric_group.command(name=stackmonitoring_cli.list_baselineable_metrics.name, help=stackmonitoring_cli.list_baselineable_metrics.help)
+@cli_util.option('--metric-id', help=u"""Identifier for the metric""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'stack_monitoring', 'class': 'BaselineableMetricSummaryCollection'})
+@cli_util.wrap_exceptions
+def list_baselineable_metrics_extended(ctx, **kwargs):
+
+    if 'metric_id' in kwargs:
+        kwargs['baselineable_metric_id'] = kwargs['metric_id']
+        kwargs.pop('metric_id')
+
+    ctx.invoke(stackmonitoring_cli.list_baselineable_metrics, **kwargs)

@@ -40,9 +40,9 @@ query_root_group.add_command(quick_pick_summary_group)
 
 
 @quick_pick_summary_group.command(name=cli_util.override('query.list_quick_picks.command_name', 'list-quick-picks'), help=u"""Returns a list of predefined Quick Pick queries intended to assist the user to choose a query to run.  There is no sorting applied on the results. \n[Command Reference](listQuickPicks)""")
-@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID for the intended request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
-@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous response.""")
+@cli_util.option('--page', help=u"""The page token representing the page where to start retrieving results. This is usually retrieved from a previous response.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -88,12 +88,12 @@ def list_quick_picks(ctx, from_json, all_pages, page_size, apm_domain_id, limit,
 
 
 @query_result_response_group.command(name=cli_util.override('query.query.command_name', 'query'), help=u"""Retrieves the results (selected attributes and aggregations) of a query constructed according to the Application Performance Monitoring Defined Query Syntax. Query results are filtered by the filter criteria specified in the where clause. Further query results are grouped by the attributes specified in the group by clause.  Finally, ordering (asc/desc) is done by the specified attributes in the order by clause. \n[Command Reference](query)""")
-@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID for the intended request.""")
 @cli_util.option('--time-span-started-greater-than-or-equal-to', required=True, type=custom_types.CLI_DATETIME, help=u"""Include spans that have a `spanStartTime` equal to or greater than this value.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-span-started-less-than', required=True, type=custom_types.CLI_DATETIME, help=u"""Include spans that have a `spanStartTime`less than this value.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--query-text', help=u"""Application Performance Monitoring defined query string that filters and retrieves trace data results.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
-@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous response.""")
+@cli_util.option('--page', help=u"""The page token representing the page where to start retrieving results. This is usually retrieved from a previous response.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context

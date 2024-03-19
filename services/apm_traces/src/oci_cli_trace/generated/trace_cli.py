@@ -54,19 +54,31 @@ trace_root_group.add_command(span_group)
 
 
 @aggregated_snapshot_group.command(name=cli_util.override('trace.get_aggregated_snapshot.command_name', 'get'), help=u"""Gets the aggregated snapshot identified by trace ID. \n[Command Reference](getAggregatedSnapshot)""")
-@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID for the intended request.""")
 @cli_util.option('--trace-key', required=True, help=u"""Unique Application Performance Monitoring trace identifier (traceId).""")
+@cli_util.option('--service-name', help=u"""Name associated with the service.""")
+@cli_util.option('--server-name', help=u"""Name of the server.""")
+@cli_util.option('--span-key', help=u"""Unique Application Performance Monitoring span identifier (spanId).""")
+@cli_util.option('--span-name', help=u"""Name of the span associated with the trace.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'apm_traces', 'class': 'AggregatedSnapshot'})
 @cli_util.wrap_exceptions
-def get_aggregated_snapshot(ctx, from_json, apm_domain_id, trace_key):
+def get_aggregated_snapshot(ctx, from_json, apm_domain_id, trace_key, service_name, server_name, span_key, span_name):
 
     if isinstance(trace_key, six.string_types) and len(trace_key.strip()) == 0:
         raise click.UsageError('Parameter --trace-key cannot be whitespace or empty string')
 
     kwargs = {}
+    if service_name is not None:
+        kwargs['service_name'] = service_name
+    if server_name is not None:
+        kwargs['server_name'] = server_name
+    if span_key is not None:
+        kwargs['span_key'] = span_key
+    if span_name is not None:
+        kwargs['span_name'] = span_name
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('apm_traces', 'trace', ctx)
     result = client.get_aggregated_snapshot(
@@ -78,15 +90,18 @@ def get_aggregated_snapshot(ctx, from_json, apm_domain_id, trace_key):
 
 
 @span_group.command(name=cli_util.override('trace.get_span.command_name', 'get'), help=u"""Gets the span details identified by spanId. \n[Command Reference](getSpan)""")
-@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID for the intended request.""")
 @cli_util.option('--span-key', required=True, help=u"""Unique Application Performance Monitoring span identifier (spanId).""")
 @cli_util.option('--trace-key', required=True, help=u"""Unique Application Performance Monitoring trace identifier (traceId).""")
+@cli_util.option('--time-span-started-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Include spans that have a `spanStartTime` equal to or greater than this value.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-span-started-less-than', type=custom_types.CLI_DATETIME, help=u"""Include spans that have a `spanStartTime`less than this value.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--span-namespace', type=custom_types.CliCaseInsensitiveChoice(["TRACES", "SYNTHETIC"]), help=u"""Name space from which the span details need to be retrieved.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'apm_traces', 'class': 'Span'})
 @cli_util.wrap_exceptions
-def get_span(ctx, from_json, apm_domain_id, span_key, trace_key):
+def get_span(ctx, from_json, apm_domain_id, span_key, trace_key, time_span_started_greater_than_or_equal_to, time_span_started_less_than, span_namespace):
 
     if isinstance(span_key, six.string_types) and len(span_key.strip()) == 0:
         raise click.UsageError('Parameter --span-key cannot be whitespace or empty string')
@@ -95,6 +110,12 @@ def get_span(ctx, from_json, apm_domain_id, span_key, trace_key):
         raise click.UsageError('Parameter --trace-key cannot be whitespace or empty string')
 
     kwargs = {}
+    if time_span_started_greater_than_or_equal_to is not None:
+        kwargs['time_span_started_greater_than_or_equal_to'] = time_span_started_greater_than_or_equal_to
+    if time_span_started_less_than is not None:
+        kwargs['time_span_started_less_than'] = time_span_started_less_than
+    if span_namespace is not None:
+        kwargs['span_namespace'] = span_namespace
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('apm_traces', 'trace', ctx)
     result = client.get_span(
@@ -107,19 +128,28 @@ def get_span(ctx, from_json, apm_domain_id, span_key, trace_key):
 
 
 @trace_group.command(name=cli_util.override('trace.get_trace.command_name', 'get'), help=u"""Gets the trace details identified by traceId. \n[Command Reference](getTrace)""")
-@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID for the intended request.""")
 @cli_util.option('--trace-key', required=True, help=u"""Unique Application Performance Monitoring trace identifier (traceId).""")
+@cli_util.option('--time-trace-started-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Include traces that have a `minTraceStartTime` equal to or greater than this value.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-trace-started-less-than', type=custom_types.CLI_DATETIME, help=u"""Include traces that have a `minTraceStartTime` less than this value.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--trace-namespace', type=custom_types.CliCaseInsensitiveChoice(["TRACES", "SYNTHETIC"]), help=u"""Name space from which the trace details need to be retrieved.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'apm_traces', 'class': 'Trace'})
 @cli_util.wrap_exceptions
-def get_trace(ctx, from_json, apm_domain_id, trace_key):
+def get_trace(ctx, from_json, apm_domain_id, trace_key, time_trace_started_greater_than_or_equal_to, time_trace_started_less_than, trace_namespace):
 
     if isinstance(trace_key, six.string_types) and len(trace_key.strip()) == 0:
         raise click.UsageError('Parameter --trace-key cannot be whitespace or empty string')
 
     kwargs = {}
+    if time_trace_started_greater_than_or_equal_to is not None:
+        kwargs['time_trace_started_greater_than_or_equal_to'] = time_trace_started_greater_than_or_equal_to
+    if time_trace_started_less_than is not None:
+        kwargs['time_trace_started_less_than'] = time_trace_started_less_than
+    if trace_namespace is not None:
+        kwargs['trace_namespace'] = trace_namespace
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('apm_traces', 'trace', ctx)
     result = client.get_trace(
@@ -131,10 +161,10 @@ def get_trace(ctx, from_json, apm_domain_id, trace_key):
 
 
 @trace_snapshot_group.command(name=cli_util.override('trace.get_trace_snapshot.command_name', 'get'), help=u"""Gets the trace snapshots data identified by trace ID. \n[Command Reference](getTraceSnapshot)""")
-@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID for the intended request.""")
 @cli_util.option('--trace-key', required=True, help=u"""Unique Application Performance Monitoring trace identifier (traceId).""")
-@cli_util.option('--is-summarized', type=click.BOOL, help=u"""If enabled, then only span level details will be sent.""")
-@cli_util.option('--thread-id', help=u"""Thread id for which snapshots needs to be retrieved. This is an identifier of a thread, and is a positive long number generated when when a thread is created.""")
+@cli_util.option('--is-summarized', type=click.BOOL, help=u"""If enabled, only span level details are sent.""")
+@cli_util.option('--thread-id', help=u"""Thread ID for which snapshots need to be retrieved. This identifier of a thread is a long positive number generated when a thread is created.""")
 @cli_util.option('--snapshot-time', help=u"""Epoch time of snapshot.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
