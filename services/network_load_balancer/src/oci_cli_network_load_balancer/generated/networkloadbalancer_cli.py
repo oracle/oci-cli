@@ -22,7 +22,7 @@ def nlb_root_group():
     pass
 
 
-@click.command(cli_util.override('nlb.listener_group.command_name', 'listener'), cls=CommandGroupWithAlias, help="""The congfiguration of the listener. For more information about backend set configuration, see [Managing Load Balancer Listeners].""")
+@click.command(cli_util.override('nlb.listener_group.command_name', 'listener'), cls=CommandGroupWithAlias, help="""The congfiguration of the listener. For more information about listener configuration, see [Managing Load Balancer Listeners].""")
 @cli_util.help_option_group
 def listener_group():
     pass
@@ -80,7 +80,7 @@ def backend_health_group():
     pass
 
 
-@click.command(cli_util.override('nlb.listener_summary_group.command_name', 'listener-summary'), cls=CommandGroupWithAlias, help="""The configuration of the listener. For more information about backend set configuration, see [Managing Load Balancer Listeners].""")
+@click.command(cli_util.override('nlb.listener_summary_group.command_name', 'listener-summary'), cls=CommandGroupWithAlias, help="""The configuration of the listener. For more information about listener configuration, see [Managing Load Balancer Listeners].""")
 @cli_util.help_option_group
 def listener_summary_group():
     pass
@@ -411,7 +411,7 @@ Example: `example_backend_set`""")
 @cli_util.option('--port', required=True, type=click.INT, help=u"""The communication port for the listener.
 
 Example: `80`""")
-@cli_util.option('--protocol', required=True, type=custom_types.CliCaseInsensitiveChoice(["ANY", "TCP", "UDP", "TCP_AND_UDP"]), help=u"""The protocol on which the listener accepts connection requests. For public network load balancers, ANY protocol refers to TCP/UDP. For private network load balancers, ANY protocol refers to TCP/UDP/ICMP (note that ICMP requires isPreserveSourceDestination to be set to true). To get a list of valid protocols, use the [ListNetworkLoadBalancersProtocols] operation.
+@cli_util.option('--protocol', required=True, type=custom_types.CliCaseInsensitiveChoice(["ANY", "TCP", "UDP", "TCP_AND_UDP"]), help=u"""The protocol on which the listener accepts connection requests. For public network load balancers, ANY protocol refers to TCP/UDP with the wildcard port. For private network load balancers, ANY protocol refers to TCP/UDP/ICMP (note that ICMP requires isPreserveSourceDestination to be set to true). \"ListNetworkLoadBalancersProtocols\" API is deprecated and it will not return the updated values. Use the allowed values for the protocol instead.
 
 Example: `TCP`""")
 @cli_util.option('--ip-version', type=custom_types.CliCaseInsensitiveChoice(["IPV4", "IPV6"]), help=u"""IP version associated with the listener.""")
@@ -484,6 +484,7 @@ def create_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.option('--display-name', required=True, help=u"""Network load balancer identifier, which can be renamed.""")
 @cli_util.option('--subnet-id', required=True, help=u"""The subnet in which the network load balancer is spawned [OCIDs].""")
 @cli_util.option('--is-preserve-source-destination', type=click.BOOL, help=u"""This parameter can be enabled only if backends are compute OCIDs. When enabled, the skipSourceDestinationCheck parameter is automatically enabled on the load balancer VNIC, and packets are sent to the backend with the entire IP header intact.""")
+@cli_util.option('--is-symmetric-hash-enabled', type=click.BOOL, help=u"""This can only be enabled when NLB is working in transparent mode with source destination header preservation enabled. This removes the additional dependency from NLB backends(like Firewalls) to perform SNAT.""")
 @cli_util.option('--reserved-ips', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of reserved Ips.
 
 This option is a JSON list with items of type ReservedIP.  For documentation on ReservedIP please see our API reference: https://docs.cloud.oracle.com/api/#/en/networkloadbalancer/20200501/datatypes/ReservedIP.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -524,7 +525,7 @@ This option is a JSON dictionary of type dict(str, BackendSetDetails).  For docu
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'reserved-ips': {'module': 'network_load_balancer', 'class': 'list[ReservedIP]'}, 'network-security-group-ids': {'module': 'network_load_balancer', 'class': 'list[string]'}, 'listeners': {'module': 'network_load_balancer', 'class': 'dict(str, ListenerDetails)'}, 'backend-sets': {'module': 'network_load_balancer', 'class': 'dict(str, BackendSetDetails)'}, 'freeform-tags': {'module': 'network_load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_load_balancer', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'network_load_balancer', 'class': 'NetworkLoadBalancer'})
 @cli_util.wrap_exceptions
-def create_network_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, subnet_id, is_preserve_source_destination, reserved_ips, is_private, network_security_group_ids, nlb_ip_version, listeners, backend_sets, freeform_tags, defined_tags):
+def create_network_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, subnet_id, is_preserve_source_destination, is_symmetric_hash_enabled, reserved_ips, is_private, network_security_group_ids, nlb_ip_version, listeners, backend_sets, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -536,6 +537,9 @@ def create_network_load_balancer(ctx, from_json, wait_for_state, max_wait_second
 
     if is_preserve_source_destination is not None:
         _details['isPreserveSourceDestination'] = is_preserve_source_destination
+
+    if is_symmetric_hash_enabled is not None:
+        _details['isSymmetricHashEnabled'] = is_symmetric_hash_enabled
 
     if reserved_ips is not None:
         _details['reservedIps'] = cli_util.parse_json_parameter("reserved_ips", reserved_ips)
@@ -1704,7 +1708,7 @@ Example: `example_backend_set`""")
 @cli_util.option('--backend-name', required=True, help=u"""The name of the backend server to update. If the backend was created with an explicitly specified name, that name should be used here. If the backend was created without explicitly specifying the name, but was created using ipAddress, this is specified as <ipAddress>:<port>. If the backend was created without explicitly specifying the name, but was created using targetId, this is specified as <targetId>:<port>.
 
 Example: `10.0.0.3:8080` or `ocid1.privateip..oc1.<var>&lt;unique_ID&gt;</var>:8080`""")
-@cli_util.option('--weight', type=click.INT, help=u"""The load balancing policy weight assigned to the server. Backend servers with a higher weight receive a larger proportion of incoming traffic. For example, a server weighted '3' receives three times the number of new connections as a server weighted '1'. For more information about load balancing policies, see [How Load Balancing Policies Work].
+@cli_util.option('--weight', type=click.INT, help=u"""The load balancing policy weight assigned to the server. Backend servers with a higher weight receive a larger proportion of incoming traffic. For example, a server weighted '3' receives three times the number of new connections as a server weighted '1'. For more information about load balancing policies, see [How Network Load Balancing Policies Work].
 
 Example: `3`""")
 @cli_util.option('--is-backup', type=click.BOOL, help=u"""Whether the network load balancer should treat this server as a backup unit. If `true`, then the network load balancer forwards no ingress traffic to this backend server unless all other backend servers not marked as \"isBackup\" fail the health check policy.
@@ -2021,7 +2025,7 @@ Example: `example_backend_set`""")
 @cli_util.option('--port', type=click.INT, help=u"""The communication port for the listener.
 
 Example: `80`""")
-@cli_util.option('--protocol', type=custom_types.CliCaseInsensitiveChoice(["ANY", "TCP", "UDP", "TCP_AND_UDP"]), help=u"""The protocol on which the listener accepts connection requests. For public network load balancers, ANY protocol refers to TCP/UDP. For private network load balancers, ANY protocol refers to TCP/UDP/ICMP (note that ICMP requires isPreserveSourceDestination to be set to true). To get a list of valid protocols, use the [ListNetworkLoadBalancersProtocols] operation.
+@cli_util.option('--protocol', type=custom_types.CliCaseInsensitiveChoice(["ANY", "TCP", "UDP", "TCP_AND_UDP"]), help=u"""The protocol on which the listener accepts connection requests. For public network load balancers, ANY protocol refers to TCP/UDP with the wildcard port. For private network load balancers, ANY protocol refers to TCP/UDP/ICMP (note that ICMP requires isPreserveSourceDestination to be set to true). \"ListNetworkLoadBalancersProtocols\" API is deprecated and it will not return the updated values. Use the allowed values for the protocol instead.
 
 Example: `TCP`""")
 @cli_util.option('--ip-version', type=custom_types.CliCaseInsensitiveChoice(["IPV4", "IPV6"]), help=u"""IP version associated with the listener.""")
@@ -2104,6 +2108,7 @@ def update_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 Example: `example_network_load_balancer`""")
 @cli_util.option('--is-preserve-source-destination', type=click.BOOL, help=u"""This parameter can be enabled only if backends are compute OCIDs. When enabled, the skipSourceDestinationCheck parameter is automatically enabled on the load balancer VNIC, and packets are sent to the backend with the entire IP header intact.""")
+@cli_util.option('--is-symmetric-hash-enabled', type=click.BOOL, help=u"""This can only be enabled when NLB is working in transparent mode with source destination header preservation enabled. This removes the additional dependency from NLB backends(like Firewalls) to perform SNAT.""")
 @cli_util.option('--nlb-ip-version', type=custom_types.CliCaseInsensitiveChoice(["IPV4", "IPV4_AND_IPV6"]), help=u"""IP version associated with the NLB.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -2121,7 +2126,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'network_load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_load_balancer', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_network_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, display_name, is_preserve_source_destination, nlb_ip_version, freeform_tags, defined_tags, if_match):
+def update_network_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, display_name, is_preserve_source_destination, is_symmetric_hash_enabled, nlb_ip_version, freeform_tags, defined_tags, if_match):
 
     if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
@@ -2142,6 +2147,9 @@ def update_network_load_balancer(ctx, from_json, force, wait_for_state, max_wait
 
     if is_preserve_source_destination is not None:
         _details['isPreserveSourceDestination'] = is_preserve_source_destination
+
+    if is_symmetric_hash_enabled is not None:
+        _details['isSymmetricHashEnabled'] = is_symmetric_hash_enabled
 
     if nlb_ip_version is not None:
         _details['nlbIpVersion'] = nlb_ip_version

@@ -6,6 +6,116 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.38.0 - 2024-03-26
+-------------------
+Added
+~~~~~
+
+* OCI Network Load Balancer Service
+
+  * Support for symmetric hashing when creating or updating network load balancers.
+
+    * ``oci nlb network-load-balancer create --is-symmetric-hash-enabled``
+    * ``oci nlb network-load-balancer update --is-symmetric-hash-enabled``
+
+* OCI Monitoring Service
+
+  * Support for new optional parameters in the create or update alarms commands.
+
+    * ``oci monitoring alarm create --overrides --rule-name --notification-version``
+    * ``oci monitoring alarm update --overrides --rule-name --notification-version``
+
+* OCI Database Management Service
+
+  * Support for new command to retrieve fleet health metrics for MySQL HeatWave clusters.
+
+    * ``oci database-management managed-my-sql-databases heat-wave-fleet-metrics``
+
+  * Support for new optional parameter when retrieving MySQL fleet metrics.
+
+    * ``oci database-management managed-my-sql-databases my-sql-fleet-metrics --is-heat-wave-enabled``
+
+* OCI Database Service
+
+  * Support for creating and updating a refreshable clone with auto-refresh for an autonomous database.
+
+    * ``oci db autonomous-database create-refreshable-clone --auto-refresh-point-lag-in-seconds``
+    * ``oci db autonomous-database update --auto-refresh-point-lag-in-seconds``
+
+* OCI Logging Service
+
+  * Support for new logging agent-configuration commands.
+
+    * ``oci logging agent-configuration create-unified-agent-configuration-unified-agent-monitoring-configuration-details``
+    * ``oci logging agent-configuration update-unified-agent-configuration-unified-agent-monitoring-configuration-details``
+
+  * Support for new optional parameters in the following commands
+
+    * ``oci logging agent-configuration create-log-configuration --service-configuration-filter``
+    * ``oci logging agent-configuration update-log-configuration --service-configuration-filter``
+
+* OCI Devops Deployment Service
+
+  * Support for new groups of commands.
+
+    * ``oci devops code-search``
+    * ``oci devops protected-branch``
+    * ``oci devops pull-request``
+    * ``oci devops pull-request-comment``
+    * ``oci devops repository-private-access``
+
+  * Support for new commands in the ``deploy-artifact`` group.
+
+    * ``oci devops deploy-artifact create-helm-command-spec``
+    * ``oci devops deploy-artifact update-helm-command-spec``
+
+  * Support for new commands in the ``project`` group.
+
+    * ``oci devops project get-project-settings``
+    * ``oci devops project update-project-settings``
+    * ``oci devops project delete-project-settings``
+    * ``oci devops project get-notification-preference``
+    * ``oci devops project update-notification-preference``
+    * ``oci devops project list-project-analytics-authors``
+    * ``oci devops project summarize-project-analytics``
+
+  * Support for new commands in the ``repository`` group.
+
+    * ``oci devops repository create-or-update-git-branch-details``
+    * ``oci devops repository create-or-update-git-tag-details``
+    * ``oci devops repository delete-git-ref``
+    * ``oci devops repository delete-repository-settings``
+    * ``oci devops repository get-repository-settings``
+    * ``oci devops repository get-repository-notification-preference``
+    * ``oci devops repository list-fork-sync-statuses``
+    * ``oci devops repository list-pull-request-authors``
+    * ``oci devops repository list-repository-analytics-authors``
+    * ``oci devops repository list-repository-build-run-snapshots``
+    * ``oci devops repository summarize-repository-analytics``
+    * ``oci devops repository sync``
+    * ``oci devops repository update-repository-notification-preference``
+    * ``oci devops repository update-repository-settings``
+
+  * Support for new parameters in the following commands.
+
+    * ``oci devops repository create --parent-repository-id``
+    * ``oci devops repository get-commit-diff --target-repository-id``
+    * ``oci devops repository list-commit-diffs --target-repository-id``
+    * ``oci devops deploy-stage create-deploy-oke-stage --oke-environment-details``
+    * ``oci devops deploy-stage update-deploy-oke-stage --oke-environment-details``
+    * ``oci devops deploy-stage create-oke-helm-chart-stage --oke-environment-details --helm-command-artifact-ids --purpose --is-uninstall-on-stage-delete``
+    * ``oci devops deploy-stage update-oke-helm-chart-stage --oke-environment-details --helm-command-artifact-ids --purpose --is-uninstall-on-stage-delete``
+
+
+Changed
+~~~~~~~
+
+* [BREAKING] Optional parameters ``--description`` and ``--display-name`` have now been made required in the following commands in OCI Logging Service.
+
+  * ``oci logging agent-configuration create``
+  * ``oci logging agent-configuration create-log-configuration``
+
+
 3.37.14 - 2024-03-19
 --------------------
 Added
