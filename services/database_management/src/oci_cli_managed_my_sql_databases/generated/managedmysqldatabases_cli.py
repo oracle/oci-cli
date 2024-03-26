@@ -24,6 +24,12 @@ def managed_my_sql_databases_root_group():
     pass
 
 
+@click.command(cli_util.override('managed_my_sql_databases.heat_wave_fleet_metrics_group.command_name', 'heat-wave-fleet-metrics'), cls=CommandGroupWithAlias, help="""The details of the HeatWave cluster fleet health metrics.""")
+@cli_util.help_option_group
+def heat_wave_fleet_metrics_group():
+    pass
+
+
 @click.command(cli_util.override('managed_my_sql_databases.my_sql_fleet_metrics_group.command_name', 'my-sql-fleet-metrics'), cls=CommandGroupWithAlias, help="""The details of the MySQL Database fleet health metrics.""")
 @cli_util.help_option_group
 def my_sql_fleet_metrics_group():
@@ -43,9 +49,45 @@ def managed_my_sql_database_collection_group():
 
 
 database_management_service_cli.database_management_service_group.add_command(managed_my_sql_databases_root_group)
+managed_my_sql_databases_root_group.add_command(heat_wave_fleet_metrics_group)
 managed_my_sql_databases_root_group.add_command(my_sql_fleet_metrics_group)
 managed_my_sql_databases_root_group.add_command(managed_my_sql_database_group)
 managed_my_sql_databases_root_group.add_command(managed_my_sql_database_collection_group)
+
+
+@heat_wave_fleet_metrics_group.command(name=cli_util.override('managed_my_sql_databases.get_heat_wave_fleet_metric.command_name', 'get'), help=u"""Gets the health metrics for a fleet of HeatWave clusters in a compartment. \n[Command Reference](getHeatWaveFleetMetric)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--start-time', required=True, help=u"""The start time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
+@cli_util.option('--end-time', required=True, help=u"""The end time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
+@cli_util.option('--filter-by-metric-names', help=u"""The filter used to retrieve a specific set of metrics by passing the desired metric names with a comma separator. Note that, by default, the service returns all supported metrics.""")
+@cli_util.option('--filter-by-heat-wave-status', type=custom_types.CliCaseInsensitiveChoice(["UP", "DOWN", "UNKNOWN"]), help=u"""The parameter to filter by HeatWave cluster status.""")
+@cli_util.option('--filter-by-heat-wave-shape', help=u"""The parameter to filter by HeatWave node shape.""")
+@cli_util.option('--is-heat-wave-lakehouse-enabled', type=click.BOOL, help=u"""The parameter to filter based on whether HeatWave Lakehouse is enabled for the cluster.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'HeatWaveFleetMetrics'})
+@cli_util.wrap_exceptions
+def get_heat_wave_fleet_metric(ctx, from_json, compartment_id, start_time, end_time, filter_by_metric_names, filter_by_heat_wave_status, filter_by_heat_wave_shape, is_heat_wave_lakehouse_enabled):
+
+    kwargs = {}
+    if filter_by_metric_names is not None:
+        kwargs['filter_by_metric_names'] = filter_by_metric_names
+    if filter_by_heat_wave_status is not None:
+        kwargs['filter_by_heat_wave_status'] = filter_by_heat_wave_status
+    if filter_by_heat_wave_shape is not None:
+        kwargs['filter_by_heat_wave_shape'] = filter_by_heat_wave_shape
+    if is_heat_wave_lakehouse_enabled is not None:
+        kwargs['is_heat_wave_lakehouse_enabled'] = is_heat_wave_lakehouse_enabled
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'managed_my_sql_databases', ctx)
+    result = client.get_heat_wave_fleet_metric(
+        compartment_id=compartment_id,
+        start_time=start_time,
+        end_time=end_time,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.get_managed_my_sql_database.command_name', 'get'), help=u"""Retrieves the general information for a specific MySQL Database. \n[Command Reference](getManagedMySqlDatabase)""")
@@ -79,12 +121,13 @@ def get_managed_my_sql_database(ctx, from_json, managed_my_sql_database_id):
 @cli_util.option('--filter-by-mds-deployment-type', type=custom_types.CliCaseInsensitiveChoice(["HA", "HEATWAVE", "STANDALONE"]), help=u"""The parameter to filter by MySQL Database System type.""")
 @cli_util.option('--filter-by-my-sql-status', type=custom_types.CliCaseInsensitiveChoice(["UP", "DOWN", "UNKNOWN"]), help=u"""The parameter to filter by MySQL Database status.""")
 @cli_util.option('--filter-by-my-sql-database-version', help=u"""The parameter to filter by MySQL database version.""")
+@cli_util.option('--is-heat-wave-enabled', type=click.BOOL, help=u"""The parameter to filter based on whether HeatWave is enabled for the database.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'MySqlFleetMetrics'})
 @cli_util.wrap_exceptions
-def get_my_sql_fleet_metric(ctx, from_json, compartment_id, start_time, end_time, filter_by_metric_names, filter_by_my_sql_deployment_type_param, filter_by_mds_deployment_type, filter_by_my_sql_status, filter_by_my_sql_database_version):
+def get_my_sql_fleet_metric(ctx, from_json, compartment_id, start_time, end_time, filter_by_metric_names, filter_by_my_sql_deployment_type_param, filter_by_mds_deployment_type, filter_by_my_sql_status, filter_by_my_sql_database_version, is_heat_wave_enabled):
 
     kwargs = {}
     if filter_by_metric_names is not None:
@@ -97,6 +140,8 @@ def get_my_sql_fleet_metric(ctx, from_json, compartment_id, start_time, end_time
         kwargs['filter_by_my_sql_status'] = filter_by_my_sql_status
     if filter_by_my_sql_database_version is not None:
         kwargs['filter_by_my_sql_database_version'] = filter_by_my_sql_database_version
+    if is_heat_wave_enabled is not None:
+        kwargs['is_heat_wave_enabled'] = is_heat_wave_enabled
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'managed_my_sql_databases', ctx)
     result = client.get_my_sql_fleet_metric(
@@ -169,7 +214,7 @@ def list_managed_my_sql_database_configuration_data(ctx, from_json, all_pages, p
 @cli_util.option('--managed-my-sql-database-id', required=True, help=u"""The OCID of the Managed MySQL Database.""")
 @cli_util.option('--start-time', required=True, help=u"""The start time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
 @cli_util.option('--end-time', required=True, help=u"""The end time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
-@cli_util.option('--filter-column', help=u"""The parameter to filter results by key criteria which include : - SUM_TIMER_WAIT - COUNT_STAR - SUM_ERRORS - SUM_ROWS_AFFECTED - SUM_ROWS_SENT - SUM_ROWS_EXAMINED - SUM_CREATED_TMP_TABLES - SUM_NO_INDEX_USED - SUM_NO_GOOD_INDEX_USED - FIRST_SEEN - LAST_SEEN""")
+@cli_util.option('--filter-column', help=u"""The parameter to filter results by key criteria which include : - AVG_TIMER_WAIT - SUM_TIMER_WAIT - COUNT_STAR - SUM_ERRORS - SUM_ROWS_AFFECTED - SUM_ROWS_SENT - SUM_ROWS_EXAMINED - SUM_CREATED_TMP_TABLES - SUM_NO_INDEX_USED - SUM_NO_GOOD_INDEX_USED - FIRST_SEEN - LAST_SEEN - HEATWAVE_OFFLOADED - HEATWAVE_OUT_OF_MEMORY""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for \u2018TIMECREATED\u2019 is descending and the default sort order for \u2018NAME\u2019 is ascending. The \u2018NAME\u2019 sort order is case-sensitive.""")

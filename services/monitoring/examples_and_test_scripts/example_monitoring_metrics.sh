@@ -88,18 +88,18 @@ main() {
 
     print_header "list metrics - no namespace or metric name given"
     echo::exec oci monitoring metric list \
-        --compartment-id "${compartment}"
+        --compartment-id "${compartment}" --limit 1
 
     print_header "list metrics - with namespace but not metric name given"
     echo::exec oci monitoring metric list \
         --compartment-id "${compartment}" \
-        --namespace "${namespace}"
+        --namespace "${namespace}" --limit 1
 
     print_header "list metrics - with namespace and metric name given"
     echo::exec oci monitoring metric list \
         --compartment-id "${compartment}" \
         --namespace "${namespace}" \
-        --name "${metric_name}"
+        --name "${metric_name}" --limit 1
 
     print_header "summarize metrics"
     echo::exec oci monitoring metric-data summarize-metrics-data \

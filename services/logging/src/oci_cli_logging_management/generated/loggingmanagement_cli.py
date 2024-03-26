@@ -527,15 +527,15 @@ def create_log_saved_search(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 
 @unified_agent_configuration_group.command(name=cli_util.override('logging.create_unified_agent_configuration.command_name', 'create'), help=u"""Create unified agent configuration registration. \n[Command Reference](createUnifiedAgentConfiguration)""")
+@cli_util.option('--display-name', required=True, help=u"""The user-friendly display name. This must be unique within the enclosing resource, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""Whether or not this resource is currently enabled.""")
 @cli_util.option('--service-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that the resource belongs to.""")
-@cli_util.option('--display-name', help=u"""The user-friendly display name. This must be unique within the enclosing resource, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--description', required=True, help=u"""Description for this resource.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--description', help=u"""Description for this resource.""")
 @cli_util.option('--group-association', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -545,27 +545,23 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'service-configuration': {'module': 'logging', 'class': 'UnifiedAgentServiceConfigurationDetails'}, 'defined-tags': {'module': 'logging', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'logging', 'class': 'dict(str, string)'}, 'group-association': {'module': 'logging', 'class': 'GroupAssociationDetails'}})
 @cli_util.wrap_exceptions
-def create_unified_agent_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, is_enabled, service_configuration, compartment_id, display_name, defined_tags, freeform_tags, description, group_association):
+def create_unified_agent_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, is_enabled, service_configuration, compartment_id, description, defined_tags, freeform_tags, group_association):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
+    _details['displayName'] = display_name
     _details['isEnabled'] = is_enabled
     _details['serviceConfiguration'] = cli_util.parse_json_parameter("service_configuration", service_configuration)
     _details['compartmentId'] = compartment_id
-
-    if display_name is not None:
-        _details['displayName'] = display_name
+    _details['description'] = description
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
-    if description is not None:
-        _details['description'] = description
 
     if group_association is not None:
         _details['groupAssociation'] = cli_util.parse_json_parameter("group_association", group_association)
@@ -606,39 +602,41 @@ def create_unified_agent_configuration(ctx, from_json, wait_for_state, max_wait_
 
 
 @unified_agent_configuration_group.command(name=cli_util.override('logging.create_unified_agent_configuration_unified_agent_logging_configuration.command_name', 'create-unified-agent-configuration-unified-agent-logging-configuration'), help=u"""Create unified agent configuration registration. \n[Command Reference](createUnifiedAgentConfiguration)""")
+@cli_util.option('--display-name', required=True, help=u"""The user-friendly display name. This must be unique within the enclosing resource, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""Whether or not this resource is currently enabled.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that the resource belongs to.""")
+@cli_util.option('--description', required=True, help=u"""Description for this resource.""")
 @cli_util.option('--service-configuration-sources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Logging source object.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--service-configuration-destination', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""The user-friendly display name. This must be unique within the enclosing resource, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--description', help=u"""Description for this resource.""")
 @cli_util.option('--group-association', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--service-configuration-filter', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Logging filter object.
+
+This option is a JSON list with items of type UnifiedAgentLoggingFilter.  For documentation on UnifiedAgentLoggingFilter please see our API reference: https://docs.cloud.oracle.com/api/#/en/loggingmanagement/20200531/datatypes/UnifiedAgentLoggingFilter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'logging', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'logging', 'class': 'dict(str, string)'}, 'group-association': {'module': 'logging', 'class': 'GroupAssociationDetails'}, 'service-configuration-sources': {'module': 'logging', 'class': 'list[UnifiedAgentLoggingSource]'}, 'service-configuration-destination': {'module': 'logging', 'class': 'UnifiedAgentLoggingDestination'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'logging', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'logging', 'class': 'dict(str, string)'}, 'group-association': {'module': 'logging', 'class': 'GroupAssociationDetails'}, 'service-configuration-sources': {'module': 'logging', 'class': 'list[UnifiedAgentLoggingSource]'}, 'service-configuration-filter': {'module': 'logging', 'class': 'list[UnifiedAgentLoggingFilter]'}, 'service-configuration-destination': {'module': 'logging', 'class': 'UnifiedAgentLoggingDestination'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'logging', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'logging', 'class': 'dict(str, string)'}, 'group-association': {'module': 'logging', 'class': 'GroupAssociationDetails'}, 'service-configuration-sources': {'module': 'logging', 'class': 'list[UnifiedAgentLoggingSource]'}, 'service-configuration-destination': {'module': 'logging', 'class': 'UnifiedAgentLoggingDestination'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'logging', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'logging', 'class': 'dict(str, string)'}, 'group-association': {'module': 'logging', 'class': 'GroupAssociationDetails'}, 'service-configuration-sources': {'module': 'logging', 'class': 'list[UnifiedAgentLoggingSource]'}, 'service-configuration-filter': {'module': 'logging', 'class': 'list[UnifiedAgentLoggingFilter]'}, 'service-configuration-destination': {'module': 'logging', 'class': 'UnifiedAgentLoggingDestination'}})
 @cli_util.wrap_exceptions
-def create_unified_agent_configuration_unified_agent_logging_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, is_enabled, compartment_id, service_configuration_sources, service_configuration_destination, display_name, defined_tags, freeform_tags, description, group_association):
+def create_unified_agent_configuration_unified_agent_logging_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, is_enabled, compartment_id, description, service_configuration_sources, service_configuration_destination, defined_tags, freeform_tags, group_association, service_configuration_filter):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
     _details['serviceConfiguration'] = {}
+    _details['displayName'] = display_name
     _details['isEnabled'] = is_enabled
     _details['compartmentId'] = compartment_id
+    _details['description'] = description
     _details['serviceConfiguration']['sources'] = cli_util.parse_json_parameter("service_configuration_sources", service_configuration_sources)
     _details['serviceConfiguration']['destination'] = cli_util.parse_json_parameter("service_configuration_destination", service_configuration_destination)
-
-    if display_name is not None:
-        _details['displayName'] = display_name
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
@@ -646,13 +644,91 @@ def create_unified_agent_configuration_unified_agent_logging_configuration(ctx, 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    if description is not None:
-        _details['description'] = description
+    if group_association is not None:
+        _details['groupAssociation'] = cli_util.parse_json_parameter("group_association", group_association)
+
+    if service_configuration_filter is not None:
+        _details['serviceConfiguration']['filter'] = cli_util.parse_json_parameter("service_configuration_filter", service_configuration_filter)
+
+    _details['serviceConfiguration']['configurationType'] = 'LOGGING'
+
+    client = cli_util.build_client('logging', 'logging_management', ctx)
+    result = client.create_unified_agent_configuration(
+        create_unified_agent_configuration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@unified_agent_configuration_group.command(name=cli_util.override('logging.create_unified_agent_configuration_unified_agent_monitoring_configuration_details.command_name', 'create-unified-agent-configuration-unified-agent-monitoring-configuration-details'), help=u"""Create unified agent configuration registration. \n[Command Reference](createUnifiedAgentConfiguration)""")
+@cli_util.option('--display-name', required=True, help=u"""The user-friendly display name. This must be unique within the enclosing resource, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""Whether or not this resource is currently enabled.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that the resource belongs to.""")
+@cli_util.option('--description', required=True, help=u"""Description for this resource.""")
+@cli_util.option('--service-configuration-application-configurations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Unified Agent monitoring application configuration details.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--group-association', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'logging', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'logging', 'class': 'dict(str, string)'}, 'group-association': {'module': 'logging', 'class': 'GroupAssociationDetails'}, 'service-configuration-application-configurations': {'module': 'logging', 'class': 'list[UnifiedAgentMonitoringApplicationConfigurationDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'logging', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'logging', 'class': 'dict(str, string)'}, 'group-association': {'module': 'logging', 'class': 'GroupAssociationDetails'}, 'service-configuration-application-configurations': {'module': 'logging', 'class': 'list[UnifiedAgentMonitoringApplicationConfigurationDetails]'}})
+@cli_util.wrap_exceptions
+def create_unified_agent_configuration_unified_agent_monitoring_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, is_enabled, compartment_id, description, service_configuration_application_configurations, defined_tags, freeform_tags, group_association):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['serviceConfiguration'] = {}
+    _details['displayName'] = display_name
+    _details['isEnabled'] = is_enabled
+    _details['compartmentId'] = compartment_id
+    _details['description'] = description
+    _details['serviceConfiguration']['applicationConfigurations'] = cli_util.parse_json_parameter("service_configuration_application_configurations", service_configuration_application_configurations)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if group_association is not None:
         _details['groupAssociation'] = cli_util.parse_json_parameter("group_association", group_association)
 
-    _details['serviceConfiguration']['configurationType'] = 'LOGGING'
+    _details['serviceConfiguration']['configurationType'] = 'MONITORING'
 
     client = cli_util.build_client('logging', 'logging_management', ctx)
     result = client.create_unified_agent_configuration(
@@ -1898,16 +1974,19 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--description', help=u"""Description for this resource.""")
 @cli_util.option('--group-association', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--service-configuration-filter', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Logging filter object.
+
+This option is a JSON list with items of type UnifiedAgentLoggingFilter.  For documentation on UnifiedAgentLoggingFilter please see our API reference: https://docs.cloud.oracle.com/api/#/en/loggingmanagement/20200531/datatypes/UnifiedAgentLoggingFilter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'logging', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'logging', 'class': 'dict(str, string)'}, 'group-association': {'module': 'logging', 'class': 'GroupAssociationDetails'}, 'service-configuration-sources': {'module': 'logging', 'class': 'list[UnifiedAgentLoggingSource]'}, 'service-configuration-destination': {'module': 'logging', 'class': 'UnifiedAgentLoggingDestination'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'logging', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'logging', 'class': 'dict(str, string)'}, 'group-association': {'module': 'logging', 'class': 'GroupAssociationDetails'}, 'service-configuration-sources': {'module': 'logging', 'class': 'list[UnifiedAgentLoggingSource]'}, 'service-configuration-filter': {'module': 'logging', 'class': 'list[UnifiedAgentLoggingFilter]'}, 'service-configuration-destination': {'module': 'logging', 'class': 'UnifiedAgentLoggingDestination'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'logging', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'logging', 'class': 'dict(str, string)'}, 'group-association': {'module': 'logging', 'class': 'GroupAssociationDetails'}, 'service-configuration-sources': {'module': 'logging', 'class': 'list[UnifiedAgentLoggingSource]'}, 'service-configuration-destination': {'module': 'logging', 'class': 'UnifiedAgentLoggingDestination'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'logging', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'logging', 'class': 'dict(str, string)'}, 'group-association': {'module': 'logging', 'class': 'GroupAssociationDetails'}, 'service-configuration-sources': {'module': 'logging', 'class': 'list[UnifiedAgentLoggingSource]'}, 'service-configuration-filter': {'module': 'logging', 'class': 'list[UnifiedAgentLoggingFilter]'}, 'service-configuration-destination': {'module': 'logging', 'class': 'UnifiedAgentLoggingDestination'}})
 @cli_util.wrap_exceptions
-def update_unified_agent_configuration_unified_agent_logging_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, unified_agent_configuration_id, display_name, is_enabled, service_configuration_sources, service_configuration_destination, defined_tags, freeform_tags, description, group_association, if_match):
+def update_unified_agent_configuration_unified_agent_logging_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, unified_agent_configuration_id, display_name, is_enabled, service_configuration_sources, service_configuration_destination, defined_tags, freeform_tags, description, group_association, if_match, service_configuration_filter):
 
     if isinstance(unified_agent_configuration_id, six.string_types) and len(unified_agent_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --unified-agent-configuration-id cannot be whitespace or empty string')
@@ -1940,7 +2019,101 @@ def update_unified_agent_configuration_unified_agent_logging_configuration(ctx, 
     if group_association is not None:
         _details['groupAssociation'] = cli_util.parse_json_parameter("group_association", group_association)
 
+    if service_configuration_filter is not None:
+        _details['serviceConfiguration']['filter'] = cli_util.parse_json_parameter("service_configuration_filter", service_configuration_filter)
+
     _details['serviceConfiguration']['configurationType'] = 'LOGGING'
+
+    client = cli_util.build_client('logging', 'logging_management', ctx)
+    result = client.update_unified_agent_configuration(
+        unified_agent_configuration_id=unified_agent_configuration_id,
+        update_unified_agent_configuration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@unified_agent_configuration_group.command(name=cli_util.override('logging.update_unified_agent_configuration_unified_agent_monitoring_configuration_details.command_name', 'update-unified-agent-configuration-unified-agent-monitoring-configuration-details'), help=u"""Update an existing unified agent configuration. This call       fails if the log group does not exist. \n[Command Reference](updateUnifiedAgentConfiguration)""")
+@cli_util.option('--unified-agent-configuration-id', required=True, help=u"""The OCID of the Unified Agent configuration.""")
+@cli_util.option('--display-name', required=True, help=u"""The user-friendly display name. This must be unique within the enclosing resource, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""Whether or not this resource is currently enabled.""")
+@cli_util.option('--service-configuration-application-configurations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Unified Agent monitoring application configuration details.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""Description for this resource.""")
+@cli_util.option('--group-association', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'logging', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'logging', 'class': 'dict(str, string)'}, 'group-association': {'module': 'logging', 'class': 'GroupAssociationDetails'}, 'service-configuration-application-configurations': {'module': 'logging', 'class': 'list[UnifiedAgentMonitoringApplicationConfigurationDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'logging', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'logging', 'class': 'dict(str, string)'}, 'group-association': {'module': 'logging', 'class': 'GroupAssociationDetails'}, 'service-configuration-application-configurations': {'module': 'logging', 'class': 'list[UnifiedAgentMonitoringApplicationConfigurationDetails]'}})
+@cli_util.wrap_exceptions
+def update_unified_agent_configuration_unified_agent_monitoring_configuration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, unified_agent_configuration_id, display_name, is_enabled, service_configuration_application_configurations, defined_tags, freeform_tags, description, group_association, if_match):
+
+    if isinstance(unified_agent_configuration_id, six.string_types) and len(unified_agent_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --unified-agent-configuration-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags or group_association:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and group-association will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['serviceConfiguration'] = {}
+    _details['displayName'] = display_name
+    _details['isEnabled'] = is_enabled
+    _details['serviceConfiguration']['applicationConfigurations'] = cli_util.parse_json_parameter("service_configuration_application_configurations", service_configuration_application_configurations)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if description is not None:
+        _details['description'] = description
+
+    if group_association is not None:
+        _details['groupAssociation'] = cli_util.parse_json_parameter("group_association", group_association)
+
+    _details['serviceConfiguration']['configurationType'] = 'MONITORING'
 
     client = cli_util.build_client('logging', 'logging_management', ctx)
     result = client.update_unified_agent_configuration(

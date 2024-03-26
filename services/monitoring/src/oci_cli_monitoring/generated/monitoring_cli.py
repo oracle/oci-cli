@@ -201,15 +201,22 @@ Example: `PT2H`""")
 @cli_util.option('--suppression', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The configuration details for suppressing an alarm.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--overrides', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A set of overrides that control evaluations of the alarm.
+
+Each override can specify values for query, severity, body, and pending duration. When an alarm contains overrides, the Monitoring service evaluates each override in order, beginning with the first override in the array (index position `0`), and then evaluates the alarm's base values (`ruleName` value of `BASE`).
+
+This option is a JSON list with items of type AlarmOverride.  For documentation on AlarmOverride please see our API reference: https://docs.cloud.oracle.com/api/#/en/monitoring/20180401/datatypes/AlarmOverride.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--rule-name', help=u"""Identifier of the alarm's base values for alarm evaluation, for use when the alarm contains overrides. A valid ruleName value starts with an alphabetic character and includes only alphanumeric characters, underscores and square brackets. Minimum number of characters: 3. Default value is `BASE`. For information about alarm overrides, see [AlarmOverride].""")
+@cli_util.option('--notification-version', help=u"""The version of the alarm notification to be delivered. Allowed value: `1.X` The value must start with a number (up to four digits), followed by a period and an uppercase X.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'destinations': {'module': 'monitoring', 'class': 'list[string]'}, 'suppression': {'module': 'monitoring', 'class': 'Suppression'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'destinations': {'module': 'monitoring', 'class': 'list[string]'}, 'suppression': {'module': 'monitoring', 'class': 'Suppression'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}, 'overrides': {'module': 'monitoring', 'class': 'list[AlarmOverride]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'destinations': {'module': 'monitoring', 'class': 'list[string]'}, 'suppression': {'module': 'monitoring', 'class': 'Suppression'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'monitoring', 'class': 'Alarm'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'destinations': {'module': 'monitoring', 'class': 'list[string]'}, 'suppression': {'module': 'monitoring', 'class': 'Suppression'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}, 'overrides': {'module': 'monitoring', 'class': 'list[AlarmOverride]'}}, output_type={'module': 'monitoring', 'class': 'Alarm'})
 @cli_util.wrap_exceptions
-def create_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, metric_compartment_id, namespace, query_parameterconflict, severity, destinations, is_enabled, metric_compartment_id_in_subtree, resource_group, resolution, pending_duration, body, is_notifications_per_metric_dimension_enabled, message_format, repeat_notification_duration, suppression, freeform_tags, defined_tags):
+def create_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, metric_compartment_id, namespace, query_parameterconflict, severity, destinations, is_enabled, metric_compartment_id_in_subtree, resource_group, resolution, pending_duration, body, is_notifications_per_metric_dimension_enabled, message_format, repeat_notification_duration, suppression, freeform_tags, defined_tags, overrides, rule_name, notification_version):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -256,6 +263,15 @@ def create_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if overrides is not None:
+        _details['overrides'] = cli_util.parse_json_parameter("overrides", overrides)
+
+    if rule_name is not None:
+        _details['ruleName'] = rule_name
+
+    if notification_version is not None:
+        _details['notificationVersion'] = notification_version
 
     client = cli_util.build_client('monitoring', 'monitoring', ctx)
     result = client.create_alarm(
@@ -619,7 +635,7 @@ def get_alarm(ctx, from_json, alarm_id):
 
 This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy. \n[Command Reference](getAlarmHistory)""")
 @cli_util.option('--alarm-id', required=True, help=u"""The [OCID] of an alarm.""")
-@cli_util.option('--alarm-historytype', type=custom_types.CliCaseInsensitiveChoice(["STATE_HISTORY", "STATE_TRANSITION_HISTORY"]), help=u"""The type of history entries to retrieve. State history (STATE_HISTORY) or state transition history (STATE_TRANSITION_HISTORY). If not specified, entries of both types are retrieved.
+@cli_util.option('--alarm-historytype', type=custom_types.CliCaseInsensitiveChoice(["STATE_HISTORY", "STATE_TRANSITION_HISTORY", "RULE_HISTORY", "RULE_TRANSITION_HISTORY"]), help=u"""The type of history entries to retrieve. State history (STATE_HISTORY), state transition history (STATE_TRANSITION_HISTORY), rule history (RULE_HISTORY) or rule transition history (RULE_TRANSITION_HISTORY). If not specified, entries of all types are retrieved.
 
 Example: `STATE_HISTORY`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -1352,23 +1368,30 @@ Example: `PT2H`""")
 Example: `true`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--overrides', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A set of overrides that control evaluations of the alarm.
+
+Each override can specify values for query, severity, body, and pending duration. When an alarm contains overrides, the Monitoring service evaluates each override in order, beginning with the first override in the array (index position `0`), and then evaluates the alarm's base values (`ruleName` value of `BASE`).
+
+This option is a JSON list with items of type AlarmOverride.  For documentation on AlarmOverride please see our API reference: https://docs.cloud.oracle.com/api/#/en/monitoring/20180401/datatypes/AlarmOverride.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--rule-name', help=u"""Identifier of the alarm's base values for alarm evaluation, for use when the alarm contains overrides. A valid ruleName value starts with an alphabetic character and includes only alphanumeric characters, underscores and square brackets. Minimum number of characters: 3. Default value is `BASE`. For information about alarm overrides, see [AlarmOverride].""")
+@cli_util.option('--notification-version', help=u"""The version of the alarm notification to be delivered. Allowed value: `1.X` The value must start with a number (up to four digits), followed by a period and an uppercase X.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'destinations': {'module': 'monitoring', 'class': 'list[string]'}, 'suppression': {'module': 'monitoring', 'class': 'Suppression'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'destinations': {'module': 'monitoring', 'class': 'list[string]'}, 'suppression': {'module': 'monitoring', 'class': 'Suppression'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}, 'overrides': {'module': 'monitoring', 'class': 'list[AlarmOverride]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'destinations': {'module': 'monitoring', 'class': 'list[string]'}, 'suppression': {'module': 'monitoring', 'class': 'Suppression'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'monitoring', 'class': 'Alarm'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'destinations': {'module': 'monitoring', 'class': 'list[string]'}, 'suppression': {'module': 'monitoring', 'class': 'Suppression'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}, 'overrides': {'module': 'monitoring', 'class': 'list[AlarmOverride]'}}, output_type={'module': 'monitoring', 'class': 'Alarm'})
 @cli_util.wrap_exceptions
-def update_alarm(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, alarm_id, display_name, compartment_id, metric_compartment_id, metric_compartment_id_in_subtree, namespace, resource_group, query_parameterconflict, resolution, pending_duration, severity, body, is_notifications_per_metric_dimension_enabled, message_format, destinations, repeat_notification_duration, suppression, is_enabled, freeform_tags, defined_tags, if_match):
+def update_alarm(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, alarm_id, display_name, compartment_id, metric_compartment_id, metric_compartment_id_in_subtree, namespace, resource_group, query_parameterconflict, resolution, pending_duration, severity, body, is_notifications_per_metric_dimension_enabled, message_format, destinations, repeat_notification_duration, suppression, is_enabled, freeform_tags, defined_tags, overrides, rule_name, notification_version, if_match):
 
     if isinstance(alarm_id, six.string_types) and len(alarm_id.strip()) == 0:
         raise click.UsageError('Parameter --alarm-id cannot be whitespace or empty string')
     if not force:
-        if destinations or suppression or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to destinations and suppression and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if destinations or suppression or freeform_tags or defined_tags or overrides:
+            if not click.confirm("WARNING: Updates to destinations and suppression and freeform-tags and defined-tags and overrides will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1434,6 +1457,15 @@ def update_alarm(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if overrides is not None:
+        _details['overrides'] = cli_util.parse_json_parameter("overrides", overrides)
+
+    if rule_name is not None:
+        _details['ruleName'] = rule_name
+
+    if notification_version is not None:
+        _details['notificationVersion'] = notification_version
 
     client = cli_util.build_client('monitoring', 'monitoring', ctx)
     result = client.update_alarm(

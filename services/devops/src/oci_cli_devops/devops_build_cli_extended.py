@@ -1,7 +1,25 @@
+# Copyright (c) 2016, 2023, Oracle and/or its affiliates.
+#
+# This software is dual-licensed to you under the Universal Permissive License
+# (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl and Apache License
+# 2.0 as shown at https://www.apache.org/licenses/LICENSE-2.0. You may choose
+# either license.
+#
+# If you elect to accept the software under the Apache License, Version 2.0,
+# the following applies:
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
-# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
-
 from services.devops.src.oci_cli_devops.generated import devops_cli
 from oci_cli import cli_util
 import click  # noqa: F401
@@ -159,7 +177,8 @@ def create_build_pipeline_stage_create_wait_stage_details_extended(ctx, **kwargs
         'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'},
         'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'},
         'build-source-collection': {'module': 'devops', 'class': 'BuildSourceCollection'},
-        'build-runner-config': {'module': 'devops', 'class': 'BuildRunnerShapeConfig'}},
+        'network-channel': {'module': 'devops', 'class': 'NetworkChannel'}
+    },
     output_type={'module': 'devops', 'class': 'BuildPipelineStage'})
 @cli_util.wrap_exceptions
 def create_build_pipeline_stage_create_build_stage_details_extended(ctx, **kwargs):
@@ -270,7 +289,8 @@ def update_build_pipeline_stage_update_wait_stage_details_extended(ctx, **kwargs
         'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'},
         'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'},
         'build-source-collection': {'module': 'devops', 'class': 'BuildSourceCollection'},
-        'build-runner-config': {'module': 'devops', 'class': 'BuildRunnerShapeConfig'}},
+        'network-channel': {'module': 'devops', 'class': 'NetworkChannel'}
+    },
     output_type={'module': 'devops', 'class': 'BuildPipelineStage'})
 @cli_util.wrap_exceptions
 def update_build_pipeline_stage_update_build_stage_details_extended(ctx, **kwargs):
@@ -1266,3 +1286,68 @@ def update_connection_update_gitlab_server_access_token_connection_details_exten
         kwargs.pop('personal_access_token')
 
     ctx.invoke(devops_cli.update_connection_update_gitlab_server_access_token_connection_details, **kwargs)
+
+
+# oci devops code-search-result-collection -> oci devops code-search
+cli_util.rename_command(devops_cli, devops_cli.devops_root_group, devops_cli.code_search_result_collection_group, "code-search")
+
+
+# oci devops code-search-result-collection list-code-search-results -> oci devops code-search-result-collection list-results
+cli_util.rename_command(devops_cli, devops_cli.code_search_result_collection_group, devops_cli.list_code_search_results, "list-results")
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.list_code_search_results, params_to_exclude=['query_parameterconflict'])
+@devops_cli.code_search_result_collection_group.command(name=devops_cli.list_code_search_results.name, help=devops_cli.list_code_search_results.help)
+@cli_util.option('--search-query', required=True, help=u"""Search query provided by the user as per the search query syntax.   Example:     Workflow AdminServiceApiConfiguration retryConfig  -  Search for files with occurrence of all of these keywords.     hello AND world  -  Search for files that has both 'hello' and 'world'.     hello OR world  -  Search for  files that has 'hello' or 'world' or both.     hello NOT world  -  Search for files that has 'hello' but not 'world'.     "hello world"  -  Search for files that has words 'hello' and 'world' in same order.     project:project1 repo:repo1 wfaas  -  Search in repository 'repo1' in project 'project1' for keyword 'wfaas'.     hello path:readme.md  -  Search for files that contain word 'hello' and the file path matches 'readme.md'.     hello ext:c  -  Search for files that has 'hello' within files with the '.c' extension. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'CodeSearchResultCollection'})
+@cli_util.wrap_exceptions
+def list_code_search_results_extended(ctx, **kwargs):
+
+    if 'search_query' in kwargs:
+        kwargs['query_parameterconflict'] = kwargs['search_query']
+        kwargs.pop('search_query')
+
+    ctx.invoke(devops_cli.list_code_search_results, **kwargs)
+
+
+# oci devops deploy-artifact create-deploy-artifact-helm-command-spec-artifact-source -> oci devops deploy-artifact create-helm-command-spec-source
+cli_util.rename_command(devops_cli, devops_cli.deploy_artifact_group, devops_cli.create_deploy_artifact_helm_command_spec_artifact_source, "create-helm-command-spec")
+
+
+# oci devops deploy-artifact update-deploy-artifact-helm-command-spec-artifact-source -> oci devops deploy-artifact update-helm-command-spec-source
+cli_util.rename_command(devops_cli, devops_cli.deploy_artifact_group, devops_cli.update_deploy_artifact_helm_command_spec_artifact_source, "update-helm-command-spec")
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.create_deploy_artifact_helm_command_spec_artifact_source, params_to_exclude=['deploy_artifact_source_base64_encoded_content', 'deploy_artifact_source_helm_artifact_source_type'])
+@devops_cli.deploy_artifact_group.command(name=devops_cli.create_deploy_artifact_helm_command_spec_artifact_source.name, help=devops_cli.create_deploy_artifact_helm_command_spec_artifact_source.help)
+@cli_util.option('--base64-encoded-content', required=True, help=u"""The Helm commands to be executed, base 64 encoded""")
+@cli_util.option('--helm-artifact-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["INLINE"]), help=u"""Type of source for the helm artifact""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'DeployArtifact'})
+@cli_util.wrap_exceptions
+def create_deploy_artifact_helm_command_spec_artifact_source_extended(ctx, **kwargs):
+    if 'base64_encoded_content' in kwargs:
+        kwargs['deploy_artifact_source_base64_encoded_content'] = kwargs['base64_encoded_content']
+        kwargs.pop('base64_encoded_content')
+    if 'helm_artifact_source' in kwargs:
+        kwargs['deploy_artifact_source_helm_artifact_source_type'] = kwargs['helm_artifact_source']
+        kwargs.pop('helm_artifact_source')
+    ctx.invoke(devops_cli.create_deploy_artifact_helm_command_spec_artifact_source, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.update_deploy_artifact_helm_command_spec_artifact_source, params_to_exclude=['deploy_artifact_source_base64_encoded_content', 'deploy_artifact_source_helm_artifact_source_type'])
+@devops_cli.deploy_artifact_group.command(name=devops_cli.update_deploy_artifact_helm_command_spec_artifact_source.name, help=devops_cli.update_deploy_artifact_helm_command_spec_artifact_source.help)
+@cli_util.option('--base64-encoded-content', required=True, help=u"""The Helm commands to be executed, base 64 encoded""")
+@cli_util.option('--helm-artifact-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["INLINE"]), help=u"""Type of source for the helm artifact""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'DeployArtifact'})
+@cli_util.wrap_exceptions
+def update_deploy_artifact_helm_command_spec_artifact_source_extended(ctx, **kwargs):
+    if 'base64_encoded_content' in kwargs:
+        kwargs['deploy_artifact_source_base64_encoded_content'] = kwargs['base64_encoded_content']
+        kwargs.pop('base64_encoded_content')
+    if 'helm_artifact_source' in kwargs:
+        kwargs['deploy_artifact_source_helm_artifact_source_type'] = kwargs['helm_artifact_source']
+        kwargs.pop('helm_artifact_source')
+    ctx.invoke(devops_cli.update_deploy_artifact_helm_command_spec_artifact_source, **kwargs)
