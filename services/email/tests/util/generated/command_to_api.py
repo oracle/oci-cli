@@ -13,6 +13,7 @@ SDK_client_map = {
     "email.delete_sender": "oci.email.EmailClient.delete_sender",
     "email.delete_suppression": "oci.email.EmailClient.delete_suppression",
     "email.get_dkim": "oci.email.EmailClient.get_dkim",
+    "email.get_email_configuration": "oci.email.EmailClient.get_email_configuration",
     "email.get_email_domain": "oci.email.EmailClient.get_email_domain",
     "email.get_sender": "oci.email.EmailClient.get_sender",
     "email.get_suppression": "oci.email.EmailClient.get_suppression",

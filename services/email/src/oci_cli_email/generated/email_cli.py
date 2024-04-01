@@ -16,12 +16,11 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('email.email_root_group.command_name', 'email'), cls=CommandGroupWithAlias, help=cli_util.override('email.email_root_group.help', """API for the Email Delivery service. Use this API to send high-volume, application-generated
-emails. For more information, see [Overview of the Email Delivery Service].
+@cli.command(cli_util.override('email.email_root_group.command_name', 'email'), cls=CommandGroupWithAlias, help=cli_util.override('email.email_root_group.help', """Use the Email Delivery API to do the necessary set up to send high-volume and application-generated emails through the OCI Email Delivery service.
+For more information, see [Overview of the Email Delivery Service].
 
-
-**Note:** Write actions (POST, UPDATE, DELETE) may take several minutes to propagate and be reflected by the API.
-If a subsequent read request fails to reflect your changes, wait a few minutes and try again."""), short_help=cli_util.override('email.email_root_group.short_help', """Email Delivery API"""))
+ **Note:** Write actions (POST, UPDATE, DELETE) may take several minutes to propagate and be reflected by the API.
+ If a subsequent read request fails to reflect your changes, wait a few minutes and try again."""), short_help=cli_util.override('email.email_root_group.short_help', """Email Delivery API"""))
 @cli_util.help_option_group
 def email_root_group():
     pass
@@ -36,6 +35,12 @@ def work_request_error_collection_group():
 @click.command(cli_util.override('email.dkim_group.command_name', 'dkim'), cls=CommandGroupWithAlias, help="""The properties that define a DKIM.""")
 @cli_util.help_option_group
 def dkim_group():
+    pass
+
+
+@click.command(cli_util.override('email.configuration_group.command_name', 'configuration'), cls=CommandGroupWithAlias, help="""Tenancy level customer email configuration details.""")
+@cli_util.help_option_group
+def configuration_group():
     pass
 
 
@@ -57,7 +62,7 @@ def suppression_group():
     pass
 
 
-@click.command(cli_util.override('email.email_domain_group.command_name', 'email-domain'), cls=CommandGroupWithAlias, help="""The properties that define a email domain. A Email Domain contains configuration used to assert responsibility for emails sent from that domain.""")
+@click.command(cli_util.override('email.email_domain_group.command_name', 'email-domain'), cls=CommandGroupWithAlias, help="""The properties that define an email domain. An email domain contains configuration used to assert responsibility for emails sent from that domain.""")
 @cli_util.help_option_group
 def email_domain_group():
     pass
@@ -77,6 +82,7 @@ def work_request_log_entry_collection_group():
 
 email_root_group.add_command(work_request_error_collection_group)
 email_root_group.add_command(dkim_group)
+email_root_group.add_command(configuration_group)
 email_root_group.add_command(sender_group)
 email_root_group.add_command(work_request_summary_collection_group)
 email_root_group.add_command(suppression_group)
@@ -85,13 +91,13 @@ email_root_group.add_command(work_request_group)
 email_root_group.add_command(work_request_log_entry_collection_group)
 
 
-@email_domain_group.command(name=cli_util.override('email.change_email_domain_compartment.command_name', 'change-compartment'), help=u"""Moves a email domain into a different compartment. When provided, If-Match is checked against ETag value of the resource. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].
+@email_domain_group.command(name=cli_util.override('email.change_email_domain_compartment.command_name', 'change-compartment'), help=u"""Moves an email domain into a different compartment. When provided, If-Match is checked against ETag value of the resource. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].
 
-**Note:** All Dkim objects associated with this email domain will also be moved into the provided compartment. \n[Command Reference](changeEmailDomainCompartment)""")
+**Note:** All DKIM objects associated with this email domain will also be moved into the provided compartment. \n[Command Reference](changeEmailDomainCompartment)""")
 @cli_util.option('--email-domain-id', required=True, help=u"""The [OCID] of this email domain.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the specified resource to.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -179,9 +185,9 @@ def change_sender_compartment(ctx, from_json, sender_id, compartment_id, if_matc
     cli_util.render_response(result, ctx)
 
 
-@dkim_group.command(name=cli_util.override('email.create_dkim.command_name', 'create'), help=u"""Creates a new DKIM for a email domain. This DKIM will sign all approved senders in the tenancy that are in this email domain. Best security practices indicate to periodically rotate the DKIM that is doing the signing. When a second DKIM is applied, all senders will seamlessly pick up the new key without interruption in signing. \n[Command Reference](createDkim)""")
+@dkim_group.command(name=cli_util.override('email.create_dkim.command_name', 'create'), help=u"""Creates a new DKIM for an email domain. This DKIM signs all approved senders in the tenancy that are in this email domain. Best security practices indicate to periodically rotate the DKIM that is doing the signing. When a second DKIM is applied, all senders seamlessly pick up the new key without interruption in signing. \n[Command Reference](createDkim)""")
 @cli_util.option('--email-domain-id', required=True, help=u"""The [OCID] of the EmailDomain for this DKIM.""")
-@cli_util.option('--name', help=u"""The DKIM selector. This selector is required to be globally unique for this email domain. If you do not provide the selector, we will generate one for you. If you do provide the selector, we suggest adding a short region indicator to differentiate from your signing of emails in other regions you may be subscribed to. Selectors limited to ASCII characters may use alphanumeric, dash (\"-\"), and dot (\".\") characters. Non-ASCII selector names should adopt IDNA2008 normalization (RFC 5891-5892).
+@cli_util.option('--name', help=u"""The DKIM selector. This selector is required to be globally unique for this email domain. If you do not provide the selector, we will generate one for you. If you do provide the selector, we suggest adding a short region indicator to differentiate from your signing of emails in other regions you might be subscribed to. Selectors limited to ASCII characters can use alphanumeric, dash (\"-\"), and dot (\".\") characters. Non-ASCII selector names should adopt IDNA2008 normalization (RFC 5891-5892).
 
 Avoid entering confidential information.
 
@@ -193,7 +199,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'email', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'email', 'class': 'dict(str, dict(str, object))'}})
@@ -257,7 +263,7 @@ def create_dkim(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
 
 @email_domain_group.command(name=cli_util.override('email.create_email_domain.command_name', 'create'), help=u"""Creates a new email domain. Avoid entering confidential information. \n[Command Reference](createEmailDomain)""")
-@cli_util.option('--name', required=True, help=u"""The name of the email domain in the Internet Domain Name System (DNS). The email domain name must be unique in the region for this tenancy. Domain names limited to ASCII characters use alphanumeric, dash (\"-\"), and dot (\".\") characters. The dash and dot are only allowed between alphanumeric characters. For details, please see: https://tools.ietf.org/html/rfc5321#section-4.1.2 Non-ASCII domain names should adopt IDNA2008 normalization (RFC 5891-5892).""")
+@cli_util.option('--name', required=True, help=u"""The name of the email domain in the Internet Domain Name System (DNS). The email domain name must be unique in the region for this tenancy. Domain names limited to ASCII characters use alphanumeric, dash (\"-\"), and dot (\".\") characters. The dash and dot are only allowed between alphanumeric characters. For details, see [RFC 5321, section 4.1.2] Non-ASCII domain names should adopt IDNA2008 normalization (RFC 5891-5892).""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment for this email domain.""")
 @cli_util.option('--description', help=u"""A string that describes the details about the domain. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -266,7 +272,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'email', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'email', 'class': 'dict(str, dict(str, object))'}})
@@ -415,11 +421,11 @@ def create_suppression(ctx, from_json, compartment_id, email_address):
     cli_util.render_response(result, ctx)
 
 
-@dkim_group.command(name=cli_util.override('email.delete_dkim.command_name', 'delete'), help=u"""Deletes a DKIM. If this key is currently the active key for the email domain, deleting the key will stop signing the domain's outgoing mail. DKIM keys are left in DELETING state for about a day to allow DKIM signatures on in-transit mail to be validated. Consider instead of deletion creating a new DKIM for this domain so the signing can be rotated to it. \n[Command Reference](deleteDkim)""")
+@dkim_group.command(name=cli_util.override('email.delete_dkim.command_name', 'delete'), help=u"""Deletes a DKIM. If this key is currently the active key for the email domain, deleting the key will stop signing the domain's outgoing mail. DKIM keys are left in DELETING state for about a day to allow DKIM signatures on in-transit mail to be validated. Consider creating a new DKIM for this domain so the signing can be rotated to it instead of deletion. \n[Command Reference](deleteDkim)""")
 @cli_util.option('--dkim-id', required=True, help=u"""The [OCID] of this DKIM.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -471,11 +477,11 @@ def delete_dkim(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@email_domain_group.command(name=cli_util.override('email.delete_email_domain.command_name', 'delete'), help=u"""Deletes a email domain. \n[Command Reference](deleteEmailDomain)""")
+@email_domain_group.command(name=cli_util.override('email.delete_email_domain.command_name', 'delete'), help=u"""Deletes an email domain. \n[Command Reference](deleteEmailDomain)""")
 @cli_util.option('--email-domain-id', required=True, help=u"""The [OCID] of this email domain.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -636,6 +642,25 @@ def get_dkim(ctx, from_json, dkim_id):
     cli_util.render_response(result, ctx)
 
 
+@configuration_group.command(name=cli_util.override('email.get_email_configuration.command_name', 'get-email'), help=u"""Returns  email configuration associated with the specified compartment. \n[Command Reference](getEmailConfiguration)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID for the compartment.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'email', 'class': 'Configuration'})
+@cli_util.wrap_exceptions
+def get_email_configuration(ctx, from_json, compartment_id):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('email', 'email', ctx)
+    result = client.get_email_configuration(
+        compartment_id=compartment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @email_domain_group.command(name=cli_util.override('email.get_email_domain.command_name', 'get'), help=u"""Retrieves the specified email domain. \n[Command Reference](getEmailDomain)""")
 @cli_util.option('--email-domain-id', required=True, help=u"""The [OCID] of this email domain.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -724,7 +749,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@dkim_group.command(name=cli_util.override('email.list_dkims.command_name', 'list'), help=u"""Lists DKIMs for a email domain. \n[Command Reference](listDkims)""")
+@dkim_group.command(name=cli_util.override('email.list_dkims.command_name', 'list'), help=u"""Lists DKIMs for an email domain. \n[Command Reference](listDkims)""")
 @cli_util.option('--email-domain-id', required=True, help=u"""The [OCID] of the email domain to which this DKIM belongs.""")
 @cli_util.option('--id', help=u"""A filter to only return resources that match the given id exactly.""")
 @cli_util.option('--name', help=u"""A filter to only return resources that match the given name exactly.""")
@@ -924,10 +949,10 @@ def list_senders(ctx, from_json, all_pages, page_size, compartment_id, lifecycle
 @suppression_group.command(name=cli_util.override('email.list_suppressions.command_name', 'list'), help=u"""Gets a list of suppressed recipient email addresses for a user. The `compartmentId` for suppressions must be a tenancy OCID. The returned list is sorted by creation time in descending order. \n[Command Reference](listSuppressions)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID for the compartment.""")
 @cli_util.option('--email-address', help=u"""The email address of the suppression.""")
-@cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Search for suppressions that were created within a specific date range, using this parameter to specify the earliest creation date for the returned list (inclusive). Specifying this parameter without the corresponding `timeCreatedLessThan` parameter will retrieve suppressions created from the given `timeCreatedGreaterThanOrEqualTo` to the current time, in \"YYYY-MM-ddThh:mmZ\" format with a Z offset, as defined by RFC 3339.
+@cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Search for suppressions that were created within a specific date range, using this parameter to specify the earliest creation date for the returned list (inclusive). Specifying this parameter without the corresponding `timeCreatedLessThan` parameter will retrieve suppressions created from the given `timeCreatedGreaterThanOrEqualTo` to the current time, in \"YYYY-MM-ddThh:mmZ\" format with a Z offset, as defined by [RFC 3339].
 
 **Example:** 2016-12-19T16:39:57.600Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-created-less-than', type=custom_types.CLI_DATETIME, help=u"""Search for suppressions that were created within a specific date range, using this parameter to specify the latest creation date for the returned list (exclusive). Specifying this parameter without the corresponding `timeCreatedGreaterThanOrEqualTo` parameter will retrieve all suppressions created before the specified end date, in \"YYYY-MM-ddThh:mmZ\" format with a Z offset, as defined by RFC 3339.
+@cli_util.option('--time-created-less-than', type=custom_types.CLI_DATETIME, help=u"""Search for suppressions that were created within a specific date range, using this parameter to specify the latest creation date for the returned list (exclusive). Specifying this parameter without the corresponding `timeCreatedGreaterThanOrEqualTo` parameter will retrieve all suppressions created before the specified end date, in \"YYYY-MM-ddThh:mmZ\" format with a Z offset, as defined by [RFC 3339].
 
 **Example:** 2016-12-19T16:39:57.600Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -1152,7 +1177,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'email', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'email', 'class': 'dict(str, dict(str, object))'}})
@@ -1221,7 +1246,7 @@ def update_dkim(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@email_domain_group.command(name=cli_util.override('email.update_email_domain.command_name', 'update'), help=u"""Modifies a email domain. \n[Command Reference](updateEmailDomain)""")
+@email_domain_group.command(name=cli_util.override('email.update_email_domain.command_name', 'update'), help=u"""Modifies an email domain. \n[Command Reference](updateEmailDomain)""")
 @cli_util.option('--email-domain-id', required=True, help=u"""The [OCID] of this email domain.""")
 @cli_util.option('--description', help=u"""A string that describes the details about the domain. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -1232,7 +1257,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'email', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'email', 'class': 'dict(str, dict(str, object))'}})

@@ -1289,26 +1289,26 @@ def update_connection_update_gitlab_server_access_token_connection_details_exten
 
 
 # oci devops code-search-result-collection -> oci devops code-search
-cli_util.rename_command(devops_cli, devops_cli.devops_root_group, devops_cli.code_search_result_collection_group, "code-search")
+#cli_util.rename_command(devops_cli, devops_cli.devops_root_group, devops_cli.code_search_result_collection_group, "code-search")
 
 
 # oci devops code-search-result-collection list-code-search-results -> oci devops code-search-result-collection list-results
-cli_util.rename_command(devops_cli, devops_cli.code_search_result_collection_group, devops_cli.list_code_search_results, "list-results")
+#cli_util.rename_command(devops_cli, devops_cli.code_search_result_collection_group, devops_cli.list_code_search_results, "list-results")
 
 
-@cli_util.copy_params_from_generated_command(devops_cli.list_code_search_results, params_to_exclude=['query_parameterconflict'])
-@devops_cli.code_search_result_collection_group.command(name=devops_cli.list_code_search_results.name, help=devops_cli.list_code_search_results.help)
-@cli_util.option('--search-query', required=True, help=u"""Search query provided by the user as per the search query syntax.   Example:     Workflow AdminServiceApiConfiguration retryConfig  -  Search for files with occurrence of all of these keywords.     hello AND world  -  Search for files that has both 'hello' and 'world'.     hello OR world  -  Search for  files that has 'hello' or 'world' or both.     hello NOT world  -  Search for files that has 'hello' but not 'world'.     "hello world"  -  Search for files that has words 'hello' and 'world' in same order.     project:project1 repo:repo1 wfaas  -  Search in repository 'repo1' in project 'project1' for keyword 'wfaas'.     hello path:readme.md  -  Search for files that contain word 'hello' and the file path matches 'readme.md'.     hello ext:c  -  Search for files that has 'hello' within files with the '.c' extension. [required]""")
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'CodeSearchResultCollection'})
-@cli_util.wrap_exceptions
-def list_code_search_results_extended(ctx, **kwargs):
-
-    if 'search_query' in kwargs:
-        kwargs['query_parameterconflict'] = kwargs['search_query']
-        kwargs.pop('search_query')
-
-    ctx.invoke(devops_cli.list_code_search_results, **kwargs)
+# @cli_util.copy_params_from_generated_command(devops_cli.list_code_search_results, params_to_exclude=['query_parameterconflict'])
+# @devops_cli.code_search_result_collection_group.command(name=devops_cli.list_code_search_results.name, help=devops_cli.list_code_search_results.help)
+# @cli_util.option('--search-query', required=True, help=u"""Search query provided by the user as per the search query syntax.   Example:     Workflow AdminServiceApiConfiguration retryConfig  -  Search for files with occurrence of all of these keywords.     hello AND world  -  Search for files that has both 'hello' and 'world'.     hello OR world  -  Search for  files that has 'hello' or 'world' or both.     hello NOT world  -  Search for files that has 'hello' but not 'world'.     "hello world"  -  Search for files that has words 'hello' and 'world' in same order.     project:project1 repo:repo1 wfaas  -  Search in repository 'repo1' in project 'project1' for keyword 'wfaas'.     hello path:readme.md  -  Search for files that contain word 'hello' and the file path matches 'readme.md'.     hello ext:c  -  Search for files that has 'hello' within files with the '.c' extension. [required]""")
+# @click.pass_context
+# @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'CodeSearchResultCollection'})
+# @cli_util.wrap_exceptions
+# def list_code_search_results_extended(ctx, **kwargs):
+#
+#     if 'search_query' in kwargs:
+#         kwargs['query_parameterconflict'] = kwargs['search_query']
+#         kwargs.pop('search_query')
+#
+#     ctx.invoke(devops_cli.list_code_search_results, **kwargs)
 
 
 # oci devops deploy-artifact create-deploy-artifact-helm-command-spec-artifact-source -> oci devops deploy-artifact create-helm-command-spec-source
@@ -1351,3 +1351,32 @@ def update_deploy_artifact_helm_command_spec_artifact_source_extended(ctx, **kwa
         kwargs['deploy_artifact_source_helm_artifact_source_type'] = kwargs['helm_artifact_source']
         kwargs.pop('helm_artifact_source')
     ctx.invoke(devops_cli.update_deploy_artifact_helm_command_spec_artifact_source, **kwargs)
+
+@cli_util.copy_params_from_generated_command(devops_cli.create_deploy_stage_create_oke_helm_chart_deploy_stage_details, params_to_exclude=['is_uninstall_on_stage_delete'])
+@devops_cli.deploy_stage_group.command(name=devops_cli.create_deploy_stage_create_oke_helm_chart_deploy_stage_details.name, help=devops_cli.create_deploy_stage_create_oke_helm_chart_deploy_stage_details.help)
+@cli_util.option('--uninstall-on-stage-delete', type=click.BOOL, help=u"""Uninstall the Helm chart release on deleting the stage.""")
+@click.pass_context
+
+@cli_util.wrap_exceptions
+def create_deploy_stage_create_oke_helm_chart_deploy_stage_details_extended(ctx, **kwargs):
+
+    if 'uninstall_on_stage_delete' in kwargs:
+        kwargs['is_uninstall_on_stage_delete'] = kwargs['uninstall_on_stage_delete']
+        kwargs.pop('uninstall_on_stage_delete')
+
+    ctx.invoke(devops_cli.create_deploy_stage_create_oke_helm_chart_deploy_stage_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.update_deploy_stage_update_oke_helm_chart_deploy_stage_details, params_to_exclude=['is_uninstall_on_stage_delete'])
+@devops_cli.deploy_stage_group.command(name=devops_cli.update_deploy_stage_update_oke_helm_chart_deploy_stage_details.name, help=devops_cli.update_deploy_stage_update_oke_helm_chart_deploy_stage_details.help)
+@cli_util.option('--uninstall-on-stage-delete', type=click.BOOL, help=u"""Uninstall the Helm chart release on deleting the stage.""")
+@click.pass_context
+
+@cli_util.wrap_exceptions
+def update_deploy_stage_update_oke_helm_chart_deploy_stage_details_extended(ctx, **kwargs):
+
+    if 'uninstall_on_stage_delete' in kwargs:
+        kwargs['is_uninstall_on_stage_delete'] = kwargs['uninstall_on_stage_delete']
+        kwargs.pop('uninstall_on_stage_delete')
+
+    ctx.invoke(devops_cli.update_deploy_stage_update_oke_helm_chart_deploy_stage_details, **kwargs)

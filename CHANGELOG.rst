@@ -6,6 +6,100 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.38.1 - 2024-04-02
+-------------------
+Added
+~~~~~
+
+* OCI Network Load Balancer Service
+
+  * Support for assigned private Ip by adding new optional parameters in the Network Load Balancer Service for creation and update
+  * ``oci nlb network-load-balancer create --assigned-ipv6, --assigned-private-ipv4``
+  * ``oci nlb network-load-balancer update --assigned-ipv6``
+
+  * LBaaS Support for TLSv1.3
+
+* OCI Email-Delivery Service
+
+  * Support for Configuration API in Email-Delivery Service
+  * Support for sending mails via Https for Email Delivery Service
+
+* OCI Cloud Guard service
+
+  * Support for the status field in creating data source resource of Cloud Guard Service
+  * ``oci cloud-guard data-source create --status``
+  * ``oci cloud-guard data-source create-data-source-logging-query-data-source-details --status``
+
+Removed ~~~~~
+
+* [BREAKING] Commands removed
+
+  * ``oci devops code-search list-results``
+  * ``oci devops project delete-project-settings``
+  * ``oci devops project get-notification-preference``
+  * ``oci devops project get-project-settings``
+  * ``oci devops project list-project-analytics-authors``
+  * ``oci devops project summarize-project-analytics``
+  * ``oci devops project update-notification-preference``
+  * ``oci devops project update-project-settings``
+  * ``oci devops protected-branch create-or-update``
+  * ``oci devops protected-branch delete``
+  * ``oci devops protected-branch list-protected-branches``
+  * ``oci devops pull-request create``
+  * ``oci devops pull-request create-pull-request-attachment``
+  * ``oci devops pull-request decline``
+  * ``oci devops pull-request delete``
+  * ``oci devops pull-request delete-pull-request-attachment``
+  * ``oci devops pull-request execute-merge-pull-request``
+  * ``oci devops pull-request get``
+  * ``oci devops pull-request get-pull-request-attachment``
+  * ``oci devops pull-request get-pull-request-attachment-content``
+  * ``oci devops pull-request get-pull-request-change-summary-metrics``
+  * ``oci devops pull-request get-pull-request-notification-preference``
+  * ``oci devops pull-request list-build-run-snapshots``
+  * ``oci devops pull-request list-pull-request-activities``
+  * ``oci devops pull-request list-pull-request-attachments``
+  * ``oci devops pull-request list-pull-request-commits``
+  * ``oci devops pull-request list-pull-request-file-changes``
+  * ``oci devops pull-request list-pull-requests``
+  * ``oci devops pull-request patch``
+  * ``oci devops pull-request reopen``
+  * ``oci devops pull-request review``
+  * ``oci devops pull-request unsubscribe``
+  * ``oci devops pull-request update``
+  * ``oci devops pull-request update-pull-request-notification-preference``
+  * ``oci devops pull-request validate-merge-pull-request``
+  * ``oci devops pull-request-comment create-pull-request-comment``
+  * ``oci devops pull-request-comment delete-pull-request-comment``
+  * ``oci devops pull-request-comment get-pull-request-comment``
+  * ``oci devops pull-request-comment like-pull-request-comment``
+  * ``oci devops pull-request-comment list-pull-request-comments``
+  * ``oci devops pull-request-comment unlike-pull-request-comment``
+  * ``oci devops pull-request-comment update-pull-request-comment``
+  * ``oci devops repository create-or-update-git-branch-details``
+  * ``oci devops repository create-or-update-git-tag-details``
+  * ``oci devops repository delete-git-ref``
+  * ``oci devops repository delete-repository-settings``
+  * ``oci devops repository get-repository-notification-preference``
+  * ``oci devops repository get-repository-settings``
+  * ``oci devops repository list-fork-sync-statuses``
+  * ``oci devops repository list-pull-request-authors``
+  * ``oci devops repository list-repository-analytics-authors``
+  * ``oci devops repository list-repository-build-run-snapshots``
+  * ``oci devops repository summarize-repository-analytics``
+  * ``oci devops repository sync``
+  * ``oci devops repository update-repository-notification-preference``
+  * ``oci devops repository update-repository-settings``
+  * ``oci devops repository-private-access change-compartment``
+  * ``oci devops repository-private-access create``
+  * ``oci devops repository-private-access delete``
+  * ``oci devops repository-private-access get``
+  * ``oci devops repository-private-access list``
+  * ``oci devops repository-private-access list-private-projects``
+  * ``oci devops repository-private-access recover``
+  * ``oci devops repository-private-access update``
+      
+
 3.38.0 - 2024-03-26
 -------------------
 Added

@@ -508,7 +508,10 @@ The benefits of associating the network load balancer with network security grou
 *  The network security rules of other resources can reference the network security groups associated with the network load balancer    to ensure access.
 
 Example: [\"ocid1.nsg.oc1.phx.unique_ID\"]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--nlb-ip-version', type=custom_types.CliCaseInsensitiveChoice(["IPV4", "IPV4_AND_IPV6"]), help=u"""IP version associated with the NLB.""")
+@cli_util.option('--nlb-ip-version', type=custom_types.CliCaseInsensitiveChoice(["IPV4", "IPV4_AND_IPV6", "IPV6"]), help=u"""IP version associated with the NLB.""")
+@cli_util.option('--subnet-ipv6-cidr', help=u"""IPv6 subnet prefix selection. If Ipv6 subnet prefix is passed, Nlb Ipv6 Address would be assign within the cidr block. NLB has to be dual or single stack ipv6 to support this.""")
+@cli_util.option('--assigned-private-ipv4', help=u"""Private IP address to be assigned to the network load balancer being created. This IP address has to be in the CIDR range of the subnet where network load balancer is being created Example: \"10.0.0.1\"""")
+@cli_util.option('--assigned-ipv6', help=u"""IPv6 address to be assigned to the network load balancer being created. This IP address has to be part of one of the prefixes supported by the subnet. Example: \"2607:9b80:9a0a:9a7e:abcd:ef01:2345:6789\"""")
 @cli_util.option('--listeners', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Listeners associated with the network load balancer.
 
 This option is a JSON dictionary of type dict(str, ListenerDetails).  For documentation on ListenerDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/networkloadbalancer/20200501/datatypes/ListenerDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -525,7 +528,7 @@ This option is a JSON dictionary of type dict(str, BackendSetDetails).  For docu
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'reserved-ips': {'module': 'network_load_balancer', 'class': 'list[ReservedIP]'}, 'network-security-group-ids': {'module': 'network_load_balancer', 'class': 'list[string]'}, 'listeners': {'module': 'network_load_balancer', 'class': 'dict(str, ListenerDetails)'}, 'backend-sets': {'module': 'network_load_balancer', 'class': 'dict(str, BackendSetDetails)'}, 'freeform-tags': {'module': 'network_load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_load_balancer', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'network_load_balancer', 'class': 'NetworkLoadBalancer'})
 @cli_util.wrap_exceptions
-def create_network_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, subnet_id, is_preserve_source_destination, is_symmetric_hash_enabled, reserved_ips, is_private, network_security_group_ids, nlb_ip_version, listeners, backend_sets, freeform_tags, defined_tags):
+def create_network_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, subnet_id, is_preserve_source_destination, is_symmetric_hash_enabled, reserved_ips, is_private, network_security_group_ids, nlb_ip_version, subnet_ipv6_cidr, assigned_private_ipv4, assigned_ipv6, listeners, backend_sets, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -552,6 +555,15 @@ def create_network_load_balancer(ctx, from_json, wait_for_state, max_wait_second
 
     if nlb_ip_version is not None:
         _details['nlbIpVersion'] = nlb_ip_version
+
+    if subnet_ipv6_cidr is not None:
+        _details['subnetIpv6Cidr'] = subnet_ipv6_cidr
+
+    if assigned_private_ipv4 is not None:
+        _details['assignedPrivateIpv4'] = assigned_private_ipv4
+
+    if assigned_ipv6 is not None:
+        _details['assignedIpv6'] = assigned_ipv6
 
     if listeners is not None:
         _details['listeners'] = cli_util.parse_json_parameter("listeners", listeners)
@@ -2109,7 +2121,9 @@ def update_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 Example: `example_network_load_balancer`""")
 @cli_util.option('--is-preserve-source-destination', type=click.BOOL, help=u"""This parameter can be enabled only if backends are compute OCIDs. When enabled, the skipSourceDestinationCheck parameter is automatically enabled on the load balancer VNIC, and packets are sent to the backend with the entire IP header intact.""")
 @cli_util.option('--is-symmetric-hash-enabled', type=click.BOOL, help=u"""This can only be enabled when NLB is working in transparent mode with source destination header preservation enabled. This removes the additional dependency from NLB backends(like Firewalls) to perform SNAT.""")
-@cli_util.option('--nlb-ip-version', type=custom_types.CliCaseInsensitiveChoice(["IPV4", "IPV4_AND_IPV6"]), help=u"""IP version associated with the NLB.""")
+@cli_util.option('--nlb-ip-version', type=custom_types.CliCaseInsensitiveChoice(["IPV4", "IPV4_AND_IPV6", "IPV6"]), help=u"""IP version associated with the NLB.""")
+@cli_util.option('--subnet-ipv6-cidr', help=u"""IPv6 subnet prefix selection. If Ipv6 subnet prefix is passed, Nlb Ipv6 Address would be assign within the cidr block. NLB has to be dual or single stack ipv6 to support this.""")
+@cli_util.option('--assigned-ipv6', help=u"""IPv6 address to be assigned to the network load balancer being created. This IP address has to be part of one of the prefixes supported by the subnet. Example: \"2607:9b80:9a0a:9a7e:abcd:ef01:2345:6789\"""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2126,7 +2140,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'network_load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_load_balancer', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_network_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, display_name, is_preserve_source_destination, is_symmetric_hash_enabled, nlb_ip_version, freeform_tags, defined_tags, if_match):
+def update_network_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, display_name, is_preserve_source_destination, is_symmetric_hash_enabled, nlb_ip_version, subnet_ipv6_cidr, assigned_ipv6, freeform_tags, defined_tags, if_match):
 
     if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
@@ -2153,6 +2167,12 @@ def update_network_load_balancer(ctx, from_json, force, wait_for_state, max_wait
 
     if nlb_ip_version is not None:
         _details['nlbIpVersion'] = nlb_ip_version
+
+    if subnet_ipv6_cidr is not None:
+        _details['subnetIpv6Cidr'] = subnet_ipv6_cidr
+
+    if assigned_ipv6 is not None:
+        _details['assignedIpv6'] = assigned_ipv6
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

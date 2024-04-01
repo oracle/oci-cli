@@ -113,7 +113,29 @@ Oracle created the following predefined cipher suites that you can specify when 
 
 *  __oci-wider-compatible-ssl-cipher-suite-v1__
 
-        \"AES128-GCM-SHA256\"         \"AES128-SHA\"         \"AES128-SHA256\"         \"AES256-GCM-SHA384\"         \"AES256-SHA\"         \"AES256-SHA256\"         \"CAMELLIA128-SHA\"         \"CAMELLIA256-SHA\"         \"DES-CBC3-SHA\"         \"DH-DSS-AES128-GCM-SHA256\"         \"DH-DSS-AES128-SHA\"         \"DH-DSS-AES128-SHA256\"         \"DH-DSS-AES256-GCM-SHA384\"         \"DH-DSS-AES256-SHA\"         \"DH-DSS-AES256-SHA256\"         \"DH-DSS-CAMELLIA128-SHA\"         \"DH-DSS-CAMELLIA256-SHA\"         \"DH-DSS-DES-CBC3-SHAv\"         \"DH-DSS-SEED-SHA\"         \"DH-RSA-AES128-GCM-SHA256\"         \"DH-RSA-AES128-SHA\"         \"DH-RSA-AES128-SHA256\"         \"DH-RSA-AES256-GCM-SHA384\"         \"DH-RSA-AES256-SHA\"         \"DH-RSA-AES256-SHA256\"         \"DH-RSA-CAMELLIA128-SHA\"         \"DH-RSA-CAMELLIA256-SHA\"         \"DH-RSA-DES-CBC3-SHA\"         \"DH-RSA-SEED-SHA\"         \"DHE-DSS-AES128-GCM-SHA256\"         \"DHE-DSS-AES128-SHA\"         \"DHE-DSS-AES128-SHA256\"         \"DHE-DSS-AES256-GCM-SHA384\"         \"DHE-DSS-AES256-SHA\"         \"DHE-DSS-AES256-SHA256\"         \"DHE-DSS-CAMELLIA128-SHA\"         \"DHE-DSS-CAMELLIA256-SHA\"         \"DHE-DSS-DES-CBC3-SHA\"         \"DHE-DSS-SEED-SHA\"         \"DHE-RSA-AES128-GCM-SHA256\"         \"DHE-RSA-AES128-SHA\"         \"DHE-RSA-AES128-SHA256\"         \"DHE-RSA-AES256-GCM-SHA384\"         \"DHE-RSA-AES256-SHA\"         \"DHE-RSA-AES256-SHA256\"         \"DHE-RSA-CAMELLIA128-SHA\"         \"DHE-RSA-CAMELLIA256-SHA\"         \"DHE-RSA-DES-CBC3-SHA\"         \"DHE-RSA-SEED-SHA\"         \"ECDH-ECDSA-AES128-GCM-SHA256\"         \"ECDH-ECDSA-AES128-SHA\"         \"ECDH-ECDSA-AES128-SHA256\"         \"ECDH-ECDSA-AES256-GCM-SHA384\"         \"ECDH-ECDSA-AES256-SHA\"         \"ECDH-ECDSA-AES256-SHA384\"         \"ECDH-ECDSA-DES-CBC3-SHA\"         \"ECDH-ECDSA-RC4-SHA\"         \"ECDH-RSA-AES128-GCM-SHA256\"         \"ECDH-RSA-AES128-SHA\"         \"ECDH-RSA-AES128-SHA256\"         \"ECDH-RSA-AES256-GCM-SHA384\"         \"ECDH-RSA-AES256-SHA\"         \"ECDH-RSA-AES256-SHA384\"         \"ECDH-RSA-DES-CBC3-SHA\"         \"ECDH-RSA-RC4-SHA\"         \"ECDHE-ECDSA-AES128-GCM-SHA256\"         \"ECDHE-ECDSA-AES128-SHA\"         \"ECDHE-ECDSA-AES128-SHA256\"         \"ECDHE-ECDSA-AES256-GCM-SHA384\"         \"ECDHE-ECDSA-AES256-SHA\"         \"ECDHE-ECDSA-AES256-SHA384\"         \"ECDHE-ECDSA-DES-CBC3-SHA\"         \"ECDHE-ECDSA-RC4-SHA\"         \"ECDHE-RSA-AES128-GCM-SHA256\"         \"ECDHE-RSA-AES128-SHA\"         \"ECDHE-RSA-AES128-SHA256\"         \"ECDHE-RSA-AES256-GCM-SHA384\"         \"ECDHE-RSA-AES256-SHA\"         \"ECDHE-RSA-AES256-SHA384\"         \"ECDHE-RSA-DES-CBC3-SHA\"         \"ECDHE-RSA-RC4-SHA\"         \"IDEA-CBC-SHA\"         \"KRB5-DES-CBC3-MD5\"         \"KRB5-DES-CBC3-SHA\"         \"KRB5-IDEA-CBC-MD5\"         \"KRB5-IDEA-CBC-SHA\"         \"KRB5-RC4-MD5\"         \"KRB5-RC4-SHA\"         \"PSK-3DES-EDE-CBC-SHA\"         \"PSK-AES128-CBC-SHA\"         \"PSK-AES256-CBC-SHA\"         \"PSK-RC4-SHA\"         \"RC4-MD5\"         \"RC4-SHA\"         \"SEED-SHA\"""")
+        \"AES128-GCM-SHA256\"         \"AES128-SHA\"         \"AES128-SHA256\"         \"AES256-GCM-SHA384\"         \"AES256-SHA\"         \"AES256-SHA256\"         \"CAMELLIA128-SHA\"         \"CAMELLIA256-SHA\"         \"DES-CBC3-SHA\"         \"DH-DSS-AES128-GCM-SHA256\"         \"DH-DSS-AES128-SHA\"         \"DH-DSS-AES128-SHA256\"         \"DH-DSS-AES256-GCM-SHA384\"         \"DH-DSS-AES256-SHA\"         \"DH-DSS-AES256-SHA256\"         \"DH-DSS-CAMELLIA128-SHA\"         \"DH-DSS-CAMELLIA256-SHA\"         \"DH-DSS-DES-CBC3-SHAv\"         \"DH-DSS-SEED-SHA\"         \"DH-RSA-AES128-GCM-SHA256\"         \"DH-RSA-AES128-SHA\"         \"DH-RSA-AES128-SHA256\"         \"DH-RSA-AES256-GCM-SHA384\"         \"DH-RSA-AES256-SHA\"         \"DH-RSA-AES256-SHA256\"         \"DH-RSA-CAMELLIA128-SHA\"         \"DH-RSA-CAMELLIA256-SHA\"         \"DH-RSA-DES-CBC3-SHA\"         \"DH-RSA-SEED-SHA\"         \"DHE-DSS-AES128-GCM-SHA256\"         \"DHE-DSS-AES128-SHA\"         \"DHE-DSS-AES128-SHA256\"         \"DHE-DSS-AES256-GCM-SHA384\"         \"DHE-DSS-AES256-SHA\"         \"DHE-DSS-AES256-SHA256\"         \"DHE-DSS-CAMELLIA128-SHA\"         \"DHE-DSS-CAMELLIA256-SHA\"         \"DHE-DSS-DES-CBC3-SHA\"         \"DHE-DSS-SEED-SHA\"         \"DHE-RSA-AES128-GCM-SHA256\"         \"DHE-RSA-AES128-SHA\"         \"DHE-RSA-AES128-SHA256\"         \"DHE-RSA-AES256-GCM-SHA384\"         \"DHE-RSA-AES256-SHA\"         \"DHE-RSA-AES256-SHA256\"         \"DHE-RSA-CAMELLIA128-SHA\"         \"DHE-RSA-CAMELLIA256-SHA\"         \"DHE-RSA-DES-CBC3-SHA\"         \"DHE-RSA-SEED-SHA\"         \"ECDH-ECDSA-AES128-GCM-SHA256\"         \"ECDH-ECDSA-AES128-SHA\"         \"ECDH-ECDSA-AES128-SHA256\"         \"ECDH-ECDSA-AES256-GCM-SHA384\"         \"ECDH-ECDSA-AES256-SHA\"         \"ECDH-ECDSA-AES256-SHA384\"         \"ECDH-ECDSA-DES-CBC3-SHA\"         \"ECDH-ECDSA-RC4-SHA\"         \"ECDH-RSA-AES128-GCM-SHA256\"         \"ECDH-RSA-AES128-SHA\"         \"ECDH-RSA-AES128-SHA256\"         \"ECDH-RSA-AES256-GCM-SHA384\"         \"ECDH-RSA-AES256-SHA\"         \"ECDH-RSA-AES256-SHA384\"         \"ECDH-RSA-DES-CBC3-SHA\"         \"ECDH-RSA-RC4-SHA\"         \"ECDHE-ECDSA-AES128-GCM-SHA256\"         \"ECDHE-ECDSA-AES128-SHA\"         \"ECDHE-ECDSA-AES128-SHA256\"         \"ECDHE-ECDSA-AES256-GCM-SHA384\"         \"ECDHE-ECDSA-AES256-SHA\"         \"ECDHE-ECDSA-AES256-SHA384\"         \"ECDHE-ECDSA-DES-CBC3-SHA\"         \"ECDHE-ECDSA-RC4-SHA\"         \"ECDHE-RSA-AES128-GCM-SHA256\"         \"ECDHE-RSA-AES128-SHA\"         \"ECDHE-RSA-AES128-SHA256\"         \"ECDHE-RSA-AES256-GCM-SHA384\"         \"ECDHE-RSA-AES256-SHA\"         \"ECDHE-RSA-AES256-SHA384\"         \"ECDHE-RSA-DES-CBC3-SHA\"         \"ECDHE-RSA-RC4-SHA\"         \"IDEA-CBC-SHA\"         \"KRB5-DES-CBC3-MD5\"         \"KRB5-DES-CBC3-SHA\"         \"KRB5-IDEA-CBC-MD5\"         \"KRB5-IDEA-CBC-SHA\"         \"KRB5-RC4-MD5\"         \"KRB5-RC4-SHA\"         \"PSK-3DES-EDE-CBC-SHA\"         \"PSK-AES128-CBC-SHA\"         \"PSK-AES256-CBC-SHA\"         \"PSK-RC4-SHA\"         \"RC4-MD5\"         \"RC4-SHA\"         \"SEED-SHA\"
+
+*  __oci-default-http2-ssl-cipher-suite-v1__
+
+        \"ECDHE-RSA-AES256-GCM-SHA384\"         \"ECDHE-ECDSA-AES256-GCM-SHA384\"         \"ECDHE-RSA-AES128-GCM-SHA256\"         \"ECDHE-ECDSA-AES128-GCM-SHA256\"         \"DHE-RSA-AES256-GCM-SHA384\"         \"DHE-RSA-AES128-GCM-SHA256\"
+
+*  __oci-default-http2-tls-13-ssl-cipher-suite-v1__
+
+        \"TLS-AES-128-GCM-SHA256\"         \"TLS-AES-256-GCM-SHA384\"         \"TLS-CHACHA20-POLY1305-SHA256\"
+
+*  __oci-default-http2-tls-12-13-ssl-cipher-suite-v1__
+
+        \"ECDHE-RSA-AES256-GCM-SHA384\"         \"ECDHE-ECDSA-AES256-GCM-SHA384\"         \"ECDHE-RSA-AES128-GCM-SHA256\"         \"ECDHE-ECDSA-AES128-GCM-SHA256\"         \"DHE-RSA-AES256-GCM-SHA384\"         \"DHE-RSA-AES128-GCM-SHA256\"         \"TLS-AES-128-GCM-SHA256\"         \"TLS-AES-256-GCM-SHA384\"         \"TLS-CHACHA20-POLY1305-SHA256\"
+
+*  __oci-tls-13-recommended-ssl-cipher-suite-v1__
+
+        \"TLS-AES-128-GCM-SHA256\"         \"TLS-AES-256-GCM-SHA384\"         \"TLS-CHACHA20-POLY1305-SHA256\"
+
+*  __oci-tls-12-13-wider-ssl-cipher-suite-v1__
+
+        \"TLS-AES-128-GCM-SHA256\"         \"TLS-AES-256-GCM-SHA384\"         \"TLS-CHACHA20-POLY1305-SHA256\"         \"ECDHE-ECDSA-AES128-GCM-SHA256\"         \"ECDHE-RSA-AES128-GCM-SHA256\"         \"ECDHE-ECDSA-AES128-SHA256\"         \"ECDHE-RSA-AES128-SHA256\"         \"ECDHE-ECDSA-AES256-GCM-SHA384\"         \"ECDHE-RSA-AES256-GCM-SHA384\"         \"ECDHE-ECDSA-AES256-SHA384\"         \"ECDHE-RSA-AES256-SHA384\"         \"AES128-GCM-SHA256\"         \"AES128-SHA256\"         \"AES256-GCM-SHA384\"         \"AES256-SHA256\"
+
+  *  __oci-tls-11-12-13-wider-ssl-cipher-suite-v1__         \"TLS-AES-128-GCM-SHA256\"         \"TLS-AES-256-GCM-SHA384\"         \"TLS-CHACHA20-POLY1305-SHA256\"         \"ECDHE-ECDSA-AES128-GCM-SHA256\"         \"ECDHE-RSA-AES128-GCM-SHA256\"         \"ECDHE-ECDSA-AES128-SHA256\"         \"ECDHE-RSA-AES128-SHA256\"         \"ECDHE-ECDSA-AES256-GCM-SHA384\"         \"ECDHE-RSA-AES256-GCM-SHA384\"         \"ECDHE-ECDSA-AES256-SHA384\"         \"ECDHE-RSA-AES256-SHA384\"         \"AES128-GCM-SHA256\"         \"AES128-SHA256\"         \"AES256-GCM-SHA384\"         \"AES256-SHA256\"         \"ECDHE-ECDSA-AES128-SHA\"         \"ECDHE-RSA-AES128-SHA\"         \"ECDHE-RSA-AES256-SHA\"         \"ECDHE-ECDSA-AES256-SHA\"         \"AES128-SHA\"         \"AES256-SHA\"""")
 @cli_util.help_option_group
 def ssl_cipher_suite_group():
     pass
@@ -1157,12 +1179,16 @@ def create_rule_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 **Note:** The name of your user-defined cipher suite must not be the same as any of Oracle's predefined or           reserved SSL cipher suite names:
 
-* oci-default-ssl-cipher-suite-v1 * oci-modern-ssl-cipher-suite-v1 * oci-compatible-ssl-cipher-suite-v1 * oci-wider-compatible-ssl-cipher-suite-v1 * oci-customized-ssl-cipher-suite
+* oci-default-ssl-cipher-suite-v1 * oci-modern-ssl-cipher-suite-v1 * oci-compatible-ssl-cipher-suite-v1 * oci-wider-compatible-ssl-cipher-suite-v1 * oci-customized-ssl-cipher-suite * oci-default-http2-ssl-cipher-suite-v1 * oci-default-http2-tls-13-ssl-cipher-suite-v1 * oci-default-http2-tls-12-13-ssl-cipher-suite-v1 * oci-tls-13-recommended-ssl-cipher-suite-v1 * oci-tls-12-13-wider-ssl-cipher-suite-v1 * oci-tls-11-12-13-wider-ssl-cipher-suite-v1
 
 example: `example_cipher_suite`""")
 @cli_util.option('--ciphers', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of SSL ciphers the load balancer must support for HTTPS or SSL connections.
 
 The following ciphers are valid values for this property:
+
+*  __TLSv1.3 ciphers__
+
+        \"TLS-AES-128-GCM-SHA256\"         \"TLS-AES-256-GCM-SHA384\"         \"TLS-CHACHA20-POLY1305-SHA256\"         \"TLS-AES-128-CCM-SHA256\"         \"TLS-AES-128-CCM-8-SHA256\"
 
 *  __TLSv1.2 ciphers__
 
@@ -4099,6 +4125,10 @@ def update_rule_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 @cli_util.option('--ciphers', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of SSL ciphers the load balancer must support for HTTPS or SSL connections.
 
 The following ciphers are valid values for this property:
+
+*  __TLSv1.3 ciphers__
+
+        \"TLS-AES-128-GCM-SHA256\"         \"TLS-AES-256-GCM-SHA384\"         \"TLS-CHACHA20-POLY1305-SHA256\"         \"TLS-AES-128-CCM-SHA256\"         \"TLS-AES-128-CCM-8-SHA256\"
 
 *  __TLSv1.2 ciphers__
 
