@@ -1,6 +1,25 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
-# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
+# Copyright (c) 2016, 2023, Oracle and/or its affiliates.
+#
+# This software is dual-licensed to you under the Universal Permissive License
+# (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl and Apache License
+# 2.0 as shown at https://www.apache.org/licenses/LICENSE-2.0. You may choose
+# either license.
+#
+# If you elect to accept the software under the Apache License, Version 2.0,
+# the following applies:
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
 import click  # noqa: F401
 import json  # noqa: F401
@@ -375,8 +394,22 @@ def update_monitored_resource_task_extended(ctx, **kwargs):
     ctx.invoke(stackmonitoring_cli.update_monitored_resource_task, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(stackmonitoring_cli.create_monitored_resource_task_import_oci_telemetry_resources_task_details, params_to_exclude=['task_details_namespace', 'task_details_source', 'task_details_availability_proxy_metric_collection_interval', 'task_details_availability_proxy_metrics', 'task_details_resource_group'])
+@cli_util.copy_params_from_generated_command(stackmonitoring_cli.create_monitored_resource_task_import_oci_telemetry_resources_task_details, params_to_exclude=['task_details_namespace', 'task_details_source', 'task_details_availability_proxy_metric_collection_interval', 'task_details_availability_proxy_metrics', 'task_details_resource_group', 'task_details_console_path_prefix', 'task_details_external_id_mapping', 'task_details_lifecycle_status_mappings_for_up_status', 'task_details_resource_name_filter', 'task_details_resource_name_mapping', 'task_details_resource_type_filter', 'task_details_resource_type_mapping', 'task_details_service_base_url', 'task_details_should_use_metrics_flow_for_status'])
 @stackmonitoring_cli.monitored_resource_task_group.command(name=stackmonitoring_cli.create_monitored_resource_task_import_oci_telemetry_resources_task_details.name, help=stackmonitoring_cli.create_monitored_resource_task_import_oci_telemetry_resources_task_details.help)
+@cli_util.option('--console-path-prefix', help="""The console path prefix to use for providing service home url page navigation. For example if the prefix provided is 'security/bastion/bastions', the URL used for navigation will be https://<cloudhostname>/security/bastion/bastions/<resourceOcid>. If not provided, service home page link will not be shown in the stack monitoring home page.""")
+@cli_util.option('--external-id-mapping', help="""The external resource identifier property in the metric dimensions. Resources imported will be using this property value for external id.""")
+@cli_util.option('--up-status-mappings', type=custom_types.CLI_COMPLEX_TYPE, help="""Lifecycle states of the external resource which reflects the status of the resource being up.
+This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--resource-name-filter', help="""The resource name filter. Resources matching with the resource name filter will be imported. Regular expressions will be accepted.""")
+@cli_util.option('--resource-name-mapping', help="""The resource name property in the metric dimensions. Resources imported will be using this property value for resource name.""")
+@cli_util.option('--resource-type-filter', help="""The resource type filter. Resources matching with the resource type filter will be imported. Regular expressions will be accepted.""")
+@cli_util.option('--resource-type-mapping', help="""The resource type property in the metric dimensions. Resources imported will be using this property value for resource type. If not specified, namespace will be used for resource type.""")
+@cli_util.option('--service-base-url', help="""The base URL of the OCI service to which the resource belongs to. Also this property is applicable only when source is OCI_TELEMETRY_NATIVE.""")
+@cli_util.option('--use-metrics-for-status', type=click.BOOL, help="""Flag to indicate whether status is calculated using metrics or LifeCycleState attribute of the resource in OCI service.""")
 @cli_util.option('--namespace', required=True, help=u"""Name space to be used for OCI Native service resources discovery. [required]""")
 @cli_util.option('--source', required=True, type=custom_types.CliCaseInsensitiveChoice(["OCI_TELEMETRY_NATIVE", "OCI_TELEMETRY_PROMETHEUS"]), help=u"""Source from where the metrics pushed to telemetry. Possible values:   * OCI_TELEMETRY_NATIVE      - The metrics are pushed to telemetry from OCI Native Services.   * OCI_TELEMETRY_PROMETHEUS  - The metrics are pushed to telemetry from Prometheus. [required]""")
 @cli_util.option('--availability-proxy-metric-collection-interval', type=click.INT, help=u"""Metrics collection interval in seconds used when calculating the availability of the resource based on metrics specified using the property 'availabilityProxyMetrics'.""")
@@ -391,6 +424,34 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'availability-proxy-metrics': {'module': 'stack_monitoring', 'class': 'list[string]'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResourceTask'})
 @cli_util.wrap_exceptions
 def create_monitored_resource_task_import_oci_telemetry_resources_task_details_extended(ctx, **kwargs):
+
+    if 'console_path_prefix' in kwargs:
+        kwargs['task_details_console_path_prefix'] = kwargs['console_path_prefix']
+        kwargs.pop('console_path_prefix')
+    if 'external_id_mapping' in kwargs:
+        kwargs['task_details_external_id_mapping'] = kwargs['external_id_mapping']
+        kwargs.pop('external_id_mapping')
+    if 'up_status_mappings' in kwargs:
+        kwargs['task_details_lifecycle_status_mappings_for_up_status'] = kwargs['up_status_mappings']
+        kwargs.pop('up_status_mappings')
+    if 'resource_name_filter' in kwargs:
+        kwargs['task_details_resource_name_filter'] = kwargs['resource_name_filter']
+        kwargs.pop('resource_name_filter')
+    if 'resource_name_mapping' in kwargs:
+        kwargs['task_details_resource_name_mapping'] = kwargs['resource_name_mapping']
+        kwargs.pop('resource_name_mapping')
+    if 'resource_type_filter' in kwargs:
+        kwargs['task_details_resource_type_filter'] = kwargs['resource_type_filter']
+        kwargs.pop('resource_type_filter')
+    if 'resource_type_mapping' in kwargs:
+        kwargs['task_details_resource_type_mapping'] = kwargs['resource_type_mapping']
+        kwargs.pop('resource_type_mapping')
+    if 'service_base_url' in kwargs:
+        kwargs['task_details_service_base_url'] = kwargs['service_base_url']
+        kwargs.pop('service_base_url')
+    if 'use_metrics_for_status' in kwargs:
+        kwargs['task_details_should_use_metrics_flow_for_status'] = kwargs['use_metrics_for_status']
+        kwargs.pop('use_metrics_for_status')
 
     if 'namespace' in kwargs:
         kwargs['task_details_namespace'] = kwargs['namespace']

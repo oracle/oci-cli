@@ -1680,17 +1680,26 @@ def create_monitored_resource_task(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--task-details-resource-group', help=u"""The resource group to use while fetching metrics from telemetry. If not specified, resource group will be skipped in the list metrics request.""")
+@cli_util.option('--task-details-should-use-metrics-flow-for-status', type=click.BOOL, help=u"""Flag to indicate whether status is calculated using metrics or LifeCycleState attribute of the resource in OCI service.""")
+@cli_util.option('--task-details-service-base-url', help=u"""The base URL of the OCI service to which the resource belongs to. Also this property is applicable only when source is OCI_TELEMETRY_NATIVE.""")
+@cli_util.option('--task-details-console-path-prefix', help=u"""The console path prefix to use for providing service home url page navigation. For example if the prefix provided is 'security/bastion/bastions', the URL used for navigation will be https://<cloudhostname>/security/bastion/bastions/<resourceOcid>. If not provided, service home page link will not be shown in the stack monitoring home page.""")
+@cli_util.option('--task-details-lifecycle-status-mappings-for-up-status', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Lifecycle states of the external resource which reflects the status of the resource being up.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--task-details-resource-name-mapping', help=u"""The resource name property in the metric dimensions. Resources imported will be using this property value for resource name.""")
+@cli_util.option('--task-details-external-id-mapping', help=u"""The external resource identifier property in the metric dimensions. Resources imported will be using this property value for external id.""")
+@cli_util.option('--task-details-resource-type-mapping', help=u"""The resource type property in the metric dimensions. Resources imported will be using this property value for resource type. If not specified, namespace will be used for resource type.""")
+@cli_util.option('--task-details-resource-name-filter', help=u"""The resource name filter. Resources matching with the resource name filter will be imported. Regular expressions will be accepted.""")
+@cli_util.option('--task-details-resource-type-filter', help=u"""The resource type filter. Resources matching with the resource type filter will be imported. Regular expressions will be accepted.""")
 @cli_util.option('--task-details-availability-proxy-metrics', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of metrics to be used to calculate the availability of the resource. Resource is considered to be up if at least one of the specified metrics is available for the resource during the specified interval using the property 'availabilityProxyMetricCollectionIntervalInSeconds'. If no metrics are specified, availability will not be calculated for the resource.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--task-details-availability-proxy-metric-collection-interval', type=click.INT, help=u"""Metrics collection interval in seconds used when calculating the availability of the resource based on metrics specified using the property 'availabilityProxyMetrics'.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'task-details-availability-proxy-metrics': {'module': 'stack_monitoring', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'task-details-lifecycle-status-mappings-for-up-status': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'task-details-availability-proxy-metrics': {'module': 'stack_monitoring', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'task-details-availability-proxy-metrics': {'module': 'stack_monitoring', 'class': 'list[string]'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResourceTask'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'task-details-lifecycle-status-mappings-for-up-status': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'task-details-availability-proxy-metrics': {'module': 'stack_monitoring', 'class': 'list[string]'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResourceTask'})
 @cli_util.wrap_exceptions
-def create_monitored_resource_task_import_oci_telemetry_resources_task_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, task_details_source, task_details_namespace, name, freeform_tags, defined_tags, task_details_resource_group, task_details_availability_proxy_metrics, task_details_availability_proxy_metric_collection_interval):
+def create_monitored_resource_task_import_oci_telemetry_resources_task_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, task_details_source, task_details_namespace, name, freeform_tags, defined_tags, task_details_resource_group, task_details_should_use_metrics_flow_for_status, task_details_service_base_url, task_details_console_path_prefix, task_details_lifecycle_status_mappings_for_up_status, task_details_resource_name_mapping, task_details_external_id_mapping, task_details_resource_type_mapping, task_details_resource_name_filter, task_details_resource_type_filter, task_details_availability_proxy_metrics, task_details_availability_proxy_metric_collection_interval):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1712,6 +1721,33 @@ def create_monitored_resource_task_import_oci_telemetry_resources_task_details(c
 
     if task_details_resource_group is not None:
         _details['taskDetails']['resourceGroup'] = task_details_resource_group
+
+    if task_details_should_use_metrics_flow_for_status is not None:
+        _details['taskDetails']['shouldUseMetricsFlowForStatus'] = task_details_should_use_metrics_flow_for_status
+
+    if task_details_service_base_url is not None:
+        _details['taskDetails']['serviceBaseUrl'] = task_details_service_base_url
+
+    if task_details_console_path_prefix is not None:
+        _details['taskDetails']['consolePathPrefix'] = task_details_console_path_prefix
+
+    if task_details_lifecycle_status_mappings_for_up_status is not None:
+        _details['taskDetails']['lifecycleStatusMappingsForUpStatus'] = cli_util.parse_json_parameter("task_details_lifecycle_status_mappings_for_up_status", task_details_lifecycle_status_mappings_for_up_status)
+
+    if task_details_resource_name_mapping is not None:
+        _details['taskDetails']['resourceNameMapping'] = task_details_resource_name_mapping
+
+    if task_details_external_id_mapping is not None:
+        _details['taskDetails']['externalIdMapping'] = task_details_external_id_mapping
+
+    if task_details_resource_type_mapping is not None:
+        _details['taskDetails']['resourceTypeMapping'] = task_details_resource_type_mapping
+
+    if task_details_resource_name_filter is not None:
+        _details['taskDetails']['resourceNameFilter'] = task_details_resource_name_filter
+
+    if task_details_resource_type_filter is not None:
+        _details['taskDetails']['resourceTypeFilter'] = task_details_resource_type_filter
 
     if task_details_availability_proxy_metrics is not None:
         _details['taskDetails']['availabilityProxyMetrics'] = cli_util.parse_json_parameter("task_details_availability_proxy_metrics", task_details_availability_proxy_metrics)
@@ -1762,6 +1798,8 @@ def create_monitored_resource_task_import_oci_telemetry_resources_task_details(c
 @cli_util.option('--display-name', help=u"""Monitored resource type display name.""")
 @cli_util.option('--description', help=u"""A friendly description.""")
 @cli_util.option('--metric-namespace', help=u"""Metric namespace for resource type.""")
+@cli_util.option('--source-type', type=custom_types.CliCaseInsensitiveChoice(["SM_MGMT_AGENT_MONITORED", "SM_REPO_ONLY", "OCI_NATIVE", "PROMETHEUS", "TELEGRAF", "COLLECTD"]), help=u"""Source type to indicate if the resource is stack monitoring discovered, OCI native resource, etc.""")
+@cli_util.option('--resource-category', type=custom_types.CliCaseInsensitiveChoice(["APPLICATION", "DATABASE", "MIDDLEWARE", "UNKNOWN"]), help=u"""Resource Category to indicate the kind of resource type.""")
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1773,7 +1811,7 @@ def create_monitored_resource_task_import_oci_telemetry_resources_task_details(c
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'stack_monitoring', 'class': 'ResourceTypeMetadataDetails'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResourceType'})
 @cli_util.wrap_exceptions
-def create_monitored_resource_type(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, display_name, description, metric_namespace, metadata, freeform_tags, defined_tags):
+def create_monitored_resource_type(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, display_name, description, metric_namespace, source_type, resource_category, metadata, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1790,6 +1828,12 @@ def create_monitored_resource_type(ctx, from_json, wait_for_state, max_wait_seco
 
     if metric_namespace is not None:
         _details['metricNamespace'] = metric_namespace
+
+    if source_type is not None:
+        _details['sourceType'] = source_type
+
+    if resource_category is not None:
+        _details['resourceCategory'] = resource_category
 
     if metadata is not None:
         _details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
@@ -1837,6 +1881,8 @@ def create_monitored_resource_type(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.option('--display-name', help=u"""Monitored resource type display name.""")
 @cli_util.option('--description', help=u"""A friendly description.""")
 @cli_util.option('--metric-namespace', help=u"""Metric namespace for resource type.""")
+@cli_util.option('--source-type', type=custom_types.CliCaseInsensitiveChoice(["SM_MGMT_AGENT_MONITORED", "SM_REPO_ONLY", "OCI_NATIVE", "PROMETHEUS", "TELEGRAF", "COLLECTD"]), help=u"""Source type to indicate if the resource is stack monitoring discovered, OCI native resource, etc.""")
+@cli_util.option('--resource-category', type=custom_types.CliCaseInsensitiveChoice(["APPLICATION", "DATABASE", "MIDDLEWARE", "UNKNOWN"]), help=u"""Resource Category to indicate the kind of resource type.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata-required-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of required properties for resource type.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1855,7 +1901,7 @@ This option is a JSON list with items of type UniquePropertySet.  For documentat
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'metadata-required-properties': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-agent-properties': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-valid-properties-for-create': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-valid-properties-for-update': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-unique-property-sets': {'module': 'stack_monitoring', 'class': 'list[UniquePropertySet]'}, 'metadata-valid-property-values': {'module': 'stack_monitoring', 'class': 'dict(str, list[string])'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResourceType'})
 @cli_util.wrap_exceptions
-def create_monitored_resource_type_system_format_resource_type_metadata_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, display_name, description, metric_namespace, freeform_tags, defined_tags, metadata_required_properties, metadata_agent_properties, metadata_valid_properties_for_create, metadata_valid_properties_for_update, metadata_unique_property_sets, metadata_valid_property_values):
+def create_monitored_resource_type_system_format_resource_type_metadata_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, display_name, description, metric_namespace, source_type, resource_category, freeform_tags, defined_tags, metadata_required_properties, metadata_agent_properties, metadata_valid_properties_for_create, metadata_valid_properties_for_update, metadata_unique_property_sets, metadata_valid_property_values):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1873,6 +1919,12 @@ def create_monitored_resource_type_system_format_resource_type_metadata_details(
 
     if metric_namespace is not None:
         _details['metricNamespace'] = metric_namespace
+
+    if source_type is not None:
+        _details['sourceType'] = source_type
+
+    if resource_category is not None:
+        _details['resourceCategory'] = resource_category
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -3378,6 +3430,7 @@ def list_monitored_resource_types(ctx, from_json, all_pages, page_size, compartm
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which data is listed.""")
 @cli_util.option('--name', help=u"""A filter to return resources that match exact resource name.""")
 @cli_util.option('--work-request-id', help=u"""A filter to return resources which were impacted as part of this work request identifier.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources with matching lifecycleState.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME", "TIME_CREATED"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for resources is ascending.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -3389,7 +3442,7 @@ def list_monitored_resource_types(ctx, from_json, all_pages, page_size, compartm
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResourceCollection'})
 @cli_util.wrap_exceptions
-def list_monitored_resources(ctx, from_json, all_pages, page_size, compartment_id, name, work_request_id, sort_by, sort_order, limit, page):
+def list_monitored_resources(ctx, from_json, all_pages, page_size, compartment_id, name, work_request_id, status, sort_by, sort_order, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -3399,6 +3452,8 @@ def list_monitored_resources(ctx, from_json, all_pages, page_size, compartment_i
         kwargs['name'] = name
     if work_request_id is not None:
         kwargs['work_request_id'] = work_request_id
+    if status is not None:
+        kwargs['status'] = status
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
@@ -3963,6 +4018,12 @@ def search_monitored_resource_members(ctx, from_json, monitored_resource_id, des
 
 @monitored_resource_group.command(name=cli_util.override('stack_monitoring.search_monitored_resources.command_name', 'search'), help=u"""Gets a list of all monitored resources in a compartment for the given search criteria. \n[Command Reference](searchMonitoredResources)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
+@cli_util.option('--compartment-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Multiple compartment identifiers [OCID].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--lifecycle-states', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Multiple lifecycle states filter.
+
+This option is a JSON list with items of type ResourceLifecycleState.  For documentation on ResourceLifecycleState please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/ResourceLifecycleState.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source-type', type=custom_types.CliCaseInsensitiveChoice(["SM_MGMT_AGENT_MONITORED", "SM_REPO_ONLY", "OCI_NATIVE", "PROMETHEUS", "TELEGRAF", "COLLECTD"]), help=u"""Source type filter.""")
+@cli_util.option('--resource-category', type=custom_types.CliCaseInsensitiveChoice(["APPLICATION", "DATABASE", "MIDDLEWARE", "UNKNOWN"]), help=u"""Resource category filter.""")
 @cli_util.option('--name', help=u"""A filter to return resources that match exact resource name.""")
 @cli_util.option('--name-contains', help=u"""A filter to return resources that match resource name pattern given. The match is not case sensitive.""")
 @cli_util.option('--type', help=u"""A filter to return resources that match resource type.""")
@@ -3993,12 +4054,12 @@ def search_monitored_resource_members(ctx, from_json, monitored_resource_id, des
 @cli_util.option('--fields', multiple=True, help=u"""Partial response refers to an optimization technique offered by the RESTful web APIs, to return only the information (fields) required by the client. In this mechanism, the client sends the required field names as the query parameters for an API to the server, and the server trims down the default response content by removing the fields that are not required by the client. The parameter controls which fields to return and should be a query string parameter called \"fields\" of an array type, provide the values as enums, and use collectionFormat.""")
 @cli_util.option('--exclude-fields', multiple=True, help=u"""Partial response refers to an optimization technique offered by the RESTful web APIs, to return all the information except the fields requested to be excluded (excludeFields) by the client. In this mechanism, the client sends the exclude field names as the query parameters for an API to the server, and the server trims down the default response content by removing the fields that are not required by the client. The parameter controls which fields to exlude and to return and should be a query string parameter called \"excludeFields\" of an array type, provide the values as enums, and use collectionFormat.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@json_skeleton_utils.get_cli_json_input_option({'property-equals': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'fields': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'exclude-fields': {'module': 'stack_monitoring', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'compartment-ids': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'lifecycle-states': {'module': 'stack_monitoring', 'class': 'list[ResourceLifecycleState]'}, 'property-equals': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'fields': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'exclude-fields': {'module': 'stack_monitoring', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'property-equals': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'fields': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'exclude-fields': {'module': 'stack_monitoring', 'class': 'list[string]'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResourceCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'compartment-ids': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'lifecycle-states': {'module': 'stack_monitoring', 'class': 'list[ResourceLifecycleState]'}, 'property-equals': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'fields': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'exclude-fields': {'module': 'stack_monitoring', 'class': 'list[string]'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResourceCollection'})
 @cli_util.wrap_exceptions
-def search_monitored_resources(ctx, from_json, compartment_id, name, name_contains, type, host_name, external_id, host_name_contains, management_agent_id, lifecycle_state, license, time_created_greater_than_or_equal_to, time_created_less_than, time_updated_greater_than_or_equal_to, time_updated_less_than, resource_time_zone, sort_order, sort_by, property_equals, limit, page, fields, exclude_fields, if_match):
+def search_monitored_resources(ctx, from_json, compartment_id, compartment_ids, lifecycle_states, source_type, resource_category, name, name_contains, type, host_name, external_id, host_name_contains, management_agent_id, lifecycle_state, license, time_created_greater_than_or_equal_to, time_created_less_than, time_updated_greater_than_or_equal_to, time_updated_less_than, resource_time_zone, sort_order, sort_by, property_equals, limit, page, fields, exclude_fields, if_match):
 
     kwargs = {}
     if limit is not None:
@@ -4015,6 +4076,18 @@ def search_monitored_resources(ctx, from_json, compartment_id, name, name_contai
 
     _details = {}
     _details['compartmentId'] = compartment_id
+
+    if compartment_ids is not None:
+        _details['compartmentIds'] = cli_util.parse_json_parameter("compartment_ids", compartment_ids)
+
+    if lifecycle_states is not None:
+        _details['lifecycleStates'] = cli_util.parse_json_parameter("lifecycle_states", lifecycle_states)
+
+    if source_type is not None:
+        _details['sourceType'] = source_type
+
+    if resource_category is not None:
+        _details['resourceCategory'] = resource_category
 
     if name is not None:
         _details['name'] = name
@@ -5576,6 +5649,8 @@ def update_monitored_resource_task(ctx, from_json, force, wait_for_state, max_wa
 @cli_util.option('--display-name', help=u"""Monitored resource type display name.""")
 @cli_util.option('--description', help=u"""A friendly description.""")
 @cli_util.option('--metric-namespace', help=u"""Metric namespace for resource type.""")
+@cli_util.option('--source-type', type=custom_types.CliCaseInsensitiveChoice(["SM_MGMT_AGENT_MONITORED", "SM_REPO_ONLY", "OCI_NATIVE", "PROMETHEUS", "TELEGRAF", "COLLECTD"]), help=u"""Source type to indicate if the resource is stack monitoring discovered, OCI native resource, etc.""")
+@cli_util.option('--resource-category', type=custom_types.CliCaseInsensitiveChoice(["APPLICATION", "DATABASE", "MIDDLEWARE", "UNKNOWN"]), help=u"""Resource Category to indicate the kind of resource type.""")
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5589,7 +5664,7 @@ def update_monitored_resource_task(ctx, from_json, force, wait_for_state, max_wa
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'stack_monitoring', 'class': 'ResourceTypeMetadataDetails'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResourceType'})
 @cli_util.wrap_exceptions
-def update_monitored_resource_type(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_type_id, display_name, description, metric_namespace, metadata, freeform_tags, defined_tags, if_match):
+def update_monitored_resource_type(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_type_id, display_name, description, metric_namespace, source_type, resource_category, metadata, freeform_tags, defined_tags, if_match):
 
     if isinstance(monitored_resource_type_id, six.string_types) and len(monitored_resource_type_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-resource-type-id cannot be whitespace or empty string')
@@ -5613,6 +5688,12 @@ def update_monitored_resource_type(ctx, from_json, force, wait_for_state, max_wa
 
     if metric_namespace is not None:
         _details['metricNamespace'] = metric_namespace
+
+    if source_type is not None:
+        _details['sourceType'] = source_type
+
+    if resource_category is not None:
+        _details['resourceCategory'] = resource_category
 
     if metadata is not None:
         _details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
@@ -5660,6 +5741,8 @@ def update_monitored_resource_type(ctx, from_json, force, wait_for_state, max_wa
 @cli_util.option('--display-name', help=u"""Monitored resource type display name.""")
 @cli_util.option('--description', help=u"""A friendly description.""")
 @cli_util.option('--metric-namespace', help=u"""Metric namespace for resource type.""")
+@cli_util.option('--source-type', type=custom_types.CliCaseInsensitiveChoice(["SM_MGMT_AGENT_MONITORED", "SM_REPO_ONLY", "OCI_NATIVE", "PROMETHEUS", "TELEGRAF", "COLLECTD"]), help=u"""Source type to indicate if the resource is stack monitoring discovered, OCI native resource, etc.""")
+@cli_util.option('--resource-category', type=custom_types.CliCaseInsensitiveChoice(["APPLICATION", "DATABASE", "MIDDLEWARE", "UNKNOWN"]), help=u"""Resource Category to indicate the kind of resource type.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -5680,7 +5763,7 @@ This option is a JSON list with items of type UniquePropertySet.  For documentat
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'metadata-required-properties': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-agent-properties': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-valid-properties-for-create': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-valid-properties-for-update': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-unique-property-sets': {'module': 'stack_monitoring', 'class': 'list[UniquePropertySet]'}, 'metadata-valid-property-values': {'module': 'stack_monitoring', 'class': 'dict(str, list[string])'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResourceType'})
 @cli_util.wrap_exceptions
-def update_monitored_resource_type_system_format_resource_type_metadata_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_type_id, display_name, description, metric_namespace, freeform_tags, defined_tags, if_match, metadata_required_properties, metadata_agent_properties, metadata_valid_properties_for_create, metadata_valid_properties_for_update, metadata_unique_property_sets, metadata_valid_property_values):
+def update_monitored_resource_type_system_format_resource_type_metadata_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_type_id, display_name, description, metric_namespace, source_type, resource_category, freeform_tags, defined_tags, if_match, metadata_required_properties, metadata_agent_properties, metadata_valid_properties_for_create, metadata_valid_properties_for_update, metadata_unique_property_sets, metadata_valid_property_values):
 
     if isinstance(monitored_resource_type_id, six.string_types) and len(monitored_resource_type_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-resource-type-id cannot be whitespace or empty string')
@@ -5705,6 +5788,12 @@ def update_monitored_resource_type_system_format_resource_type_metadata_details(
 
     if metric_namespace is not None:
         _details['metricNamespace'] = metric_namespace
+
+    if source_type is not None:
+        _details['sourceType'] = source_type
+
+    if resource_category is not None:
+        _details['resourceCategory'] = resource_category
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

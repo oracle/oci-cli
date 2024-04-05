@@ -370,3 +370,10 @@ devops, repository-private-access, update
 devops, repository-settings, delete
 devops, repository-settings, get
 devops, repository-settings, update
+stack-monitoring, resource-task, import-telemetry-resources
+stack-monitoring, resource, list
+lb, backend-set, create
+lb, backend-set, update
+lb, listener, create
+lb, listener, update
+nlb, health-checker, update

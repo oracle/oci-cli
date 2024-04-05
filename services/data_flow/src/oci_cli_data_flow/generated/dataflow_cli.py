@@ -663,6 +663,7 @@ This option is a JSON list with items of type ApplicationParameter.  For documen
 @cli_util.option('--warehouse-bucket-uri', help=u"""An Oracle Cloud Infrastructure URI of the bucket to be used as default warehouse directory for BATCH SQL runs. See https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/hdfsconnector.htm#uriformat.""")
 @cli_util.option('--max-duration-in-minutes', type=click.INT, help=u"""The maximum duration in minutes for which an Application should run. Data Flow Run would be terminated once it reaches this duration from the time it transitions to `IN_PROGRESS` state.""")
 @cli_util.option('--idle-timeout-in-minutes', type=click.INT, help=u"""The timeout value in minutes used to manage Runs. A Run would be stopped after inactivity for this amount of time period. Note: This parameter is currently only applicable for Runs of type `SESSION`. Default value is 2880 minutes (2 days)""")
+@cli_util.option('--opc-parent-rpt-url', help=u"""(Optional header param, required for Resource Principal version 3.0+) Parent resource control plane endpoint used to exchange for upper level resource principal token.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "CANCELING", "CANCELED", "FAILED", "SUCCEEDED", "STOPPING", "STOPPED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -671,9 +672,11 @@ This option is a JSON list with items of type ApplicationParameter.  For documen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'application-log-config': {'module': 'data_flow', 'class': 'ApplicationLogConfig'}, 'arguments': {'module': 'data_flow', 'class': 'list[string]'}, 'configuration': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'driver-shape-config': {'module': 'data_flow', 'class': 'ShapeConfig'}, 'executor-shape-config': {'module': 'data_flow', 'class': 'ShapeConfig'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'parameters': {'module': 'data_flow', 'class': 'list[ApplicationParameter]'}}, output_type={'module': 'data_flow', 'class': 'Run'})
 @cli_util.wrap_exceptions
-def create_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, application_log_config, application_id, archive_uri, arguments, configuration, defined_tags, display_name, driver_shape, driver_shape_config, execute, executor_shape, executor_shape_config, freeform_tags, logs_bucket_uri, metastore_id, num_executors, parameters, pool_id, spark_version, type, warehouse_bucket_uri, max_duration_in_minutes, idle_timeout_in_minutes):
+def create_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, application_log_config, application_id, archive_uri, arguments, configuration, defined_tags, display_name, driver_shape, driver_shape_config, execute, executor_shape, executor_shape_config, freeform_tags, logs_bucket_uri, metastore_id, num_executors, parameters, pool_id, spark_version, type, warehouse_bucket_uri, max_duration_in_minutes, idle_timeout_in_minutes, opc_parent_rpt_url):
 
     kwargs = {}
+    if opc_parent_rpt_url is not None:
+        kwargs['opc_parent_rpt_url'] = opc_parent_rpt_url
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -1801,7 +1804,7 @@ def list_runs(ctx, from_json, all_pages, page_size, compartment_id, application_
 @sql_endpoint_collection_group.command(name=cli_util.override('data_flow.list_sql_endpoints.command_name', 'list-sql-endpoints'), help=u"""Lists all Sql Endpoints in the specified compartment. The query must include compartmentId or sqlEndpointId. If the query does not include either compartmentId or sqlEndpointId, an error is returned. \n[Command Reference](listSqlEndpoints)""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to query resources.""")
 @cli_util.option('--sql-endpoint-id', help=u"""The unique id of the SQL Endpoint.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only those resources whose sqlEndpointLifecycleState matches the given sqlEndpointLifecycleState.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "UPDATING", "NEEDS_ATTENTION"]), help=u"""A filter to return only those resources whose sqlEndpointLifecycleState matches the given sqlEndpointLifecycleState.""")
 @cli_util.option('--display-name', help=u"""The query parameter for the Spark application name.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items that can be returned.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")

@@ -327,6 +327,8 @@ Example: `example_backend_set`""")
 Example: `FIVE_TUPLE``""")
 @cli_util.option('--health-checker', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-preserve-source', type=click.BOOL, help=u"""If this parameter is enabled, then the network load balancer preserves the source IP of the packet when it is forwarded to backends. Backends see the original source IP. If the isPreserveSourceDestination parameter is enabled for the network load balancer resource, then this parameter cannot be disabled. The value is true by default.""")
+@cli_util.option('--is-instant-failover-enabled', type=click.BOOL, help=u"""If enabled existing connections will be forwarded to an alternative healthy backend as soon as current backend becomes unhealthy.""")
+@cli_util.option('--is-fail-open', type=click.BOOL, help=u"""If enabled, the network load balancer will continue to distribute traffic in the configured distribution in the event all backends are unhealthy. The value is false by default.""")
 @cli_util.option('--ip-version', type=custom_types.CliCaseInsensitiveChoice(["IPV4", "IPV6"]), help=u"""IP version associated with the backend set.""")
 @cli_util.option('--backends', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of backends to be associated with the backend set.
 
@@ -340,7 +342,7 @@ This option is a JSON list with items of type BackendDetails.  For documentation
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'network_load_balancer', 'class': 'list[BackendDetails]'}, 'health-checker': {'module': 'network_load_balancer', 'class': 'HealthCheckerDetails'}})
 @cli_util.wrap_exceptions
-def create_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, name, policy, health_checker, is_preserve_source, ip_version, backends, if_match):
+def create_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, name, policy, health_checker, is_preserve_source, is_instant_failover_enabled, is_fail_open, ip_version, backends, if_match):
 
     if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
@@ -357,6 +359,11 @@ def create_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if is_preserve_source is not None:
         _details['isPreserveSource'] = is_preserve_source
+
+    if is_instant_failover_enabled is not None:
+        _details['isInstantFailoverEnabled'] = is_instant_failover_enabled
+    if is_fail_open is not None:
+        _details['isFailOpen'] = is_fail_open
 
     if ip_version is not None:
         _details['ipVersion'] = ip_version
@@ -1818,6 +1825,8 @@ Example: `example_backend_set`""")
 
 Example: `FIVE_TUPLE`""")
 @cli_util.option('--is-preserve-source', type=click.BOOL, help=u"""If this parameter is enabled, then the network load balancer preserves the source IP of the packet when it is forwarded to backends. Backends see the original source IP. If the isPreserveSourceDestination parameter is enabled for the network load balancer resource, then this parameter cannot be disabled. The value is true by default.""")
+@cli_util.option('--is-instant-failover-enabled', type=click.BOOL, help=u"""If enabled existing connections will be forwarded to an alternative healthy backend as soon as current backend becomes unhealthy.""")
+@cli_util.option('--is-fail-open', type=click.BOOL, help=u"""If enabled, the network load balancer will continue to distribute traffic in the configured distribution in the event all backends are unhealthy. The value is false by default.""")
 @cli_util.option('--ip-version', type=custom_types.CliCaseInsensitiveChoice(["IPV4", "IPV6"]), help=u"""The IP version associated with the backend set.""")
 @cli_util.option('--backends', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of backends associated with the backend set.
 
@@ -1833,7 +1842,7 @@ This option is a JSON list with items of type BackendDetails.  For documentation
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'network_load_balancer', 'class': 'list[BackendDetails]'}, 'health-checker': {'module': 'network_load_balancer', 'class': 'HealthCheckerDetails'}})
 @cli_util.wrap_exceptions
-def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, backend_set_name, policy, is_preserve_source, ip_version, backends, health_checker, if_match):
+def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, backend_set_name, policy, is_preserve_source, is_instant_failover_enabled, is_fail_open, ip_version, backends, health_checker, if_match):
 
     if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
@@ -1857,6 +1866,11 @@ def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
     if is_preserve_source is not None:
         _details['isPreserveSource'] = is_preserve_source
+
+    if is_instant_failover_enabled is not None:
+        _details['isInstantFailoverEnabled'] = is_instant_failover_enabled
+    if is_fail_open is not None:
+        _details['isFailOpen'] = is_fail_open
 
     if ip_version is not None:
         _details['ipVersion'] = ip_version
@@ -1909,7 +1923,7 @@ def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set associated with the health check policy to be retrieved.
 
 Example: `example_backend_set`""")
-@cli_util.option('--protocol', type=custom_types.CliCaseInsensitiveChoice(["HTTP", "HTTPS", "TCP", "UDP"]), help=u"""The protocol that the health check must use; either HTTP, UDP, or TCP.
+@cli_util.option('--protocol', type=custom_types.CliCaseInsensitiveChoice(["HTTP", "HTTPS", "TCP", "UDP", "DNS"]), help=u"""The protocol that the health check must use; either HTTP, UDP, or TCP.
 
 Example: `HTTP`""")
 @cli_util.option('--port', type=click.INT, help=u"""The backend server port against which to run the health check.
@@ -1935,22 +1949,28 @@ Example: `^((?!false).|\\s)*$`""")
 Example: `200`""")
 @cli_util.option('--request-data', help=u"""Base64 encoded pattern to be sent as UDP or TCP health check probe.""")
 @cli_util.option('--response-data', help=u"""Base64 encoded pattern to be validated as UDP or TCP health check probe response.""")
+@cli_util.option('--dns', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the current etag value of the resource.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'dns': {'module': 'network_load_balancer', 'class': 'DnsHealthCheckerDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'dns': {'module': 'network_load_balancer', 'class': 'DnsHealthCheckerDetails'}})
 @cli_util.wrap_exceptions
-def update_health_checker(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, backend_set_name, protocol, port, retries, timeout_in_millis, interval_in_millis, url_path, response_body_regex, return_code, request_data, response_data, if_match):
+def update_health_checker(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, backend_set_name, protocol, port, retries, timeout_in_millis, interval_in_millis, url_path, response_body_regex, return_code, request_data, response_data, dns, if_match):
 
     if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
 
     if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
+    if not force:
+        if dns:
+            if not click.confirm("WARNING: Updates to dns will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -1988,6 +2008,9 @@ def update_health_checker(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
     if response_data is not None:
         _details['responseData'] = response_data
+
+    if dns is not None:
+        _details['dns'] = cli_util.parse_json_parameter("dns", dns)
 
     client = cli_util.build_client('network_load_balancer', 'network_load_balancer', ctx)
     result = client.update_health_checker(
