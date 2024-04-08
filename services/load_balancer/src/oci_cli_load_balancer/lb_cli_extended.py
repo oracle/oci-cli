@@ -49,36 +49,42 @@ def update_network_security_groups_extended(ctx, **kwargs):
 
 def process_ssl_configuration_kwargs(kwargs):
     ssl_configuration = {}
+    if kwargs['ssl_certificate_name'] is not None and kwargs['ssl_certificate_ids'] is not None:
+        raise click.UsageError('--ssl-certificate-name and --ssl-certificate-ids option cannot be provided together')
+
     if kwargs['ssl_certificate_name']:
         ssl_configuration['certificateName'] = kwargs['ssl_certificate_name']
 
+    if kwargs['ssl_certificate_ids']:
+        ssl_configuration['certificateIds'] = cli_util.parse_json_parameter("ssl_certificate_ids", kwargs['ssl_certificate_ids'])
+
     if kwargs['ssl_verify_depth'] is not None:
-        if kwargs['ssl_certificate_name'] is None:
-            raise click.UsageError('--ssl-certificate-name option must be provided if --ssl-verify-depth is provided')
+        if kwargs['ssl_certificate_name'] is None and kwargs['ssl_certificate_ids'] is None:
+            raise click.UsageError('--ssl-certificate-name or --ssl-certificate-ids option must be provided if --ssl-verify-depth is provided')
 
         ssl_configuration['verifyDepth'] = kwargs['ssl_verify_depth']
 
     if kwargs['ssl_verify_peer_certificate'] is not None:
-        if kwargs['ssl_certificate_name'] is None:
-            raise click.UsageError('--ssl-certificate-name option must be provided if --ssl-verify-peer-certificate is provided')
+        if kwargs['ssl_certificate_name'] is None and kwargs['ssl_certificate_ids'] is None:
+            raise click.UsageError('--ssl-certificate-name or --ssl-certificate-ids option must be provided if --ssl-verify-peer-certificate is provided')
 
         ssl_configuration['verifyPeerCertificate'] = kwargs['ssl_verify_peer_certificate']
 
     if kwargs['protocols'] is not None:
-        if kwargs['ssl_certificate_name'] is None:
-            raise click.UsageError('--ssl-certificate-name option must be provided if --protocols is provided')
+        if kwargs['ssl_certificate_name'] is None and kwargs['ssl_certificate_ids'] is None:
+            raise click.UsageError('--ssl-certificate-name or --ssl-certificate-ids option must be provided if --protocols is provided')
 
         ssl_configuration['protocols'] = cli_util.parse_json_parameter("protocols", kwargs['protocols'])
 
     if kwargs['cipher_suite_name'] is not None:
-        if kwargs['ssl_certificate_name'] is None:
-            raise click.UsageError('--ssl-certificate-name option must be provided if --cipher-suite-name is provided')
+        if kwargs['ssl_certificate_name'] is None and kwargs['ssl_certificate_ids'] is None:
+            raise click.UsageError('--ssl-certificate-name or --ssl-certificate-ids option must be provided if --cipher-suite-name is provided')
 
         ssl_configuration['cipherSuiteName'] = kwargs['cipher_suite_name']
 
     if kwargs['server_order_preference'] is not None:
-        if kwargs['ssl_certificate_name'] is None:
-            raise click.UsageError('--ssl-certificate-name option must be provided if --server-order-preference is provided')
+        if kwargs['ssl_certificate_name'] is None and kwargs['ssl_certificate_ids'] is None:
+            raise click.UsageError('--ssl-certificate-name or --ssl-certificate-ids option must be provided if --server-order-preference is provided')
 
         ssl_configuration['serverOrderPreference'] = kwargs['server_order_preference']
 
@@ -87,6 +93,7 @@ def process_ssl_configuration_kwargs(kwargs):
 
     # remove kwargs that create_backend_set wont recognize
     kwargs.pop('ssl_certificate_name')
+    kwargs.pop('ssl_certificate_ids')
     kwargs.pop('ssl_verify_depth')
     kwargs.pop('ssl_verify_peer_certificate')
     kwargs.pop('protocols')
@@ -214,6 +221,7 @@ def create_certificate(ctx, **kwargs):
 @cli_util.option('--session-persistence-cookie-name', type=click.STRING, help="""The name of the cookie used to detect a session initiated by the backend server. Use '*' to specify that any cookie set by the backend causes the session to persist.""")
 @cli_util.option('--session-persistence-disable-fallback', type=click.BOOL, help="""Whether the load balancer is prevented from directing traffic from a persistent session client to a different backend server if the original server is unavailable. Defaults to false.""")
 @cli_util.option('--ssl-certificate-name', type=click.STRING, help="""A friendly name for the certificate bundle. It must be unique and it cannot be changed. Valid certificate bundle names include only alphanumeric characters, dashes, and underscores. Certificate bundle names cannot contain spaces. Avoid entering confidential information.""")
+@cli_util.option('--ssl-certificate-ids', type=custom_types.CLI_COMPLEX_TYPE, help="""A list of OCI Certificates [OCIDs] to be used by this Load Balancer.""")
 @cli_util.option('--ssl-verify-depth', type=click.INT, help="""The maximum depth for peer certificate chain verification.""")
 @cli_util.option('--ssl-verify-peer-certificate', type=click.BOOL, help="""Whether the load balancer listener should verify peer certificates.""")
 @cli_util.option('--protocols', type=custom_types.CLI_COMPLEX_TYPE, help="""A list of protocols to be configured for backend. It must be a list of strings.
@@ -222,7 +230,7 @@ Example: ["TLSv1.1","TLSv1.2"]""")
 @cli_util.option('--cipher-suite-name', type=click.STRING, help="""Cipher suite name for backend.""")
 @cli_util.option('--server-order-preference', type=click.STRING, help="""Server order preference for backend.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'lb-cookie-session-persistence-configuration': {'module': 'load_balancer', 'class': 'LBCookieSessionPersistenceConfigurationDetails'}, 'protocols': {'module': 'load_balancer', 'class': 'list[string]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'lb-cookie-session-persistence-configuration': {'module': 'load_balancer', 'class': 'LBCookieSessionPersistenceConfigurationDetails'}, 'protocols': {'module': 'load_balancer', 'class': 'list[string]'}, 'ssl-certificate-ids': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def create_backend_set(ctx, **kwargs):
     process_health_checker_kwargs(kwargs)
@@ -245,6 +253,7 @@ def create_backend_set(ctx, **kwargs):
 @cli_util.option('--session-persistence-cookie-name', type=click.STRING, help="""The name of the cookie used to detect a session initiated by the backend server. Use '*' to specify that any cookie set by the backend causes the session to persist.""")
 @cli_util.option('--session-persistence-disable-fallback', type=click.BOOL, help="""Whether the load balancer is prevented from directing traffic from a persistent session client to a different backend server if the original server is unavailable. Defaults to false.""")
 @cli_util.option('--ssl-certificate-name', type=click.STRING, help="""A friendly name for the certificate bundle. It must be unique and it cannot be changed. Valid certificate bundle names include only alphanumeric characters, dashes, and underscores. Certificate bundle names cannot contain spaces. Avoid entering confidential information.""")
+@cli_util.option('--ssl-certificate-ids', type=custom_types.CLI_COMPLEX_TYPE, help="""A list of OCI Certificates [OCIDs] to be used by this Load Balancer.""")
 @cli_util.option('--ssl-verify-depth', type=click.INT, help="""The maximum depth for peer certificate chain verification.""")
 @cli_util.option('--ssl-verify-peer-certificate', type=click.BOOL, help="""Whether the load balancer listener should verify peer certificates.""")
 @cli_util.option('--protocols', type=custom_types.CLI_COMPLEX_TYPE, help="""A list of protocols to be configured for backend. It must be a list of strings.
@@ -253,7 +262,7 @@ Example: ["TLSv1.1","TLSv1.2"]""")
 @cli_util.option('--cipher-suite-name', type=click.STRING, help="""Cipher suite name for backend.""")
 @cli_util.option('--server-order-preference', type=click.STRING, help="""Server order preference for backend.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'lb-cookie-session-persistence-configuration': {'module': 'load_balancer', 'class': 'LBCookieSessionPersistenceConfigurationDetails'}, 'protocols': {'module': 'load_balancer', 'class': 'list[string]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'lb-cookie-session-persistence-configuration': {'module': 'load_balancer', 'class': 'LBCookieSessionPersistenceConfigurationDetails'}, 'protocols': {'module': 'load_balancer', 'class': 'list[string]'}, 'ssl-certificate-ids': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def update_backend_set(ctx, **kwargs):
     process_health_checker_kwargs(kwargs)
@@ -266,6 +275,7 @@ def update_backend_set(ctx, **kwargs):
 @cli_util.copy_params_from_generated_command(loadbalancer_cli.create_listener, params_to_exclude=['ssl_configuration', 'connection_configuration'])
 @loadbalancer_cli.listener_group.command(name='create', help="""Adds a listener to a load balancer.""")
 @cli_util.option('--ssl-certificate-name', type=click.STRING, help="""A friendly name for the certificate bundle. It must be unique and it cannot be changed. Valid certificate bundle names include only alphanumeric characters, dashes, and underscores. Certificate bundle names cannot contain spaces. Avoid entering confidential information.""")
+@cli_util.option('--ssl-certificate-ids', type=custom_types.CLI_COMPLEX_TYPE, help="""A list of OCI Certificates [OCIDs] to be used by this Load Balancer.""")
 @cli_util.option('--ssl-verify-depth', type=click.INT, help="""The maximum depth for peer certificate chain verification.""")
 @cli_util.option('--ssl-verify-peer-certificate', type=click.BOOL, help="""Whether the load balancer listener should verify peer certificates.""")
 @cli_util.option('--connection-configuration-backend-tcp-proxy-protocol-version', type=click.INT, help="""Connection Configuration Backend TCP Proxy Protocol Version.""")
@@ -276,7 +286,7 @@ Example: ["TLSv1.1","TLSv1.2"]""")
 @cli_util.option('--server-order-preference', type=click.STRING, help="""Server order preference for listener.""")
 @cli_util.option('--connection-configuration-idle-timeout', type=click.INT, help="""The maximum idle time, in seconds, allowed between two successive receive or two successive send operations between the client and backend servers.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'rule-set-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'protocols': {'module': 'load_balancer', 'class': 'list[string]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'rule-set-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'protocols': {'module': 'load_balancer', 'class': 'list[string]'}, 'ssl-certificate-ids': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def create_listener(ctx, **kwargs):
     process_ssl_configuration_kwargs(kwargs)
@@ -288,6 +298,7 @@ def create_listener(ctx, **kwargs):
 @cli_util.copy_params_from_generated_command(loadbalancer_cli.update_listener, params_to_exclude=['ssl_configuration', 'connection_configuration'])
 @loadbalancer_cli.listener_group.command(name='update', help="""Updates a listener for a given load balancer.""")
 @cli_util.option('--ssl-certificate-name', type=click.STRING, help="""A friendly name for the certificate bundle. It must be unique and it cannot be changed. Valid certificate bundle names include only alphanumeric characters, dashes, and underscores. Certificate bundle names cannot contain spaces. Avoid entering confidential information.""")
+@cli_util.option('--ssl-certificate-ids', type=custom_types.CLI_COMPLEX_TYPE, help="""A list of OCI Certificates [OCIDs] to be used by this Load Balancer.""")
 @cli_util.option('--ssl-verify-depth', type=click.INT, help="""The maximum depth for peer certificate chain verification.""")
 @cli_util.option('--ssl-verify-peer-certificate', type=click.BOOL, help="""Whether the load balancer listener should verify peer certificates.""")
 @cli_util.option('--connection-configuration-backend-tcp-proxy-protocol-version', type=click.INT, help="""Connection Configuration Backend TCP Proxy Protocol Version.""")
@@ -298,7 +309,7 @@ Example: ["TLSv1.1","TLSv1.2"]""")
 @cli_util.option('--server-order-preference', type=click.STRING, help="""Server order preference for listener.""")
 @cli_util.option('--connection-configuration-idle-timeout', type=click.INT, help="""The maximum idle time, in seconds, allowed between two successive receive or two successive send operations between the client and backend servers.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'rule-set-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'protocols': {'module': 'load_balancer', 'class': 'list[string]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'rule-set-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'protocols': {'module': 'load_balancer', 'class': 'list[string]'}, 'ssl-certificate-ids': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def update_listener(ctx, **kwargs):
     process_ssl_configuration_kwargs(kwargs)

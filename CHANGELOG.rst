@@ -6,6 +6,61 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.39.0 - 2024-04-09
+--------------------
+Removed
+~~~~~
+
+* [BREAKING] Application Migration Service removed
+
+  * ``oci application-migration``
+
+Added
+~~~~~
+* Support for oke workload resource principal signer auth using --auth oke_workload_identity option
+
+* OCI Network Load Balancer Service
+
+  * Support for the Domain Name System based backend health check
+
+    * ``oci nlb health-checker update --dns``
+
+  * Support for Fail Open in Network Load Balancer service
+
+    * ``oci nlb backend-set create --is-fail-open``
+    * ``oci nlb backend-set update --is-fail-open``
+
+  * New NLB feature with Instant FailOver
+
+    * ``oci nlb backend-set create  --is-instant-failover-enabled'``
+    * ``oci nlb backend-set update  --is-instant-failover-enabled'``
+
+* Stack Monitoring Service
+
+  * Support for adding/updating source type and resource category for resource types in the Stack Monitoring Service
+
+    * ``oci stack-monitoring resource-type create --resource-category, --source-type``
+    * ``oci stack-monitoring resource-type create-system-format-resource-type --resource-category, --source-type``
+    * ``oci stack-monitoring resource-type update --resource-category, --source-type``
+    * ``oci stack-monitoring resource-type update-system-format-resource-type --resource-category, --source-type``
+
+  * Support for searching resources based on resource category,  sourceType, multiple compartments, multiple lifecycle states in the Stack Monitoring Service
+
+    * ``oci stack-monitoring resource search --compartment-ids, --lifecycle-states, --resource-category, --source-type``
+
+  * Support for filtering listed resources based on lifecycle status in the Stack Monitoring Service
+
+    * ``oci stack-monitoring resource list --status``
+
+  * Support for creating tasks with new config parameters in the Stack Monitoring Service
+
+    * ``oci stack-monitoring resource-task import-telemetry-resources --console-path-prefix, --external-id-mapping, --up-status-mappings, --resource-name-filter, --resource-name-mapping, --resource-type-filter, --resource-type-mapping, --service-base-url, --use-metrics-for-status``
+
+* Support for setting nested resource principal parent URL in the Oracle Cloud Infrastructure Data Flow service
+
+  * ``oci data-flow run create --opc-parent-rpt-url``
+  * ``oci data-flow run submit --opc-parent-rpt-url``
+
 3.38.1 - 2024-04-02
 -------------------
 Added

@@ -68,11 +68,6 @@ service_mapping = {
         "Application Performance Monitoring Trace Explorer",
         "Observability & Management"
     ],
-    "application-migration": [
-        "application_migration",
-        "Application Migration",
-        "Others"
-    ],
     "appmgmt-control": [
         "appmgmt_control",
         "Resource Discovery and Monitoring Control",
@@ -267,6 +262,11 @@ service_mapping = {
         "email",
         "Email Delivery",
         "Developer Services"
+    ],
+    "email-data-plane": [
+        "email_data_plane",
+        "Email Delivery Submission",
+        "Others"
     ],
     "events": [
         "events",

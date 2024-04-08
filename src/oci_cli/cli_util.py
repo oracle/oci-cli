@@ -354,6 +354,7 @@ def create_config_and_signer_based_on_click_context(ctx):
     resource_principal_auth = 'auth' in ctx.obj and ctx.obj['auth'] == cli_constants.OCI_CLI_AUTH_RESOURCE_PRINCIPAL
     session_token_auth = 'auth' in ctx.obj and ctx.obj['auth'] == cli_constants.OCI_CLI_AUTH_SESSION_TOKEN
     delegation_token_auth = 'auth' in ctx.obj and ctx.obj['auth'] == cli_constants.OCI_CLI_AUTH_INSTANCE_OBO_USER
+    oke_workload_identity_auth = 'auth' in ctx.obj and ctx.obj['auth'] == cli_constants.OCI_CLI_AUTH_OKE_WORKLOAD_IDENTITY
 
     signer = None
     kwargs = {}
@@ -362,7 +363,7 @@ def create_config_and_signer_based_on_click_context(ctx):
         client_config = build_config(ctx.obj)
     except exceptions.ConfigFileNotFound as e:
         # config file is not required to be present for instance principal auth or resource principal auth
-        if not (instance_principal_auth or resource_principal_auth):
+        if not (instance_principal_auth or resource_principal_auth or oke_workload_identity_auth):
             click.echo('ERROR: Could not find config file at {}'.format(os.path.expanduser(ctx.obj['config_file'])))
             # if user requests session authentication without a config file, prompt them to create a config file with a session profile
             # otherwise, prompt them to create the config file with a profile that uses API key pair authentication
@@ -425,6 +426,23 @@ def create_config_and_signer_based_on_click_context(ctx):
         if ctx.obj['debug']:
             logger.debug("auth: resource_principal")
         signer = oci.auth.signers.resource_principals_signer.get_resource_principals_signer()
+    elif oke_workload_identity_auth:
+        # The following environment variables are expected to be set for this to work.
+        #
+        # OCI_KUBERNETES_SERVICE_ACCOUNT_CERT_PATH if cert is present in path other than default "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+        # KUBERNETES_SERVICE_HOST
+        # OCI_RESOURCE_PRINCIPAL_REGION
+        # OCI_KUBERNETES_SERVICE_ACCOUNT_TOKEN_PATH or OCI_KUBERNETES_SERVICE_ACCOUNT_TOKEN_STRING in case token path other than default "/var/run/secrets/kubernetes.io/serviceaccount/token" or token string is used
+
+        if ctx.obj['debug']:
+            logger.debug("auth: oke_workload_identity")
+
+        # If these environment varaible are not set (i.e have value None) , default path "/var/run/secrets/kubernetes.io/serviceaccount/token" will be used in python-sdk
+
+        service_account_token_path = os.environ.get(cli_constants.OCI_KUBERNETES_SERVICE_ACCOUNT_TOKEN_PATH_ENV_VAR, None)
+        service_account_token = os.environ.get(cli_constants.OCI_KUBERNETES_SERVICE_ACCOUNT_TOKEN_STRING_ENV_VAR, None)
+
+        signer = oci.auth.signers.get_oke_workload_identity_resource_principal_signer(service_account_token_path=service_account_token_path, service_account_token=service_account_token)
     kwargs['signer'] = signer
 
     try:

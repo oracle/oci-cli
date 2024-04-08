@@ -1289,11 +1289,11 @@ def update_connection_update_gitlab_server_access_token_connection_details_exten
 
 
 # oci devops code-search-result-collection -> oci devops code-search
-#cli_util.rename_command(devops_cli, devops_cli.devops_root_group, devops_cli.code_search_result_collection_group, "code-search")
+# cli_util.rename_command(devops_cli, devops_cli.devops_root_group, devops_cli.code_search_result_collection_group, "code-search")
 
 
 # oci devops code-search-result-collection list-code-search-results -> oci devops code-search-result-collection list-results
-#cli_util.rename_command(devops_cli, devops_cli.code_search_result_collection_group, devops_cli.list_code_search_results, "list-results")
+# cli_util.rename_command(devops_cli, devops_cli.code_search_result_collection_group, devops_cli.list_code_search_results, "list-results")
 
 
 # @cli_util.copy_params_from_generated_command(devops_cli.list_code_search_results, params_to_exclude=['query_parameterconflict'])
@@ -1352,11 +1352,11 @@ def update_deploy_artifact_helm_command_spec_artifact_source_extended(ctx, **kwa
         kwargs.pop('helm_artifact_source')
     ctx.invoke(devops_cli.update_deploy_artifact_helm_command_spec_artifact_source, **kwargs)
 
+
 @cli_util.copy_params_from_generated_command(devops_cli.create_deploy_stage_create_oke_helm_chart_deploy_stage_details, params_to_exclude=['is_uninstall_on_stage_delete'])
 @devops_cli.deploy_stage_group.command(name=devops_cli.create_deploy_stage_create_oke_helm_chart_deploy_stage_details.name, help=devops_cli.create_deploy_stage_create_oke_helm_chart_deploy_stage_details.help)
 @cli_util.option('--uninstall-on-stage-delete', type=click.BOOL, help=u"""Uninstall the Helm chart release on deleting the stage.""")
 @click.pass_context
-
 @cli_util.wrap_exceptions
 def create_deploy_stage_create_oke_helm_chart_deploy_stage_details_extended(ctx, **kwargs):
 
@@ -1371,7 +1371,6 @@ def create_deploy_stage_create_oke_helm_chart_deploy_stage_details_extended(ctx,
 @devops_cli.deploy_stage_group.command(name=devops_cli.update_deploy_stage_update_oke_helm_chart_deploy_stage_details.name, help=devops_cli.update_deploy_stage_update_oke_helm_chart_deploy_stage_details.help)
 @cli_util.option('--uninstall-on-stage-delete', type=click.BOOL, help=u"""Uninstall the Helm chart release on deleting the stage.""")
 @click.pass_context
-
 @cli_util.wrap_exceptions
 def update_deploy_stage_update_oke_helm_chart_deploy_stage_details_extended(ctx, **kwargs):
 
