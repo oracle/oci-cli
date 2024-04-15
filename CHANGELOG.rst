@@ -6,6 +6,90 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.39.1 - 2024-04-16
+--------------------
+Added
+~~~~~
+* Database Service
+
+  * New Autonomous Database Software Image Introduced
+
+    * ``oci db autonomous-database-software-image``
+
+  * Support for Autonomous Database Software Image
+
+    * ``oci db autonomous-database-software-image change-compartment --autonomous-database-software-image-id``
+    * ``oci db autonomous-database-software-image create``
+    * ``oci db autonomous-database-software-image delete``
+    * ``oci db autonomous-database-software-image get --autonomous-database-software-image-id``
+    * ``oci db autonomous-database-software-image list``
+    * ``oci db autonomous-database-software-image update --autonomous-database-software-image-id``
+
+  * Support for optional parameter --database-software-image-id
+
+    * ``oci db autonomous-container-database create --database-software-image-id``
+
+* Database Migration Service
+
+  * Support for AWS_S3 with object_storage_bucket migrations
+
+    * ``oci database-migration migration create-migration-aws-s3-data-transfer-medium-details``
+    * ``oci database-migration migration update-migration-aws-s3-data-transfer-medium-details``
+
+* Generative AI Interface Service
+
+  * Support for Chat Results
+
+    * ``oci generative-ai-inference chat-result chat``
+    * ``oci generative-ai-inference chat-result chat-cohere-chat-request``
+    * ``oci generative-ai-inference chat-result chat-dedicated-serving-mode``
+    * ``oci generative-ai-inference chat-result chat-generic-chat-request``
+    * ``oci generative-ai-inference chat-result chat-on-demand-serving-mode``
+
+* Network Load Balancer Service
+
+  * Addition of optional parameter --is-fail-open in backend-set and health-checker update commands
+
+    * ``oci nlb backend-set update``
+    * ``oci nlb health-checker update``
+
+* Redis Service
+
+  * Support for new optional parameters --nsg-ids in redis cluster commands
+
+    * ``oci redis redis-cluster create --nsg-ids``
+    * ``oci redis redis-cluster update --nsg-ids``
+
+* Generative AI Service
+
+  * Support Dedicated AI Cluster Unit Shape LARGE_COHERE_V2 in the Generative AI Service Management
+
+    * ``oci generative-ai dedicated-ai-cluster``
+
+* Usage Service
+
+  * Support for Usage Statements in email recipient groups
+
+    * ``oci usage-api email-recipients-group create``
+    * ``oci usage-api email-recipients-group delete``
+    * ``oci usage-api email-recipients-group get``
+    * ``oci usage-api email-recipients-group list``
+    * ``oci usage-api email-recipients-group update``
+
+* AI Language Service
+
+  * Support for extracting entities from healthcare records
+
+    * ``oci ai language batch-detect-health-entities --documents --endpoint-id --is-detect-assertions --is-detect-relationships``
+    * ``oci ai language batch-detect-pii-entities``
+
+* Process Automation Service
+
+  * Support for the Oracle Process Automation instance start and stop operation
+
+    * ``oci opa opa-instance start --opa-instance-id``
+    * ``oci opa opa-instance stop --opa-instance-id``
+
 3.39.0 - 2024-04-09
 --------------------
 Removed

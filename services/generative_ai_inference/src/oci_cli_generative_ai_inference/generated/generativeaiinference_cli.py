@@ -46,15 +46,289 @@ def summarize_text_result_group():
     pass
 
 
+@click.command(cli_util.override('generative_ai_inference.chat_result_group.command_name', 'chat-result'), cls=CommandGroupWithAlias, help="""The response to the chat conversation.""")
+@cli_util.help_option_group
+def chat_result_group():
+    pass
+
+
 generative_ai_inference_root_group.add_command(generate_text_result_group)
 generative_ai_inference_root_group.add_command(embed_text_result_group)
 generative_ai_inference_root_group.add_command(summarize_text_result_group)
+generative_ai_inference_root_group.add_command(chat_result_group)
+
+
+@chat_result_group.command(name=cli_util.override('generative_ai_inference.chat.command_name', 'chat'), help=u"""Creates a response for the given conversation. \n[Command Reference](chat)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment that the user is authorized to use to call into the Generative AI service.""")
+@cli_util.option('--serving-mode', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--chat-request', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'chat-request': {'module': 'generative_ai_inference', 'class': 'BaseChatRequest'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'chat-request': {'module': 'generative_ai_inference', 'class': 'BaseChatRequest'}}, output_type={'module': 'generative_ai_inference', 'class': 'ChatResult'})
+@cli_util.wrap_exceptions
+def chat(ctx, from_json, compartment_id, serving_mode, chat_request):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['servingMode'] = cli_util.parse_json_parameter("serving_mode", serving_mode)
+
+    if chat_request is not None:
+        _details['chatRequest'] = cli_util.parse_json_parameter("chat_request", chat_request)
+
+    client = cli_util.build_client('generative_ai_inference', 'generative_ai_inference', ctx)
+    result = client.chat(
+        chat_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@chat_result_group.command(name=cli_util.override('generative_ai_inference.chat_dedicated_serving_mode.command_name', 'chat-dedicated-serving-mode'), help=u"""Creates a response for the given conversation. \n[Command Reference](chat)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment that the user is authorized to use to call into the Generative AI service.""")
+@cli_util.option('--serving-mode-endpoint-id', required=True, help=u"""The OCID of the endpoint to use.""")
+@cli_util.option('--chat-request', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'chat-request': {'module': 'generative_ai_inference', 'class': 'BaseChatRequest'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'chat-request': {'module': 'generative_ai_inference', 'class': 'BaseChatRequest'}}, output_type={'module': 'generative_ai_inference', 'class': 'ChatResult'})
+@cli_util.wrap_exceptions
+def chat_dedicated_serving_mode(ctx, from_json, compartment_id, serving_mode_endpoint_id, chat_request):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['servingMode'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['servingMode']['endpointId'] = serving_mode_endpoint_id
+
+    if chat_request is not None:
+        _details['chatRequest'] = cli_util.parse_json_parameter("chat_request", chat_request)
+
+    _details['servingMode']['servingType'] = 'DEDICATED'
+
+    client = cli_util.build_client('generative_ai_inference', 'generative_ai_inference', ctx)
+    result = client.chat(
+        chat_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@chat_result_group.command(name=cli_util.override('generative_ai_inference.chat_on_demand_serving_mode.command_name', 'chat-on-demand-serving-mode'), help=u"""Creates a response for the given conversation. \n[Command Reference](chat)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment that the user is authorized to use to call into the Generative AI service.""")
+@cli_util.option('--serving-mode-model-id', required=True, help=u"""The unique ID of a model to use. Can use list Models API to list available models.""")
+@cli_util.option('--chat-request', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'chat-request': {'module': 'generative_ai_inference', 'class': 'BaseChatRequest'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'chat-request': {'module': 'generative_ai_inference', 'class': 'BaseChatRequest'}}, output_type={'module': 'generative_ai_inference', 'class': 'ChatResult'})
+@cli_util.wrap_exceptions
+def chat_on_demand_serving_mode(ctx, from_json, compartment_id, serving_mode_model_id, chat_request):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['servingMode'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['servingMode']['modelId'] = serving_mode_model_id
+
+    if chat_request is not None:
+        _details['chatRequest'] = cli_util.parse_json_parameter("chat_request", chat_request)
+
+    _details['servingMode']['servingType'] = 'ON_DEMAND'
+
+    client = cli_util.build_client('generative_ai_inference', 'generative_ai_inference', ctx)
+    result = client.chat(
+        chat_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@chat_result_group.command(name=cli_util.override('generative_ai_inference.chat_generic_chat_request.command_name', 'chat-generic-chat-request'), help=u"""Creates a response for the given conversation. \n[Command Reference](chat)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment that the user is authorized to use to call into the Generative AI service.""")
+@cli_util.option('--serving-mode', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--chat-request-messages', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The series of messages associated with this chat completion request. It should include previous messages in the conversation. Each message has a role and content.
+
+This option is a JSON list with items of type Message.  For documentation on Message please see our API reference: https://docs.cloud.oracle.com/api/#/en/generativeaiinference/20231130/datatypes/Message.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--chat-request-is-stream', type=click.BOOL, help=u"""Whether to stream back partial progress. If set, tokens are sent as data-only server-sent events as they become available.""")
+@cli_util.option('--chat-request-num-generations', type=click.INT, help=u"""The number of of generated texts that will be returned.""")
+@cli_util.option('--chat-request-is-echo', type=click.BOOL, help=u"""Whether or not to return the user prompt in the response. Applies only to non-stream results.""")
+@cli_util.option('--chat-request-top-k', type=click.INT, help=u"""An integer that sets up the model to use only the top k most likely tokens in the generated output. A higher k introduces more randomness into the output making the output text sound more natural. Default value is -1 which means to consider all tokens. Setting to 0 disables this method and considers all tokens.
+
+If also using top p, then the model considers only the top tokens whose probabilities add up to p percent and ignores the rest of the k tokens. For example, if k is 20, but the probabilities of the top 10 add up to .75, then only the top 10 tokens are chosen.""")
+@cli_util.option('--chat-request-top-p', help=u"""If set to a probability 0.0 < p < 1.0, it ensures that only the most likely tokens, with total probability mass of p, are considered for generation at each step.
+
+To eliminate tokens with low likelihood, assign p a minimum percentage for the next token's likelihood. For example, when p is set to 0.75, the model eliminates the bottom 25 percent for the next token. Set to 1 to consider all tokens and set to 0 to disable. If both k and p are enabled, p acts after k.""")
+@cli_util.option('--chat-request-temperature', help=u"""A number that sets the randomness of the generated output. A lower temperature means a less random generations.
+
+Use lower numbers for tasks with a correct answer such as question answering or summarizing. High temperatures can generate hallucinations or factually incorrect information. Start with temperatures lower than 1.0 and increase the temperature for more creative outputs, as you regenerate the prompts to refine the outputs.""")
+@cli_util.option('--chat-request-frequency-penalty', help=u"""To reduce repetitiveness of generated tokens, this number penalizes new tokens based on their frequency in the generated text so far. Values > 0 encourage the model to use new tokens and values < 0 encourage the model to repeat tokens. Set to 0 to disable.""")
+@cli_util.option('--chat-request-presence-penalty', help=u"""To reduce repetitiveness of generated tokens, this number penalizes new tokens based on whether they've appeared in the generated text so far. Values > 0 encourage the model to use new tokens and values < 0 encourage the model to repeat tokens.
+
+Similar to frequency penalty, a penalty is applied to previously present tokens, except that this penalty is applied equally to all tokens that have already appeared, regardless of how many times they've appeared. Set to 0 to disable.""")
+@cli_util.option('--chat-request-stop', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of strings that stop the generation if they are generated for the response text. The returned output will not contain the stop strings.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--chat-request-log-probs', type=click.INT, help=u"""Includes the logarithmic probabilities for the most likely output tokens and the chosen tokens.
+
+For example, if the log probability is 5, the API returns a list of the 5 most likely tokens. The API returns the log probability of the sampled token, so there might be up to logprobs+1 elements in the response.""")
+@cli_util.option('--chat-request-max-tokens', type=click.INT, help=u"""The maximum number of tokens that can be generated per output sequence. The token count of your prompt plus max_tokens cannot exceed the model's context length.""")
+@cli_util.option('--chat-request-logit-bias', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Modify the likelihood of specified tokens appearing in the completion.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'chat-request-messages': {'module': 'generative_ai_inference', 'class': 'list[Message]'}, 'chat-request-stop': {'module': 'generative_ai_inference', 'class': 'list[string]'}, 'chat-request-logit-bias': {'module': 'generative_ai_inference', 'class': 'object'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'chat-request-messages': {'module': 'generative_ai_inference', 'class': 'list[Message]'}, 'chat-request-stop': {'module': 'generative_ai_inference', 'class': 'list[string]'}, 'chat-request-logit-bias': {'module': 'generative_ai_inference', 'class': 'object'}}, output_type={'module': 'generative_ai_inference', 'class': 'ChatResult'})
+@cli_util.wrap_exceptions
+def chat_generic_chat_request(ctx, from_json, compartment_id, serving_mode, chat_request_messages, chat_request_is_stream, chat_request_num_generations, chat_request_is_echo, chat_request_top_k, chat_request_top_p, chat_request_temperature, chat_request_frequency_penalty, chat_request_presence_penalty, chat_request_stop, chat_request_log_probs, chat_request_max_tokens, chat_request_logit_bias):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['chatRequest'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['servingMode'] = cli_util.parse_json_parameter("serving_mode", serving_mode)
+
+    if chat_request_messages is not None:
+        _details['chatRequest']['messages'] = cli_util.parse_json_parameter("chat_request_messages", chat_request_messages)
+
+    if chat_request_is_stream is not None:
+        _details['chatRequest']['isStream'] = chat_request_is_stream
+
+    if chat_request_num_generations is not None:
+        _details['chatRequest']['numGenerations'] = chat_request_num_generations
+
+    if chat_request_is_echo is not None:
+        _details['chatRequest']['isEcho'] = chat_request_is_echo
+
+    if chat_request_top_k is not None:
+        _details['chatRequest']['topK'] = chat_request_top_k
+
+    if chat_request_top_p is not None:
+        _details['chatRequest']['topP'] = chat_request_top_p
+
+    if chat_request_temperature is not None:
+        _details['chatRequest']['temperature'] = chat_request_temperature
+
+    if chat_request_frequency_penalty is not None:
+        _details['chatRequest']['frequencyPenalty'] = chat_request_frequency_penalty
+
+    if chat_request_presence_penalty is not None:
+        _details['chatRequest']['presencePenalty'] = chat_request_presence_penalty
+
+    if chat_request_stop is not None:
+        _details['chatRequest']['stop'] = cli_util.parse_json_parameter("chat_request_stop", chat_request_stop)
+
+    if chat_request_log_probs is not None:
+        _details['chatRequest']['logProbs'] = chat_request_log_probs
+
+    if chat_request_max_tokens is not None:
+        _details['chatRequest']['maxTokens'] = chat_request_max_tokens
+
+    if chat_request_logit_bias is not None:
+        _details['chatRequest']['logitBias'] = cli_util.parse_json_parameter("chat_request_logit_bias", chat_request_logit_bias)
+
+    _details['chatRequest']['apiFormat'] = 'GENERIC'
+
+    client = cli_util.build_client('generative_ai_inference', 'generative_ai_inference', ctx)
+    result = client.chat(
+        chat_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@chat_result_group.command(name=cli_util.override('generative_ai_inference.chat_cohere_chat_request.command_name', 'chat-cohere-chat-request'), help=u"""Creates a response for the given conversation. \n[Command Reference](chat)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment that the user is authorized to use to call into the Generative AI service.""")
+@cli_util.option('--serving-mode', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--chat-request-message', required=True, help=u"""Text input for the model to respond to.""")
+@cli_util.option('--chat-request-chat-history', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of previous messages between the user and the model, meant to give the model conversational context for responding to the user's message.
+
+This option is a JSON list with items of type CohereMessage.  For documentation on CohereMessage please see our API reference: https://docs.cloud.oracle.com/api/#/en/generativeaiinference/20231130/datatypes/CohereMessage.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--chat-request-documents', type=custom_types.CLI_COMPLEX_TYPE, help=u"""list of relevant documents that the model can cite to generate a more accurate reply. Some suggested keys are \"text\", \"author\", and \"date\". For better generation quality, it is recommended to keep the total word count of the strings in the dictionary to under 300 words.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--chat-request-is-search-queries-only', type=click.BOOL, help=u"""When true, the response will only contain a list of generated search queries, but no search will take place, and no reply from the model to the user's message will be generated.""")
+@cli_util.option('--chat-request-preamble-override', help=u"""When specified, the default Cohere preamble will be replaced with the provided one. Preambles are a part of the prompt used to adjust the model's overall behavior and conversation style. Default preambles vary for different models.""")
+@cli_util.option('--chat-request-is-stream', type=click.BOOL, help=u"""Whether to stream back partial progress. If set, tokens are sent as data-only server-sent events as they become available.""")
+@cli_util.option('--chat-request-max-tokens', type=click.INT, help=u"""The maximum number of tokens to predict for each response. Includes input plus output tokens.""")
+@cli_util.option('--chat-request-temperature', help=u"""A number that sets the randomness of the generated output. A lower temperature means a less random generations. Use lower numbers for tasks with a correct answer such as question answering or summarizing. High temperatures can generate hallucinations or factually incorrect information. Start with temperatures lower than 1.0 and increase the temperature for more creative outputs, as you regenerate the prompts to refine the outputs.""")
+@cli_util.option('--chat-request-top-k', type=click.INT, help=u"""An integer that sets up the model to use only the top k most likely tokens in the generated output. A higher k introduces more randomness into the output making the output text sound more natural. Default value is 0 which disables this method and considers all tokens. To set a number for the likely tokens, choose an integer between 1 and 500.
+
+If also using top p, then the model considers only the top tokens whose probabilities add up to p percent and ignores the rest of the k tokens. For example, if k is 20, but the probabilities of the top 10 add up to .75, then only the top 10 tokens are chosen.""")
+@cli_util.option('--chat-request-top-p', help=u"""If set to a probability 0.0 < p < 1.0, it ensures that only the most likely tokens, with total probability mass of p, are considered for generation at each step.
+
+To eliminate tokens with low likelihood, assign p a minimum percentage for the next token's likelihood. For example, when p is set to 0.75, the model eliminates the bottom 25 percent for the next token. Set to 1.0 to consider all tokens and set to 0 to disable. If both k and p are enabled, p acts after k.""")
+@cli_util.option('--chat-request-frequency-penalty', help=u"""To reduce repetitiveness of generated tokens, this number penalizes new tokens based on their frequency in the generated text so far. Greater numbers encourage the model to use new tokens, while lower numbers encourage the model to repeat the tokens. Set to 0 to disable.""")
+@cli_util.option('--chat-request-presence-penalty', help=u"""To reduce repetitiveness of generated tokens, this number penalizes new tokens based on whether they've appeared in the generated text so far. Greater numbers encourage the model to use new tokens, while lower numbers encourage the model to repeat the tokens.
+
+Similar to frequency penalty, a penalty is applied to previously present tokens, except that this penalty is applied equally to all tokens that have already appeared, regardless of how many times they've appeared. Set to 0 to disable.""")
+@json_skeleton_utils.get_cli_json_input_option({'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'chat-request-chat-history': {'module': 'generative_ai_inference', 'class': 'list[CohereMessage]'}, 'chat-request-documents': {'module': 'generative_ai_inference', 'class': 'list[object]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'chat-request-chat-history': {'module': 'generative_ai_inference', 'class': 'list[CohereMessage]'}, 'chat-request-documents': {'module': 'generative_ai_inference', 'class': 'list[object]'}}, output_type={'module': 'generative_ai_inference', 'class': 'ChatResult'})
+@cli_util.wrap_exceptions
+def chat_cohere_chat_request(ctx, from_json, compartment_id, serving_mode, chat_request_message, chat_request_chat_history, chat_request_documents, chat_request_is_search_queries_only, chat_request_preamble_override, chat_request_is_stream, chat_request_max_tokens, chat_request_temperature, chat_request_top_k, chat_request_top_p, chat_request_frequency_penalty, chat_request_presence_penalty):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['chatRequest'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['servingMode'] = cli_util.parse_json_parameter("serving_mode", serving_mode)
+    _details['chatRequest']['message'] = chat_request_message
+
+    if chat_request_chat_history is not None:
+        _details['chatRequest']['chatHistory'] = cli_util.parse_json_parameter("chat_request_chat_history", chat_request_chat_history)
+
+    if chat_request_documents is not None:
+        _details['chatRequest']['documents'] = cli_util.parse_json_parameter("chat_request_documents", chat_request_documents)
+
+    if chat_request_is_search_queries_only is not None:
+        _details['chatRequest']['isSearchQueriesOnly'] = chat_request_is_search_queries_only
+
+    if chat_request_preamble_override is not None:
+        _details['chatRequest']['preambleOverride'] = chat_request_preamble_override
+
+    if chat_request_is_stream is not None:
+        _details['chatRequest']['isStream'] = chat_request_is_stream
+
+    if chat_request_max_tokens is not None:
+        _details['chatRequest']['maxTokens'] = chat_request_max_tokens
+
+    if chat_request_temperature is not None:
+        _details['chatRequest']['temperature'] = chat_request_temperature
+
+    if chat_request_top_k is not None:
+        _details['chatRequest']['topK'] = chat_request_top_k
+
+    if chat_request_top_p is not None:
+        _details['chatRequest']['topP'] = chat_request_top_p
+
+    if chat_request_frequency_penalty is not None:
+        _details['chatRequest']['frequencyPenalty'] = chat_request_frequency_penalty
+
+    if chat_request_presence_penalty is not None:
+        _details['chatRequest']['presencePenalty'] = chat_request_presence_penalty
+
+    _details['chatRequest']['apiFormat'] = 'COHERE'
+
+    client = cli_util.build_client('generative_ai_inference', 'generative_ai_inference', ctx)
+    result = client.chat(
+        chat_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @embed_text_result_group.command(name=cli_util.override('generative_ai_inference.embed_text.command_name', 'embed-text'), help=u"""Produces embeddings for the inputs.
 
 An embedding is numeric representation of a piece of text. This text can be a phrase, a sentence, or one or more paragraphs. The Generative AI embedding model transforms each phrase, sentence, or paragraph that you input, into an array with 1024 numbers. You can use these embeddings for finding similarity in your input text such as finding phrases that are similar in context or category. Embeddings are mostly used for semantic searches where the search function focuses on the meaning of the text that it's searching through rather than finding results based on keywords. \n[Command Reference](embedText)""")
-@cli_util.option('--inputs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of strings for embeddings.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--inputs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Provide a list of strings with a maximum number of 96 entries. Each string can be words, a phrase, or a paragraph. The maximum length of each string entry in the list is 512 tokens.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--serving-mode', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment that the user is authorized to use to call into the Generative AI service.""")
 @cli_util.option('--is-echo', type=click.BOOL, help=u"""Whether or not to include the original inputs in the response. Results are index-based.""")
@@ -95,7 +369,7 @@ def embed_text(ctx, from_json, inputs, serving_mode, compartment_id, is_echo, tr
 @embed_text_result_group.command(name=cli_util.override('generative_ai_inference.embed_text_dedicated_serving_mode.command_name', 'embed-text-dedicated-serving-mode'), help=u"""Produces embeddings for the inputs.
 
 An embedding is numeric representation of a piece of text. This text can be a phrase, a sentence, or one or more paragraphs. The Generative AI embedding model transforms each phrase, sentence, or paragraph that you input, into an array with 1024 numbers. You can use these embeddings for finding similarity in your input text such as finding phrases that are similar in context or category. Embeddings are mostly used for semantic searches where the search function focuses on the meaning of the text that it's searching through rather than finding results based on keywords. \n[Command Reference](embedText)""")
-@cli_util.option('--inputs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of strings for embeddings.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--inputs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Provide a list of strings with a maximum number of 96 entries. Each string can be words, a phrase, or a paragraph. The maximum length of each string entry in the list is 512 tokens.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment that the user is authorized to use to call into the Generative AI service.""")
 @cli_util.option('--serving-mode-endpoint-id', required=True, help=u"""The OCID of the endpoint to use.""")
 @cli_util.option('--is-echo', type=click.BOOL, help=u"""Whether or not to include the original inputs in the response. Results are index-based.""")
@@ -139,7 +413,7 @@ def embed_text_dedicated_serving_mode(ctx, from_json, inputs, compartment_id, se
 @embed_text_result_group.command(name=cli_util.override('generative_ai_inference.embed_text_on_demand_serving_mode.command_name', 'embed-text-on-demand-serving-mode'), help=u"""Produces embeddings for the inputs.
 
 An embedding is numeric representation of a piece of text. This text can be a phrase, a sentence, or one or more paragraphs. The Generative AI embedding model transforms each phrase, sentence, or paragraph that you input, into an array with 1024 numbers. You can use these embeddings for finding similarity in your input text such as finding phrases that are similar in context or category. Embeddings are mostly used for semantic searches where the search function focuses on the meaning of the text that it's searching through rather than finding results based on keywords. \n[Command Reference](embedText)""")
-@cli_util.option('--inputs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of strings for embeddings.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--inputs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Provide a list of strings with a maximum number of 96 entries. Each string can be words, a phrase, or a paragraph. The maximum length of each string entry in the list is 512 tokens.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment that the user is authorized to use to call into the Generative AI service.""")
 @cli_util.option('--serving-mode-model-id', required=True, help=u"""The unique ID of a model to use. Can use list Models API to list available models.""")
 @cli_util.option('--is-echo', type=click.BOOL, help=u"""Whether or not to include the original inputs in the response. Results are index-based.""")
@@ -291,7 +565,7 @@ Similar to frequency penalty, a penalty is applied to previously present tokens,
 @cli_util.option('--inference-request-log-probs', type=click.INT, help=u"""Includes the logarithmic probabilities for the most likely output tokens and the chosen tokens.
 
 For example, if the log probability is 5, the API returns a list of the 5 most likely tokens. The API returns the log probability of the sampled token, so there might be up to logprobs+1 elements in the response.""")
-@cli_util.option('--inference-request-max-tokens', type=click.INT, help=u"""The maximum number of tokens to predict for each response. Includes input plus output tokens.""")
+@cli_util.option('--inference-request-max-tokens', type=click.INT, help=u"""The maximum number of tokens that can be generated per output sequence. The token count of your prompt plus max_tokens cannot exceed the model's context length.""")
 @json_skeleton_utils.get_cli_json_input_option({'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'inference-request-stop': {'module': 'generative_ai_inference', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context

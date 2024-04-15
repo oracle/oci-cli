@@ -12,5 +12,7 @@ SDK_client_map = {
     "opa.list_work_request_errors": "oci.opa.OpaInstanceClient.list_work_request_errors",
     "opa.list_work_request_logs": "oci.opa.OpaInstanceClient.list_work_request_logs",
     "opa.list_work_requests": "oci.opa.OpaInstanceClient.list_work_requests",
+    "opa.start_opa_instance": "oci.opa.OpaInstanceClient.start_opa_instance",
+    "opa.stop_opa_instance": "oci.opa.OpaInstanceClient.stop_opa_instance",
     "opa.update_opa_instance": "oci.opa.OpaInstanceClient.update_opa_instance",
 }

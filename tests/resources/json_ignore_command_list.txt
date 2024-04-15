@@ -377,3 +377,9 @@ lb, backend-set, update
 lb, listener, create
 lb, listener, update
 nlb, health-checker, update
+database-migration, connection, list
+database-migration, migration, create-mysql-migration
+database-migration, migration, create-oracle-migration
+database-migration, migration, update-mysql-migration
+database-migration, migration, update-oracle-migration
+database-migration, migration-object-type-summary
