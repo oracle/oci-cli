@@ -16,9 +16,15 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('usage_api.usage_api_root_group.command_name', 'usage-api'), cls=CommandGroupWithAlias, help=cli_util.override('usage_api.usage_api_root_group.help', """Use the Usage API to view your Oracle Cloud usage and costs. The API allows you to request data that meets the specified filter criteria, and to group that data by the dimension of your choosing. The Usage API is used by the Cost Analysis tool in the Console. Also see [Using the Usage API] for more information."""), short_help=cli_util.override('usage_api.usage_api_root_group.short_help', """Usage API"""))
+@cli.command(cli_util.override('usage_api.usage_api_root_group.command_name', 'usage-api'), cls=CommandGroupWithAlias, help=cli_util.override('usage_api.usage_api_root_group.help', """Use the Usage API to view your Oracle Cloud usage and costs. The API allows you to request data that meets the specified filter criteria, and to group that data by the chosen dimension. The Usage API is used by the Cost Analysis and Carbon Emissions Analysis tools in the Console. See [Cost Analysis Overview] and [Using the Usage API] for more information."""), short_help=cli_util.override('usage_api.usage_api_root_group.short_help', """Usage API"""))
 @cli_util.help_option_group
 def usage_api_root_group():
+    pass
+
+
+@click.command(cli_util.override('usage_api.email_recipients_group_group.command_name', 'email-recipients-group'), cls=CommandGroupWithAlias, help="""The recipients group to receive usage statement email.""")
+@cli_util.help_option_group
+def email_recipients_group_group():
     pass
 
 
@@ -82,6 +88,7 @@ def custom_table_group():
     pass
 
 
+usage_api_root_group.add_command(email_recipients_group_group)
 usage_api_root_group.add_command(schedule_group)
 usage_api_root_group.add_command(usage_summary_group)
 usage_api_root_group.add_command(usage_carbon_emissions_query_group)
@@ -118,6 +125,62 @@ def create_custom_table(ctx, from_json, compartment_id, saved_report_id, saved_c
         create_custom_table_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@email_recipients_group_group.command(name=cli_util.override('usage_api.create_email_recipients_group.command_name', 'create'), help=u"""Add a list of email recipients that can receive usage statements for the subscription. \n[Command Reference](createEmailRecipientsGroup)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The customer tenancy.""")
+@cli_util.option('--recipients-list', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of recipient will receive the usage statement email.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--subscription-id', required=True, help=u"""The UsageStatement Subscription unique OCID.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'recipients-list': {'module': 'usage_api', 'class': 'list[EmailRecipient]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'recipients-list': {'module': 'usage_api', 'class': 'list[EmailRecipient]'}}, output_type={'module': 'usage_api', 'class': 'EmailRecipientsGroup'})
+@cli_util.wrap_exceptions
+def create_email_recipients_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, recipients_list, subscription_id):
+
+    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+        raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['recipientsList'] = cli_util.parse_json_parameter("recipients_list", recipients_list)
+
+    client = cli_util.build_client('usage_api', 'usageapi', ctx)
+    result = client.create_email_recipients_group(
+        subscription_id=subscription_id,
+        create_email_recipients_group_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_email_recipients_group') and callable(getattr(client, 'get_email_recipients_group')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_email_recipients_group(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -366,6 +429,39 @@ def delete_custom_table(ctx, from_json, custom_table_id, if_match):
     cli_util.render_response(result, ctx)
 
 
+@email_recipients_group_group.command(name=cli_util.override('usage_api.delete_email_recipients_group.command_name', 'delete'), help=u"""Delete the email recipients group for the usage statement subscription. \n[Command Reference](deleteEmailRecipientsGroup)""")
+@cli_util.option('--email-recipients-group-id', required=True, help=u"""The email recipient group OCID.""")
+@cli_util.option('--subscription-id', required=True, help=u"""The UsageStatement Subscription unique OCID.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID in which to list resources.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted, only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_email_recipients_group(ctx, from_json, email_recipients_group_id, subscription_id, compartment_id, if_match):
+
+    if isinstance(email_recipients_group_id, six.string_types) and len(email_recipients_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --email-recipients-group-id cannot be whitespace or empty string')
+
+    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+        raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('usage_api', 'usageapi', ctx)
+    result = client.delete_email_recipients_group(
+        email_recipients_group_id=email_recipients_group_id,
+        subscription_id=subscription_id,
+        compartment_id=compartment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @query_group.command(name=cli_util.override('usage_api.delete_query.command_name', 'delete'), help=u"""Delete a saved query by the OCID. \n[Command Reference](deleteQuery)""")
 @cli_util.option('--query-id', required=True, help=u"""The query unique OCID.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted, only if the etag you provide matches the resource's current etag value.""")
@@ -504,6 +600,35 @@ def get_custom_table(ctx, from_json, custom_table_id):
     cli_util.render_response(result, ctx)
 
 
+@email_recipients_group_group.command(name=cli_util.override('usage_api.get_email_recipients_group.command_name', 'get'), help=u"""Return the saved usage statement email recipient group. \n[Command Reference](getEmailRecipientsGroup)""")
+@cli_util.option('--email-recipients-group-id', required=True, help=u"""The email recipient group OCID.""")
+@cli_util.option('--subscription-id', required=True, help=u"""The UsageStatement Subscription unique OCID.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID in which to list resources.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'usage_api', 'class': 'EmailRecipientsGroup'})
+@cli_util.wrap_exceptions
+def get_email_recipients_group(ctx, from_json, email_recipients_group_id, subscription_id, compartment_id):
+
+    if isinstance(email_recipients_group_id, six.string_types) and len(email_recipients_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --email-recipients-group-id cannot be whitespace or empty string')
+
+    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+        raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('usage_api', 'usageapi', ctx)
+    result = client.get_email_recipients_group(
+        email_recipients_group_id=email_recipients_group_id,
+        subscription_id=subscription_id,
+        compartment_id=compartment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @query_group.command(name=cli_util.override('usage_api.get_query.command_name', 'get'), help=u"""Returns the saved query. \n[Command Reference](getQuery)""")
 @cli_util.option('--query-id', required=True, help=u"""The query unique OCID.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -549,7 +674,7 @@ def get_schedule(ctx, from_json, schedule_id):
 
 
 @scheduled_run_group.command(name=cli_util.override('usage_api.get_scheduled_run.command_name', 'get'), help=u"""Returns the saved schedule run. \n[Command Reference](getScheduledRun)""")
-@cli_util.option('--scheduled-run-id', required=True, help=u"""The scheduledRun unique OCID.""")
+@cli_util.option('--scheduled-run-id', required=True, help=u"""The scheduledRun unique OCID""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -645,6 +770,67 @@ def list_custom_tables(ctx, from_json, all_pages, page_size, compartment_id, sav
         result = client.list_custom_tables(
             compartment_id=compartment_id,
             saved_report_id=saved_report_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@email_recipients_group_group.command(name=cli_util.override('usage_api.list_email_recipients_groups.command_name', 'list'), help=u"""Return the saved usage statement email recipient group. \n[Command Reference](listEmailRecipientsGroups)""")
+@cli_util.option('--subscription-id', required=True, help=u"""The UsageStatement Subscription unique OCID.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID in which to list resources.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximumimum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName"]), help=u"""The field to sort by. If not specified, the default is displayName.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, whether 'asc' or 'desc'.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'usage_api', 'class': 'EmailRecipientsGroupCollection'})
+@cli_util.wrap_exceptions
+def list_email_recipients_groups(ctx, from_json, all_pages, page_size, subscription_id, compartment_id, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+        raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('usage_api', 'usageapi', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_email_recipients_groups,
+            subscription_id=subscription_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_email_recipients_groups,
+            limit,
+            page_size,
+            subscription_id=subscription_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_email_recipients_groups(
+            subscription_id=subscription_id,
+            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -1107,6 +1293,75 @@ def update_custom_table(ctx, from_json, force, saved_custom_table, custom_table_
         update_custom_table_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@email_recipients_group_group.command(name=cli_util.override('usage_api.update_email_recipients_group.command_name', 'update'), help=u"""Update a saved email recipients group. \n[Command Reference](updateEmailRecipientsGroup)""")
+@cli_util.option('--recipients-list', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of recipient will receive the usage statement email.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--email-recipients-group-id', required=True, help=u"""The email recipient group OCID.""")
+@cli_util.option('--subscription-id', required=True, help=u"""The UsageStatement Subscription unique OCID.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment ID in which to list resources.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted, only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'recipients-list': {'module': 'usage_api', 'class': 'list[EmailRecipient]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'recipients-list': {'module': 'usage_api', 'class': 'list[EmailRecipient]'}}, output_type={'module': 'usage_api', 'class': 'EmailRecipientsGroup'})
+@cli_util.wrap_exceptions
+def update_email_recipients_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, recipients_list, email_recipients_group_id, subscription_id, compartment_id, if_match):
+
+    if isinstance(email_recipients_group_id, six.string_types) and len(email_recipients_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --email-recipients-group-id cannot be whitespace or empty string')
+
+    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+        raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
+    if not force:
+        if recipients_list:
+            if not click.confirm("WARNING: Updates to recipients-list will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['recipientsList'] = cli_util.parse_json_parameter("recipients_list", recipients_list)
+
+    client = cli_util.build_client('usage_api', 'usageapi', ctx)
+    result = client.update_email_recipients_group(
+        email_recipients_group_id=email_recipients_group_id,
+        subscription_id=subscription_id,
+        compartment_id=compartment_id,
+        update_email_recipients_group_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_email_recipients_group') and callable(getattr(client, 'get_email_recipients_group')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_email_recipients_group(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

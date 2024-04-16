@@ -184,6 +184,12 @@ def autonomous_patch_group():
     pass
 
 
+@click.command(cli_util.override('db.autonomous_database_software_image_group.command_name', 'autonomous-database-software-image'), cls=CommandGroupWithAlias, help="""Autonomous Database Software Images created from Autonomous Container Database""")
+@cli_util.help_option_group
+def autonomous_database_software_image_group():
+    pass
+
+
 @click.command(cli_util.override('db.ocp_us_group.command_name', 'ocp-us'), cls=CommandGroupWithAlias, help="""The details of the available and consumed CPU cores of the Autonomous Exadata Infrastructure instance, including consumption by database workload type.""")
 @cli_util.help_option_group
 def ocp_us_group():
@@ -448,6 +454,7 @@ db_root_group.add_command(cloud_exadata_infrastructure_unallocated_resources_gro
 db_root_group.add_command(autonomous_database_group)
 db_root_group.add_command(autonomous_database_dataguard_association_group)
 db_root_group.add_command(autonomous_patch_group)
+db_root_group.add_command(autonomous_database_software_image_group)
 db_root_group.add_command(ocp_us_group)
 db_root_group.add_command(patch_history_entry_group)
 db_root_group.add_command(vm_cluster_network_group)
@@ -977,6 +984,75 @@ def change_autonomous_database_compartment(ctx, from_json, wait_for_state, max_w
     result = client.change_autonomous_database_compartment(
         autonomous_database_id=autonomous_database_id,
         change_compartment_details=_details,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@autonomous_database_software_image_group.command(name=cli_util.override('db.change_autonomous_database_software_image_compartment.command_name', 'change-compartment'), help=u"""Move the Autonomous Database Software Image and its dependent resources to the specified compartment. \n[Command Reference](changeAutonomousDatabaseSoftwareImageCompartment)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the resource to.""")
+@cli_util.option('--autonomous-database-software-image-id', required=True, help=u"""The Autonomous Database Software Image [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_autonomous_database_software_image_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, autonomous_database_software_image_id, if_match):
+
+    if isinstance(autonomous_database_software_image_id, six.string_types) and len(autonomous_database_software_image_id.strip()) == 0:
+        raise click.UsageError('Parameter --autonomous-database-software-image-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.change_autonomous_database_software_image_compartment(
+        autonomous_database_software_image_id=autonomous_database_software_image_id,
+        change_autonomous_database_software_image_compartment_details=_details,
         **kwargs
     )
     work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
@@ -2809,6 +2885,7 @@ def create_application_vip(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.option('--service-level-agreement-type', type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "AUTONOMOUS_DATAGUARD"]), help=u"""The service level agreement type of the Autonomous Container Database. The default is STANDARD. For an autonomous dataguard Autonomous Container Database, the specified Autonomous Exadata Infrastructure must be associated with a remote Autonomous Exadata Infrastructure.""")
 @cli_util.option('--autonomous-exadata-infrastructure-id', help=u"""**No longer used.** This parameter is no longer used for Autonomous Database on dedicated Exadata infrasture. Specify a `cloudAutonomousVmClusterId` instead. Using this parameter will cause the operation to fail.""")
 @cli_util.option('--db-version', help=u"""The base version for the Autonomous Container Database.""")
+@cli_util.option('--database-software-image-id', help=u"""The Autonomous Database Software Image [OCID].""")
 @cli_util.option('--peer-autonomous-exadata-infrastructure-id', help=u"""*No longer used.* This parameter is no longer used for Autonomous Database on dedicated Exadata infrasture. Specify a `peerCloudAutonomousVmClusterId` instead. Using this parameter will cause the operation to fail.""")
 @cli_util.option('--peer-autonomous-container-database-display-name', help=u"""The display name for the peer Autonomous Container Database.""")
 @cli_util.option('--protection-mode', type=custom_types.CliCaseInsensitiveChoice(["MAXIMUM_AVAILABILITY", "MAXIMUM_PERFORMANCE"]), help=u"""The protection mode of this Autonomous Data Guard association. For more information, see [Oracle Data Guard Protection Modes] in the Oracle Data Guard documentation.""")
@@ -2847,7 +2924,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'peer-autonomous-container-database-backup-config': {'module': 'database', 'class': 'PeerAutonomousContainerDatabaseBackupConfig'}, 'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'backup-config': {'module': 'database', 'class': 'AutonomousContainerDatabaseBackupConfig'}}, output_type={'module': 'database', 'class': 'AutonomousContainerDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, patch_model, db_unique_name, db_name, service_level_agreement_type, autonomous_exadata_infrastructure_id, db_version, peer_autonomous_exadata_infrastructure_id, peer_autonomous_container_database_display_name, protection_mode, fast_start_fail_over_lag_limit_in_seconds, is_automatic_failover_enabled, peer_cloud_autonomous_vm_cluster_id, peer_autonomous_vm_cluster_id, peer_autonomous_container_database_compartment_id, peer_autonomous_container_database_backup_config, peer_db_unique_name, autonomous_vm_cluster_id, cloud_autonomous_vm_cluster_id, compartment_id, maintenance_window_details, standby_maintenance_buffer_in_days, version_preference, is_dst_file_update_enabled, freeform_tags, defined_tags, backup_config, kms_key_id, kms_key_version_id, vault_id, key_store_id, db_split_threshold, vm_failover_reservation, distribution_affinity, net_services_architecture):
+def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, patch_model, db_unique_name, db_name, service_level_agreement_type, autonomous_exadata_infrastructure_id, db_version, database_software_image_id, peer_autonomous_exadata_infrastructure_id, peer_autonomous_container_database_display_name, protection_mode, fast_start_fail_over_lag_limit_in_seconds, is_automatic_failover_enabled, peer_cloud_autonomous_vm_cluster_id, peer_autonomous_vm_cluster_id, peer_autonomous_container_database_compartment_id, peer_autonomous_container_database_backup_config, peer_db_unique_name, autonomous_vm_cluster_id, cloud_autonomous_vm_cluster_id, compartment_id, maintenance_window_details, standby_maintenance_buffer_in_days, version_preference, is_dst_file_update_enabled, freeform_tags, defined_tags, backup_config, kms_key_id, kms_key_version_id, vault_id, key_store_id, db_split_threshold, vm_failover_reservation, distribution_affinity, net_services_architecture):
 
     kwargs = {}
 
@@ -2869,6 +2946,9 @@ def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wai
 
     if db_version is not None:
         _details['dbVersion'] = db_version
+
+    if database_software_image_id is not None:
+        _details['databaseSoftwareImageId'] = database_software_image_id
 
     if peer_autonomous_exadata_infrastructure_id is not None:
         _details['peerAutonomousExadataInfrastructureId'] = peer_autonomous_exadata_infrastructure_id
@@ -5607,6 +5687,71 @@ def create_autonomous_database_backup(ctx, from_json, wait_for_state, max_wait_s
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_autonomous_database_backup(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@autonomous_database_software_image_group.command(name=cli_util.override('db.create_autonomous_database_software_image.command_name', 'create'), help=u"""create Autonomous Database Software Image in the specified compartment. \n[Command Reference](createAutonomousDatabaseSoftwareImage)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the Autonomous Database Software Image. The name does not have to be unique.""")
+@cli_util.option('--source-cdb-id', required=True, help=u"""The source Autonomous Container Database [OCID] from which to create Autonomous Database Software Image.""")
+@cli_util.option('--image-shape-family', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXADATA_SHAPE", "EXACC_SHAPE"]), help=u"""To what shape the image is meant for.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "FAILED", "PROVISIONING", "EXPIRED", "TERMINATED", "TERMINATING", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDatabaseSoftwareImage'})
+@cli_util.wrap_exceptions
+def create_autonomous_database_software_image(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, source_cdb_id, image_shape_family, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['sourceCdbId'] = source_cdb_id
+    _details['imageShapeFamily'] = image_shape_family
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.create_autonomous_database_software_image(
+        create_autonomous_database_software_image_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_autonomous_database_software_image') and callable(getattr(client, 'get_autonomous_database_software_image')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_autonomous_database_software_image(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -9332,6 +9477,63 @@ def delete_autonomous_database_backup(ctx, from_json, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
+@autonomous_database_software_image_group.command(name=cli_util.override('db.delete_autonomous_database_software_image.command_name', 'delete'), help=u"""Delete an Autonomous Database Software Image \n[Command Reference](deleteAutonomousDatabaseSoftwareImage)""")
+@cli_util.option('--autonomous-database-software-image-id', required=True, help=u"""The Autonomous Database Software Image [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_autonomous_database_software_image(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_software_image_id, if_match):
+
+    if isinstance(autonomous_database_software_image_id, six.string_types) and len(autonomous_database_software_image_id.strip()) == 0:
+        raise click.UsageError('Parameter --autonomous-database-software-image-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.delete_autonomous_database_software_image(
+        autonomous_database_software_image_id=autonomous_database_software_image_id,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @autonomous_vm_cluster_group.command(name=cli_util.override('db.delete_autonomous_vm_cluster.command_name', 'delete'), help=u"""Deletes the specified Autonomous VM cluster in an Exadata Cloud@Customer system. To delete an Autonomous VM Cluster in the Oracle cloud, see [DeleteCloudAutonomousVmCluster]. \n[Command Reference](deleteAutonomousVmCluster)""")
 @cli_util.option('--autonomous-vm-cluster-id', required=True, help=u"""The autonomous VM cluster [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -12853,6 +13055,28 @@ def get_autonomous_database_regional_wallet(ctx, from_json, ):
     cli_util.render_response(result, ctx)
 
 
+@autonomous_database_software_image_group.command(name=cli_util.override('db.get_autonomous_database_software_image.command_name', 'get'), help=u"""Gets information about the specified Autonomous Database Software Image. \n[Command Reference](getAutonomousDatabaseSoftwareImage)""")
+@cli_util.option('--autonomous-database-software-image-id', required=True, help=u"""The Autonomous Database Software Image [OCID].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'AutonomousDatabaseSoftwareImage'})
+@cli_util.wrap_exceptions
+def get_autonomous_database_software_image(ctx, from_json, autonomous_database_software_image_id):
+
+    if isinstance(autonomous_database_software_image_id, six.string_types) and len(autonomous_database_software_image_id.strip()) == 0:
+        raise click.UsageError('Parameter --autonomous-database-software-image-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.get_autonomous_database_software_image(
+        autonomous_database_software_image_id=autonomous_database_software_image_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @autonomous_database_wallet_group.command(name=cli_util.override('db.get_autonomous_database_wallet.command_name', 'get'), help=u"""Gets the wallet details for the specified Autonomous Database. \n[Command Reference](getAutonomousDatabaseWallet)""")
 @cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -15687,6 +15911,70 @@ def list_autonomous_database_refreshable_clones(ctx, from_json, all_pages, page_
     else:
         result = client.list_autonomous_database_refreshable_clones(
             autonomous_database_id=autonomous_database_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@autonomous_database_software_image_group.command(name=cli_util.override('db.list_autonomous_database_software_images.command_name', 'list'), help=u"""Gets a list of the Autonomous Database Software Images in the specified compartment. \n[Command Reference](listAutonomousDatabaseSoftwareImages)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--image-shape-family', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXACC_SHAPE", "EXADATA_SHAPE"]), help=u"""A filter to return only resources that match the given image shape family exactly.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""parameter according to which Autonomous Database Software Images will be sorted.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "FAILED", "PROVISIONING", "EXPIRED", "TERMINATED", "TERMINATING", "UPDATING"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'AutonomousDatabaseSoftwareImageCollection'})
+@cli_util.wrap_exceptions
+def list_autonomous_database_software_images(ctx, from_json, all_pages, page_size, compartment_id, image_shape_family, limit, page, sort_order, sort_by, lifecycle_state, display_name):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_autonomous_database_software_images,
+            compartment_id=compartment_id,
+            image_shape_family=image_shape_family,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_autonomous_database_software_images,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            image_shape_family=image_shape_family,
+            **kwargs
+        )
+    else:
+        result = client.list_autonomous_database_software_images(
+            compartment_id=compartment_id,
+            image_shape_family=image_shape_family,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -21994,6 +22282,76 @@ def update_autonomous_database_regional_wallet(ctx, from_json, wait_for_state, m
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@autonomous_database_software_image_group.command(name=cli_util.override('db.update_autonomous_database_software_image.command_name', 'update'), help=u"""Updates the properties of an Autonomous Database Software Image, like add tags \n[Command Reference](updateAutonomousDatabaseSoftwareImage)""")
+@cli_util.option('--autonomous-database-software-image-id', required=True, help=u"""The Autonomous Database Software Image [OCID].""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "FAILED", "PROVISIONING", "EXPIRED", "TERMINATED", "TERMINATING", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDatabaseSoftwareImage'})
+@cli_util.wrap_exceptions
+def update_autonomous_database_software_image(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_software_image_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(autonomous_database_software_image_id, six.string_types) and len(autonomous_database_software_image_id.strip()) == 0:
+        raise click.UsageError('Parameter --autonomous-database-software-image-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.update_autonomous_database_software_image(
+        autonomous_database_software_image_id=autonomous_database_software_image_id,
+        update_autonomous_database_software_image_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_autonomous_database_software_image') and callable(getattr(client, 'get_autonomous_database_software_image')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_autonomous_database_software_image(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

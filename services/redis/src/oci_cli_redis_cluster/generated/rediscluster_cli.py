@@ -153,17 +153,18 @@ def change_redis_cluster_compartment(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.option('--software-version', required=True, help=u"""The Redis version that the cluster is running.""")
 @cli_util.option('--node-memory-in-gbs', required=True, type=click.FLOAT, help=u"""The amount of memory allocated to the Redis cluster's nodes, in gigabytes.""")
 @cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the Redis cluster's subnet.""")
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""OCIDs of the NSGs to control access in the customer network""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'redis', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'redis', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'redis', 'class': 'list[string]'}, 'freeform-tags': {'module': 'redis', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'redis', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'redis', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'redis', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'redis', 'class': 'RedisCluster'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'redis', 'class': 'list[string]'}, 'freeform-tags': {'module': 'redis', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'redis', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'redis', 'class': 'RedisCluster'})
 @cli_util.wrap_exceptions
-def create_redis_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, node_count, software_version, node_memory_in_gbs, subnet_id, freeform_tags, defined_tags):
+def create_redis_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, node_count, software_version, node_memory_in_gbs, subnet_id, nsg_ids, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -175,6 +176,9 @@ def create_redis_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     _details['softwareVersion'] = software_version
     _details['nodeMemoryInGBs'] = node_memory_in_gbs
     _details['subnetId'] = subnet_id
+
+    if nsg_ids is not None:
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -560,6 +564,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--node-count', type=click.INT, help=u"""The number of nodes in the Redis cluster.""")
 @cli_util.option('--node-memory-in-gbs', type=click.FLOAT, help=u"""The amount of memory allocated to the Redis cluster's nodes, in gigabytes.""")
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""OCIDs of the NSGs to control access in the customer network""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -567,18 +572,18 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'redis', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'redis', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'redis', 'class': 'list[string]'}, 'freeform-tags': {'module': 'redis', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'redis', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'redis', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'redis', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'redis', 'class': 'list[string]'}, 'freeform-tags': {'module': 'redis', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'redis', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_redis_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, redis_cluster_id, display_name, node_count, node_memory_in_gbs, freeform_tags, defined_tags, if_match):
+def update_redis_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, redis_cluster_id, display_name, node_count, node_memory_in_gbs, nsg_ids, freeform_tags, defined_tags, if_match):
 
     if isinstance(redis_cluster_id, six.string_types) and len(redis_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --redis-cluster-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if nsg_ids or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to nsg-ids and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -596,6 +601,9 @@ def update_redis_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds
 
     if node_memory_in_gbs is not None:
         _details['nodeMemoryInGBs'] = node_memory_in_gbs
+
+    if nsg_ids is not None:
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

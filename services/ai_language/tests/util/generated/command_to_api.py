@@ -3,6 +3,7 @@
 
 SDK_client_map = {
     "ai.batch_detect_dominant_language": "oci.ai_language.AIServiceLanguageClient.batch_detect_dominant_language",
+    "ai.batch_detect_health_entity": "oci.ai_language.AIServiceLanguageClient.batch_detect_health_entity",
     "ai.batch_detect_language_entities": "oci.ai_language.AIServiceLanguageClient.batch_detect_language_entities",
     "ai.batch_detect_language_key_phrases": "oci.ai_language.AIServiceLanguageClient.batch_detect_language_key_phrases",
     "ai.batch_detect_language_pii_entities": "oci.ai_language.AIServiceLanguageClient.batch_detect_language_pii_entities",

@@ -327,8 +327,8 @@ Example: `example_backend_set`""")
 Example: `FIVE_TUPLE``""")
 @cli_util.option('--health-checker', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-preserve-source', type=click.BOOL, help=u"""If this parameter is enabled, then the network load balancer preserves the source IP of the packet when it is forwarded to backends. Backends see the original source IP. If the isPreserveSourceDestination parameter is enabled for the network load balancer resource, then this parameter cannot be disabled. The value is true by default.""")
-@cli_util.option('--is-instant-failover-enabled', type=click.BOOL, help=u"""If enabled existing connections will be forwarded to an alternative healthy backend as soon as current backend becomes unhealthy.""")
 @cli_util.option('--is-fail-open', type=click.BOOL, help=u"""If enabled, the network load balancer will continue to distribute traffic in the configured distribution in the event all backends are unhealthy. The value is false by default.""")
+@cli_util.option('--is-instant-failover-enabled', type=click.BOOL, help=u"""If enabled existing connections will be forwarded to an alternative healthy backend as soon as current backend becomes unhealthy.""")
 @cli_util.option('--ip-version', type=custom_types.CliCaseInsensitiveChoice(["IPV4", "IPV6"]), help=u"""IP version associated with the backend set.""")
 @cli_util.option('--backends', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of backends to be associated with the backend set.
 
@@ -342,7 +342,7 @@ This option is a JSON list with items of type BackendDetails.  For documentation
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'network_load_balancer', 'class': 'list[BackendDetails]'}, 'health-checker': {'module': 'network_load_balancer', 'class': 'HealthCheckerDetails'}})
 @cli_util.wrap_exceptions
-def create_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, name, policy, health_checker, is_preserve_source, is_instant_failover_enabled, is_fail_open, ip_version, backends, if_match):
+def create_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, name, policy, health_checker, is_preserve_source, is_fail_open, is_instant_failover_enabled, ip_version, backends, if_match):
 
     if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
@@ -360,10 +360,11 @@ def create_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     if is_preserve_source is not None:
         _details['isPreserveSource'] = is_preserve_source
 
-    if is_instant_failover_enabled is not None:
-        _details['isInstantFailoverEnabled'] = is_instant_failover_enabled
     if is_fail_open is not None:
         _details['isFailOpen'] = is_fail_open
+
+    if is_instant_failover_enabled is not None:
+        _details['isInstantFailoverEnabled'] = is_instant_failover_enabled
 
     if ip_version is not None:
         _details['ipVersion'] = ip_version
@@ -1825,8 +1826,8 @@ Example: `example_backend_set`""")
 
 Example: `FIVE_TUPLE`""")
 @cli_util.option('--is-preserve-source', type=click.BOOL, help=u"""If this parameter is enabled, then the network load balancer preserves the source IP of the packet when it is forwarded to backends. Backends see the original source IP. If the isPreserveSourceDestination parameter is enabled for the network load balancer resource, then this parameter cannot be disabled. The value is true by default.""")
-@cli_util.option('--is-instant-failover-enabled', type=click.BOOL, help=u"""If enabled existing connections will be forwarded to an alternative healthy backend as soon as current backend becomes unhealthy.""")
 @cli_util.option('--is-fail-open', type=click.BOOL, help=u"""If enabled, the network load balancer will continue to distribute traffic in the configured distribution in the event all backends are unhealthy. The value is false by default.""")
+@cli_util.option('--is-instant-failover-enabled', type=click.BOOL, help=u"""If enabled existing connections will be forwarded to an alternative healthy backend as soon as current backend becomes unhealthy.""")
 @cli_util.option('--ip-version', type=custom_types.CliCaseInsensitiveChoice(["IPV4", "IPV6"]), help=u"""The IP version associated with the backend set.""")
 @cli_util.option('--backends', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of backends associated with the backend set.
 
@@ -1842,7 +1843,7 @@ This option is a JSON list with items of type BackendDetails.  For documentation
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'network_load_balancer', 'class': 'list[BackendDetails]'}, 'health-checker': {'module': 'network_load_balancer', 'class': 'HealthCheckerDetails'}})
 @cli_util.wrap_exceptions
-def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, backend_set_name, policy, is_preserve_source, is_instant_failover_enabled, is_fail_open, ip_version, backends, health_checker, if_match):
+def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, backend_set_name, policy, is_preserve_source, is_fail_open, is_instant_failover_enabled, ip_version, backends, health_checker, if_match):
 
     if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
@@ -1867,10 +1868,11 @@ def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     if is_preserve_source is not None:
         _details['isPreserveSource'] = is_preserve_source
 
-    if is_instant_failover_enabled is not None:
-        _details['isInstantFailoverEnabled'] = is_instant_failover_enabled
     if is_fail_open is not None:
         _details['isFailOpen'] = is_fail_open
+
+    if is_instant_failover_enabled is not None:
+        _details['isInstantFailoverEnabled'] = is_instant_failover_enabled
 
     if ip_version is not None:
         _details['ipVersion'] = ip_version
