@@ -16,24 +16,70 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.os_management_hub.src.oci_cli_os_management_hub.generated import os_management_hub_service_cli
 
 
-@click.command(cli_util.override('managed_instance.managed_instance_root_group.command_name', 'managed-instance'), cls=CommandGroupWithAlias, help=cli_util.override('managed_instance.managed_instance_root_group.help', """Use the OS Management Hub API to manage and monitor updates and patches for the operating system environments in your private data centers through a single management console. For more information, see [Overview of OS Management Hub]."""), short_help=cli_util.override('managed_instance.managed_instance_root_group.short_help', """OS Management Hub API"""))
+@click.command(cli_util.override('managed_instance.managed_instance_root_group.command_name', 'managed-instance'), cls=CommandGroupWithAlias, help=cli_util.override('managed_instance.managed_instance_root_group.help', """Use the OS Management Hub API to manage and monitor updates and patches for instances in OCI, your private data center, or 3rd-party clouds.
+For more information, see [Overview of OS Management Hub]."""), short_help=cli_util.override('managed_instance.managed_instance_root_group.short_help', """OS Management Hub API"""))
 @cli_util.help_option_group
 def managed_instance_root_group():
     pass
 
 
-@click.command(cli_util.override('managed_instance.managed_instance_group.command_name', 'managed-instance'), cls=CommandGroupWithAlias, help="""Detail information for an OCI Compute instance that is being managed.""")
+@click.command(cli_util.override('managed_instance.windows_update_collection_group.command_name', 'windows-update-collection'), cls=CommandGroupWithAlias, help="""A set of Windows updates returned for the [ListWindowsUpdates] operation. The list contains a summary of each update.""")
+@cli_util.help_option_group
+def windows_update_collection_group():
+    pass
+
+
+@click.command(cli_util.override('managed_instance.managed_instance_group.command_name', 'managed-instance'), cls=CommandGroupWithAlias, help="""An object that defines the instance being managed by the service.""")
 @cli_util.help_option_group
 def managed_instance_group():
     pass
 
 
+@click.command(cli_util.override('managed_instance.windows_update_group.command_name', 'windows-update'), cls=CommandGroupWithAlias, help="""An object that provides information about an update for a Windows instance.""")
+@cli_util.help_option_group
+def windows_update_group():
+    pass
+
+
 os_management_hub_service_cli.os_management_hub_service_group.add_command(managed_instance_root_group)
+managed_instance_root_group.add_command(windows_update_collection_group)
 managed_instance_root_group.add_command(managed_instance_group)
+managed_instance_root_group.add_command(windows_update_group)
+
+
+@managed_instance_group.command(name=cli_util.override('managed_instance.attach_profile_to_managed_instance.command_name', 'attach'), help=u"""Adds profile to a managed instance. After the profile has been added, the instance can be registered as a managed instance. \n[Command Reference](attachProfileToManagedInstance)""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
+@cli_util.option('--profile-id', required=True, help=u"""The profile [OCID] to attach to the managed instance.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def attach_profile_to_managed_instance(ctx, from_json, managed_instance_id, profile_id, if_match):
+
+    if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['profileId'] = profile_id
+
+    client = cli_util.build_client('os_management_hub', 'managed_instance', ctx)
+    result = client.attach_profile_to_managed_instance(
+        managed_instance_id=managed_instance_id,
+        attach_profile_to_managed_instance_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @managed_instance_group.command(name=cli_util.override('managed_instance.attach_software_sources_to_managed_instance.command_name', 'attach'), help=u"""Adds software sources to a managed instance. After the software source has been added, then packages from that software source can be installed on the managed instance. \n[Command Reference](attachSoftwareSourcesToManagedInstance)""")
-@cli_util.option('--managed-instance-id', required=True, help=u"""The OCID of the managed instance.""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
 @cli_util.option('--software-sources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of software source OCIDs to be attached/detached.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--work-request-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -97,8 +143,89 @@ def attach_software_sources_to_managed_instance(ctx, from_json, wait_for_state, 
     cli_util.render_response(result, ctx)
 
 
+@managed_instance_group.command(name=cli_util.override('managed_instance.delete_managed_instance.command_name', 'delete'), help=u"""Unregisters the specified managed instance from the service. Once unregistered, the service will no longer manage the instance. For Linux instances, yum or DNF repository files will be restored to their state prior to registration. \n[Command Reference](deleteManagedInstance)""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_managed_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_id, if_match):
+
+    if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management_hub', 'managed_instance', ctx)
+    result = client.delete_managed_instance(
+        managed_instance_id=managed_instance_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@managed_instance_group.command(name=cli_util.override('managed_instance.detach_profile_from_managed_instance.command_name', 'detach'), help=u"""Detaches profile from a managed instance. After the profile has been removed, the instance cannot be registered as a managed instance. \n[Command Reference](detachProfileFromManagedInstance)""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def detach_profile_from_managed_instance(ctx, from_json, managed_instance_id, if_match):
+
+    if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management_hub', 'managed_instance', ctx)
+    result = client.detach_profile_from_managed_instance(
+        managed_instance_id=managed_instance_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @managed_instance_group.command(name=cli_util.override('managed_instance.detach_software_sources_from_managed_instance.command_name', 'detach'), help=u"""Removes software sources from a managed instance. Packages will no longer be able to be installed from these software sources. \n[Command Reference](detachSoftwareSourcesFromManagedInstance)""")
-@cli_util.option('--managed-instance-id', required=True, help=u"""The OCID of the managed instance.""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
 @cli_util.option('--software-sources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of software source OCIDs to be attached/detached.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--work-request-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -163,7 +290,7 @@ def detach_software_sources_from_managed_instance(ctx, from_json, wait_for_state
 
 
 @managed_instance_group.command(name=cli_util.override('managed_instance.disable_module_stream_on_managed_instance.command_name', 'disable-module-stream'), help=u"""Disables a module stream on a managed instance.  After the stream is disabled, it is no longer possible to install the profiles that are contained by the stream.  All installed profiles must be removed prior to disabling a module stream. \n[Command Reference](disableModuleStreamOnManagedInstance)""")
-@cli_util.option('--managed-instance-id', required=True, help=u"""The OCID of the managed instance.""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
 @cli_util.option('--module-name', required=True, help=u"""The name of a module.""")
 @cli_util.option('--stream-name', help=u"""The name of a stream of the specified module.""")
 @cli_util.option('--work-request-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -232,7 +359,7 @@ def disable_module_stream_on_managed_instance(ctx, from_json, wait_for_state, ma
 
 
 @managed_instance_group.command(name=cli_util.override('managed_instance.enable_module_stream_on_managed_instance.command_name', 'enable-module-stream'), help=u"""Enables a module stream on a managed instance.  After the stream is enabled, it is possible to install the profiles that are contained by the stream.  Enabling a stream that is already enabled will succeed.  Attempting to enable a different stream for a module that already has a stream enabled results in an error. \n[Command Reference](enableModuleStreamOnManagedInstance)""")
-@cli_util.option('--managed-instance-id', required=True, help=u"""The OCID of the managed instance.""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
 @cli_util.option('--module-name', required=True, help=u"""The name of a module.""")
 @cli_util.option('--stream-name', help=u"""The name of a stream of the specified module.""")
 @cli_util.option('--work-request-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -301,7 +428,7 @@ def enable_module_stream_on_managed_instance(ctx, from_json, wait_for_state, max
 
 
 @managed_instance_group.command(name=cli_util.override('managed_instance.get_managed_instance.command_name', 'get'), help=u"""Gets information about the specified managed instance. \n[Command Reference](getManagedInstance)""")
-@cli_util.option('--managed-instance-id', required=True, help=u"""The OCID of the managed instance.""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -322,8 +449,94 @@ def get_managed_instance(ctx, from_json, managed_instance_id):
     cli_util.render_response(result, ctx)
 
 
+@windows_update_group.command(name=cli_util.override('managed_instance.get_windows_update.command_name', 'get'), help=u"""Returns a Windows Update object. \n[Command Reference](getWindowsUpdate)""")
+@cli_util.option('--windows-update-id', required=True, help=u"""The unique identifier for the Windows update. Note that this is not an OCID, but is a unique identifier assigned by Microsoft. Example: '6981d463-cd91-4a26-b7c4-ea4ded9183ed'""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management_hub', 'class': 'WindowsUpdate'})
+@cli_util.wrap_exceptions
+def get_windows_update(ctx, from_json, windows_update_id):
+
+    if isinstance(windows_update_id, six.string_types) and len(windows_update_id.strip()) == 0:
+        raise click.UsageError('Parameter --windows-update-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management_hub', 'managed_instance', ctx)
+    result = client.get_windows_update(
+        windows_update_id=windows_update_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_instance_group.command(name=cli_util.override('managed_instance.install_all_windows_updates_on_managed_instances_in_compartment.command_name', 'install-all-windows-updates-on-managed-instances-in-compartment'), help=u"""Installs all of the available Windows updates for managed instances in a compartment. This applies only to standalone Windows instances. This will not update instances that belong to a group. \n[Command Reference](installAllWindowsUpdatesOnManagedInstancesInCompartment)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--windows-update-types', type=custom_types.CliCaseInsensitiveChoice(["SECURITY", "BUGFIX", "ENHANCEMENT", "OTHER", "ALL"]), help=u"""The types of Windows updates to be installed.""")
+@cli_util.option('--work-request-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}})
+@cli_util.wrap_exceptions
+def install_all_windows_updates_on_managed_instances_in_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, windows_update_types, work_request_details, if_match):
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    if windows_update_types is not None:
+        _details['windowsUpdateTypes'] = cli_util.parse_json_parameter("windows_update_types", windows_update_types)
+
+    if work_request_details is not None:
+        _details['workRequestDetails'] = cli_util.parse_json_parameter("work_request_details", work_request_details)
+
+    client = cli_util.build_client('os_management_hub', 'managed_instance', ctx)
+    result = client.install_all_windows_updates_on_managed_instances_in_compartment(
+        install_all_windows_updates_on_managed_instances_in_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @managed_instance_group.command(name=cli_util.override('managed_instance.install_module_stream_profile_on_managed_instance.command_name', 'install-module-stream-profile'), help=u"""Installs a profile for an module stream.  The stream must be enabled before a profile can be installed.  If a module stream defines multiple profiles, each one can be installed independently. \n[Command Reference](installModuleStreamProfileOnManagedInstance)""")
-@cli_util.option('--managed-instance-id', required=True, help=u"""The OCID of the managed instance.""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
 @cli_util.option('--module-name', required=True, help=u"""The name of a module.""")
 @cli_util.option('--stream-name', help=u"""The name of a stream of the specified module.""")
 @cli_util.option('--profile-name', help=u"""The name of a profile of the specified module stream.""")
@@ -396,7 +609,7 @@ def install_module_stream_profile_on_managed_instance(ctx, from_json, wait_for_s
 
 
 @managed_instance_group.command(name=cli_util.override('managed_instance.install_packages_on_managed_instance.command_name', 'install-packages'), help=u"""Installs packages on a managed instance. \n[Command Reference](installPackagesOnManagedInstance)""")
-@cli_util.option('--managed-instance-id', required=True, help=u"""The OCID of the managed instance.""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
 @cli_util.option('--package-names', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of package names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--work-request-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -460,11 +673,82 @@ def install_packages_on_managed_instance(ctx, from_json, wait_for_state, max_wai
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('managed_instance.list_managed_instance_available_packages.command_name', 'list-managed-instance-available-packages'), help=u"""Returns a list of available packages for a managed instance. \n[Command Reference](listManagedInstanceAvailablePackages)""")
-@cli_util.option('--managed-instance-id', required=True, help=u"""The OCID of the managed instance.""")
+@managed_instance_group.command(name=cli_util.override('managed_instance.install_windows_updates_on_managed_instance.command_name', 'install-windows-updates'), help=u"""Installs Windows updates on the specified managed instance. \n[Command Reference](installWindowsUpdatesOnManagedInstance)""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
+@cli_util.option('--windows-update-name', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of Windows update unique identifiers. Note that this is not an OCID, but is a unique identifier assigned by Microsoft. Example: '6981d463-cd91-4a26-b7c4-ea4ded9183ed'""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--windows-update-types', type=custom_types.CliCaseInsensitiveChoice(["SECURITY", "BUGFIX", "ENHANCEMENT", "OTHER", "ALL"]), help=u"""The types of Windows updates to be installed.""")
+@cli_util.option('--work-request-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'windows-update-name': {'module': 'os_management_hub', 'class': 'list[string]'}, 'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'windows-update-name': {'module': 'os_management_hub', 'class': 'list[string]'}, 'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}})
+@cli_util.wrap_exceptions
+def install_windows_updates_on_managed_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_id, windows_update_name, windows_update_types, work_request_details, if_match):
+
+    if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if windows_update_name is not None:
+        _details['windowsUpdateName'] = cli_util.parse_json_parameter("windows_update_name", windows_update_name)
+
+    if windows_update_types is not None:
+        _details['windowsUpdateTypes'] = cli_util.parse_json_parameter("windows_update_types", windows_update_types)
+
+    if work_request_details is not None:
+        _details['workRequestDetails'] = cli_util.parse_json_parameter("work_request_details", work_request_details)
+
+    client = cli_util.build_client('os_management_hub', 'managed_instance', ctx)
+    result = client.install_windows_updates_on_managed_instance(
+        managed_instance_id=managed_instance_id,
+        install_windows_updates_on_managed_instance_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@managed_instance_group.command(name=cli_util.override('managed_instance.list_managed_instance_available_packages.command_name', 'list-managed-instance-available-packages'), help=u"""Returns a list of packages that are available for installation on a managed instance. \n[Command Reference](listManagedInstanceAvailablePackages)""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
 @cli_util.option('--display-name', multiple=True, help=u"""A filter to return resources that match the given display names.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -530,11 +814,11 @@ def list_managed_instance_available_packages(ctx, from_json, all_pages, page_siz
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('managed_instance.list_managed_instance_available_software_sources.command_name', 'list-managed-instance-available-software-sources'), help=u"""Returns a list of available software sources for a managed instance. \n[Command Reference](listManagedInstanceAvailableSoftwareSources)""")
-@cli_util.option('--managed-instance-id', required=True, help=u"""The OCID of the managed instance.""")
+@managed_instance_group.command(name=cli_util.override('managed_instance.list_managed_instance_available_software_sources.command_name', 'list-managed-instance-available-software-sources'), help=u"""Returns a list of software sources that can be attached to the specified managed instance. Any software sources already attached to the instance are not included in the list. \n[Command Reference](listManagedInstanceAvailableSoftwareSources)""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
 @cli_util.option('--display-name', multiple=True, help=u"""A filter to return resources that match the given display names.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -600,14 +884,93 @@ def list_managed_instance_available_software_sources(ctx, from_json, all_pages, 
     cli_util.render_response(result, ctx)
 
 
+@managed_instance_group.command(name=cli_util.override('managed_instance.list_managed_instance_available_windows_updates.command_name', 'list-managed-instance-available-windows-updates'), help=u"""Returns a list of Windows updates that can be installed on the specified managed instance. \n[Command Reference](listManagedInstanceAvailableWindowsUpdates)""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
+@cli_util.option('--classification-type', type=custom_types.CliCaseInsensitiveChoice(["SECURITY", "BUGFIX", "ENHANCEMENT", "OTHER"]), multiple=True, help=u"""A filter to return only packages that match the given update classification type.""")
+@cli_util.option('--name', multiple=True, help=u"""A filter based on the unique identifier for the Windows update. Note that this is not an OCID, but is a unique identifier assigned by Microsoft. Example: '6981d463-cd91-4a26-b7c4-ea4ded9183ed'""")
+@cli_util.option('--display-name', help=u"""A filter to return resources that match the given user-friendly name.""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
+@cli_util.option('--is-installable', type=custom_types.CliCaseInsensitiveChoice(["INSTALLABLE", "NOT_INSTALLABLE"]), help=u"""Indicates if the update can be installed by the OS Management Hub service.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `3`""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "name", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeInstalled is descending. Default order for name or displayName is ascending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'name': {'module': 'os_management_hub', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'name': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'AvailableWindowsUpdateCollection'})
+@cli_util.wrap_exceptions
+def list_managed_instance_available_windows_updates(ctx, from_json, all_pages, page_size, managed_instance_id, classification_type, name, display_name, display_name_contains, is_installable, compartment_id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if classification_type is not None and len(classification_type) > 0:
+        kwargs['classification_type'] = classification_type
+    if name is not None and len(name) > 0:
+        kwargs['name'] = name
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if display_name_contains is not None:
+        kwargs['display_name_contains'] = display_name_contains
+    if is_installable is not None:
+        kwargs['is_installable'] = is_installable
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management_hub', 'managed_instance', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_managed_instance_available_windows_updates,
+            managed_instance_id=managed_instance_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_managed_instance_available_windows_updates,
+            limit,
+            page_size,
+            managed_instance_id=managed_instance_id,
+            **kwargs
+        )
+    else:
+        result = client.list_managed_instance_available_windows_updates(
+            managed_instance_id=managed_instance_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @managed_instance_group.command(name=cli_util.override('managed_instance.list_managed_instance_errata.command_name', 'list-managed-instance-errata'), help=u"""Returns a list of applicable errata on the managed instance. \n[Command Reference](listManagedInstanceErrata)""")
-@cli_util.option('--managed-instance-id', required=True, help=u"""The OCID of the managed instance.""")
-@cli_util.option('--advisory-type', type=custom_types.CliCaseInsensitiveChoice(["SECURITY", "BUGFIX", "ENHANCEMENT"]), multiple=True, help=u"""A filter to return only errata that match the given advisory types.""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
+@cli_util.option('--classification-type', type=custom_types.CliCaseInsensitiveChoice(["SECURITY", "BUGFIX", "ENHANCEMENT", "OTHER"]), multiple=True, help=u"""A filter to return only packages that match the given update classification type.""")
 @cli_util.option('--name', multiple=True, help=u"""The assigned erratum name. It's unique and not changeable.
 
 Example: `ELSA-2020-5804`""")
 @cli_util.option('--name-contains', help=u"""A filter to return resources that may partially match the erratum name given.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -623,7 +986,7 @@ Example: `3`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'name': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'ManagedInstanceErratumSummaryCollection'})
 @cli_util.wrap_exceptions
-def list_managed_instance_errata(ctx, from_json, all_pages, page_size, managed_instance_id, advisory_type, name, name_contains, compartment_id, limit, page, sort_order, sort_by):
+def list_managed_instance_errata(ctx, from_json, all_pages, page_size, managed_instance_id, classification_type, name, name_contains, compartment_id, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -632,8 +995,8 @@ def list_managed_instance_errata(ctx, from_json, all_pages, page_size, managed_i
         raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
-    if advisory_type is not None and len(advisory_type) > 0:
-        kwargs['advisory_type'] = advisory_type
+    if classification_type is not None and len(classification_type) > 0:
+        kwargs['classification_type'] = classification_type
     if name is not None and len(name) > 0:
         kwargs['name'] = name
     if name_contains is not None:
@@ -676,16 +1039,16 @@ def list_managed_instance_errata(ctx, from_json, all_pages, page_size, managed_i
 
 
 @managed_instance_group.command(name=cli_util.override('managed_instance.list_managed_instance_installed_packages.command_name', 'list-managed-instance-installed-packages'), help=u"""Lists the packages that are installed on the managed instance. \n[Command Reference](listManagedInstanceInstalledPackages)""")
-@cli_util.option('--managed-instance-id', required=True, help=u"""The OCID of the managed instance.""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
 @cli_util.option('--display-name', multiple=True, help=u"""A filter to return resources that match the given display names.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
 @cli_util.option('--time-install-date-start', type=custom_types.CLI_DATETIME, help=u"""The install date after which to list all packages, in ISO 8601 format
 
 Example: 2017-07-14T02:40:00.000Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-install-date-end', type=custom_types.CLI_DATETIME, help=u"""The install date before which to list all packages, in ISO 8601 format.
+@cli_util.option('--time-install-date-end', type=custom_types.CLI_DATETIME, help=u"""A filter to return only packages that were installed on or before the date provided, in ISO 8601 format.
 
 Example: 2017-07-14T02:40:00.000Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -755,13 +1118,82 @@ def list_managed_instance_installed_packages(ctx, from_json, all_pages, page_siz
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('managed_instance.list_managed_instance_modules.command_name', 'list-managed-instance-modules'), help=u"""Retrieve a list of modules, along with streams of the modules, from a managed instance.  Filters may be applied to select a subset of modules based on the filter criteria.
+@managed_instance_group.command(name=cli_util.override('managed_instance.list_managed_instance_installed_windows_updates.command_name', 'list-managed-instance-installed-windows-updates'), help=u"""Returns a list of Windows updates that have been installed on the specified managed instance. \n[Command Reference](listManagedInstanceInstalledWindowsUpdates)""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
+@cli_util.option('--name', multiple=True, help=u"""A filter based on the unique identifier for the Windows update. Note that this is not an OCID, but is a unique identifier assigned by Microsoft. Example: '6981d463-cd91-4a26-b7c4-ea4ded9183ed'""")
+@cli_util.option('--display-name', help=u"""A filter to return resources that match the given user-friendly name.""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
-The 'name' attribute filters against the name of a module. It accepts strings of the format \"<string>\".
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
 
-The 'nameContains' attribute filters against the name of a module based on partial match. It accepts strings of the format \"<string>\". If this attribute is defined, only matching modules are included in the result set. If it is not defined, the request  is not subject to this filter. \n[Command Reference](listManagedInstanceModules)""")
-@cli_util.option('--managed-instance-id', required=True, help=u"""The OCID of the managed instance.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list.""")
+Example: `3`""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "name", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeInstalled is descending. Default order for name or displayName is ascending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'name': {'module': 'os_management_hub', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'name': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'InstalledWindowsUpdateCollection'})
+@cli_util.wrap_exceptions
+def list_managed_instance_installed_windows_updates(ctx, from_json, all_pages, page_size, managed_instance_id, name, display_name, display_name_contains, compartment_id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if name is not None and len(name) > 0:
+        kwargs['name'] = name
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if display_name_contains is not None:
+        kwargs['display_name_contains'] = display_name_contains
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management_hub', 'managed_instance', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_managed_instance_installed_windows_updates,
+            managed_instance_id=managed_instance_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_managed_instance_installed_windows_updates,
+            limit,
+            page_size,
+            managed_instance_id=managed_instance_id,
+            **kwargs
+        )
+    else:
+        result = client.list_managed_instance_installed_windows_updates(
+            managed_instance_id=managed_instance_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@managed_instance_group.command(name=cli_util.override('managed_instance.list_managed_instance_modules.command_name', 'list-managed-instance-modules'), help=u"""Retrieves a list of modules, along with streams of the modules, from a managed instance. Filters may be applied to select a subset of modules based on the filter criteria. \n[Command Reference](listManagedInstanceModules)""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--name', help=u"""The resource name.""")
 @cli_util.option('--name-contains', help=u"""A filter to return resources that may partially match the name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -860,14 +1292,14 @@ def list_managed_instance_modules(ctx, from_json, all_pages, page_size, wait_for
 
 
 @managed_instance_group.command(name=cli_util.override('managed_instance.list_managed_instance_updatable_packages.command_name', 'list-managed-instance-updatable-packages'), help=u"""Returns a list of updatable packages for a managed instance. \n[Command Reference](listManagedInstanceUpdatablePackages)""")
-@cli_util.option('--managed-instance-id', required=True, help=u"""The OCID of the managed instance.""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
 @cli_util.option('--classification-type', type=custom_types.CliCaseInsensitiveChoice(["SECURITY", "BUGFIX", "ENHANCEMENT", "OTHER"]), multiple=True, help=u"""A filter to return only packages that match the given update classification type.""")
 @cli_util.option('--display-name', multiple=True, help=u"""A filter to return resources that match the given display names.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
 @cli_util.option('--advisory-name', multiple=True, help=u"""The assigned erratum name. It's unique and not changeable.
 
 Example: `ELSA-2020-5804`""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -938,23 +1370,31 @@ def list_managed_instance_updatable_packages(ctx, from_json, all_pages, page_siz
 
 
 @managed_instance_group.command(name=cli_util.override('managed_instance.list_managed_instances.command_name', 'list'), help=u"""Lists managed instances that match the specified compartment or managed instance OCID. Filter the list against a variety of criteria including but not limited to its name, status, architecture, and OS version. \n[Command Reference](listManagedInstances)""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--display-name', multiple=True, help=u"""A filter to return resources that match the given display names.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
-@cli_util.option('--managed-instance-id', help=u"""The OCID of the managed instance for which to list resources.""")
-@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "UNREACHABLE", "ERROR", "WARNING", "REGISTRATION_ERROR"]), multiple=True, help=u"""A filter to return only instances whose managed instance status matches the given status.""")
+@cli_util.option('--managed-instance-id', help=u"""The [OCID] of the managed instance. This filter returns resources associated with this managed instance.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "UNREACHABLE", "ERROR", "WARNING", "REGISTRATION_ERROR", "DELETING", "ONBOARDING"]), multiple=True, help=u"""A filter to return only managed instances whose status matches the status provided.""")
 @cli_util.option('--arch-type', type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC"]), multiple=True, help=u"""A filter to return only instances whose architecture type matches the given architecture.""")
-@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7"]), multiple=True, help=u"""A filter to return only instances whose OS family type matches the given OS family.""")
-@cli_util.option('--is-management-station', type=click.BOOL, help=u"""A filter to return only managed instances acting as management stations.""")
+@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "ALL"]), multiple=True, help=u"""A filter to return only resources that match the given operating system family.""")
+@cli_util.option('--is-management-station', type=click.BOOL, help=u"""A filter to return only managed instances that are acting as management stations.""")
 @cli_util.option('--group', help=u"""A filter to return only managed instances that are attached to the specified group.""")
 @cli_util.option('--group-not-equal-to', help=u"""A filter to return only managed instances that are NOT attached to the specified group.""")
 @cli_util.option('--lifecycle-stage', help=u"""A filter to return only managed instances that are associated with the specified lifecycle environment.""")
 @cli_util.option('--lifecycle-stage-not-equal-to', help=u"""A filter to return only managed instances that are NOT associated with the specified lifecycle environment.""")
 @cli_util.option('--is-attached-to-group-or-lifecycle-stage', type=click.BOOL, help=u"""A filter to return only managed instances that are attached to the specified group or lifecycle environment.""")
-@cli_util.option('--software-source-id', help=u"""The OCID for the software source.""")
+@cli_util.option('--software-source-id', help=u"""The [OCID] of the software source. This filter returns resources associated with this software source.""")
 @cli_util.option('--advisory-name', multiple=True, help=u"""The assigned erratum name. It's unique and not changeable.
 
 Example: `ELSA-2020-5804`""")
+@cli_util.option('--lifecycle-environment', help=u"""A filter to return only managed instances in a specific lifecycle environment.""")
+@cli_util.option('--lifecycle-environment-not-equal-to', help=u"""A filter to return only managed instances that aren't in a specific lifecycle environment.""")
+@cli_util.option('--location', type=custom_types.CliCaseInsensitiveChoice(["ON_PREMISE", "OCI_COMPUTE", "AZURE", "EC2", "GCP"]), multiple=True, help=u"""A filter to return only resources whose location matches the given value.""")
+@cli_util.option('--location-not-equal-to', type=custom_types.CliCaseInsensitiveChoice(["ON_PREMISE", "OCI_COMPUTE", "AZURE", "EC2", "GCP"]), multiple=True, help=u"""A filter to return only resources whose location does not match the given value.""")
+@cli_util.option('--profile-parameterconflict', multiple=True, help=u"""A multi filter to return only managed instances that match the given profile ids.""")
+@cli_util.option('--profile-not-equal-to', multiple=True, help=u"""A multi filter to return only managed instances that don't contain the given profile [OCIDs].""")
+@cli_util.option('--is-profile-attached', type=click.BOOL, help=u"""A filter to return only managed instances with a registration profile attached.""")
+@cli_util.option('--is-managed-by-autonomous-linux', type=click.BOOL, help=u"""Indicates whether to list only resources managed by the Autonomous Linux service.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -965,12 +1405,12 @@ Example: `3`""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@json_skeleton_utils.get_cli_json_input_option({'display-name': {'module': 'os_management_hub', 'class': 'list[string]'}, 'advisory-name': {'module': 'os_management_hub', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'display-name': {'module': 'os_management_hub', 'class': 'list[string]'}, 'advisory-name': {'module': 'os_management_hub', 'class': 'list[string]'}, 'profile-parameterconflict': {'module': 'os_management_hub', 'class': 'list[string]'}, 'profile-not-equal-to': {'module': 'os_management_hub', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'display-name': {'module': 'os_management_hub', 'class': 'list[string]'}, 'advisory-name': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'ManagedInstanceCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'display-name': {'module': 'os_management_hub', 'class': 'list[string]'}, 'advisory-name': {'module': 'os_management_hub', 'class': 'list[string]'}, 'profile-parameterconflict': {'module': 'os_management_hub', 'class': 'list[string]'}, 'profile-not-equal-to': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'ManagedInstanceCollection'})
 @cli_util.wrap_exceptions
-def list_managed_instances(ctx, from_json, all_pages, page_size, compartment_id, display_name, display_name_contains, managed_instance_id, status, arch_type, os_family, is_management_station, group, group_not_equal_to, lifecycle_stage, lifecycle_stage_not_equal_to, is_attached_to_group_or_lifecycle_stage, software_source_id, advisory_name, limit, page, sort_order, sort_by):
+def list_managed_instances(ctx, from_json, all_pages, page_size, compartment_id, display_name, display_name_contains, managed_instance_id, status, arch_type, os_family, is_management_station, group, group_not_equal_to, lifecycle_stage, lifecycle_stage_not_equal_to, is_attached_to_group_or_lifecycle_stage, software_source_id, advisory_name, lifecycle_environment, lifecycle_environment_not_equal_to, location, location_not_equal_to, profile_parameterconflict, profile_not_equal_to, is_profile_attached, is_managed_by_autonomous_linux, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1006,6 +1446,22 @@ def list_managed_instances(ctx, from_json, all_pages, page_size, compartment_id,
         kwargs['software_source_id'] = software_source_id
     if advisory_name is not None and len(advisory_name) > 0:
         kwargs['advisory_name'] = advisory_name
+    if lifecycle_environment is not None:
+        kwargs['lifecycle_environment'] = lifecycle_environment
+    if lifecycle_environment_not_equal_to is not None:
+        kwargs['lifecycle_environment_not_equal_to'] = lifecycle_environment_not_equal_to
+    if location is not None and len(location) > 0:
+        kwargs['location'] = location
+    if location_not_equal_to is not None and len(location_not_equal_to) > 0:
+        kwargs['location_not_equal_to'] = location_not_equal_to
+    if profile_parameterconflict is not None and len(profile_parameterconflict) > 0:
+        kwargs['profile'] = profile_parameterconflict
+    if profile_not_equal_to is not None and len(profile_not_equal_to) > 0:
+        kwargs['profile_not_equal_to'] = profile_not_equal_to
+    if is_profile_attached is not None:
+        kwargs['is_profile_attached'] = is_profile_attached
+    if is_managed_by_autonomous_linux is not None:
+        kwargs['is_managed_by_autonomous_linux'] = is_managed_by_autonomous_linux
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -1038,35 +1494,86 @@ def list_managed_instances(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('managed_instance.manage_module_streams_on_managed_instance.command_name', 'manage-module-streams'), help=u"""Perform an operation involving modules, streams, and profiles on a managed instance.  Each operation may enable or disable an arbitrary amount of module streams, and install or remove an arbitrary number of module stream profiles.  When the operation is complete, the state of the modules, streams, and profiles on the managed instance will match the state indicated in the operation.
+@windows_update_collection_group.command(name=cli_util.override('managed_instance.list_windows_updates.command_name', 'list-windows-updates'), help=u"""Lists Windows updates that have been reported to the service. \n[Command Reference](listWindowsUpdates)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment. This parameter is required and returns only resources contained within the specified compartment.""")
+@cli_util.option('--classification-type', type=custom_types.CliCaseInsensitiveChoice(["SECURITY", "BUGFIX", "ENHANCEMENT", "OTHER"]), multiple=True, help=u"""A filter to return only packages that match the given update classification type.""")
+@cli_util.option('--name', multiple=True, help=u"""A filter based on the unique identifier for the Windows update. Note that this is not an OCID, but is a unique identifier assigned by Microsoft. Example: '6981d463-cd91-4a26-b7c4-ea4ded9183ed'""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
-Each module stream specified in the list of module streams to enable will be in the \"ENABLED\" state upon completion of the operation. If there was already a stream of that module enabled, any work required to switch from the current stream to the new stream is performed implicitly.
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
 
-Each module stream specified in the list of module streams to disable will be in the \"DISABLED\" state upon completion of the operation. Any profiles that are installed for the module stream will be removed as part of the operation.
+Example: `3`""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "name", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeInstalled is descending. Default order for name or displayName is ascending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'name': {'module': 'os_management_hub', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'name': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'WindowsUpdateCollection'})
+@cli_util.wrap_exceptions
+def list_windows_updates(ctx, from_json, all_pages, page_size, compartment_id, classification_type, name, display_name_contains, limit, page, sort_order, sort_by):
 
-Each module stream profile specified in the list of profiles to install will be in the \"INSTALLED\" state upon completion of the operation, indicating that any packages that are part of the profile are installed on the managed instance.  If the module stream containing the profile is not enabled, it will be enabled as part of the operation.  There is an exception when attempting to install a stream of a profile when another stream of the same module is enabled.  It is an error to attempt to install a profile of another module stream, unless enabling the new module stream is explicitly included in this operation.
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-Each module stream profile specified in the list of profiles to remove will be in the \"AVAILABLE\" state upon completion of the operation. The status of packages within the profile after the operation is complete is defined by the package manager on the managed instance.
+    kwargs = {}
+    if classification_type is not None and len(classification_type) > 0:
+        kwargs['classification_type'] = classification_type
+    if name is not None and len(name) > 0:
+        kwargs['name'] = name
+    if display_name_contains is not None:
+        kwargs['display_name_contains'] = display_name_contains
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management_hub', 'managed_instance', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
 
-Operations that contain one or more elements that are not allowed are rejected.
+        result = cli_util.list_call_get_all_results(
+            client.list_windows_updates,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_windows_updates,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_windows_updates(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
 
-The result of this request is a work request object.  The returned work request is the parent of a structure of other WorkRequests.  Taken as a whole, this structure indicates the entire set of work to be performed to complete the operation.
 
-This interface can also be used to perform a dry run of the operation rather than committing it to a managed instance.  If a dry run is requested, the OS Management Hub service will evaluate the operation against the current module, stream, and profile state on the managed instance.  It will calculate the impact of the operation on all modules, streams, and profiles on the managed instance, including those that are implicitly impacted by the operation.
-
-The WorkRequest resulting from a dry run behaves differently than a WorkRequest resulting from a committable operation.  Dry run WorkRequests are always singletons and never have children.  The impact of the operation is returned using the log and error facilities of work requests.  The impact of operations that are allowed by the OS Management Hub service are communicated as one or more work request log entries.  Operations that are not allowed by the OS Management Hub service are communicated as one or more work request error entries.  Each entry, for either logs or errors, contains a structured message containing the results of one or more operations. \n[Command Reference](manageModuleStreamsOnManagedInstance)""")
-@cli_util.option('--managed-instance-id', required=True, help=u"""The OCID of the managed instance.""")
+@managed_instance_group.command(name=cli_util.override('managed_instance.manage_module_streams_on_managed_instance.command_name', 'manage-module-streams'), help=u"""Enables or disables module streams and installs or removes module stream profiles. Once complete, the state of the modules, streams, and profiles will match the state indicated in the operation. See [ManageModuleStreamsOnManagedInstanceDetails] for more information. You can preform this operation as a dry run. For a dry run, the service evaluates the operation against the current module, stream, and profile state on the managed instance, but does not commit the changes. Instead, the service returns work request log or error entries indicating the impact of the operation. \n[Command Reference](manageModuleStreamsOnManagedInstance)""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
 @cli_util.option('--is-dry-run', type=click.BOOL, help=u"""Indicates if this operation is a dry run or if the operation should be committed.  If set to true, the result of the operation will be evaluated but not committed.  If set to false, the operation is committed to the managed instance.  The default is false.""")
-@cli_util.option('--enable', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The set of module streams to enable.
+@cli_util.option('--enable', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The set of module streams to enable. If any streams of a module are already enabled, the service switches from the current stream to the new stream. Once complete, the streams will be in 'ENABLED' status.
 
 This option is a JSON list with items of type ModuleStreamDetails.  For documentation on ModuleStreamDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/managedinstance/20220901/datatypes/ModuleStreamDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--disable', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The set of module streams to disable.
+@cli_util.option('--disable', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The set of module streams to disable. Any profiles that are installed for the module stream will be removed as part of the operation. Once complete, the streams will be in 'DISABLED' status.
 
 This option is a JSON list with items of type ModuleStreamDetails.  For documentation on ModuleStreamDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/managedinstance/20220901/datatypes/ModuleStreamDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--install', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The set of module stream profiles to install.
+@cli_util.option('--install', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The set of module stream profiles to install. Any packages that are part of the profile are installed on the managed instance. Once complete, the profile will be in 'INSTALLED' status. The operation will return an error if you attempt to install a profile from a disabled stream, unless enabling the new module stream is included in this operation.
 
 This option is a JSON list with items of type ModuleStreamProfileDetails.  For documentation on ModuleStreamProfileDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/managedinstance/20220901/datatypes/ModuleStreamProfileDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--remove', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The set of module stream profiles to remove.
+@cli_util.option('--remove', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The set of module stream profiles to remove. Once complete, the profile will be in 'AVAILABLE' status. The status of packages within the profile after the operation is complete is defined by the package manager on the managed instance group.
 
 This option is a JSON list with items of type ModuleStreamProfileDetails.  For documentation on ModuleStreamProfileDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/managedinstance/20220901/datatypes/ModuleStreamProfileDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--work-request-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1145,8 +1652,8 @@ def manage_module_streams_on_managed_instance(ctx, from_json, wait_for_state, ma
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('managed_instance.refresh_software_on_managed_instance.command_name', 'refresh-software'), help=u"""Refresh all installed and updatable software information on a managed instance. \n[Command Reference](refreshSoftwareOnManagedInstance)""")
-@cli_util.option('--managed-instance-id', required=True, help=u"""The OCID of the managed instance.""")
+@managed_instance_group.command(name=cli_util.override('managed_instance.refresh_software_on_managed_instance.command_name', 'refresh-software'), help=u"""Refreshes the package or Windows update information on a managed instance with the latest data from the software source. This does not update packages on the instance. It provides the service with the latest package data. \n[Command Reference](refreshSoftwareOnManagedInstance)""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1201,7 +1708,7 @@ def refresh_software_on_managed_instance(ctx, from_json, wait_for_state, max_wai
 
 
 @managed_instance_group.command(name=cli_util.override('managed_instance.remove_module_stream_profile_from_managed_instance.command_name', 'remove'), help=u"""Removes a profile for a module stream that is installed on a managed instance. If a module stream is provided, rather than a fully qualified profile, all profiles that have been installed for the module stream will be removed. \n[Command Reference](removeModuleStreamProfileFromManagedInstance)""")
-@cli_util.option('--managed-instance-id', required=True, help=u"""The OCID of the managed instance.""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
 @cli_util.option('--module-name', required=True, help=u"""The name of a module.""")
 @cli_util.option('--stream-name', help=u"""The name of a stream of the specified module.""")
 @cli_util.option('--profile-name', help=u"""The name of a profile of the specified module stream.""")
@@ -1274,7 +1781,7 @@ def remove_module_stream_profile_from_managed_instance(ctx, from_json, wait_for_
 
 
 @managed_instance_group.command(name=cli_util.override('managed_instance.remove_packages_from_managed_instance.command_name', 'remove'), help=u"""Removes an installed package from a managed instance. \n[Command Reference](removePackagesFromManagedInstance)""")
-@cli_util.option('--managed-instance-id', required=True, help=u"""The OCID of the managed instance.""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
 @cli_util.option('--package-names', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of package names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--work-request-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1339,10 +1846,11 @@ def remove_packages_from_managed_instance(ctx, from_json, wait_for_state, max_wa
 
 
 @managed_instance_group.command(name=cli_util.override('managed_instance.switch_module_stream_on_managed_instance.command_name', 'switch-module-stream'), help=u"""Enables a new stream for a module that already has a stream enabled. If any profiles or packages from the original module are installed, switching to a new stream will remove the existing packages and install their counterparts in the new stream. \n[Command Reference](switchModuleStreamOnManagedInstance)""")
-@cli_util.option('--managed-instance-id', required=True, help=u"""The OCID of the managed instance.""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
 @cli_util.option('--module-name', required=True, help=u"""The name of a module.""")
 @cli_util.option('--stream-name', required=True, help=u"""The name of a stream of the specified module.""")
 @cli_util.option('--work-request-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--software-source-id', help=u"""The [OCID] of the software source that contains the module stream.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1352,7 +1860,7 @@ def remove_packages_from_managed_instance(ctx, from_json, wait_for_state, max_wa
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}})
 @cli_util.wrap_exceptions
-def switch_module_stream_on_managed_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_id, module_name, stream_name, work_request_details, if_match):
+def switch_module_stream_on_managed_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_id, module_name, stream_name, work_request_details, software_source_id, if_match):
 
     if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
@@ -1368,6 +1876,9 @@ def switch_module_stream_on_managed_instance(ctx, from_json, wait_for_state, max
 
     if work_request_details is not None:
         _details['workRequestDetails'] = cli_util.parse_json_parameter("work_request_details", work_request_details)
+
+    if software_source_id is not None:
+        _details['softwareSourceId'] = software_source_id
 
     client = cli_util.build_client('os_management_hub', 'managed_instance', ctx)
     result = client.switch_module_stream_on_managed_instance(
@@ -1405,9 +1916,9 @@ def switch_module_stream_on_managed_instance(ctx, from_json, wait_for_state, max
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('managed_instance.update_all_packages_on_managed_instances_in_compartment.command_name', 'update-all-packages-on-managed-instances-in-compartment'), help=u"""Install all of the available package updates for all of the managed instances in a compartment. \n[Command Reference](updateAllPackagesOnManagedInstancesInCompartment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment being targeted by this operation.""")
-@cli_util.option('--update-types', type=custom_types.CliCaseInsensitiveChoice(["SECURITY", "BUGFIX", "ENHANCEMENT", "OTHER", "KSPLICE_KERNEL", "KSPLICE_USERSPACE", "ALL"]), help=u"""The type of updates to be applied.""")
+@managed_instance_group.command(name=cli_util.override('managed_instance.update_all_packages_on_managed_instances_in_compartment.command_name', 'update-all-packages-on-managed-instances-in-compartment'), help=u"""Install all of the available package updates for all of the managed instances in a compartment. This applies only to standalone non-Windows instances. This will not update instances that belong to a group or lifecycle environment. \n[Command Reference](updateAllPackagesOnManagedInstancesInCompartment)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--update-types', type=custom_types.CliCaseInsensitiveChoice(["SECURITY", "BUGFIX", "ENHANCEMENT", "OTHER", "KSPLICE_KERNEL", "KSPLICE_USERSPACE", "ALL"]), help=u"""The types of updates to be applied.""")
 @cli_util.option('--work-request-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1469,20 +1980,28 @@ def update_all_packages_on_managed_instances_in_compartment(ctx, from_json, wait
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('managed_instance.update_managed_instance.command_name', 'update'), help=u"""Updates the managed instance. \n[Command Reference](updateManagedInstance)""")
-@cli_util.option('--managed-instance-id', required=True, help=u"""The OCID of the managed instance.""")
-@cli_util.option('--primary-management-station-id', help=u"""The OCID of a management station to be used as the preferred primary.""")
-@cli_util.option('--secondary-management-station-id', help=u"""The OCID of a management station to be used as the preferred secondary.""")
+@managed_instance_group.command(name=cli_util.override('managed_instance.update_managed_instance.command_name', 'update'), help=u"""Updates the specified managed instance information, such as description, ONS topic, and associated management station. \n[Command Reference](updateManagedInstance)""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
+@cli_util.option('--description', help=u"""User-specified description of the managed instance. Avoid entering confidential information.""")
+@cli_util.option('--primary-management-station-id', help=u"""The [OCID] of the management station for the instance to use as primary management station.""")
+@cli_util.option('--secondary-management-station-id', help=u"""The [OCID] of the management station for the instance to use as secondary management station.""")
+@cli_util.option('--notification-topic-id', help=u"""The [OCID] for the Oracle Notifications service (ONS) topic. ONS is the channel used to send notifications to the customer.""")
+@cli_util.option('--autonomous-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'autonomous-settings': {'module': 'os_management_hub', 'class': 'UpdatableAutonomousSettings'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management_hub', 'class': 'ManagedInstance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'autonomous-settings': {'module': 'os_management_hub', 'class': 'UpdatableAutonomousSettings'}}, output_type={'module': 'os_management_hub', 'class': 'ManagedInstance'})
 @cli_util.wrap_exceptions
-def update_managed_instance(ctx, from_json, managed_instance_id, primary_management_station_id, secondary_management_station_id, if_match):
+def update_managed_instance(ctx, from_json, force, managed_instance_id, description, primary_management_station_id, secondary_management_station_id, notification_topic_id, autonomous_settings, if_match):
 
     if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
+    if not force:
+        if autonomous_settings:
+            if not click.confirm("WARNING: Updates to autonomous-settings will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -1491,11 +2010,20 @@ def update_managed_instance(ctx, from_json, managed_instance_id, primary_managem
 
     _details = {}
 
+    if description is not None:
+        _details['description'] = description
+
     if primary_management_station_id is not None:
         _details['primaryManagementStationId'] = primary_management_station_id
 
     if secondary_management_station_id is not None:
         _details['secondaryManagementStationId'] = secondary_management_station_id
+
+    if notification_topic_id is not None:
+        _details['notificationTopicId'] = notification_topic_id
+
+    if autonomous_settings is not None:
+        _details['autonomousSettings'] = cli_util.parse_json_parameter("autonomous_settings", autonomous_settings)
 
     client = cli_util.build_client('os_management_hub', 'managed_instance', ctx)
     result = client.update_managed_instance(
@@ -1507,9 +2035,9 @@ def update_managed_instance(ctx, from_json, managed_instance_id, primary_managem
 
 
 @managed_instance_group.command(name=cli_util.override('managed_instance.update_packages_on_managed_instance.command_name', 'update-packages'), help=u"""Updates a package on a managed instance. \n[Command Reference](updatePackagesOnManagedInstance)""")
-@cli_util.option('--managed-instance-id', required=True, help=u"""The OCID of the managed instance.""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""The [OCID] of the managed instance.""")
 @cli_util.option('--package-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of package names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--update-types', type=custom_types.CliCaseInsensitiveChoice(["SECURITY", "BUGFIX", "ENHANCEMENT", "OTHER", "KSPLICE_KERNEL", "KSPLICE_USERSPACE", "ALL"]), help=u"""The type of updates to be applied.""")
+@cli_util.option('--update-types', type=custom_types.CliCaseInsensitiveChoice(["SECURITY", "BUGFIX", "ENHANCEMENT", "OTHER", "KSPLICE_KERNEL", "KSPLICE_USERSPACE", "ALL"]), help=u"""The types of updates to be applied.""")
 @cli_util.option('--work-request-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")

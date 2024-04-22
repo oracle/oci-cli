@@ -6,6 +6,155 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.40.0 - 2024-04-23
+--------------------
+Added
+~~~~~
+* Support for the new Cluster Placement Groups service
+
+  * ``oci cpg``
+
+* Support for new optional parameter domainId in ApproverInfo while managing ApprovalTemplate in Managed Access Service
+
+    * ``oci oma approval-template create --approver-levels``
+    * ``oci oma approval-template update --approver-levels``
+
+* Cloud Guard And Security Zones Service
+
+  * New resource adhocquery
+
+    * ``oci cloud-guard adhoc-query create``
+    * ``oci cloud-guard adhoc-query delete``
+    * ``oci cloud-guard adhoc-query get``
+    * ``oci cloud-guard adhoc-query list``
+    * ``oci cloud-guard adhoc-query-result-collection get-adhoc-query-result-content``
+    * ``oci cloud-guard adhoc-query-result-collection list-adhoc-query-results``
+
+  * New resource savedQuery
+
+    * ``oci cloud-guard saved-query change-compartment``
+    * ``oci cloud-guard saved-query create``
+    * ``oci cloud-guard saved-query delete``
+    * ``oci cloud-guard saved-query get``
+    * ``oci cloud-guard saved-query list``
+    * ``oci cloud-guard saved-query update``
+
+  * Support for the new enum scheduledQuery for parameter feedprovider in data source resource
+
+    * ``oci cloud-guard data-source create-data-source-scheduled-query-data-source-obj-details``
+    * ``oci cloud-guard data-source update-data-source-scheduled-query-data-source-obj-details``
+
+* Core Services
+
+  * Support for new optional parameters in the instance launch APIs
+
+    * ``oci compute instance launch --cluster-placement-group-id``
+    * ``oci compute instance launch-instance-generic-bm-launch-instance-platform-config --cluster-placement-group-id``
+
+  * Support for assigning cluster placement group to boot volume creation in block storage.
+
+    * ``oci bv boot-volume create --cluster-placement-group-id``
+
+  * Support for assigning cluster placement group to boot volume creation from boot volume replica in block storage.
+
+    * ``oci bv boot-volume create-boot-volume-boot-volume-source-from-boot-volume-replica-details --cluster-placement-group-id``
+
+  * Support for assigning cluster placement group to block volume creation in block storage.
+
+    * ``oci bv volume create --cluster-placement-group-id``
+
+  * Support for assigning cluster placement group to block volume creation from block volume replica in block storage.
+
+    * ``oci bv volume create-volume-volume-source-from-block-volume-replica-details --cluster-placement-group-id``
+
+  * Support for listing volumes by cluster placement group in block storage.
+
+    * ``oci bv volume list --cluster-placement-group-id``
+
+  * Support for assigning cluster placement group to volumes after restoring from a volume group clone, backup, or replica in block storage.
+
+    * ``oci bv volume-group create --cluster-placement-group-id``
+
+* OS Management Hub Service
+
+  * Support for events
+
+    * ``oci os-management-hub event``
+
+  * Support for installing windows updates for all instances in a compartment
+
+    * ``oci os-management-hub install-all-windows-updates-in-compartment``
+
+  * Support for moving resources to different compartments
+
+    * ``oci os-management-hub lifecycle-environment change-compartment``
+    * ``oci os-management-hub managed-instance-group change-compartment``
+    * ``oci os-management-hub management-station change-compartment``
+    * ``oci os-management-hub profile change-compartment``
+    * ``oci os-management-hub scheduled-job change-compartment``
+    * ``oci os-management-hub software-source change-compartment``
+
+  * Support for new commands for managed instances
+
+    * ``oci os-management-hub managed-instance attach-profile``
+    * ``oci os-management-hub managed-instance detach-profile``
+    * ``oci os-management-hub managed-instance delete``
+    * ``oci os-management-hub managed-instance install-windows-updates``
+    * ``oci os-management-hub managed-instance list-available-windows-updates``
+    * ``oci os-management-hub managed-instance list-installed-windows-updates``
+
+  * Support for new commands for managed instance groups
+
+    * ``oci os-management-hub managed-instance-group install-windows-updates``
+    * ``oci os-management-hub managed-instance-group switch-module-stream``
+
+  * Support for new commands for management station
+
+    * ``oci os-management-hub management-station refresh-management-station-config``
+
+  * Support for new commands for software sources
+
+    * ``oci os-management-hub software-source add-packages``
+    * ``oci os-management-hub software-source get-software-package-by-name``
+    * ``oci os-management-hub software-source list-all-software-packages``
+    * ``oci os-management-hub software-source list-software-sources-with-package``
+    * ``oci os-management-hub software-source replicate-vendor-swsrc``
+    * ``oci os-management-hub software-source update-versioned-custom-swsrc``
+
+  * Support for new commands for windows updates
+
+    * ``oci os-management-hub windows-update get``
+    * ``oci os-management-hub windows-update list-windows-updates``
+
+Changed
+~~~~~~~
+* [BREAKING] OS Management Hub Service
+
+  * Optional parameter ``--vulnerability-type`` has now been made required in the following command
+
+    * ``oci os-management-hub managed-instance get-content``
+
+  * Optional parameter ``--managed-instances`` has now been made required in the following commands
+
+    * ``oci os-management-hub managed-instance-group attach-managed-instances``
+    * ``oci os-management-hub managed-instance-group detach-managed-instances``
+
+  * Optional parameter ``--software-sources`` has now been made required in the following commands
+
+    * ``oci os-management-hub managed-instance-group attach-software-sources``
+    * ``oci os-management-hub managed-instance-group detach-software-sources``
+
+  * Optional parameter ``--module-name`` has now been made required in the following commands
+
+    * ``oci os-management-hub managed-instance-group disable-module-stream``
+    * ``oci os-management-hub managed-instance-group enable-module-stream``
+    * ``oci os-management-hub managed-instance-group install-module-profile``
+
+  * Optional parameter ``--package-names`` has now been made required in the following commands
+
+    * ``oci os-management-hub managed-instance-group install-packages``
+    * ``oci os-management-hub managed-instance-group remove-packages``
+
 3.39.1 - 2024-04-16
 --------------------
 Added

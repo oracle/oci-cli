@@ -4,32 +4,16 @@
 
 import click  # noqa: F401
 import json  # noqa: F401
-
 from services.os_management_hub.src.oci_cli_os_management_hub.generated import os_management_hub_service_cli
-from services.os_management_hub.src.oci_cli_work_request.generated import workrequest_cli
+from services.os_management_hub.src.oci_cli_event.generated import event_cli
 from oci_cli import cli_util  # noqa: F401
 from oci_cli import custom_types  # noqa: F401
 from oci_cli import json_skeleton_utils  # noqa: F401
 
 
-# oci os-management-hub work-request work-request list-work-request-errors -> oci os-management-hub work-request work-request list-errors
-cli_util.rename_command(workrequest_cli, workrequest_cli.work_request_group, workrequest_cli.list_work_request_errors, "list-errors")
-
-
-# oci os-management-hub work-request work-request list-work-request-logs -> oci os-management-hub work-request work-request list-logs
-cli_util.rename_command(workrequest_cli, workrequest_cli.work_request_group, workrequest_cli.list_work_request_logs, "list-logs")
-
-
-# Move commands under 'oci os-management-hub work-request work-request' -> 'oci os-management-hub work-request'
-workrequest_cli.work_request_root_group.commands.pop(workrequest_cli.work_request_group.name)
-os_management_hub_service_cli.os_management_hub_service_group.commands.pop(workrequest_cli.work_request_root_group.name)
-os_management_hub_service_cli.os_management_hub_service_group.add_command(workrequest_cli.work_request_group)
-
-
-@cli_util.copy_params_from_generated_command(workrequest_cli.list_work_requests, params_to_exclude=['parent_resources_not_equal_to', 'is_managed_by_autonomous_linux', 'time_created_greater_than_or_equal_to', 'time_created_less_than'])
-@workrequest_cli.work_request_group.command(name=workrequest_cli.list_work_requests.name, help=workrequest_cli.list_work_requests.help)
-@cli_util.option('--is-managed-by-alx', type=click.BOOL, help="""Indicates whether to list only resources managed by the Autonomous Linux service.""")
-@cli_util.option('--time-created-gte', type=custom_types.CLI_DATETIME, help="""A filter to return work requests that were created on or after the date provided (in [RFC 3339] format). Example: '2023-08-25T21:10:29.600Z'
+@cli_util.copy_params_from_generated_command(event_cli.list_events, params_to_exclude=['time_created_less_than', 'time_created_greater_than_or_equal_to', 'is_managed_by_autonomous_linux'])
+@event_cli.event_group.command(name=cli_util.override('event.list_events.command_name', 'list'), help=event_cli.list_events.help)
+@cli_util.option('--time-created-lt', type=custom_types.CLI_DATETIME, help=u"""A filter that returns events that occurred on or before the date provided. Example: `2016-08-25T21:10:29.600Z`
 
 The following datetime formats are supported:
 
@@ -97,7 +81,7 @@ Epoch seconds
 **************
 Example: 1412195400
     """)
-@cli_util.option('--time-created-lt', type=custom_types.CLI_DATETIME, help="""A filter to return work requests that were created before the date provided (in [RFC 3339] format). Example: '2023-08-25T21:10:29.600Z'
+@cli_util.option('--time-created-gte', type=custom_types.CLI_DATETIME, help=u"""A filter that returns events that occurred on or after the date provided. Example: `2016-08-25T21:10:29.600Z`
 
 The following datetime formats are supported:
 
@@ -165,24 +149,33 @@ Epoch seconds
 **************
 Example: 1412195400
     """)
-@cli_util.option('--parent-resources-ne', multiple=True, help=u"""A filter to return the resources whose parent resources are not the same as the given resource OCID(s).""")
+@cli_util.option('--is-managed-by-alx', type=click.BOOL, help=u"""Indicates whether to list only resources managed by the Autonomous Linux service.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-resources-not-equal-to': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'WorkRequestSummaryCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management_hub', 'class': 'EventCollection'})
 @cli_util.wrap_exceptions
-def list_work_requests_extended(ctx, **kwargs):
+def list_events_extended(ctx, **kwargs):
 
-    if 'is_managed_by_alx' in kwargs:
-        kwargs['is_managed_by_autonomous_linux'] = kwargs['is_managed_by_alx']
-        kwargs.pop('is_managed_by_alx')
-    if 'time_created_gte' in kwargs:
-        kwargs['time_created_greater_than_or_equal_to'] = kwargs['time_created_gte']
-        kwargs.pop('time_created_gte')
     if 'time_created_lt' in kwargs:
         kwargs['time_created_less_than'] = kwargs['time_created_lt']
         kwargs.pop('time_created_lt')
 
-    if 'parent_resources_ne' in kwargs:
-        kwargs['parent_resources_not_equal_to'] = kwargs['parent_resources_ne']
-        kwargs.pop('parent_resources_ne')
+    if 'time_created_gte' in kwargs:
+        kwargs['time_created_greater_than_or_equal_to'] = kwargs['time_created_gte']
+        kwargs.pop('time_created_gte')
 
-    ctx.invoke(workrequest_cli.list_work_requests, **kwargs)
+    if 'is_managed_by_alx' in kwargs:
+        kwargs['is_managed_by_autonomous_linux'] = kwargs['is_managed_by_alx']
+        kwargs.pop('is_managed_by_alx')
+
+    ctx.invoke(event_cli.list_events, **kwargs)
+
+
+# Move commands under 'oci os-management-hub event event' -> 'oci os-management-hub event'
+event_cli.event_root_group.commands.pop(event_cli.event_group.name)
+os_management_hub_service_cli.os_management_hub_service_group.commands.pop(event_cli.event_root_group.name)
+os_management_hub_service_cli.os_management_hub_service_group.add_command(event_cli.event_group)
+
+# Move commands under 'oci os-management-hub event event-collection' -> 'oci os-management-hub event'
+event_cli.event_root_group.commands.pop(event_cli.event_collection_group.name)
+# this is the same annotating the extended method with @event_cli.event_group.command
+event_cli.event_group.add_command(list_events_extended)

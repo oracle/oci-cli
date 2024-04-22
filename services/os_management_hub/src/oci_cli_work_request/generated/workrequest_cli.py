@@ -16,13 +16,14 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.os_management_hub.src.oci_cli_os_management_hub.generated import os_management_hub_service_cli
 
 
-@click.command(cli_util.override('work_request.work_request_root_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help=cli_util.override('work_request.work_request_root_group.help', """Use the OS Management Hub API to manage and monitor updates and patches for the operating system environments in your private data centers through a single management console. For more information, see [Overview of OS Management Hub]."""), short_help=cli_util.override('work_request.work_request_root_group.short_help', """OS Management Hub API"""))
+@click.command(cli_util.override('work_request.work_request_root_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help=cli_util.override('work_request.work_request_root_group.help', """Use the OS Management Hub API to manage and monitor updates and patches for instances in OCI, your private data center, or 3rd-party clouds.
+For more information, see [Overview of OS Management Hub]."""), short_help=cli_util.override('work_request.work_request_root_group.short_help', """OS Management Hub API"""))
 @cli_util.help_option_group
 def work_request_root_group():
     pass
 
 
-@click.command(cli_util.override('work_request.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""Describes a work request.""")
+@click.command(cli_util.override('work_request.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""An object that defines a work request.""")
 @cli_util.help_option_group
 def work_request_group():
     pass
@@ -33,7 +34,7 @@ work_request_root_group.add_command(work_request_group)
 
 
 @work_request_group.command(name=cli_util.override('work_request.get_work_request.command_name', 'get'), help=u"""Gets information about the specified work request. \n[Command Reference](getWorkRequest)""")
-@cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
+@cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -55,7 +56,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @work_request_group.command(name=cli_util.override('work_request.list_work_request_errors.command_name', 'list-work-request-errors'), help=u"""Gets the errors for the specified work request. \n[Command Reference](listWorkRequestErrors)""")
-@cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
+@cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `3`""")
@@ -116,7 +117,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
 
 
 @work_request_group.command(name=cli_util.override('work_request.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Gets the logs for the specified work request. \n[Command Reference](listWorkRequestLogs)""")
-@cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
+@cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `3`""")
@@ -177,10 +178,10 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('work_request.list_work_requests.command_name', 'list'), help=u"""Lists work requests that match the specified compartment or work request OCID. Filter the list against a variety of criteria including but not limited to its name, status, and operation type. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list.""")
-@cli_util.option('--work-request-id', help=u"""The OCID of the work request.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--work-request-id', help=u"""The [OCID] of the work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help=u"""A filter to return work requests that match the given status.""")
-@cli_util.option('--resource-id', help=u"""The OCID of the resource affected by the work request.""")
+@cli_util.option('--resource-id', help=u"""The [OCID] of the resource. This filter returns resources associated with the specified resource.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `3`""")
@@ -189,11 +190,15 @@ Example: `3`""")
 Example: `50`""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending.""")
-@cli_util.option('--initiator-id', help=u"""The OCID of the schedule job that initiated the work request.""")
-@cli_util.option('--parent-id', help=u"""The OCID of the parent work request.""")
-@cli_util.option('--parent-resources-not-equal-to', multiple=True, help=u"""A filter to return the resources whose parent resources are not the same as the given resource OCID(s).""")
-@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["INSTALL_PACKAGES", "REMOVE_PACKAGES", "UPDATE_PACKAGES", "UPDATE_ALL_PACKAGES", "UPDATE_SECURITY", "UPDATE_BUGFIX", "UPDATE_ENHANCEMENT", "UPDATE_OTHER", "UPDATE_KSPLICE_KERNEL", "UPDATE_KSPLICE_USERSPACE", "ENABLE_MODULE_STREAMS", "DISABLE_MODULE_STREAMS", "SWITCH_MODULE_STREAM", "INSTALL_MODULE_PROFILES", "REMOVE_MODULE_PROFILES", "SET_SOFTWARE_SOURCES", "LIST_PACKAGES", "SET_MANAGEMENT_STATION_CONFIG", "SYNC_MANAGEMENT_STATION_MIRROR", "UPDATE_MANAGEMENT_STATION_SOFTWARE", "UPDATE", "MODULE_ACTIONS", "LIFECYCLE_PROMOTION", "CREATE_SOFTWARE_SOURCE", "UPDATE_SOFTWARE_SOURCE"]), multiple=True, help=u"""The asynchronous operation tracked by this work request. The filter returns only resources that match the given OperationType.""")
+@cli_util.option('--initiator-id', help=u"""The [OCID] of the schedule job that initiated the work request.""")
+@cli_util.option('--parent-id', help=u"""The [OCID] of the parent work request.""")
+@cli_util.option('--parent-resources-not-equal-to', multiple=True, help=u"""A filter to return the resources whose parent resources are not the same as the given resource [OCIDs].""")
+@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["INSTALL_PACKAGES", "REMOVE_PACKAGES", "UPDATE_PACKAGES", "UPDATE_ALL_PACKAGES", "UPDATE_SECURITY", "UPDATE_BUGFIX", "UPDATE_ENHANCEMENT", "UPDATE_OTHER", "UPDATE_KSPLICE_KERNEL", "UPDATE_KSPLICE_USERSPACE", "ENABLE_MODULE_STREAMS", "DISABLE_MODULE_STREAMS", "SWITCH_MODULE_STREAM", "INSTALL_MODULE_PROFILES", "REMOVE_MODULE_PROFILES", "SET_SOFTWARE_SOURCES", "LIST_PACKAGES", "SET_MANAGEMENT_STATION_CONFIG", "SYNC_MANAGEMENT_STATION_MIRROR", "UPDATE_MANAGEMENT_STATION_SOFTWARE", "UPDATE", "MODULE_ACTIONS", "LIFECYCLE_PROMOTION", "CREATE_SOFTWARE_SOURCE", "UPDATE_SOFTWARE_SOURCE", "IMPORT_CONTENT", "SYNC_AGENT_CONFIG", "INSTALL_WINDOWS_UPDATES", "LIST_WINDOWS_UPDATE", "GET_WINDOWS_UPDATE_DETAILS", "INSTALL_ALL_WINDOWS_UPDATES", "INSTALL_SECURITY_WINDOWS_UPDATES", "INSTALL_BUGFIX_WINDOWS_UPDATES", "INSTALL_ENHANCEMENT_WINDOWS_UPDATES", "INSTALL_OTHER_WINDOWS_UPDATES", "REMOVE_CONTENT", "UNREGISTER_MANAGED_INSTANCE"]), multiple=True, help=u"""The asynchronous operation tracked by this work request. The filter returns only resources that match the given OperationType.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
+@cli_util.option('--retry-of-id', help=u"""A filter to return the work requests that are a retry of the given work request [OCIDs].""")
+@cli_util.option('--time-created-less-than', type=custom_types.CLI_DATETIME, help=u"""A filter to return work requests that were created before the date provided (in [RFC 3339] format). Example: '2023-08-25T21:10:29.600Z'""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter to return work requests that were created on or after the date provided (in [RFC 3339] format). Example: '2023-08-25T21:10:29.600Z'""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--is-managed-by-autonomous-linux', type=click.BOOL, help=u"""Indicates whether to list only resources managed by the Autonomous Linux service.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({'parent-resources-not-equal-to': {'module': 'os_management_hub', 'class': 'list[string]'}})
@@ -201,7 +206,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-resources-not-equal-to': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'WorkRequestSummaryCollection'})
 @cli_util.wrap_exceptions
-def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, work_request_id, status, resource_id, page, limit, sort_order, sort_by, initiator_id, parent_id, parent_resources_not_equal_to, operation_type, display_name_contains):
+def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, work_request_id, status, resource_id, page, limit, sort_order, sort_by, initiator_id, parent_id, parent_resources_not_equal_to, operation_type, display_name_contains, retry_of_id, time_created_less_than, time_created_greater_than_or_equal_to, is_managed_by_autonomous_linux):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -233,6 +238,14 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
         kwargs['operation_type'] = operation_type
     if display_name_contains is not None:
         kwargs['display_name_contains'] = display_name_contains
+    if retry_of_id is not None:
+        kwargs['retry_of_id'] = retry_of_id
+    if time_created_less_than is not None:
+        kwargs['time_created_less_than'] = time_created_less_than
+    if time_created_greater_than_or_equal_to is not None:
+        kwargs['time_created_greater_than_or_equal_to'] = time_created_greater_than_or_equal_to
+    if is_managed_by_autonomous_linux is not None:
+        kwargs['is_managed_by_autonomous_linux'] = is_managed_by_autonomous_linux
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('os_management_hub', 'work_request', ctx)
     if all_pages:

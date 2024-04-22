@@ -50,6 +50,11 @@ cli_util.rename_command(managedinstance_cli, managedinstance_cli.managed_instanc
 # oci os-management-hub managed-instance managed-instance detach -> oci os-management-hub managed-instance managed-instance detach-software-sources
 cli_util.rename_command(managedinstance_cli, managedinstance_cli.managed_instance_group, managedinstance_cli.detach_software_sources_from_managed_instance, "detach-software-sources")
 
+# oci os-management-hub managed-instance attach -> oci os-management-hub managed-instance attach-profile
+cli_util.rename_command(managedinstance_cli, managedinstance_cli.managed_instance_group, managedinstance_cli.attach_profile_to_managed_instance, "attach-profile")
+
+# oci os-management-hub managed-instance detach -> oci os-management-hub managed-instance detach-profile
+cli_util.rename_command(managedinstance_cli, managedinstance_cli.managed_instance_group, managedinstance_cli.detach_profile_from_managed_instance, "detach-profile")
 
 # oci os-management-hub managed-instance managed-instance remove -> oci os-management-hub managed-instance managed-instance remove-packages
 cli_util.rename_command(managedinstance_cli, managedinstance_cli.managed_instance_group, managedinstance_cli.remove_packages_from_managed_instance, "remove-packages")
@@ -61,13 +66,23 @@ managedinstance_cli.managed_instance_group.commands.pop(managedinstance_cli.mana
 
 # Move commands under 'oci os-management-hub managed-instance managed-instance' -> 'oci os-management-hub managed-instance'
 managedinstance_cli.managed_instance_root_group.commands.pop(managedinstance_cli.managed_instance_group.name)
-
 os_management_hub_service_cli.os_management_hub_service_group.commands.pop(managedinstance_cli.managed_instance_root_group.name)
 os_management_hub_service_cli.os_management_hub_service_group.add_command(managedinstance_cli.managed_instance_group)
 
+# Move commands under 'oci os-management-hub managed-instance windows-update-collection' -> 'oci os-management-hub windows-update'
+managedinstance_cli.managed_instance_root_group.commands.pop(managedinstance_cli.windows_update_collection_group.name)
+managedinstance_cli.windows_update_group.add_command(managedinstance_cli.list_windows_updates)
+os_management_hub_service_cli.os_management_hub_service_group.add_command(managedinstance_cli.windows_update_group)
 
-@cli_util.copy_params_from_generated_command(managedinstance_cli.list_managed_instances, params_to_exclude=['is_attached_to_group_or_lifecycle_stage', 'lifecycle_stage', 'lifecycle_stage_not_equal_to', 'group_not_equal_to'])
+
+@cli_util.copy_params_from_generated_command(managedinstance_cli.list_managed_instances, params_to_exclude=['is_attached_to_group_or_lifecycle_stage', 'lifecycle_stage', 'lifecycle_stage_not_equal_to', 'group_not_equal_to', 'lifecycle_environment', 'lifecycle_environment_not_equal_to', 'location_not_equal_to', 'profile_not_equal_to', 'profile_parameterconflict', 'is_managed_by_autonomous_linux'])
 @managedinstance_cli.managed_instance_group.command(name=managedinstance_cli.list_managed_instances.name, help=managedinstance_cli.list_managed_instances.help)
+@cli_util.option('--lifecycle-env-id', help="""A filter to return only managed instances in a specific lifecycle environment.""")
+@cli_util.option('--lifecycle-env-id-ne', help="""A filter to return only managed instances that aren't in a specific lifecycle environment.""")
+@cli_util.option('--location-ne', type=custom_types.CliCaseInsensitiveChoice(["ON_PREMISE", "OCI_COMPUTE", "AZURE", "EC2", "GCP"]), multiple=True, help="""A filter to return only resources whose location does not match the given value.""")
+@cli_util.option('--profile-id-ne', multiple=True, help="""A multi filter to return only managed instances that don't contain the given profile [OCIDs].""")
+@cli_util.option('--profile-id', multiple=True, help="""A multi filter to return only managed instances that match the given profile ids.""")
+@cli_util.option('--is-managed-by-alx', type=click.BOOL, help="""Indicates whether to list only resources managed by the Autonomous Linux service.""")
 @cli_util.option('--is-attached-to-group-or-stage', type=click.BOOL, help=u"""A filter to return only managed instances that are attached to the specified group or lifecycle environment.""")
 @cli_util.option('--stage', type=click.BOOL, help=u"""A filter to return only managed instances that are associated with the specified lifecycle environment.""")
 @cli_util.option('--stage-ne', help=u"""A filter to return only managed instances that are NOT associated with the specified lifecycle environment.""")
@@ -76,6 +91,25 @@ os_management_hub_service_cli.os_management_hub_service_group.add_command(manage
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'display-name': {'module': 'os_management_hub', 'class': 'list[string]'}, 'advisory-name': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'ManagedInstanceCollection'})
 @cli_util.wrap_exceptions
 def list_managed_instances_extended(ctx, **kwargs):
+
+    if 'lifecycle_env_id' in kwargs:
+        kwargs['lifecycle_environment'] = kwargs['lifecycle_env_id']
+        kwargs.pop('lifecycle_env_id')
+    if 'lifecycle_env_id_ne' in kwargs:
+        kwargs['lifecycle_environment_not_equal_to'] = kwargs['lifecycle_env_id_ne']
+        kwargs.pop('lifecycle_env_id_ne')
+    if 'location_ne' in kwargs:
+        kwargs['location_not_equal_to'] = kwargs['location_ne']
+        kwargs.pop('location_ne')
+    if 'profile_id_ne' in kwargs:
+        kwargs['profile_not_equal_to'] = kwargs['profile_id_ne']
+        kwargs.pop('profile_id_ne')
+    if 'profile_id' in kwargs:
+        kwargs['profile_parameterconflict'] = kwargs['profile_id']
+        kwargs.pop('profile_id')
+    if 'is_managed_by_alx' in kwargs:
+        kwargs['is_managed_by_autonomous_linux'] = kwargs['is_managed_by_alx']
+        kwargs.pop('is_managed_by_alx')
 
     if 'is_attached_to_group_or_stage' in kwargs:
         kwargs['is_attached_to_group_or_lifecycle_stage'] = kwargs['is_attached_to_group_or_stage']
@@ -143,3 +177,19 @@ cli_util.rename_command(managedinstance_cli, managedinstance_cli.managed_instanc
 # Move oci os-management-hub managed-instance update-all-packages-on-managed-instances-in-compartment to oci os-management-hub update-all-packages-on-managed-instances-in-compartment
 managedinstance_cli.managed_instance_group.commands.pop(managedinstance_cli.update_all_packages_on_managed_instances_in_compartment.name)
 os_management_hub_service_cli.os_management_hub_service_group.add_command(managedinstance_cli.update_all_packages_on_managed_instances_in_compartment)
+
+
+# oci os-management-hub managed-instance install-all-windows-updates-on-managed-instances-in-compartment -> oci os-management-hub managed-instance install-all-windows-updates-in-compartment
+cli_util.rename_command(managedinstance_cli, managedinstance_cli.managed_instance_group, managedinstance_cli.install_all_windows_updates_on_managed_instances_in_compartment, "install-all-windows-updates-in-compartment")
+
+# Move oci os-management-hub managed-instance install-all-windows-updates-on-managed-instances-in-compartment to os-management-hub install-all-windows-updates-on-managed-instances-in-compartment
+managedinstance_cli.managed_instance_group.commands.pop(managedinstance_cli.install_all_windows_updates_on_managed_instances_in_compartment.name)
+os_management_hub_service_cli.os_management_hub_service_group.add_command(managedinstance_cli.install_all_windows_updates_on_managed_instances_in_compartment)
+
+
+# oci os-management-hub managed-instance list-managed-instance-available-windows-updates -> oci os-management-hub managed-instance list-available-windows-updates
+cli_util.rename_command(managedinstance_cli, managedinstance_cli.managed_instance_group, managedinstance_cli.list_managed_instance_available_windows_updates, "list-available-windows-updates")
+
+
+# oci os-management-hub managed-instance list-managed-instance-installed-windows-updates -> oci os-management-hub managed-instance list-installed-windows-updates
+cli_util.rename_command(managedinstance_cli, managedinstance_cli.managed_instance_group, managedinstance_cli.list_managed_instance_installed_windows_updates, "list-installed-windows-updates")

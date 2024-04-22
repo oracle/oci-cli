@@ -383,3 +383,11 @@ database-migration, migration, create-oracle-migration
 database-migration, migration, update-mysql-migration
 database-migration, migration, update-oracle-migration
 database-migration, migration-object-type-summary
+os-management-hub, managed-instance, update
+os-management-hub, managed-instance-group, update
+os-management-hub, scheduled-job, create
+os-management-hub, software-source, create-custom-swsrc
+os-management-hub, software-source, create-versioned-custom-swsrc
+os-management-hub, install-all-windows-updates-in-compartment
+os-management-hub, managed-instance, install-windows-updates
+os-management-hub, managed-instance-group, install-windows-updates

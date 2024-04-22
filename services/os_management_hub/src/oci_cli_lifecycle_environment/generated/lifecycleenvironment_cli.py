@@ -16,7 +16,8 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.os_management_hub.src.oci_cli_os_management_hub.generated import os_management_hub_service_cli
 
 
-@click.command(cli_util.override('lifecycle_environment.lifecycle_environment_root_group.command_name', 'lifecycle-environment'), cls=CommandGroupWithAlias, help=cli_util.override('lifecycle_environment.lifecycle_environment_root_group.help', """Use the OS Management Hub API to manage and monitor updates and patches for the operating system environments in your private data centers through a single management console. For more information, see [Overview of OS Management Hub]."""), short_help=cli_util.override('lifecycle_environment.lifecycle_environment_root_group.short_help', """OS Management Hub API"""))
+@click.command(cli_util.override('lifecycle_environment.lifecycle_environment_root_group.command_name', 'lifecycle-environment'), cls=CommandGroupWithAlias, help=cli_util.override('lifecycle_environment.lifecycle_environment_root_group.help', """Use the OS Management Hub API to manage and monitor updates and patches for instances in OCI, your private data center, or 3rd-party clouds.
+For more information, see [Overview of OS Management Hub]."""), short_help=cli_util.override('lifecycle_environment.lifecycle_environment_root_group.short_help', """OS Management Hub API"""))
 @cli_util.help_option_group
 def lifecycle_environment_root_group():
     pass
@@ -28,7 +29,7 @@ def lifecycle_stage_group():
     pass
 
 
-@click.command(cli_util.override('lifecycle_environment.lifecycle_environment_group.command_name', 'lifecycle-environment'), cls=CommandGroupWithAlias, help="""Contains versioned software source content and lifecycle stages for a managed instance.""")
+@click.command(cli_util.override('lifecycle_environment.lifecycle_environment_group.command_name', 'lifecycle-environment'), cls=CommandGroupWithAlias, help="""Defines the lifecycle environment, including the associated versioned software sources, lifecycle stages, and managed instances.""")
 @cli_util.help_option_group
 def lifecycle_environment_group():
     pass
@@ -39,8 +40,8 @@ lifecycle_environment_root_group.add_command(lifecycle_stage_group)
 lifecycle_environment_root_group.add_command(lifecycle_environment_group)
 
 
-@lifecycle_stage_group.command(name=cli_util.override('lifecycle_environment.attach_managed_instances_to_lifecycle_stage.command_name', 'attach'), help=u"""Attach(add) managed instances to a lifecycle stage. Once added operations can be applied to all managed instances in the lifecycle stage. \n[Command Reference](attachManagedInstancesToLifecycleStage)""")
-@cli_util.option('--lifecycle-stage-id', required=True, help=u"""The OCID of the lifecycle stage.""")
+@lifecycle_stage_group.command(name=cli_util.override('lifecycle_environment.attach_managed_instances_to_lifecycle_stage.command_name', 'attach'), help=u"""Attaches (adds) managed instances to a lifecycle stage. Once added, you can apply operations to all managed instances in the lifecycle stage. \n[Command Reference](attachManagedInstancesToLifecycleStage)""")
+@cli_util.option('--lifecycle-stage-id', required=True, help=u"""The [OCID] of the lifecycle stage.""")
 @cli_util.option('--managed-instance-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -102,14 +103,48 @@ def attach_managed_instances_to_lifecycle_stage(ctx, from_json, wait_for_state, 
     cli_util.render_response(result, ctx)
 
 
-@lifecycle_environment_group.command(name=cli_util.override('lifecycle_environment.create_lifecycle_environment.command_name', 'create'), help=u"""Creates a new lifecycle environment. \n[Command Reference](createLifecycleEnvironment)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy containing the lifecycle environment.""")
-@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--stages', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""User specified list of ranked lifecycle stages to be created for the lifecycle environment.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--arch-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC"]), help=u"""The CPU architecture of the managed instance(s) in the lifecycle environment.""")
-@cli_util.option('--os-family', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7"]), help=u"""The operating system type of the managed instance(s) in the lifecycle environment.""")
-@cli_util.option('--vendor-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE"]), help=u"""The software source vendor name.""")
-@cli_util.option('--description', help=u"""User specified information about the lifecycle environment.""")
+@lifecycle_environment_group.command(name=cli_util.override('lifecycle_environment.change_lifecycle_environment_compartment.command_name', 'change-compartment'), help=u"""Moves a lifecycle environment into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeLifecycleEnvironmentCompartment)""")
+@cli_util.option('--lifecycle-environment-id', required=True, help=u"""The [OCID] of the lifecycle environment.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment to move the lifecycle environment to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_lifecycle_environment_compartment(ctx, from_json, lifecycle_environment_id, compartment_id, if_match):
+
+    if isinstance(lifecycle_environment_id, six.string_types) and len(lifecycle_environment_id.strip()) == 0:
+        raise click.UsageError('Parameter --lifecycle-environment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('os_management_hub', 'lifecycle_environment', ctx)
+    result = client.change_lifecycle_environment_compartment(
+        lifecycle_environment_id=lifecycle_environment_id,
+        change_lifecycle_environment_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@lifecycle_environment_group.command(name=cli_util.override('lifecycle_environment.create_lifecycle_environment.command_name', 'create'), help=u"""Creates a lifecycle environment. A lifecycle environment is a user-defined pipeline to deliver curated, versioned content in a prescribed, methodical manner. \n[Command Reference](createLifecycleEnvironment)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the lifecycle environment.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the lifecycle environment. Does not have to be unique and you can change the name later. Avoid entering confidential information.""")
+@cli_util.option('--stages', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""User-specified list of ranked lifecycle stages used within the lifecycle environment.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--arch-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC"]), help=u"""The CPU architecture of the managed instances in the lifecycle environment.""")
+@cli_util.option('--os-family', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "ALL"]), help=u"""The operating system of the managed instances in the lifecycle environment.""")
+@cli_util.option('--vendor-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE", "MICROSOFT"]), help=u"""The vendor of the operating system used by the managed instances in the lifecycle environment.""")
+@cli_util.option('--description', help=u"""User-specified information about the lifecycle environment. Avoid entering confidential information.""")
+@cli_util.option('--location', type=custom_types.CliCaseInsensitiveChoice(["ON_PREMISE", "OCI_COMPUTE", "AZURE", "EC2", "GCP"]), help=u"""The location of managed instances attached to the lifecycle environment. If no location is provided, the default is 'ON_PREMISE.'""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -120,7 +155,7 @@ def attach_managed_instances_to_lifecycle_stage(ctx, from_json, wait_for_state, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stages': {'module': 'os_management_hub', 'class': 'list[CreateLifecycleStageDetails]'}, 'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'os_management_hub', 'class': 'LifecycleEnvironment'})
 @cli_util.wrap_exceptions
-def create_lifecycle_environment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, stages, arch_type, os_family, vendor_name, description, freeform_tags, defined_tags):
+def create_lifecycle_environment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, stages, arch_type, os_family, vendor_name, description, location, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -135,6 +170,9 @@ def create_lifecycle_environment(ctx, from_json, wait_for_state, max_wait_second
 
     if description is not None:
         _details['description'] = description
+
+    if location is not None:
+        _details['location'] = location
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -173,8 +211,8 @@ def create_lifecycle_environment(ctx, from_json, wait_for_state, max_wait_second
     cli_util.render_response(result, ctx)
 
 
-@lifecycle_environment_group.command(name=cli_util.override('lifecycle_environment.delete_lifecycle_environment.command_name', 'delete'), help=u"""Deletes a lifecycle environment. \n[Command Reference](deleteLifecycleEnvironment)""")
-@cli_util.option('--lifecycle-environment-id', required=True, help=u"""The OCID of the lifecycle environment.""")
+@lifecycle_environment_group.command(name=cli_util.override('lifecycle_environment.delete_lifecycle_environment.command_name', 'delete'), help=u"""Deletes the specified lifecycle environment. \n[Command Reference](deleteLifecycleEnvironment)""")
+@cli_util.option('--lifecycle-environment-id', required=True, help=u"""The [OCID] of the lifecycle environment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -237,8 +275,8 @@ def delete_lifecycle_environment(ctx, from_json, wait_for_state, max_wait_second
     cli_util.render_response(result, ctx)
 
 
-@lifecycle_stage_group.command(name=cli_util.override('lifecycle_environment.detach_managed_instances_from_lifecycle_stage.command_name', 'detach'), help=u"""Detach(remove) managed instance from a lifecycle stage. \n[Command Reference](detachManagedInstancesFromLifecycleStage)""")
-@cli_util.option('--lifecycle-stage-id', required=True, help=u"""The OCID of the lifecycle stage.""")
+@lifecycle_stage_group.command(name=cli_util.override('lifecycle_environment.detach_managed_instances_from_lifecycle_stage.command_name', 'detach'), help=u"""Detaches (removes) a managed instance from a lifecycle stage. \n[Command Reference](detachManagedInstancesFromLifecycleStage)""")
+@cli_util.option('--lifecycle-stage-id', required=True, help=u"""The [OCID] of the lifecycle stage.""")
 @cli_util.option('--managed-instance-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -301,7 +339,7 @@ def detach_managed_instances_from_lifecycle_stage(ctx, from_json, wait_for_state
 
 
 @lifecycle_environment_group.command(name=cli_util.override('lifecycle_environment.get_lifecycle_environment.command_name', 'get'), help=u"""Gets information about the specified lifecycle environment. \n[Command Reference](getLifecycleEnvironment)""")
-@cli_util.option('--lifecycle-environment-id', required=True, help=u"""The OCID of the lifecycle environment.""")
+@cli_util.option('--lifecycle-environment-id', required=True, help=u"""The [OCID] of the lifecycle environment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -322,8 +360,8 @@ def get_lifecycle_environment(ctx, from_json, lifecycle_environment_id):
     cli_util.render_response(result, ctx)
 
 
-@lifecycle_stage_group.command(name=cli_util.override('lifecycle_environment.get_lifecycle_stage.command_name', 'get'), help=u"""Gets information about the specified lifecycle stage. \n[Command Reference](getLifecycleStage)""")
-@cli_util.option('--lifecycle-stage-id', required=True, help=u"""The OCID of the lifecycle stage.""")
+@lifecycle_stage_group.command(name=cli_util.override('lifecycle_environment.get_lifecycle_stage.command_name', 'get'), help=u"""Returns information about the specified lifecycle stage. \n[Command Reference](getLifecycleStage)""")
+@cli_util.option('--lifecycle-stage-id', required=True, help=u"""The [OCID] of the lifecycle stage.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -345,12 +383,14 @@ def get_lifecycle_stage(ctx, from_json, lifecycle_stage_id):
 
 
 @lifecycle_environment_group.command(name=cli_util.override('lifecycle_environment.list_lifecycle_environments.command_name', 'list'), help=u"""Lists lifecycle environments that match the specified compartment or lifecycle environment OCID. Filter the list against a variety of criteria including but not limited to its name, status, architecture, and OS family. \n[Command Reference](listLifecycleEnvironments)""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--display-name', multiple=True, help=u"""A filter to return resources that match the given display names.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
-@cli_util.option('--lifecycle-environment-id', help=u"""The OCID of the lifecycle environment.""")
+@cli_util.option('--lifecycle-environment-id', help=u"""The [OCID] of the lifecycle environment.""")
 @cli_util.option('--arch-type', type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC"]), help=u"""A filter to return only profiles that match the given archType.""")
-@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7"]), help=u"""A filter to return only profiles that match the given osFamily.""")
+@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "ALL"]), help=u"""A filter to return only resources that match the given operating system family.""")
+@cli_util.option('--location', type=custom_types.CliCaseInsensitiveChoice(["ON_PREMISE", "OCI_COMPUTE", "AZURE", "EC2", "GCP"]), multiple=True, help=u"""A filter to return only resources whose location matches the given value.""")
+@cli_util.option('--location-not-equal-to', type=custom_types.CliCaseInsensitiveChoice(["ON_PREMISE", "OCI_COMPUTE", "AZURE", "EC2", "GCP"]), multiple=True, help=u"""A filter to return only resources whose location does not match the given value.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -367,7 +407,7 @@ Example: `3`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'display-name': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'LifecycleEnvironmentCollection'})
 @cli_util.wrap_exceptions
-def list_lifecycle_environments(ctx, from_json, all_pages, page_size, compartment_id, display_name, display_name_contains, lifecycle_environment_id, arch_type, os_family, limit, page, lifecycle_state, sort_order, sort_by):
+def list_lifecycle_environments(ctx, from_json, all_pages, page_size, compartment_id, display_name, display_name_contains, lifecycle_environment_id, arch_type, os_family, location, location_not_equal_to, limit, page, lifecycle_state, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -385,6 +425,10 @@ def list_lifecycle_environments(ctx, from_json, all_pages, page_size, compartmen
         kwargs['arch_type'] = arch_type
     if os_family is not None:
         kwargs['os_family'] = os_family
+    if location is not None and len(location) > 0:
+        kwargs['location'] = location
+    if location_not_equal_to is not None and len(location_not_equal_to) > 0:
+        kwargs['location_not_equal_to'] = location_not_equal_to
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -420,8 +464,8 @@ def list_lifecycle_environments(ctx, from_json, all_pages, page_size, compartmen
 
 
 @lifecycle_stage_group.command(name=cli_util.override('lifecycle_environment.list_lifecycle_stage_installed_packages.command_name', 'list-lifecycle-stage-installed-packages'), help=u"""Lists installed packages on managed instances in a specified lifecycle stage. Filter the list against a variety of criteria including but not limited to the package name. \n[Command Reference](listLifecycleStageInstalledPackages)""")
-@cli_util.option('--lifecycle-stage-id', required=True, help=u"""The OCID of the lifecycle stage.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list.""")
+@cli_util.option('--lifecycle-stage-id', required=True, help=u"""The [OCID] of the lifecycle stage.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--display-name', multiple=True, help=u"""A filter to return resources that match the given display names.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -430,7 +474,7 @@ Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `3`""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only lifecycle stage whose lifecycle state matches the given lifecycle state.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only lifecycle stages whose lifecycle state matches the given lifecycle state.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -492,21 +536,23 @@ def list_lifecycle_stage_installed_packages(ctx, from_json, all_pages, page_size
     cli_util.render_response(result, ctx)
 
 
-@lifecycle_stage_group.command(name=cli_util.override('lifecycle_environment.list_lifecycle_stages.command_name', 'list'), help=u"""Lists lifecycle stages that match the specified compartment or lifecycle stage OCID. Filter the list against a variety of criteria including but not limited to its name, status, architecture, and OS family. \n[Command Reference](listLifecycleStages)""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list.""")
+@lifecycle_stage_group.command(name=cli_util.override('lifecycle_environment.list_lifecycle_stages.command_name', 'list'), help=u"""Lists lifecycle stages that match the specified compartment or lifecycle stage [OCID]. Filter the list against \n[Command Reference](listLifecycleStages)""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--display-name', multiple=True, help=u"""A filter to return resources that match the given display names.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
-@cli_util.option('--lifecycle-stage-id', help=u"""The OCID of the lifecycle stage.""")
-@cli_util.option('--software-source-id', help=u"""The OCID for the software source.""")
+@cli_util.option('--lifecycle-stage-id', help=u"""The [OCID] of the lifecycle stage.""")
+@cli_util.option('--software-source-id', help=u"""The [OCID] of the software source. This filter returns resources associated with this software source.""")
 @cli_util.option('--arch-type', type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC"]), help=u"""A filter to return only profiles that match the given archType.""")
-@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7"]), help=u"""A filter to return only profiles that match the given osFamily.""")
+@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "ALL"]), help=u"""A filter to return only resources that match the given operating system family.""")
+@cli_util.option('--location', type=custom_types.CliCaseInsensitiveChoice(["ON_PREMISE", "OCI_COMPUTE", "AZURE", "EC2", "GCP"]), multiple=True, help=u"""A filter to return only resources whose location matches the given value.""")
+@cli_util.option('--location-not-equal-to', type=custom_types.CliCaseInsensitiveChoice(["ON_PREMISE", "OCI_COMPUTE", "AZURE", "EC2", "GCP"]), multiple=True, help=u"""A filter to return only resources whose location does not match the given value.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `3`""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only lifecycle stage whose lifecycle state matches the given lifecycle state.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only lifecycle stages whose lifecycle state matches the given lifecycle state.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -516,7 +562,7 @@ Example: `3`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'display-name': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'LifecycleStageCollection'})
 @cli_util.wrap_exceptions
-def list_lifecycle_stages(ctx, from_json, all_pages, page_size, compartment_id, display_name, display_name_contains, lifecycle_stage_id, software_source_id, arch_type, os_family, limit, page, lifecycle_state, sort_order, sort_by):
+def list_lifecycle_stages(ctx, from_json, all_pages, page_size, compartment_id, display_name, display_name_contains, lifecycle_stage_id, software_source_id, arch_type, os_family, location, location_not_equal_to, limit, page, lifecycle_state, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -536,6 +582,10 @@ def list_lifecycle_stages(ctx, from_json, all_pages, page_size, compartment_id, 
         kwargs['arch_type'] = arch_type
     if os_family is not None:
         kwargs['os_family'] = os_family
+    if location is not None and len(location) > 0:
+        kwargs['location'] = location
+    if location_not_equal_to is not None and len(location_not_equal_to) > 0:
+        kwargs['location_not_equal_to'] = location_not_equal_to
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -570,10 +620,10 @@ def list_lifecycle_stages(ctx, from_json, all_pages, page_size, compartment_id, 
     cli_util.render_response(result, ctx)
 
 
-@lifecycle_stage_group.command(name=cli_util.override('lifecycle_environment.promote_software_source_to_lifecycle_stage.command_name', 'promote-software-source'), help=u"""Updates the versioned custom software source content for specified lifecycle stage. \n[Command Reference](promoteSoftwareSourceToLifecycleStage)""")
-@cli_util.option('--lifecycle-stage-id', required=True, help=u"""The OCID of the lifecycle stage.""")
+@lifecycle_stage_group.command(name=cli_util.override('lifecycle_environment.promote_software_source_to_lifecycle_stage.command_name', 'promote-software-source'), help=u"""Updates the versioned custom software source content to the specified lifecycle stage. A versioned custom software source OCID (softwareSourceId) is required when promoting content to the first lifecycle stage. You must promote content to the first stage before promoting to subsequent stages, otherwise the service returns an error. The softwareSourceId is optional when promoting content to the second, third, forth, or fifth stages. If you provide a softwareSourceId, the service validates that it matches the softwareSourceId of the previous stage. If it does not match, the service returns an error. If you don't provide a softwareSourceId, the service promotes the versioned software source from the previous lifecycle stage. If the previous lifecycle stage has no software source, the service returns an error. \n[Command Reference](promoteSoftwareSourceToLifecycleStage)""")
+@cli_util.option('--lifecycle-stage-id', required=True, help=u"""The [OCID] of the lifecycle stage.""")
 @cli_util.option('--work-request-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--software-source-id', help=u"""The OCID for the software source.""")
+@cli_util.option('--software-source-id', help=u"""The [OCID] of the software source. This filter returns resources associated with this software source.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -637,9 +687,9 @@ def promote_software_source_to_lifecycle_stage(ctx, from_json, wait_for_state, m
 
 
 @lifecycle_environment_group.command(name=cli_util.override('lifecycle_environment.update_lifecycle_environment.command_name', 'update'), help=u"""Updates the specified lifecycle environment's name, description, stages, or tags. \n[Command Reference](updateLifecycleEnvironment)""")
-@cli_util.option('--lifecycle-environment-id', required=True, help=u"""The OCID of the lifecycle environment.""")
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--description', help=u"""User specified information about the lifecycle environment. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--lifecycle-environment-id', required=True, help=u"""The [OCID] of the lifecycle environment.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name for the lifecycle environment. Does not have to be unique. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""User-specified list of lifecycle stages used within the lifecycle environment. Avoid entering confidential information.""")
 @cli_util.option('--stages', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of lifecycle stages to be updated.
 
 This option is a JSON list with items of type UpdateLifecycleStageDetails.  For documentation on UpdateLifecycleStageDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/lifecycleenvironment/20220901/datatypes/UpdateLifecycleStageDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

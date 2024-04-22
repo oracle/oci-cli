@@ -16,37 +16,38 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.os_management_hub.src.oci_cli_os_management_hub.generated import os_management_hub_service_cli
 
 
-@click.command(cli_util.override('software_source.software_source_root_group.command_name', 'software-source'), cls=CommandGroupWithAlias, help=cli_util.override('software_source.software_source_root_group.help', """Use the OS Management Hub API to manage and monitor updates and patches for the operating system environments in your private data centers through a single management console. For more information, see [Overview of OS Management Hub]."""), short_help=cli_util.override('software_source.software_source_root_group.short_help', """OS Management Hub API"""))
+@click.command(cli_util.override('software_source.software_source_root_group.command_name', 'software-source'), cls=CommandGroupWithAlias, help=cli_util.override('software_source.software_source_root_group.help', """Use the OS Management Hub API to manage and monitor updates and patches for instances in OCI, your private data center, or 3rd-party clouds.
+For more information, see [Overview of OS Management Hub]."""), short_help=cli_util.override('software_source.software_source_root_group.short_help', """OS Management Hub API"""))
 @cli_util.help_option_group
 def software_source_root_group():
     pass
 
 
-@click.command(cli_util.override('software_source.software_source_group.command_name', 'software-source'), cls=CommandGroupWithAlias, help="""A software source contains a collection of packages.""")
+@click.command(cli_util.override('software_source.software_source_group.command_name', 'software-source'), cls=CommandGroupWithAlias, help="""The object that defines a software source. A software source contains a collection of packages. For more information, see [Managing Software Sources].""")
 @cli_util.help_option_group
 def software_source_group():
     pass
 
 
-@click.command(cli_util.override('software_source.erratum_group.command_name', 'erratum'), cls=CommandGroupWithAlias, help="""Details about the erratum.""")
+@click.command(cli_util.override('software_source.erratum_group.command_name', 'erratum'), cls=CommandGroupWithAlias, help="""An object that defines an erratum..""")
 @cli_util.help_option_group
 def erratum_group():
     pass
 
 
-@click.command(cli_util.override('software_source.module_stream_group.command_name', 'module-stream'), cls=CommandGroupWithAlias, help="""A module stream provided by a software source.""")
+@click.command(cli_util.override('software_source.module_stream_group.command_name', 'module-stream'), cls=CommandGroupWithAlias, help="""An object that defines a module stream provided by a software source.""")
 @cli_util.help_option_group
 def module_stream_group():
     pass
 
 
-@click.command(cli_util.override('software_source.module_stream_profile_group.command_name', 'module-stream-profile'), cls=CommandGroupWithAlias, help="""A module stream profile provided by a software source.""")
+@click.command(cli_util.override('software_source.module_stream_profile_group.command_name', 'module-stream-profile'), cls=CommandGroupWithAlias, help="""An object that defines a module stream profile provide by a software source.""")
 @cli_util.help_option_group
 def module_stream_profile_group():
     pass
 
 
-@click.command(cli_util.override('software_source.package_group_group.command_name', 'package-group'), cls=CommandGroupWithAlias, help="""Yum/DNF package group, category or environment.""")
+@click.command(cli_util.override('software_source.package_group_group.command_name', 'package-group'), cls=CommandGroupWithAlias, help="""Yum or DNF package group, category, or environment.""")
 @cli_util.help_option_group
 def package_group_group():
     pass
@@ -60,10 +61,69 @@ software_source_root_group.add_command(module_stream_profile_group)
 software_source_root_group.add_command(package_group_group)
 
 
-@software_source_group.command(name=cli_util.override('software_source.change_availability_of_software_sources.command_name', 'change-availability-of'), help=u"""Updates the availability for a list of specified software sources. \n[Command Reference](changeAvailabilityOfSoftwareSources)""")
-@cli_util.option('--software-source-availabilities', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of objects containing software source ids and its availability.
+@software_source_group.command(name=cli_util.override('software_source.add_packages_to_software_source.command_name', 'add'), help=u"""Adds packages to a software source. This operation can only be done for custom and versioned custom software sources that are not created using filters. For a versioned custom software source, you can only add packages when the source is created. Once content is added to a versioned custom software source, it is immutable. \n[Command Reference](addPackagesToSoftwareSource)""")
+@cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
+@cli_util.option('--packages', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of packages specified by the full package name (NEVRA.rpm).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'packages': {'module': 'os_management_hub', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'packages': {'module': 'os_management_hub', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def add_packages_to_software_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, software_source_id, packages, if_match):
 
-This option is a JSON list with items of type SoftwareSourceAvailability.  For documentation on SoftwareSourceAvailability please see our API reference: https://docs.cloud.oracle.com/api/#/en/softwaresource/20220901/datatypes/SoftwareSourceAvailability.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+        raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['packages'] = cli_util.parse_json_parameter("packages", packages)
+
+    client = cli_util.build_client('os_management_hub', 'software_source', ctx)
+    result = client.add_packages_to_software_source(
+        software_source_id=software_source_id,
+        add_packages_to_software_source_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@software_source_group.command(name=cli_util.override('software_source.change_availability_of_software_sources.command_name', 'change-availability-of'), help=u"""Updates the availability for a list of specified software sources. \n[Command Reference](changeAvailabilityOfSoftwareSources)""")
+@cli_util.option('--software-source-availabilities', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of vendor software sources and their availability statuses.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'software-source-availabilities': {'module': 'os_management_hub', 'class': 'list[SoftwareSourceAvailability]'}})
 @cli_util.help_option
 @click.pass_context
@@ -75,9 +135,7 @@ def change_availability_of_software_sources(ctx, from_json, software_source_avai
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-
-    if software_source_availabilities is not None:
-        _details['softwareSourceAvailabilities'] = cli_util.parse_json_parameter("software_source_availabilities", software_source_availabilities)
+    _details['softwareSourceAvailabilities'] = cli_util.parse_json_parameter("software_source_availabilities", software_source_availabilities)
 
     client = cli_util.build_client('os_management_hub', 'software_source', ctx)
     result = client.change_availability_of_software_sources(
@@ -87,9 +145,40 @@ def change_availability_of_software_sources(ctx, from_json, software_source_avai
     cli_util.render_response(result, ctx)
 
 
+@software_source_group.command(name=cli_util.override('software_source.change_software_source_compartment.command_name', 'change-compartment'), help=u"""Moves the specified software sources to a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeSoftwareSourceCompartment)""")
+@cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the software source to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_software_source_compartment(ctx, from_json, software_source_id, compartment_id, if_match):
+
+    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+        raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('os_management_hub', 'software_source', ctx)
+    result = client.change_software_source_compartment(
+        software_source_id=software_source_id,
+        change_software_source_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @software_source_group.command(name=cli_util.override('software_source.create_entitlement.command_name', 'create-entitlement'), help=u"""Registers the necessary entitlement credentials for OS vendor software sources. \n[Command Reference](createEntitlement)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy containing the entitlement.""")
-@cli_util.option('--csi', required=True, help=u"""A Customer Support Identifier (CSI) is a unique key given to a customer to unlock software sources. It uniquely identifies the entitlement.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the tenancy containing the entitlement.""")
+@cli_util.option('--csi', required=True, help=u"""The Customer Support Identifier (CSI) which unlocks the software sources. The CSI is is a unique key given to a customer and it uniquely identifies the entitlement.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -113,10 +202,10 @@ def create_entitlement(ctx, from_json, compartment_id, csi):
 
 
 @software_source_group.command(name=cli_util.override('software_source.create_software_source.command_name', 'create'), help=u"""Creates a new versioned or custom software source. \n[Command Reference](createSoftwareSource)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy containing the software source.""")
-@cli_util.option('--display-name', required=True, help=u"""User friendly name for the software source.""")
-@cli_util.option('--software-source-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VENDOR", "CUSTOM", "VERSIONED"]), help=u"""Type of the software source.""")
-@cli_util.option('--description', help=u"""Information specified by the user about the software source.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the software source.""")
+@cli_util.option('--software-source-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VENDOR", "CUSTOM", "VERSIONED"]), help=u"""Type of software source.""")
+@cli_util.option('--display-name', help=u"""User-friendly name for the software source. Does not have to be unique and you can change the name later. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""User-specified description for the software source. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -127,15 +216,17 @@ def create_entitlement(ctx, from_json, compartment_id, csi):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'os_management_hub', 'class': 'SoftwareSource'})
 @cli_util.wrap_exceptions
-def create_software_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, software_source_type, description, freeform_tags, defined_tags):
+def create_software_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, software_source_type, display_name, description, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
     _details['compartmentId'] = compartment_id
-    _details['displayName'] = display_name
     _details['softwareSourceType'] = software_source_type
+
+    if display_name is not None:
+        _details['displayName'] = display_name
 
     if description is not None:
         _details['description'] = description
@@ -182,31 +273,36 @@ def create_software_source(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 
 @software_source_group.command(name=cli_util.override('software_source.create_software_source_create_custom_software_source_details.command_name', 'create-software-source-create-custom-software-source-details'), help=u"""Creates a new versioned or custom software source. \n[Command Reference](createSoftwareSource)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy containing the software source.""")
-@cli_util.option('--display-name', required=True, help=u"""User friendly name for the software source.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the software source.""")
 @cli_util.option('--vendor-software-sources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of vendor software sources.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--description', help=u"""Information specified by the user about the software source.""")
+@cli_util.option('--display-name', help=u"""User-friendly name for the software source. Does not have to be unique and you can change the name later. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""User-specified description for the software source. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--custom-software-source-filter', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-automatically-updated', type=click.BOOL, help=u"""Indicates whether service should automatically update the custom software source for the user.""")
+@cli_util.option('--is-automatically-updated', type=click.BOOL, help=u"""Indicates whether the service should automatically update the custom software source to use the latest package versions available. The service reviews packages levels once a day.""")
+@cli_util.option('--is-auto-resolve-dependencies', type=click.BOOL, help=u"""Indicates whether the service should automatically resolve package dependencies when including specific packages in the software source.""")
+@cli_util.option('--is-created-from-package-list', type=click.BOOL, help=u"""Indicates whether the service should create the software source from a list of packages provided by the user.""")
+@cli_util.option('--packages', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A property used for compatibility only. It doesn't provide a complete list of packages. See [AddPackagesToSoftwareSourceDetails] for providing the list of packages used to create the software source when isCreatedFromPackageList is set to true.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}, 'vendor-software-sources': {'module': 'os_management_hub', 'class': 'list[Id]'}, 'custom-software-source-filter': {'module': 'os_management_hub', 'class': 'CustomSoftwareSourceFilter'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}, 'vendor-software-sources': {'module': 'os_management_hub', 'class': 'list[Id]'}, 'custom-software-source-filter': {'module': 'os_management_hub', 'class': 'CustomSoftwareSourceFilter'}, 'packages': {'module': 'os_management_hub', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}, 'vendor-software-sources': {'module': 'os_management_hub', 'class': 'list[Id]'}, 'custom-software-source-filter': {'module': 'os_management_hub', 'class': 'CustomSoftwareSourceFilter'}}, output_type={'module': 'os_management_hub', 'class': 'SoftwareSource'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}, 'vendor-software-sources': {'module': 'os_management_hub', 'class': 'list[Id]'}, 'custom-software-source-filter': {'module': 'os_management_hub', 'class': 'CustomSoftwareSourceFilter'}, 'packages': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'SoftwareSource'})
 @cli_util.wrap_exceptions
-def create_software_source_create_custom_software_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, vendor_software_sources, description, freeform_tags, defined_tags, custom_software_source_filter, is_automatically_updated):
+def create_software_source_create_custom_software_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, vendor_software_sources, display_name, description, freeform_tags, defined_tags, custom_software_source_filter, is_automatically_updated, is_auto_resolve_dependencies, is_created_from_package_list, packages):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
     _details['compartmentId'] = compartment_id
-    _details['displayName'] = display_name
     _details['vendorSoftwareSources'] = cli_util.parse_json_parameter("vendor_software_sources", vendor_software_sources)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
 
     if description is not None:
         _details['description'] = description
@@ -222,6 +318,15 @@ def create_software_source_create_custom_software_source_details(ctx, from_json,
 
     if is_automatically_updated is not None:
         _details['isAutomaticallyUpdated'] = is_automatically_updated
+
+    if is_auto_resolve_dependencies is not None:
+        _details['isAutoResolveDependencies'] = is_auto_resolve_dependencies
+
+    if is_created_from_package_list is not None:
+        _details['isCreatedFromPackageList'] = is_created_from_package_list
+
+    if packages is not None:
+        _details['packages'] = cli_util.parse_json_parameter("packages", packages)
 
     _details['softwareSourceType'] = 'CUSTOM'
 
@@ -260,33 +365,111 @@ def create_software_source_create_custom_software_source_details(ctx, from_json,
     cli_util.render_response(result, ctx)
 
 
-@software_source_group.command(name=cli_util.override('software_source.create_software_source_create_versioned_custom_software_source_details.command_name', 'create-software-source-create-versioned-custom-software-source-details'), help=u"""Creates a new versioned or custom software source. \n[Command Reference](createSoftwareSource)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy containing the software source.""")
-@cli_util.option('--display-name', required=True, help=u"""User friendly name for the software source.""")
-@cli_util.option('--vendor-software-sources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of vendor software sources.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--software-source-version', required=True, help=u"""The version to assign to this custom software source.""")
-@cli_util.option('--description', help=u"""Information specified by the user about the software source.""")
+@software_source_group.command(name=cli_util.override('software_source.create_software_source_create_vendor_software_source_details.command_name', 'create-software-source-create-vendor-software-source-details'), help=u"""Creates a new versioned or custom software source. \n[Command Reference](createSoftwareSource)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the software source.""")
+@cli_util.option('--origin-software-source-id', required=True, help=u"""The [OCID] of the vendor software source in the root compartment that is being replicated.""")
+@cli_util.option('--display-name', help=u"""User-friendly name for the software source. Does not have to be unique and you can change the name later. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""User-specified description for the software source. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--custom-software-source-filter', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}, 'vendor-software-sources': {'module': 'os_management_hub', 'class': 'list[Id]'}, 'custom-software-source-filter': {'module': 'os_management_hub', 'class': 'CustomSoftwareSourceFilter'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}, 'vendor-software-sources': {'module': 'os_management_hub', 'class': 'list[Id]'}, 'custom-software-source-filter': {'module': 'os_management_hub', 'class': 'CustomSoftwareSourceFilter'}}, output_type={'module': 'os_management_hub', 'class': 'SoftwareSource'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'os_management_hub', 'class': 'SoftwareSource'})
 @cli_util.wrap_exceptions
-def create_software_source_create_versioned_custom_software_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, vendor_software_sources, software_source_version, description, freeform_tags, defined_tags, custom_software_source_filter):
+def create_software_source_create_vendor_software_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, origin_software_source_id, display_name, description, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
     _details['compartmentId'] = compartment_id
-    _details['displayName'] = display_name
+    _details['originSoftwareSourceId'] = origin_software_source_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['softwareSourceType'] = 'VENDOR'
+
+    client = cli_util.build_client('os_management_hub', 'software_source', ctx)
+    result = client.create_software_source(
+        create_software_source_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@software_source_group.command(name=cli_util.override('software_source.create_software_source_create_versioned_custom_software_source_details.command_name', 'create-software-source-create-versioned-custom-software-source-details'), help=u"""Creates a new versioned or custom software source. \n[Command Reference](createSoftwareSource)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the software source.""")
+@cli_util.option('--vendor-software-sources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of vendor software sources.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--software-source-version', required=True, help=u"""The version to assign to this custom software source.""")
+@cli_util.option('--display-name', help=u"""User-friendly name for the software source. Does not have to be unique and you can change the name later. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""User-specified description for the software source. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--custom-software-source-filter', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-auto-resolve-dependencies', type=click.BOOL, help=u"""Indicates whether the service should automatically resolve package dependencies when including specific packages in the software source.""")
+@cli_util.option('--is-created-from-package-list', type=click.BOOL, help=u"""Indicates whether the service should create the software source from a list of packages provided by the user.""")
+@cli_util.option('--packages', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A property used for compatibility only. It doesn't provide a complete list of packages. See [AddPackagesToSoftwareSourceDetails] for providing the list of packages used to create the software source when isCreatedFromPackageList is set to true.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}, 'vendor-software-sources': {'module': 'os_management_hub', 'class': 'list[Id]'}, 'custom-software-source-filter': {'module': 'os_management_hub', 'class': 'CustomSoftwareSourceFilter'}, 'packages': {'module': 'os_management_hub', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}, 'vendor-software-sources': {'module': 'os_management_hub', 'class': 'list[Id]'}, 'custom-software-source-filter': {'module': 'os_management_hub', 'class': 'CustomSoftwareSourceFilter'}, 'packages': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'SoftwareSource'})
+@cli_util.wrap_exceptions
+def create_software_source_create_versioned_custom_software_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, vendor_software_sources, software_source_version, display_name, description, freeform_tags, defined_tags, custom_software_source_filter, is_auto_resolve_dependencies, is_created_from_package_list, packages):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
     _details['vendorSoftwareSources'] = cli_util.parse_json_parameter("vendor_software_sources", vendor_software_sources)
     _details['softwareSourceVersion'] = software_source_version
+
+    if display_name is not None:
+        _details['displayName'] = display_name
 
     if description is not None:
         _details['description'] = description
@@ -299,6 +482,15 @@ def create_software_source_create_versioned_custom_software_source_details(ctx, 
 
     if custom_software_source_filter is not None:
         _details['customSoftwareSourceFilter'] = cli_util.parse_json_parameter("custom_software_source_filter", custom_software_source_filter)
+
+    if is_auto_resolve_dependencies is not None:
+        _details['isAutoResolveDependencies'] = is_auto_resolve_dependencies
+
+    if is_created_from_package_list is not None:
+        _details['isCreatedFromPackageList'] = is_created_from_package_list
+
+    if packages is not None:
+        _details['packages'] = cli_util.parse_json_parameter("packages", packages)
 
     _details['softwareSourceType'] = 'VERSIONED'
 
@@ -338,10 +530,10 @@ def create_software_source_create_versioned_custom_software_source_details(ctx, 
 
 
 @software_source_group.command(name=cli_util.override('software_source.delete_software_source.command_name', 'delete'), help=u"""Deletes the specified software source. \n[Command Reference](deleteSoftwareSource)""")
-@cli_util.option('--software-source-id', required=True, help=u"""The software source OCID.""")
+@cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -401,9 +593,9 @@ def delete_software_source(ctx, from_json, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@erratum_group.command(name=cli_util.override('software_source.get_erratum.command_name', 'get'), help=u"""Gets information about the specified erratum by its advisory name. \n[Command Reference](getErratum)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the resources to list. This parameter is required.""")
-@cli_util.option('--name', required=True, help=u"""The erratum name (e.g. ELSA-2023-34678).""")
+@erratum_group.command(name=cli_util.override('software_source.get_erratum.command_name', 'get'), help=u"""Returns information about the specified erratum based on its advisory name. \n[Command Reference](getErratum)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment. This parameter is required and returns only resources contained within the specified compartment.""")
+@cli_util.option('--name', required=True, help=u"""The erratum name (such as ELSA-2023-34678).""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -425,8 +617,8 @@ def get_erratum(ctx, from_json, compartment_id, name):
     cli_util.render_response(result, ctx)
 
 
-@module_stream_group.command(name=cli_util.override('software_source.get_module_stream.command_name', 'get'), help=u"""Gets information about the specified module stream in a software source. \n[Command Reference](getModuleStream)""")
-@cli_util.option('--software-source-id', required=True, help=u"""The software source OCID.""")
+@module_stream_group.command(name=cli_util.override('software_source.get_module_stream.command_name', 'get'), help=u"""Returns information about the specified module stream in a software source. \n[Command Reference](getModuleStream)""")
+@cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
 @cli_util.option('--module-name', required=True, help=u"""The name of the module.""")
 @cli_util.option('--stream-name', required=True, help=u"""The name of the stream of the containing module.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -454,9 +646,9 @@ def get_module_stream(ctx, from_json, software_source_id, module_name, stream_na
     cli_util.render_response(result, ctx)
 
 
-@module_stream_profile_group.command(name=cli_util.override('software_source.get_module_stream_profile.command_name', 'get'), help=u"""Gets information about the specified module stream profile in a software source. \n[Command Reference](getModuleStreamProfile)""")
-@cli_util.option('--software-source-id', required=True, help=u"""The software source OCID.""")
-@cli_util.option('--profile-name', required=True, help=u"""The name of the profile of the containing module stream.""")
+@module_stream_profile_group.command(name=cli_util.override('software_source.get_module_stream_profile.command_name', 'get'), help=u"""Returns information about the specified module stream profile in a software source. \n[Command Reference](getModuleStreamProfile)""")
+@cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
+@cli_util.option('--profile-name', required=True, help=u"""The name of the module stream profile.""")
 @cli_util.option('--module-name', required=True, help=u"""The name of a module.""")
 @cli_util.option('--stream-name', required=True, help=u"""The name of the stream of the containing module.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -485,8 +677,8 @@ def get_module_stream_profile(ctx, from_json, software_source_id, profile_name, 
     cli_util.render_response(result, ctx)
 
 
-@package_group_group.command(name=cli_util.override('software_source.get_package_group.command_name', 'get'), help=u"""Gets information about the specified package group from a software source. \n[Command Reference](getPackageGroup)""")
-@cli_util.option('--software-source-id', required=True, help=u"""The software source OCID.""")
+@package_group_group.command(name=cli_util.override('software_source.get_package_group.command_name', 'get'), help=u"""Returns information about the specified package group from a software source. \n[Command Reference](getPackageGroup)""")
+@cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
 @cli_util.option('--package-group-id', required=True, help=u"""The unique package group identifier.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -512,8 +704,8 @@ def get_package_group(ctx, from_json, software_source_id, package_group_id):
     cli_util.render_response(result, ctx)
 
 
-@software_source_group.command(name=cli_util.override('software_source.get_software_package.command_name', 'get-software-package'), help=u"""Gets information about the specified software package. \n[Command Reference](getSoftwarePackage)""")
-@cli_util.option('--software-source-id', required=True, help=u"""The software source OCID.""")
+@software_source_group.command(name=cli_util.override('software_source.get_software_package.command_name', 'get-software-package'), help=u"""Returns information about the specified software package. \n[Command Reference](getSoftwarePackage)""")
+@cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
 @cli_util.option('--software-package-name', required=True, help=u"""The name of the software package.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -539,8 +731,30 @@ def get_software_package(ctx, from_json, software_source_id, software_package_na
     cli_util.render_response(result, ctx)
 
 
-@software_source_group.command(name=cli_util.override('software_source.get_software_source.command_name', 'get'), help=u"""Gets information about the specified software source. \n[Command Reference](getSoftwareSource)""")
-@cli_util.option('--software-source-id', required=True, help=u"""The software source OCID.""")
+@software_source_group.command(name=cli_util.override('software_source.get_software_package_by_name.command_name', 'get-software-package-by-name'), help=u"""Returns information about the specified software package based on its fully qualified name. \n[Command Reference](getSoftwarePackageByName)""")
+@cli_util.option('--software-package-name', required=True, help=u"""The name of the software package.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management_hub', 'class': 'SoftwarePackage'})
+@cli_util.wrap_exceptions
+def get_software_package_by_name(ctx, from_json, software_package_name):
+
+    if isinstance(software_package_name, six.string_types) and len(software_package_name.strip()) == 0:
+        raise click.UsageError('Parameter --software-package-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management_hub', 'software_source', ctx)
+    result = client.get_software_package_by_name(
+        software_package_name=software_package_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@software_source_group.command(name=cli_util.override('software_source.get_software_source.command_name', 'get'), help=u"""Returns information about the specified software source. \n[Command Reference](getSoftwareSource)""")
+@cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -561,10 +775,82 @@ def get_software_source(ctx, from_json, software_source_id):
     cli_util.render_response(result, ctx)
 
 
-@software_source_group.command(name=cli_util.override('software_source.list_entitlements.command_name', 'list-entitlements'), help=u"""Lists entitlements in the specified tenancy OCID. Filter the list against a variety of criteria including but not limited to its CSI, and vendor name. \n[Command Reference](listEntitlements)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the resources to list. This parameter is required.""")
+@software_source_group.command(name=cli_util.override('software_source.list_all_software_packages.command_name', 'list-all-software-packages'), help=u"""Lists software packages available through the OS Management Hub service.  Filter the list against a variety of criteria including but not limited to its name. \n[Command Reference](listAllSoftwarePackages)""")
+@cli_util.option('--display-name', help=u"""A filter to return resources that match the given user-friendly name.""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
+@cli_util.option('--version-parameterconflict', help=u"""A filter to return software packages that match the given version.""")
+@cli_util.option('--architecture', type=custom_types.CliCaseInsensitiveChoice(["I386", "I686", "AARCH64", "X86_64", "SRC", "NOARCH", "OTHER"]), help=u"""A filter to return software packages that match the given architecture.""")
+@cli_util.option('--is-latest', type=click.BOOL, help=u"""Indicates whether to list only the latest versions of packages, module streams, and stream profiles.""")
+@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "ALL"]), help=u"""A filter to return only resources that match the given operating system family.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `3`""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName"]), help=u"""The field to sort packages by. Only one sort order may be provided. Default order for displayName is ascending. If no value is specified displayName is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management_hub', 'class': 'SoftwarePackageCollection'})
+@cli_util.wrap_exceptions
+def list_all_software_packages(ctx, from_json, all_pages, page_size, display_name, display_name_contains, version_parameterconflict, architecture, is_latest, os_family, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if display_name_contains is not None:
+        kwargs['display_name_contains'] = display_name_contains
+    if version_parameterconflict is not None:
+        kwargs['version'] = version_parameterconflict
+    if architecture is not None:
+        kwargs['architecture'] = architecture
+    if is_latest is not None:
+        kwargs['is_latest'] = is_latest
+    if os_family is not None:
+        kwargs['os_family'] = os_family
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management_hub', 'software_source', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_all_software_packages,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_all_software_packages,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_all_software_packages(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@software_source_group.command(name=cli_util.override('software_source.list_entitlements.command_name', 'list-entitlements'), help=u"""Lists entitlements in the specified tenancy [OCID]. Filter the list against a variety of criteria including but not limited to its Customer Support Identifier (CSI), and vendor name. \n[Command Reference](listEntitlements)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment. This parameter is required and returns only resources contained within the specified compartment.""")
 @cli_util.option('--csi', help=u"""A filter to return entitlements that match the given CSI.""")
-@cli_util.option('--vendor-name', type=custom_types.CliCaseInsensitiveChoice(["ORACLE"]), help=u"""A filter to return only profiles that match the given vendorName.""")
+@cli_util.option('--vendor-name', type=custom_types.CliCaseInsensitiveChoice(["ORACLE", "MICROSOFT"]), help=u"""A filter to return only resources that match the given vendor name.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -626,13 +912,14 @@ def list_entitlements(ctx, from_json, all_pages, page_size, compartment_id, csi,
 
 
 @erratum_group.command(name=cli_util.override('software_source.list_errata.command_name', 'list-errata'), help=u"""Lists all of the currently available errata. Filter the list against a variety of criteria including but not limited to its name, classification type, advisory severity, and OS family. \n[Command Reference](listErrata)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the resources to list. This parameter is required.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment. This parameter is required and returns only resources contained within the specified compartment.""")
 @cli_util.option('--name', multiple=True, help=u"""The assigned erratum name. It's unique and not changeable.
 
 Example: `ELSA-2020-5804`""")
 @cli_util.option('--name-contains', help=u"""A filter to return resources that may partially match the erratum name given.""")
 @cli_util.option('--classification-type', type=custom_types.CliCaseInsensitiveChoice(["SECURITY", "BUGFIX", "ENHANCEMENT", "OTHER"]), multiple=True, help=u"""A filter to return only packages that match the given update classification type.""")
-@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7"]), help=u"""A filter to return only profiles that match the given osFamily.""")
+@cli_util.option('--advisory-type', type=custom_types.CliCaseInsensitiveChoice(["SECURITY", "BUGFIX", "ENHANCEMENT"]), multiple=True, help=u"""A filter to return only errata that match the given advisory types.""")
+@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "ALL"]), help=u"""A filter to return only resources that match the given operating system family.""")
 @cli_util.option('--advisory-severity', type=custom_types.CliCaseInsensitiveChoice(["LOW", "MODERATE", "IMPORTANT", "CRITICAL"]), multiple=True, help=u"""The advisory severity.""")
 @cli_util.option('--time-issue-date-start', type=custom_types.CLI_DATETIME, help=u"""The issue date after which to list all errata, in ISO 8601 format
 
@@ -655,7 +942,7 @@ Example: `3`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'name': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'ErratumCollection'})
 @cli_util.wrap_exceptions
-def list_errata(ctx, from_json, all_pages, page_size, compartment_id, name, name_contains, classification_type, os_family, advisory_severity, time_issue_date_start, time_issue_date_end, limit, page, sort_order, sort_by):
+def list_errata(ctx, from_json, all_pages, page_size, compartment_id, name, name_contains, classification_type, advisory_type, os_family, advisory_severity, time_issue_date_start, time_issue_date_end, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -667,6 +954,8 @@ def list_errata(ctx, from_json, all_pages, page_size, compartment_id, name, name
         kwargs['name_contains'] = name_contains
     if classification_type is not None and len(classification_type) > 0:
         kwargs['classification_type'] = classification_type
+    if advisory_type is not None and len(advisory_type) > 0:
+        kwargs['advisory_type'] = advisory_type
     if os_family is not None:
         kwargs['os_family'] = os_family
     if advisory_severity is not None and len(advisory_severity) > 0:
@@ -710,10 +999,10 @@ def list_errata(ctx, from_json, all_pages, page_size, compartment_id, name, name
     cli_util.render_response(result, ctx)
 
 
-@software_source_group.command(name=cli_util.override('software_source.list_module_stream_profiles.command_name', 'list-module-stream-profiles'), help=u"""Lists module stream profiles from the specified software source OCID. Filter the list against a variety of criteria including but not limited to its module name, stream name, and (profile) name. \n[Command Reference](listModuleStreamProfiles)""")
-@cli_util.option('--software-source-id', required=True, help=u"""The software source OCID.""")
+@software_source_group.command(name=cli_util.override('software_source.list_module_stream_profiles.command_name', 'list-module-stream-profiles'), help=u"""Lists module stream profiles from the specified software source [OCID]. Filter the list against a variety of criteria including but not limited to its module name, stream name, and profile name. \n[Command Reference](listModuleStreamProfiles)""")
+@cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
 @cli_util.option('--module-name', help=u"""The name of a module. This parameter is required if a streamName is specified.""")
-@cli_util.option('--stream-name', help=u"""The name of the stream of the containing module.  This parameter is required if a profileName is specified.""")
+@cli_util.option('--stream-name', help=u"""The name of the module stream. This parameter is required if a profile name is specified.""")
 @cli_util.option('--name', help=u"""The name of the entity to be queried.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -780,11 +1069,11 @@ def list_module_stream_profiles(ctx, from_json, all_pages, page_size, software_s
     cli_util.render_response(result, ctx)
 
 
-@software_source_group.command(name=cli_util.override('software_source.list_module_streams.command_name', 'list-module-streams'), help=u"""Lists module streams from the specified software source OCID. Filter the list against a variety of criteria including but not limited to its module name and (stream) name. \n[Command Reference](listModuleStreams)""")
-@cli_util.option('--software-source-id', required=True, help=u"""The software source OCID.""")
+@software_source_group.command(name=cli_util.override('software_source.list_module_streams.command_name', 'list-module-streams'), help=u"""Lists module streams from the specified software source [OCID]. Filter the list against a variety of criteria including but not limited to its module name and (stream) name. \n[Command Reference](listModuleStreams)""")
+@cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
 @cli_util.option('--module-name', help=u"""The name of a module. This parameter is required if a streamName is specified.""")
 @cli_util.option('--name', help=u"""The name of the entity to be queried.""")
-@cli_util.option('--is-latest', type=click.BOOL, help=u"""A boolean variable that is used to list only the latest versions of packages, module streams, and stream profiles when set to true. All packages, module streams, and stream profiles are returned when set to false.""")
+@cli_util.option('--is-latest', type=click.BOOL, help=u"""Indicates whether to list only the latest versions of packages, module streams, and stream profiles.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -853,9 +1142,9 @@ def list_module_streams(ctx, from_json, all_pages, page_size, software_source_id
     cli_util.render_response(result, ctx)
 
 
-@software_source_group.command(name=cli_util.override('software_source.list_package_groups.command_name', 'list-package-groups'), help=u"""Lists package groups that associate with the specified software source OCID. Filter the list against a variety of criteria including but not limited to its name, and package group type. \n[Command Reference](listPackageGroups)""")
-@cli_util.option('--software-source-id', required=True, help=u"""The software source OCID.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list.""")
+@software_source_group.command(name=cli_util.override('software_source.list_package_groups.command_name', 'list-package-groups'), help=u"""Lists package groups that are associated with the specified software source [OCID]. Filter the list against a variety of criteria including but not limited to its name, and package group type. \n[Command Reference](listPackageGroups)""")
+@cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--name', help=u"""The name of the entity to be queried.""")
 @cli_util.option('--name-contains', help=u"""A filter to return resources that may partially match the name given.""")
 @cli_util.option('--group-type', type=custom_types.CliCaseInsensitiveChoice(["GROUP", "ENVIRONMENT", "CATEGORY"]), multiple=True, help=u"""A filter to return only package groups of the specified type.""")
@@ -926,13 +1215,103 @@ def list_package_groups(ctx, from_json, all_pages, page_size, software_source_id
     cli_util.render_response(result, ctx)
 
 
-@software_source_group.command(name=cli_util.override('software_source.list_software_packages.command_name', 'list-software-packages'), help=u"""Lists software packages in the specified software source.  Filter the list against a variety of criteria including but not limited to its name. \n[Command Reference](listSoftwarePackages)""")
-@cli_util.option('--software-source-id', required=True, help=u"""The software source OCID.""")
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
-
-Example: `My new resource`""")
+@software_source_group.command(name=cli_util.override('software_source.list_software_package_software_sources.command_name', 'list-software-package'), help=u"""Lists the software sources in the tenancy that contain the software package. Filter the list against a variety of criteria including but not limited to its name, type, architecture, and OS family. \n[Command Reference](listSoftwarePackageSoftwareSources)""")
+@cli_util.option('--software-package-name', required=True, help=u"""The name of the software package.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment. This parameter is required and returns only resources contained within the specified compartment.""")
+@cli_util.option('--software-source-type', type=custom_types.CliCaseInsensitiveChoice(["VENDOR", "CUSTOM", "VERSIONED"]), multiple=True, help=u"""The type of the software source.""")
+@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "ALL"]), multiple=True, help=u"""A filter to return only resources that match the given operating system family.""")
+@cli_util.option('--arch-type', type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC"]), multiple=True, help=u"""A filter to return only instances whose architecture type matches the given architecture.""")
+@cli_util.option('--availability', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "SELECTED", "RESTRICTED", "UNAVAILABLE"]), multiple=True, help=u"""The availabilities of the software source in a non-OCI environment for a tenancy.""")
+@cli_util.option('--availability-at-oci', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "SELECTED", "RESTRICTED", "UNAVAILABLE"]), multiple=True, help=u"""The availabilities of the software source in an OCI environment for a tenancy.""")
+@cli_util.option('--availability-anywhere', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "SELECTED", "RESTRICTED", "UNAVAILABLE"]), multiple=True, help=u"""The availabilities of the software source. Use this query parameter to filter across availabilities in different environments.""")
+@cli_util.option('--display-name', help=u"""A filter to return resources that match the given user-friendly name.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
-@cli_util.option('--is-latest', type=click.BOOL, help=u"""A boolean variable that is used to list only the latest versions of packages, module streams, and stream profiles when set to true. All packages, module streams, and stream profiles are returned when set to false.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `3`""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help=u"""A filter to return only software sources whose state matches the given state.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management_hub', 'class': 'SoftwareSourceCollection'})
+@cli_util.wrap_exceptions
+def list_software_package_software_sources(ctx, from_json, all_pages, page_size, software_package_name, compartment_id, software_source_type, os_family, arch_type, availability, availability_at_oci, availability_anywhere, display_name, display_name_contains, limit, page, sort_order, sort_by, lifecycle_state):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(software_package_name, six.string_types) and len(software_package_name.strip()) == 0:
+        raise click.UsageError('Parameter --software-package-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if software_source_type is not None and len(software_source_type) > 0:
+        kwargs['software_source_type'] = software_source_type
+    if os_family is not None and len(os_family) > 0:
+        kwargs['os_family'] = os_family
+    if arch_type is not None and len(arch_type) > 0:
+        kwargs['arch_type'] = arch_type
+    if availability is not None and len(availability) > 0:
+        kwargs['availability'] = availability
+    if availability_at_oci is not None and len(availability_at_oci) > 0:
+        kwargs['availability_at_oci'] = availability_at_oci
+    if availability_anywhere is not None and len(availability_anywhere) > 0:
+        kwargs['availability_anywhere'] = availability_anywhere
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if display_name_contains is not None:
+        kwargs['display_name_contains'] = display_name_contains
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if lifecycle_state is not None and len(lifecycle_state) > 0:
+        kwargs['lifecycle_state'] = lifecycle_state
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management_hub', 'software_source', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_software_package_software_sources,
+            software_package_name=software_package_name,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_software_package_software_sources,
+            limit,
+            page_size,
+            software_package_name=software_package_name,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_software_package_software_sources(
+            software_package_name=software_package_name,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@software_source_group.command(name=cli_util.override('software_source.list_software_packages.command_name', 'list-software-packages'), help=u"""Lists software packages in the specified software source.  Filter the list against a variety of criteria including but not limited to its name. \n[Command Reference](listSoftwarePackages)""")
+@cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
+@cli_util.option('--display-name', help=u"""A filter to return resources that match the given user-friendly name.""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
+@cli_util.option('--is-latest', type=click.BOOL, help=u"""Indicates whether to list only the latest versions of packages, module streams, and stream profiles.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -999,7 +1378,7 @@ def list_software_packages(ctx, from_json, all_pages, page_size, software_source
 
 
 @software_source_group.command(name=cli_util.override('software_source.list_software_source_vendors.command_name', 'list-software-source-vendors'), help=u"""Lists available software source vendors. Filter the list against a variety of criteria including but not limited to its name. \n[Command Reference](listSoftwareSourceVendors)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the resources to list. This parameter is required.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment. This parameter is required and returns only resources contained within the specified compartment.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name"]), help=u"""The field to sort software source vendors by. Only one sort order may be provided. Default order for name is ascending.""")
 @cli_util.option('--name', help=u"""The name of the entity to be queried.""")
@@ -1027,17 +1406,18 @@ def list_software_source_vendors(ctx, from_json, all_pages, compartment_id, sort
     cli_util.render_response(result, ctx)
 
 
-@software_source_group.command(name=cli_util.override('software_source.list_software_sources.command_name', 'list'), help=u"""Lists software sources that match the specified tenancy or software source OCID. Filter the list against a variety of criteria including but not limited to its name, status, architecture, and OS family. \n[Command Reference](listSoftwareSources)""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list.""")
-@cli_util.option('--software-source-id', help=u"""The OCID for the software source.""")
+@software_source_group.command(name=cli_util.override('software_source.list_software_sources.command_name', 'list'), help=u"""Lists software sources that match the specified tenancy or software source [OCID]. Filter the list against a variety of criteria including but not limited to its name, status, architecture, and OS family. \n[Command Reference](listSoftwareSources)""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--software-source-id', help=u"""The [OCID] for the software source.""")
 @cli_util.option('--software-source-type', type=custom_types.CliCaseInsensitiveChoice(["VENDOR", "CUSTOM", "VERSIONED"]), multiple=True, help=u"""The type of the software source.""")
-@cli_util.option('--vendor-name', type=custom_types.CliCaseInsensitiveChoice(["ORACLE"]), help=u"""A filter to return only profiles that match the given vendorName.""")
-@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7"]), multiple=True, help=u"""A filter to return only instances whose OS family type matches the given OS family.""")
+@cli_util.option('--vendor-name', type=custom_types.CliCaseInsensitiveChoice(["ORACLE", "MICROSOFT"]), help=u"""A filter to return only resources that match the given vendor name.""")
+@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "ALL"]), multiple=True, help=u"""A filter to return only resources that match the given operating system family.""")
 @cli_util.option('--arch-type', type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC"]), multiple=True, help=u"""A filter to return only instances whose architecture type matches the given architecture.""")
-@cli_util.option('--availability', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "SELECTED", "RESTRICTED"]), multiple=True, help=u"""The availabilities of the software source for a tenant.""")
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
-
-Example: `My new resource`""")
+@cli_util.option('--availability', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "SELECTED", "RESTRICTED", "UNAVAILABLE"]), multiple=True, help=u"""The availabilities of the software source in a non-OCI environment for a tenancy.""")
+@cli_util.option('--availability-at-oci', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "SELECTED", "RESTRICTED", "UNAVAILABLE"]), multiple=True, help=u"""The availabilities of the software source in an OCI environment for a tenancy.""")
+@cli_util.option('--availability-anywhere', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "SELECTED", "RESTRICTED", "UNAVAILABLE"]), multiple=True, help=u"""The availabilities of the software source. Use this query parameter to filter across availabilities in different environments.""")
+@cli_util.option('--is-mandatory-for-autonomous-linux', type=click.BOOL, help=u"""Indicates whether the software source is mandatory for the Autonomous Linux service.""")
+@cli_util.option('--display-name', help=u"""A filter to return resources that match the given user-friendly name.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
 @cli_util.option('--display-name-not-equal-to', multiple=True, help=u"""A multi filter to return resources that do not contains the given display names.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -1048,7 +1428,7 @@ Example: `50`""")
 Example: `3`""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleStates.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help=u"""A filter to return only software sources whose state matches the given state.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({'display-name-not-equal-to': {'module': 'os_management_hub', 'class': 'list[string]'}})
@@ -1056,7 +1436,7 @@ Example: `3`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'display-name-not-equal-to': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'SoftwareSourceCollection'})
 @cli_util.wrap_exceptions
-def list_software_sources(ctx, from_json, all_pages, page_size, compartment_id, software_source_id, software_source_type, vendor_name, os_family, arch_type, availability, display_name, display_name_contains, display_name_not_equal_to, limit, page, sort_order, sort_by, lifecycle_state):
+def list_software_sources(ctx, from_json, all_pages, page_size, compartment_id, software_source_id, software_source_type, vendor_name, os_family, arch_type, availability, availability_at_oci, availability_anywhere, is_mandatory_for_autonomous_linux, display_name, display_name_contains, display_name_not_equal_to, limit, page, sort_order, sort_by, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1076,6 +1456,12 @@ def list_software_sources(ctx, from_json, all_pages, page_size, compartment_id, 
         kwargs['arch_type'] = arch_type
     if availability is not None and len(availability) > 0:
         kwargs['availability'] = availability
+    if availability_at_oci is not None and len(availability_at_oci) > 0:
+        kwargs['availability_at_oci'] = availability_at_oci
+    if availability_anywhere is not None and len(availability_anywhere) > 0:
+        kwargs['availability_anywhere'] = availability_anywhere
+    if is_mandatory_for_autonomous_linux is not None:
+        kwargs['is_mandatory_for_autonomous_linux'] = is_mandatory_for_autonomous_linux
     if display_name is not None:
         kwargs['display_name'] = display_name
     if display_name_contains is not None:
@@ -1116,8 +1502,8 @@ def list_software_sources(ctx, from_json, all_pages, page_size, compartment_id, 
     cli_util.render_response(result, ctx)
 
 
-@software_source_group.command(name=cli_util.override('software_source.search_software_source_module_streams.command_name', 'search-software-source-module-streams'), help=u"""Lists modules from a list of software sources. Filter the list against a variety of criteria including the module name. \n[Command Reference](searchSoftwareSourceModuleStreams)""")
-@cli_util.option('--software-source-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of software source OCIDs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@software_source_group.command(name=cli_util.override('software_source.search_software_source_module_streams.command_name', 'search-software-source-module-streams'), help=u"""Returns a list of module streams from the specified software sources. Filter the list against a variety of criteria including the module name. \n[Command Reference](searchSoftwareSourceModuleStreams)""")
+@cli_util.option('--software-source-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of software source [OCIDs].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order.""")
 @cli_util.option('--module-name', help=u"""The name of a module.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["MODULENAME"]), help=u"""The field to sort by.""")
@@ -1161,11 +1547,11 @@ def search_software_source_module_streams(ctx, from_json, software_source_ids, s
     cli_util.render_response(result, ctx)
 
 
-@software_source_group.command(name=cli_util.override('software_source.search_software_source_modules.command_name', 'search-software-source-modules'), help=u"""Lists modules from a list of software sources. Filter the list against a variety of criteria including the (module) name. \n[Command Reference](searchSoftwareSourceModules)""")
-@cli_util.option('--software-source-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of software source OCIDs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@software_source_group.command(name=cli_util.override('software_source.search_software_source_modules.command_name', 'search-software-source-modules'), help=u"""Lists modules from a list of software sources. Filter the list against a variety of criteria including the module name. \n[Command Reference](searchSoftwareSourceModules)""")
+@cli_util.option('--software-source-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of sofware source [OCIDs].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order.""")
 @cli_util.option('--name', help=u"""The name of a module.""")
-@cli_util.option('--name-contains', help=u"""filters results, allowing only those with a name which contains the string.""")
+@cli_util.option('--name-contains', help=u"""A filter to return modules with a name that contains the given string.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME"]), help=u"""The field to sort by.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -1211,10 +1597,10 @@ def search_software_source_modules(ctx, from_json, software_source_ids, sort_ord
 
 
 @software_source_group.command(name=cli_util.override('software_source.search_software_source_package_groups.command_name', 'search-software-source-package-groups'), help=u"""Searches the package groups from the specified list of software sources. Filter the list against a variety of criteria including but not limited to its name, and group type. \n[Command Reference](searchSoftwareSourcePackageGroups)""")
-@cli_util.option('--software-source-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of software source OCIDs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--software-source-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of software source [OCIDs].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME"]), help=u"""The field to sort by.""")
-@cli_util.option('--name-contains', help=u"""filters results, allowing only those with a Name which contains the string.""")
+@cli_util.option('--name-contains', help=u"""A filter that returns package groups with a name that contains the given string.""")
 @cli_util.option('--group-type', help=u"""Indicates if this is a group, category or environment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -1260,10 +1646,10 @@ def search_software_source_package_groups(ctx, from_json, software_source_ids, s
 
 
 @software_source_group.command(name=cli_util.override('software_source.update_software_source.command_name', 'update'), help=u"""Updates the specified software source's details, including but not limited to name, description, and tags. \n[Command Reference](updateSoftwareSource)""")
-@cli_util.option('--software-source-id', required=True, help=u"""The software source OCID.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the tenancy containing the software source.""")
-@cli_util.option('--display-name', help=u"""User friendly name for the software source.""")
-@cli_util.option('--description', help=u"""Information specified by the user about the software source.""")
+@cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that contains the software source.""")
+@cli_util.option('--display-name', help=u"""User-friendly name for the software source.""")
+@cli_util.option('--description', help=u"""User-specified description of the software source.""")
 @cli_util.option('--software-source-type', type=custom_types.CliCaseInsensitiveChoice(["VENDOR", "CUSTOM", "VERSIONED"]), help=u"""Type of the software source.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1348,17 +1734,18 @@ def update_software_source(ctx, from_json, force, wait_for_state, max_wait_secon
 
 
 @software_source_group.command(name=cli_util.override('software_source.update_software_source_update_custom_software_source_details.command_name', 'update-software-source-update-custom-software-source-details'), help=u"""Updates the specified software source's details, including but not limited to name, description, and tags. \n[Command Reference](updateSoftwareSource)""")
-@cli_util.option('--software-source-id', required=True, help=u"""The software source OCID.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the tenancy containing the software source.""")
-@cli_util.option('--display-name', help=u"""User friendly name for the software source.""")
-@cli_util.option('--description', help=u"""Information specified by the user about the software source.""")
+@cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that contains the software source.""")
+@cli_util.option('--display-name', help=u"""User-friendly name for the software source.""")
+@cli_util.option('--description', help=u"""User-specified description of the software source.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vendor-software-sources', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of vendor software sources.
+@cli_util.option('--vendor-software-sources', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of vendor software sources that are used for the basis of the custom software source.
 
 This option is a JSON list with items of type Id.  For documentation on Id please see our API reference: https://docs.cloud.oracle.com/api/#/en/softwaresource/20220901/datatypes/Id.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--custom-software-source-filter', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-automatically-updated', type=click.BOOL, help=u"""Indicates whether service should automatically update the custom software source for the user.""")
+@cli_util.option('--is-automatically-updated', type=click.BOOL, help=u"""Indicates whether the service should automatically update the custom software source to use the latest package versions available. The service reviews packages levels once a day.""")
+@cli_util.option('--is-auto-resolve-dependencies', type=click.BOOL, help=u"""Indicates whether the service should automatically resolve package dependencies when including specific packages in the software source.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1369,7 +1756,7 @@ This option is a JSON list with items of type Id.  For documentation on Id pleas
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}, 'vendor-software-sources': {'module': 'os_management_hub', 'class': 'list[Id]'}, 'custom-software-source-filter': {'module': 'os_management_hub', 'class': 'CustomSoftwareSourceFilter'}}, output_type={'module': 'os_management_hub', 'class': 'SoftwareSource'})
 @cli_util.wrap_exceptions
-def update_software_source_update_custom_software_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, software_source_id, compartment_id, display_name, description, freeform_tags, defined_tags, vendor_software_sources, custom_software_source_filter, is_automatically_updated, if_match):
+def update_software_source_update_custom_software_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, software_source_id, compartment_id, display_name, description, freeform_tags, defined_tags, vendor_software_sources, custom_software_source_filter, is_automatically_updated, is_auto_resolve_dependencies, if_match):
 
     if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
         raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
@@ -1409,6 +1796,9 @@ def update_software_source_update_custom_software_source_details(ctx, from_json,
     if is_automatically_updated is not None:
         _details['isAutomaticallyUpdated'] = is_automatically_updated
 
+    if is_auto_resolve_dependencies is not None:
+        _details['isAutoResolveDependencies'] = is_auto_resolve_dependencies
+
     _details['softwareSourceType'] = 'CUSTOM'
 
     client = cli_util.build_client('os_management_hub', 'software_source', ctx)
@@ -1447,11 +1837,97 @@ def update_software_source_update_custom_software_source_details(ctx, from_json,
     cli_util.render_response(result, ctx)
 
 
+@software_source_group.command(name=cli_util.override('software_source.update_software_source_update_versioned_custom_software_source_details.command_name', 'update-software-source-update-versioned-custom-software-source-details'), help=u"""Updates the specified software source's details, including but not limited to name, description, and tags. \n[Command Reference](updateSoftwareSource)""")
+@cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that contains the software source.""")
+@cli_util.option('--display-name', help=u"""User-friendly name for the software source.""")
+@cli_util.option('--description', help=u"""User-specified description of the software source.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'os_management_hub', 'class': 'SoftwareSource'})
+@cli_util.wrap_exceptions
+def update_software_source_update_versioned_custom_software_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, software_source_id, compartment_id, display_name, description, freeform_tags, defined_tags, if_match):
+
+    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+        raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['softwareSourceType'] = 'VERSIONED'
+
+    client = cli_util.build_client('os_management_hub', 'software_source', ctx)
+    result = client.update_software_source(
+        software_source_id=software_source_id,
+        update_software_source_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @software_source_group.command(name=cli_util.override('software_source.update_software_source_update_vendor_software_source_details.command_name', 'update-software-source-update-vendor-software-source-details'), help=u"""Updates the specified software source's details, including but not limited to name, description, and tags. \n[Command Reference](updateSoftwareSource)""")
-@cli_util.option('--software-source-id', required=True, help=u"""The software source OCID.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the tenancy containing the software source.""")
-@cli_util.option('--display-name', help=u"""User friendly name for the software source.""")
-@cli_util.option('--description', help=u"""Information specified by the user about the software source.""")
+@cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that contains the software source.""")
+@cli_util.option('--display-name', help=u"""User-friendly name for the software source.""")
+@cli_util.option('--description', help=u"""User-specified description of the software source.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
