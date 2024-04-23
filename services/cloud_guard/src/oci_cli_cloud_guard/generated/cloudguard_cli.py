@@ -24,19 +24,21 @@ def cloud_guard_root_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.security_policy_collection_group.command_name', 'security-policy-collection'), cls=CommandGroupWithAlias, help="""Results of a security policy search. Contains `SecurityPolicySummary` items.""")
+@click.command(cli_util.override('cloud_guard.security_policy_collection_group.command_name', 'security-policy-collection'), cls=CommandGroupWithAlias, help="""Results of a security policy search.""")
 @cli_util.help_option_group
 def security_policy_collection_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.data_mask_rule_group.command_name', 'data-mask-rule'), cls=CommandGroupWithAlias, help="""A data mask rule specifies the conditions in which the value for a sensitive data field in the UI is to be hidden or displayed when viewed by specified groups of users. The DataMaskRule object contains the parameters for a data mask rule.""")
+@click.command(cli_util.override('cloud_guard.data_mask_rule_group.command_name', 'data-mask-rule'), cls=CommandGroupWithAlias, help="""A data mask rule specifies the conditions in which the value for a sensitive data field in the UI is to be hidden or displayed when viewed by specified groups of users. The DataMaskRule resource contains the parameters for a data mask rule.""")
 @cli_util.help_option_group
 def data_mask_rule_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.target_responder_recipe_responder_rule_group.command_name', 'target-responder-recipe-responder-rule'), cls=CommandGroupWithAlias, help="""Details of ResponderRule.""")
+@click.command(cli_util.override('cloud_guard.target_responder_recipe_responder_rule_group.command_name', 'target-responder-recipe-responder-rule'), cls=CommandGroupWithAlias, help="""A TargetResponderRecipeResponderRule resource contains a specific instance of a single responder rule.
+
+A TargetResponderRecipeRule resource: * Is effectively a copy of a ResponderRecipeRule resource in which users can make certain changes if it\u2019s Oracle-managed, and other changes if it\u2019s user-managed. * Is visible on the Cloud Guard Targets, Target Details page. * Is effectively located in a specific OCI compartment, through the ThreatResponderRecipe resource to which it belongs. * Can be modified by users, programmatically or through the UI. * Changes that can be made here apply locally, to resources in OCI compartments mapped to the target that attaches the associated responder recipe (in a TargetResponderRecipe resource), and override any changes made in rules associated with the corresponding ResponderRecipe resource.""")
 @cli_util.help_option_group
 def target_responder_recipe_responder_rule_group():
     pass
@@ -60,43 +62,53 @@ def resource_risk_score_aggregation_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""A description of workrequest status""")
+@click.command(cli_util.override('cloud_guard.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""Detailed information about a work request (WorkRequest resource).""")
 @cli_util.help_option_group
 def work_request_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.security_recipe_collection_group.command_name', 'security-recipe-collection'), cls=CommandGroupWithAlias, help="""Results of a security zone recipe search. Contains `SecurityRecipeSummary` items.""")
+@click.command(cli_util.override('cloud_guard.security_recipe_collection_group.command_name', 'security-recipe-collection'), cls=CommandGroupWithAlias, help="""Collection of Security Zones recipes (SecurityRecipeSummary resources), resulting from a security zone recipe search.""")
 @cli_util.help_option_group
 def security_recipe_collection_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.problem_group.command_name', 'problem'), cls=CommandGroupWithAlias, help="""Problems are at the core of Cloud Guard\u2019s functionality. A Problem object is created whenever an action or a configuration on a resource triggers a rule in a detector that\u2019s attached to the target containing the compartment where the resource is located. Each Problem object contains all the details for a single problem. This is the information for the problem that appears on the Cloud Guard Problems page.""")
+@click.command(cli_util.override('cloud_guard.problem_group.command_name', 'problem'), cls=CommandGroupWithAlias, help="""Problems are at the core of Cloud Guard\u2019s functionality. A Problem resource is created whenever an action or a configuration on a resource triggers a rule in a detector that\u2019s attached to the target containing the compartment where the resource is located. Each Problem resource contains all the details for a single problem. This is the information for the problem that appears on the Cloud Guard Problems page.""")
 @cli_util.help_option_group
 def problem_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.sighting_endpoint_summary_group.command_name', 'sighting-endpoint-summary'), cls=CommandGroupWithAlias, help="""Sighting Endpoints summary.""")
+@click.command(cli_util.override('cloud_guard.sighting_endpoint_summary_group.command_name', 'sighting-endpoint-summary'), cls=CommandGroupWithAlias, help="""A summary of sighting endpoints.""")
 @cli_util.help_option_group
 def sighting_endpoint_summary_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""An error encountered while executing a work request.""")
+@click.command(cli_util.override('cloud_guard.work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""Summary information for an error (WorkRequestError resource) encountered while executing a work request""")
 @cli_util.help_option_group
 def work_request_error_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.target_detector_recipe_group.command_name', 'target-detector-recipe'), cls=CommandGroupWithAlias, help="""Target Detector recipe""")
+@click.command(cli_util.override('cloud_guard.adhoc_query_group.command_name', 'adhoc-query'), cls=CommandGroupWithAlias, help="""Details of a adhoc query.""")
+@cli_util.help_option_group
+def adhoc_query_group():
+    pass
+
+
+@click.command(cli_util.override('cloud_guard.target_detector_recipe_group.command_name', 'target-detector-recipe'), cls=CommandGroupWithAlias, help="""A TargetDetectorRecipe resource contains a specific instance of one of the supported detector types (for example, activity, configuration, or threat) in which some settings can be modified specifically for a single target.
+
+A TargetDetectorRecipe resource: * Is effectively a copy of a DetectorRecipe resource in which users can make very limited changes if it\u2019s Oracle-managed, and more changes if it\u2019s user-managed. * Is visible on the Cloud Guard Targets, Target Details page. * Is located in a specific OCI compartment. * Can be modified by users, programmatically or through the UI. * Changes that can be made here override any settings in the corresponding DetectorRecipe, of which the TargetDetectorRecipe resource is effectively a copy, created when the detector recipe is attached to the target.""")
 @cli_util.help_option_group
 def target_detector_recipe_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.responder_recipe_group.command_name', 'responder-recipe'), cls=CommandGroupWithAlias, help="""Details of ResponderRecipe.""")
+@click.command(cli_util.override('cloud_guard.responder_recipe_group.command_name', 'responder-recipe'), cls=CommandGroupWithAlias, help="""A ResponderRecipe resource contains a specific instance of one of the supported detector types (for example, activity, configuration, or threat).
+
+A ResponderRecipe resource: * Is effectively a copy of a Responder resource in which users can make very limited changes if it\u2019s Oracle-managed, and more changes if it\u2019s user-managed. * Can also be created by cloning an existing ResponderRecipe resource, either user-managed or Oracle-managed. * Is visible on Cloud Guard\u2019s Responder Recipes page. * Is located in a specific OCI compartment. * Can be modified by users, programmatically or through the UI. * Changes that can be made here apply globally, to resources in all OCI compartments mapped to a target that attaches the responder recipe, but are overridden by any changes made in the corresponding TargetResponderRecipe resource (effectively created when the responder recipe is attached to the target).""")
 @cli_util.help_option_group
 def responder_recipe_group():
     pass
@@ -108,25 +120,37 @@ def responder_execution_trend_aggregation_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.security_zone_collection_group.command_name', 'security-zone-collection'), cls=CommandGroupWithAlias, help="""Results of a security zone search. Contains `SecurityZoneSummary` items.""")
+@click.command(cli_util.override('cloud_guard.security_zone_collection_group.command_name', 'security-zone-collection'), cls=CommandGroupWithAlias, help="""A collection of security zones. Results of a security zone search.""")
 @cli_util.help_option_group
 def security_zone_collection_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.security_policy_group.command_name', 'security-policy'), cls=CommandGroupWithAlias, help="""A security policy defines a security requirement for resources in a security zone. If a security zone enables a policy (using a recipe), then any action that attempts to violate that policy is denied.""")
+@click.command(cli_util.override('cloud_guard.security_policy_group.command_name', 'security-policy'), cls=CommandGroupWithAlias, help="""A security policy (SecurityPolicy resource) defines security requirements for resources in a security zone. If a security zone enables a security policy through a security recipe (SecurityRecipe resource), then any action that would violate that policy is blocked.""")
 @cli_util.help_option_group
 def security_policy_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.detector_recipe_group.command_name', 'detector-recipe'), cls=CommandGroupWithAlias, help="""A detector recipe is a collection of rules that can be configured to trigger problems that appear on the Cloud Guard Problems page. A DetectorRecipe object contains settings for a specific detector recipe, plus a list of the detector rules (DetectorRecipeDetectorRule objects) belonging to the DetectorRecipe object.""")
+@click.command(cli_util.override('cloud_guard.resource_group.command_name', 'resource'), cls=CommandGroupWithAlias, help="""Details of cloud guard resource""")
+@cli_util.help_option_group
+def resource_group():
+    pass
+
+
+@click.command(cli_util.override('cloud_guard.adhoc_query_result_collection_group.command_name', 'adhoc-query-result-collection'), cls=CommandGroupWithAlias, help="""Aggregated results for an adhoc query request""")
+@cli_util.help_option_group
+def adhoc_query_result_collection_group():
+    pass
+
+
+@click.command(cli_util.override('cloud_guard.detector_recipe_group.command_name', 'detector-recipe'), cls=CommandGroupWithAlias, help="""A detector recipe is a collection of rules that can be configured to trigger problems that appear on the Cloud Guard Problems page. A DetectorRecipe resource contains settings for a specific detector recipe, plus a list of the detector rules (DetectorRecipeDetectorRule resources) belonging to the DetectorRecipe resource.""")
 @cli_util.help_option_group
 def detector_recipe_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.detector_recipe_detector_rule_group.command_name', 'detector-recipe-detector-rule'), cls=CommandGroupWithAlias, help="""A DetectorRecipeDetectorRule object defines a single recipe rule in the collection for a DetectorRecipe object.""")
+@click.command(cli_util.override('cloud_guard.detector_recipe_detector_rule_group.command_name', 'detector-recipe-detector-rule'), cls=CommandGroupWithAlias, help="""A DetectorRecipeDetectorRule resource defines a single recipe rule in the collection for a DetectorRecipe resource.""")
 @cli_util.help_option_group
 def detector_recipe_detector_rule_group():
     pass
@@ -138,9 +162,21 @@ def problem_aggregation_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.data_source_group.command_name', 'data-source'), cls=CommandGroupWithAlias, help="""Details of Data source""")
+@click.command(cli_util.override('cloud_guard.wlp_agent_group.command_name', 'wlp-agent'), cls=CommandGroupWithAlias, help="""Details of WLP agent. Example: `{\"id\": \"ocid1.wlpagent.oc1..exampleawwcufihrc62gpbcvbjizswgoj4w7rg5q4fwbg\",           \"compartmentId\": \"ocid1.compartment.oc1..exampleawwcufihrc62gpbcvbjizswgoj4w7rg5q4fwbg2fauxvlcxbtliaa\",           \"agentVersion\": \"1.0.11\",           \"certificateId\": \"ocid1.certificate.oc1..exampleawwcufihrc62gpbcvbjizswgoj4w7oj4w7rg5q4fwbg2fauxv\"           \"certificateSignedRequest\": \"MIIGwjCCBaqgAwIBAgIVAK8hJCS/5Hu0dEMQ2ud\"}`""")
+@cli_util.help_option_group
+def wlp_agent_group():
+    pass
+
+
+@click.command(cli_util.override('cloud_guard.data_source_group.command_name', 'data-source'), cls=CommandGroupWithAlias, help="""Detailed information for a data source (DataSource resource).""")
 @cli_util.help_option_group
 def data_source_group():
+    pass
+
+
+@click.command(cli_util.override('cloud_guard.resource_vulnerability_collection_group.command_name', 'resource-vulnerability-collection'), cls=CommandGroupWithAlias, help="""List of CloudGuardResourceVulnerabilitySummary.""")
+@cli_util.help_option_group
+def resource_vulnerability_collection_group():
     pass
 
 
@@ -150,7 +186,7 @@ def policy_summary_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.sighting_summary_group.command_name', 'sighting-summary'), cls=CommandGroupWithAlias, help="""Sighting summary Definition.""")
+@click.command(cli_util.override('cloud_guard.sighting_summary_group.command_name', 'sighting-summary'), cls=CommandGroupWithAlias, help="""Sighting summary definition.""")
 @cli_util.help_option_group
 def sighting_summary_group():
     pass
@@ -162,7 +198,7 @@ def detector_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.impacted_resource_summary_group.command_name', 'impacted-resource-summary'), cls=CommandGroupWithAlias, help="""A summary of detailed information on a resource that\u2019s been impacted by a detected problem.""")
+@click.command(cli_util.override('cloud_guard.impacted_resource_summary_group.command_name', 'impacted-resource-summary'), cls=CommandGroupWithAlias, help="""Summary of information on a resource that\u2019s been impacted by a detected problem.""")
 @cli_util.help_option_group
 def impacted_resource_summary_group():
     pass
@@ -180,19 +216,27 @@ def configuration_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.responder_recipe_responder_rule_group.command_name', 'responder-recipe-responder-rule'), cls=CommandGroupWithAlias, help="""Details of ResponderRule.""")
+@click.command(cli_util.override('cloud_guard.responder_recipe_responder_rule_group.command_name', 'responder-recipe-responder-rule'), cls=CommandGroupWithAlias, help="""A ResponderRecipeRule resource contains a specific instance of a single responder rule.
+
+A ResponderRecipeRule resource: * Is effectively a copy of a ResponderRule resource in which users can make certain changes if it\u2019s Oracle-managed, and other changes if it\u2019s user-managed. * Can also be created by cloning an existing ResponderRecipe resource, either user-managed or Oracle-managed; cloning the ResponderRecipe resource also clones its associated ResponderRule resources as ResponderRecipeRule resources. * Is visible on the Cloud Guard Responder Recipes, Responder Details page. * Is effectively located in a specific OCI compartment, through the ResponderRecipe resource to which it belongs. * Can be modified by users, programmatically or through the UI. * Changes that can be made here apply globally, to all resources in OCI compartments mapped to a target that attaches the associated responder recipe (in a TargetResponderRecipe resource), but are overridden by changes made in the corresponding TargetResponderRecipe resource (which is effectively a copy of the ResponderRecipe resource). type: object""")
 @cli_util.help_option_group
 def responder_recipe_responder_rule_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.responder_execution_summary_group.command_name', 'responder-execution-summary'), cls=CommandGroupWithAlias, help="""Summary of the Responder Execution.""")
+@click.command(cli_util.override('cloud_guard.resource_port_collection_group.command_name', 'resource-port-collection'), cls=CommandGroupWithAlias, help="""List of CloudGuardResourcePortSummary.""")
+@cli_util.help_option_group
+def resource_port_collection_group():
+    pass
+
+
+@click.command(cli_util.override('cloud_guard.responder_execution_summary_group.command_name', 'responder-execution-summary'), cls=CommandGroupWithAlias, help="""A summary of detailed information on responder execution.""")
 @cli_util.help_option_group
 def responder_execution_summary_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.responder_execution_group.command_name', 'responder-execution'), cls=CommandGroupWithAlias, help="""Responder Execution Object.""")
+@click.command(cli_util.override('cloud_guard.responder_execution_group.command_name', 'responder-execution'), cls=CommandGroupWithAlias, help="""Attributes for a responder execution (ResponderExecution resource).""")
 @cli_util.help_option_group
 def responder_execution_group():
     pass
@@ -204,25 +248,27 @@ def responder_execution_aggregation_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.technique_summary_group.command_name', 'technique-summary'), cls=CommandGroupWithAlias, help="""Technique summary.""")
+@click.command(cli_util.override('cloud_guard.technique_summary_group.command_name', 'technique-summary'), cls=CommandGroupWithAlias, help="""Summary information for a technique.""")
 @cli_util.help_option_group
 def technique_summary_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.responder_rule_group.command_name', 'responder-rule'), cls=CommandGroupWithAlias, help="""Definition of ResponderRule.""")
+@click.command(cli_util.override('cloud_guard.responder_rule_group.command_name', 'responder-rule'), cls=CommandGroupWithAlias, help="""A ResponderRule resource contains the default settings for a single responder rule that Cloud Guard provides.
+
+A ResponderRule resource: * Is used as the original source for a rule in an Oracle-managed responder of the specified type. * Is not directly visible in the Cloud Guard UI. * Can\u2019t be modified by users, programmatically or through the UI. * May be modified from time to time by Cloud Guard.""")
 @cli_util.help_option_group
 def responder_rule_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.resource_type_summary_group.command_name', 'resource-type-summary'), cls=CommandGroupWithAlias, help="""Summary of ResourceType""")
+@click.command(cli_util.override('cloud_guard.resource_type_summary_group.command_name', 'resource-type-summary'), cls=CommandGroupWithAlias, help="""A summary of detailed information on a resource type.""")
 @cli_util.help_option_group
 def resource_type_summary_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.resource_profile_impacted_resource_summary_group.command_name', 'resource-profile-impacted-resource-summary'), cls=CommandGroupWithAlias, help="""Resource Profile impacted resource summary.""")
+@click.command(cli_util.override('cloud_guard.resource_profile_impacted_resource_summary_group.command_name', 'resource-profile-impacted-resource-summary'), cls=CommandGroupWithAlias, help="""Summary information on impacted resource in resource profile.""")
 @cli_util.help_option_group
 def resource_profile_impacted_resource_summary_group():
     pass
@@ -234,19 +280,19 @@ def security_score_aggregation_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.resource_profile_summary_group.command_name', 'resource-profile-summary'), cls=CommandGroupWithAlias, help="""Resource profile summary.""")
+@click.command(cli_util.override('cloud_guard.resource_profile_summary_group.command_name', 'resource-profile-summary'), cls=CommandGroupWithAlias, help="""Summary information for a resource profile.""")
 @cli_util.help_option_group
 def resource_profile_summary_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.sighting_impacted_resource_summary_group.command_name', 'sighting-impacted-resource-summary'), cls=CommandGroupWithAlias, help="""Sighting Impacted Resource summary.""")
+@click.command(cli_util.override('cloud_guard.sighting_impacted_resource_summary_group.command_name', 'sighting-impacted-resource-summary'), cls=CommandGroupWithAlias, help="""Summary of resources impacted by a sighting.""")
 @cli_util.help_option_group
 def sighting_impacted_resource_summary_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.resource_profile_endpoint_summary_group.command_name', 'resource-profile-endpoint-summary'), cls=CommandGroupWithAlias, help="""Resource Profile Endpoints summary.""")
+@click.command(cli_util.override('cloud_guard.resource_profile_endpoint_summary_group.command_name', 'resource-profile-endpoint-summary'), cls=CommandGroupWithAlias, help="""Summary information for resource profile endpoints.""")
 @cli_util.help_option_group
 def resource_profile_endpoint_summary_group():
     pass
@@ -255,6 +301,12 @@ def resource_profile_endpoint_summary_group():
 @click.command(cli_util.override('cloud_guard.activity_problem_aggregation_group.command_name', 'activity-problem-aggregation'), cls=CommandGroupWithAlias, help="""Provides the parameters and their corresponding count.""")
 @cli_util.help_option_group
 def activity_problem_aggregation_group():
+    pass
+
+
+@click.command(cli_util.override('cloud_guard.resource_vulnerability_group.command_name', 'resource-vulnerability'), cls=CommandGroupWithAlias, help="""CG vulnerability object""")
+@cli_util.help_option_group
+def resource_vulnerability_group():
     pass
 
 
@@ -270,13 +322,15 @@ def problem_endpoint_summary_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.security_recipe_group.command_name', 'security-recipe'), cls=CommandGroupWithAlias, help="""A security zone recipe is a collection of security zone policies. Oracle Cloud Infrastructure enforces these policies on security zones that use the recipe.""")
+@click.command(cli_util.override('cloud_guard.security_recipe_group.command_name', 'security-recipe'), cls=CommandGroupWithAlias, help="""A security zone recipe (SecurityRecipe resource) is a collection of security zone policies (SecurityPolicy resources). Oracle Cloud Infrastructure enforces these policies on security zones that use the recipe.""")
 @cli_util.help_option_group
 def security_recipe_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.target_detector_recipe_detector_rule_group.command_name', 'target-detector-recipe-detector-rule'), cls=CommandGroupWithAlias, help="""Detector Recipe Rule""")
+@click.command(cli_util.override('cloud_guard.target_detector_recipe_detector_rule_group.command_name', 'target-detector-recipe-detector-rule'), cls=CommandGroupWithAlias, help="""A TargetDetectorRecipeDetectorRule resource contains a specific instance of a single detector rule in one of the supported detector types (for example, activity, configuration, or threat).
+
+A TargetDetectorRecipeDetectorRule resource: * Is effectively a copy of a DetectorRecipeRule resource (made when a detector recipe is attached to a target) in which users can make certain changes if it\u2019s Oracle-managed, and other changes if it\u2019s user-managed. * Is visible on the Cloud Guard Targets, Target Details page. * Is effectively located in a specific OCI compartment, through the ThreatDetectorRecipe resource to which it belongs. * Can be modified by users, programmatically or through the UI. * Changes that can be made here apply locally, to resources in OCI compartments mapped to the target that attaches the associated detector recipe (in a TargetDetectorRecipe resource), and override any changes made in rules associated with the corresponding DetectorRecipe resource.""")
 @cli_util.help_option_group
 def target_detector_recipe_detector_rule_group():
     pass
@@ -288,13 +342,13 @@ def work_request_log_entry_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.recommendation_summary_group.command_name', 'recommendation-summary'), cls=CommandGroupWithAlias, help="""Recommendation Definition.""")
+@click.command(cli_util.override('cloud_guard.recommendation_summary_group.command_name', 'recommendation-summary'), cls=CommandGroupWithAlias, help="""Recommendation definition.""")
 @cli_util.help_option_group
 def recommendation_summary_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.resource_profile_risk_score_aggregation_summary_group.command_name', 'resource-profile-risk-score-aggregation-summary'), cls=CommandGroupWithAlias, help="""Resource profile risk score trend-line""")
+@click.command(cli_util.override('cloud_guard.resource_profile_risk_score_aggregation_summary_group.command_name', 'resource-profile-risk-score-aggregation-summary'), cls=CommandGroupWithAlias, help="""Summary of resource profile risk score aggregations.""")
 @cli_util.help_option_group
 def resource_profile_risk_score_aggregation_summary_group():
     pass
@@ -306,19 +360,19 @@ def sighting_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.target_group.command_name', 'target'), cls=CommandGroupWithAlias, help="""Description of Target.""")
+@click.command(cli_util.override('cloud_guard.target_group.command_name', 'target'), cls=CommandGroupWithAlias, help="""A target defines the scope of resources that Cloud Guard monitors and the rules to be enforced in that monitoring. A Target resource contains the settings for a specific target.""")
 @cli_util.help_option_group
 def target_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.responder_activity_summary_group.command_name', 'responder-activity-summary'), cls=CommandGroupWithAlias, help="""Responder Activity summary Definition.""")
+@click.command(cli_util.override('cloud_guard.responder_activity_summary_group.command_name', 'responder-activity-summary'), cls=CommandGroupWithAlias, help="""Responder activity summary definition.""")
 @cli_util.help_option_group
 def responder_activity_summary_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.managed_list_group.command_name', 'managed-list'), cls=CommandGroupWithAlias, help="""A managed list is a reusable list of parameters that makes it easier to set the scope for detector and responder rules. A ManagedList object contains the reusable list of parameters, plus metadata for the list.""")
+@click.command(cli_util.override('cloud_guard.managed_list_group.command_name', 'managed-list'), cls=CommandGroupWithAlias, help="""A managed list is a reusable list of parameters that makes it easier to set the scope for detector and responder rules. A ManagedList resource contains the reusable list of parameters, plus metadata for the list.""")
 @cli_util.help_option_group
 def managed_list_group():
     pass
@@ -330,21 +384,29 @@ def managed_list_type_summary_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.target_responder_recipe_group.command_name', 'target-responder-recipe'), cls=CommandGroupWithAlias, help="""Details of Target ResponderRecipe""")
+@click.command(cli_util.override('cloud_guard.target_responder_recipe_group.command_name', 'target-responder-recipe'), cls=CommandGroupWithAlias, help="""A TargetResponderRecipe resource contains a specific instance of one of the supported detector types (for example, activity, configuration, or threat) in which some settings can be modified specifically for a single target.
+
+A TargetResponderRecipe resource: * Is effectively a copy of a ResponderRecipe resource in which users can make very limited changes if it\u2019s Oracle-managed, and more changes if it\u2019s user-managed. * Is visible on the Cloud Guard Targets, Target Details page. * Is located in a specific OCI compartment. * Can be modified by users, programmatically or through the UI. * Changes that can be made here override any settings in the corresponding ResponderRecipe, of which the TargetResponderRecipe resource is effectively a copy of the ResponderRecipe resource (effectively created when the detector recipe is attached to the target).""")
 @cli_util.help_option_group
 def target_responder_recipe_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.tactic_summary_group.command_name', 'tactic-summary'), cls=CommandGroupWithAlias, help="""Tactic summary.""")
+@click.command(cli_util.override('cloud_guard.tactic_summary_group.command_name', 'tactic-summary'), cls=CommandGroupWithAlias, help="""Summary information for a tactic.""")
 @cli_util.help_option_group
 def tactic_summary_group():
     pass
 
 
-@click.command(cli_util.override('cloud_guard.resource_profile_group.command_name', 'resource-profile'), cls=CommandGroupWithAlias, help="""Resource profile details""")
+@click.command(cli_util.override('cloud_guard.resource_profile_group.command_name', 'resource-profile'), cls=CommandGroupWithAlias, help="""Resource profile details.""")
 @cli_util.help_option_group
 def resource_profile_group():
+    pass
+
+
+@click.command(cli_util.override('cloud_guard.saved_query_group.command_name', 'saved-query'), cls=CommandGroupWithAlias, help="""Details of a saved query.""")
+@cli_util.help_option_group
+def saved_query_group():
     pass
 
 
@@ -371,15 +433,20 @@ cloud_guard_root_group.add_command(security_recipe_collection_group)
 cloud_guard_root_group.add_command(problem_group)
 cloud_guard_root_group.add_command(sighting_endpoint_summary_group)
 cloud_guard_root_group.add_command(work_request_error_group)
+cloud_guard_root_group.add_command(adhoc_query_group)
 cloud_guard_root_group.add_command(target_detector_recipe_group)
 cloud_guard_root_group.add_command(responder_recipe_group)
 cloud_guard_root_group.add_command(responder_execution_trend_aggregation_group)
 cloud_guard_root_group.add_command(security_zone_collection_group)
 cloud_guard_root_group.add_command(security_policy_group)
+cloud_guard_root_group.add_command(resource_group)
+cloud_guard_root_group.add_command(adhoc_query_result_collection_group)
 cloud_guard_root_group.add_command(detector_recipe_group)
 cloud_guard_root_group.add_command(detector_recipe_detector_rule_group)
 cloud_guard_root_group.add_command(problem_aggregation_group)
+cloud_guard_root_group.add_command(wlp_agent_group)
 cloud_guard_root_group.add_command(data_source_group)
+cloud_guard_root_group.add_command(resource_vulnerability_collection_group)
 cloud_guard_root_group.add_command(policy_summary_group)
 cloud_guard_root_group.add_command(sighting_summary_group)
 cloud_guard_root_group.add_command(detector_group)
@@ -387,6 +454,7 @@ cloud_guard_root_group.add_command(impacted_resource_summary_group)
 cloud_guard_root_group.add_command(security_zone_group)
 cloud_guard_root_group.add_command(configuration_group)
 cloud_guard_root_group.add_command(responder_recipe_responder_rule_group)
+cloud_guard_root_group.add_command(resource_port_collection_group)
 cloud_guard_root_group.add_command(responder_execution_summary_group)
 cloud_guard_root_group.add_command(responder_execution_group)
 cloud_guard_root_group.add_command(responder_execution_aggregation_group)
@@ -399,6 +467,7 @@ cloud_guard_root_group.add_command(resource_profile_summary_group)
 cloud_guard_root_group.add_command(sighting_impacted_resource_summary_group)
 cloud_guard_root_group.add_command(resource_profile_endpoint_summary_group)
 cloud_guard_root_group.add_command(activity_problem_aggregation_group)
+cloud_guard_root_group.add_command(resource_vulnerability_group)
 cloud_guard_root_group.add_command(condition_metadata_type_group)
 cloud_guard_root_group.add_command(problem_endpoint_summary_group)
 cloud_guard_root_group.add_command(security_recipe_group)
@@ -414,12 +483,13 @@ cloud_guard_root_group.add_command(managed_list_type_summary_group)
 cloud_guard_root_group.add_command(target_responder_recipe_group)
 cloud_guard_root_group.add_command(tactic_summary_group)
 cloud_guard_root_group.add_command(resource_profile_group)
+cloud_guard_root_group.add_command(saved_query_group)
 cloud_guard_root_group.add_command(detector_rule_group)
 cloud_guard_root_group.add_command(risk_score_aggregation_group)
 
 
-@security_zone_group.command(name=cli_util.override('cloud_guard.add_compartment.command_name', 'add'), help=u"""Add an existing compartment to a security zone. If you previously removed a subcompartment from a security zone, you can add it back to the same security zone. The security zone ensures that resources in the subcompartment comply with the security zone's policies. \n[Command Reference](addCompartment)""")
-@cli_util.option('--security-zone-id', required=True, help=u"""The unique identifier of the security zone (`SecurityZone`)""")
+@security_zone_group.command(name=cli_util.override('cloud_guard.add_compartment.command_name', 'add'), help=u"""Adds a compartment to an existing security zone (SecurityZone resource), identified by securityZoneId. Specify parameters in an AddCompartmentDetails resource that you pass. If you previously removed a subcompartment from a security zone, you can add it back to the same security zone. The security zone ensures that resources in the subcompartment comply with the security zone's policies. \n[Command Reference](addCompartment)""")
+@cli_util.option('--security-zone-id', required=True, help=u"""The unique identifier of the security zone (`SecurityZone` resource).""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to be added to the security zone.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -475,7 +545,7 @@ def add_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('cloud_guard.cancel_work_request.command_name', 'cancel'), help=u"""Cancels the work request with the given ID. \n[Command Reference](cancelWorkRequest)""")
+@work_request_group.command(name=cli_util.override('cloud_guard.cancel_work_request.command_name', 'cancel'), help=u"""Cancels a work request identified by workRequestId. \n[Command Reference](cancelWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -501,9 +571,9 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@data_source_group.command(name=cli_util.override('cloud_guard.change_data_source_compartment.command_name', 'change-compartment'), help=u"""Moves the DataSource from current compartment to another. \n[Command Reference](changeDataSourceCompartment)""")
-@cli_util.option('--data-source-id', required=True, help=u"""DataSource OCID""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment into which the DataSource should be moved""")
+@data_source_group.command(name=cli_util.override('cloud_guard.change_data_source_compartment.command_name', 'change-compartment'), help=u"""Moves a data source (DataSource resource), identified by parameters passed in a ChangeDataSourceCompartmentDetails resource, from the current compartment to another. \n[Command Reference](changeDataSourceCompartment)""")
+@cli_util.option('--data-source-id', required=True, help=u"""Data source OCID.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment into which the data source is to be moved""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -562,9 +632,9 @@ def change_data_source_compartment(ctx, from_json, wait_for_state, max_wait_seco
     cli_util.render_response(result, ctx)
 
 
-@detector_recipe_group.command(name=cli_util.override('cloud_guard.change_detector_recipe_compartment.command_name', 'change-compartment'), help=u"""Moves the detector recipe (DetectorRecipe object), identified by detectorRecipeId, from the current compartment to another compartment. \n[Command Reference](changeDetectorRecipeCompartment)""")
-@cli_util.option('--detector-recipe-id', required=True, help=u"""DetectorRecipe OCID""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment into which the DetectorRecipe should be moved""")
+@detector_recipe_group.command(name=cli_util.override('cloud_guard.change_detector_recipe_compartment.command_name', 'change-compartment'), help=u"""Moves the detector recipe (DetectorRecipe resource), identified by detectorRecipeId, from the current compartment to another compartment. When provided, If-Match is checked against etag values of the resource. \n[Command Reference](changeDetectorRecipeCompartment)""")
+@cli_util.option('--detector-recipe-id', required=True, help=u"""Detector recipe OCID""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment into which the detector recipe is to be moved""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -593,9 +663,9 @@ def change_detector_recipe_compartment(ctx, from_json, detector_recipe_id, compa
     cli_util.render_response(result, ctx)
 
 
-@managed_list_group.command(name=cli_util.override('cloud_guard.change_managed_list_compartment.command_name', 'change-compartment'), help=u"""Moves the managed list (ManagedList object), identified by managedListId, from the current compartment to another compartment. \n[Command Reference](changeManagedListCompartment)""")
-@cli_util.option('--managed-list-id', required=True, help=u"""The cloudguard list OCID to be passed in the request.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment into which the ManagedList should be moved""")
+@managed_list_group.command(name=cli_util.override('cloud_guard.change_managed_list_compartment.command_name', 'change-compartment'), help=u"""Moves the managed list (ManagedList resource), identified by managedListId, from the current compartment to another compartment. \n[Command Reference](changeManagedListCompartment)""")
+@cli_util.option('--managed-list-id', required=True, help=u"""The managed list OCID to be passed in the request.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment into which the managed list is to be moved""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -624,9 +694,9 @@ def change_managed_list_compartment(ctx, from_json, managed_list_id, compartment
     cli_util.render_response(result, ctx)
 
 
-@responder_recipe_group.command(name=cli_util.override('cloud_guard.change_responder_recipe_compartment.command_name', 'change-compartment'), help=u"""Moves the ResponderRecipe from current compartment to another. \n[Command Reference](changeResponderRecipeCompartment)""")
-@cli_util.option('--responder-recipe-id', required=True, help=u"""OCID of ResponderRecipe""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment into which the ResponderRecipe should be moved""")
+@responder_recipe_group.command(name=cli_util.override('cloud_guard.change_responder_recipe_compartment.command_name', 'change-compartment'), help=u"""Moves the responder recipe (ResponderRecipe resource), identified by responderRecipeId in a ChangeResponderRecipeCompartmentDetails resource, from the current compartment to another compartment. When provided, if-match is checked against etag values of the resource. \n[Command Reference](changeResponderRecipeCompartment)""")
+@cli_util.option('--responder-recipe-id', required=True, help=u"""OCID of the responder recipe.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment into which the responder recipe is to be moved""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -655,8 +725,39 @@ def change_responder_recipe_compartment(ctx, from_json, responder_recipe_id, com
     cli_util.render_response(result, ctx)
 
 
-@security_recipe_group.command(name=cli_util.override('cloud_guard.change_security_recipe_compartment.command_name', 'change-compartment'), help=u"""Moves a security zone recipe to a different compartment. When provided, `If-Match` is checked against `ETag` values of the resource. \n[Command Reference](changeSecurityRecipeCompartment)""")
-@cli_util.option('--security-recipe-id', required=True, help=u"""The unique identifier of the security zone recipe (`SecurityRecipe`)""")
+@saved_query_group.command(name=cli_util.override('cloud_guard.change_saved_query_compartment.command_name', 'change-compartment'), help=u"""Moves the SavedQuery resource into a different compartment. When provided, If-Match is checked against etag values of the resource. \n[Command Reference](changeSavedQueryCompartment)""")
+@cli_util.option('--saved-query-id', required=True, help=u"""Saved query OCID""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment into which the SavedQuery is to be moved""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_saved_query_compartment(ctx, from_json, saved_query_id, compartment_id, if_match):
+
+    if isinstance(saved_query_id, six.string_types) and len(saved_query_id.strip()) == 0:
+        raise click.UsageError('Parameter --saved-query-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    result = client.change_saved_query_compartment(
+        saved_query_id=saved_query_id,
+        change_saved_query_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@security_recipe_group.command(name=cli_util.override('cloud_guard.change_security_recipe_compartment.command_name', 'change-compartment'), help=u"""Moves the security recipe (SecurityRecipe resource), identified by securityRecipeId, from the current compartment to another compartment. When provided, `if-match` is checked against `etag` values of the resource. \n[Command Reference](changeSecurityRecipeCompartment)""")
+@cli_util.option('--security-recipe-id', required=True, help=u"""The unique identifier of the security zone recipe. (`SecurityRecipe`)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -686,8 +787,8 @@ def change_security_recipe_compartment(ctx, from_json, security_recipe_id, compa
     cli_util.render_response(result, ctx)
 
 
-@security_zone_group.command(name=cli_util.override('cloud_guard.change_security_zone_compartment.command_name', 'change-compartment'), help=u"""Moves a security zone to a different compartment. When provided, `If-Match` is checked against `ETag` values of the resource. \n[Command Reference](changeSecurityZoneCompartment)""")
-@cli_util.option('--security-zone-id', required=True, help=u"""The unique identifier of the security zone (`SecurityZone`)""")
+@security_zone_group.command(name=cli_util.override('cloud_guard.change_security_zone_compartment.command_name', 'change-compartment'), help=u"""Moves a security zone, identified by securityZoneId, to a different compartment. Pass parameters through a ChangeSecurityZoneCompartmentDetails resource. When provided, `if-match` is checked against `etag` values of the resource. \n[Command Reference](changeSecurityZoneCompartment)""")
+@cli_util.option('--security-zone-id', required=True, help=u"""The unique identifier of the security zone (`SecurityZone` resource).""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -717,17 +818,78 @@ def change_security_zone_compartment(ctx, from_json, security_zone_id, compartme
     cli_util.render_response(result, ctx)
 
 
-@data_mask_rule_group.command(name=cli_util.override('cloud_guard.create_data_mask_rule.command_name', 'create'), help=u"""Creates a new DataMaskRule object definition. \n[Command Reference](createDataMaskRule)""")
-@cli_util.option('--display-name', required=True, help=u"""Data mask rule name.
+@adhoc_query_group.command(name=cli_util.override('cloud_guard.create_adhoc_query.command_name', 'create'), help=u"""Creates a AdhocQuery resource. \n[Command Reference](createAdhocQuery)""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID of adhoc query""")
+@cli_util.option('--adhoc-query-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
+
+Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'adhoc-query-details': {'module': 'cloud_guard', 'class': 'AdhocQueryDetails'}, 'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'adhoc-query-details': {'module': 'cloud_guard', 'class': 'AdhocQueryDetails'}, 'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_guard', 'class': 'AdhocQuery'})
+@cli_util.wrap_exceptions
+def create_adhoc_query(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, adhoc_query_details, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['adhocQueryDetails'] = cli_util.parse_json_parameter("adhoc_query_details", adhoc_query_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    result = client.create_adhoc_query(
+        create_adhoc_query_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_adhoc_query') and callable(getattr(client, 'get_adhoc_query')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_adhoc_query(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@data_mask_rule_group.command(name=cli_util.override('cloud_guard.create_data_mask_rule.command_name', 'create'), help=u"""Creates a new DataMaskRule resource definition. \n[Command Reference](createDataMaskRule)""")
+@cli_util.option('--display-name', required=True, help=u"""Data mask rule display name
 
 Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier where the resource is created""")
-@cli_util.option('--iam-group-id', required=True, help=u"""IAM Group id associated with the data mask rule""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID where the resource is created""")
+@cli_util.option('--iam-group-id', required=True, help=u"""IAM group ID associated with the data mask rule""")
 @cli_util.option('--target-selected', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data-mask-categories', required=True, type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data Mask Categories""")
-@cli_util.option('--description', help=u"""The data mask rule description. Avoid entering confidential information.""")
-@cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The status of the dataMaskRule.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The current state of the DataMaskRule.""")
+@cli_util.option('--data-mask-categories', required=True, type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data mask rule categories""")
+@cli_util.option('--description', help=u"""The data mask rule description Avoid entering confidential information.""")
+@cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The current status of the data mask rule""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The current lifecycle state of the data mask rule""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
 
 Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -798,16 +960,16 @@ def create_data_mask_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@data_mask_rule_group.command(name=cli_util.override('cloud_guard.create_data_mask_rule_all_targets_selected.command_name', 'create-data-mask-rule-all-targets-selected'), help=u"""Creates a new DataMaskRule object definition. \n[Command Reference](createDataMaskRule)""")
-@cli_util.option('--display-name', required=True, help=u"""Data mask rule name.
+@data_mask_rule_group.command(name=cli_util.override('cloud_guard.create_data_mask_rule_all_targets_selected.command_name', 'create-data-mask-rule-all-targets-selected'), help=u"""Creates a new DataMaskRule resource definition. \n[Command Reference](createDataMaskRule)""")
+@cli_util.option('--display-name', required=True, help=u"""Data mask rule display name
 
 Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier where the resource is created""")
-@cli_util.option('--iam-group-id', required=True, help=u"""IAM Group id associated with the data mask rule""")
-@cli_util.option('--data-mask-categories', required=True, type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data Mask Categories""")
-@cli_util.option('--description', help=u"""The data mask rule description. Avoid entering confidential information.""")
-@cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The status of the dataMaskRule.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The current state of the DataMaskRule.""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID where the resource is created""")
+@cli_util.option('--iam-group-id', required=True, help=u"""IAM group ID associated with the data mask rule""")
+@cli_util.option('--data-mask-categories', required=True, type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data mask rule categories""")
+@cli_util.option('--description', help=u"""The data mask rule description Avoid entering confidential information.""")
+@cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The current status of the data mask rule""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The current lifecycle state of the data mask rule""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
 
 Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -880,21 +1042,21 @@ def create_data_mask_rule_all_targets_selected(ctx, from_json, wait_for_state, m
     cli_util.render_response(result, ctx)
 
 
-@data_mask_rule_group.command(name=cli_util.override('cloud_guard.create_data_mask_rule_target_resource_types_selected.command_name', 'create-data-mask-rule-target-resource-types-selected'), help=u"""Creates a new DataMaskRule object definition. \n[Command Reference](createDataMaskRule)""")
-@cli_util.option('--display-name', required=True, help=u"""Data mask rule name.
+@data_mask_rule_group.command(name=cli_util.override('cloud_guard.create_data_mask_rule_target_resource_types_selected.command_name', 'create-data-mask-rule-target-resource-types-selected'), help=u"""Creates a new DataMaskRule resource definition. \n[Command Reference](createDataMaskRule)""")
+@cli_util.option('--display-name', required=True, help=u"""Data mask rule display name
 
 Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier where the resource is created""")
-@cli_util.option('--iam-group-id', required=True, help=u"""IAM Group id associated with the data mask rule""")
-@cli_util.option('--data-mask-categories', required=True, type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data Mask Categories""")
-@cli_util.option('--description', help=u"""The data mask rule description. Avoid entering confidential information.""")
-@cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The status of the dataMaskRule.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The current state of the DataMaskRule.""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID where the resource is created""")
+@cli_util.option('--iam-group-id', required=True, help=u"""IAM group ID associated with the data mask rule""")
+@cli_util.option('--data-mask-categories', required=True, type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data mask rule categories""")
+@cli_util.option('--description', help=u"""The data mask rule description Avoid entering confidential information.""")
+@cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The current status of the data mask rule""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The current lifecycle state of the data mask rule""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
 
 Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--target-selected-values', type=custom_types.CliCaseInsensitiveChoice(["COMPARTMENT", "ERPCLOUD", "HCMCLOUD", "SECURITY_ZONE"]), help=u"""Types of Targets""")
+@cli_util.option('--target-selected-values', type=custom_types.CliCaseInsensitiveChoice(["COMPARTMENT", "ERPCLOUD", "HCMCLOUD", "SECURITY_ZONE"]), help=u"""Types of targets""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -966,21 +1128,21 @@ def create_data_mask_rule_target_resource_types_selected(ctx, from_json, wait_fo
     cli_util.render_response(result, ctx)
 
 
-@data_mask_rule_group.command(name=cli_util.override('cloud_guard.create_data_mask_rule_target_ids_selected.command_name', 'create-data-mask-rule-target-ids-selected'), help=u"""Creates a new DataMaskRule object definition. \n[Command Reference](createDataMaskRule)""")
-@cli_util.option('--display-name', required=True, help=u"""Data mask rule name.
+@data_mask_rule_group.command(name=cli_util.override('cloud_guard.create_data_mask_rule_target_ids_selected.command_name', 'create-data-mask-rule-target-ids-selected'), help=u"""Creates a new DataMaskRule resource definition. \n[Command Reference](createDataMaskRule)""")
+@cli_util.option('--display-name', required=True, help=u"""Data mask rule display name
 
 Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier where the resource is created""")
-@cli_util.option('--iam-group-id', required=True, help=u"""IAM Group id associated with the data mask rule""")
-@cli_util.option('--data-mask-categories', required=True, type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data Mask Categories""")
-@cli_util.option('--description', help=u"""The data mask rule description. Avoid entering confidential information.""")
-@cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The status of the dataMaskRule.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The current state of the DataMaskRule.""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID where the resource is created""")
+@cli_util.option('--iam-group-id', required=True, help=u"""IAM group ID associated with the data mask rule""")
+@cli_util.option('--data-mask-categories', required=True, type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data mask rule categories""")
+@cli_util.option('--description', help=u"""The data mask rule description Avoid entering confidential information.""")
+@cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The current status of the data mask rule""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The current lifecycle state of the data mask rule""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
 
 Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--target-selected-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Ids of Target""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--target-selected-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""IDs of targets""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1052,11 +1214,11 @@ def create_data_mask_rule_target_ids_selected(ctx, from_json, wait_for_state, ma
     cli_util.render_response(result, ctx)
 
 
-@data_source_group.command(name=cli_util.override('cloud_guard.create_data_source.command_name', 'create'), help=u"""Creates a DataSource \n[Command Reference](createDataSource)""")
-@cli_util.option('--display-name', required=True, help=u"""Data Source display name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""CompartmentId of Data Source.""")
-@cli_util.option('--data-source-feed-provider', required=True, type=custom_types.CliCaseInsensitiveChoice(["LOGGINGQUERY"]), help=u"""Possible type of dataSourceFeed Provider(LoggingQuery)""")
-@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Status of DataSource. Default value is DISABLED.""")
+@data_source_group.command(name=cli_util.override('cloud_guard.create_data_source.command_name', 'create'), help=u"""Creates a data source (DataSource resource), using parameters passed through a CreateDataSourceDetails resource. \n[Command Reference](createDataSource)""")
+@cli_util.option('--display-name', required=True, help=u"""Data source display name""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID of the data source""")
+@cli_util.option('--data-source-feed-provider', required=True, type=custom_types.CliCaseInsensitiveChoice(["LOGGINGQUERY", "SCHEDULEDQUERY"]), help=u"""Type of data source feed provider (LoggingQuery)""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Enablement status of data source.""")
 @cli_util.option('--data-source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
 
@@ -1127,23 +1289,115 @@ def create_data_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@data_source_group.command(name=cli_util.override('cloud_guard.create_data_source_logging_query_data_source_details.command_name', 'create-data-source-logging-query-data-source-details'), help=u"""Creates a DataSource \n[Command Reference](createDataSource)""")
-@cli_util.option('--display-name', required=True, help=u"""Data Source display name.""")
-@cli_util.option('--compartment-id', required=True, help=u"""CompartmentId of Data Source.""")
-@cli_util.option('--data-source-feed-provider', required=True, type=custom_types.CliCaseInsensitiveChoice(["LOGGINGQUERY"]), help=u"""Possible type of dataSourceFeed Provider(LoggingQuery)""")
-@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Status of DataSource. Default value is DISABLED.""")
+@data_source_group.command(name=cli_util.override('cloud_guard.create_data_source_scheduled_query_data_source_obj_details.command_name', 'create-data-source-scheduled-query-data-source-obj-details'), help=u"""Creates a data source (DataSource resource), using parameters passed through a CreateDataSourceDetails resource. \n[Command Reference](createDataSource)""")
+@cli_util.option('--display-name', required=True, help=u"""Data source display name""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID of the data source""")
+@cli_util.option('--data-source-feed-provider', required=True, type=custom_types.CliCaseInsensitiveChoice(["LOGGINGQUERY", "SCHEDULEDQUERY"]), help=u"""Type of data source feed provider (LoggingQuery)""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Enablement status of data source.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
 
 Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data-source-details-regions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Logging Query regions""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-source-details-query', help=u"""The continuous query expression that is run periodically.""")
+@cli_util.option('--data-source-details-description', help=u"""Description text for the query""")
+@cli_util.option('--data-source-details-interval-in-seconds', type=click.INT, help=u"""Interval in minutes which query is run periodically.""")
+@cli_util.option('--data-source-details-scheduled-query-scope-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Target information in which scheduled query will be run
+
+This option is a JSON list with items of type ScheduledQueryScopeDetail.  For documentation on ScheduledQueryScopeDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/cloudguard/20200131/datatypes/ScheduledQueryScopeDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}, 'data-source-details-scheduled-query-scope-details': {'module': 'cloud_guard', 'class': 'list[ScheduledQueryScopeDetail]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}, 'data-source-details-scheduled-query-scope-details': {'module': 'cloud_guard', 'class': 'list[ScheduledQueryScopeDetail]'}})
+@cli_util.wrap_exceptions
+def create_data_source_scheduled_query_data_source_obj_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, data_source_feed_provider, status, freeform_tags, defined_tags, data_source_details_query, data_source_details_description, data_source_details_interval_in_seconds, data_source_details_scheduled_query_scope_details):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dataSourceDetails'] = {}
+    _details['displayName'] = display_name
+    _details['compartmentId'] = compartment_id
+    _details['dataSourceFeedProvider'] = data_source_feed_provider
+
+    if status is not None:
+        _details['status'] = status
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if data_source_details_query is not None:
+        _details['dataSourceDetails']['query'] = data_source_details_query
+
+    if data_source_details_description is not None:
+        _details['dataSourceDetails']['description'] = data_source_details_description
+
+    if data_source_details_interval_in_seconds is not None:
+        _details['dataSourceDetails']['intervalInSeconds'] = data_source_details_interval_in_seconds
+
+    if data_source_details_scheduled_query_scope_details is not None:
+        _details['dataSourceDetails']['scheduledQueryScopeDetails'] = cli_util.parse_json_parameter("data_source_details_scheduled_query_scope_details", data_source_details_scheduled_query_scope_details)
+
+    _details['dataSourceDetails']['dataSourceFeedProvider'] = 'SCHEDULEDQUERY'
+
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    result = client.create_data_source(
+        create_data_source_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@data_source_group.command(name=cli_util.override('cloud_guard.create_data_source_logging_query_data_source_details.command_name', 'create-data-source-logging-query-data-source-details'), help=u"""Creates a data source (DataSource resource), using parameters passed through a CreateDataSourceDetails resource. \n[Command Reference](createDataSource)""")
+@cli_util.option('--display-name', required=True, help=u"""Data source display name""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID of the data source""")
+@cli_util.option('--data-source-feed-provider', required=True, type=custom_types.CliCaseInsensitiveChoice(["LOGGINGQUERY", "SCHEDULEDQUERY"]), help=u"""Type of data source feed provider (LoggingQuery)""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Enablement status of data source.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
+
+Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-source-details-regions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of logging query regions""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-source-details-query', help=u"""The continuous query expression that is run periodicall""")
 @cli_util.option('--data-source-details-interval-in-minutes', type=click.INT, help=u"""Interval in minutes that query is run periodically.""")
-@cli_util.option('--data-source-details-threshold', type=click.INT, help=u"""The integer value that must be exceeded, fall below or equal to (depending on the operator), the query result to trigger an event.""")
+@cli_util.option('--data-source-details-threshold', type=click.INT, help=u"""The integer value that must be exceeded, fall below or equal to (depending on the operator), for the query result to trigger an event""")
 @cli_util.option('--data-source-details-query-start-time', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data-source-details-operator', type=custom_types.CliCaseInsensitiveChoice(["EQUAL", "GREATER", "GREATERTHANEQUALTO", "LESS", "LESSTHANEQUALTO"]), help=u"""Operator used in Data Soruce""")
-@cli_util.option('--data-source-details-logging-query-type', type=custom_types.CliCaseInsensitiveChoice(["INSIGHT"]), help=u"""Logging query type for data source (Sighting/Insight)""")
-@cli_util.option('--data-source-details-additional-entities-count', type=click.INT, help=u"""The additional entities count used for data source query.""")
+@cli_util.option('--data-source-details-operator', type=custom_types.CliCaseInsensitiveChoice(["EQUAL", "GREATER", "GREATERTHANEQUALTO", "LESS", "LESSTHANEQUALTO"]), help=u"""Operator used in data source""")
+@cli_util.option('--data-source-details-logging-query-type', type=custom_types.CliCaseInsensitiveChoice(["INSIGHT"]), help=u"""Type of logging query for data source (Sighting/Insight)""")
+@cli_util.option('--data-source-details-additional-entities-count', type=click.INT, help=u"""The additional entities count used for data source query""")
 @cli_util.option('--data-source-details-logging-query-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1237,17 +1491,17 @@ def create_data_source_logging_query_data_source_details(ctx, from_json, wait_fo
     cli_util.render_response(result, ctx)
 
 
-@detector_recipe_group.command(name=cli_util.override('cloud_guard.create_detector_recipe.command_name', 'create'), help=u"""Creates a new DetectorRecipe object. \n[Command Reference](createDetectorRecipe)""")
+@detector_recipe_group.command(name=cli_util.override('cloud_guard.create_detector_recipe.command_name', 'create'), help=u"""Creates a new DetectorRecipe resource. \n[Command Reference](createDetectorRecipe)""")
 @cli_util.option('--display-name', required=True, help=u"""Detector recipe display name.
 
 Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID""")
 @cli_util.option('--description', help=u"""Detector recipe description.
 
 Avoid entering confidential information.""")
-@cli_util.option('--detector', type=custom_types.CliCaseInsensitiveChoice(["IAAS_ACTIVITY_DETECTOR", "IAAS_CONFIGURATION_DETECTOR", "IAAS_THREAT_DETECTOR", "IAAS_LOG_INSIGHT_DETECTOR"]), help=u"""detector for the rule""")
-@cli_util.option('--source-detector-recipe-id', help=u"""The id of the source detector recipe.""")
-@cli_util.option('--detector-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Detector Rules to override from source detector recipe
+@cli_util.option('--detector', type=custom_types.CliCaseInsensitiveChoice(["IAAS_ACTIVITY_DETECTOR", "IAAS_CONFIGURATION_DETECTOR", "IAAS_THREAT_DETECTOR", "IAAS_LOG_INSIGHT_DETECTOR", "IAAS_INSTANCE_SECURITY_DETECTOR"]), help=u"""Detector for the rule""")
+@cli_util.option('--source-detector-recipe-id', help=u"""The ID of the source detector recipe""")
+@cli_util.option('--detector-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Detector rules to override from source detector recipe
 
 This option is a JSON list with items of type UpdateDetectorRecipeDetectorRule.  For documentation on UpdateDetectorRecipeDetectorRule please see our API reference: https://docs.cloud.oracle.com/api/#/en/cloudguard/20200131/datatypes/UpdateDetectorRecipeDetectorRule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
@@ -1320,8 +1574,8 @@ def create_detector_recipe(ctx, from_json, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@detector_recipe_detector_rule_group.command(name=cli_util.override('cloud_guard.create_detector_recipe_detector_rule.command_name', 'create'), help=u"""Create the DetectorRule \n[Command Reference](createDetectorRecipeDetectorRule)""")
-@cli_util.option('--detector-recipe-id', required=True, help=u"""DetectorRecipe OCID""")
+@detector_recipe_detector_rule_group.command(name=cli_util.override('cloud_guard.create_detector_recipe_detector_rule.command_name', 'create'), help=u"""Creates a detector rule. \n[Command Reference](createDetectorRecipeDetectorRule)""")
+@cli_util.option('--detector-recipe-id', required=True, help=u"""Detector recipe OCID""")
 @cli_util.option('--details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1376,17 +1630,17 @@ def create_detector_recipe_detector_rule(ctx, from_json, wait_for_state, max_wai
     cli_util.render_response(result, ctx)
 
 
-@managed_list_group.command(name=cli_util.override('cloud_guard.create_managed_list.command_name', 'create'), help=u"""Creates a new ManagedList object. \n[Command Reference](createManagedList)""")
+@managed_list_group.command(name=cli_util.override('cloud_guard.create_managed_list.command_name', 'create'), help=u"""Creates a new ManagedList resource. \n[Command Reference](createManagedList)""")
 @cli_util.option('--display-name', required=True, help=u"""Managed list display name.
 
 Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier""")
-@cli_util.option('--source-managed-list-id', help=u"""OCID of the Source ManagedList""")
-@cli_util.option('--description', help=u"""Managed list description.
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID""")
+@cli_util.option('--source-managed-list-id', help=u"""OCID of the source managed list""")
+@cli_util.option('--description', help=u"""Managed list description
 
 Avoid entering confidential information.""")
-@cli_util.option('--list-type', type=custom_types.CliCaseInsensitiveChoice(["CIDR_BLOCK", "USERS", "GROUPS", "IPV4ADDRESS", "IPV6ADDRESS", "RESOURCE_OCID", "REGION", "COUNTRY", "STATE", "CITY", "TAGS", "GENERIC", "FUSION_APPS_ROLE", "FUSION_APPS_PERMISSION"]), help=u"""type of the list""")
-@cli_util.option('--list-items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of ManagedListItem""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--list-type', type=custom_types.CliCaseInsensitiveChoice(["CIDR_BLOCK", "USERS", "GROUPS", "IPV4ADDRESS", "IPV6ADDRESS", "RESOURCE_OCID", "REGION", "COUNTRY", "STATE", "CITY", "TAGS", "GENERIC", "FUSION_APPS_ROLE", "FUSION_APPS_PERMISSION"]), help=u"""Type of information stored in the list""")
+@cli_util.option('--list-items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of items in the managed list""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
 
 Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1457,16 +1711,16 @@ def create_managed_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@responder_recipe_group.command(name=cli_util.override('cloud_guard.create_responder_recipe.command_name', 'create'), help=u"""Create a ResponderRecipe. \n[Command Reference](createResponderRecipe)""")
+@responder_recipe_group.command(name=cli_util.override('cloud_guard.create_responder_recipe.command_name', 'create'), help=u"""Creates a responder recipe (ResponderRecipe resource), from values passed in a CreateResponderRecipeDetails resource. \n[Command Reference](createResponderRecipe)""")
 @cli_util.option('--display-name', required=True, help=u"""Responder recipe display name.
 
 Avoid entering confidential information.""")
-@cli_util.option('--source-responder-recipe-id', required=True, help=u"""The id of the source responder recipe.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier""")
+@cli_util.option('--source-responder-recipe-id', required=True, help=u"""The unique identifier of the source responder recipe""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID""")
 @cli_util.option('--description', help=u"""Responder recipe description.
 
 Avoid entering confidential information.""")
-@cli_util.option('--responder-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Responder Rules to override from source responder recipe
+@cli_util.option('--responder-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of responder rules to override from source responder recipe
 
 This option is a JSON list with items of type UpdateResponderRecipeResponderRule.  For documentation on UpdateResponderRecipeResponderRule please see our API reference: https://docs.cloud.oracle.com/api/#/en/cloudguard/20200131/datatypes/UpdateResponderRecipeResponderRule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
@@ -1534,10 +1788,79 @@ def create_responder_recipe(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@security_recipe_group.command(name=cli_util.override('cloud_guard.create_security_recipe.command_name', 'create'), help=u"""Creates a security zone recipe. A security zone recipe is a collection of security zone policies. \n[Command Reference](createSecurityRecipe)""")
-@cli_util.option('--display-name', required=True, help=u"""The recipe's name""")
-@cli_util.option('--security-policies', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of `SecurityPolicy` ids to include in the recipe""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment in which to create the recipe""")
+@saved_query_group.command(name=cli_util.override('cloud_guard.create_saved_query.command_name', 'create'), help=u"""Creates a SavedQuery resource. \n[Command Reference](createSavedQuery)""")
+@cli_util.option('--display-name', required=True, help=u"""Display name of the saved query""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID of the saved query""")
+@cli_util.option('--query-parameterconflict', required=True, help=u"""The adhoc query expression that is run""")
+@cli_util.option('--description', help=u"""Description of the saved query""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
+
+Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_guard', 'class': 'SavedQuery'})
+@cli_util.wrap_exceptions
+def create_saved_query(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, query_parameterconflict, description, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['displayName'] = display_name
+    _details['compartmentId'] = compartment_id
+    _details['query'] = query_parameterconflict
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    result = client.create_saved_query(
+        create_saved_query_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_saved_query') and callable(getattr(client, 'get_saved_query')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_saved_query(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@security_recipe_group.command(name=cli_util.override('cloud_guard.create_security_recipe.command_name', 'create'), help=u"""Creates a security zone recipe (SecurityRecipe resource), using parameters passed in a CreateSecurityRecipeDetails resource. \n[Command Reference](createSecurityRecipe)""")
+@cli_util.option('--display-name', required=True, help=u"""The recipe's display name.
+
+Avoid entering confidential information.""")
+@cli_util.option('--security-policies', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of security policy IDs to include in the recipe""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to create the recipe""")
 @cli_util.option('--description', help=u"""The recipe's description""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
 
@@ -1601,9 +1924,9 @@ def create_security_recipe(ctx, from_json, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@security_zone_group.command(name=cli_util.override('cloud_guard.create_security_zone.command_name', 'create'), help=u"""Creates a security zone for a compartment. A security zone enforces all security zone policies in a given security zone recipe. Any actions that violate a policy are denied. By default, any subcompartments are also in the same security zone. \n[Command Reference](createSecurityZone)""")
-@cli_util.option('--display-name', required=True, help=u"""The security zone's name""")
-@cli_util.option('--security-zone-recipe-id', required=True, help=u"""The OCID of the recipe (`SecurityRecipe`) for the security zone""")
+@security_zone_group.command(name=cli_util.override('cloud_guard.create_security_zone.command_name', 'create'), help=u"""Creates a security zone (SecurityZone resource) for a compartment. Pass parameters through a CreateSecurityZoneDetails resource. \n[Command Reference](createSecurityZone)""")
+@cli_util.option('--display-name', required=True, help=u"""The security zone's display name""")
+@cli_util.option('--security-zone-recipe-id', required=True, help=u"""The OCID of the security zone recipe (`SecurityRecipe` resource) for the security zone""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment for the security zone""")
 @cli_util.option('--description', help=u"""The security zone's description""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
@@ -1668,23 +1991,23 @@ def create_security_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@target_group.command(name=cli_util.override('cloud_guard.create_target.command_name', 'create'), help=u"""Creates a new Target \n[Command Reference](createTarget)""")
-@cli_util.option('--display-name', required=True, help=u"""DetectorTemplate identifier.
+@target_group.command(name=cli_util.override('cloud_guard.create_target.command_name', 'create'), help=u"""Creates a target (Target resource), using parameters passed in a CreateTargetDetails resource. \n[Command Reference](createTarget)""")
+@cli_util.option('--display-name', required=True, help=u"""Display name for the target.
 
 Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier where the resource is created""")
-@cli_util.option('--target-resource-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["COMPARTMENT", "ERPCLOUD", "HCMCLOUD", "SECURITY_ZONE"]), help=u"""possible type of targets(COMPARTMENT/FACLOUD)""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID where the resource is created""")
+@cli_util.option('--target-resource-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["COMPARTMENT", "ERPCLOUD", "HCMCLOUD", "SECURITY_ZONE"]), help=u"""Type of resource that target support (COMPARTMENT/FACLOUD)""")
 @cli_util.option('--target-resource-id', required=True, help=u"""Resource ID which the target uses to monitor""")
 @cli_util.option('--description', help=u"""The target description.
 
 Avoid entering confidential information.""")
-@cli_util.option('--target-detector-recipes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of detector recipes to associate with target
+@cli_util.option('--target-detector-recipes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of detector recipes to attach to target
 
 This option is a JSON list with items of type CreateTargetDetectorRecipeDetails.  For documentation on CreateTargetDetectorRecipeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/cloudguard/20200131/datatypes/CreateTargetDetectorRecipeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--target-responder-recipes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of responder recipes to associate with target
+@cli_util.option('--target-responder-recipes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of responder recipes to attach to target
 
 This option is a JSON list with items of type CreateTargetResponderRecipeDetails.  For documentation on CreateTargetResponderRecipeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/cloudguard/20200131/datatypes/CreateTargetResponderRecipeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The current state of the DetectorRule.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The enablement state of the detector rule""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
 
 Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1757,9 +2080,9 @@ def create_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@target_detector_recipe_group.command(name=cli_util.override('cloud_guard.create_target_detector_recipe.command_name', 'create'), help=u"""Attach a DetectorRecipe with the Target \n[Command Reference](createTargetDetectorRecipe)""")
-@cli_util.option('--target-id', required=True, help=u"""OCID of target""")
-@cli_util.option('--detector-recipe-id', required=True, help=u"""DetectorRecipe Identifier""")
+@target_detector_recipe_group.command(name=cli_util.override('cloud_guard.create_target_detector_recipe.command_name', 'create'), help=u"""Attaches a DetectorRecipe to a target (Target resource) identified by targetId, using parameters passed in a TargetAttachTargetDetectorRecipeDetails resource. Attach a DetectorRecipe with the Target \n[Command Reference](createTargetDetectorRecipe)""")
+@cli_util.option('--target-id', required=True, help=u"""OCID of the target""")
+@cli_util.option('--detector-recipe-id', required=True, help=u"""Detector recipe unique identifier""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1811,9 +2134,9 @@ def create_target_detector_recipe(ctx, from_json, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@target_responder_recipe_group.command(name=cli_util.override('cloud_guard.create_target_responder_recipe.command_name', 'create'), help=u"""Attach a ResponderRecipe with the Target \n[Command Reference](createTargetResponderRecipe)""")
-@cli_util.option('--target-id', required=True, help=u"""OCID of target""")
-@cli_util.option('--responder-recipe-id', required=True, help=u"""ResponderRecipe Identifier""")
+@target_responder_recipe_group.command(name=cli_util.override('cloud_guard.create_target_responder_recipe.command_name', 'create'), help=u"""Attaches a responder recipe to a target. \n[Command Reference](createTargetResponderRecipe)""")
+@cli_util.option('--target-id', required=True, help=u"""OCID of the target""")
+@cli_util.option('--responder-recipe-id', required=True, help=u"""Unique identifier for existing responder recipe""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1839,8 +2162,111 @@ def create_target_responder_recipe(ctx, from_json, target_id, responder_recipe_i
     cli_util.render_response(result, ctx)
 
 
-@data_mask_rule_group.command(name=cli_util.override('cloud_guard.delete_data_mask_rule.command_name', 'delete'), help=u"""Deletes a DataMaskRule object, identified by dataMaskRuleId. \n[Command Reference](deleteDataMaskRule)""")
-@cli_util.option('--data-mask-rule-id', required=True, help=u"""OCID of dataMaskRule""")
+@wlp_agent_group.command(name=cli_util.override('cloud_guard.create_wlp_agent.command_name', 'create'), help=u"""Creates and registers a WLP agent for an on-premise resource. \n[Command Reference](createWlpAgent)""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID of the host""")
+@cli_util.option('--agent-version', required=True, help=u"""The version of the agent making the request""")
+@cli_util.option('--certificate-signed-request', required=True, help=u"""The certificate signed request containing domain, organization names, organization units, city, state, country, email and public key, among other certificate details, signed by private key""")
+@cli_util.option('--os-info', required=True, help=u"""Concatenated OS name, OS version and agent architecture; for example, ubuntu_22.0_amd64.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
+
+Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_guard', 'class': 'WlpAgent'})
+@cli_util.wrap_exceptions
+def create_wlp_agent(ctx, from_json, compartment_id, agent_version, certificate_signed_request, os_info, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['agentVersion'] = agent_version
+    _details['certificateSignedRequest'] = certificate_signed_request
+    _details['osInfo'] = os_info
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    result = client.create_wlp_agent(
+        create_wlp_agent_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@adhoc_query_group.command(name=cli_util.override('cloud_guard.delete_adhoc_query.command_name', 'delete'), help=u"""Deletes a AdhocQuery resource identified by adhocQueryId. \n[Command Reference](deleteAdhocQuery)""")
+@cli_util.option('--adhoc-query-id', required=True, help=u"""Adhoc query OCID.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_adhoc_query(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, adhoc_query_id, if_match):
+
+    if isinstance(adhoc_query_id, six.string_types) and len(adhoc_query_id.strip()) == 0:
+        raise click.UsageError('Parameter --adhoc-query-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    result = client.delete_adhoc_query(
+        adhoc_query_id=adhoc_query_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_adhoc_query') and callable(getattr(client, 'get_adhoc_query')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_adhoc_query(adhoc_query_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@data_mask_rule_group.command(name=cli_util.override('cloud_guard.delete_data_mask_rule.command_name', 'delete'), help=u"""Deletes a DataMaskRule resource, identified by dataMaskRuleId. \n[Command Reference](deleteDataMaskRule)""")
+@cli_util.option('--data-mask-rule-id', required=True, help=u"""OCID of the data mask rule""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1903,8 +2329,8 @@ def delete_data_mask_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@data_source_group.command(name=cli_util.override('cloud_guard.delete_data_source.command_name', 'delete'), help=u"""Deletes a DataSource identified by dataSourceId \n[Command Reference](deleteDataSource)""")
-@cli_util.option('--data-source-id', required=True, help=u"""DataSource OCID""")
+@data_source_group.command(name=cli_util.override('cloud_guard.delete_data_source.command_name', 'delete'), help=u"""Deletes a data source (DataSource resource) identified by dataSourceId. \n[Command Reference](deleteDataSource)""")
+@cli_util.option('--data-source-id', required=True, help=u"""Data source OCID.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1959,8 +2385,8 @@ def delete_data_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@detector_recipe_group.command(name=cli_util.override('cloud_guard.delete_detector_recipe.command_name', 'delete'), help=u"""Deletes a detector recipe (DetectorRecipe object) identified by detectorRecipeId. \n[Command Reference](deleteDetectorRecipe)""")
-@cli_util.option('--detector-recipe-id', required=True, help=u"""DetectorRecipe OCID""")
+@detector_recipe_group.command(name=cli_util.override('cloud_guard.delete_detector_recipe.command_name', 'delete'), help=u"""Deletes a detector recipe (DetectorRecipe resource) identified by detectorRecipeId. \n[Command Reference](deleteDetectorRecipe)""")
+@cli_util.option('--detector-recipe-id', required=True, help=u"""Detector recipe OCID""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2023,9 +2449,9 @@ def delete_detector_recipe(ctx, from_json, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@detector_recipe_detector_rule_group.command(name=cli_util.override('cloud_guard.delete_detector_recipe_detector_rule.command_name', 'delete'), help=u"""Deletes DetectorRecipeDetectorRule \n[Command Reference](deleteDetectorRecipeDetectorRule)""")
-@cli_util.option('--detector-recipe-id', required=True, help=u"""DetectorRecipe OCID""")
-@cli_util.option('--detector-rule-id', required=True, help=u"""The key of Detector Rule.""")
+@detector_recipe_detector_rule_group.command(name=cli_util.override('cloud_guard.delete_detector_recipe_detector_rule.command_name', 'delete'), help=u"""Deletes the DetectorRecipeDetectorRule resource identified by detectorRuleId. \n[Command Reference](deleteDetectorRecipeDetectorRule)""")
+@cli_util.option('--detector-recipe-id', required=True, help=u"""Detector recipe OCID""")
+@cli_util.option('--detector-rule-id', required=True, help=u"""The unique identifier of a detector rule.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2054,10 +2480,10 @@ def delete_detector_recipe_detector_rule(ctx, from_json, detector_recipe_id, det
     cli_util.render_response(result, ctx)
 
 
-@detector_recipe_detector_rule_group.command(name=cli_util.override('cloud_guard.delete_detector_recipe_detector_rule_data_source.command_name', 'delete-detector-recipe-detector-rule-data-source'), help=u"""Delete the DetectorRecipeDetectorRuleDataSource resource by identifier \n[Command Reference](deleteDetectorRecipeDetectorRuleDataSource)""")
-@cli_util.option('--detector-recipe-id', required=True, help=u"""DetectorRecipe OCID""")
-@cli_util.option('--detector-rule-id', required=True, help=u"""The key of Detector Rule.""")
-@cli_util.option('--data-source-id', required=True, help=u"""DataSource OCID""")
+@detector_recipe_detector_rule_group.command(name=cli_util.override('cloud_guard.delete_detector_recipe_detector_rule_data_source.command_name', 'delete-detector-recipe-detector-rule-data-source'), help=u"""Deletes the DetectorRecipeDetectorRuleDataSource resource by identifier. \n[Command Reference](deleteDetectorRecipeDetectorRuleDataSource)""")
+@cli_util.option('--detector-recipe-id', required=True, help=u"""Detector recipe OCID""")
+@cli_util.option('--detector-rule-id', required=True, help=u"""The unique identifier of a detector rule.""")
+@cli_util.option('--data-source-id', required=True, help=u"""Data source OCID.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2091,7 +2517,7 @@ def delete_detector_recipe_detector_rule_data_source(ctx, from_json, detector_re
 
 
 @managed_list_group.command(name=cli_util.override('cloud_guard.delete_managed_list.command_name', 'delete'), help=u"""Deletes a managed list identified by managedListId. \n[Command Reference](deleteManagedList)""")
-@cli_util.option('--managed-list-id', required=True, help=u"""The cloudguard list OCID to be passed in the request.""")
+@cli_util.option('--managed-list-id', required=True, help=u"""The managed list OCID to be passed in the request.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2154,8 +2580,8 @@ def delete_managed_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@responder_recipe_group.command(name=cli_util.override('cloud_guard.delete_responder_recipe.command_name', 'delete'), help=u"""Delete the ResponderRecipe resource by identifier \n[Command Reference](deleteResponderRecipe)""")
-@cli_util.option('--responder-recipe-id', required=True, help=u"""OCID of ResponderRecipe""")
+@responder_recipe_group.command(name=cli_util.override('cloud_guard.delete_responder_recipe.command_name', 'delete'), help=u"""Deletes a responder recipe (ResponderRecipe resource) identified by responderRecipeId. \n[Command Reference](deleteResponderRecipe)""")
+@cli_util.option('--responder-recipe-id', required=True, help=u"""OCID of the responder recipe.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2218,8 +2644,72 @@ def delete_responder_recipe(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@security_recipe_group.command(name=cli_util.override('cloud_guard.delete_security_recipe.command_name', 'delete'), help=u"""Deletes a security zone recipe. The recipe can't be associated with an existing security zone. \n[Command Reference](deleteSecurityRecipe)""")
-@cli_util.option('--security-recipe-id', required=True, help=u"""The unique identifier of the security zone recipe (`SecurityRecipe`)""")
+@saved_query_group.command(name=cli_util.override('cloud_guard.delete_saved_query.command_name', 'delete'), help=u"""Deletes a SavedQuery resource identified by savedQueryId. \n[Command Reference](deleteSavedQuery)""")
+@cli_util.option('--saved-query-id', required=True, help=u"""Saved query OCID""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_saved_query(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, saved_query_id, if_match):
+
+    if isinstance(saved_query_id, six.string_types) and len(saved_query_id.strip()) == 0:
+        raise click.UsageError('Parameter --saved-query-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    result = client.delete_saved_query(
+        saved_query_id=saved_query_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_saved_query') and callable(getattr(client, 'get_saved_query')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_saved_query(saved_query_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@security_recipe_group.command(name=cli_util.override('cloud_guard.delete_security_recipe.command_name', 'delete'), help=u"""Deletes a security zone recipe, identified by securityRecipeId. The recipe can't be associated with an existing security zone. \n[Command Reference](deleteSecurityRecipe)""")
+@cli_util.option('--security-recipe-id', required=True, help=u"""The unique identifier of the security zone recipe. (`SecurityRecipe`)""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2282,8 +2772,8 @@ def delete_security_recipe(ctx, from_json, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@security_zone_group.command(name=cli_util.override('cloud_guard.delete_security_zone.command_name', 'delete'), help=u"""Deletes an existing security zone with a given identifier. \n[Command Reference](deleteSecurityZone)""")
-@cli_util.option('--security-zone-id', required=True, help=u"""The unique identifier of the security zone (`SecurityZone`)""")
+@security_zone_group.command(name=cli_util.override('cloud_guard.delete_security_zone.command_name', 'delete'), help=u"""Deletes a security zone, identified by securityZoneId. \n[Command Reference](deleteSecurityZone)""")
+@cli_util.option('--security-zone-id', required=True, help=u"""The unique identifier of the security zone (`SecurityZone` resource).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2346,8 +2836,8 @@ def delete_security_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@target_group.command(name=cli_util.override('cloud_guard.delete_target.command_name', 'delete'), help=u"""Deletes a Target identified by targetId \n[Command Reference](deleteTarget)""")
-@cli_util.option('--target-id', required=True, help=u"""OCID of target""")
+@target_group.command(name=cli_util.override('cloud_guard.delete_target.command_name', 'delete'), help=u"""Deletes a target (Target resource) identified by targetId. \n[Command Reference](deleteTarget)""")
+@cli_util.option('--target-id', required=True, help=u"""OCID of the target""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2410,9 +2900,9 @@ def delete_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@target_detector_recipe_group.command(name=cli_util.override('cloud_guard.delete_target_detector_recipe.command_name', 'delete'), help=u"""Delete the TargetDetectorRecipe resource by identifier \n[Command Reference](deleteTargetDetectorRecipe)""")
-@cli_util.option('--target-id', required=True, help=u"""OCID of target""")
-@cli_util.option('--target-detector-recipe-id', required=True, help=u"""OCID of TargetDetectorRecipe""")
+@target_detector_recipe_group.command(name=cli_util.override('cloud_guard.delete_target_detector_recipe.command_name', 'delete'), help=u"""Deletes the target detector recipe (TargetDetectorRecipe resource) identified by targetDetectorRecipeId, from a target (Target resource) identified by targetId. \n[Command Reference](deleteTargetDetectorRecipe)""")
+@cli_util.option('--target-id', required=True, help=u"""OCID of the target""")
+@cli_util.option('--target-detector-recipe-id', required=True, help=u"""OCID of the target detector recipe.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2441,9 +2931,9 @@ def delete_target_detector_recipe(ctx, from_json, target_id, target_detector_rec
     cli_util.render_response(result, ctx)
 
 
-@target_responder_recipe_group.command(name=cli_util.override('cloud_guard.delete_target_responder_recipe.command_name', 'delete'), help=u"""Delete the TargetResponderRecipe resource by identifier \n[Command Reference](deleteTargetResponderRecipe)""")
-@cli_util.option('--target-id', required=True, help=u"""OCID of target""")
-@cli_util.option('--target-responder-recipe-id', required=True, help=u"""OCID of TargetResponderRecipe""")
+@target_responder_recipe_group.command(name=cli_util.override('cloud_guard.delete_target_responder_recipe.command_name', 'delete'), help=u"""Detaches a target responder recipe (TargetResponderRecipe resource) identified by targetResponderRecipeId, from a target (Target resource) identified by targetId. \n[Command Reference](deleteTargetResponderRecipe)""")
+@cli_util.option('--target-id', required=True, help=u"""OCID of the target""")
+@cli_util.option('--target-responder-recipe-id', required=True, help=u"""OCID of the target responder recipe.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2472,11 +2962,37 @@ def delete_target_responder_recipe(ctx, from_json, target_id, target_responder_r
     cli_util.render_response(result, ctx)
 
 
-@responder_execution_group.command(name=cli_util.override('cloud_guard.execute_responder_execution.command_name', 'execute'), help=u"""Executes the responder execution. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](executeResponderExecution)""")
-@cli_util.option('--responder-execution-id', required=True, help=u"""The identifier of the responder execution.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@wlp_agent_group.command(name=cli_util.override('cloud_guard.delete_wlp_agent.command_name', 'delete'), help=u"""Deletes and unregisters the WLP agent for an on-premise resource. x-obmcs-splat: routing:   strategy: route-to-any-ad serviceList: [ 'cloudguard-cp-SPLAT_ENV' ] resources:   wlpAgent:     serviceResourceName: WlpAgent     targetCompartmentId: downstream.getOr404('cloudguard-cp-SPLAT_ENV', 'GetWlpAgent', request.resourceId).compartmentId     actionKind: delete     resourceOcid: request.resourceId     reconciliationCanStartAfterSecs: 30     permissions: [ \"WLP_AGENT_DELETE\" ] authorization:   mode: automated   check: resources['wlpAgent'].grantedPermissions.contains('WLP_AGENT_DELETE')   allowCrossTenancy: true tagStore:   mode: automated maximumAttemptCount: 3 throttling:   perUserLimit:     rpsLimit: 15   perTenantLimit:     rpsLimit: 30 quotas:   mode: automated search:   mode: backfilling   operationResourceName: wlpAgent lock:   mode: test   operationResourceName: wlpAgent \n[Command Reference](deleteWlpAgent)""")
+@cli_util.option('--wlp-agent-id', required=True, help=u"""WLP agent OCID.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--configurations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""ResponderRule configurations
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_wlp_agent(ctx, from_json, wlp_agent_id, if_match):
+
+    if isinstance(wlp_agent_id, six.string_types) and len(wlp_agent_id.strip()) == 0:
+        raise click.UsageError('Parameter --wlp-agent-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    result = client.delete_wlp_agent(
+        wlp_agent_id=wlp_agent_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@responder_execution_group.command(name=cli_util.override('cloud_guard.execute_responder_execution.command_name', 'execute'), help=u"""Executes the responder execution. When provided, if-match is checked against etag values of the resource. \n[Command Reference](executeResponderExecution)""")
+@cli_util.option('--responder-execution-id', required=True, help=u"""The unique identifier of the responder execution.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--configurations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of responder rule configurations
 
 This option is a JSON list with items of type ResponderConfiguration.  For documentation on ResponderConfiguration please see our API reference: https://docs.cloud.oracle.com/api/#/en/cloudguard/20200131/datatypes/ResponderConfiguration.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'configurations': {'module': 'cloud_guard', 'class': 'list[ResponderConfiguration]'}})
@@ -2509,10 +3025,77 @@ def execute_responder_execution(ctx, from_json, responder_execution_id, compartm
     cli_util.render_response(result, ctx)
 
 
-@condition_metadata_type_group.command(name=cli_util.override('cloud_guard.get_condition_metadata_type.command_name', 'get'), help=u"""Returns a ConditionMetatDataType object with its details. \n[Command Reference](getConditionMetadataType)""")
-@cli_util.option('--condition-metadata-type-id', required=True, type=custom_types.CliCaseInsensitiveChoice(["ActivityCondition", "SecurityCondition", "CloudGuardCondition", "ThreatCondition"]), help=u"""The type of the condition meta data.""")
-@cli_util.option('--service-type', help=u"""ServiceType filter for the condition meta data.""")
-@cli_util.option('--resource-type', help=u"""Resource filter for the condition meta data.""")
+@adhoc_query_group.command(name=cli_util.override('cloud_guard.get_adhoc_query.command_name', 'get'), help=u"""Returns an adhoc query identified by adhocQueryId. \n[Command Reference](getAdhocQuery)""")
+@cli_util.option('--adhoc-query-id', required=True, help=u"""Adhoc query OCID.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'cloud_guard', 'class': 'AdhocQuery'})
+@cli_util.wrap_exceptions
+def get_adhoc_query(ctx, from_json, adhoc_query_id):
+
+    if isinstance(adhoc_query_id, six.string_types) and len(adhoc_query_id.strip()) == 0:
+        raise click.UsageError('Parameter --adhoc-query-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    result = client.get_adhoc_query(
+        adhoc_query_id=adhoc_query_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@adhoc_query_result_collection_group.command(name=cli_util.override('cloud_guard.get_adhoc_query_result_content.command_name', 'get-adhoc-query-result-content'), help=u"""Downloads the results for a given adhoc ID (from includes results from all monitoring regions). \n[Command Reference](getAdhocQueryResultContent)""")
+@cli_util.option('--adhoc-query-id', required=True, help=u"""Adhoc query OCID.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def get_adhoc_query_result_content(ctx, from_json, file, adhoc_query_id):
+
+    if isinstance(adhoc_query_id, six.string_types) and len(adhoc_query_id.strip()) == 0:
+        raise click.UsageError('Parameter --adhoc-query-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    result = client.get_adhoc_query_result_content(
+        adhoc_query_id=adhoc_query_id,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
+@condition_metadata_type_group.command(name=cli_util.override('cloud_guard.get_condition_metadata_type.command_name', 'get'), help=u"""Returns a ConditionMetatDataType resource with its details. \n[Command Reference](getConditionMetadataType)""")
+@cli_util.option('--condition-metadata-type-id', required=True, type=custom_types.CliCaseInsensitiveChoice(["ActivityCondition", "SecurityCondition", "CloudGuardCondition", "InstanceSecurityCondition", "ThreatCondition"]), help=u"""The type of the condition metadata.""")
+@cli_util.option('--service-type', help=u"""Service type filter for the condition metadata.""")
+@cli_util.option('--resource-type', help=u"""Resource filter for the condition metadata.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2538,7 +3121,7 @@ def get_condition_metadata_type(ctx, from_json, condition_metadata_type_id, serv
 
 
 @configuration_group.command(name=cli_util.override('cloud_guard.get_configuration.command_name', 'get'), help=u"""Returns the configuration details for a Cloud Guard tenancy, identified by root compartment OCID. \n[Command Reference](getConfiguration)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2556,8 +3139,8 @@ def get_configuration(ctx, from_json, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@data_mask_rule_group.command(name=cli_util.override('cloud_guard.get_data_mask_rule.command_name', 'get'), help=u"""Returns a DataMaskRule object, identified by DataMaskRuleId. \n[Command Reference](getDataMaskRule)""")
-@cli_util.option('--data-mask-rule-id', required=True, help=u"""OCID of dataMaskRule""")
+@data_mask_rule_group.command(name=cli_util.override('cloud_guard.get_data_mask_rule.command_name', 'get'), help=u"""Returns a DataMaskRule resource, identified by dataMaskRuleId. \n[Command Reference](getDataMaskRule)""")
+@cli_util.option('--data-mask-rule-id', required=True, help=u"""OCID of the data mask rule""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2578,8 +3161,8 @@ def get_data_mask_rule(ctx, from_json, data_mask_rule_id):
     cli_util.render_response(result, ctx)
 
 
-@data_source_group.command(name=cli_util.override('cloud_guard.get_data_source.command_name', 'get'), help=u"""Returns a DataSource identified by dataSourceId \n[Command Reference](getDataSource)""")
-@cli_util.option('--data-source-id', required=True, help=u"""DataSource OCID""")
+@data_source_group.command(name=cli_util.override('cloud_guard.get_data_source.command_name', 'get'), help=u"""Returns a data source (DataSource resource) identified by dataSourceId. \n[Command Reference](getDataSource)""")
+@cli_util.option('--data-source-id', required=True, help=u"""Data source OCID.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2600,8 +3183,8 @@ def get_data_source(ctx, from_json, data_source_id):
     cli_util.render_response(result, ctx)
 
 
-@detector_group.command(name=cli_util.override('cloud_guard.get_detector.command_name', 'get'), help=u"""Returns a Detector object, identified by detectorId. \n[Command Reference](getDetector)""")
-@cli_util.option('--detector-id', required=True, help=u"""The Name of Detector.""")
+@detector_group.command(name=cli_util.override('cloud_guard.get_detector.command_name', 'get'), help=u"""Returns a Detector resource, identified by detectorId. \n[Command Reference](getDetector)""")
+@cli_util.option('--detector-id', required=True, help=u"""Detector name.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2622,8 +3205,8 @@ def get_detector(ctx, from_json, detector_id):
     cli_util.render_response(result, ctx)
 
 
-@detector_recipe_group.command(name=cli_util.override('cloud_guard.get_detector_recipe.command_name', 'get'), help=u"""Returns a detector recipe (DetectorRecipe object) identified by detectorRecipeId. \n[Command Reference](getDetectorRecipe)""")
-@cli_util.option('--detector-recipe-id', required=True, help=u"""DetectorRecipe OCID""")
+@detector_recipe_group.command(name=cli_util.override('cloud_guard.get_detector_recipe.command_name', 'get'), help=u"""Returns a detector recipe (DetectorRecipe resource) identified by detectorRecipeId. \n[Command Reference](getDetectorRecipe)""")
+@cli_util.option('--detector-recipe-id', required=True, help=u"""Detector recipe OCID""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2644,9 +3227,9 @@ def get_detector_recipe(ctx, from_json, detector_recipe_id):
     cli_util.render_response(result, ctx)
 
 
-@detector_recipe_detector_rule_group.command(name=cli_util.override('cloud_guard.get_detector_recipe_detector_rule.command_name', 'get'), help=u"""Returns a detector rule (DetectorRule object) identified by detectorRuleId. \n[Command Reference](getDetectorRecipeDetectorRule)""")
-@cli_util.option('--detector-recipe-id', required=True, help=u"""DetectorRecipe OCID""")
-@cli_util.option('--detector-rule-id', required=True, help=u"""The key of Detector Rule.""")
+@detector_recipe_detector_rule_group.command(name=cli_util.override('cloud_guard.get_detector_recipe_detector_rule.command_name', 'get'), help=u"""Returns a detector rule (DetectorRule resource) identified by detectorRuleId. \n[Command Reference](getDetectorRecipeDetectorRule)""")
+@cli_util.option('--detector-recipe-id', required=True, help=u"""Detector recipe OCID""")
+@cli_util.option('--detector-rule-id', required=True, help=u"""The unique identifier of a detector rule.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2671,9 +3254,9 @@ def get_detector_recipe_detector_rule(ctx, from_json, detector_recipe_id, detect
     cli_util.render_response(result, ctx)
 
 
-@detector_rule_group.command(name=cli_util.override('cloud_guard.get_detector_rule.command_name', 'get'), help=u"""Returns a detector rule (DetectorRule object) identified by detectorRuleId. \n[Command Reference](getDetectorRule)""")
-@cli_util.option('--detector-id', required=True, help=u"""The Name of Detector.""")
-@cli_util.option('--detector-rule-id', required=True, help=u"""The key of Detector Rule.""")
+@detector_rule_group.command(name=cli_util.override('cloud_guard.get_detector_rule.command_name', 'get'), help=u"""Returns a detector rule (DetectorRule resource) identified by detectorRuleId. \n[Command Reference](getDetectorRule)""")
+@cli_util.option('--detector-id', required=True, help=u"""Detector name.""")
+@cli_util.option('--detector-rule-id', required=True, help=u"""The unique identifier of a detector rule.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2699,7 +3282,7 @@ def get_detector_rule(ctx, from_json, detector_id, detector_rule_id):
 
 
 @managed_list_group.command(name=cli_util.override('cloud_guard.get_managed_list.command_name', 'get'), help=u"""Returns a managed list identified by managedListId. \n[Command Reference](getManagedList)""")
-@cli_util.option('--managed-list-id', required=True, help=u"""The cloudguard list OCID to be passed in the request.""")
+@cli_util.option('--managed-list-id', required=True, help=u"""The managed list OCID to be passed in the request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2720,8 +3303,8 @@ def get_managed_list(ctx, from_json, managed_list_id):
     cli_util.render_response(result, ctx)
 
 
-@problem_group.command(name=cli_util.override('cloud_guard.get_problem.command_name', 'get'), help=u"""Returns the Problem object identified by a problemId. \n[Command Reference](getProblem)""")
-@cli_util.option('--problem-id', required=True, help=u"""OCId of the problem.""")
+@problem_group.command(name=cli_util.override('cloud_guard.get_problem.command_name', 'get'), help=u"""Returns the Problem resource identified by problemId. \n[Command Reference](getProblem)""")
+@cli_util.option('--problem-id', required=True, help=u"""OCID of the problem.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2742,7 +3325,29 @@ def get_problem(ctx, from_json, problem_id):
     cli_util.render_response(result, ctx)
 
 
-@resource_profile_group.command(name=cli_util.override('cloud_guard.get_resource_profile.command_name', 'get'), help=u"""Returns resource profile details \n[Command Reference](getResourceProfile)""")
+@resource_group.command(name=cli_util.override('cloud_guard.get_resource.command_name', 'get'), help=u"""Returns a resource identified by resourceId \n[Command Reference](getResource)""")
+@cli_util.option('--resource-id', required=True, help=u"""CloudGuard resource OCID""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'cloud_guard', 'class': 'Resource'})
+@cli_util.wrap_exceptions
+def get_resource(ctx, from_json, resource_id):
+
+    if isinstance(resource_id, six.string_types) and len(resource_id.strip()) == 0:
+        raise click.UsageError('Parameter --resource-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    result = client.get_resource(
+        resource_id=resource_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@resource_profile_group.command(name=cli_util.override('cloud_guard.get_resource_profile.command_name', 'get'), help=u"""Returns details for a resource profile, identified by resourceProfileId. \n[Command Reference](getResourceProfile)""")
 @cli_util.option('--resource-profile-id', required=True, help=u"""OCID of the resource profile.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2764,8 +3369,35 @@ def get_resource_profile(ctx, from_json, resource_profile_id):
     cli_util.render_response(result, ctx)
 
 
-@responder_execution_group.command(name=cli_util.override('cloud_guard.get_responder_execution.command_name', 'get'), help=u"""Returns a Responder Execution identified by responderExecutionId \n[Command Reference](getResponderExecution)""")
-@cli_util.option('--responder-execution-id', required=True, help=u"""The identifier of the responder execution.""")
+@resource_vulnerability_group.command(name=cli_util.override('cloud_guard.get_resource_vulnerability.command_name', 'get'), help=u"""Returns the vulnerability details associated with the cveId where resource is an instance \n[Command Reference](getResourceVulnerability)""")
+@cli_util.option('--resource-id', required=True, help=u"""CloudGuard resource OCID""")
+@cli_util.option('--vulnerability-key', required=True, help=u"""CloudGuard vulnerability id""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'cloud_guard', 'class': 'ResourceVulnerability'})
+@cli_util.wrap_exceptions
+def get_resource_vulnerability(ctx, from_json, resource_id, vulnerability_key):
+
+    if isinstance(resource_id, six.string_types) and len(resource_id.strip()) == 0:
+        raise click.UsageError('Parameter --resource-id cannot be whitespace or empty string')
+
+    if isinstance(vulnerability_key, six.string_types) and len(vulnerability_key.strip()) == 0:
+        raise click.UsageError('Parameter --vulnerability-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    result = client.get_resource_vulnerability(
+        resource_id=resource_id,
+        vulnerability_key=vulnerability_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@responder_execution_group.command(name=cli_util.override('cloud_guard.get_responder_execution.command_name', 'get'), help=u"""Returns a responder execution identified by responderExecutionId. \n[Command Reference](getResponderExecution)""")
+@cli_util.option('--responder-execution-id', required=True, help=u"""The unique identifier of the responder execution.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2786,8 +3418,8 @@ def get_responder_execution(ctx, from_json, responder_execution_id):
     cli_util.render_response(result, ctx)
 
 
-@responder_recipe_group.command(name=cli_util.override('cloud_guard.get_responder_recipe.command_name', 'get'), help=u"""Get a ResponderRecipe by identifier \n[Command Reference](getResponderRecipe)""")
-@cli_util.option('--responder-recipe-id', required=True, help=u"""OCID of ResponderRecipe""")
+@responder_recipe_group.command(name=cli_util.override('cloud_guard.get_responder_recipe.command_name', 'get'), help=u"""Returns a responder recipe (ResponderRecipe resource) identified by responderRecipeId. \n[Command Reference](getResponderRecipe)""")
+@cli_util.option('--responder-recipe-id', required=True, help=u"""OCID of the responder recipe.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2808,9 +3440,9 @@ def get_responder_recipe(ctx, from_json, responder_recipe_id):
     cli_util.render_response(result, ctx)
 
 
-@responder_recipe_responder_rule_group.command(name=cli_util.override('cloud_guard.get_responder_recipe_responder_rule.command_name', 'get'), help=u"""Get ResponderRule by identifier \n[Command Reference](getResponderRecipeResponderRule)""")
-@cli_util.option('--responder-recipe-id', required=True, help=u"""OCID of ResponderRecipe""")
-@cli_util.option('--responder-rule-id', required=True, help=u"""The id of ResponderRule""")
+@responder_recipe_responder_rule_group.command(name=cli_util.override('cloud_guard.get_responder_recipe_responder_rule.command_name', 'get'), help=u"""Returns a responder rule (ResponderRule resource) identified by responderRuleId. \n[Command Reference](getResponderRecipeResponderRule)""")
+@cli_util.option('--responder-recipe-id', required=True, help=u"""OCID of the responder recipe.""")
+@cli_util.option('--responder-rule-id', required=True, help=u"""Unique identifier of the responder rule.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2835,8 +3467,8 @@ def get_responder_recipe_responder_rule(ctx, from_json, responder_recipe_id, res
     cli_util.render_response(result, ctx)
 
 
-@responder_rule_group.command(name=cli_util.override('cloud_guard.get_responder_rule.command_name', 'get'), help=u"""Get a ResponderRule by identifier \n[Command Reference](getResponderRule)""")
-@cli_util.option('--responder-rule-id', required=True, help=u"""The id of ResponderRule""")
+@responder_rule_group.command(name=cli_util.override('cloud_guard.get_responder_rule.command_name', 'get'), help=u"""Returns a responder rule (ResponderRule resource) identified by resonderRuleId. \n[Command Reference](getResponderRule)""")
+@cli_util.option('--responder-rule-id', required=True, help=u"""Unique identifier of the responder rule.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2857,8 +3489,30 @@ def get_responder_rule(ctx, from_json, responder_rule_id):
     cli_util.render_response(result, ctx)
 
 
-@security_policy_group.command(name=cli_util.override('cloud_guard.get_security_policy.command_name', 'get'), help=u"""Gets a security zone policy using its identifier. When a policy is enabled in a security zone, then any action in the zone that attempts to violate that policy is denied. \n[Command Reference](getSecurityPolicy)""")
-@cli_util.option('--security-policy-id', required=True, help=u"""The unique identifier of the security zone policy (`SecurityPolicy`)""")
+@saved_query_group.command(name=cli_util.override('cloud_guard.get_saved_query.command_name', 'get'), help=u"""Returns a SavedQuery resource identified by savedQueryId. \n[Command Reference](getSavedQuery)""")
+@cli_util.option('--saved-query-id', required=True, help=u"""Saved query OCID""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'cloud_guard', 'class': 'SavedQuery'})
+@cli_util.wrap_exceptions
+def get_saved_query(ctx, from_json, saved_query_id):
+
+    if isinstance(saved_query_id, six.string_types) and len(saved_query_id.strip()) == 0:
+        raise click.UsageError('Parameter --saved-query-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    result = client.get_saved_query(
+        saved_query_id=saved_query_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@security_policy_group.command(name=cli_util.override('cloud_guard.get_security_policy.command_name', 'get'), help=u"""Returns a security zone policy (SecurityPolicy resource), identified by its unique ID (securityPolicyId). When a policy is enabled in a security zone, then any action in the zone that attempts to violate that policy is blocked. \n[Command Reference](getSecurityPolicy)""")
+@cli_util.option('--security-policy-id', required=True, help=u"""The unique identifier of the security zone policy. (`SecurityPolicy`)""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2879,8 +3533,8 @@ def get_security_policy(ctx, from_json, security_policy_id):
     cli_util.render_response(result, ctx)
 
 
-@security_recipe_group.command(name=cli_util.override('cloud_guard.get_security_recipe.command_name', 'get'), help=u"""Gets a security zone recipe by identifier. A security zone recipe is a collection of security zone policies. \n[Command Reference](getSecurityRecipe)""")
-@cli_util.option('--security-recipe-id', required=True, help=u"""The unique identifier of the security zone recipe (`SecurityRecipe`)""")
+@security_recipe_group.command(name=cli_util.override('cloud_guard.get_security_recipe.command_name', 'get'), help=u"""Returns a security zone recipe (SecurityRecipe resource) identified by securityRecipeId. \n[Command Reference](getSecurityRecipe)""")
+@cli_util.option('--security-recipe-id', required=True, help=u"""The unique identifier of the security zone recipe. (`SecurityRecipe`)""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2901,8 +3555,8 @@ def get_security_recipe(ctx, from_json, security_recipe_id):
     cli_util.render_response(result, ctx)
 
 
-@security_zone_group.command(name=cli_util.override('cloud_guard.get_security_zone.command_name', 'get'), help=u"""Gets a security zone by its identifier. A security zone is associated with a security zone recipe and enforces all security zone policies in the recipe. Any actions in the zone's compartments that violate a policy are denied. \n[Command Reference](getSecurityZone)""")
-@cli_util.option('--security-zone-id', required=True, help=u"""The unique identifier of the security zone (`SecurityZone`)""")
+@security_zone_group.command(name=cli_util.override('cloud_guard.get_security_zone.command_name', 'get'), help=u"""Returns a security zone (SecurityZone resource) identified by securityZoneId. \n[Command Reference](getSecurityZone)""")
+@cli_util.option('--security-zone-id', required=True, help=u"""The unique identifier of the security zone (`SecurityZone` resource).""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2923,7 +3577,7 @@ def get_security_zone(ctx, from_json, security_zone_id):
     cli_util.render_response(result, ctx)
 
 
-@sighting_group.command(name=cli_util.override('cloud_guard.get_sighting.command_name', 'get'), help=u"""Returns Sighting details \n[Command Reference](getSighting)""")
+@sighting_group.command(name=cli_util.override('cloud_guard.get_sighting.command_name', 'get'), help=u"""Returns a single sighting (Sighting resource) identified by sightingId. \n[Command Reference](getSighting)""")
 @cli_util.option('--sighting-id', required=True, help=u"""OCID of the sighting.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2945,8 +3599,8 @@ def get_sighting(ctx, from_json, sighting_id):
     cli_util.render_response(result, ctx)
 
 
-@target_group.command(name=cli_util.override('cloud_guard.get_target.command_name', 'get'), help=u"""Returns a Target identified by targetId \n[Command Reference](getTarget)""")
-@cli_util.option('--target-id', required=True, help=u"""OCID of target""")
+@target_group.command(name=cli_util.override('cloud_guard.get_target.command_name', 'get'), help=u"""Returns a target (Target resource) identified by targetId. \n[Command Reference](getTarget)""")
+@cli_util.option('--target-id', required=True, help=u"""OCID of the target""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2967,9 +3621,9 @@ def get_target(ctx, from_json, target_id):
     cli_util.render_response(result, ctx)
 
 
-@target_detector_recipe_group.command(name=cli_util.override('cloud_guard.get_target_detector_recipe.command_name', 'get'), help=u"""Get a TargetDetectorRecipe by identifier \n[Command Reference](getTargetDetectorRecipe)""")
-@cli_util.option('--target-id', required=True, help=u"""OCID of target""")
-@cli_util.option('--target-detector-recipe-id', required=True, help=u"""OCID of TargetDetectorRecipe""")
+@target_detector_recipe_group.command(name=cli_util.override('cloud_guard.get_target_detector_recipe.command_name', 'get'), help=u"""Returns a target detector recipe (TargetDetectorRecipe resource) identified by targetDetectorRecipeId. \n[Command Reference](getTargetDetectorRecipe)""")
+@cli_util.option('--target-id', required=True, help=u"""OCID of the target""")
+@cli_util.option('--target-detector-recipe-id', required=True, help=u"""OCID of the target detector recipe.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2994,10 +3648,10 @@ def get_target_detector_recipe(ctx, from_json, target_id, target_detector_recipe
     cli_util.render_response(result, ctx)
 
 
-@target_detector_recipe_detector_rule_group.command(name=cli_util.override('cloud_guard.get_target_detector_recipe_detector_rule.command_name', 'get'), help=u"""Get DetectorRule by identifier \n[Command Reference](getTargetDetectorRecipeDetectorRule)""")
-@cli_util.option('--target-id', required=True, help=u"""OCID of target""")
-@cli_util.option('--target-detector-recipe-id', required=True, help=u"""OCID of TargetDetectorRecipe""")
-@cli_util.option('--detector-rule-id', required=True, help=u"""The id of DetectorRule""")
+@target_detector_recipe_detector_rule_group.command(name=cli_util.override('cloud_guard.get_target_detector_recipe_detector_rule.command_name', 'get'), help=u"""Returns DetectorRule resource by identified by targetDetectorRecipeId. \n[Command Reference](getTargetDetectorRecipeDetectorRule)""")
+@cli_util.option('--target-id', required=True, help=u"""OCID of the target""")
+@cli_util.option('--target-detector-recipe-id', required=True, help=u"""OCID of the target detector recipe.""")
+@cli_util.option('--detector-rule-id', required=True, help=u"""The unique identifier of the detector rule.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -3026,9 +3680,9 @@ def get_target_detector_recipe_detector_rule(ctx, from_json, target_id, target_d
     cli_util.render_response(result, ctx)
 
 
-@target_responder_recipe_group.command(name=cli_util.override('cloud_guard.get_target_responder_recipe.command_name', 'get'), help=u"""Get a TargetResponderRecipe by identifier \n[Command Reference](getTargetResponderRecipe)""")
-@cli_util.option('--target-id', required=True, help=u"""OCID of target""")
-@cli_util.option('--target-responder-recipe-id', required=True, help=u"""OCID of TargetResponderRecipe""")
+@target_responder_recipe_group.command(name=cli_util.override('cloud_guard.get_target_responder_recipe.command_name', 'get'), help=u"""Returns a target responder recipe (TargetResponderRecipe) identified by targetResponderRecipeId for a target (Target resource) identified by targetId. \n[Command Reference](getTargetResponderRecipe)""")
+@cli_util.option('--target-id', required=True, help=u"""OCID of the target""")
+@cli_util.option('--target-responder-recipe-id', required=True, help=u"""OCID of the target responder recipe.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -3053,10 +3707,10 @@ def get_target_responder_recipe(ctx, from_json, target_id, target_responder_reci
     cli_util.render_response(result, ctx)
 
 
-@target_responder_recipe_responder_rule_group.command(name=cli_util.override('cloud_guard.get_target_responder_recipe_responder_rule.command_name', 'get'), help=u"""Get ResponderRule by identifier \n[Command Reference](getTargetResponderRecipeResponderRule)""")
-@cli_util.option('--target-id', required=True, help=u"""OCID of target""")
-@cli_util.option('--target-responder-recipe-id', required=True, help=u"""OCID of TargetResponderRecipe""")
-@cli_util.option('--responder-rule-id', required=True, help=u"""The id of ResponderRule""")
+@target_responder_recipe_responder_rule_group.command(name=cli_util.override('cloud_guard.get_target_responder_recipe_responder_rule.command_name', 'get'), help=u"""Returns a responder rule (ResponderRule resource) identified by responderRuleId, from a target responder recipe (TargetResponderRecipe resource) identified by targetResponderRecipeId, attached to a target (Target resource) identified by targetId. \n[Command Reference](getTargetResponderRecipeResponderRule)""")
+@cli_util.option('--target-id', required=True, help=u"""OCID of the target""")
+@cli_util.option('--target-responder-recipe-id', required=True, help=u"""OCID of the target responder recipe.""")
+@cli_util.option('--responder-rule-id', required=True, help=u"""Unique identifier of the responder rule.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -3085,7 +3739,29 @@ def get_target_responder_recipe_responder_rule(ctx, from_json, target_id, target
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('cloud_guard.get_work_request.command_name', 'get'), help=u"""Gets details of the work request with the given ID. \n[Command Reference](getWorkRequest)""")
+@wlp_agent_group.command(name=cli_util.override('cloud_guard.get_wlp_agent.command_name', 'get'), help=u"""Returns a WlpAgent resource for an on-premise resource identified by wlpAgentId. \n[Command Reference](getWlpAgent)""")
+@cli_util.option('--wlp-agent-id', required=True, help=u"""WLP agent OCID.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'cloud_guard', 'class': 'WlpAgent'})
+@cli_util.wrap_exceptions
+def get_wlp_agent(ctx, from_json, wlp_agent_id):
+
+    if isinstance(wlp_agent_id, six.string_types) and len(wlp_agent_id.strip()) == 0:
+        raise click.UsageError('Parameter --wlp-agent-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    result = client.get_wlp_agent(
+        wlp_agent_id=wlp_agent_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@work_request_group.command(name=cli_util.override('cloud_guard.get_work_request.command_name', 'get'), help=u"""Returns details for a work request (WorkRequest resource) identified by workRequestId. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3107,12 +3783,148 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@condition_metadata_type_group.command(name=cli_util.override('cloud_guard.list_condition_metadata_types.command_name', 'list'), help=u"""Returns a list of ConditionMetadataType objects. \n[Command Reference](listConditionMetadataTypes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@adhoc_query_group.command(name=cli_util.override('cloud_guard.list_adhoc_queries.command_name', 'list'), help=u"""Returns a list of all adhoc queries (AdhocQuery resources) for a compartment identified by compartmentId. List is returned in a AdhocQueryCollection resource with page of AdhocQuerySummary resources.
+
+The ListAdhocQueries operation returns only the adhoc queries in 'compartmentId' passed. The list does not include any subcompartments of the compartmentId passed.
+
+The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
+
+The parameter `compartmentIdInSubtree` applies when you perform ListAdhocQueries on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listAdhocQueries)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--adhoc-query-status', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "CREATED", "IN_PROGRESS", "PARTIALLY_COMPLETED", "EXPIRED", "COMPLETED", "FAILED"]), help=u"""The status of the adhoc query created. Default value for state is provisioning. If no value is specified state is provisioning.""")
+@cli_util.option('--time-started-filter-query-param', type=custom_types.CLI_DATETIME, help=u"""Start time for a filter. If start time is not specified, start time will be set to current time - 30 days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-ended-filter-query-param', type=custom_types.CLI_DATETIME, help=u"""End time for a filter. If end time is not specified, end time will be set to current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
+@cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'cloud_guard', 'class': 'AdhocQueryCollection'})
+@cli_util.wrap_exceptions
+def list_adhoc_queries(ctx, from_json, all_pages, page_size, compartment_id, adhoc_query_status, time_started_filter_query_param, time_ended_filter_query_param, limit, page, compartment_id_in_subtree, access_level, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if adhoc_query_status is not None:
+        kwargs['adhoc_query_status'] = adhoc_query_status
+    if time_started_filter_query_param is not None:
+        kwargs['time_started_filter_query_param'] = time_started_filter_query_param
+    if time_ended_filter_query_param is not None:
+        kwargs['time_ended_filter_query_param'] = time_ended_filter_query_param
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if access_level is not None:
+        kwargs['access_level'] = access_level
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_adhoc_queries,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_adhoc_queries,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_adhoc_queries(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@adhoc_query_result_collection_group.command(name=cli_util.override('cloud_guard.list_adhoc_query_results.command_name', 'list-adhoc-query-results'), help=u"""Lists the results for a given adhoc ID (from includes results from all monitoring regions). \n[Command Reference](listAdhocQueryResults)""")
+@cli_util.option('--adhoc-query-id', required=True, help=u"""Adhoc query OCID.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'cloud_guard', 'class': 'AdhocQueryResultCollection'})
+@cli_util.wrap_exceptions
+def list_adhoc_query_results(ctx, from_json, all_pages, page_size, adhoc_query_id, compartment_id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(adhoc_query_id, six.string_types) and len(adhoc_query_id.strip()) == 0:
+        raise click.UsageError('Parameter --adhoc-query-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_adhoc_query_results,
+            adhoc_query_id=adhoc_query_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_adhoc_query_results,
+            limit,
+            page_size,
+            adhoc_query_id=adhoc_query_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_adhoc_query_results(
+            adhoc_query_id=adhoc_query_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@condition_metadata_type_group.command(name=cli_util.override('cloud_guard.list_condition_metadata_types.command_name', 'list'), help=u"""Returns a list of ConditionMetadataType resources. \n[Command Reference](listConditionMetadataTypes)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -3164,18 +3976,18 @@ def list_condition_metadata_types(ctx, from_json, all_pages, page_size, compartm
     cli_util.render_response(result, ctx)
 
 
-@data_mask_rule_group.command(name=cli_util.override('cloud_guard.list_data_mask_rules.command_name', 'list'), help=u"""Returns a list of all DataMaskRule objects in the specified compartmentId (OCID) and its subcompartments. \n[Command Reference](listDataMaskRules)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@data_mask_rule_group.command(name=cli_util.override('cloud_guard.list_data_mask_rules.command_name', 'list'), help=u"""Returns a list of all DataMaskRule resources in the specified compartmentId (OCID) and its subcompartments. \n[Command Reference](listDataMaskRules)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
-@cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The status of the dataMaskRule.""")
-@cli_util.option('--target-id', help=u"""OCID of target""")
-@cli_util.option('--iam-group-id', help=u"""OCID of iamGroup""")
+@cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The status of the data mask rule""")
+@cli_util.option('--target-id', help=u"""OCID of the target""")
+@cli_util.option('--iam-group-id', help=u"""OCID of the IAM group""")
 @cli_util.option('--target-type', help=u"""Type of target""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -3239,12 +4051,12 @@ def list_data_mask_rules(ctx, from_json, all_pages, page_size, compartment_id, d
     cli_util.render_response(result, ctx)
 
 
-@data_source_group.command(name=cli_util.override('cloud_guard.list_data_source_events.command_name', 'list-data-source-events'), help=u"""Returns a list of events from CloudGuard DataSource \n[Command Reference](listDataSourceEvents)""")
-@cli_util.option('--data-source-id', required=True, help=u"""DataSource OCID""")
-@cli_util.option('--region-parameterconflict', help=u"""A filter to return only resource their region matches the given region.""")
+@data_source_group.command(name=cli_util.override('cloud_guard.list_data_source_events.command_name', 'list-data-source-events'), help=u"""Returns a list of data source events (DataSourceEventCollection  resource) from the data source (DataSource resource) identified by dataSourceId. \n[Command Reference](listDataSourceEvents)""")
+@cli_util.option('--data-source-id', required=True, help=u"""Data source OCID.""")
+@cli_util.option('--region-parameterconflict', help=u"""A filter to return only resource where their region matches the given region.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -3299,23 +4111,23 @@ def list_data_source_events(ctx, from_json, all_pages, page_size, data_source_id
     cli_util.render_response(result, ctx)
 
 
-@data_source_group.command(name=cli_util.override('cloud_guard.list_data_sources.command_name', 'list'), help=u"""Returns a list of all Data Sources in a compartment
+@data_source_group.command(name=cli_util.override('cloud_guard.list_data_sources.command_name', 'list'), help=u"""Returns a list of all data sources (DataSource resources) for a compartment identified by compartmentId. List is returned in a DataSourceCollection resource with page of DataSourceSummary resources.
 
-The ListDataSources operation returns only the data Sources in `compartmentId` passed. The list does not include any subcompartments of the compartmentId passed.
+The ListAdhocQueries operation returns only the adhoc queries in 'compartmentId' passed. The list does not include any subcompartments of the compartmentId passed.
 
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
-The parameter `compartmentIdInSubtree` applies when you perform ListdataSources on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listDataSources)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+The parameter `compartmentIdInSubtree` applies when you perform ListAdhocQueries on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listDataSources)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--data-source-feed-provider', type=custom_types.CliCaseInsensitiveChoice(["LOGGINGQUERY"]), help=u"""A filter to return only resources their feedProvider matches the given DataSourceFeedProvider.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--data-source-feed-provider', type=custom_types.CliCaseInsensitiveChoice(["LOGGINGQUERY", "SCHEDULEDQUERY"]), help=u"""A filter to return only resources when their feed provider matches the given feed provider (`DataSourceFeedProvider` resource).""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--logging-query-type', type=custom_types.CliCaseInsensitiveChoice(["INSIGHT"]), help=u"""A filter to return only resources their query type matches the given LoggingQueryType.""")
-@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.""")
+@cli_util.option('--logging-query-type', type=custom_types.CliCaseInsensitiveChoice(["INSIGHT"]), help=u"""A filter to return only resources where their query type matches the given LoggingQueryType.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -3377,14 +4189,14 @@ def list_data_sources(ctx, from_json, all_pages, page_size, compartment_id, disp
     cli_util.render_response(result, ctx)
 
 
-@detector_recipe_detector_rule_group.command(name=cli_util.override('cloud_guard.list_detector_recipe_detector_rules.command_name', 'list'), help=u"""Returns a list of detector rules (DetectorRule objects) for a detector recipe (DetectorRecipe object), identified by detectorRecipeId. \n[Command Reference](listDetectorRecipeDetectorRules)""")
-@cli_util.option('--detector-recipe-id', required=True, help=u"""DetectorRecipe OCID""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@detector_recipe_detector_rule_group.command(name=cli_util.override('cloud_guard.list_detector_recipe_detector_rules.command_name', 'list'), help=u"""Returns a list of detector rules (DetectorRule resources) for a detector recipe (DetectorRecipe resource), identified by detectorRecipeId. \n[Command Reference](listDetectorRecipeDetectorRules)""")
+@cli_util.option('--detector-recipe-id', required=True, help=u"""Detector recipe OCID""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "riskLevel"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for displayName is ascending. If no value is specified displayName is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -3444,22 +4256,22 @@ def list_detector_recipe_detector_rules(ctx, from_json, all_pages, page_size, de
     cli_util.render_response(result, ctx)
 
 
-@detector_recipe_group.command(name=cli_util.override('cloud_guard.list_detector_recipes.command_name', 'list'), help=u"""Returns a list of all detector recipes (DetectorRecipe objects) in a compartment, identified by compartmentId.
+@detector_recipe_group.command(name=cli_util.override('cloud_guard.list_detector_recipes.command_name', 'list'), help=u"""Returns a list of all detector recipes (DetectorRecipe resources) in a compartment, identified by compartmentId.
 
 The ListDetectorRecipes operation returns only the detector recipes in `compartmentId` passed. The list does not include any subcompartments of the compartmentId passed.
 
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListDetectorRecipes on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listDetectorRecipes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--resource-metadata-only', type=click.BOOL, help=u"""Default is false. When set to true, the list of all Oracle Managed Resources Metadata supported by Cloud Guard are returned.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--resource-metadata-only', type=click.BOOL, help=u"""Default is false. When set to true, the list of all Oracle-managed resources metadata supported by Cloud Guard is returned.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -3519,14 +4331,14 @@ def list_detector_recipes(ctx, from_json, all_pages, page_size, compartment_id, 
     cli_util.render_response(result, ctx)
 
 
-@detector_rule_group.command(name=cli_util.override('cloud_guard.list_detector_rules.command_name', 'list'), help=u"""Returns a list of detector rules for the DetectorRecipe object identified by detectorId. \n[Command Reference](listDetectorRules)""")
-@cli_util.option('--detector-id', required=True, help=u"""The Name of Detector.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@detector_rule_group.command(name=cli_util.override('cloud_guard.list_detector_rules.command_name', 'list'), help=u"""Returns a list of detector rules for the DetectorRecipe resource identified by detectorId. \n[Command Reference](listDetectorRules)""")
+@cli_util.option('--detector-id', required=True, help=u"""Detector name.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -3586,12 +4398,12 @@ def list_detector_rules(ctx, from_json, all_pages, page_size, detector_id, compa
     cli_util.render_response(result, ctx)
 
 
-@detector_group.command(name=cli_util.override('cloud_guard.list_detectors.command_name', 'list'), help=u"""Returns a detector catalog (DetectorCollection object) with a list of DetectorSummary objects. \n[Command Reference](listDetectors)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
+@detector_group.command(name=cli_util.override('cloud_guard.list_detectors.command_name', 'list'), help=u"""Returns a detector catalog (DetectorCollection resource) with a list of DetectorSummary resources. \n[Command Reference](listDetectors)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -3643,11 +4455,11 @@ def list_detectors(ctx, from_json, all_pages, page_size, compartment_id, limit, 
     cli_util.render_response(result, ctx)
 
 
-@impacted_resource_summary_group.command(name=cli_util.override('cloud_guard.list_impacted_resources.command_name', 'list-impacted-resources'), help=u"""Returns a list of impacted resources for a Cloud Guard problem with a specified problem ID. \n[Command Reference](listImpactedResources)""")
-@cli_util.option('--problem-id', required=True, help=u"""OCId of the problem.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@impacted_resource_summary_group.command(name=cli_util.override('cloud_guard.list_impacted_resources.command_name', 'list-impacted-resources'), help=u"""Returns a list of impacted resources for a problem identified by problemId. \n[Command Reference](listImpactedResources)""")
+@cli_util.option('--problem-id', required=True, help=u"""OCID of the problem.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -3701,11 +4513,11 @@ def list_impacted_resources(ctx, from_json, all_pages, page_size, problem_id, li
 
 
 @managed_list_type_summary_group.command(name=cli_util.override('cloud_guard.list_managed_list_types.command_name', 'list-managed-list-types'), help=u"""Returns all managed list types (listType parameter) that Cloud Guard supports. \n[Command Reference](listManagedListTypes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "riskLevel"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for displayName is ascending. If no value is specified displayName is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -3757,21 +4569,21 @@ def list_managed_list_types(ctx, from_json, all_pages, page_size, compartment_id
     cli_util.render_response(result, ctx)
 
 
-@managed_list_group.command(name=cli_util.override('cloud_guard.list_managed_lists.command_name', 'list'), help=u"""Returns a list of all ManagedList objects in a compartment, identified by compartmentId. The ListManagedLists operation returns only the managed lists in `compartmentId` passed. The list does not include any subcompartments of the compartmentId passed.
+@managed_list_group.command(name=cli_util.override('cloud_guard.list_managed_lists.command_name', 'list'), help=u"""Returns a list of all ManagedList resources in a compartment, identified by compartmentId. The ListManagedLists operation returns only the managed lists in `compartmentId` passed. The list does not include any subcompartments of the compartmentId passed.
 
 The parameter `accessLevel` specifies whether to return ManagedLists in only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListManagedLists on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listManagedLists)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--resource-metadata-only', type=click.BOOL, help=u"""Default is false. When set to true, the list of all Oracle Managed Resources Metadata supported by Cloud Guard are returned.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
-@cli_util.option('--list-type', type=custom_types.CliCaseInsensitiveChoice(["CIDR_BLOCK", "USERS", "GROUPS", "IPV4ADDRESS", "IPV6ADDRESS", "RESOURCE_OCID", "REGION", "COUNTRY", "STATE", "CITY", "TAGS", "GENERIC", "FUSION_APPS_ROLE", "FUSION_APPS_PERMISSION"]), help=u"""The type of the ManagedList.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--resource-metadata-only', type=click.BOOL, help=u"""Default is false. When set to true, the list of all Oracle-managed resources metadata supported by Cloud Guard is returned.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
+@cli_util.option('--list-type', type=custom_types.CliCaseInsensitiveChoice(["CIDR_BLOCK", "USERS", "GROUPS", "IPV4ADDRESS", "IPV6ADDRESS", "RESOURCE_OCID", "REGION", "COUNTRY", "STATE", "CITY", "TAGS", "GENERIC", "FUSION_APPS_ROLE", "FUSION_APPS_PERMISSION"]), help=u"""The type of managed list.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -3834,10 +4646,10 @@ def list_managed_lists(ctx, from_json, all_pages, page_size, compartment_id, dis
 
 
 @policy_summary_group.command(name=cli_util.override('cloud_guard.list_policies.command_name', 'list-policies'), help=u"""Returns the list of global policy statements (policy attributes) needed to fully enable Cloud Guard. \n[Command Reference](listPolicies)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -3888,10 +4700,10 @@ def list_policies(ctx, from_json, all_pages, page_size, compartment_id, limit, p
 
 
 @problem_endpoint_summary_group.command(name=cli_util.override('cloud_guard.list_problem_endpoints.command_name', 'list-problem-endpoints'), help=u"""Returns a list of endpoints associated with a problem, identified by problemId. \n[Command Reference](listProblemEndpoints)""")
-@cli_util.option('--problem-id', required=True, help=u"""OCId of the problem.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--problem-id', required=True, help=u"""OCID of the problem.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -3944,11 +4756,11 @@ def list_problem_endpoints(ctx, from_json, all_pages, page_size, problem_id, lim
     cli_util.render_response(result, ctx)
 
 
-@problem_group.command(name=cli_util.override('cloud_guard.list_problem_entities.command_name', 'list-problem-entities'), help=u"""Returns a list of entities for a CloudGuard Problem \n[Command Reference](listProblemEntities)""")
-@cli_util.option('--problem-id', required=True, help=u"""OCId of the problem.""")
+@problem_group.command(name=cli_util.override('cloud_guard.list_problem_entities.command_name', 'list-problem-entities'), help=u"""Returns a list of entities for a problem. \n[Command Reference](listProblemEntities)""")
+@cli_util.option('--problem-id', required=True, help=u"""OCID of the problem.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -4001,12 +4813,12 @@ def list_problem_entities(ctx, from_json, all_pages, page_size, problem_id, page
     cli_util.render_response(result, ctx)
 
 
-@problem_group.command(name=cli_util.override('cloud_guard.list_problem_histories.command_name', 'list-problem-histories'), help=u"""Returns a list of actions taken on a Cloud Guard problem. \n[Command Reference](listProblemHistories)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--problem-id', required=True, help=u"""OCId of the problem.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@problem_group.command(name=cli_util.override('cloud_guard.list_problem_histories.command_name', 'list-problem-histories'), help=u"""Returns a list of actions taken on a problem. \n[Command Reference](listProblemHistories)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--problem-id', required=True, help=u"""OCID of the problem.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -4069,30 +4881,30 @@ The ListProblems operation returns only the problems in `compartmentId` passed. 
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListProblems on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listProblems)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--time-last-detected-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Start time for a filter. If start time is not specified, start time will be set to current time - 30 days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-last-detected-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""End time for a filter. If end time is not specified, end time will be set to current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-first-detected-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Start time for a filter. If start time is not specified, start time will be set to current time - 30 days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-first-detected-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""End time for a filter. If end time is not specified, end time will be set to current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--lifecycle-detail', type=custom_types.CliCaseInsensitiveChoice(["OPEN", "RESOLVED", "DISMISSED", "DELETED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
-@cli_util.option('--region-parameterconflict', help=u"""OCI Monitoring region.""")
-@cli_util.option('--risk-level', help=u"""Risk level of the Problem.""")
-@cli_util.option('--resource-type', help=u"""Resource Type associated with the resource.""")
+@cli_util.option('--lifecycle-detail', type=custom_types.CliCaseInsensitiveChoice(["OPEN", "RESOLVED", "DISMISSED", "DELETED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
+@cli_util.option('--region-parameterconflict', help=u"""OCI monitoring region.""")
+@cli_util.option('--risk-level', help=u"""Risk level of the problem.""")
+@cli_util.option('--resource-type', help=u"""Resource type associated with the resource.""")
 @cli_util.option('--city', help=u"""City of the problem.""")
-@cli_util.option('--state', help=u"""State of the problem.""")
+@cli_util.option('--state', help=u"""State or province of the problem.""")
 @cli_util.option('--country', help=u"""Country of the problem.""")
-@cli_util.option('--label', help=u"""Label associated with the Problem.""")
-@cli_util.option('--detector-rule-id-list', multiple=True, help=u"""Comma seperated list of detector rule ids to be passed in to match against Problems.""")
-@cli_util.option('--detector-type', type=custom_types.CliCaseInsensitiveChoice(["IAAS_ACTIVITY_DETECTOR", "IAAS_CONFIGURATION_DETECTOR", "IAAS_THREAT_DETECTOR", "IAAS_LOG_INSIGHT_DETECTOR"]), help=u"""The field to list the Problems by Detector Type. Valid values are IAAS_ACTIVITY_DETECTOR and IAAS_CONFIGURATION_DETECTOR""")
+@cli_util.option('--label', help=u"""User-defined label associated with the problem.""")
+@cli_util.option('--detector-rule-id-list', multiple=True, help=u"""Comma seperated list of detector rule IDs to be passed in to match against Problems.""")
+@cli_util.option('--detector-type', type=custom_types.CliCaseInsensitiveChoice(["IAAS_ACTIVITY_DETECTOR", "IAAS_CONFIGURATION_DETECTOR", "IAAS_THREAT_DETECTOR", "IAAS_LOG_INSIGHT_DETECTOR", "IAAS_INSTANCE_SECURITY_DETECTOR"]), help=u"""The field to list the problems by detector type.""")
 @cli_util.option('--target-id', help=u"""The ID of the target in which to list resources.""")
-@cli_util.option('--problem-category', type=custom_types.CliCaseInsensitiveChoice(["SECURITY_ZONE"]), help=u"""Setting this to `SECURITY_ZONE` returns only security-zone related violations.""")
-@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.""")
+@cli_util.option('--problem-category', type=custom_types.CliCaseInsensitiveChoice(["SECURITY_ZONE"]), help=u"""Setting this to `SECURITY_ZONE` returns only security zone-related violations.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
 @cli_util.option('--resource-id', help=u"""The ID of the resource associated with the problem.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["riskLevel", "timeLastDetected", "resourceName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for riskLevel, timeLastDetected and resourceName is descending. Default order for riskLevel and resourceName is ascending. If no value is specified timeLastDetected is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -4182,16 +4994,16 @@ def list_problems(ctx, from_json, all_pages, page_size, compartment_id, time_las
     cli_util.render_response(result, ctx)
 
 
-@recommendation_summary_group.command(name=cli_util.override('cloud_guard.list_recommendations.command_name', 'list-recommendations'), help=u"""Returns a list of all Recommendations. \n[Command Reference](listRecommendations)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@recommendation_summary_group.command(name=cli_util.override('cloud_guard.list_recommendations.command_name', 'list-recommendations'), help=u"""Returns a list of recommendations (RecommendationSummaryCollection resource with a page of RecommendationSummary resources) for a specified compartment OCID. \n[Command Reference](listRecommendations)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["riskLevel", "timeCreated"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for riskLevel and timeCreated is descending. If no value is specified riskLevel is default.""")
 @cli_util.option('--target-id', help=u"""The ID of the target in which to list resources.""")
-@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
-@cli_util.option('--lifecycle-detail', type=custom_types.CliCaseInsensitiveChoice(["OPEN", "RESOLVED", "DISMISSED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
+@cli_util.option('--lifecycle-detail', type=custom_types.CliCaseInsensitiveChoice(["OPEN", "RESOLVED", "DISMISSED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -4251,11 +5063,71 @@ def list_recommendations(ctx, from_json, all_pages, page_size, compartment_id, s
     cli_util.render_response(result, ctx)
 
 
-@resource_profile_endpoint_summary_group.command(name=cli_util.override('cloud_guard.list_resource_profile_endpoints.command_name', 'list-resource-profile-endpoints'), help=u"""Returns a list of endpoints for Cloud Guard resource profile \n[Command Reference](listResourceProfileEndpoints)""")
-@cli_util.option('--resource-profile-id', required=True, help=u"""OCID of the resource profile.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@resource_port_collection_group.command(name=cli_util.override('cloud_guard.list_resource_ports.command_name', 'list-resource-ports'), help=u"""Returns the list of open ports associated with the resourceId where resource is an instance \n[Command Reference](listResourcePorts)""")
+@cli_util.option('--resource-id', required=True, help=u"""CloudGuard resource OCID""")
+@cli_util.option('--open-port', help=u"""open port associated with the resource.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'cloud_guard', 'class': 'ResourcePortCollection'})
+@cli_util.wrap_exceptions
+def list_resource_ports(ctx, from_json, all_pages, page_size, resource_id, open_port, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(resource_id, six.string_types) and len(resource_id.strip()) == 0:
+        raise click.UsageError('Parameter --resource-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if open_port is not None:
+        kwargs['open_port'] = open_port
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_resource_ports,
+            resource_id=resource_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_resource_ports,
+            limit,
+            page_size,
+            resource_id=resource_id,
+            **kwargs
+        )
+    else:
+        result = client.list_resource_ports(
+            resource_id=resource_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@resource_profile_endpoint_summary_group.command(name=cli_util.override('cloud_guard.list_resource_profile_endpoints.command_name', 'list-resource-profile-endpoints'), help=u"""Returns a list of endpoints (ResourceProfileEndpointCollection resource with a page of ResourceProfileEndpointSummary resources) for a resource profile identified by resourceProfileId. \n[Command Reference](listResourceProfileEndpoints)""")
+@cli_util.option('--resource-profile-id', required=True, help=u"""OCID of the resource profile.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -4308,11 +5180,11 @@ def list_resource_profile_endpoints(ctx, from_json, all_pages, page_size, resour
     cli_util.render_response(result, ctx)
 
 
-@resource_profile_impacted_resource_summary_group.command(name=cli_util.override('cloud_guard.list_resource_profile_impacted_resources.command_name', 'list-resource-profile-impacted-resources'), help=u"""Returns a list of impacted resources for Cloud Guard resource profile \n[Command Reference](listResourceProfileImpactedResources)""")
+@resource_profile_impacted_resource_summary_group.command(name=cli_util.override('cloud_guard.list_resource_profile_impacted_resources.command_name', 'list-resource-profile-impacted-resources'), help=u"""Returns a list of impacted resources (ResourceProfileImpactedResourceCollection resource with a page of ResourceProfileImpactedResourceSummary resources) for a resource profile identified by resourceProfileId. \n[Command Reference](listResourceProfileImpactedResources)""")
 @cli_util.option('--resource-profile-id', required=True, help=u"""OCID of the resource profile.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -4365,26 +5237,26 @@ def list_resource_profile_impacted_resources(ctx, from_json, all_pages, page_siz
     cli_util.render_response(result, ctx)
 
 
-@resource_profile_summary_group.command(name=cli_util.override('cloud_guard.list_resource_profiles.command_name', 'list-resource-profiles'), help=u"""Returns a list of all resource profiles identified by the Cloud Guard The ListResourceProfiles operation returns only resource profiles that match the passed filters.
+@resource_profile_summary_group.command(name=cli_util.override('cloud_guard.list_resource_profiles.command_name', 'list-resource-profiles'), help=u"""Returns a list of all resource profile summaries (ResourceProfileCollection resource with a page of ResourceProfileSummary resources) for a compartment, identified by compartmentId and filtered as specified.
 
 The ListResourceProfiles operation returns only the resource profiles in `compartmentId` passed. The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListResourceProfiles on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listResourceProfiles)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--time-last-detected-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Start time for a filter. If start time is not specified, start time will be set to current time - 30 days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-last-detected-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""End time for a filter. If end time is not specified, end time will be set to current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-first-detected-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Start time for a filter. If start time is not specified, start time will be set to current time - 30 days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-first-detected-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""End time for a filter. If end time is not specified, end time will be set to current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
-@cli_util.option('--resource-types', multiple=True, help=u"""A filter to return only resources that match the list of resource types given""")
-@cli_util.option('--risk-score-greater-than-or-equal-to', help=u"""risk score filter""")
-@cli_util.option('--risk-score-less-than-or-equal-to', help=u"""risk score filter""")
-@cli_util.option('--techniques', multiple=True, help=u"""A filter to return only resources that match the list of techniques given""")
+@cli_util.option('--resource-types', multiple=True, help=u"""A filter to return only resources that match the list of resource types given.""")
+@cli_util.option('--risk-score-greater-than-or-equal-to', help=u"""Risk score filter.""")
+@cli_util.option('--risk-score-less-than-or-equal-to', help=u"""Risk score filter,""")
+@cli_util.option('--techniques', multiple=True, help=u"""A filter to return only resources that match the list of techniques given.""")
 @cli_util.option('--tactics', multiple=True, help=u"""A filter to return only resources that match the list of tactics given.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["riskScore", "riskScoreGrowth", "timeFirstDetected", "timeLastDetected", "sightingsCount", "displayName", "type"]), help=u"""The field to sort resource profiles. Only one sort order may be provided. Default order for timeLastDetected is descending. If no value is specified timeLastDetected is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -4456,13 +5328,13 @@ def list_resource_profiles(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
-@resource_type_summary_group.command(name=cli_util.override('cloud_guard.list_resource_types.command_name', 'list-resource-types'), help=u"""Returns a list of resource types. \n[Command Reference](listResourceTypes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--detector-id', type=custom_types.CliCaseInsensitiveChoice(["IAAS_ACTIVITY_DETECTOR", "IAAS_CONFIGURATION_DETECTOR", "IAAS_THREAT_DETECTOR", "IAAS_LOG_INSIGHT_DETECTOR"]), help=u"""Detector type""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@resource_type_summary_group.command(name=cli_util.override('cloud_guard.list_resource_types.command_name', 'list-resource-types'), help=u"""Returns a single ResourceTypeCollection resource, containing a list of resource types, identified by parameters specified. \n[Command Reference](listResourceTypes)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--detector-id', type=custom_types.CliCaseInsensitiveChoice(["IAAS_ACTIVITY_DETECTOR", "IAAS_CONFIGURATION_DETECTOR", "IAAS_THREAT_DETECTOR", "IAAS_LOG_INSIGHT_DETECTOR", "IAAS_INSTANCE_SECURITY_DETECTOR"]), help=u"""Detector type.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "riskLevel"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for displayName is ascending. If no value is specified displayName is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -4516,11 +5388,173 @@ def list_resource_types(ctx, from_json, all_pages, page_size, compartment_id, de
     cli_util.render_response(result, ctx)
 
 
-@responder_activity_summary_group.command(name=cli_util.override('cloud_guard.list_responder_activities.command_name', 'list-responder-activities'), help=u"""Returns a list of Responder activities done on CloudGuard Problem \n[Command Reference](listResponderActivities)""")
-@cli_util.option('--problem-id', required=True, help=u"""OCId of the problem.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@resource_vulnerability_collection_group.command(name=cli_util.override('cloud_guard.list_resource_vulnerabilities.command_name', 'list-resource-vulnerabilities'), help=u"""Returns the list of vulnerabilities associated with the resourceId where resource is an instance \n[Command Reference](listResourceVulnerabilities)""")
+@cli_util.option('--resource-id', required=True, help=u"""CloudGuard resource OCID""")
+@cli_util.option('--cve-id', help=u"""CVE ID associated with the resource.""")
+@cli_util.option('--risk-level', help=u"""Risk level of the problem.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'cloud_guard', 'class': 'ResourceVulnerabilityCollection'})
+@cli_util.wrap_exceptions
+def list_resource_vulnerabilities(ctx, from_json, all_pages, page_size, resource_id, cve_id, risk_level, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(resource_id, six.string_types) and len(resource_id.strip()) == 0:
+        raise click.UsageError('Parameter --resource-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if cve_id is not None:
+        kwargs['cve_id'] = cve_id
+    if risk_level is not None:
+        kwargs['risk_level'] = risk_level
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_resource_vulnerabilities,
+            resource_id=resource_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_resource_vulnerabilities,
+            limit,
+            page_size,
+            resource_id=resource_id,
+            **kwargs
+        )
+    else:
+        result = client.list_resource_vulnerabilities(
+            resource_id=resource_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@resource_group.command(name=cli_util.override('cloud_guard.list_resources.command_name', 'list'), help=u"""Returns a list of all resources in a compartment
+
+The ListResources operation returns only the resources in `compartmentId` passed. The list does not include any subcompartments of the compartmentId passed.
+
+The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
+
+The parameter `compartmentIdInSubtree` applies when you perform ListResources on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listResources)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--target-id', help=u"""The ID of the target in which to list resources.""")
+@cli_util.option('--region-parameterconflict', help=u"""OCI monitoring region.""")
+@cli_util.option('--cvss-score', type=click.INT, help=u"""Cvss score associated with the resource.""")
+@cli_util.option('--cvss-score-greater-than', type=click.INT, help=u"""Cvss score greater than associated with the resource.""")
+@cli_util.option('--cvss-score-less-than', type=click.INT, help=u"""Cvss score less than associated with the resource.""")
+@cli_util.option('--cve-id', help=u"""CVE ID associated with the resource.""")
+@cli_util.option('--risk-level', help=u"""Risk level of the problem.""")
+@cli_util.option('--risk-level-greater-than', help=u"""To filter risk level greater than the one mentioned in query param""")
+@cli_util.option('--risk-level-less-than', help=u"""To filter risk level less than the one mentioned in query param""")
+@cli_util.option('--detector-rule-id-list', multiple=True, help=u"""Comma seperated list of detector rule IDs to be passed in to match against Problems.""")
+@cli_util.option('--detector-type', type=custom_types.CliCaseInsensitiveChoice(["IAAS_ACTIVITY_DETECTOR", "IAAS_CONFIGURATION_DETECTOR", "IAAS_THREAT_DETECTOR", "IAAS_LOG_INSIGHT_DETECTOR", "IAAS_INSTANCE_SECURITY_DETECTOR"]), help=u"""The field to list the problems by detector type.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
+@cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'detector-rule-id-list': {'module': 'cloud_guard', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'detector-rule-id-list': {'module': 'cloud_guard', 'class': 'list[string]'}}, output_type={'module': 'cloud_guard', 'class': 'ResourceCollection'})
+@cli_util.wrap_exceptions
+def list_resources(ctx, from_json, all_pages, page_size, compartment_id, target_id, region_parameterconflict, cvss_score, cvss_score_greater_than, cvss_score_less_than, cve_id, risk_level, risk_level_greater_than, risk_level_less_than, detector_rule_id_list, detector_type, limit, page, compartment_id_in_subtree, access_level, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if target_id is not None:
+        kwargs['target_id'] = target_id
+    if region_parameterconflict is not None:
+        kwargs['region'] = region_parameterconflict
+    if cvss_score is not None:
+        kwargs['cvss_score'] = cvss_score
+    if cvss_score_greater_than is not None:
+        kwargs['cvss_score_greater_than'] = cvss_score_greater_than
+    if cvss_score_less_than is not None:
+        kwargs['cvss_score_less_than'] = cvss_score_less_than
+    if cve_id is not None:
+        kwargs['cve_id'] = cve_id
+    if risk_level is not None:
+        kwargs['risk_level'] = risk_level
+    if risk_level_greater_than is not None:
+        kwargs['risk_level_greater_than'] = risk_level_greater_than
+    if risk_level_less_than is not None:
+        kwargs['risk_level_less_than'] = risk_level_less_than
+    if detector_rule_id_list is not None and len(detector_rule_id_list) > 0:
+        kwargs['detector_rule_id_list'] = detector_rule_id_list
+    if detector_type is not None:
+        kwargs['detector_type'] = detector_type
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if access_level is not None:
+        kwargs['access_level'] = access_level
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_resources,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_resources,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_resources(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@responder_activity_summary_group.command(name=cli_util.override('cloud_guard.list_responder_activities.command_name', 'list-responder-activities'), help=u"""Returns a list of responder activities for a problem, identified by problemId, in a ResponderActivityCollection resource, with a page of ResponderActivitySummary resources. \n[Command Reference](listResponderActivities)""")
+@cli_util.option('--problem-id', required=True, help=u"""OCID of the problem.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "responderRuleName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for responderRuleName is ascending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -4573,23 +5607,23 @@ def list_responder_activities(ctx, from_json, all_pages, page_size, problem_id, 
     cli_util.render_response(result, ctx)
 
 
-@responder_execution_summary_group.command(name=cli_util.override('cloud_guard.list_responder_executions.command_name', 'list-responder-executions'), help=u"""Returns a list of Responder Executions. A Responder Execution is an entity that tracks the collective execution of multiple Responder Rule Executions for a given Problem. \n[Command Reference](listResponderExecutions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.""")
+@responder_execution_summary_group.command(name=cli_util.override('cloud_guard.list_responder_executions.command_name', 'list-responder-executions'), help=u"""Returns a list of responder executions. A responder execution is an entity that tracks the collective execution of multiple responder rule executions for a given problem. \n[Command Reference](listResponderExecutions)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
-@cli_util.option('--responder-rule-ids', multiple=True, help=u"""Responder Rule Ids filter for the Responder Executions.""")
-@cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Creation Start time for filtering""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-created-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Creation End time for filtering""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-completed-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Completion End Time""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-completed-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Completion Start Time""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--responder-rule-ids', multiple=True, help=u"""Responder rule unique identifier filter for the responder executions.""")
+@cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Creation start time for filtering""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-created-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Creation end time for filtering.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-completed-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Completion end time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-completed-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Completion start time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--target-id', help=u"""The ID of the target in which to list resources.""")
-@cli_util.option('--resource-type', help=u"""Resource Type associated with the resource.""")
-@cli_util.option('--responder-type', type=custom_types.CliCaseInsensitiveChoice(["REMEDIATION", "NOTIFICATION"]), help=u"""The field to list the Responder Executions by Responder Type. Valid values are REMEDIATION and NOTIFICATION""")
+@cli_util.option('--resource-type', help=u"""Resource type associated with the resource.""")
+@cli_util.option('--responder-type', type=custom_types.CliCaseInsensitiveChoice(["REMEDIATION", "NOTIFICATION"]), help=u"""The field to list the responder executions by responder type. Valid values are REMEDIATION and NOTIFICATION.""")
 @cli_util.option('--responder-execution-status', type=custom_types.CliCaseInsensitiveChoice(["STARTED", "AWAITING_CONFIRMATION", "AWAITING_INPUT", "SUCCEEDED", "FAILED", "SKIPPED", "ALL"]), help=u"""The status of the responder execution in which to list responders.""")
 @cli_util.option('--responder-execution-mode', type=custom_types.CliCaseInsensitiveChoice(["MANUAL", "AUTOMATED", "ALL"]), help=u"""The mode of the responder execution in which to list responders.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "responderRuleName", "resourceName", "timeCompleted"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for responderRuleName and resourceName is ascending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -4663,14 +5697,14 @@ def list_responder_executions(ctx, from_json, all_pages, page_size, compartment_
     cli_util.render_response(result, ctx)
 
 
-@responder_recipe_responder_rule_group.command(name=cli_util.override('cloud_guard.list_responder_recipe_responder_rules.command_name', 'list'), help=u"""Returns a list of ResponderRule associated with ResponderRecipe. \n[Command Reference](listResponderRecipeResponderRules)""")
-@cli_util.option('--responder-recipe-id', required=True, help=u"""OCID of ResponderRecipe""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@responder_recipe_responder_rule_group.command(name=cli_util.override('cloud_guard.list_responder_recipe_responder_rules.command_name', 'list'), help=u"""Returns a list of responder rules (ResponderRule resources in a responderRecipeResponderRuleCollection resource, with page of ResponderRuleSummary resources), for a responder recipe (ResponderRecipe resource), identified by responderRecipeId. \n[Command Reference](listResponderRecipeResponderRules)""")
+@cli_util.option('--responder-recipe-id', required=True, help=u"""OCID of the responder recipe.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "riskLevel"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for displayName is ascending. If no value is specified displayName is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -4730,20 +5764,20 @@ def list_responder_recipe_responder_rules(ctx, from_json, all_pages, page_size, 
     cli_util.render_response(result, ctx)
 
 
-@responder_recipe_group.command(name=cli_util.override('cloud_guard.list_responder_recipes.command_name', 'list'), help=u"""Returns a list of all ResponderRecipes in a compartment The ListResponderRecipe operation returns only the targets in `compartmentId` passed. The list does not include any subcompartments of the compartmentId passed.
+@responder_recipe_group.command(name=cli_util.override('cloud_guard.list_responder_recipes.command_name', 'list'), help=u"""Returns a list (ResponderRecipeCollection resource, with a page of ResponderRecipeSummary resources) of all responder recipes (RespponderRecipe resources) in a compartment, identified by compartmentId. The ListResponderRecipe operation returns only the targets in `compartmentId` passed. The list does not include any subcompartments of the compartmentId passed.
 
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListResponderRecipe on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listResponderRecipes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--resource-metadata-only', type=click.BOOL, help=u"""Default is false. When set to true, the list of all Oracle Managed Resources Metadata supported by Cloud Guard are returned.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--resource-metadata-only', type=click.BOOL, help=u"""Default is false. When set to true, the list of all Oracle-managed resources metadata supported by Cloud Guard is returned.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -4803,13 +5837,13 @@ def list_responder_recipes(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
-@responder_rule_group.command(name=cli_util.override('cloud_guard.list_responder_rules.command_name', 'list'), help=u"""Returns a list of ResponderRule. \n[Command Reference](listResponderRules)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@responder_rule_group.command(name=cli_util.override('cloud_guard.list_responder_rules.command_name', 'list'), help=u"""Returns a list of responder rules for the ResponderRecipe resource identified by responderId. The list is contained in a ResponderRuleCollection resource with a page of ResponderRuleSummary resources. \n[Command Reference](listResponderRules)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -4863,14 +5897,77 @@ def list_responder_rules(ctx, from_json, all_pages, page_size, compartment_id, d
     cli_util.render_response(result, ctx)
 
 
-@security_policy_collection_group.command(name=cli_util.override('cloud_guard.list_security_policies.command_name', 'list-security-policies'), help=u"""Returns a list of security zone policies. Specify any compartment. \n[Command Reference](listSecurityPolicies)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
+@saved_query_group.command(name=cli_util.override('cloud_guard.list_saved_queries.command_name', 'list'), help=u"""Returns a list of saved queries run in a tenancy. \n[Command Reference](listSavedQueries)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--id', help=u"""The unique identifier of the security zone policy (`SecurityPolicy`)""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
+@cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'cloud_guard', 'class': 'SavedQueryCollection'})
+@cli_util.wrap_exceptions
+def list_saved_queries(ctx, from_json, all_pages, page_size, compartment_id, display_name, limit, page, compartment_id_in_subtree, access_level, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if access_level is not None:
+        kwargs['access_level'] = access_level
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_saved_queries,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_saved_queries,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_saved_queries(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@security_policy_collection_group.command(name=cli_util.override('cloud_guard.list_security_policies.command_name', 'list-security-policies'), help=u"""Returns a list of security zone policies (SecurityPolicySummary resources), identified by compartmentId. \n[Command Reference](listSecurityPolicies)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--id', help=u"""The unique identifier of the security zone policy. (`SecurityPolicy`)""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -4926,14 +6023,14 @@ def list_security_policies(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
-@security_recipe_collection_group.command(name=cli_util.override('cloud_guard.list_security_recipes.command_name', 'list-security-recipes'), help=u"""Gets a list of all security zone recipes in a compartment. \n[Command Reference](listSecurityRecipes)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
+@security_recipe_collection_group.command(name=cli_util.override('cloud_guard.list_security_recipes.command_name', 'list-security-recipes'), help=u"""Returns a list of security zone recipes (SecurityRecipeSummary resources) in a compartment, identified by compartmentId. \n[Command Reference](listSecurityRecipes)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--id', help=u"""The unique identifier of the security zone recipe (`SecurityRecipe`)""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--id', help=u"""The unique identifier of the security zone recipe. (`SecurityRecipe`)""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -4989,16 +6086,16 @@ def list_security_recipes(ctx, from_json, all_pages, page_size, compartment_id, 
     cli_util.render_response(result, ctx)
 
 
-@security_zone_collection_group.command(name=cli_util.override('cloud_guard.list_security_zones.command_name', 'list-security-zones'), help=u"""Gets a list of all security zones in a compartment. \n[Command Reference](listSecurityZones)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
+@security_zone_collection_group.command(name=cli_util.override('cloud_guard.list_security_zones.command_name', 'list-security-zones'), help=u"""Returns a list of security zones (SecurityZone resources) in a compartment identified by compartmentId. List is contained in a page of SecurityZoneSummary resources. \n[Command Reference](listSecurityZones)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--id', help=u"""The unique identifier of the security zone (`SecurityZone`)""")
-@cli_util.option('--security-recipe-id', help=u"""The unique identifier of the security zone recipe (`SecurityRecipe`)""")
-@cli_util.option('--is-required-security-zones-in-subtree', type=click.BOOL, help=u"""security zones in the subtree""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--id', help=u"""The unique identifier of the security zone (`SecurityZone` resource).""")
+@cli_util.option('--security-recipe-id', help=u"""The unique identifier of the security zone recipe. (`SecurityRecipe` resource).""")
+@cli_util.option('--is-required-security-zones-in-subtree', type=click.BOOL, help=u"""Is security zones in the subtree?""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -5058,11 +6155,11 @@ def list_security_zones(ctx, from_json, all_pages, page_size, compartment_id, li
     cli_util.render_response(result, ctx)
 
 
-@sighting_endpoint_summary_group.command(name=cli_util.override('cloud_guard.list_sighting_endpoints.command_name', 'list-sighting-endpoints'), help=u"""Returns Sighting endpoints details \n[Command Reference](listSightingEndpoints)""")
+@sighting_endpoint_summary_group.command(name=cli_util.override('cloud_guard.list_sighting_endpoints.command_name', 'list-sighting-endpoints'), help=u"""Returns sighting endpoints details in a SightingEndpointsCollection resource with a page of SightingEndpointSummary resources. \n[Command Reference](listSightingEndpoints)""")
 @cli_util.option('--sighting-id', required=True, help=u"""OCID of the sighting.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -5115,11 +6212,11 @@ def list_sighting_endpoints(ctx, from_json, all_pages, page_size, sighting_id, l
     cli_util.render_response(result, ctx)
 
 
-@sighting_impacted_resource_summary_group.command(name=cli_util.override('cloud_guard.list_sighting_impacted_resources.command_name', 'list-sighting-impacted-resources'), help=u"""Return a list of Impacted Resources for a CloudGuard Sighting \n[Command Reference](listSightingImpactedResources)""")
+@sighting_impacted_resource_summary_group.command(name=cli_util.override('cloud_guard.list_sighting_impacted_resources.command_name', 'list-sighting-impacted-resources'), help=u"""Returns a list of impacted resources for a sighting, identified by sightingId, in a SightingImpactedResourceCollection resource with a page of SightingImpactedResourceSummary resources. \n[Command Reference](listSightingImpactedResources)""")
 @cli_util.option('--sighting-id', required=True, help=u"""OCID of the sighting.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -5172,19 +6269,19 @@ def list_sighting_impacted_resources(ctx, from_json, all_pages, page_size, sight
     cli_util.render_response(result, ctx)
 
 
-@sighting_summary_group.command(name=cli_util.override('cloud_guard.list_sightings.command_name', 'list-sightings'), help=u"""Returns a list of all Sightings identified by the Cloud Guard The ListSightings operation returns only sightings that match the passed filters.
+@sighting_summary_group.command(name=cli_util.override('cloud_guard.list_sightings.command_name', 'list-sightings'), help=u"""For the parameters passed, returns a list of sightings (SightingCollection resource) with a page of SightingSummary resources.
 
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform ListSightings on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listSightings)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--problem-id', help=u"""OCID of the problem.""")
 @cli_util.option('--resource-profile-id', help=u"""OCID of the resource profile.""")
-@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. If no value is specified timeCreated is default.""")
 @cli_util.option('--time-last-detected-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Start time for a filter. If start time is not specified, start time will be set to current time - 30 days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-last-detected-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""End time for a filter. If end time is not specified, end time will be set to current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -5248,12 +6345,12 @@ def list_sightings(ctx, from_json, all_pages, page_size, compartment_id, problem
     cli_util.render_response(result, ctx)
 
 
-@tactic_summary_group.command(name=cli_util.override('cloud_guard.list_tactics.command_name', 'list-tactics'), help=u"""Returns a list of tactics associated with detector rules. \n[Command Reference](listTactics)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@tactic_summary_group.command(name=cli_util.override('cloud_guard.list_tactics.command_name', 'list-tactics'), help=u"""Returns a list of TacticSummary resources for a compartment, identified by compartmentId. \n[Command Reference](listTactics)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for displayName is ascending. If no value is specified displayName is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -5306,14 +6403,14 @@ def list_tactics(ctx, from_json, all_pages, page_size, compartment_id, lifecycle
 
 
 @target_detector_recipe_detector_rule_group.command(name=cli_util.override('cloud_guard.list_target_detector_recipe_detector_rules.command_name', 'list'), help=u"""Returns a list of DetectorRule associated with DetectorRecipe within a Target. \n[Command Reference](listTargetDetectorRecipeDetectorRules)""")
-@cli_util.option('--target-id', required=True, help=u"""OCID of target""")
-@cli_util.option('--target-detector-recipe-id', required=True, help=u"""OCID of TargetDetectorRecipe""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--target-id', required=True, help=u"""OCID of the target""")
+@cli_util.option('--target-detector-recipe-id', required=True, help=u"""OCID of the target detector recipe.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "riskLevel"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for displayName is ascending. If no value is specified displayName is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -5379,14 +6476,14 @@ def list_target_detector_recipe_detector_rules(ctx, from_json, all_pages, page_s
     cli_util.render_response(result, ctx)
 
 
-@target_detector_recipe_group.command(name=cli_util.override('cloud_guard.list_target_detector_recipes.command_name', 'list'), help=u"""Returns a list of all detector recipes associated with the target identified by targetId \n[Command Reference](listTargetDetectorRecipes)""")
-@cli_util.option('--target-id', required=True, help=u"""OCID of target""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@target_detector_recipe_group.command(name=cli_util.override('cloud_guard.list_target_detector_recipes.command_name', 'list'), help=u"""Returns a list of all target detector recipes (TargetDetectorRecipe resources) associated with a target (Target resource), identified by targetId. The list is contained in a TargetDetectorRecipeCollection resource with page of TargetDetectorRecipeSummary resources. \n[Command Reference](listTargetDetectorRecipes)""")
+@cli_util.option('--target-id', required=True, help=u"""OCID of the target""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -5446,15 +6543,15 @@ def list_target_detector_recipes(ctx, from_json, all_pages, page_size, target_id
     cli_util.render_response(result, ctx)
 
 
-@target_responder_recipe_responder_rule_group.command(name=cli_util.override('cloud_guard.list_target_responder_recipe_responder_rules.command_name', 'list'), help=u"""Returns a list of ResponderRule associated with ResponderRecipe within a Target. \n[Command Reference](listTargetResponderRecipeResponderRules)""")
-@cli_util.option('--target-id', required=True, help=u"""OCID of target""")
-@cli_util.option('--target-responder-recipe-id', required=True, help=u"""OCID of TargetResponderRecipe""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@target_responder_recipe_responder_rule_group.command(name=cli_util.override('cloud_guard.list_target_responder_recipe_responder_rules.command_name', 'list'), help=u"""Returns a list of responder rules (ResponderRule resources) associated with a responder recipe (ResponderRecipe resource) attached to a Target. List is returned in a TargetResponderRecipeResponderRuleCollection resource with page of TargetResponderRecipeResponderRuleSummary resources. \n[Command Reference](listTargetResponderRecipeResponderRules)""")
+@cli_util.option('--target-id', required=True, help=u"""OCID of the target""")
+@cli_util.option('--target-responder-recipe-id', required=True, help=u"""OCID of the target responder recipe.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "riskLevel"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for displayName is ascending. If no value is specified displayName is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -5520,14 +6617,14 @@ def list_target_responder_recipe_responder_rules(ctx, from_json, all_pages, page
     cli_util.render_response(result, ctx)
 
 
-@target_responder_recipe_group.command(name=cli_util.override('cloud_guard.list_target_responder_recipes.command_name', 'list'), help=u"""Returns a list of all responder recipes associated with the target identified by targetId \n[Command Reference](listTargetResponderRecipes)""")
-@cli_util.option('--target-id', required=True, help=u"""OCID of target""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@target_responder_recipe_group.command(name=cli_util.override('cloud_guard.list_target_responder_recipes.command_name', 'list'), help=u"""Returns a list of summary information for all responder recipes (TargetResponderRecipeCollection resource, with a page of TargetResponderRecipeSummary resources) attached to a target identified by targetId, located in a compartment identified by compartmentId. \n[Command Reference](listTargetResponderRecipes)""")
+@cli_util.option('--target-id', required=True, help=u"""OCID of the target""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -5587,20 +6684,20 @@ def list_target_responder_recipes(ctx, from_json, all_pages, page_size, target_i
     cli_util.render_response(result, ctx)
 
 
-@target_group.command(name=cli_util.override('cloud_guard.list_targets.command_name', 'list'), help=u"""Returns a list of all Targets in a compartment The ListTargets operation returns only the targets in `compartmentId` passed. The list does not include any subcompartments of the compartmentId passed.
+@target_group.command(name=cli_util.override('cloud_guard.list_targets.command_name', 'list'), help=u"""Returns a list of targets (TargetCollection resource with page of TargetSummary resources) for the target identified by compartmentId. By default, only the target associated with the compartment is returned. Setting compartmentIdInSubtree to true returns the entire hierarchy of targets in subcompartments.
 
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
-The parameter `compartmentIdInSubtree` applies when you perform ListTargets on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listTargets)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+The parameter `compartmentIdInSubtree` applies when you perform ListTargets on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all targets in compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](listTargets)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--is-non-security-zone-targets-only-query', type=click.BOOL, help=u"""Default is false. When set to true, only the targets that would be deleted as part of security zone creation will be returned.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
-@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -5661,12 +6758,12 @@ def list_targets(ctx, from_json, all_pages, page_size, compartment_id, display_n
 
 
 @technique_summary_group.command(name=cli_util.override('cloud_guard.list_techniques.command_name', 'list-techniques'), help=u"""Returns a list of techniques associated with detector rules. \n[Command Reference](listTechniques)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--tactics', multiple=True, help=u"""A filter to return only resources that match the list of tactics given.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field life cycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for displayName is ascending. If no value is specified displayName is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -5720,12 +6817,66 @@ def list_techniques(ctx, from_json, all_pages, page_size, compartment_id, tactic
     cli_util.render_response(result, ctx)
 
 
-@work_request_error_group.command(name=cli_util.override('cloud_guard.list_work_request_errors.command_name', 'list'), help=u"""Return a (paginated) list of errors for a given work request. \n[Command Reference](listWorkRequestErrors)""")
+@wlp_agent_group.command(name=cli_util.override('cloud_guard.list_wlp_agents.command_name', 'list'), help=u"""Returns a list of WLP agents in a compartment. \n[Command Reference](listWlpAgents)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'cloud_guard', 'class': 'WlpAgentCollection'})
+@cli_util.wrap_exceptions
+def list_wlp_agents(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_wlp_agents,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_wlp_agents,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_wlp_agents(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@work_request_error_group.command(name=cli_util.override('cloud_guard.list_work_request_errors.command_name', 'list'), help=u"""Returns a list of errors for a work request identified by workRequestId. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -5777,12 +6928,12 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     cli_util.render_response(result, ctx)
 
 
-@work_request_log_entry_group.command(name=cli_util.override('cloud_guard.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Return a (paginated) list of logs for a given work request. \n[Command Reference](listWorkRequestLogs)""")
+@work_request_log_entry_group.command(name=cli_util.override('cloud_guard.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Returns a paginated list (WorkRequestLogEntryCollection resource) of log entries for a request, identified by workRequestId. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -5834,13 +6985,13 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('cloud_guard.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources their lifecycleState matches the given OperationStatus.""")
+@work_request_group.command(name=cli_util.override('cloud_guard.list_work_requests.command_name', 'list'), help=u"""Returns a list of work requests (WorkRequestSummaryCollection resource), in a compartment identified by compartmentId. \n[Command Reference](listWorkRequests)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources their lifecycleState matches the given operation status (OperationStatus resource).""")
 @cli_util.option('--resource-id', help=u"""The ID of the resource affected by the work request.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeAccepted"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeAccepted is descending.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -5894,8 +7045,8 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, sta
     cli_util.render_response(result, ctx)
 
 
-@security_zone_group.command(name=cli_util.override('cloud_guard.remove_compartment.command_name', 'remove'), help=u"""Removes an existing compartment from a security zone. When you remove a subcompartment from a security zone, it no longer enforces security zone policies on the resources in the subcompartment. You can't remove the primary compartment that was used to create the security zone. \n[Command Reference](removeCompartment)""")
-@cli_util.option('--security-zone-id', required=True, help=u"""The unique identifier of the security zone (`SecurityZone`)""")
+@security_zone_group.command(name=cli_util.override('cloud_guard.remove_compartment.command_name', 'remove'), help=u"""Removes a compartment from a security zone (SecurityZone resource), identified by securityZoneId. Pass compartmentId of compartment to remove through a RemoveCompartmentDetails resource. When you remove a subcompartment from a security zone, it no longer enforces security zone policies on the resources in the subcompartment. You can't remove the primary compartment that was used to create the security zone. \n[Command Reference](removeCompartment)""")
+@cli_util.option('--security-zone-id', required=True, help=u"""The unique identifier of the security zone (`SecurityZone` resource).""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to be removed from SecurityZone.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -5951,9 +7102,9 @@ def remove_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@risk_score_aggregation_group.command(name=cli_util.override('cloud_guard.request_risk_scores.command_name', 'request-risk-scores'), help=u"""Examines the number of problems related to the resource and the relative severity of those problems. \n[Command Reference](requestRiskScores)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@risk_score_aggregation_group.command(name=cli_util.override('cloud_guard.request_risk_scores.command_name', 'request-risk-scores'), help=u"""Returns a page of RiskScoreAggregation resources for a compartment, identified by compartmentId. \n[Command Reference](requestRiskScores)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5976,11 +7127,11 @@ def request_risk_scores(ctx, from_json, compartment_id, limit, page):
     cli_util.render_response(result, ctx)
 
 
-@security_score_trend_aggregation_group.command(name=cli_util.override('cloud_guard.request_security_score_summarized_trend.command_name', 'request-security-score-summarized-trend'), help=u"""Measures the number of resources examined across all regions and compares it with the number of problems detected, for a given time period. \n[Command Reference](requestSecurityScoreSummarizedTrend)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@security_score_trend_aggregation_group.command(name=cli_util.override('cloud_guard.request_security_score_summarized_trend.command_name', 'request-security-score-summarized-trend'), help=u"""Returns a page of SecurityScoreTrendAggregation resources. These measure the number of resources examined across all regions and compare it with the number of problems detected. \n[Command Reference](requestSecurityScoreSummarizedTrend)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--time-score-computed-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Start time for a filter. If start time is not specified, start time will be set to today's current time - 30 days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-score-computed-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""End time for a filter. If end time is not specified, end time will be set to today's current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -6007,9 +7158,9 @@ def request_security_score_summarized_trend(ctx, from_json, compartment_id, time
     cli_util.render_response(result, ctx)
 
 
-@security_score_aggregation_group.command(name=cli_util.override('cloud_guard.request_security_scores.command_name', 'request-security-scores'), help=u"""Measures the number of resources examined across all regions and compares it with the number of problems detected. \n[Command Reference](requestSecurityScores)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@security_score_aggregation_group.command(name=cli_util.override('cloud_guard.request_security_scores.command_name', 'request-security-scores'), help=u"""Returns a page of SecurityScoreAggregation resources. These measure the number of resources examined across all regions and compare it with the number of problems detected. \n[Command Reference](requestSecurityScores)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -6039,10 +7190,10 @@ The parameter `accessLevel` specifies whether to return only those compartments 
 The parameter `compartmentIdInSubtree` applies when you perform summarize API on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE.
 
 The compartmentId to be passed with `accessLevel` and `compartmentIdInSubtree` params has to be the root compartment id (tenant-id) only. \n[Command Reference](requestSummarizedActivityProblems)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--include-unknown-locations', type=click.BOOL, help=u"""Default is false. When set to true, the summary of activity problems that has unknown values for city, state or country will be included.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -6078,10 +7229,10 @@ The parameter `accessLevel` specifies whether to return only those compartments 
 
 The parameter `compartmentIdInSubtree` applies when you perform summarize API on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](requestSummarizedProblems)""")
 @cli_util.option('--list-dimensions', required=True, type=custom_types.CliCaseInsensitiveChoice(["RESOURCE_TYPE", "REGION", "COMPARTMENT_ID", "RISK_LEVEL"]), multiple=True, help=u"""The possible attributes based on which the problems can be distinguished.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -6109,18 +7260,18 @@ def request_summarized_problems(ctx, from_json, list_dimensions, compartment_id,
     cli_util.render_response(result, ctx)
 
 
-@responder_execution_aggregation_group.command(name=cli_util.override('cloud_guard.request_summarized_responder_executions.command_name', 'request-summarized-responder-executions'), help=u"""Returns the number of Responder Executions, for a given set of dimensions.
+@responder_execution_aggregation_group.command(name=cli_util.override('cloud_guard.request_summarized_responder_executions.command_name', 'request-summarized-responder-executions'), help=u"""Returns the number of responder executions, identified by parameters specified, in a page of ResponderExecutionAggregation resources.
 
-The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
+Setting accessLevel to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions, directly or indirectly (permissions can be on a resource in a subcompartment). \u201CNot Authorized\u201D is returned if user doesn't have access to at least one of the child compartments. When accessLevel is set to RESTRICTED, permissions are checked and no partial results are displayed. This is valid only when compartmentIdInSubtree is set to true.
 
-The parameter `compartmentIdInSubtree` applies when you perform summarize API on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](requestSummarizedResponderExecutions)""")
-@cli_util.option('--responder-executions-dimensions', required=True, type=custom_types.CliCaseInsensitiveChoice(["RESPONDER_RULE_TYPE", "RESPONDER_EXECUTION_STATUS"]), multiple=True, help=u"""The possible attributes based on which the responder executions can be distinguished""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--responder-type-filter', type=custom_types.CliCaseInsensitiveChoice(["REMEDIATION", "NOTIFICATION"]), multiple=True, help=u"""The possible filters for Responder Type Dimension to distinguish Responder Executions. If no values are passed, the metric for responder executions of all reponder types are returned""")
-@cli_util.option('--responder-execution-status-filter', type=custom_types.CliCaseInsensitiveChoice(["STARTED", "AWAITING_CONFIRMATION", "SUCCEEDED", "FAILED", "SKIPPED"]), multiple=True, help=u"""The possible filters for Responder Type Dimension to distinguish Responder Executions. If no values are passed, the metric for responder executions of all status are returned""")
-@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.""")
+Setting accessLevel to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions, directly or indirectly (permissions can be on a resource in a subcompartment). \u201CNot Authorized\u201D is returned if user doesn't have access to at least one of the child compartments. When accessLevel is set to RESTRICTED, permissions are checked and no partial results are displayed. This is valid only when compartmentIdInSubtree is set to true. \n[Command Reference](requestSummarizedResponderExecutions)""")
+@cli_util.option('--responder-executions-dimensions', required=True, type=custom_types.CliCaseInsensitiveChoice(["RESPONDER_RULE_TYPE", "RESPONDER_EXECUTION_STATUS"]), multiple=True, help=u"""The possible attributes based on which the responder executions can be distinguished.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--responder-type-filter', type=custom_types.CliCaseInsensitiveChoice(["REMEDIATION", "NOTIFICATION"]), multiple=True, help=u"""The possible filters for responder type dimension to distinguish responder executions. If no values are passed, the metric for responder executions of all responder types are returned.""")
+@cli_util.option('--responder-execution-status-filter', type=custom_types.CliCaseInsensitiveChoice(["STARTED", "AWAITING_CONFIRMATION", "SUCCEEDED", "FAILED", "SKIPPED"]), multiple=True, help=u"""The possible filters for responder type dimension to distinguish responder executions. If no values are passed, the metric for responder executions of all status are returned.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -6153,8 +7304,8 @@ def request_summarized_responder_executions(ctx, from_json, responder_executions
 
 
 @risk_score_aggregation_group.command(name=cli_util.override('cloud_guard.request_summarized_risk_scores.command_name', 'request-summarized-risk-scores'), help=u"""DEPRECATED \n[Command Reference](requestSummarizedRiskScores)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -6178,8 +7329,8 @@ def request_summarized_risk_scores(ctx, from_json, compartment_id, limit, page):
 
 
 @security_score_aggregation_group.command(name=cli_util.override('cloud_guard.request_summarized_security_scores.command_name', 'request-summarized-security-scores'), help=u"""DEPRECATED \n[Command Reference](requestSummarizedSecurityScores)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -6202,15 +7353,15 @@ def request_summarized_security_scores(ctx, from_json, compartment_id, limit, pa
     cli_util.render_response(result, ctx)
 
 
-@resource_profile_risk_score_aggregation_summary_group.command(name=cli_util.override('cloud_guard.request_summarized_top_trend_resource_profile_risk_scores.command_name', 'request-summarized-top-trend-resource-profile-risk-scores'), help=u"""Summarizes the resource profile risk score top trends for the given time range based on the search filters. \n[Command Reference](requestSummarizedTopTrendResourceProfileRiskScores)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@resource_profile_risk_score_aggregation_summary_group.command(name=cli_util.override('cloud_guard.request_summarized_top_trend_resource_profile_risk_scores.command_name', 'request-summarized-top-trend-resource-profile-risk-scores'), help=u"""Returns a list of resource profile risk score aggregation summaries (ResourceProfileRiskScoreAggregationSummaryCollection resource with a page of ResourceProfileRiskScoreAggregationSummary resources) for a specified compartment. \n[Command Reference](requestSummarizedTopTrendResourceProfileRiskScores)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--time-score-computed-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Start time for a filter. If start time is not specified, start time will be set to today's current time - 30 days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-score-computed-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""End time for a filter. If end time is not specified, end time will be set to today's current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["riskScore", "riskScoreGrowth", "timeFirstDetected", "timeLastDetected"]), help=u"""The field to sort trendlines for resource profiles. Only one sort order may be provided. If no value is specified riskScore is default.""")
 @cli_util.option('--count', type=click.INT, help=u"""Number of resource profile risk score trend-lines to be displayed. Default value is 10.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -6250,12 +7401,12 @@ def request_summarized_top_trend_resource_profile_risk_scores(ctx, from_json, co
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform summarize API on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](requestSummarizedTrendProblems)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--time-first-detected-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Start time for a filter. If start time is not specified, start time will be set to current time - 30 days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-first-detected-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""End time for a filter. If end time is not specified, end time will be set to current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -6286,15 +7437,15 @@ def request_summarized_trend_problems(ctx, from_json, compartment_id, time_first
     cli_util.render_response(result, ctx)
 
 
-@resource_risk_score_aggregation_group.command(name=cli_util.override('cloud_guard.request_summarized_trend_resource_risk_scores.command_name', 'request-summarized-trend-resource-risk-scores'), help=u"""Summarizes the resource risk score trend for the given time range based on the search filters. \n[Command Reference](requestSummarizedTrendResourceRiskScores)""")
-@cli_util.option('--filter', required=True, type=custom_types.CliCaseInsensitiveChoice(["PROBLEM_ID", "RESOURCE_PROFILE_ID"]), help=u"""The filter type.""")
-@cli_util.option('--filter-id', required=True, help=u"""Id to be passed in to filter the risk scores.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@resource_risk_score_aggregation_group.command(name=cli_util.override('cloud_guard.request_summarized_trend_resource_risk_scores.command_name', 'request-summarized-trend-resource-risk-scores'), help=u"""Returns a summary of risk score trends in a  ResourceRiskScoreAggregationCollection resource, with a page of ResourceRiskScoreAggregation resources, filtered by parameters that you specify in a RequestSummarizedTrendResourceRiskScoresDetailsresource. \n[Command Reference](requestSummarizedTrendResourceRiskScores)""")
+@cli_util.option('--filter', required=True, type=custom_types.CliCaseInsensitiveChoice(["PROBLEM_ID", "RESOURCE_PROFILE_ID"]), help=u"""The filter type""")
+@cli_util.option('--filter-id', required=True, help=u"""ID to be passed in to filter the risk scores""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--time-score-computed-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Start time for a filter. If start time is not specified, start time will be set to today's current time - 30 days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-score-computed-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""End time for a filter. If end time is not specified, end time will be set to today's current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -6336,12 +7487,12 @@ def request_summarized_trend_resource_risk_scores(ctx, from_json, filter, filter
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform summarize API on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](requestSummarizedTrendResponderExecutions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--time-completed-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Completion End Time""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-completed-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Completion Start Time""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--time-completed-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Completion end time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-completed-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Completion start time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -6373,10 +7524,10 @@ def request_summarized_trend_responder_executions(ctx, from_json, compartment_id
 
 
 @security_score_trend_aggregation_group.command(name=cli_util.override('cloud_guard.request_summarized_trend_security_scores.command_name', 'request-summarized-trend-security-scores'), help=u"""DEPRECATED \n[Command Reference](requestSummarizedTrendSecurityScores)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--time-score-computed-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Start time for a filter. If start time is not specified, start time will be set to today's current time - 30 days.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-score-computed-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""End time for a filter. If end time is not specified, end time will be set to today's current time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -6403,8 +7554,8 @@ def request_summarized_trend_security_scores(ctx, from_json, compartment_id, tim
     cli_util.render_response(result, ctx)
 
 
-@responder_execution_group.command(name=cli_util.override('cloud_guard.skip_bulk_responder_execution.command_name', 'skip-bulk'), help=u"""Skips the execution for a bulk of responder executions The operation is atomic in nature \n[Command Reference](skipBulkResponderExecution)""")
-@cli_util.option('--responder-execution-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of responder execution ids to skip the execution""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@responder_execution_group.command(name=cli_util.override('cloud_guard.skip_bulk_responder_execution.command_name', 'skip-bulk'), help=u"""Skips the execution for a bulk of responder executions. \n[Command Reference](skipBulkResponderExecution)""")
+@cli_util.option('--responder-execution-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of responder execution IDs to skip execution""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'responder-execution-ids': {'module': 'cloud_guard', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
@@ -6426,9 +7577,9 @@ def skip_bulk_responder_execution(ctx, from_json, responder_execution_ids):
     cli_util.render_response(result, ctx)
 
 
-@responder_execution_group.command(name=cli_util.override('cloud_guard.skip_responder_execution.command_name', 'skip'), help=u"""Skips the execution of the responder execution. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](skipResponderExecution)""")
-@cli_util.option('--responder-execution-id', required=True, help=u"""The identifier of the responder execution.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@responder_execution_group.command(name=cli_util.override('cloud_guard.skip_responder_execution.command_name', 'skip'), help=u"""Skips the execution of the responder execution. When provided, If-Match is checked against etag values of the resource. \n[Command Reference](skipResponderExecution)""")
+@cli_util.option('--responder-execution-id', required=True, help=u"""The unique identifier of the responder execution.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -6454,9 +7605,9 @@ def skip_responder_execution(ctx, from_json, responder_execution_id, compartment
 
 
 @problem_group.command(name=cli_util.override('cloud_guard.trigger_responder.command_name', 'trigger-responder'), help=u"""Sends the problem identified by problemId to the responder engine, to be processed by rule that\u2019s identified by responderRuleId, in the TriggerResponderDetails resource that\u2019s passed. \n[Command Reference](triggerResponder)""")
-@cli_util.option('--problem-id', required=True, help=u"""OCId of the problem.""")
-@cli_util.option('--responder-rule-id', required=True, help=u"""ResponderRule ID""")
-@cli_util.option('--configurations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""ResponderRule configurations
+@cli_util.option('--problem-id', required=True, help=u"""OCID of the problem.""")
+@cli_util.option('--responder-rule-id', required=True, help=u"""Unique identifier for the responder rule""")
+@cli_util.option('--configurations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of responder rule configurations
 
 This option is a JSON list with items of type ResponderConfiguration.  For documentation on ResponderConfiguration please see our API reference: https://docs.cloud.oracle.com/api/#/en/cloudguard/20200131/datatypes/ResponderConfiguration.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -6492,8 +7643,8 @@ def trigger_responder(ctx, from_json, problem_id, responder_rule_id, configurati
 
 @problem_group.command(name=cli_util.override('cloud_guard.update_bulk_problem_status.command_name', 'update-bulk-problem-status'), help=u"""Changes the status for all problems listed in the problemIds array, passed through the UpdateBulkProblemStatusDetails resource, from the current status to the status set in UpdateBulkProblemStatusDetails. \n[Command Reference](updateBulkProblemStatus)""")
 @cli_util.option('--status', required=True, type=custom_types.CliCaseInsensitiveChoice(["OPEN", "RESOLVED", "DISMISSED", "DELETED"]), help=u"""Action taken by user""")
-@cli_util.option('--problem-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of ProblemIds to be passed in to update the Problem status.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--comment', help=u"""User defined comment to be passed in to update the problem.""")
+@cli_util.option('--problem-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of problem IDs to be passed in to update the problem status""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--comment', help=u"""User-defined comment to be passed in to update the problem""")
 @json_skeleton_utils.get_cli_json_input_option({'problem-ids': {'module': 'cloud_guard', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
@@ -6519,18 +7670,26 @@ def update_bulk_problem_status(ctx, from_json, status, problem_ids, comment):
     cli_util.render_response(result, ctx)
 
 
-@configuration_group.command(name=cli_util.override('cloud_guard.update_configuration.command_name', 'update'), help=u"""Update configuration details for a Cloud Guard tenancy, identified by root compartment OCID. The reporting region cannot be updated once created. \n[Command Reference](updateConfiguration)""")
-@cli_util.option('--reporting-region', required=True, help=u"""The reporting region value""")
-@cli_util.option('--status', required=True, type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Status of Cloud Guard Tenant""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@configuration_group.command(name=cli_util.override('cloud_guard.update_configuration.command_name', 'update'), help=u"""Updates configuration details for a Cloud Guard tenancy, identified by root compartment OCID. The reporting region cannot be updated once created. \n[Command Reference](updateConfiguration)""")
+@cli_util.option('--reporting-region', required=True, help=u"""The reporting region""")
+@cli_util.option('--status', required=True, type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Status of Cloud Guard tenant""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--service-configurations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of service configurations for tenant
+
+This option is a JSON list with items of type ServiceConfiguration.  For documentation on ServiceConfiguration please see our API reference: https://docs.cloud.oracle.com/api/#/en/cloudguard/20200131/datatypes/ServiceConfiguration.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--self-manage-resources', type=click.BOOL, help=u"""Identifies if Oracle managed resources will be created by customers. If no value is specified false is the default.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'service-configurations': {'module': 'cloud_guard', 'class': 'list[ServiceConfiguration]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'cloud_guard', 'class': 'Configuration'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'service-configurations': {'module': 'cloud_guard', 'class': 'list[ServiceConfiguration]'}}, output_type={'module': 'cloud_guard', 'class': 'Configuration'})
 @cli_util.wrap_exceptions
-def update_configuration(ctx, from_json, reporting_region, status, compartment_id, self_manage_resources, if_match):
+def update_configuration(ctx, from_json, force, reporting_region, status, compartment_id, service_configurations, self_manage_resources, if_match):
+    if not force:
+        if service_configurations:
+            if not click.confirm("WARNING: Updates to service-configurations will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -6540,6 +7699,9 @@ def update_configuration(ctx, from_json, reporting_region, status, compartment_i
     _details = {}
     _details['reportingRegion'] = reporting_region
     _details['status'] = status
+
+    if service_configurations is not None:
+        _details['serviceConfigurations'] = cli_util.parse_json_parameter("service_configurations", service_configurations)
 
     if self_manage_resources is not None:
         _details['selfManageResources'] = self_manage_resources
@@ -6553,16 +7715,16 @@ def update_configuration(ctx, from_json, reporting_region, status, compartment_i
     cli_util.render_response(result, ctx)
 
 
-@data_mask_rule_group.command(name=cli_util.override('cloud_guard.update_data_mask_rule.command_name', 'update'), help=u"""Updates a data mask rule (DataMaskRule object) identified by dataMaskRuleId. \n[Command Reference](updateDataMaskRule)""")
-@cli_util.option('--data-mask-rule-id', required=True, help=u"""OCID of dataMaskRule""")
-@cli_util.option('--display-name', help=u"""Data mask rule Name.
+@data_mask_rule_group.command(name=cli_util.override('cloud_guard.update_data_mask_rule.command_name', 'update'), help=u"""Updates a data mask rule (DataMaskRule resource) identified by dataMaskRuleId. \n[Command Reference](updateDataMaskRule)""")
+@cli_util.option('--data-mask-rule-id', required=True, help=u"""OCID of the data mask rule""")
+@cli_util.option('--display-name', help=u"""Data mask rule display name
 
 Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', help=u"""Compartment Identifier where the resource is created""")
-@cli_util.option('--iam-group-id', help=u"""IAM Group id associated with the data mask rule""")
+@cli_util.option('--compartment-id', help=u"""Compartment OCID where the resource is created""")
+@cli_util.option('--iam-group-id', help=u"""IAM group ID associated with the data mask rule""")
 @cli_util.option('--target-selected', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data-mask-categories', type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data Mask Categories""")
-@cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The status of the dataMaskRule.""")
+@cli_util.option('--data-mask-categories', type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data mask rule categories""")
+@cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The status of the data mask rule""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
 
 Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6649,15 +7811,15 @@ def update_data_mask_rule(ctx, from_json, force, wait_for_state, max_wait_second
     cli_util.render_response(result, ctx)
 
 
-@data_mask_rule_group.command(name=cli_util.override('cloud_guard.update_data_mask_rule_all_targets_selected.command_name', 'update-data-mask-rule-all-targets-selected'), help=u"""Updates a data mask rule (DataMaskRule object) identified by dataMaskRuleId. \n[Command Reference](updateDataMaskRule)""")
-@cli_util.option('--data-mask-rule-id', required=True, help=u"""OCID of dataMaskRule""")
-@cli_util.option('--display-name', help=u"""Data mask rule Name.
+@data_mask_rule_group.command(name=cli_util.override('cloud_guard.update_data_mask_rule_all_targets_selected.command_name', 'update-data-mask-rule-all-targets-selected'), help=u"""Updates a data mask rule (DataMaskRule resource) identified by dataMaskRuleId. \n[Command Reference](updateDataMaskRule)""")
+@cli_util.option('--data-mask-rule-id', required=True, help=u"""OCID of the data mask rule""")
+@cli_util.option('--display-name', help=u"""Data mask rule display name
 
 Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', help=u"""Compartment Identifier where the resource is created""")
-@cli_util.option('--iam-group-id', help=u"""IAM Group id associated with the data mask rule""")
-@cli_util.option('--data-mask-categories', type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data Mask Categories""")
-@cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The status of the dataMaskRule.""")
+@cli_util.option('--compartment-id', help=u"""Compartment OCID where the resource is created""")
+@cli_util.option('--iam-group-id', help=u"""IAM group ID associated with the data mask rule""")
+@cli_util.option('--data-mask-categories', type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data mask rule categories""")
+@cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The status of the data mask rule""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
 
 Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6744,21 +7906,21 @@ def update_data_mask_rule_all_targets_selected(ctx, from_json, force, wait_for_s
     cli_util.render_response(result, ctx)
 
 
-@data_mask_rule_group.command(name=cli_util.override('cloud_guard.update_data_mask_rule_target_resource_types_selected.command_name', 'update-data-mask-rule-target-resource-types-selected'), help=u"""Updates a data mask rule (DataMaskRule object) identified by dataMaskRuleId. \n[Command Reference](updateDataMaskRule)""")
-@cli_util.option('--data-mask-rule-id', required=True, help=u"""OCID of dataMaskRule""")
-@cli_util.option('--display-name', help=u"""Data mask rule Name.
+@data_mask_rule_group.command(name=cli_util.override('cloud_guard.update_data_mask_rule_target_resource_types_selected.command_name', 'update-data-mask-rule-target-resource-types-selected'), help=u"""Updates a data mask rule (DataMaskRule resource) identified by dataMaskRuleId. \n[Command Reference](updateDataMaskRule)""")
+@cli_util.option('--data-mask-rule-id', required=True, help=u"""OCID of the data mask rule""")
+@cli_util.option('--display-name', help=u"""Data mask rule display name
 
 Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', help=u"""Compartment Identifier where the resource is created""")
-@cli_util.option('--iam-group-id', help=u"""IAM Group id associated with the data mask rule""")
-@cli_util.option('--data-mask-categories', type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data Mask Categories""")
-@cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The status of the dataMaskRule.""")
+@cli_util.option('--compartment-id', help=u"""Compartment OCID where the resource is created""")
+@cli_util.option('--iam-group-id', help=u"""IAM group ID associated with the data mask rule""")
+@cli_util.option('--data-mask-categories', type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data mask rule categories""")
+@cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The status of the data mask rule""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
 
 Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--target-selected-values', type=custom_types.CliCaseInsensitiveChoice(["COMPARTMENT", "ERPCLOUD", "HCMCLOUD", "SECURITY_ZONE"]), help=u"""Types of Targets""")
+@cli_util.option('--target-selected-values', type=custom_types.CliCaseInsensitiveChoice(["COMPARTMENT", "ERPCLOUD", "HCMCLOUD", "SECURITY_ZONE"]), help=u"""Types of targets""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -6843,21 +8005,21 @@ def update_data_mask_rule_target_resource_types_selected(ctx, from_json, force, 
     cli_util.render_response(result, ctx)
 
 
-@data_mask_rule_group.command(name=cli_util.override('cloud_guard.update_data_mask_rule_target_ids_selected.command_name', 'update-data-mask-rule-target-ids-selected'), help=u"""Updates a data mask rule (DataMaskRule object) identified by dataMaskRuleId. \n[Command Reference](updateDataMaskRule)""")
-@cli_util.option('--data-mask-rule-id', required=True, help=u"""OCID of dataMaskRule""")
-@cli_util.option('--display-name', help=u"""Data mask rule Name.
+@data_mask_rule_group.command(name=cli_util.override('cloud_guard.update_data_mask_rule_target_ids_selected.command_name', 'update-data-mask-rule-target-ids-selected'), help=u"""Updates a data mask rule (DataMaskRule resource) identified by dataMaskRuleId. \n[Command Reference](updateDataMaskRule)""")
+@cli_util.option('--data-mask-rule-id', required=True, help=u"""OCID of the data mask rule""")
+@cli_util.option('--display-name', help=u"""Data mask rule display name
 
 Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', help=u"""Compartment Identifier where the resource is created""")
-@cli_util.option('--iam-group-id', help=u"""IAM Group id associated with the data mask rule""")
-@cli_util.option('--data-mask-categories', type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data Mask Categories""")
-@cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The status of the dataMaskRule.""")
+@cli_util.option('--compartment-id', help=u"""Compartment OCID where the resource is created""")
+@cli_util.option('--iam-group-id', help=u"""IAM group ID associated with the data mask rule""")
+@cli_util.option('--data-mask-categories', type=custom_types.CliCaseInsensitiveChoice(["ACTOR", "PII", "PHI", "FINANCIAL", "LOCATION", "CUSTOM"]), help=u"""Data mask rule categories""")
+@cli_util.option('--data-mask-rule-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""The status of the data mask rule""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
 
 Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--target-selected-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Ids of Target""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--target-selected-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""IDs of targets""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -6942,10 +8104,10 @@ def update_data_mask_rule_target_ids_selected(ctx, from_json, force, wait_for_st
     cli_util.render_response(result, ctx)
 
 
-@data_source_group.command(name=cli_util.override('cloud_guard.update_data_source.command_name', 'update'), help=u"""Updates a data source identified by dataSourceId \n[Command Reference](updateDataSource)""")
-@cli_util.option('--data-source-id', required=True, help=u"""DataSource OCID""")
-@cli_util.option('--display-name', help=u"""Data Source display name.""")
-@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Status of DataSource.""")
+@data_source_group.command(name=cli_util.override('cloud_guard.update_data_source.command_name', 'update'), help=u"""Updates a data source (DataSource resource) identified by dataSourceId, using values passed in an UpdateDataSourceDetails resource. \n[Command Reference](updateDataSource)""")
+@cli_util.option('--data-source-id', required=True, help=u"""Data source OCID.""")
+@cli_util.option('--display-name', help=u"""Display name for data source""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Enablement status of data source""")
 @cli_util.option('--data-source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
 
@@ -7028,23 +8190,126 @@ def update_data_source(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@data_source_group.command(name=cli_util.override('cloud_guard.update_data_source_logging_query_data_source_details.command_name', 'update-data-source-logging-query-data-source-details'), help=u"""Updates a data source identified by dataSourceId \n[Command Reference](updateDataSource)""")
-@cli_util.option('--data-source-id', required=True, help=u"""DataSource OCID""")
-@cli_util.option('--display-name', help=u"""Data Source display name.""")
-@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Status of DataSource.""")
+@data_source_group.command(name=cli_util.override('cloud_guard.update_data_source_scheduled_query_data_source_obj_details.command_name', 'update-data-source-scheduled-query-data-source-obj-details'), help=u"""Updates a data source (DataSource resource) identified by dataSourceId, using values passed in an UpdateDataSourceDetails resource. \n[Command Reference](updateDataSource)""")
+@cli_util.option('--data-source-id', required=True, help=u"""Data source OCID.""")
+@cli_util.option('--display-name', help=u"""Display name for data source""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Enablement status of data source""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
 
 Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--data-source-details-regions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Logging Query regions""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-source-details-query', help=u"""The continuous query expression that is run periodically.""")
+@cli_util.option('--data-source-details-description', help=u"""Description text for the query""")
+@cli_util.option('--data-source-details-interval-in-seconds', type=click.INT, help=u"""Interval in minutes which query is run periodically.""")
+@cli_util.option('--data-source-details-scheduled-query-scope-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Target information in which scheduled query will be run
+
+This option is a JSON list with items of type ScheduledQueryScopeDetail.  For documentation on ScheduledQueryScopeDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/cloudguard/20200131/datatypes/ScheduledQueryScopeDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}, 'data-source-details-scheduled-query-scope-details': {'module': 'cloud_guard', 'class': 'list[ScheduledQueryScopeDetail]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}, 'data-source-details-scheduled-query-scope-details': {'module': 'cloud_guard', 'class': 'list[ScheduledQueryScopeDetail]'}})
+@cli_util.wrap_exceptions
+def update_data_source_scheduled_query_data_source_obj_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_source_id, display_name, status, freeform_tags, defined_tags, if_match, data_source_details_query, data_source_details_description, data_source_details_interval_in_seconds, data_source_details_scheduled_query_scope_details):
+
+    if isinstance(data_source_id, six.string_types) and len(data_source_id.strip()) == 0:
+        raise click.UsageError('Parameter --data-source-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dataSourceDetails'] = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if status is not None:
+        _details['status'] = status
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if data_source_details_query is not None:
+        _details['dataSourceDetails']['query'] = data_source_details_query
+
+    if data_source_details_description is not None:
+        _details['dataSourceDetails']['description'] = data_source_details_description
+
+    if data_source_details_interval_in_seconds is not None:
+        _details['dataSourceDetails']['intervalInSeconds'] = data_source_details_interval_in_seconds
+
+    if data_source_details_scheduled_query_scope_details is not None:
+        _details['dataSourceDetails']['scheduledQueryScopeDetails'] = cli_util.parse_json_parameter("data_source_details_scheduled_query_scope_details", data_source_details_scheduled_query_scope_details)
+
+    _details['dataSourceDetails']['dataSourceFeedProvider'] = 'SCHEDULEDQUERY'
+
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    result = client.update_data_source(
+        data_source_id=data_source_id,
+        update_data_source_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@data_source_group.command(name=cli_util.override('cloud_guard.update_data_source_logging_query_data_source_details.command_name', 'update-data-source-logging-query-data-source-details'), help=u"""Updates a data source (DataSource resource) identified by dataSourceId, using values passed in an UpdateDataSourceDetails resource. \n[Command Reference](updateDataSource)""")
+@cli_util.option('--data-source-id', required=True, help=u"""Data source OCID.""")
+@cli_util.option('--display-name', help=u"""Display name for data source""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Enablement status of data source""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
+
+Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--data-source-details-regions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of logging query regions""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-source-details-query', help=u"""The continuous query expression that is run periodicall""")
 @cli_util.option('--data-source-details-interval-in-minutes', type=click.INT, help=u"""Interval in minutes that query is run periodically.""")
-@cli_util.option('--data-source-details-threshold', type=click.INT, help=u"""The integer value that must be exceeded, fall below or equal to (depending on the operator), the query result to trigger an event.""")
+@cli_util.option('--data-source-details-threshold', type=click.INT, help=u"""The integer value that must be exceeded, fall below or equal to (depending on the operator), for the query result to trigger an event""")
 @cli_util.option('--data-source-details-query-start-time', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data-source-details-operator', type=custom_types.CliCaseInsensitiveChoice(["EQUAL", "GREATER", "GREATERTHANEQUALTO", "LESS", "LESSTHANEQUALTO"]), help=u"""Operator used in Data Soruce""")
-@cli_util.option('--data-source-details-logging-query-type', type=custom_types.CliCaseInsensitiveChoice(["INSIGHT"]), help=u"""Logging query type for data source (Sighting/Insight)""")
-@cli_util.option('--data-source-details-additional-entities-count', type=click.INT, help=u"""The additional entities count used for data source query.""")
+@cli_util.option('--data-source-details-operator', type=custom_types.CliCaseInsensitiveChoice(["EQUAL", "GREATER", "GREATERTHANEQUALTO", "LESS", "LESSTHANEQUALTO"]), help=u"""Operator used in data source""")
+@cli_util.option('--data-source-details-logging-query-type', type=custom_types.CliCaseInsensitiveChoice(["INSIGHT"]), help=u"""Type of logging query for data source (Sighting/Insight)""")
+@cli_util.option('--data-source-details-additional-entities-count', type=click.INT, help=u"""The additional entities count used for data source query""")
 @cli_util.option('--data-source-details-logging-query-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -7149,15 +8414,15 @@ def update_data_source_logging_query_data_source_details(ctx, from_json, force, 
     cli_util.render_response(result, ctx)
 
 
-@detector_recipe_group.command(name=cli_util.override('cloud_guard.update_detector_recipe.command_name', 'update'), help=u"""Updates a detector recipe (DetectorRecipe object) identified by detectorRecipeId. \n[Command Reference](updateDetectorRecipe)""")
-@cli_util.option('--detector-recipe-id', required=True, help=u"""DetectorRecipe OCID""")
+@detector_recipe_group.command(name=cli_util.override('cloud_guard.update_detector_recipe.command_name', 'update'), help=u"""Updates a detector recipe (DetectorRecipe resource) identified by detectorRecipeId. \n[Command Reference](updateDetectorRecipe)""")
+@cli_util.option('--detector-recipe-id', required=True, help=u"""Detector recipe OCID""")
 @cli_util.option('--display-name', help=u"""Display name of detector recipe.
 
 Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Detector recipe description.
 
 Avoid entering confidential information.""")
-@cli_util.option('--detector-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Detector Rules to update
+@cli_util.option('--detector-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of detector rules to update
 
 This option is a JSON list with items of type UpdateDetectorRecipeDetectorRule.  For documentation on UpdateDetectorRecipeDetectorRule please see our API reference: https://docs.cloud.oracle.com/api/#/en/cloudguard/20200131/datatypes/UpdateDetectorRecipeDetectorRule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
@@ -7237,9 +8502,9 @@ def update_detector_recipe(ctx, from_json, force, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@detector_recipe_detector_rule_group.command(name=cli_util.override('cloud_guard.update_detector_recipe_detector_rule.command_name', 'update'), help=u"""Updates a detector rule (DetectorRule object) identified by detectorRuleId. \n[Command Reference](updateDetectorRecipeDetectorRule)""")
-@cli_util.option('--detector-recipe-id', required=True, help=u"""DetectorRecipe OCID""")
-@cli_util.option('--detector-rule-id', required=True, help=u"""The key of Detector Rule.""")
+@detector_recipe_detector_rule_group.command(name=cli_util.override('cloud_guard.update_detector_recipe_detector_rule.command_name', 'update'), help=u"""Updates a detector rule (DetectorRule resource) identified by detectorRuleId. \n[Command Reference](updateDetectorRecipeDetectorRule)""")
+@cli_util.option('--detector-recipe-id', required=True, help=u"""Detector recipe OCID""")
+@cli_util.option('--detector-rule-id', required=True, help=u"""The unique identifier of a detector rule.""")
 @cli_util.option('--details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -7306,13 +8571,13 @@ def update_detector_recipe_detector_rule(ctx, from_json, force, wait_for_state, 
     cli_util.render_response(result, ctx)
 
 
-@managed_list_group.command(name=cli_util.override('cloud_guard.update_managed_list.command_name', 'update'), help=u"""Updates a ManagedList object, identified by managedList. \n[Command Reference](updateManagedList)""")
-@cli_util.option('--managed-list-id', required=True, help=u"""The cloudguard list OCID to be passed in the request.""")
+@managed_list_group.command(name=cli_util.override('cloud_guard.update_managed_list.command_name', 'update'), help=u"""Updates a ManagedList resource, identified by managedList. \n[Command Reference](updateManagedList)""")
+@cli_util.option('--managed-list-id', required=True, help=u"""The managed list OCID to be passed in the request.""")
 @cli_util.option('--display-name', help=u"""Managed list display name.
 
 Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Managed list description. Avoid entering confidential information.""")
-@cli_util.option('--list-items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of ManagedListItem""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--list-items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of managed list items""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
 
 Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -7391,9 +8656,9 @@ def update_managed_list(ctx, from_json, force, wait_for_state, max_wait_seconds,
 
 
 @problem_group.command(name=cli_util.override('cloud_guard.update_problem_status.command_name', 'update-problem-status'), help=u"""Changes the current status of the problem, identified by problemId, to the status specified in the UpdateProblemStatusDetails resource that you pass. \n[Command Reference](updateProblemStatus)""")
-@cli_util.option('--problem-id', required=True, help=u"""OCId of the problem.""")
+@cli_util.option('--problem-id', required=True, help=u"""OCID of the problem.""")
 @cli_util.option('--status', required=True, type=custom_types.CliCaseInsensitiveChoice(["OPEN", "RESOLVED", "DISMISSED", "DELETED"]), help=u"""Action taken by user""")
-@cli_util.option('--comment', help=u"""User Comments""")
+@cli_util.option('--comment', help=u"""User comments""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -7451,15 +8716,15 @@ def update_problem_status(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@responder_recipe_group.command(name=cli_util.override('cloud_guard.update_responder_recipe.command_name', 'update'), help=u"""Update the ResponderRecipe resource by identifier \n[Command Reference](updateResponderRecipe)""")
-@cli_util.option('--responder-recipe-id', required=True, help=u"""OCID of ResponderRecipe""")
-@cli_util.option('--display-name', required=True, help=u"""Responder recipe identifier.
+@responder_recipe_group.command(name=cli_util.override('cloud_guard.update_responder_recipe.command_name', 'update'), help=u"""Updates a responder recipe (ResponderRecipe resource) identified by responderRecipeId, passed in an UpdateResponderRecipeDetails resource. \n[Command Reference](updateResponderRecipe)""")
+@cli_util.option('--responder-recipe-id', required=True, help=u"""OCID of the responder recipe.""")
+@cli_util.option('--display-name', required=True, help=u"""Responder recipe display name.
 
 Avoid entering confidential information.""")
-@cli_util.option('--description', help=u"""Responder recipe description.
+@cli_util.option('--description', help=u"""Responder recipe description
 
 Avoid entering confidential information.""")
-@cli_util.option('--responder-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Responder Rules to Update
+@cli_util.option('--responder-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of responder rules to update
 
 This option is a JSON list with items of type UpdateResponderRecipeResponderRule.  For documentation on UpdateResponderRecipeResponderRule please see our API reference: https://docs.cloud.oracle.com/api/#/en/cloudguard/20200131/datatypes/UpdateResponderRecipeResponderRule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
@@ -7537,9 +8802,9 @@ def update_responder_recipe(ctx, from_json, force, wait_for_state, max_wait_seco
     cli_util.render_response(result, ctx)
 
 
-@responder_recipe_responder_rule_group.command(name=cli_util.override('cloud_guard.update_responder_recipe_responder_rule.command_name', 'update'), help=u"""Update the ResponderRule by identifier \n[Command Reference](updateResponderRecipeResponderRule)""")
-@cli_util.option('--responder-recipe-id', required=True, help=u"""OCID of ResponderRecipe""")
-@cli_util.option('--responder-rule-id', required=True, help=u"""The id of ResponderRule""")
+@responder_recipe_responder_rule_group.command(name=cli_util.override('cloud_guard.update_responder_recipe_responder_rule.command_name', 'update'), help=u"""Updates a responder rule (ResponderRule resource) identified by responderRuleId, passed in a UpdateResponderRecipeResponderRuleDetails resource. \n[Command Reference](updateResponderRecipeResponderRule)""")
+@cli_util.option('--responder-recipe-id', required=True, help=u"""OCID of the responder recipe.""")
+@cli_util.option('--responder-rule-id', required=True, help=u"""Unique identifier of the responder rule.""")
 @cli_util.option('--details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -7604,11 +8869,93 @@ def update_responder_recipe_responder_rule(ctx, from_json, force, wait_for_state
     cli_util.render_response(result, ctx)
 
 
-@security_recipe_group.command(name=cli_util.override('cloud_guard.update_security_recipe.command_name', 'update'), help=u"""Updates a security zone recipe. A security zone recipe is a collection of security zone policies. \n[Command Reference](updateSecurityRecipe)""")
-@cli_util.option('--security-recipe-id', required=True, help=u"""The unique identifier of the security zone recipe (`SecurityRecipe`)""")
-@cli_util.option('--display-name', required=True, help=u"""The recipe's name""")
+@saved_query_group.command(name=cli_util.override('cloud_guard.update_saved_query.command_name', 'update'), help=u"""Updates a saved query identified by savedQueryId. \n[Command Reference](updateSavedQuery)""")
+@cli_util.option('--saved-query-id', required=True, help=u"""Saved query OCID""")
+@cli_util.option('--display-name', help=u"""Display name of the saved query""")
+@cli_util.option('--description', help=u"""Description of the saved query""")
+@cli_util.option('--query-parameterconflict', help=u"""The saved query expression""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
+
+Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_guard', 'class': 'SavedQuery'})
+@cli_util.wrap_exceptions
+def update_saved_query(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, saved_query_id, display_name, description, query_parameterconflict, freeform_tags, defined_tags, if_match):
+
+    if isinstance(saved_query_id, six.string_types) and len(saved_query_id.strip()) == 0:
+        raise click.UsageError('Parameter --saved-query-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if query_parameterconflict is not None:
+        _details['query'] = query_parameterconflict
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    result = client.update_saved_query(
+        saved_query_id=saved_query_id,
+        update_saved_query_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_saved_query') and callable(getattr(client, 'get_saved_query')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_saved_query(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@security_recipe_group.command(name=cli_util.override('cloud_guard.update_security_recipe.command_name', 'update'), help=u"""Updates a security zone recipe (SecurityRecipe resource), identified by securityRecipeId, using parameters passed in an UpdateSecurityRecipeDetails resource. \n[Command Reference](updateSecurityRecipe)""")
+@cli_util.option('--security-recipe-id', required=True, help=u"""The unique identifier of the security zone recipe. (`SecurityRecipe`)""")
+@cli_util.option('--display-name', required=True, help=u"""The recipe's display name""")
 @cli_util.option('--description', help=u"""The recipe's description""")
-@cli_util.option('--security-policies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of `SecurityPolicy` ids to include in the recipe""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-policies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of security policy IDs to include in the recipe""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
 
 Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -7684,11 +9031,11 @@ def update_security_recipe(ctx, from_json, force, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@security_zone_group.command(name=cli_util.override('cloud_guard.update_security_zone.command_name', 'update'), help=u"""Updates the security zone identified by its id \n[Command Reference](updateSecurityZone)""")
-@cli_util.option('--security-zone-id', required=True, help=u"""The unique identifier of the security zone (`SecurityZone`)""")
-@cli_util.option('--display-name', required=True, help=u"""The security zone's name""")
+@security_zone_group.command(name=cli_util.override('cloud_guard.update_security_zone.command_name', 'update'), help=u"""Updates a security zone (SecurityZone resource) identified by securityZoneId. Pass parameters through an UpdateSecurityZoneDetails resource. \n[Command Reference](updateSecurityZone)""")
+@cli_util.option('--security-zone-id', required=True, help=u"""The unique identifier of the security zone (`SecurityZone` resource).""")
+@cli_util.option('--display-name', required=True, help=u"""The security zone's display name""")
 @cli_util.option('--description', help=u"""The security zone's description""")
-@cli_util.option('--security-zone-recipe-id', help=u"""The OCID of the recipe (`SecurityRecipe`) for the security zone""")
+@cli_util.option('--security-zone-recipe-id', help=u"""The OCID of the security recipe (`SecurityRecipe` resource) for the security zone""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
 
 Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -7764,16 +9111,16 @@ def update_security_zone(ctx, from_json, force, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@target_group.command(name=cli_util.override('cloud_guard.update_target.command_name', 'update'), help=u"""Updates a Target identified by targetId \n[Command Reference](updateTarget)""")
-@cli_util.option('--target-id', required=True, help=u"""OCID of target""")
+@target_group.command(name=cli_util.override('cloud_guard.update_target.command_name', 'update'), help=u"""Updates a target (Target resource) identified by targetId, using parameters passed in an UpdateTargetDetails resource. \n[Command Reference](updateTarget)""")
+@cli_util.option('--target-id', required=True, help=u"""OCID of the target""")
 @cli_util.option('--display-name', help=u"""Display name of a target.
 
 Avoid entering confidential information.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The current state of the Target.""")
-@cli_util.option('--target-detector-recipes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of target detector recipes to be updated.
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The current lifecycle state of the Target.""")
+@cli_util.option('--target-detector-recipes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of target detector recipes to be updated
 
 This option is a JSON list with items of type UpdateTargetDetectorRecipe.  For documentation on UpdateTargetDetectorRecipe please see our API reference: https://docs.cloud.oracle.com/api/#/en/cloudguard/20200131/datatypes/UpdateTargetDetectorRecipe.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--target-responder-recipes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of target responder recipes to be updated.
+@cli_util.option('--target-responder-recipes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of target responder recipes to be updated
 
 This option is a JSON list with items of type UpdateTargetResponderRecipe.  For documentation on UpdateTargetResponderRecipe please see our API reference: https://docs.cloud.oracle.com/api/#/en/cloudguard/20200131/datatypes/UpdateTargetResponderRecipe.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
@@ -7856,12 +9203,12 @@ def update_target(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@target_detector_recipe_group.command(name=cli_util.override('cloud_guard.update_target_detector_recipe.command_name', 'update'), help=u"""Update the TargetDetectorRecipe resource by identifier \n[Command Reference](updateTargetDetectorRecipe)""")
-@cli_util.option('--target-id', required=True, help=u"""OCID of target""")
-@cli_util.option('--target-detector-recipe-id', required=True, help=u"""OCID of TargetDetectorRecipe""")
-@cli_util.option('--detector-recipe-id', help=u"""Detector recipe identifier associated with the target""")
-@cli_util.option('--is-validation-only-query', type=click.BOOL, help=u"""When enabled, validation is performed for attaching the detector recipe.""")
-@cli_util.option('--detector-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Update detector rules associated with detector recipe in a target.
+@target_detector_recipe_group.command(name=cli_util.override('cloud_guard.update_target_detector_recipe.command_name', 'update'), help=u"""Updates a target detector recipe (TargtetDetectorRecipe resource) identified by targetDetectorRecipeId, using parameters passed in an UpdateTargetDetectorRecipeDetails resource. \n[Command Reference](updateTargetDetectorRecipe)""")
+@cli_util.option('--target-id', required=True, help=u"""OCID of the target""")
+@cli_util.option('--target-detector-recipe-id', required=True, help=u"""OCID of the target detector recipe.""")
+@cli_util.option('--detector-recipe-id', help=u"""Unique identifier for the target detector recipe""")
+@cli_util.option('--is-validation-only-query', type=click.BOOL, help=u"""Is validation to be performed for attaching the detector recipe?""")
+@cli_util.option('--detector-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of updates to be applied to detector rules in target detector recipe
 
 This option is a JSON list with items of type UpdateTargetRecipeDetectorRuleDetails.  For documentation on UpdateTargetRecipeDetectorRuleDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/cloudguard/20200131/datatypes/UpdateTargetRecipeDetectorRuleDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -7935,10 +9282,10 @@ def update_target_detector_recipe(ctx, from_json, force, wait_for_state, max_wai
     cli_util.render_response(result, ctx)
 
 
-@target_detector_recipe_detector_rule_group.command(name=cli_util.override('cloud_guard.update_target_detector_recipe_detector_rule.command_name', 'update'), help=u"""Update the DetectorRule by identifier \n[Command Reference](updateTargetDetectorRecipeDetectorRule)""")
-@cli_util.option('--target-id', required=True, help=u"""OCID of target""")
-@cli_util.option('--target-detector-recipe-id', required=True, help=u"""OCID of TargetDetectorRecipe""")
-@cli_util.option('--detector-rule-id', required=True, help=u"""The id of DetectorRule""")
+@target_detector_recipe_detector_rule_group.command(name=cli_util.override('cloud_guard.update_target_detector_recipe_detector_rule.command_name', 'update'), help=u"""Updates the DetectorRule resource identified by targetDetectorRecipeId \n[Command Reference](updateTargetDetectorRecipeDetectorRule)""")
+@cli_util.option('--target-id', required=True, help=u"""OCID of the target""")
+@cli_util.option('--target-detector-recipe-id', required=True, help=u"""OCID of the target detector recipe.""")
+@cli_util.option('--detector-rule-id', required=True, help=u"""The unique identifier of the detector rule.""")
 @cli_util.option('--details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -8007,10 +9354,10 @@ def update_target_detector_recipe_detector_rule(ctx, from_json, force, wait_for_
     cli_util.render_response(result, ctx)
 
 
-@target_responder_recipe_group.command(name=cli_util.override('cloud_guard.update_target_responder_recipe.command_name', 'update'), help=u"""Update the TargetResponderRecipe resource by identifier \n[Command Reference](updateTargetResponderRecipe)""")
-@cli_util.option('--target-id', required=True, help=u"""OCID of target""")
-@cli_util.option('--target-responder-recipe-id', required=True, help=u"""OCID of TargetResponderRecipe""")
-@cli_util.option('--responder-rules', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Update responder rules associated with responder recipe in a target.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@target_responder_recipe_group.command(name=cli_util.override('cloud_guard.update_target_responder_recipe.command_name', 'update'), help=u"""Updates the target responder recipe (TargetResponderRecipe resource) identified by targetResponderRecipeId, attached to a target identified by targetId. Pass parameters for the update through an UpdateTargetResponderRecipeDetails resource. \n[Command Reference](updateTargetResponderRecipe)""")
+@cli_util.option('--target-id', required=True, help=u"""OCID of the target""")
+@cli_util.option('--target-responder-recipe-id', required=True, help=u"""OCID of the target responder recipe.""")
+@cli_util.option('--responder-rules', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of responder rules to be updated in a target responder recipe.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'responder-rules': {'module': 'cloud_guard', 'class': 'list[UpdateTargetRecipeResponderRuleDetails]'}})
@@ -8048,10 +9395,10 @@ def update_target_responder_recipe(ctx, from_json, force, target_id, target_resp
     cli_util.render_response(result, ctx)
 
 
-@target_responder_recipe_responder_rule_group.command(name=cli_util.override('cloud_guard.update_target_responder_recipe_responder_rule.command_name', 'update'), help=u"""Update the ResponderRule by identifier \n[Command Reference](updateTargetResponderRecipeResponderRule)""")
-@cli_util.option('--target-id', required=True, help=u"""OCID of target""")
-@cli_util.option('--target-responder-recipe-id', required=True, help=u"""OCID of TargetResponderRecipe""")
-@cli_util.option('--responder-rule-id', required=True, help=u"""The id of ResponderRule""")
+@target_responder_recipe_responder_rule_group.command(name=cli_util.override('cloud_guard.update_target_responder_recipe_responder_rule.command_name', 'update'), help=u"""Updates a responder rule (ResponderRule resource) identified by responderRuleId, for a target responder recipe (TargetResponderRecipe resource) identified by targetResponderRecipeId, for a target (Target resource) identified by targetId. Parameters for the update are passed through an UpdateTargetResponderRecipeResponderRuleDetails resource. \n[Command Reference](updateTargetResponderRecipeResponderRule)""")
+@cli_util.option('--target-id', required=True, help=u"""OCID of the target""")
+@cli_util.option('--target-responder-recipe-id', required=True, help=u"""OCID of the target responder recipe.""")
+@cli_util.option('--responder-rule-id', required=True, help=u"""Unique identifier of the responder rule.""")
 @cli_util.option('--details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -8117,4 +9464,50 @@ def update_target_responder_recipe_responder_rule(ctx, from_json, force, wait_fo
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@wlp_agent_group.command(name=cli_util.override('cloud_guard.update_wlp_agent.command_name', 'update'), help=u"""Updates and renews the certificate for an on-premise WLP agent identified by wlpAgentId. \n[Command Reference](updateWlpAgent)""")
+@cli_util.option('--wlp-agent-id', required=True, help=u"""WLP agent OCID.""")
+@cli_util.option('--certificate-signed-request', required=True, help=u"""The updated certificate signing request""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
+
+Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_guard', 'class': 'WlpAgent'})
+@cli_util.wrap_exceptions
+def update_wlp_agent(ctx, from_json, force, wlp_agent_id, certificate_signed_request, freeform_tags, defined_tags, if_match):
+
+    if isinstance(wlp_agent_id, six.string_types) and len(wlp_agent_id.strip()) == 0:
+        raise click.UsageError('Parameter --wlp-agent-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['certificateSignedRequest'] = certificate_signed_request
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('cloud_guard', 'cloud_guard', ctx)
+    result = client.update_wlp_agent(
+        wlp_agent_id=wlp_agent_id,
+        update_wlp_agent_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)

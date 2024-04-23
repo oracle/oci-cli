@@ -16,7 +16,8 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.os_management_hub.src.oci_cli_os_management_hub.generated import os_management_hub_service_cli
 
 
-@click.command(cli_util.override('management_station.management_station_root_group.command_name', 'management-station'), cls=CommandGroupWithAlias, help=cli_util.override('management_station.management_station_root_group.help', """Use the OS Management Hub API to manage and monitor updates and patches for the operating system environments in your private data centers through a single management console. For more information, see [Overview of OS Management Hub]."""), short_help=cli_util.override('management_station.management_station_root_group.short_help', """OS Management Hub API"""))
+@click.command(cli_util.override('management_station.management_station_root_group.command_name', 'management-station'), cls=CommandGroupWithAlias, help=cli_util.override('management_station.management_station_root_group.help', """Use the OS Management Hub API to manage and monitor updates and patches for instances in OCI, your private data center, or 3rd-party clouds.
+For more information, see [Overview of OS Management Hub]."""), short_help=cli_util.override('management_station.management_station_root_group.short_help', """OS Management Hub API"""))
 @cli_util.help_option_group
 def management_station_root_group():
     pass
@@ -28,7 +29,7 @@ def mirrors_collection_group():
     pass
 
 
-@click.command(cli_util.override('management_station.management_station_group.command_name', 'management-station'), cls=CommandGroupWithAlias, help="""Detailed information about an ManagementStation config""")
+@click.command(cli_util.override('management_station.management_station_group.command_name', 'management-station'), cls=CommandGroupWithAlias, help="""Provides information about the management station, including name, state, and configuration.""")
 @cli_util.help_option_group
 def management_station_group():
     pass
@@ -39,13 +40,44 @@ management_station_root_group.add_command(mirrors_collection_group)
 management_station_root_group.add_command(management_station_group)
 
 
-@management_station_group.command(name=cli_util.override('management_station.create_management_station.command_name', 'create'), help=u"""Creates a management station. \n[Command Reference](createManagementStation)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy containing the Management Station.""")
-@cli_util.option('--display-name', required=True, help=u"""Management Station name""")
-@cli_util.option('--hostname', required=True, help=u"""Name of the host""")
+@management_station_group.command(name=cli_util.override('management_station.change_management_station_compartment.command_name', 'change-compartment'), help=u"""Moves a managment station to a different compartment. \n[Command Reference](changeManagementStationCompartment)""")
+@cli_util.option('--management-station-id', required=True, help=u"""The [OCID] of the management station.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the management station to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_management_station_compartment(ctx, from_json, management_station_id, compartment_id, if_match):
+
+    if isinstance(management_station_id, six.string_types) and len(management_station_id.strip()) == 0:
+        raise click.UsageError('Parameter --management-station-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('os_management_hub', 'management_station', ctx)
+    result = client.change_management_station_compartment(
+        management_station_id=management_station_id,
+        change_management_station_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@management_station_group.command(name=cli_util.override('management_station.create_management_station.command_name', 'create'), help=u"""Create a management station. You must provide proxy and mirror configuration information. \n[Command Reference](createManagementStation)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the management station.""")
+@cli_util.option('--display-name', required=True, help=u"""User-friendly name for the management station. Does not have to be unique and you can change the name later. Avoid entering confidential information.""")
+@cli_util.option('--hostname', required=True, help=u"""Hostname of the management station.""")
 @cli_util.option('--proxy-parameterconflict', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--mirror', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--description', help=u"""Details describing the Management Station config.""")
+@cli_util.option('--description', help=u"""User-specified description of the management station. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -109,7 +141,7 @@ def create_management_station(ctx, from_json, wait_for_state, max_wait_seconds, 
 
 
 @management_station_group.command(name=cli_util.override('management_station.delete_management_station.command_name', 'delete'), help=u"""Deletes a management station. \n[Command Reference](deleteManagementStation)""")
-@cli_util.option('--management-station-id', required=True, help=u"""The OCID of the management station.""")
+@cli_util.option('--management-station-id', required=True, help=u"""The [OCID] of the management station.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -173,7 +205,7 @@ def delete_management_station(ctx, from_json, wait_for_state, max_wait_seconds, 
 
 
 @management_station_group.command(name=cli_util.override('management_station.get_management_station.command_name', 'get'), help=u"""Gets information about the specified management station. \n[Command Reference](getManagementStation)""")
-@cli_util.option('--management-station-id', required=True, help=u"""The OCID of the management station.""")
+@cli_util.option('--management-station-id', required=True, help=u"""The [OCID] of the management station.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -195,13 +227,11 @@ def get_management_station(ctx, from_json, management_station_id):
 
 
 @management_station_group.command(name=cli_util.override('management_station.list_management_stations.command_name', 'list'), help=u"""Lists management stations in a compartment. \n[Command Reference](listManagementStations)""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list.""")
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
-
-Example: `My new resource`""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
+@cli_util.option('--display-name', help=u"""A filter to return resources that match the given user-friendly name.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The current lifecycle state for the object.""")
-@cli_util.option('--managed-instance-id', help=u"""The OCID of the managed instance for which to list resources.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter that returns information for management stations in the specified state.""")
+@cli_util.option('--managed-instance-id', help=u"""The [OCID] of the managed instance. This filter returns resources associated with this managed instance.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -210,7 +240,7 @@ Example: `50`""")
 Example: `3`""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
-@cli_util.option('--id', help=u"""The OCID of the management station.""")
+@cli_util.option('--id', help=u"""The [OCID] of the management station. A filter that returns information about the specified management station.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -269,10 +299,8 @@ def list_management_stations(ctx, from_json, all_pages, page_size, compartment_i
 
 
 @mirrors_collection_group.command(name=cli_util.override('management_station.list_mirrors.command_name', 'list-mirrors'), help=u"""Lists all software source mirrors associated with a specified management station. \n[Command Reference](listMirrors)""")
-@cli_util.option('--management-station-id', required=True, help=u"""The OCID of the management station.""")
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
-
-Example: `My new resource`""")
+@cli_util.option('--management-station-id', required=True, help=u"""The [OCID] of the management station.""")
+@cli_util.option('--display-name', help=u"""A filter to return resources that match the given user-friendly name.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -340,8 +368,63 @@ def list_mirrors(ctx, from_json, all_pages, page_size, management_station_id, di
     cli_util.render_response(result, ctx)
 
 
-@management_station_group.command(name=cli_util.override('management_station.synchronize_mirrors.command_name', 'synchronize-mirrors'), help=u"""Synchronizes the specified mirrors associated with the management station. \n[Command Reference](synchronizeMirrors)""")
-@cli_util.option('--management-station-id', required=True, help=u"""The OCID of the management station.""")
+@management_station_group.command(name=cli_util.override('management_station.refresh_management_station_config.command_name', 'refresh-management-station-config'), help=u"""Refreshes the list of software sources mirrored by the management station to support the associated instances. \n[Command Reference](refreshManagementStationConfig)""")
+@cli_util.option('--management-station-id', required=True, help=u"""The [OCID] of the management station.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def refresh_management_station_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_station_id, if_match):
+
+    if isinstance(management_station_id, six.string_types) and len(management_station_id.strip()) == 0:
+        raise click.UsageError('Parameter --management-station-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management_hub', 'management_station', ctx)
+    result = client.refresh_management_station_config(
+        management_station_id=management_station_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@management_station_group.command(name=cli_util.override('management_station.synchronize_mirrors.command_name', 'synchronize-mirrors'), help=u"""Synchronize the specified software sources mirrors on the management station. \n[Command Reference](synchronizeMirrors)""")
+@cli_util.option('--management-station-id', required=True, help=u"""The [OCID] of the management station.""")
 @cli_util.option('--software-source-list', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Software Source OCIDs to synchronize""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -401,8 +484,8 @@ def synchronize_mirrors(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@management_station_group.command(name=cli_util.override('management_station.synchronize_single_mirrors.command_name', 'synchronize-single-mirrors'), help=u"""Synchronize the specified mirror associated with a management station. \n[Command Reference](synchronizeSingleMirrors)""")
-@cli_util.option('--management-station-id', required=True, help=u"""The OCID of the management station.""")
+@management_station_group.command(name=cli_util.override('management_station.synchronize_single_mirrors.command_name', 'synchronize-single-mirrors'), help=u"""Synchronize the specified software source mirrors on the management station. \n[Command Reference](synchronizeSingleMirrors)""")
+@cli_util.option('--management-station-id', required=True, help=u"""The [OCID] of the management station.""")
 @cli_util.option('--mirror-id', required=True, help=u"""Unique Software Source identifier""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -462,10 +545,10 @@ def synchronize_single_mirrors(ctx, from_json, wait_for_state, max_wait_seconds,
 
 
 @management_station_group.command(name=cli_util.override('management_station.update_management_station.command_name', 'update'), help=u"""Updates the configuration of the specified management station. \n[Command Reference](updateManagementStation)""")
-@cli_util.option('--management-station-id', required=True, help=u"""The OCID of the management station.""")
-@cli_util.option('--display-name', help=u"""ManagementStation name""")
-@cli_util.option('--description', help=u"""Details describing the ManagementStation config.""")
-@cli_util.option('--hostname', help=u"""Name of the host""")
+@cli_util.option('--management-station-id', required=True, help=u"""The [OCID] of the management station.""")
+@cli_util.option('--display-name', help=u"""User-friendly name for the management station. Does not have to be unique. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""User-specified description of the management station. Avoid entering confidential information.""")
+@cli_util.option('--hostname', help=u"""Hostname of the management station.""")
 @cli_util.option('--proxy-parameterconflict', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--mirror', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

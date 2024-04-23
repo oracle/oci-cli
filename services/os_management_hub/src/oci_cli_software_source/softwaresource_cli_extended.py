@@ -164,13 +164,18 @@ def create_software_source_create_versioned_custom_software_source_details_exten
     ctx.invoke(softwaresource_cli.create_software_source_create_versioned_custom_software_source_details, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(softwaresource_cli.list_software_sources, params_to_exclude=['display_name_not_equal_to'])
+@cli_util.copy_params_from_generated_command(softwaresource_cli.list_software_sources, params_to_exclude=['display_name_not_equal_to', 'is_mandatory_for_autonomous_linux'])
 @softwaresource_cli.software_source_group.command(name=softwaresource_cli.list_software_sources.name, help=softwaresource_cli.list_software_sources.help)
+@cli_util.option('--is-mandatory-for-alx', type=click.BOOL, help="""Indicates whether the software source is mandatory for the Autonomous Linux service.""")
 @cli_util.option('--display-name-ne', multiple=True, help=u"""A multi filter to return resources that do not contains the given display names.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'display-name-not-equal-to': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'SoftwareSourceCollection'})
 @cli_util.wrap_exceptions
 def list_software_sources_extended(ctx, **kwargs):
+
+    if 'is_mandatory_for_alx' in kwargs:
+        kwargs['is_mandatory_for_autonomous_linux'] = kwargs['is_mandatory_for_alx']
+        kwargs.pop('is_mandatory_for_alx')
 
     if 'display_name_ne' in kwargs:
         kwargs['display_name_not_equal_to'] = kwargs['display_name_ne']
@@ -251,3 +256,34 @@ def search_software_source_modules_extended(ctx, **kwargs):
         kwargs.pop('module_name_contains')
 
     ctx.invoke(softwaresource_cli.search_software_source_modules, **kwargs)
+
+
+# oci os-management-hub software-source add -> oci os-management-hub software-source add-packages
+cli_util.rename_command(softwaresource_cli, softwaresource_cli.software_source_group, softwaresource_cli.add_packages_to_software_source, "add-packages")
+
+
+# oci os-management-hub software-source create-software-source-create-vendor-software-source-details -> oci os-management-hub software-source replicate-vendor-swsrc
+cli_util.rename_command(softwaresource_cli, softwaresource_cli.software_source_group, softwaresource_cli.create_software_source_create_vendor_software_source_details, "replicate-vendor-swsrc")
+
+
+# oci os-management-hub software-source list-software-package -> oci os-management-hub software-source list-software-sources-with-package
+cli_util.rename_command(softwaresource_cli, softwaresource_cli.software_source_group, softwaresource_cli.list_software_package_software_sources, "list-software-sources-with-package")
+
+
+# oci os-management-hub software-source update-software-source-update-versioned-custom-software-source-details -> oci os-management-hub software-source update-versioned-custom-swsrc
+cli_util.rename_command(softwaresource_cli, softwaresource_cli.software_source_group, softwaresource_cli.update_software_source_update_versioned_custom_software_source_details, "update-versioned-custom-swsrc")
+
+
+@cli_util.copy_params_from_generated_command(softwaresource_cli.list_all_software_packages, params_to_exclude=['version_parameterconflict'])
+@softwaresource_cli.software_source_group.command(name=softwaresource_cli.list_all_software_packages.name, help=softwaresource_cli.list_all_software_packages.help)
+@cli_util.option('--package-version', help=u"""A filter to return software packages that match the given version.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management_hub', 'class': 'SoftwarePackageCollection'})
+@cli_util.wrap_exceptions
+def list_all_software_packages_extended(ctx, **kwargs):
+
+    if 'package_version' in kwargs:
+        kwargs['version_parameterconflict'] = kwargs['package_version']
+        kwargs.pop('package_version')
+
+    ctx.invoke(softwaresource_cli.list_all_software_packages, **kwargs)

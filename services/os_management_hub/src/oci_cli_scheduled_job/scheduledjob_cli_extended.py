@@ -21,8 +21,9 @@ os_management_hub_service_cli.os_management_hub_service_group.commands.pop(sched
 os_management_hub_service_cli.os_management_hub_service_group.add_command(scheduledjob_cli.scheduled_job_group)
 
 
-@cli_util.copy_params_from_generated_command(scheduledjob_cli.create_scheduled_job, params_to_exclude=['managed_instance_group_ids', 'lifecycle_stage_ids'])
+@cli_util.copy_params_from_generated_command(scheduledjob_cli.create_scheduled_job, params_to_exclude=['managed_instance_group_ids', 'lifecycle_stage_ids', 'is_managed_by_autonomous_linux'])
 @scheduledjob_cli.scheduled_job_group.command(name=scheduledjob_cli.create_scheduled_job.name, help=scheduledjob_cli.create_scheduled_job.help)
+@cli_util.option('--is-managed-by-alx', type=click.BOOL, help="""Indicates whether this scheduled job is managed by the Autonomous Linux service.""")
 @cli_util.option('--group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of managed instance group OCIDs this scheduled job operates on. Either this or managedInstanceIds, or managedCompartmentIds, or lifecycleStageIds must be supplied.
 This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
@@ -40,6 +41,10 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.wrap_exceptions
 def create_scheduled_job_extended(ctx, **kwargs):
 
+    if 'is_managed_by_alx' in kwargs:
+        kwargs['is_managed_by_autonomous_linux'] = kwargs['is_managed_by_alx']
+        kwargs.pop('is_managed_by_alx')
+
     if 'group_ids' in kwargs:
         kwargs['managed_instance_group_ids'] = kwargs['group_ids']
         kwargs.pop('group_ids')
@@ -51,8 +56,10 @@ def create_scheduled_job_extended(ctx, **kwargs):
     ctx.invoke(scheduledjob_cli.create_scheduled_job, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(scheduledjob_cli.list_scheduled_jobs, params_to_exclude=['managed_instance_group_id', 'lifecycle_stage_id', 'id'])
+@cli_util.copy_params_from_generated_command(scheduledjob_cli.list_scheduled_jobs, params_to_exclude=['managed_instance_group_id', 'lifecycle_stage_id', 'id', 'is_managed_by_autonomous_linux', 'location_not_equal_to'])
 @scheduledjob_cli.scheduled_job_group.command(name=scheduledjob_cli.list_scheduled_jobs.name, help=scheduledjob_cli.list_scheduled_jobs.help)
+@cli_util.option('--is-managed-by-alx', type=click.BOOL, help="""Indicates whether to list only resources managed by the Autonomous Linux service.""")
+@cli_util.option('--location-ne', type=custom_types.CliCaseInsensitiveChoice(["ON_PREMISE", "OCI_COMPUTE", "AZURE", "EC2", "GCP"]), multiple=True, help="""A filter to return only resources whose location does not match the given value.""")
 @cli_util.option('--group-id', help=u"""The OCID of the managed instance group for which to list resources.""")
 @cli_util.option('--stage-id', help=u"""The OCID of the lifecycle stage for which to list resources.""")
 @cli_util.option('--scheduled-job-id', help=u"""The OCID of the scheduled job.""")
@@ -60,6 +67,13 @@ def create_scheduled_job_extended(ctx, **kwargs):
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management_hub', 'class': 'ScheduledJobCollection'})
 @cli_util.wrap_exceptions
 def list_scheduled_jobs_extended(ctx, **kwargs):
+
+    if 'is_managed_by_alx' in kwargs:
+        kwargs['is_managed_by_autonomous_linux'] = kwargs['is_managed_by_alx']
+        kwargs.pop('is_managed_by_alx')
+    if 'location_ne' in kwargs:
+        kwargs['location_not_equal_to'] = kwargs['location_ne']
+        kwargs.pop('location_ne')
 
     if 'group_id' in kwargs:
         kwargs['managed_instance_group_id'] = kwargs['group_id']

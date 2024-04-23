@@ -220,19 +220,19 @@ A network security group consists of two items:
 
   * The set of [VNICs] that all have the same security rule needs (for     example, a group of Compute instances all running the same application)   * A set of NSG [SecurityRules] that apply to the VNICs in the group
 
-After creating an NSG, you can add VNICs and security rules to it. For example, when you create an instance, you can specify one or more NSGs to add the instance to (see [CreateVnicDetails]). Or you can add an existing instance to an NSG with [UpdateVnic].
+After creating an NSG, you can add VNICs and security rules to it. For example, when you create an instance, you can specify one or more NSGs to add the instance to (see `[CreateVnicDetails])`. Or you can add an existing instance to an NSG with `[UpdateVnic]`.
 
-To add security rules to an NSG, see [AddNetworkSecurityGroupSecurityRules].
+To add security rules to an NSG, see `[AddNetworkSecurityGroupSecurityRules]`.
 
-To list the VNICs in an NSG, see [ListNetworkSecurityGroupVnics].
+To list the VNICs in an NSG, see `[ListNetworkSecurityGroupVnics]`.
 
-To list the security rules in an NSG, see [ListNetworkSecurityGroupSecurityRules].
+To list the security rules in an NSG, see `[ListNetworkSecurityGroupSecurityRules]`.
 
-For more information about network security groups, see [Network Security Groups].
+For more information about network security groups, see `[Network Security Groups]`.
 
 **Important:** Oracle Cloud Infrastructure Compute service images automatically include firewall rules (for example, Linux iptables, Windows firewall). If there are issues with some type of access to an instance, make sure all of the following are set correctly:
 
-  * Any security rules in any NSGs the instance's VNIC belongs to   * Any [SecurityLists] associated with the instance's subnet   * The instance's OS firewall rules
+  * Any security rules in any NSGs the instance's VNIC belongs to   * Any `[SecurityLists]` associated with the instance's subnet   * The instance's OS firewall rules
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
@@ -324,7 +324,7 @@ Each instance has a *primary private IP* that is automatically created and assig
 
 You can add *secondary private IPs* to a VNIC after it's created. For more information, see the `privateIp` operations and also [IP Addresses].
 
-**Note:** Only [ListPrivateIps] and [GetPrivateIp] work with *primary* private IPs. To create and update primary private IPs, you instead work with instance and VNIC operations. For example, a primary private IP's properties come from the values you specify in [CreateVnicDetails] when calling either [LaunchInstance] or [AttachVnic]. To update the hostname for a primary private IP, you use [UpdateVnic].
+**Note:** Only [ListPrivateIps] and [GetPrivateIp] work with *primary* private IPs. To create and update primary private IPs, you instead work with instance and VNIC operations. For example, a primary private IP's properties come from the values you specify in [CreateVnicDetails] when calling either [LaunchInstance] or [AttachVnic]. To update the hostname for a primary private IP, you use `[UpdateVnic]`.
 
 `PrivateIp` objects that are created for use with the Oracle Cloud VMware Solution are assigned to a VLAN and not a VNIC in a subnet. See the descriptions of the relevant attributes in the `PrivateIp` object. Also see [Vlan].
 
@@ -659,7 +659,7 @@ def add_drg_route_rules(ctx, from_json, drg_route_table_id, route_rules):
 
 
 @subnet_group.command(name=cli_util.override('virtual_network.add_ipv6_subnet_cidr.command_name', 'add'), help=u"""Add an IPv6 prefix to a subnet. \n[Command Reference](addIpv6SubnetCidr)""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet.""")
+@cli_util.option('--subnet-id', required=True, help=u"""Specify the [OCID] of the subnet.""")
 @cli_util.option('--ipv6-cidr-block', required=True, help=u"""This field is not required and should only be specified when adding an IPv6 prefix to a subnet's IPv6 address space. See[IPv6 Addresses].
 
 Example: `2001:0db8:0123::/64`""")
@@ -730,7 +730,7 @@ def add_ipv6_subnet_cidr(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 
 @vcn_group.command(name=cli_util.override('virtual_network.add_ipv6_vcn_cidr.command_name', 'add'), help=u"""Add an IPv6 prefix to a VCN. The VCN size is always /56 and assigned by Oracle. Once added the IPv6 prefix cannot be removed or modified. \n[Command Reference](addIpv6VcnCidr)""")
-@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
+@cli_util.option('--vcn-id', required=True, help=u"""Specify the [OCID] of the VCN.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--ipv6-private-cidr-block', help=u"""This field is not required and should only be specified if a ULA or private IPv6 prefix is desired for VCN's private IP address space. See[IPv6 Addresses].
 
@@ -904,7 +904,7 @@ def add_public_ip_pool_capacity(ctx, from_json, wait_for_state, max_wait_seconds
 - Must be valid. - Must not overlap with another CIDR block in the VCN, a CIDR block of a peered VCN, or the on-premises network CIDR block. - Must not exceed the limit of CIDR blocks allowed per VCN.
 
 **Note:** Adding a CIDR block places your VCN in an updating state until the changes are complete. You cannot create or update the VCN's subnets, VLANs, LPGs, or route tables during this operation. The time to completion can take a few minutes. You can use the `GetWorkRequest` operation to check the status of the update. \n[Command Reference](addVcnCidr)""")
-@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
+@cli_util.option('--vcn-id', required=True, help=u"""Specify the [OCID] of the VCN.""")
 @cli_util.option('--cidr-block', required=True, help=u"""The CIDR block to add.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1692,7 +1692,7 @@ def change_service_gateway_compartment(ctx, from_json, service_gateway_id, compa
 
 
 @subnet_group.command(name=cli_util.override('virtual_network.change_subnet_compartment.command_name', 'change-compartment'), help=u"""Moves a subnet into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeSubnetCompartment)""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet.""")
+@cli_util.option('--subnet-id', required=True, help=u"""Specify the [OCID] of the subnet.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the subnet to.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1758,7 +1758,7 @@ def change_subnet_compartment(ctx, from_json, wait_for_state, max_wait_seconds, 
 
 
 @vcn_group.command(name=cli_util.override('virtual_network.change_vcn_compartment.command_name', 'change-compartment'), help=u"""Moves a VCN into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeVcnCompartment)""")
-@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
+@cli_util.option('--vcn-id', required=True, help=u"""Specify the [OCID] of the VCN.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the VCN to.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2782,7 +2782,7 @@ def create_drg_attachment_vcn_drg_attachment_network_create_details(ctx, from_js
 
 @drg_route_distribution_group.command(name=cli_util.override('virtual_network.create_drg_route_distribution.command_name', 'create'), help=u"""Creates a new route distribution for the specified DRG. Assign the route distribution as an import distribution to a DRG route table using the `UpdateDrgRouteTable` or `CreateDrgRouteTable` operations. Assign the route distribution as an export distribution to a DRG attachment using the `UpdateDrgAttachment` or `CreateDrgAttachment` operations. \n[Command Reference](createDrgRouteDistribution)""")
 @cli_util.option('--drg-id', required=True, help=u"""The [OCID] of the DRG the DRG route table belongs to.""")
-@cli_util.option('--distribution-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["IMPORT"]), help=u"""Whether this distribution defines how routes get imported into route tables or exported through DRG Attachments""")
+@cli_util.option('--distribution-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["IMPORT"]), help=u"""Whether this distribution defines how routes get imported into route tables or exported through DRG attachments.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5941,7 +5941,7 @@ def delete_service_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 
 @subnet_group.command(name=cli_util.override('virtual_network.delete_subnet.command_name', 'delete'), help=u"""Deletes the specified subnet, but only if there are no instances in the subnet. This is an asynchronous operation. The subnet's `lifecycleState` will change to TERMINATING temporarily. If there are any instances in the subnet, the state will instead change back to AVAILABLE. \n[Command Reference](deleteSubnet)""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet.""")
+@cli_util.option('--subnet-id', required=True, help=u"""Specify the [OCID] of the subnet.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -6006,7 +6006,7 @@ def delete_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @vcn_group.command(name=cli_util.override('virtual_network.delete_vcn.command_name', 'delete'), help=u"""Deletes the specified VCN. The VCN must be completely empty and have no attached gateways. This is an asynchronous operation.
 
 A deleted VCN's `lifecycleState` changes to TERMINATING and then TERMINATED temporarily until the VCN is completely removed. A completely removed VCN does not appear in the results of a `ListVcns` operation and can't be used in a `GetVcn` operation. \n[Command Reference](deleteVcn)""")
-@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
+@cli_util.option('--vcn-id', required=True, help=u"""Specify the [OCID] of the VCN.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -7324,7 +7324,7 @@ def get_service_gateway(ctx, from_json, service_gateway_id):
 
 
 @subnet_group.command(name=cli_util.override('virtual_network.get_subnet.command_name', 'get'), help=u"""Gets the specified subnet's information. \n[Command Reference](getSubnet)""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet.""")
+@cli_util.option('--subnet-id', required=True, help=u"""Specify the [OCID] of the subnet.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -7485,7 +7485,7 @@ def get_upgrade_status(ctx, from_json, drg_id):
 
 
 @vcn_group.command(name=cli_util.override('virtual_network.get_vcn.command_name', 'get'), help=u"""Gets the specified VCN's information. \n[Command Reference](getVcn)""")
-@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
+@cli_util.option('--vcn-id', required=True, help=u"""Specify the [OCID] of the VCN.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -7506,7 +7506,7 @@ def get_vcn(ctx, from_json, vcn_id):
 
 
 @vcn_dns_resolver_association_group.command(name=cli_util.override('virtual_network.get_vcn_dns_resolver_association.command_name', 'get'), help=u"""Get the associated DNS resolver information with a vcn \n[Command Reference](getVcnDnsResolverAssociation)""")
-@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
+@cli_util.option('--vcn-id', required=True, help=u"""Specify the [OCID] of the VCN.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -10372,7 +10372,7 @@ def list_vtaps(ctx, from_json, all_pages, page_size, compartment_id, vcn_id, sou
 - Must be valid. - Must not overlap with another CIDR block in the VCN, a CIDR block of a peered VCN, or the on-premises network CIDR block. - Must not exceed the limit of CIDR blocks allowed per VCN. - Must include IP addresses from the original CIDR block that are used in the VCN's existing route rules. - No IP address in an existing subnet should be outside of the new CIDR block range.
 
 **Note:** Modifying a CIDR block places your VCN in an updating state until the changes are complete. You cannot create or update the VCN's subnets, VLANs, LPGs, or route tables during this operation. The time to completion can vary depending on the size of your network. Updating a small network could take about a minute, and updating a large network could take up to an hour. You can use the `GetWorkRequest` operation to check the status of the update. \n[Command Reference](modifyVcnCidr)""")
-@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
+@cli_util.option('--vcn-id', required=True, help=u"""Specify the [OCID] of the VCN.""")
 @cli_util.option('--original-cidr-block', required=True, help=u"""The CIDR IP address to update.""")
 @cli_util.option('--new-cidr-block', required=True, help=u"""The new CIDR IP address.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -10603,7 +10603,7 @@ def remove_import_drg_route_distribution(ctx, from_json, wait_for_state, max_wai
 
 
 @subnet_group.command(name=cli_util.override('virtual_network.remove_ipv6_subnet_cidr.command_name', 'remove'), help=u"""Remove an IPv6 prefix from a subnet. At least one IPv6 CIDR should remain. \n[Command Reference](removeIpv6SubnetCidr)""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet.""")
+@cli_util.option('--subnet-id', required=True, help=u"""Specify the [OCID] of the subnet.""")
 @cli_util.option('--ipv6-cidr-block', required=True, help=u"""This field is not required and should only be specified when removing an IPv6 prefix from a subnet's IPv6 address space. See[IPv6 Addresses].
 
 Example: `2001:0db8:0123::/64`""")
@@ -10674,7 +10674,7 @@ def remove_ipv6_subnet_cidr(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 
 @vcn_group.command(name=cli_util.override('virtual_network.remove_ipv6_vcn_cidr.command_name', 'remove'), help=u"""Removing an existing IPv6 prefix from a VCN. \n[Command Reference](removeIpv6VcnCidr)""")
-@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
+@cli_util.option('--vcn-id', required=True, help=u"""Specify the [OCID] of the VCN.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--ipv6-cidr-block', help=u"""This field is not required and should only be specified when removing ULA or private IPv6 prefix or an IPv6 GUA assigned by Oracle or BYOIPv6 prefix from a VCN's IPv6 address space. See[IPv6 Addresses].
 
@@ -10832,7 +10832,7 @@ def remove_public_ip_pool_capacity(ctx, from_json, wait_for_state, max_wait_seco
 @vcn_group.command(name=cli_util.override('virtual_network.remove_vcn_cidr.command_name', 'remove'), help=u"""Removes a specified CIDR block from a VCN.
 
 **Notes:** - You cannot remove a CIDR block if an IP address in its range is in use. - Removing a CIDR block places your VCN in an updating state until the changes are complete. You cannot create or update the VCN's subnets, VLANs, LPGs, or route tables during this operation. The time to completion can take a few minutes. You can use the `GetWorkRequest` operation to check the status of the update. \n[Command Reference](removeVcnCidr)""")
-@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
+@cli_util.option('--vcn-id', required=True, help=u"""Specify the [OCID] of the VCN.""")
 @cli_util.option('--cidr-block', required=True, help=u"""The CIDR block to remove.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -13163,7 +13163,7 @@ def update_service_gateway(ctx, from_json, force, wait_for_state, max_wait_secon
 
 
 @subnet_group.command(name=cli_util.override('virtual_network.update_subnet.command_name', 'update'), help=u"""Updates the specified subnet. \n[Command Reference](updateSubnet)""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet.""")
+@cli_util.option('--subnet-id', required=True, help=u"""Specify the [OCID] of the subnet.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -13317,7 +13317,7 @@ def update_tunnel_cpe_device_config(ctx, from_json, force, ipsc_id, tunnel_id, t
 
 
 @vcn_group.command(name=cli_util.override('virtual_network.update_vcn.command_name', 'update'), help=u"""Updates the specified VCN. \n[Command Reference](updateVcn)""")
-@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
+@cli_util.option('--vcn-id', required=True, help=u"""Specify the [OCID] of the VCN.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -13639,7 +13639,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--hostname-label', help=u"""The hostname for the VNIC's primary private IP. Used for DNS. The value is the hostname portion of the primary private IP's fully qualified domain name (FQDN) (for example, `bminstance1` in FQDN `bminstance1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952] and [RFC 1123]. The value appears in the [Vnic] object and also the [PrivateIp] object returned by [ListPrivateIps] and [GetPrivateIp].
+@cli_util.option('--hostname-label', help=u"""The hostname for the VNIC's primary private IP. Used for DNS. The value is the hostname portion of the primary private IP's fully qualified domain name (FQDN) (for example, `bminstance1` in FQDN `bminstance1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952] and [RFC 1123]. The value appears in the `[Vnic]` object and also the [PrivateIp] object returned by [ListPrivateIps] and [GetPrivateIp].
 
 For more information, see [DNS in Your Virtual Cloud Network].""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the OCIDs of the network security groups (NSGs) to add the VNIC to. Setting this as an empty array removes the VNIC from all network security groups.

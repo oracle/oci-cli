@@ -24,7 +24,7 @@ cli_util.rename_command(reportingmanagedinstance_cli, reportingmanagedinstance_c
 cli_util.rename_command(reportingmanagedinstance_cli, reportingmanagedinstance_cli.managed_instance_analytic_collection_group, reportingmanagedinstance_cli.summarize_managed_instance_analytics, "summarize-analytics")
 
 
-@cli_util.copy_params_from_generated_command(reportingmanagedinstance_cli.get_managed_instance_analytic_content, params_to_exclude=['bug_updates_available_equals_to', 'bug_updates_available_greater_than', 'lifecycle_environment_id', 'managed_instance_group_id', 'security_updates_available_equals_to', 'security_updates_available_greater_than', 'lifecycle_stage_id'])
+@cli_util.copy_params_from_generated_command(reportingmanagedinstance_cli.get_managed_instance_analytic_content, params_to_exclude=['bug_updates_available_equals_to', 'bug_updates_available_greater_than', 'lifecycle_environment_id', 'managed_instance_group_id', 'security_updates_available_equals_to', 'security_updates_available_greater_than', 'lifecycle_stage_id', 'location_not_equal_to', 'is_managed_by_autonomous_linux'])
 @managedinstance_cli.managed_instance_group.command(name=reportingmanagedinstance_cli.get_managed_instance_analytic_content.name, help=reportingmanagedinstance_cli.get_managed_instance_analytic_content.help)
 @cli_util.option('--bug-updates-eq', type=click.INT, help=u"""A filter to return instances with number of available bug updates equals to the number specified.""")
 @cli_util.option('--bug-updates-gt', type=click.INT, help=u"""A filter to return instances with number of available bug updates greater than the number specified.""")
@@ -33,6 +33,8 @@ cli_util.rename_command(reportingmanagedinstance_cli, reportingmanagedinstance_c
 @cli_util.option('--security-updates-eq', type=click.INT, help=u"""A filter to return instances with number of available security updates equals to the number specified.""")
 @cli_util.option('--security-updates-gt', type=click.INT, help=u"""A filter to return instances with number of available security updates greater than the number specified.""")
 @cli_util.option('--stage-id', help=u"""The OCID of the lifecycle stage for which to list resources.""")
+@cli_util.option('--location-ne', type=custom_types.CliCaseInsensitiveChoice(["ON_PREMISE", "OCI_COMPUTE", "AZURE", "EC2", "GCP"]), multiple=True, help="""A filter to return only resources whose location does not match the given value.""")
+@cli_util.option('--is-managed-by-alx', type=click.BOOL, help="""Indicates whether to list only resources managed by the Autonomous Linux service.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'display-name': {'module': 'os_management_hub', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
@@ -66,14 +68,24 @@ def get_managed_instance_analytic_content_extended(ctx, **kwargs):
         kwargs['lifecycle_stage_id'] = kwargs['stage_id']
         kwargs.pop('stage_id')
 
+    if 'location_ne' in kwargs:
+        kwargs['location_not_equal_to'] = kwargs['location_ne']
+        kwargs.pop('location_ne')
+
+    if 'is_managed_by_alx' in kwargs:
+        kwargs['is_managed_by_autonomous_linux'] = kwargs['is_managed_by_alx']
+        kwargs.pop('is_managed_by_alx')
+
     ctx.invoke(reportingmanagedinstance_cli.get_managed_instance_analytic_content, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(reportingmanagedinstance_cli.summarize_managed_instance_analytics, params_to_exclude=['lifecycle_environment_id', 'managed_instance_group_id', 'lifecycle_stage_id'])
+@cli_util.copy_params_from_generated_command(reportingmanagedinstance_cli.summarize_managed_instance_analytics, params_to_exclude=['lifecycle_environment_id', 'managed_instance_group_id', 'lifecycle_stage_id', 'location_not_equal_to', 'is_managed_by_autonomous_linux'])
 @managedinstance_cli.managed_instance_group.command(name=reportingmanagedinstance_cli.summarize_managed_instance_analytics.name, help=reportingmanagedinstance_cli.summarize_managed_instance_analytics.help)
 @cli_util.option('--lifecycle-env-id', help=u"""The OCID of the lifecycle environment.""")
 @cli_util.option('--group-id', help=u"""The OCID of the managed instance group for which to list resources.""")
 @cli_util.option('--stage-id', help=u"""The OCID of the lifecycle stage for which to list resources.""")
+@cli_util.option('--location-ne', type=custom_types.CliCaseInsensitiveChoice(["ON_PREMISE", "OCI_COMPUTE", "AZURE", "EC2", "GCP"]), multiple=True, help="""A filter to return only resources whose location does not match the given value.""")
+@cli_util.option('--is-managed-by-alx', type=click.BOOL, help="""Indicates whether to list only resources managed by the Autonomous Linux service.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'display-name': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'ManagedInstanceAnalyticCollection'})
 @cli_util.wrap_exceptions
@@ -90,6 +102,14 @@ def summarize_managed_instance_analytics_extended(ctx, **kwargs):
     if 'stage_id' in kwargs:
         kwargs['lifecycle_stage_id'] = kwargs['stage_id']
         kwargs.pop('stage_id')
+
+    if 'location_ne' in kwargs:
+        kwargs['location_not_equal_to'] = kwargs['location_ne']
+        kwargs.pop('location_ne')
+
+    if 'is_managed_by_alx' in kwargs:
+        kwargs['is_managed_by_autonomous_linux'] = kwargs['is_managed_by_alx']
+        kwargs.pop('is_managed_by_alx')
 
     ctx.invoke(reportingmanagedinstance_cli.summarize_managed_instance_analytics, **kwargs)
 

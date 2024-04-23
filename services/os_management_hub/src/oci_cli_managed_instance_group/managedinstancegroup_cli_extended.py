@@ -231,13 +231,22 @@ def install_packages_on_managed_instance_group_extended(ctx, **kwargs):
     ctx.invoke(managedinstancegroup_cli.install_packages_on_managed_instance_group, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(managedinstancegroup_cli.list_managed_instance_groups, params_to_exclude=['managed_instance_group_id'])
+@cli_util.copy_params_from_generated_command(managedinstancegroup_cli.list_managed_instance_groups, params_to_exclude=['managed_instance_group_id', 'location_not_equal_to', 'is_managed_by_autonomous_linux'])
 @managedinstancegroup_cli.managed_instance_group_group.command(name=managedinstancegroup_cli.list_managed_instance_groups.name, help=managedinstancegroup_cli.list_managed_instance_groups.help)
+@cli_util.option('--location-ne', type=custom_types.CliCaseInsensitiveChoice(["ON_PREMISE", "OCI_COMPUTE", "AZURE", "EC2", "GCP"]), multiple=True, help="""A filter to return only resources whose location does not match the given value.""")
+@cli_util.option('--is-managed-by-alx', type=click.BOOL, help="""Indicates whether to list only resources managed by the Autonomous Linux service.""")
 @cli_util.option('--group-id', help=u"""The OCID of the managed instance group for which to list resources.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'display-name': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'ManagedInstanceGroupCollection'})
 @cli_util.wrap_exceptions
 def list_managed_instance_groups_extended(ctx, **kwargs):
+
+    if 'location_ne' in kwargs:
+        kwargs['location_not_equal_to'] = kwargs['location_ne']
+        kwargs.pop('location_ne')
+    if 'is_managed_by_alx' in kwargs:
+        kwargs['is_managed_by_autonomous_linux'] = kwargs['is_managed_by_alx']
+        kwargs.pop('is_managed_by_alx')
 
     if 'group_id' in kwargs:
         kwargs['managed_instance_group_id'] = kwargs['group_id']
@@ -384,3 +393,48 @@ def update_all_packages_on_managed_instance_group_extended(ctx, **kwargs):
         kwargs.pop('group_id')
 
     ctx.invoke(managedinstancegroup_cli.update_all_packages_on_managed_instance_group, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(managedinstancegroup_cli.change_managed_instance_group_compartment, params_to_exclude=['managed_instance_group_id'])
+@managedinstancegroup_cli.managed_instance_group_group.command(name=managedinstancegroup_cli.change_managed_instance_group_compartment.name, help=managedinstancegroup_cli.change_managed_instance_group_compartment.help)
+@cli_util.option('--group-id', required=True, help=u"""The [OCID] of the managed instance group. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_managed_instance_group_compartment_extended(ctx, **kwargs):
+
+    if 'group_id' in kwargs:
+        kwargs['managed_instance_group_id'] = kwargs['group_id']
+        kwargs.pop('group_id')
+
+    ctx.invoke(managedinstancegroup_cli.change_managed_instance_group_compartment, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(managedinstancegroup_cli.install_windows_updates_on_managed_instance_group, params_to_exclude=['managed_instance_group_id'])
+@managedinstancegroup_cli.managed_instance_group_group.command(name=managedinstancegroup_cli.install_windows_updates_on_managed_instance_group.name, help=managedinstancegroup_cli.install_windows_updates_on_managed_instance_group.help)
+@cli_util.option('--group-id', required=True, help=u"""The [OCID] of the managed instance group. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}})
+@cli_util.wrap_exceptions
+def install_windows_updates_on_managed_instance_group_extended(ctx, **kwargs):
+
+    if 'group_id' in kwargs:
+        kwargs['managed_instance_group_id'] = kwargs['group_id']
+        kwargs.pop('group_id')
+
+    ctx.invoke(managedinstancegroup_cli.install_windows_updates_on_managed_instance_group, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(managedinstancegroup_cli.switch_module_stream_on_managed_instance_group, params_to_exclude=['managed_instance_group_id'])
+@managedinstancegroup_cli.managed_instance_group_group.command(name=managedinstancegroup_cli.switch_module_stream_on_managed_instance_group.name, help=managedinstancegroup_cli.switch_module_stream_on_managed_instance_group.help)
+@cli_util.option('--group-id', required=True, help=u"""The [OCID] of the managed instance group. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}})
+@cli_util.wrap_exceptions
+def switch_module_stream_on_managed_instance_group_extended(ctx, **kwargs):
+
+    if 'group_id' in kwargs:
+        kwargs['managed_instance_group_id'] = kwargs['group_id']
+        kwargs.pop('group_id')
+
+    ctx.invoke(managedinstancegroup_cli.switch_module_stream_on_managed_instance_group, **kwargs)

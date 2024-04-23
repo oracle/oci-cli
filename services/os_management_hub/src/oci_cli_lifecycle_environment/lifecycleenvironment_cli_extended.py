@@ -61,13 +61,18 @@ def get_lifecycle_environment_extended(ctx, **kwargs):
     ctx.invoke(lifecycleenvironment_cli.get_lifecycle_environment, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(lifecycleenvironment_cli.list_lifecycle_environments, params_to_exclude=['lifecycle_environment_id'])
+@cli_util.copy_params_from_generated_command(lifecycleenvironment_cli.list_lifecycle_environments, params_to_exclude=['lifecycle_environment_id', 'location_not_equal_to'])
 @lifecycleenvironment_cli.lifecycle_environment_group.command(name=lifecycleenvironment_cli.list_lifecycle_environments.name, help=lifecycleenvironment_cli.list_lifecycle_environments.help)
+@cli_util.option('--location-ne', type=custom_types.CliCaseInsensitiveChoice(["ON_PREMISE", "OCI_COMPUTE", "AZURE", "EC2", "GCP"]), multiple=True, help="""A filter to return only resources whose location does not match the given value.""")
 @cli_util.option('--lifecycle-env-id', help=u"""The OCID of the lifecycle environment.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'display-name': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'LifecycleEnvironmentCollection'})
 @cli_util.wrap_exceptions
 def list_lifecycle_environments_extended(ctx, **kwargs):
+
+    if 'location_ne' in kwargs:
+        kwargs['location_not_equal_to'] = kwargs['location_ne']
+        kwargs.pop('location_ne')
 
     if 'lifecycle_env_id' in kwargs:
         kwargs['lifecycle_environment_id'] = kwargs['lifecycle_env_id']
@@ -136,13 +141,18 @@ def get_lifecycle_stage_extended(ctx, **kwargs):
     ctx.invoke(lifecycleenvironment_cli.get_lifecycle_stage, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(lifecycleenvironment_cli.list_lifecycle_stages, params_to_exclude=['lifecycle_stage_id'])
+@cli_util.copy_params_from_generated_command(lifecycleenvironment_cli.list_lifecycle_stages, params_to_exclude=['lifecycle_stage_id', 'location_not_equal_to'])
 @lifecycleenvironment_cli.lifecycle_stage_group.command(name=lifecycleenvironment_cli.list_lifecycle_stages.name, help=lifecycleenvironment_cli.list_lifecycle_stages.help)
+@cli_util.option('--location-ne', type=custom_types.CliCaseInsensitiveChoice(["ON_PREMISE", "OCI_COMPUTE", "AZURE", "EC2", "GCP"]), multiple=True, help="""A filter to return only resources whose location does not match the given value.""")
 @cli_util.option('--stage-id', help=u"""The OCID of the lifecycle stage.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'display-name': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'LifecycleStageCollection'})
 @cli_util.wrap_exceptions
 def list_lifecycle_stages_extended(ctx, **kwargs):
+
+    if 'location_ne' in kwargs:
+        kwargs['location_not_equal_to'] = kwargs['location_ne']
+        kwargs.pop('location_ne')
 
     if 'stage_id' in kwargs:
         kwargs['lifecycle_stage_id'] = kwargs['stage_id']
@@ -179,3 +189,18 @@ def promote_software_source_to_lifecycle_stage_extended(ctx, **kwargs):
         kwargs.pop('stage_id')
 
     ctx.invoke(lifecycleenvironment_cli.promote_software_source_to_lifecycle_stage, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(lifecycleenvironment_cli.change_lifecycle_environment_compartment, params_to_exclude=['lifecycle_environment_id'])
+@lifecycleenvironment_cli.lifecycle_environment_group.command(name=lifecycleenvironment_cli.change_lifecycle_environment_compartment.name, help=lifecycleenvironment_cli.change_lifecycle_environment_compartment.help)
+@cli_util.option('--lifecycle-env-id', required=True, help=u"""The [OCID] of the lifecycle environment. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_lifecycle_environment_compartment_extended(ctx, **kwargs):
+
+    if 'lifecycle_env_id' in kwargs:
+        kwargs['lifecycle_environment_id'] = kwargs['lifecycle_env_id']
+        kwargs.pop('lifecycle_env_id')
+
+    ctx.invoke(lifecycleenvironment_cli.change_lifecycle_environment_compartment, **kwargs)

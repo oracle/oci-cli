@@ -66,6 +66,12 @@ def access_materials_group():
     pass
 
 
+@click.command(cli_util.override('oma.access_request_ext_group.command_name', 'access-request-ext'), cls=CommandGroupWithAlias, help="""An access request to a customer's resource that includes additional requestor metadata. An access request is a subsidiary resource of the Lockbox entity.""")
+@cli_util.help_option_group
+def access_request_ext_group():
+    pass
+
+
 @click.command(cli_util.override('oma.work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""A log message from the execution of a work request.""")
 @cli_util.help_option_group
 def work_request_log_entry_group():
@@ -91,6 +97,7 @@ oma_root_group.add_command(work_request_error_group)
 oma_root_group.add_command(access_request_collection_group)
 oma_root_group.add_command(access_request_group)
 oma_root_group.add_command(access_materials_group)
+oma_root_group.add_command(access_request_ext_group)
 oma_root_group.add_command(work_request_log_entry_group)
 oma_root_group.add_command(work_request_group)
 oma_root_group.add_command(lockbox_collection_group)
@@ -649,6 +656,28 @@ def get_access_request(ctx, from_json, access_request_id):
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('lockbox', 'lockbox', ctx)
     result = client.get_access_request(
+        access_request_id=access_request_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@access_request_ext_group.command(name=cli_util.override('oma.get_access_request_internal.command_name', 'get-access-request-internal'), help=u"""Retrieves an access request identified by the access request ID for internal use. \n[Command Reference](getAccessRequestInternal)""")
+@cli_util.option('--access-request-id', required=True, help=u"""The unique identifier (OCID) of the access request.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'lockbox', 'class': 'AccessRequestExt'})
+@cli_util.wrap_exceptions
+def get_access_request_internal(ctx, from_json, access_request_id):
+
+    if isinstance(access_request_id, six.string_types) and len(access_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --access-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('lockbox', 'lockbox', ctx)
+    result = client.get_access_request_internal(
         access_request_id=access_request_id,
         **kwargs
     )

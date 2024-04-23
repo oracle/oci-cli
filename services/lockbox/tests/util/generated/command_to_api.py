@@ -13,6 +13,7 @@ SDK_client_map = {
     "oma.export_access_requests": "oci.lockbox.LockboxClient.export_access_requests",
     "oma.get_access_materials": "oci.lockbox.LockboxClient.get_access_materials",
     "oma.get_access_request": "oci.lockbox.LockboxClient.get_access_request",
+    "oma.get_access_request_internal": "oci.lockbox.LockboxClient.get_access_request_internal",
     "oma.get_approval_template": "oci.lockbox.LockboxClient.get_approval_template",
     "oma.get_lockbox": "oci.lockbox.LockboxClient.get_lockbox",
     "oma.get_work_request": "oci.lockbox.LockboxClient.get_work_request",
