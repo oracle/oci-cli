@@ -2912,9 +2912,9 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--kms-key-version-id', help=u"""The OCID of the key container version that is used in database transparent data encryption (TDE) operations KMS Key can have multiple key versions. If none is specified, the current key version (latest) of the Key Id is used for the operation. Autonomous Database Serverless does not use key versions, hence is not applicable for Autonomous Database Serverless instances.""")
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
 @cli_util.option('--key-store-id', help=u"""The [OCID] of the key store of Oracle Vault.""")
-@cli_util.option('--db-split-threshold', type=click.INT, help=u"""The value above which an Autonomous Database will be split across multiple nodes. This value defaults to 16 when the \"CPU per VM\" value on the Autonomous VM Cluster is greater than 16. Otherwise, it defaults to the \"CPU per VM\" value.""")
-@cli_util.option('--vm-failover-reservation', type=click.INT, help=u"""The percentage of CPUs to reserve for a single node Autonomous Database, in increments of 25.""")
-@cli_util.option('--distribution-affinity', type=custom_types.CliCaseInsensitiveChoice(["MINIMUM_DISTRIBUTION", "MAXIMUM_DISTRIBUTION"]), help=u"""This option determines whether to open an Autonomous Database across the maximum number of nodes or the least number of nodes. The default will be for the minimum number of VMs.""")
+@cli_util.option('--db-split-threshold', type=click.INT, help=u"""The CPU value beyond which an Autonomous Database will be opened across multiple nodes. The default value of this attribute is 16 for OCPUs and 64 for ECPUs.""")
+@cli_util.option('--vm-failover-reservation', type=click.INT, help=u"""The percentage of CPUs reserved across nodes to support node failover. Allowed values are 0%, 25%, and 50%, with 50% being the default option.""")
+@cli_util.option('--distribution-affinity', type=custom_types.CliCaseInsensitiveChoice(["MINIMUM_DISTRIBUTION", "MAXIMUM_DISTRIBUTION"]), help=u"""Determines whether an Autonomous Database must be opened across a minimum or maximum of nodes. By default, Minimum nodes is selected.""")
 @cli_util.option('--net-services-architecture', type=custom_types.CliCaseInsensitiveChoice(["DEDICATED", "SHARED"]), help=u"""Enabling SHARED server architecture enables a database server to allow many client processes to share very few server processes, thereby increasing the number of supported users.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "BACKUP_IN_PROGRESS", "RESTORING", "RESTORE_FAILED", "RESTARTING", "MAINTENANCE_IN_PROGRESS", "ROLE_CHANGE_IN_PROGRESS", "ENABLING_AUTONOMOUS_DATA_GUARD", "UNAVAILABLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3201,7 +3201,7 @@ This cannot be used in conjunction with with OCI vault secrets (secretId).""")
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, dataStorageSizeInTBs, adminPassword, isMTLSConnectionRequired, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
 @cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database CPU core count. The default value is `TRUE`.""")
-@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""This project introduces Autonomous Database for Developers (ADB-Dev), a free tier on dedicated infrastructure, and Cloud@Customer for database development purposes. ADB-Dev enables ExaDB customers to experiment with ADB for free and incentivizes enterprises to use ADB for new development projects.Note that ADB-Dev have 4 CPU and 20GB of memory. For ADB-Dev , memory and CPU cannot be scaled""")
+@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are free Autonomous Databases that developers can use to build and test new applications.With Autonomous these database instancess instances, you can try new Autonomous Database features for free and apply them to ongoing or new development projects. Developer database comes with limited resources and is, therefore, not suitable for large-scale testing and production deployments. When you need more compute or storage resources, you can transition to a paid database licensing by cloning your developer database into a regular Autonomous Database. See [Autonomous Database documentation] for more details.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous Database on Dedicated Exadata Infrastructure.""")
 @cli_util.option('--in-memory-percentage', type=click.INT, help=u"""The percentage of the System Global Area(SGA) assigned to In-Memory tables in Autonomous Database. This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
@@ -3260,7 +3260,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type ScheduledOperationDetails.  For documentation on ScheduledOperationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ScheduledOperationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-auto-scaling-for-storage-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database storage. The default value is `FALSE`.""")
-@cli_util.option('--database-edition', help=u"""The Oracle Database Edition that applies to the Autonomous databases.""")
+@cli_util.option('--database-edition', help=u"""The Oracle Database Edition that applies to the Autonomous databases. This parameter accepts options `STANDARD_EDITION` and `ENTERPRISE_EDITION`.""")
 @cli_util.option('--db-tools-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of database tools details.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, isLocalDataGuardEnabled, or isFreeTier.
@@ -3510,7 +3510,7 @@ This cannot be used in conjunction with with OCI vault secrets (secretId).""")
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, dataStorageSizeInTBs, adminPassword, isMTLSConnectionRequired, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
 @cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database CPU core count. The default value is `TRUE`.""")
-@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""This project introduces Autonomous Database for Developers (ADB-Dev), a free tier on dedicated infrastructure, and Cloud@Customer for database development purposes. ADB-Dev enables ExaDB customers to experiment with ADB for free and incentivizes enterprises to use ADB for new development projects.Note that ADB-Dev have 4 CPU and 20GB of memory. For ADB-Dev , memory and CPU cannot be scaled""")
+@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are free Autonomous Databases that developers can use to build and test new applications.With Autonomous these database instancess instances, you can try new Autonomous Database features for free and apply them to ongoing or new development projects. Developer database comes with limited resources and is, therefore, not suitable for large-scale testing and production deployments. When you need more compute or storage resources, you can transition to a paid database licensing by cloning your developer database into a regular Autonomous Database. See [Autonomous Database documentation] for more details.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous Database on Dedicated Exadata Infrastructure.""")
 @cli_util.option('--in-memory-percentage', type=click.INT, help=u"""The percentage of the System Global Area(SGA) assigned to In-Memory tables in Autonomous Database. This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
@@ -3566,7 +3566,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type ScheduledOperationDetails.  For documentation on ScheduledOperationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ScheduledOperationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-auto-scaling-for-storage-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database storage. The default value is `FALSE`.""")
-@cli_util.option('--database-edition', help=u"""The Oracle Database Edition that applies to the Autonomous databases.""")
+@cli_util.option('--database-edition', help=u"""The Oracle Database Edition that applies to the Autonomous databases. This parameter accepts options `STANDARD_EDITION` and `ENTERPRISE_EDITION`.""")
 @cli_util.option('--db-tools-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of database tools details.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, isLocalDataGuardEnabled, or isFreeTier.
@@ -3816,7 +3816,7 @@ This cannot be used in conjunction with with OCI vault secrets (secretId).""")
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, dataStorageSizeInTBs, adminPassword, isMTLSConnectionRequired, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
 @cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database CPU core count. The default value is `TRUE`.""")
-@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""This project introduces Autonomous Database for Developers (ADB-Dev), a free tier on dedicated infrastructure, and Cloud@Customer for database development purposes. ADB-Dev enables ExaDB customers to experiment with ADB for free and incentivizes enterprises to use ADB for new development projects.Note that ADB-Dev have 4 CPU and 20GB of memory. For ADB-Dev , memory and CPU cannot be scaled""")
+@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are free Autonomous Databases that developers can use to build and test new applications.With Autonomous these database instancess instances, you can try new Autonomous Database features for free and apply them to ongoing or new development projects. Developer database comes with limited resources and is, therefore, not suitable for large-scale testing and production deployments. When you need more compute or storage resources, you can transition to a paid database licensing by cloning your developer database into a regular Autonomous Database. See [Autonomous Database documentation] for more details.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous Database on Dedicated Exadata Infrastructure.""")
 @cli_util.option('--in-memory-percentage', type=click.INT, help=u"""The percentage of the System Global Area(SGA) assigned to In-Memory tables in Autonomous Database. This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
@@ -3872,7 +3872,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type ScheduledOperationDetails.  For documentation on ScheduledOperationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ScheduledOperationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-auto-scaling-for-storage-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database storage. The default value is `FALSE`.""")
-@cli_util.option('--database-edition', help=u"""The Oracle Database Edition that applies to the Autonomous databases.""")
+@cli_util.option('--database-edition', help=u"""The Oracle Database Edition that applies to the Autonomous databases. This parameter accepts options `STANDARD_EDITION` and `ENTERPRISE_EDITION`.""")
 @cli_util.option('--db-tools-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of database tools details.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, isLocalDataGuardEnabled, or isFreeTier.
@@ -4144,7 +4144,7 @@ This cannot be used in conjunction with with OCI vault secrets (secretId).""")
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, dataStorageSizeInTBs, adminPassword, isMTLSConnectionRequired, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
 @cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database CPU core count. The default value is `TRUE`.""")
-@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""This project introduces Autonomous Database for Developers (ADB-Dev), a free tier on dedicated infrastructure, and Cloud@Customer for database development purposes. ADB-Dev enables ExaDB customers to experiment with ADB for free and incentivizes enterprises to use ADB for new development projects.Note that ADB-Dev have 4 CPU and 20GB of memory. For ADB-Dev , memory and CPU cannot be scaled""")
+@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are free Autonomous Databases that developers can use to build and test new applications.With Autonomous these database instancess instances, you can try new Autonomous Database features for free and apply them to ongoing or new development projects. Developer database comes with limited resources and is, therefore, not suitable for large-scale testing and production deployments. When you need more compute or storage resources, you can transition to a paid database licensing by cloning your developer database into a regular Autonomous Database. See [Autonomous Database documentation] for more details.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous Database on Dedicated Exadata Infrastructure.""")
 @cli_util.option('--in-memory-percentage', type=click.INT, help=u"""The percentage of the System Global Area(SGA) assigned to In-Memory tables in Autonomous Database. This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
@@ -4200,7 +4200,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type ScheduledOperationDetails.  For documentation on ScheduledOperationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ScheduledOperationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-auto-scaling-for-storage-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database storage. The default value is `FALSE`.""")
-@cli_util.option('--database-edition', help=u"""The Oracle Database Edition that applies to the Autonomous databases.""")
+@cli_util.option('--database-edition', help=u"""The Oracle Database Edition that applies to the Autonomous databases. This parameter accepts options `STANDARD_EDITION` and `ENTERPRISE_EDITION`.""")
 @cli_util.option('--db-tools-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of database tools details.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, isLocalDataGuardEnabled, or isFreeTier.
@@ -4404,7 +4404,7 @@ def create_autonomous_database_create_autonomous_database_from_backup_details(ct
 
 @autonomous_database_group.command(name=cli_util.override('db.create_autonomous_database_create_cross_region_disaster_recovery_details.command_name', 'create-autonomous-database-create-cross-region-disaster-recovery-details'), help=u"""Creates a new Autonomous Database. \n[Command Reference](createAutonomousDatabase)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment of the Autonomous Database.""")
-@cli_util.option('--source-id', required=True, help=u"""The [OCID] of the source Autonomous Database that will be used to create a new standby database for the DR association.""")
+@cli_util.option('--source-id', required=True, help=u"""The [OCID] of the source Autonomous Database that will be used to create a new peer database for the DR association.""")
 @cli_util.option('--remote-disaster-recovery-type', required=True, help=u"""Indicates the cross-region disaster recovery (DR) type of the standby Autonomous Database Serverless instance. Autonomous Data Guard (ADG) DR type provides business critical DR with a faster recovery time objective (RTO) during failover or switchover. Backup-based DR type provides lower cost DR with a slower RTO during failover or switchover.""")
 @cli_util.option('--character-set', help=u"""The character set for the autonomous database. The default is AL32UTF8. Allowed values for an Autonomous Database Serverless instance as as returned by [List Autonomous Database Character Sets]
 
@@ -4451,7 +4451,7 @@ This cannot be used in conjunction with with OCI vault secrets (secretId).""")
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, dataStorageSizeInTBs, adminPassword, isMTLSConnectionRequired, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
 @cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database CPU core count. The default value is `TRUE`.""")
-@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""This project introduces Autonomous Database for Developers (ADB-Dev), a free tier on dedicated infrastructure, and Cloud@Customer for database development purposes. ADB-Dev enables ExaDB customers to experiment with ADB for free and incentivizes enterprises to use ADB for new development projects.Note that ADB-Dev have 4 CPU and 20GB of memory. For ADB-Dev , memory and CPU cannot be scaled""")
+@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are free Autonomous Databases that developers can use to build and test new applications.With Autonomous these database instancess instances, you can try new Autonomous Database features for free and apply them to ongoing or new development projects. Developer database comes with limited resources and is, therefore, not suitable for large-scale testing and production deployments. When you need more compute or storage resources, you can transition to a paid database licensing by cloning your developer database into a regular Autonomous Database. See [Autonomous Database documentation] for more details.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous Database on Dedicated Exadata Infrastructure.""")
 @cli_util.option('--in-memory-percentage', type=click.INT, help=u"""The percentage of the System Global Area(SGA) assigned to In-Memory tables in Autonomous Database. This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
@@ -4507,7 +4507,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type ScheduledOperationDetails.  For documentation on ScheduledOperationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ScheduledOperationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-auto-scaling-for-storage-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database storage. The default value is `FALSE`.""")
-@cli_util.option('--database-edition', help=u"""The Oracle Database Edition that applies to the Autonomous databases.""")
+@cli_util.option('--database-edition', help=u"""The Oracle Database Edition that applies to the Autonomous databases. This parameter accepts options `STANDARD_EDITION` and `ENTERPRISE_EDITION`.""")
 @cli_util.option('--db-tools-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of database tools details.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, isLocalDataGuardEnabled, or isFreeTier.
@@ -4762,7 +4762,7 @@ This cannot be used in conjunction with with OCI vault secrets (secretId).""")
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, dataStorageSizeInTBs, adminPassword, isMTLSConnectionRequired, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
 @cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database CPU core count. The default value is `TRUE`.""")
-@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""This project introduces Autonomous Database for Developers (ADB-Dev), a free tier on dedicated infrastructure, and Cloud@Customer for database development purposes. ADB-Dev enables ExaDB customers to experiment with ADB for free and incentivizes enterprises to use ADB for new development projects.Note that ADB-Dev have 4 CPU and 20GB of memory. For ADB-Dev , memory and CPU cannot be scaled""")
+@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are free Autonomous Databases that developers can use to build and test new applications.With Autonomous these database instancess instances, you can try new Autonomous Database features for free and apply them to ongoing or new development projects. Developer database comes with limited resources and is, therefore, not suitable for large-scale testing and production deployments. When you need more compute or storage resources, you can transition to a paid database licensing by cloning your developer database into a regular Autonomous Database. See [Autonomous Database documentation] for more details.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous Database on Dedicated Exadata Infrastructure.""")
 @cli_util.option('--in-memory-percentage', type=click.INT, help=u"""The percentage of the System Global Area(SGA) assigned to In-Memory tables in Autonomous Database. This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
@@ -4818,7 +4818,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type ScheduledOperationDetails.  For documentation on ScheduledOperationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ScheduledOperationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-auto-scaling-for-storage-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database storage. The default value is `FALSE`.""")
-@cli_util.option('--database-edition', help=u"""The Oracle Database Edition that applies to the Autonomous databases.""")
+@cli_util.option('--database-edition', help=u"""The Oracle Database Edition that applies to the Autonomous databases. This parameter accepts options `STANDARD_EDITION` and `ENTERPRISE_EDITION`.""")
 @cli_util.option('--db-tools-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of database tools details.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, isLocalDataGuardEnabled, or isFreeTier.
@@ -5030,7 +5030,7 @@ def create_autonomous_database_create_autonomous_database_from_backup_timestamp_
 
 @autonomous_database_group.command(name=cli_util.override('db.create_autonomous_database_create_cross_region_autonomous_database_data_guard_details.command_name', 'create-autonomous-database-create-cross-region-autonomous-database-data-guard-details'), help=u"""Creates a new Autonomous Database. \n[Command Reference](createAutonomousDatabase)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment of the Autonomous Database.""")
-@cli_util.option('--source-id', required=True, help=u"""The [OCID] of the source Autonomous Database that will be used to create a new standby database for the Data Guard association.""")
+@cli_util.option('--source-id', required=True, help=u"""The [OCID] of the source Autonomous Database that will be used to create a new peer database for the Data Guard association.""")
 @cli_util.option('--character-set', help=u"""The character set for the autonomous database. The default is AL32UTF8. Allowed values for an Autonomous Database Serverless instance as as returned by [List Autonomous Database Character Sets]
 
 For an Autonomous Database on dedicated infrastructure, the allowed values are:
@@ -5076,7 +5076,7 @@ This cannot be used in conjunction with with OCI vault secrets (secretId).""")
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, dataStorageSizeInTBs, adminPassword, isMTLSConnectionRequired, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
 @cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database CPU core count. The default value is `TRUE`.""")
-@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""This project introduces Autonomous Database for Developers (ADB-Dev), a free tier on dedicated infrastructure, and Cloud@Customer for database development purposes. ADB-Dev enables ExaDB customers to experiment with ADB for free and incentivizes enterprises to use ADB for new development projects.Note that ADB-Dev have 4 CPU and 20GB of memory. For ADB-Dev , memory and CPU cannot be scaled""")
+@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are free Autonomous Databases that developers can use to build and test new applications.With Autonomous these database instancess instances, you can try new Autonomous Database features for free and apply them to ongoing or new development projects. Developer database comes with limited resources and is, therefore, not suitable for large-scale testing and production deployments. When you need more compute or storage resources, you can transition to a paid database licensing by cloning your developer database into a regular Autonomous Database. See [Autonomous Database documentation] for more details.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous Database on Dedicated Exadata Infrastructure.""")
 @cli_util.option('--in-memory-percentage', type=click.INT, help=u"""The percentage of the System Global Area(SGA) assigned to In-Memory tables in Autonomous Database. This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
@@ -5132,7 +5132,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type ScheduledOperationDetails.  For documentation on ScheduledOperationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ScheduledOperationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-auto-scaling-for-storage-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database storage. The default value is `FALSE`.""")
-@cli_util.option('--database-edition', help=u"""The Oracle Database Edition that applies to the Autonomous databases.""")
+@cli_util.option('--database-edition', help=u"""The Oracle Database Edition that applies to the Autonomous databases. This parameter accepts options `STANDARD_EDITION` and `ENTERPRISE_EDITION`.""")
 @cli_util.option('--db-tools-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of database tools details.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, isLocalDataGuardEnabled, or isFreeTier.
@@ -5380,7 +5380,7 @@ This cannot be used in conjunction with with OCI vault secrets (secretId).""")
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, dataStorageSizeInTBs, adminPassword, isMTLSConnectionRequired, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
 @cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database CPU core count. The default value is `TRUE`.""")
-@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""This project introduces Autonomous Database for Developers (ADB-Dev), a free tier on dedicated infrastructure, and Cloud@Customer for database development purposes. ADB-Dev enables ExaDB customers to experiment with ADB for free and incentivizes enterprises to use ADB for new development projects.Note that ADB-Dev have 4 CPU and 20GB of memory. For ADB-Dev , memory and CPU cannot be scaled""")
+@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are free Autonomous Databases that developers can use to build and test new applications.With Autonomous these database instancess instances, you can try new Autonomous Database features for free and apply them to ongoing or new development projects. Developer database comes with limited resources and is, therefore, not suitable for large-scale testing and production deployments. When you need more compute or storage resources, you can transition to a paid database licensing by cloning your developer database into a regular Autonomous Database. See [Autonomous Database documentation] for more details.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous Database on Dedicated Exadata Infrastructure.""")
 @cli_util.option('--in-memory-percentage', type=click.INT, help=u"""The percentage of the System Global Area(SGA) assigned to In-Memory tables in Autonomous Database. This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
@@ -5436,7 +5436,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type ScheduledOperationDetails.  For documentation on ScheduledOperationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ScheduledOperationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-auto-scaling-for-storage-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database storage. The default value is `FALSE`.""")
-@cli_util.option('--database-edition', help=u"""The Oracle Database Edition that applies to the Autonomous databases.""")
+@cli_util.option('--database-edition', help=u"""The Oracle Database Edition that applies to the Autonomous databases. This parameter accepts options `STANDARD_EDITION` and `ENTERPRISE_EDITION`.""")
 @cli_util.option('--db-tools-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of database tools details.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, isLocalDataGuardEnabled, or isFreeTier.
@@ -7422,6 +7422,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DB_BACKUP", "DATABASE", "VM_CLUSTER_BACKUP", "VM_CLUSTER_NEW"]), help=u"""The source of database: NONE for creating a new database. DB_BACKUP for creating a new database by restoring from a database backup.""")
 @cli_util.option('--is-desupported-version', type=click.BOOL, help=u"""If true, the customer acknowledges that the specified Oracle Database software is an older release that is not currently supported by OCI.""")
+@cli_util.option('--is-unified-auditing-enabled', type=click.BOOL, help=u"""Indicates whether unified autiding is enabled or not. Set to True to enable unified auditing on respective DBHome.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -7430,7 +7431,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DbHome'})
 @cli_util.wrap_exceptions
-def create_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, kms_key_id, kms_key_version_id, database_software_image_id, freeform_tags, defined_tags, source, is_desupported_version):
+def create_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, kms_key_id, kms_key_version_id, database_software_image_id, freeform_tags, defined_tags, source, is_desupported_version, is_unified_auditing_enabled):
 
     kwargs = {}
 
@@ -7459,6 +7460,9 @@ def create_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
     if is_desupported_version is not None:
         _details['isDesupportedVersion'] = is_desupported_version
+
+    if is_unified_auditing_enabled is not None:
+        _details['isUnifiedAuditingEnabled'] = is_unified_auditing_enabled
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.create_db_home(
@@ -7503,6 +7507,7 @@ def create_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-desupported-version', type=click.BOOL, help=u"""If true, the customer acknowledges that the specified Oracle Database software is an older release that is not currently supported by OCI.""")
+@cli_util.option('--is-unified-auditing-enabled', type=click.BOOL, help=u"""Indicates whether unified autiding is enabled or not. Set to True to enable unified auditing on respective DBHome.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -7511,7 +7516,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'database': {'module': 'database', 'class': 'CreateDatabaseFromAnotherDatabaseDetails'}}, output_type={'module': 'database', 'class': 'DbHome'})
 @cli_util.wrap_exceptions
-def create_db_home_create_db_home_with_db_system_id_from_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, database, display_name, kms_key_id, kms_key_version_id, database_software_image_id, freeform_tags, defined_tags, is_desupported_version):
+def create_db_home_create_db_home_with_db_system_id_from_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, database, display_name, kms_key_id, kms_key_version_id, database_software_image_id, freeform_tags, defined_tags, is_desupported_version, is_unified_auditing_enabled):
 
     kwargs = {}
 
@@ -7539,6 +7544,9 @@ def create_db_home_create_db_home_with_db_system_id_from_database_details(ctx, f
 
     if is_desupported_version is not None:
         _details['isDesupportedVersion'] = is_desupported_version
+
+    if is_unified_auditing_enabled is not None:
+        _details['isUnifiedAuditingEnabled'] = is_unified_auditing_enabled
 
     _details['source'] = 'DATABASE'
 
@@ -7585,6 +7593,7 @@ def create_db_home_create_db_home_with_db_system_id_from_database_details(ctx, f
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-desupported-version', type=click.BOOL, help=u"""If true, the customer acknowledges that the specified Oracle Database software is an older release that is not currently supported by OCI.""")
+@cli_util.option('--is-unified-auditing-enabled', type=click.BOOL, help=u"""Indicates whether unified autiding is enabled or not. Set to True to enable unified auditing on respective DBHome.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -7593,7 +7602,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'database': {'module': 'database', 'class': 'CreateDatabaseFromBackupDetails'}}, output_type={'module': 'database', 'class': 'DbHome'})
 @cli_util.wrap_exceptions
-def create_db_home_create_db_home_with_db_system_id_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, database, display_name, kms_key_id, kms_key_version_id, database_software_image_id, freeform_tags, defined_tags, is_desupported_version):
+def create_db_home_create_db_home_with_db_system_id_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, database, display_name, kms_key_id, kms_key_version_id, database_software_image_id, freeform_tags, defined_tags, is_desupported_version, is_unified_auditing_enabled):
 
     kwargs = {}
 
@@ -7621,6 +7630,9 @@ def create_db_home_create_db_home_with_db_system_id_from_backup_details(ctx, fro
 
     if is_desupported_version is not None:
         _details['isDesupportedVersion'] = is_desupported_version
+
+    if is_unified_auditing_enabled is not None:
+        _details['isUnifiedAuditingEnabled'] = is_unified_auditing_enabled
 
     _details['source'] = 'DB_BACKUP'
 
@@ -7667,6 +7679,7 @@ def create_db_home_create_db_home_with_db_system_id_from_backup_details(ctx, fro
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-desupported-version', type=click.BOOL, help=u"""If true, the customer acknowledges that the specified Oracle Database software is an older release that is not currently supported by OCI.""")
+@cli_util.option('--is-unified-auditing-enabled', type=click.BOOL, help=u"""Indicates whether unified autiding is enabled or not. Set to True to enable unified auditing on respective DBHome.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -7675,7 +7688,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'database': {'module': 'database', 'class': 'CreateDatabaseFromBackupDetails'}}, output_type={'module': 'database', 'class': 'DbHome'})
 @cli_util.wrap_exceptions
-def create_db_home_create_db_home_with_vm_cluster_id_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_cluster_id, database, display_name, kms_key_id, kms_key_version_id, database_software_image_id, freeform_tags, defined_tags, is_desupported_version):
+def create_db_home_create_db_home_with_vm_cluster_id_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_cluster_id, database, display_name, kms_key_id, kms_key_version_id, database_software_image_id, freeform_tags, defined_tags, is_desupported_version, is_unified_auditing_enabled):
 
     kwargs = {}
 
@@ -7703,6 +7716,9 @@ def create_db_home_create_db_home_with_vm_cluster_id_from_backup_details(ctx, fr
 
     if is_desupported_version is not None:
         _details['isDesupportedVersion'] = is_desupported_version
+
+    if is_unified_auditing_enabled is not None:
+        _details['isUnifiedAuditingEnabled'] = is_unified_auditing_enabled
 
     _details['source'] = 'VM_CLUSTER_BACKUP'
 
@@ -7748,6 +7764,7 @@ def create_db_home_create_db_home_with_vm_cluster_id_from_backup_details(ctx, fr
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-desupported-version', type=click.BOOL, help=u"""If true, the customer acknowledges that the specified Oracle Database software is an older release that is not currently supported by OCI.""")
+@cli_util.option('--is-unified-auditing-enabled', type=click.BOOL, help=u"""Indicates whether unified autiding is enabled or not. Set to True to enable unified auditing on respective DBHome.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
@@ -7760,7 +7777,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'database': {'module': 'database', 'class': 'CreateDatabaseDetails'}}, output_type={'module': 'database', 'class': 'DbHome'})
 @cli_util.wrap_exceptions
-def create_db_home_create_db_home_with_db_system_id_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, display_name, kms_key_id, kms_key_version_id, database_software_image_id, freeform_tags, defined_tags, is_desupported_version, db_version, database):
+def create_db_home_create_db_home_with_db_system_id_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, display_name, kms_key_id, kms_key_version_id, database_software_image_id, freeform_tags, defined_tags, is_desupported_version, is_unified_auditing_enabled, db_version, database):
 
     kwargs = {}
 
@@ -7787,6 +7804,9 @@ def create_db_home_create_db_home_with_db_system_id_details(ctx, from_json, wait
 
     if is_desupported_version is not None:
         _details['isDesupportedVersion'] = is_desupported_version
+
+    if is_unified_auditing_enabled is not None:
+        _details['isUnifiedAuditingEnabled'] = is_unified_auditing_enabled
 
     if db_version is not None:
         _details['dbVersion'] = db_version
@@ -7838,6 +7858,7 @@ def create_db_home_create_db_home_with_db_system_id_details(ctx, from_json, wait
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-desupported-version', type=click.BOOL, help=u"""If true, the customer acknowledges that the specified Oracle Database software is an older release that is not currently supported by OCI.""")
+@cli_util.option('--is-unified-auditing-enabled', type=click.BOOL, help=u"""Indicates whether unified autiding is enabled or not. Set to True to enable unified auditing on respective DBHome.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
@@ -7850,7 +7871,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'database': {'module': 'database', 'class': 'CreateDatabaseDetails'}}, output_type={'module': 'database', 'class': 'DbHome'})
 @cli_util.wrap_exceptions
-def create_db_home_create_db_home_with_vm_cluster_id_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_cluster_id, display_name, kms_key_id, kms_key_version_id, database_software_image_id, freeform_tags, defined_tags, is_desupported_version, db_version, database):
+def create_db_home_create_db_home_with_vm_cluster_id_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_cluster_id, display_name, kms_key_id, kms_key_version_id, database_software_image_id, freeform_tags, defined_tags, is_desupported_version, is_unified_auditing_enabled, db_version, database):
 
     kwargs = {}
 
@@ -7877,6 +7898,9 @@ def create_db_home_create_db_home_with_vm_cluster_id_details(ctx, from_json, wai
 
     if is_desupported_version is not None:
         _details['isDesupportedVersion'] = is_desupported_version
+
+    if is_unified_auditing_enabled is not None:
+        _details['isUnifiedAuditingEnabled'] = is_unified_auditing_enabled
 
     if db_version is not None:
         _details['dbVersion'] = db_version
@@ -17121,12 +17145,13 @@ def list_data_guard_associations(ctx, from_json, all_pages, page_size, database_
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME", "PATCHSET"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive. Default order for PATCHSET is descending.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "DELETING", "DELETED", "FAILED", "TERMINATING", "TERMINATED", "UPDATING"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
 @cli_util.option('--image-type', type=custom_types.CliCaseInsensitiveChoice(["GRID_IMAGE", "DATABASE_IMAGE"]), help=u"""A filter to return only resources that match the given image type exactly.""")
 @cli_util.option('--image-shape-family', type=custom_types.CliCaseInsensitiveChoice(["VM_BM_SHAPE", "EXADATA_SHAPE", "EXACC_SHAPE"]), help=u"""A filter to return only resources that match the given image shape family exactly.""")
+@cli_util.option('--patch-set-greater-than-or-equal-to', help=u"""A filter to return only resources with `patchSet` greater than or equal to given value.""")
 @cli_util.option('--is-upgrade-supported', type=click.BOOL, help=u"""If provided, filters the results to the set of database versions which are supported for Upgrade.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -17135,7 +17160,7 @@ def list_data_guard_associations(ctx, from_json, all_pages, page_size, database_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DatabaseSoftwareImageSummary]'})
 @cli_util.wrap_exceptions
-def list_database_software_images(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, lifecycle_state, display_name, image_type, image_shape_family, is_upgrade_supported):
+def list_database_software_images(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, lifecycle_state, display_name, image_type, image_shape_family, patch_set_greater_than_or_equal_to, is_upgrade_supported):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -17157,6 +17182,8 @@ def list_database_software_images(ctx, from_json, all_pages, page_size, compartm
         kwargs['image_type'] = image_type
     if image_shape_family is not None:
         kwargs['image_shape_family'] = image_shape_family
+    if patch_set_greater_than_or_equal_to is not None:
+        kwargs['patch_set_greater_than_or_equal_to'] = patch_set_greater_than_or_equal_to
     if is_upgrade_supported is not None:
         kwargs['is_upgrade_supported'] = is_upgrade_supported
     client = cli_util.build_client('database', 'database', ctx)
@@ -18371,7 +18398,7 @@ def list_flex_components(ctx, from_json, all_pages, page_size, compartment_id, n
     cli_util.render_response(result, ctx)
 
 
-@gi_version_group.command(name=cli_util.override('db.list_gi_versions.command_name', 'list'), help=u"""Gets a list of supported GI versions for the Exadata Cloud@Customer VM cluster. \n[Command Reference](listGiVersions)""")
+@gi_version_group.command(name=cli_util.override('db.list_gi_versions.command_name', 'list'), help=u"""Gets a list of supported GI versions. \n[Command Reference](listGiVersions)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -21821,7 +21848,7 @@ def update_autonomous_container_database_dataguard_association(ctx, from_json, w
 
 This cannot be updated in parallel with any of the following: licenseModel, databaseEdition, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
 @cli_util.option('--long-term-backup-schedule', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""This project introduces Autonomous Database for Developers (ADB-Dev), a free tier on dedicated infrastructure, and Cloud@Customer for database development purposes. ADB-Dev enables ExaDB customers to experiment with ADB for free and incentivizes enterprises to use ADB for new development projects.Note that ADB-Dev have 4 CPU and 20GB of memory. For ADB-Dev , memory and CPU cannot be scaled""")
+@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are free Autonomous Databases that developers can use to build and test new applications.With Autonomous these database instancess instances, you can try new Autonomous Database features for free and apply them to ongoing or new development projects. Developer database comes with limited resources and is, therefore, not suitable for large-scale testing and production deployments. When you need more compute or storage resources, you can transition to a paid database licensing by cloning your developer database into a regular Autonomous Database. See [Autonomous Database documentation] for more details.""")
 @cli_util.option('--compute-count', type=click.FLOAT, help=u"""The compute amount (CPUs) available to the database. Minimum and maximum values depend on the compute model and whether the database is an Autonomous Database Serverless instance or an Autonomous Database on Dedicated Exadata Infrastructure. For an Autonomous Database Serverless instance, the 'ECPU' compute model requires a minimum value of one, for databases in the elastic resource pool and minimum value of two, otherwise. Required when using the `computeModel` parameter. When using `cpuCoreCount` parameter, it is an error to specify computeCount to a non-null value. Providing `computeModel` and `computeCount` is the preferred method for both OCPU and ECPU.
 
 This cannot be updated in parallel with any of the following: licenseModel, databaseEdition, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
@@ -21944,7 +21971,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 
 This option is a JSON list with items of type ScheduledOperationDetails.  For documentation on ScheduledOperationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ScheduledOperationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-auto-scaling-for-storage-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database storage. The default value is `FALSE`.""")
-@cli_util.option('--database-edition', help=u"""The Oracle Database Edition that applies to the Autonomous databases.
+@cli_util.option('--database-edition', help=u"""The Oracle Database Edition that applies to the Autonomous databases. This parameter accepts options `STANDARD_EDITION` and `ENTERPRISE_EDITION`.
 
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
 @cli_util.option('--db-tools-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of database tools details.
@@ -24332,7 +24359,7 @@ def update_external_pluggable_database(ctx, from_json, force, wait_for_state, ma
     cli_util.render_response(result, ctx)
 
 
-@key_store_group.command(name=cli_util.override('db.update_key_store.command_name', 'update'), help=u"""If no database is associated with the key store, edit the key store. \n[Command Reference](updateKeyStore)""")
+@key_store_group.command(name=cli_util.override('db.update_key_store.command_name', 'update'), help=u"""Edit the key store. \n[Command Reference](updateKeyStore)""")
 @cli_util.option('--key-store-id', required=True, help=u"""The [OCID] of the key store.""")
 @cli_util.option('--type-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -24406,7 +24433,7 @@ def update_key_store(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@key_store_group.command(name=cli_util.override('db.update_key_store_key_store_type_from_oracle_key_vault_details.command_name', 'update-key-store-key-store-type-from-oracle-key-vault-details'), help=u"""If no database is associated with the key store, edit the key store. \n[Command Reference](updateKeyStore)""")
+@key_store_group.command(name=cli_util.override('db.update_key_store_key_store_type_from_oracle_key_vault_details.command_name', 'update-key-store-key-store-type-from-oracle-key-vault-details'), help=u"""Edit the key store. \n[Command Reference](updateKeyStore)""")
 @cli_util.option('--key-store-id', required=True, help=u"""The [OCID] of the key store.""")
 @cli_util.option('--type-details-connection-ips', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of Oracle Key Vault connection IP addresses.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--type-details-admin-username', required=True, help=u"""The administrator username to connect to Oracle Key Vault""")

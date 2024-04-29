@@ -8,9 +8,9 @@ from oci_cli import cli_util
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('sql_tuning.database_management_service_group.command_name', 'database-management'), cls=CommandGroupWithAlias, help=cli_util.override('sql_tuning.database_management_service_group.help', """Use the Database Management API to perform tasks such as obtaining performance and resource usage metrics
-for a fleet of Managed Databases or a specific Managed Database, creating Managed Database Groups, and
-running a SQL job on a Managed Database or Managed Database Group."""), short_help=cli_util.override('sql_tuning.database_management_service_group.short_help', """Database Management API"""))
+@cli.command(cli_util.override('sql_tuning.database_management_service_group.command_name', 'database-management'), cls=CommandGroupWithAlias, help=cli_util.override('sql_tuning.database_management_service_group.help', """Use the Database Management API to monitor and manage resources such as
+Oracle Databases, MySQL Databases, and External Database Systems.
+For more information, see [Database Management]."""), short_help=cli_util.override('sql_tuning.database_management_service_group.short_help', """Database Management API"""))
 @cli_util.help_option_group
 def database_management_service_group():
     pass

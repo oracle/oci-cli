@@ -4721,6 +4721,39 @@ def import_glossary(ctx, from_json, catalog_id, glossary_key, glossary_file_cont
     cli_util.render_response(result, ctx)
 
 
+@data_asset_group.command(name=cli_util.override('data_catalog.import_lineage.command_name', 'import-lineage'), help=u"""Imports lineage metadata. Returns details about the job that performs the import. \n[Command Reference](importLineage)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
+@cli_util.option('--lineage-payload', required=True, help=u"""The payload used to import lineage.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'ImportLineageJobResult'})
+@cli_util.wrap_exceptions
+def import_lineage(ctx, from_json, catalog_id, data_asset_key, lineage_payload):
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+        raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['lineagePayload'] = lineage_payload
+
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.import_lineage(
+        catalog_id=catalog_id,
+        data_asset_key=data_asset_key,
+        import_lineage_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @entity_group.command(name=cli_util.override('data_catalog.list_aggregated_physical_entities.command_name', 'list-aggregated-physical'), help=u"""List the physical entities aggregated by this logical entity. \n[Command Reference](listAggregatedPhysicalEntities)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
@@ -5609,6 +5642,7 @@ def list_derived_logical_entities(ctx, from_json, all_pages, page_size, catalog_
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--is-process', type=click.BOOL, help=u"""A filter to return only process entities.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -5616,7 +5650,7 @@ def list_derived_logical_entities(ctx, from_json, all_pages, page_size, catalog_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'EntityCollection'})
 @cli_util.wrap_exceptions
-def list_entities(ctx, from_json, all_pages, page_size, catalog_id, data_asset_key, display_name, business_name, display_or_business_name_contains, type_key, display_name_contains, lifecycle_state, time_created, time_updated, created_by_id, updated_by_id, external_key, pattern_key, time_external, time_status_updated, is_logical, is_partition, folder_key, path, harvest_status, last_job_key, fields, sort_by, sort_order, limit, page):
+def list_entities(ctx, from_json, all_pages, page_size, catalog_id, data_asset_key, display_name, business_name, display_or_business_name_contains, type_key, display_name_contains, lifecycle_state, time_created, time_updated, created_by_id, updated_by_id, external_key, pattern_key, time_external, time_status_updated, is_logical, is_partition, folder_key, path, harvest_status, last_job_key, fields, sort_by, sort_order, limit, page, is_process):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -5678,6 +5712,8 @@ def list_entities(ctx, from_json, all_pages, page_size, catalog_id, data_asset_k
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if is_process is not None:
+        kwargs['is_process'] = is_process
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     if all_pages:

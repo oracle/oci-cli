@@ -16,9 +16,9 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.database_management.src.oci_cli_database_management.generated import database_management_service_cli
 
 
-@click.command(cli_util.override('diagnosability.diagnosability_root_group.command_name', 'diagnosability'), cls=CommandGroupWithAlias, help=cli_util.override('diagnosability.diagnosability_root_group.help', """Use the Database Management API to perform tasks such as obtaining performance and resource usage metrics
-for a fleet of Managed Databases or a specific Managed Database, creating Managed Database Groups, and
-running a SQL job on a Managed Database or Managed Database Group."""), short_help=cli_util.override('diagnosability.diagnosability_root_group.short_help', """Database Management API"""))
+@click.command(cli_util.override('diagnosability.diagnosability_root_group.command_name', 'diagnosability'), cls=CommandGroupWithAlias, help=cli_util.override('diagnosability.diagnosability_root_group.help', """Use the Database Management API to monitor and manage resources such as
+Oracle Databases, MySQL Databases, and External Database Systems.
+For more information, see [Database Management]."""), short_help=cli_util.override('diagnosability.diagnosability_root_group.short_help', """Database Management API"""))
 @cli_util.help_option_group
 def diagnosability_root_group():
     pass

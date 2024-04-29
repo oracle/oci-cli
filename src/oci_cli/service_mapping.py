@@ -168,6 +168,11 @@ service_mapping = {
         "Container Instance",
         "Others"
     ],
+    "cpg": [
+        "cluster_placement_groups",
+        "Cluster Placement Groups",
+        "Others"
+    ],
     "dashboard-service": [
         "dashboard_service",
         "Dashboards",

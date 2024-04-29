@@ -87,6 +87,7 @@ SDK_client_map = {
     "data_catalog.import_connection": "oci.data_catalog.DataCatalogClient.import_connection",
     "data_catalog.import_data_asset": "oci.data_catalog.DataCatalogClient.import_data_asset",
     "data_catalog.import_glossary": "oci.data_catalog.DataCatalogClient.import_glossary",
+    "data_catalog.import_lineage": "oci.data_catalog.DataCatalogClient.import_lineage",
     "data_catalog.list_aggregated_physical_entities": "oci.data_catalog.DataCatalogClient.list_aggregated_physical_entities",
     "data_catalog.list_attribute_tags": "oci.data_catalog.DataCatalogClient.list_attribute_tags",
     "data_catalog.list_attributes": "oci.data_catalog.DataCatalogClient.list_attributes",

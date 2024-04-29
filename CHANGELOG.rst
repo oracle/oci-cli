@@ -6,6 +6,79 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.40.1 - 2024-04-30
+--------------------
+Added
+~~~~~
+* Database Service
+
+  * Support for enabling unified auditing for DBHome
+
+    * ``oci db db-home``
+
+  * Support to create Grid Infrastructure type of custom software images
+
+    * ``oci db database-software-image create --display-name, --compartment-id, --image-type "grid_image"``
+
+  * Support to list custom software images greater than a given patchSet version, to find the images available for use in patching.
+
+    * ``oci db database-software-image list --compartment-id, --image-type, --image-shape-family, --patch-set-greater-than-or-equal-to``
+
+  * Support Cloud VM cluster in-place patching using custom Grid Infrastructure image
+
+    * ``oci db cloud-vm-cluster update --cloud-vm-cluster-id, --gi-image-id, --update-action``
+
+  * Support VM cluster in-place patching using custom Grid Infrastructure image
+
+    * ``oci db vm-cluster update --vm-cluster-id, --gi-image-id, --update-action``
+
+* Oracle Database Autonomous Recovery Service
+
+  * Support for  Cancel Protected Database
+
+    * ``oci recovery protected-database cancel-protected-database-deletion [options]``
+
+  * Support for  Schedule Protected Database
+
+    * ``oci recovery protected-database schedule-protected-database-deletion [options]``
+
+  * Support for Network Security Group for RSS
+
+    * ``oci recovery recovery-subnet create --nsg-ids  [options]``
+    * ``oci recovery recovery-subnet update --nsg-ids  [options]``
+
+* Data Catalog
+
+  * Support for lineage metadata import
+
+    * ``oci data-catalog data-asset import-lineage``
+
+* Database Management Service
+
+  * Support for monitoring ExaCC databases
+
+    * ``oci database-management managed-database enable-database-management-feature-database-diagnostics-and-management-feature-details``
+    * ``oci database-management managed-database enable-external-container-database-management-feature-external-database-diagnostics-and-management-feature-details``
+    * ``oci database-management managed-database enable-external-non-container-database-management-feature-external-database-diagnostics-and-management-feature-details``
+
+* Data Safe Service
+
+  * Support for generate, list, get, delete and change compartment for pre-masking check before actual masking
+
+    * ``oci data-safe masking-policy-health-report change-compartment --compartment-id | -c, --masking-policy-health-report-id, -? | -h | --help``
+    * ``oci data-safe masking-policy-health-report delete --masking-policy-health-report-id, --force, -? | -h | --help``
+    * ``oci data-safe masking-policy-health-report generate-health-report --masking-policy-id, --check-type, --compartment-id | -c, --defined-tags, --freeform-tags, -? | -h | --help, --tablespace, --target-id``
+    * ``oci data-safe masking-policy-health-report get --masking-policy-health-report-id, -? | -h | --help``
+    * ``oci data-safe masking-policy-health-report list --compartment-id | -c, --access-level, --all, --compartment-id-in-subtree, --display-name, -? | -h | --help, --masking-policy-health-report-id, --masking-policy-id, --target-id``
+    * ``oci data-safe masking-policy-health-report list-masking-policy-health-report-logs --masking-policy-health-report-id, --all, -? | -h | --help, --message-type``
+
+* Data Integration Service
+
+  * Support for workspace properties in create/update workspace
+
+    * ``oci data-integration workspace create``
+    * ``oci data-integration workspace update``
+
 3.40.0 - 2024-04-23
 --------------------
 Added

@@ -669,6 +669,7 @@ def create_database(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds
         if 'vm_cluster_id' in kwargs and kwargs['vm_cluster_id']:
             create_db_home_details = oci.database.models.CreateDbHomeWithVmClusterIdDetails()
             create_db_home_details.vm_cluster_id = kwargs['vm_cluster_id']
+            create_db_home_details.is_unified_auditing_enabled = kwargs['is_unified_auditing_enabled']
         else:
             click.echo(message="Missing a required parameter. Either --db-system-id or --vm-cluster-id must be specified.", file=sys.stderr)
             sys.exit(1)
@@ -839,6 +840,7 @@ def create_database_from_backup(ctx, wait_for_state, max_wait_seconds, wait_inte
             create_db_home_with_system_details = oci.database.models.CreateDbHomeWithVmClusterIdFromBackupDetails()
             create_db_home_with_system_details.vm_cluster_id = kwargs['vm_cluster_id']
             create_db_home_with_system_details.source = 'VM_CLUSTER_BACKUP'
+            create_db_home_with_system_details.is_unified_auditing_enabled = kwargs['is_unified_auditing_enabled']
         else:
             click.echo(message="Missing a required parameter. Either --db-system-id or --vm-cluster-id must be specified.", file=sys.stderr)
             sys.exit(1)
@@ -1348,6 +1350,7 @@ database_cli.db_root_group.commands.pop(database_cli.vm_cluster_update_history_e
 @cli_util.option('--patch-id', help="""The OCID of the patch.""")
 @cli_util.option('--update-action', help="""The action to perform on the update.""")
 @cli_util.option('--update-id', help="""The [OCID](/Content/General/Concepts/identifiers.htm) of the maintenance update.""")
+@cli_util.option('--gi-image-id', help="""The [OCID](/Content/General/Concepts/identifiers.htm) of the grid infrastructure software image. This is a database software image of type `GRID_IMAGE`.""")
 @cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=DATA_COLLECTION_OPTIONS_HELP)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'version-parameterconflict': {'module': 'database', 'class': 'PatchDetails'}, 'update-details': {'module': 'database', 'class': 'VmClusterUpdateDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}}, output_type={'module': 'database', 'class': 'VmCluster'})
@@ -1367,14 +1370,22 @@ def update_vm_cluster_extended(ctx, **kwargs):
 
     update_action = kwargs.get('update_action')
     update_id = kwargs.get('update_id')
-    if update_action and not update_id:
-        raise click.UsageError('--update-id is required if --update-action is specified')
-    elif update_id and not update_action:
-        raise click.UsageError('--update-action is required if --update-id is specified')
+    gi_image_id = kwargs.get('gi_image_id')
+    if update_id and gi_image_id:
+        raise click.UsageError('Provide only one of the identifiers --update-id for Oracle released update or --gi-image-id for custom software image')
+    elif update_action and not (update_id or gi_image_id):
+        raise click.UsageError('--update-id or --gi-image-id is required if --update-action is specified')
+    elif (update_id or gi_image_id) and not update_action:
+        raise click.UsageError('--update-action is required if --update-id or --gi-image-id is specified')
     elif update_id and update_action:
         kwargs['update_details'] = {
             "updateAction": update_action,
             "updateId": update_id
+        }
+    elif gi_image_id and update_action:
+        kwargs['update_details'] = {
+            "updateAction": update_action,
+            "giSoftwareImageId": gi_image_id
         }
 
     # remove kwargs that update_vm_cluster wont recognize
@@ -1382,6 +1393,7 @@ def update_vm_cluster_extended(ctx, **kwargs):
     del kwargs['patch_id']
     del kwargs['update_action']
     del kwargs['update_id']
+    del kwargs['gi_image_id']
 
     ctx.invoke(database_cli.update_vm_cluster, **kwargs)
 
@@ -1774,6 +1786,7 @@ def list_cloud_vm_clusters(ctx, **kwargs):
 @database_cli.cloud_vm_cluster_group.command(name='update', help=database_cli.update_cloud_vm_cluster.help)
 @cli_util.option('--update-action', help="""The action to perform on the update.""")
 @cli_util.option('--update-id', help="""The [OCID](/Content/General/Concepts/identifiers.htm) of the maintenance update.""")
+@cli_util.option('--gi-image-id', help="""The [OCID](/Content/General/Concepts/identifiers.htm) of the grid infrastructure software image. This is a database software image of type `GRID_IMAGE`.""")
 @cli_util.option('--ssh-authorized-keys-file', type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the cloud VM cluster. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
 @cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=DATA_COLLECTION_OPTIONS_HELP)
 @click.pass_context
@@ -1786,20 +1799,29 @@ def update_cloud_vm_cluster(ctx, **kwargs):
 
     update_action = kwargs.get('update_action')
     update_id = kwargs.get('update_id')
-    if update_action and not update_id:
-        raise click.UsageError('--update-id is required if --update-action is specified')
-    elif update_id and not update_action:
-        raise click.UsageError('--update-action is required if --update-id is specified')
+    gi_image_id = kwargs.get('gi_image_id')
+    if update_id and gi_image_id:
+        raise click.UsageError('Provide only one of the identifiers --update-id for Oracle released update or --gi-image-id for custom software image')
+    elif update_action and not (update_id or gi_image_id):
+        raise click.UsageError('--update-id or --gi-image-id is required if --update-action is specified')
+    elif (update_id or gi_image_id) and not update_action:
+        raise click.UsageError('--update-action is required if --update-id or --gi-image-id is specified')
     elif update_id and update_action:
         kwargs['update_details'] = {
             "updateAction": update_action,
             "updateId": update_id
+        }
+    elif gi_image_id and update_action:
+        kwargs['update_details'] = {
+            "updateAction": update_action,
+            "giSoftwareImageId": gi_image_id
         }
 
     # remove kwargs that update cloud vm cluster wont recognize
     del kwargs['ssh_authorized_keys_file']
     del kwargs['update_action']
     del kwargs['update_id']
+    del kwargs['gi_image_id']
 
     ctx.invoke(database_cli.update_cloud_vm_cluster, **kwargs)
 
@@ -1864,6 +1886,7 @@ def create_db_home(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds,
             vm_cluster_id = kwargs['vm_cluster_id']
             db_home_details = oci.database.models.CreateDbHomeWithVmClusterIdDetails()
             db_home_details.vm_cluster_id = vm_cluster_id
+            db_home_details.is_unified_auditing_enabled = kwargs['is_unified_auditing_enabled']
             if CLOUD_VM_CLUSTER_PREFIX in vm_cluster_id or DB_SYSTEM_PREFIX in vm_cluster_id:
                 # Call get_cloud_vm_cluster for (migrated) cloud vm cluster
                 get_db_system_response = client.get_cloud_vm_cluster(vm_cluster_id)
