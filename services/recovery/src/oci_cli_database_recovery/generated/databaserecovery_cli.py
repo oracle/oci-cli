@@ -94,11 +94,36 @@ recovery_root_group.add_command(recovery_service_subnet_collection_group)
 recovery_root_group.add_command(work_request_log_entry_collection_group)
 
 
+@protected_database_group.command(name=cli_util.override('recovery.cancel_protected_database_deletion.command_name', 'cancel-protected-database-deletion'), help=u"""Cancels the scheduled deletion of a protected database, and returns the protected database to an ACTIVE state. You can cancel the deletion only if the protected database is in the DELETE SCHEDULED state. \n[Command Reference](cancelProtectedDatabaseDeletion)""")
+@cli_util.option('--protected-database-id', required=True, help=u"""The protected database OCID.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def cancel_protected_database_deletion(ctx, from_json, protected_database_id, if_match):
+
+    if isinstance(protected_database_id, six.string_types) and len(protected_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --protected-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('recovery', 'database_recovery', ctx)
+    result = client.cancel_protected_database_deletion(
+        protected_database_id=protected_database_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @protected_database_group.command(name=cli_util.override('recovery.change_protected_database_compartment.command_name', 'change-compartment'), help=u"""Moves a protected database resource from the existing compartment to the specified compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeProtectedDatabaseCompartment)""")
 @cli_util.option('--protected-database-id', required=True, help=u"""The protected database OCID.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the protected database should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "WAITING", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -159,7 +184,7 @@ def change_protected_database_compartment(ctx, from_json, wait_for_state, max_wa
 @cli_util.option('--protection-policy-id', required=True, help=u"""The protection policy OCID.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the Protection Policy should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "WAITING", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -220,7 +245,7 @@ def change_protection_policy_compartment(ctx, from_json, wait_for_state, max_wai
 @cli_util.option('--recovery-service-subnet-id', required=True, help=u"""The recovery service subnet OCID.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the Recovery Service subnet should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "WAITING", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -292,7 +317,18 @@ def change_recovery_service_subnet_compartment(ctx, from_json, wait_for_state, m
 @cli_util.option('--is-redo-logs-shipped', type=click.BOOL, help=u"""The value TRUE indicates that the protected database is configured to use Real-time data protection, and redo-data is sent from the protected database to Recovery Service. Real-time data protection substantially reduces the window of potential data loss that exists between successive archived redo log backups.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`. For more information, see [Resource Tags]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates if the request is to test the preparedness for creating a protected database, without actually creating a protected database.
+
+If you set the `opcDryRun` option as `true`, then Recovery Service only performs a test run to check for any missing prerequisites or configurations required to create a protected database, and then returns error messages to warn you about any missing requirements.
+
+If an error occurs, you can review, correct, and repeat the dry run until the `createProtectedDatabase` request does not return any errors.
+
+These are the common issues that you can identify by performing a dry run of the `createProtectedDatabase` request:
+
+* The Recovery Service subnet has insufficient free IP addresses to support the required number of private endpoints. See, [troubleshooting] information * Recovery Service does not have permissions to manage the network resources in a chosen compartment * Recovery Service is out of capacity. See, [Service Limits] for more information * Recovery Service resources exceed quota limits * A protected database, having the same database ID, already exists * The specified protection policy does not exist, or it is not in an Active state * The specified Recovery Service subnet does not exist, or it is not in an Active state
+
+See, [Prerequisites for Using Recovery Service] for more information.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "WAITING", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'recovery-service-subnets': {'module': 'recovery', 'class': 'list[RecoveryServiceSubnetInput]'}, 'freeform-tags': {'module': 'recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'recovery', 'class': 'dict(str, dict(str, object))'}})
@@ -300,9 +336,11 @@ def change_recovery_service_subnet_compartment(ctx, from_json, wait_for_state, m
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'recovery-service-subnets': {'module': 'recovery', 'class': 'list[RecoveryServiceSubnetInput]'}, 'freeform-tags': {'module': 'recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'recovery', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'recovery', 'class': 'ProtectedDatabase'})
 @cli_util.wrap_exceptions
-def create_protected_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, db_unique_name, password, protection_policy_id, recovery_service_subnets, compartment_id, database_size, database_id, database_size_in_gbs, change_rate, compression_ratio, is_redo_logs_shipped, freeform_tags, defined_tags):
+def create_protected_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, db_unique_name, password, protection_policy_id, recovery_service_subnets, compartment_id, database_size, database_id, database_size_in_gbs, change_rate, compression_ratio, is_redo_logs_shipped, freeform_tags, defined_tags, opc_dry_run):
 
     kwargs = {}
+    if opc_dry_run is not None:
+        kwargs['opc_dry_run'] = opc_dry_run
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -376,9 +414,12 @@ def create_protected_database(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.option('--display-name', required=True, help=u"""A user provided name for the protection policy. The 'displayName' does not have to be unique, and it can be modified. Avoid entering confidential information.""")
 @cli_util.option('--backup-retention-period-in-days', required=True, type=click.INT, help=u"""The maximum number of days to retain backups for a protected database.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier""")
+@cli_util.option('--policy-locked-date-time', help=u"""An RFC3339 formatted datetime string that specifies the exact date and time for the retention lock to take effect and permanently lock the retention period defined in the policy.
+
+* The retention lock feature controls whether Recovery Service strictly preserves backups for the duration defined in a policy. Retention lock is useful to enforce recovery window compliance and to prevent unintentional modifications to protected database backups. * Recovery Service enforces a 14-day delay before the retention lock set for a policy can take effect. Therefore, you must set policyLockedDateTime  to a date that occurs 14 days after the current date. * For example, assuming that the current date is Aug 1, 2023 9 pm, you can set policyLockedDateTime  to '2023-08-15T21:00:00.600Z' (Aug 15, 2023, 9:00 pm), or greater. * During the 14-day delay period, you can either increase or decrease the retention period in the policy. * However, you are only allowed to increase the retention period on or after the retention lock date. * You cannot change the value of policyLockedDateTime if the retention lock is already in effect.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`. For more information, see [Resource Tags]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "WAITING", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'recovery', 'class': 'dict(str, dict(str, object))'}})
@@ -386,7 +427,7 @@ def create_protected_database(ctx, from_json, wait_for_state, max_wait_seconds, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'recovery', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'recovery', 'class': 'ProtectionPolicy'})
 @cli_util.wrap_exceptions
-def create_protection_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, backup_retention_period_in_days, compartment_id, freeform_tags, defined_tags):
+def create_protection_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, backup_retention_period_in_days, compartment_id, policy_locked_date_time, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -395,6 +436,9 @@ def create_protection_policy(ctx, from_json, wait_for_state, max_wait_seconds, w
     _details['displayName'] = display_name
     _details['backupRetentionPeriodInDays'] = backup_retention_period_in_days
     _details['compartmentId'] = compartment_id
+
+    if policy_locked_date_time is not None:
+        _details['policyLockedDateTime'] = policy_locked_date_time
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -439,29 +483,39 @@ def create_protection_policy(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 @recovery_service_subnet_group.command(name=cli_util.override('recovery.create_recovery_service_subnet.command_name', 'create'), help=u"""Creates a new Recovery Service Subnet. \n[Command Reference](createRecoveryServiceSubnet)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-provided name for the recovery service subnet. The 'displayName' does not have to be unique, and it can be modified. Avoid entering confidential information.""")
-@cli_util.option('--subnet-id', required=True, help=u"""The OCID of the subnet associated with the recovery service subnet. You can create a single backup network per virtual cloud network (VCN).""")
 @cli_util.option('--vcn-id', required=True, help=u"""The OCID of the virtual cloud network (VCN) that contains the recovery service subnet. You can create a single recovery service subnet per VCN.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID.""")
+@cli_util.option('--subnet-id', help=u"""Deprecated. One of the subnets associated with the Recovery Service subnet.""")
+@cli_util.option('--subnets', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of OCIDs of the subnets associated with the Recovery Service subnet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of network security group (NSG) OCIDs that are associated with the Recovery Service subnet. You can specify a maximum of 5 unique OCIDs, which implies that you can associate a maximum of 5 NSGs to each Recovery Service subnet. Specify an empty array if you want to remove all the associated NSGs from a Recovery Service subnet. See [Network Security Groups] for more information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`. For more information, see [Resource Tags]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "WAITING", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'recovery', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'subnets': {'module': 'recovery', 'class': 'list[string]'}, 'nsg-ids': {'module': 'recovery', 'class': 'list[string]'}, 'freeform-tags': {'module': 'recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'recovery', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'recovery', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'recovery', 'class': 'RecoveryServiceSubnet'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'subnets': {'module': 'recovery', 'class': 'list[string]'}, 'nsg-ids': {'module': 'recovery', 'class': 'list[string]'}, 'freeform-tags': {'module': 'recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'recovery', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'recovery', 'class': 'RecoveryServiceSubnet'})
 @cli_util.wrap_exceptions
-def create_recovery_service_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, subnet_id, vcn_id, compartment_id, freeform_tags, defined_tags):
+def create_recovery_service_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, vcn_id, compartment_id, subnet_id, subnets, nsg_ids, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
     _details['displayName'] = display_name
-    _details['subnetId'] = subnet_id
     _details['vcnId'] = vcn_id
     _details['compartmentId'] = compartment_id
+
+    if subnet_id is not None:
+        _details['subnetId'] = subnet_id
+
+    if subnets is not None:
+        _details['subnets'] = cli_util.parse_json_parameter("subnets", subnets)
+
+    if nsg_ids is not None:
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -506,9 +560,10 @@ def create_recovery_service_subnet(ctx, from_json, wait_for_state, max_wait_seco
 
 @protected_database_group.command(name=cli_util.override('recovery.delete_protected_database.command_name', 'delete'), help=u"""Deletes a protected database based on the specified protected database ID. \n[Command Reference](deleteProtectedDatabase)""")
 @cli_util.option('--protected-database-id', required=True, help=u"""The protected database OCID.""")
+@cli_util.option('--deletion-schedule', type=custom_types.CliCaseInsensitiveChoice(["DELETE_AFTER_RETENTION_PERIOD", "DELETE_AFTER_72_HOURS"]), help=u"""Defines a preferred schedule to delete a protected database after you terminate the source database. * The default schedule is DELETE_AFTER_72_HOURS, so that the delete operation can occur 72 hours (3 days) after the source database is terminated . * The alternate schedule is DELETE_AFTER_RETENTION_PERIOD. Specify this option if you want to delete a protected database only after the policy-defined backup retention period expires.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "WAITING", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -516,12 +571,14 @@ def create_recovery_service_subnet(ctx, from_json, wait_for_state, max_wait_seco
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_protected_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, protected_database_id, if_match):
+def delete_protected_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, protected_database_id, deletion_schedule, if_match):
 
     if isinstance(protected_database_id, six.string_types) and len(protected_database_id.strip()) == 0:
         raise click.UsageError('Parameter --protected-database-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if deletion_schedule is not None:
+        kwargs['deletion_schedule'] = deletion_schedule
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -564,7 +621,7 @@ def delete_protected_database(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.option('--protection-policy-id', required=True, help=u"""The protection policy OCID.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "WAITING", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -620,7 +677,7 @@ def delete_protection_policy(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.option('--recovery-service-subnet-id', required=True, help=u"""The recovery service subnet OCID.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "WAITING", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -675,7 +732,7 @@ def delete_recovery_service_subnet(ctx, from_json, wait_for_state, max_wait_seco
 @protected_database_group.command(name=cli_util.override('recovery.fetch_protected_database_configuration.command_name', 'fetch-protected-database-configuration'), help=u"""Downloads the network service configuration file 'tnsnames.ora' for a specified protected database. Applies to user-defined recovery systems only. \n[Command Reference](fetchProtectedDatabaseConfiguration)""")
 @cli_util.option('--protected-database-id', required=True, help=u"""The protected database OCID.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
-@cli_util.option('--configuration-type', type=custom_types.CliCaseInsensitiveChoice(["CABUNDLE", "TNSNAMES", "HOSTS", "ALL"]), help=u"""Currently has four config options ALL, TNSNAMES, HOSTS and CABUNDLE. All will return a zipped folder containing the contents of both tnsnames and the certificateChainPem.""")
+@cli_util.option('--configuration-type', type=custom_types.CliCaseInsensitiveChoice(["CABUNDLE", "TNSNAMES", "HOSTS", "RCVCONF", "ALL"]), help=u"""Currently has four config options ALL, TNSNAMES, HOSTS and CABUNDLE. All will return a zipped folder containing the contents of both tnsnames and the certificateChainPem.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -818,7 +875,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 @protected_database_collection_group.command(name=cli_util.override('recovery.list_protected_databases.command_name', 'list-protected-databases'), help=u"""Lists the protected databases based on the specified parameters. \n[Command Reference](listProtectedDatabases)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only the resources that match the specified lifecycle state.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETE_SCHEDULED", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only the resources that match the specified lifecycle state.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire 'displayname' given.""")
 @cli_util.option('--id', help=u"""The protected database OCID.""")
 @cli_util.option('--protection-policy-id', help=u"""The protection policy OCID.""")
@@ -887,7 +944,7 @@ def list_protected_databases(ctx, from_json, all_pages, page_size, compartment_i
 
 @protection_policy_collection_group.command(name=cli_util.override('recovery.list_protection_policies.command_name', 'list-protection-policies'), help=u"""Gets a list of protection policies based on the specified parameters. \n[Command Reference](listProtectionPolicies)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETE_SCHEDULED", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire 'displayname' given.""")
 @cli_util.option('--protection-policy-id', help=u"""The protection policy OCID.""")
 @cli_util.option('--owner', type=custom_types.CliCaseInsensitiveChoice(["oracle", "customer"]), help=u"""A filter to return only the policies that match the owner as 'Customer' or 'Oracle'.""")
@@ -953,7 +1010,7 @@ def list_protection_policies(ctx, from_json, all_pages, page_size, compartment_i
 
 @recovery_service_subnet_collection_group.command(name=cli_util.override('recovery.list_recovery_service_subnets.command_name', 'list-recovery-service-subnets'), help=u"""Returns a list of Recovery Service Subnets. \n[Command Reference](listRecoveryServiceSubnets)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only the resources that match the specified lifecycle state. Allowed values are:   - CREATING   - UPDATING   - ACTIVE   - DELETING   - DELETED   - FAILED""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETE_SCHEDULED", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only the resources that match the specified lifecycle state.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire 'displayname' given.""")
 @cli_util.option('--id', help=u"""The recovery service subnet OCID.""")
 @cli_util.option('--vcn-id', help=u"""The OCID of the virtual cloud network (VCN) associated with the recovery service subnet.""")
@@ -1134,7 +1191,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @work_request_summary_collection_group.command(name=cli_util.override('recovery.list_work_requests.command_name', 'list-work-requests'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID.""")
 @cli_util.option('--work-request-id', help=u"""Unique Oracle-assigned identifier of the work request.""")
-@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources their lifecycleState matches the given OperationStatus.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "WAITING", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources their lifecycleState matches the given OperationStatus.""")
 @cli_util.option('--resource-id', help=u"""The ID of the resource affected by the work request.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
@@ -1194,6 +1251,69 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
     cli_util.render_response(result, ctx)
 
 
+@protected_database_group.command(name=cli_util.override('recovery.schedule_protected_database_deletion.command_name', 'schedule-protected-database-deletion'), help=u"""Defines a preferred schedule to delete a protected database after you terminate the source database. The default schedule is DELETE_AFTER_72_HOURS, so that the delete operation can occur 72 hours (3 days) after the source database is terminated. The alternate schedule is DELETE_AFTER_RETENTION_PERIOD. Specify this option if you want to delete a protected database only after the policy-defined backup retention period expires. \n[Command Reference](scheduleProtectedDatabaseDeletion)""")
+@cli_util.option('--protected-database-id', required=True, help=u"""The protected database OCID.""")
+@cli_util.option('--deletion-schedule', type=custom_types.CliCaseInsensitiveChoice(["DELETE_AFTER_RETENTION_PERIOD", "DELETE_AFTER_72_HOURS"]), help=u"""Defines a preferred schedule to delete a protected database after you terminate the source database. * The default schedule is DELETE_AFTER_72_HOURS, so that the delete operation can occur 72 hours (3 days) after the source database is terminated. * The alternate schedule is DELETE_AFTER_RETENTION_PERIOD. Specify this option if you want to delete a protected database only after the policy-defined backup retention period expires.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "WAITING", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def schedule_protected_database_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, protected_database_id, deletion_schedule, if_match):
+
+    if isinstance(protected_database_id, six.string_types) and len(protected_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --protected-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if deletion_schedule is not None:
+        _details['deletionSchedule'] = deletion_schedule
+
+    client = cli_util.build_client('recovery', 'database_recovery', ctx)
+    result = client.schedule_protected_database_deletion(
+        protected_database_id=protected_database_id,
+        schedule_protected_database_deletion_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @protected_database_group.command(name=cli_util.override('recovery.update_protected_database.command_name', 'update'), help=u"""Updates the Protected Database \n[Command Reference](updateProtectedDatabase)""")
 @cli_util.option('--protected-database-id', required=True, help=u"""The protected database OCID.""")
 @cli_util.option('--display-name', help=u"""The protected database name. You can change the displayName. Avoid entering confidential information.""")
@@ -1209,7 +1329,7 @@ This option is a JSON list with items of type RecoveryServiceSubnetInput.  For d
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`. For more information, see [Resource Tags]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "WAITING", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'recovery-service-subnets': {'module': 'recovery', 'class': 'list[RecoveryServiceSubnetInput]'}, 'freeform-tags': {'module': 'recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'recovery', 'class': 'dict(str, dict(str, object))'}})
@@ -1300,11 +1420,14 @@ def update_protected_database(ctx, from_json, force, wait_for_state, max_wait_se
 @cli_util.option('--protection-policy-id', required=True, help=u"""The protection policy OCID.""")
 @cli_util.option('--display-name', help=u"""A user provided name for the protection policy. The 'displayName' does not have to be unique, and it can be modified. Avoid entering confidential information.""")
 @cli_util.option('--backup-retention-period-in-days', type=click.INT, help=u"""The maximum number of days to retain backups for a protected database.""")
+@cli_util.option('--policy-locked-date-time', help=u"""An RFC3339 formatted datetime string that specifies the exact date and time for the retention lock to take effect and permanently lock the retention period defined in the policy.
+
+* The retention lock feature controls whether Recovery Service strictly preserves backups for the duration defined in a policy. Retention lock is useful to enforce recovery window compliance and to prevent unintentional modifications to protected database backups. * Recovery Service enforces a 14-day delay before the retention lock set for a policy can take effect. Therefore, you must set policyLockedDateTime  to a date that occurs 14 days after the current date. * For example, assuming that the current date is Aug 1, 2023 9 pm, you can set policyLockedDateTime  to '2023-08-15T21:00:00.600Z' (Aug 15, 2023, 9:00 pm), or greater. * During the 14-day delay period, you can either increase or decrease the retention period in the policy. * However, you are only allowed to increase the retention period on or after the retention lock date. * You cannot change the value of policyLockedDateTime if the retention lock is already in effect.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`. For more information, see [Resource Tags]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "WAITING", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'recovery', 'class': 'dict(str, dict(str, object))'}})
@@ -1312,7 +1435,7 @@ def update_protected_database(ctx, from_json, force, wait_for_state, max_wait_se
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'recovery', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_protection_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, protection_policy_id, display_name, backup_retention_period_in_days, freeform_tags, defined_tags, if_match):
+def update_protection_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, protection_policy_id, display_name, backup_retention_period_in_days, policy_locked_date_time, freeform_tags, defined_tags, if_match):
 
     if isinstance(protection_policy_id, six.string_types) and len(protection_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --protection-policy-id cannot be whitespace or empty string')
@@ -1333,6 +1456,9 @@ def update_protection_policy(ctx, from_json, force, wait_for_state, max_wait_sec
 
     if backup_retention_period_in_days is not None:
         _details['backupRetentionPeriodInDays'] = backup_retention_period_in_days
+
+    if policy_locked_date_time is not None:
+        _details['policyLockedDateTime'] = policy_locked_date_time
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -1379,25 +1505,27 @@ def update_protection_policy(ctx, from_json, force, wait_for_state, max_wait_sec
 @recovery_service_subnet_group.command(name=cli_util.override('recovery.update_recovery_service_subnet.command_name', 'update'), help=u"""Updates the specified recovery service subnet. \n[Command Reference](updateRecoveryServiceSubnet)""")
 @cli_util.option('--recovery-service-subnet-id', required=True, help=u"""The recovery service subnet OCID.""")
 @cli_util.option('--display-name', help=u"""A user-provided name for the recovery service subnet. The 'displayName' does not have to be unique, and it can be modified. Avoid entering confidential information.""")
+@cli_util.option('--subnets', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of OCIDs of the subnets associated with the recovery service subnet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of network security group (NSG) OCIDs that are associated with the Recovery Service subnet. You can specify a maximum of 5 unique OCIDs, which implies that you can associate a maximum of 5 NSGs to each Recovery Service subnet. Specify an empty array if you want to remove all the associated NSGs from a Recovery Service subnet. See [Network Security Groups] for more information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`. For more information, see [Resource Tags]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "WAITING", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'recovery', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'subnets': {'module': 'recovery', 'class': 'list[string]'}, 'nsg-ids': {'module': 'recovery', 'class': 'list[string]'}, 'freeform-tags': {'module': 'recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'recovery', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'recovery', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'subnets': {'module': 'recovery', 'class': 'list[string]'}, 'nsg-ids': {'module': 'recovery', 'class': 'list[string]'}, 'freeform-tags': {'module': 'recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'recovery', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_recovery_service_subnet(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, recovery_service_subnet_id, display_name, freeform_tags, defined_tags, if_match):
+def update_recovery_service_subnet(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, recovery_service_subnet_id, display_name, subnets, nsg_ids, freeform_tags, defined_tags, if_match):
 
     if isinstance(recovery_service_subnet_id, six.string_types) and len(recovery_service_subnet_id.strip()) == 0:
         raise click.UsageError('Parameter --recovery-service-subnet-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if subnets or nsg_ids or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to subnets and nsg-ids and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1409,6 +1537,12 @@ def update_recovery_service_subnet(ctx, from_json, force, wait_for_state, max_wa
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if subnets is not None:
+        _details['subnets'] = cli_util.parse_json_parameter("subnets", subnets)
+
+    if nsg_ids is not None:
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

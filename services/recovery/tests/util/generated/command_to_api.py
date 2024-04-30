@@ -2,6 +2,7 @@
 # Copyright (c) 2016, 2024, Oracle and/or its affiliates. All rights reserved.
 
 SDK_client_map = {
+    "recovery.cancel_protected_database_deletion": "oci.recovery.DatabaseRecoveryClient.cancel_protected_database_deletion",
     "recovery.change_protected_database_compartment": "oci.recovery.DatabaseRecoveryClient.change_protected_database_compartment",
     "recovery.change_protection_policy_compartment": "oci.recovery.DatabaseRecoveryClient.change_protection_policy_compartment",
     "recovery.change_recovery_service_subnet_compartment": "oci.recovery.DatabaseRecoveryClient.change_recovery_service_subnet_compartment",
@@ -22,6 +23,7 @@ SDK_client_map = {
     "recovery.list_work_request_errors": "oci.recovery.DatabaseRecoveryClient.list_work_request_errors",
     "recovery.list_work_request_logs": "oci.recovery.DatabaseRecoveryClient.list_work_request_logs",
     "recovery.list_work_requests": "oci.recovery.DatabaseRecoveryClient.list_work_requests",
+    "recovery.schedule_protected_database_deletion": "oci.recovery.DatabaseRecoveryClient.schedule_protected_database_deletion",
     "recovery.update_protected_database": "oci.recovery.DatabaseRecoveryClient.update_protected_database",
     "recovery.update_protection_policy": "oci.recovery.DatabaseRecoveryClient.update_protection_policy",
     "recovery.update_recovery_service_subnet": "oci.recovery.DatabaseRecoveryClient.update_recovery_service_subnet",

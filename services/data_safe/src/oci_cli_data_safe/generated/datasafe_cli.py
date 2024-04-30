@@ -312,6 +312,12 @@ def audit_policy_collection_group():
     pass
 
 
+@click.command(cli_util.override('data_safe.masking_policy_health_report_group.command_name', 'masking-policy-health-report'), cls=CommandGroupWithAlias, help="""The masking policy health report.""")
+@cli_util.help_option_group
+def masking_policy_health_report_group():
+    pass
+
+
 @click.command(cli_util.override('data_safe.role_grant_path_collection_group.command_name', 'role-grant-path-collection'), cls=CommandGroupWithAlias, help="""A collection of role grant path summary objects.""")
 @cli_util.help_option_group
 def role_grant_path_collection_group():
@@ -498,6 +504,7 @@ data_safe_root_group.add_command(sql_collection_group)
 data_safe_root_group.add_command(alert_group)
 data_safe_root_group.add_command(sensitive_schema_collection_group)
 data_safe_root_group.add_command(audit_policy_collection_group)
+data_safe_root_group.add_command(masking_policy_health_report_group)
 data_safe_root_group.add_command(role_grant_path_collection_group)
 data_safe_root_group.add_command(sensitive_object_collection_group)
 data_safe_root_group.add_command(sql_firewall_allowed_sql_analytics_collection_group)
@@ -1417,6 +1424,37 @@ def change_masking_policy_compartment(ctx, from_json, masking_policy_id, compart
     result = client.change_masking_policy_compartment(
         masking_policy_id=masking_policy_id,
         change_masking_policy_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@masking_policy_health_report_group.command(name=cli_util.override('data_safe.change_masking_policy_health_report_compartment.command_name', 'change-compartment'), help=u"""Moves the specified masking policy health report and its dependent resources into a different compartment. \n[Command Reference](changeMaskingPolicyHealthReportCompartment)""")
+@cli_util.option('--masking-policy-health-report-id', required=True, help=u"""The OCID of the masking health report.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the masking policy should be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_masking_policy_health_report_compartment(ctx, from_json, masking_policy_health_report_id, compartment_id, if_match):
+
+    if isinstance(masking_policy_health_report_id, six.string_types) and len(masking_policy_health_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --masking-policy-health-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.change_masking_policy_health_report_compartment(
+        masking_policy_health_report_id=masking_policy_health_report_id,
+        change_masking_policy_health_report_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -5422,6 +5460,62 @@ def delete_masking_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
+@masking_policy_health_report_group.command(name=cli_util.override('data_safe.delete_masking_policy_health_report.command_name', 'delete'), help=u"""Deletes the specified masking policy health report. \n[Command Reference](deleteMaskingPolicyHealthReport)""")
+@cli_util.option('--masking-policy-health-report-id', required=True, help=u"""The OCID of the masking health report.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_masking_policy_health_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, masking_policy_health_report_id, if_match):
+
+    if isinstance(masking_policy_health_report_id, six.string_types) and len(masking_policy_health_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --masking-policy-health-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.delete_masking_policy_health_report(
+        masking_policy_health_report_id=masking_policy_health_report_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @on_prem_connector_group.command(name=cli_util.override('data_safe.delete_on_prem_connector.command_name', 'delete'), help=u"""Deletes the specified on-premises connector. \n[Command Reference](deleteOnPremConnector)""")
 @cli_util.option('--on-prem-connector-id', required=True, help=u"""The OCID of the on-premises connector.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -6738,6 +6832,90 @@ def generate_discovery_report_for_download(ctx, from_json, wait_for_state, max_w
     cli_util.render_response(result, ctx)
 
 
+@masking_policy_health_report_group.command(name=cli_util.override('data_safe.generate_health_report.command_name', 'generate-health-report'), help=u"""Performs health check on the masking policy. \n[Command Reference](generateHealthReport)""")
+@cli_util.option('--masking-policy-id', required=True, help=u"""The OCID of the masking policy.""")
+@cli_util.option('--check-type', type=custom_types.CliCaseInsensitiveChoice(["ALL"]), help=u"""The type of health check. The default behaviour is to perform all health checks.""")
+@cli_util.option('--target-id', help=u"""The OCID of the target database to use for the masking policy health check. The targetId associated with the masking policy is used if this is not passed.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment where the health report resource should be created.""")
+@cli_util.option('--tablespace', help=u"""The tablespace that should be used to estimate space. If no tablespace is provided, the DEFAULT tablespace is used.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def generate_health_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, masking_policy_id, check_type, target_id, compartment_id, tablespace, freeform_tags, defined_tags):
+
+    if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if check_type is not None:
+        _details['checkType'] = check_type
+
+    if target_id is not None:
+        _details['targetId'] = target_id
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if tablespace is not None:
+        _details['tablespace'] = tablespace
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.generate_health_report(
+        masking_policy_id=masking_policy_id,
+        generate_health_report_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @masking_policy_group.command(name=cli_util.override('data_safe.generate_masking_policy_for_download.command_name', 'generate-masking-policy-for-download'), help=u"""Generates a downloadable file corresponding to the specified masking policy. It's a prerequisite for the DownloadMaskingPolicy operation. Use this endpoint to generate a masking policy file and then use DownloadMaskingPolicy to download the generated file. Note that file generation and download are serial operations. The download operation can't be invoked while the generate operation is in progress. \n[Command Reference](generateMaskingPolicyForDownload)""")
 @cli_util.option('--masking-policy-id', required=True, help=u"""The OCID of the masking policy.""")
 @cli_util.option('--policy-format', type=custom_types.CliCaseInsensitiveChoice(["XML"]), help=u"""The format of the masking policy file.""")
@@ -7688,6 +7866,28 @@ def get_masking_policy(ctx, from_json, masking_policy_id):
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.get_masking_policy(
         masking_policy_id=masking_policy_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@masking_policy_health_report_group.command(name=cli_util.override('data_safe.get_masking_policy_health_report.command_name', 'get'), help=u"""Gets the details of the specified masking policy health report. \n[Command Reference](getMaskingPolicyHealthReport)""")
+@cli_util.option('--masking-policy-health-report-id', required=True, help=u"""The OCID of the masking health report.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'MaskingPolicyHealthReport'})
+@cli_util.wrap_exceptions
+def get_masking_policy_health_report(ctx, from_json, masking_policy_health_report_id):
+
+    if isinstance(masking_policy_health_report_id, six.string_types) and len(masking_policy_health_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --masking-policy-health-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.get_masking_policy_health_report(
+        masking_policy_health_report_id=masking_policy_health_report_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -10826,6 +11026,141 @@ def list_masking_policies(ctx, from_json, all_pages, page_size, compartment_id, 
         )
     else:
         result = client.list_masking_policies(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@masking_policy_health_report_group.command(name=cli_util.override('data_safe.list_masking_policy_health_report_logs.command_name', 'list-masking-policy-health-report-logs'), help=u"""Gets a list of errors and warnings from a masking policy health check. \n[Command Reference](listMaskingPolicyHealthReportLogs)""")
+@cli_util.option('--masking-policy-health-report-id', required=True, help=u"""The OCID of the masking health report.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["logType"]), help=u"""sort by""")
+@cli_util.option('--message-type', type=custom_types.CliCaseInsensitiveChoice(["PASS", "WARNING", "ERROR"]), help=u"""A filter to return only the resources that match the specified log message type.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'MaskingPolicyHealthReportLogCollection'})
+@cli_util.wrap_exceptions
+def list_masking_policy_health_report_logs(ctx, from_json, all_pages, page_size, masking_policy_health_report_id, limit, page, sort_order, sort_by, message_type):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(masking_policy_health_report_id, six.string_types) and len(masking_policy_health_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --masking-policy-health-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if message_type is not None:
+        kwargs['message_type'] = message_type
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_masking_policy_health_report_logs,
+            masking_policy_health_report_id=masking_policy_health_report_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_masking_policy_health_report_logs,
+            limit,
+            page_size,
+            masking_policy_health_report_id=masking_policy_health_report_id,
+            **kwargs
+        )
+    else:
+        result = client.list_masking_policy_health_report_logs(
+            masking_policy_health_report_id=masking_policy_health_report_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@masking_policy_health_report_group.command(name=cli_util.override('data_safe.list_masking_policy_health_reports.command_name', 'list'), help=u"""Gets a list of masking policy health reports based on the specified query parameters. \n[Command Reference](listMaskingPolicyHealthReports)""")
+@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--masking-policy-health-report-id', help=u"""A filter to return only the resources that match the specified masking policy health report OCID.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
+@cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "timeCreated"]), help=u"""sort by""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
+@cli_util.option('--target-id', help=u"""A filter to return only items related to a specific target OCID.""")
+@cli_util.option('--masking-policy-id', help=u"""A filter to return only the resources that match the specified masking policy OCID.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "NEEDS_ATTENTION", "FAILED"]), help=u"""A filter to return only the resources that match the specified lifecycle states.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'MaskingPolicyHealthReportCollection'})
+@cli_util.wrap_exceptions
+def list_masking_policy_health_reports(ctx, from_json, all_pages, page_size, compartment_id, masking_policy_health_report_id, limit, page, compartment_id_in_subtree, access_level, sort_by, sort_order, display_name, target_id, masking_policy_id, lifecycle_state):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if masking_policy_health_report_id is not None:
+        kwargs['masking_policy_health_report_id'] = masking_policy_health_report_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if access_level is not None:
+        kwargs['access_level'] = access_level
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if target_id is not None:
+        kwargs['target_id'] = target_id
+    if masking_policy_id is not None:
+        kwargs['masking_policy_id'] = masking_policy_id
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_masking_policy_health_reports,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_masking_policy_health_reports,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_masking_policy_health_reports(
             compartment_id=compartment_id,
             **kwargs
         )

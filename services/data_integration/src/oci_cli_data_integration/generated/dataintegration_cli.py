@@ -9504,15 +9504,16 @@ def create_user_defined_function_validation(ctx, from_json, workspace_id, key, m
 @cli_util.option('--registry-compartment-id', help=u"""DCMS Data Asset Registry Compartment Identifier""")
 @cli_util.option('--endpoint-name', help=u"""DCMS Private Endpoint Name""")
 @cli_util.option('--endpoint-compartment-id', help=u"""DCMS PRivate Endpoint Compartment Identifier""")
+@cli_util.option('--workspace-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Key-values pairs of workspace for storing properties on the workspace.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_integration', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_integration', 'class': 'dict(str, dict(str, object))'}, 'workspace-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_integration', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_integration', 'class': 'dict(str, dict(str, object))'}, 'workspace-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}})
 @cli_util.wrap_exceptions
-def create_workspace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, vcn_id, subnet_id, dns_server_ip, dns_server_zone, freeform_tags, defined_tags, description, is_private_network_enabled, registry_id, endpoint_id, registry_name, registry_compartment_id, endpoint_name, endpoint_compartment_id):
+def create_workspace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, vcn_id, subnet_id, dns_server_ip, dns_server_zone, freeform_tags, defined_tags, description, is_private_network_enabled, registry_id, endpoint_id, registry_name, registry_compartment_id, endpoint_name, endpoint_compartment_id, workspace_properties):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -9562,6 +9563,9 @@ def create_workspace(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     if endpoint_compartment_id is not None:
         _details['endpointCompartmentId'] = endpoint_compartment_id
+
+    if workspace_properties is not None:
+        _details['workspaceProperties'] = cli_util.parse_json_parameter("workspace_properties", workspace_properties)
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.create_workspace(
@@ -20795,23 +20799,24 @@ def update_user_defined_function(ctx, from_json, force, workspace_id, user_defin
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A user defined description for the workspace.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the workspace. Does not have to be unique, and can be modified. Avoid entering confidential information.""")
+@cli_util.option('--workspace-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Key-values pairs of workspace for storing properties on the workspace.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_integration', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_integration', 'class': 'dict(str, dict(str, object))'}, 'workspace-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_integration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_integration', 'class': 'Workspace'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_integration', 'class': 'dict(str, dict(str, object))'}, 'workspace-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}}, output_type={'module': 'data_integration', 'class': 'Workspace'})
 @cli_util.wrap_exceptions
-def update_workspace(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, workspace_id, freeform_tags, defined_tags, description, display_name, if_match):
+def update_workspace(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, workspace_id, freeform_tags, defined_tags, description, display_name, workspace_properties, if_match):
 
     if isinstance(workspace_id, six.string_types) and len(workspace_id.strip()) == 0:
         raise click.UsageError('Parameter --workspace-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if freeform_tags or defined_tags or workspace_properties:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and workspace-properties will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -20832,6 +20837,9 @@ def update_workspace(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if workspace_properties is not None:
+        _details['workspaceProperties'] = cli_util.parse_json_parameter("workspace_properties", workspace_properties)
 
     client = cli_util.build_client('data_integration', 'data_integration', ctx)
     result = client.update_workspace(
