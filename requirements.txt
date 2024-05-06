@@ -14,7 +14,7 @@ Jinja2==3.0.3
 jmespath==0.10.0
 ndg-httpsclient==0.4.2
 mock==2.0.0
-oci==2.126.1
+oci==2.126.2
 packaging==20.2
 pluggy==0.13.0
 py==1.11.0
@@ -41,7 +41,8 @@ pytest-xdist==1.22.2
 pytest-forked==1.0.2
 PyYAML>=5.4,<=6.0.1
 docutils==0.15.2
-prompt-toolkit==3.0.29
+prompt-toolkit==3.0.29; python_version == '3.6'
+prompt-toolkit>=3.0.38,<=3.0.43; python_version > '3.6'
 setuptools>65.5.1; python_version > '3.6'
 setuptools==59.6.0; python_version == '3.6'
 # this is required because of python 3.6 requests dependency version bound

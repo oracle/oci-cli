@@ -98,6 +98,12 @@ def drg_group():
     pass
 
 
+@click.command(cli_util.override('virtual_network.ip_inventory_vcn_overlap_collection_group.command_name', 'ip-inventory-vcn-overlap-collection'), cls=CommandGroupWithAlias, help="""The details of the overlapping VCNs and compartments.""")
+@cli_util.help_option_group
+def ip_inventory_vcn_overlap_collection_group():
+    pass
+
+
 @click.command(cli_util.override('virtual_network.cpe_group.command_name', 'cpe'), cls=CommandGroupWithAlias, help="""An object you create when setting up a Site-to-Site VPN between your on-premises network and VCN. The `Cpe` is a virtual representation of your customer-premises equipment, which is the actual router on-premises at your site at your end of the Site-to-Site VPN IPSec connection. For more information, see [Overview of the Networking Service].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
@@ -175,6 +181,12 @@ def fast_connect_provider_service_key_group():
 @click.command(cli_util.override('virtual_network.drg_route_distribution_statement_group.command_name', 'drg-route-distribution-statement'), cls=CommandGroupWithAlias, help="""A single statement within a route distribution. All match criteria in a statement must be met for the action to take place.""")
 @cli_util.help_option_group
 def drg_route_distribution_statement_group():
+    pass
+
+
+@click.command(cli_util.override('virtual_network.ip_inventory_subnet_resource_collection_group.command_name', 'ip-inventory-subnet-resource-collection'), cls=CommandGroupWithAlias, help="""The results returned by a `ListIpInventorySubnet` operation.""")
+@cli_util.help_option_group
+def ip_inventory_subnet_resource_collection_group():
     pass
 
 
@@ -408,6 +420,12 @@ def public_ip_pool_group():
     pass
 
 
+@click.command(cli_util.override('virtual_network.ip_inventory_cidr_utilization_collection_group.command_name', 'ip-inventory-cidr-utilization-collection'), cls=CommandGroupWithAlias, help="""The IP Inventory CIDR utilization details of a subnet.""")
+@cli_util.help_option_group
+def ip_inventory_cidr_utilization_collection_group():
+    pass
+
+
 @click.command(cli_util.override('virtual_network.route_table_group.command_name', 'route-table'), cls=CommandGroupWithAlias, help="""A collection of `RouteRule` objects, which are used to route packets based on destination IP to a particular network entity. For more information, see [Overview of the Networking Service].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
@@ -447,6 +465,12 @@ Each VNIC has a *primary private IP* that is automatically assigned during launc
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def vnic_group():
+    pass
+
+
+@click.command(cli_util.override('virtual_network.ip_inventory_collection_group.command_name', 'ip-inventory-collection'), cls=CommandGroupWithAlias, help="""The results returned by a `ListIpInventory` operation.""")
+@cli_util.help_option_group
+def ip_inventory_collection_group():
     pass
 
 
@@ -545,6 +569,7 @@ virtual_network_root_group.add_command(virtual_circuit_public_prefix_group)
 virtual_network_root_group.add_command(subnet_topology_group)
 virtual_network_root_group.add_command(ip_sec_connection_tunnel_shared_secret_group)
 virtual_network_root_group.add_command(drg_group)
+virtual_network_root_group.add_command(ip_inventory_vcn_overlap_collection_group)
 virtual_network_root_group.add_command(cpe_group)
 virtual_network_root_group.add_command(cross_connect_group)
 virtual_network_root_group.add_command(letter_of_authority_group)
@@ -557,6 +582,7 @@ virtual_network_root_group.add_command(ip_sec_connection_device_status_group)
 virtual_network_root_group.add_command(cpe_device_shape_detail_group)
 virtual_network_root_group.add_command(fast_connect_provider_service_key_group)
 virtual_network_root_group.add_command(drg_route_distribution_statement_group)
+virtual_network_root_group.add_command(ip_inventory_subnet_resource_collection_group)
 virtual_network_root_group.add_command(drg_route_table_group)
 virtual_network_root_group.add_command(tunnel_security_association_group)
 virtual_network_root_group.add_command(internet_gateway_group)
@@ -583,11 +609,13 @@ virtual_network_root_group.add_command(vlan_group)
 virtual_network_root_group.add_command(ipv6_group)
 virtual_network_root_group.add_command(cross_connect_port_speed_shape_group)
 virtual_network_root_group.add_command(public_ip_pool_group)
+virtual_network_root_group.add_command(ip_inventory_cidr_utilization_collection_group)
 virtual_network_root_group.add_command(route_table_group)
 virtual_network_root_group.add_command(vtap_group)
 virtual_network_root_group.add_command(vcn_group)
 virtual_network_root_group.add_command(network_security_group_vnic_group)
 virtual_network_root_group.add_command(vnic_group)
+virtual_network_root_group.add_command(ip_inventory_collection_group)
 virtual_network_root_group.add_command(dhcp_options_group)
 virtual_network_root_group.add_command(virtual_circuit_bandwidth_shape_group)
 virtual_network_root_group.add_command(peer_region_for_remote_peering_group)
@@ -7239,6 +7267,28 @@ def get_remote_peering_connection(ctx, from_json, remote_peering_connection_id):
     cli_util.render_response(result, ctx)
 
 
+@ip_inventory_collection_group.command(name=cli_util.override('virtual_network.get_resource_ip_inventory.command_name', 'get-resource-ip-inventory'), help=u"""Gets the `IpInventory` resource. \n[Command Reference](getResourceIpInventory)""")
+@cli_util.option('--data-request-id', required=True, help=u"""Specify the ID of the resource.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'IpInventoryCollection'})
+@cli_util.wrap_exceptions
+def get_resource_ip_inventory(ctx, from_json, data_request_id):
+
+    if isinstance(data_request_id, six.string_types) and len(data_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --data-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    result = client.get_resource_ip_inventory(
+        data_request_id=data_request_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @route_table_group.command(name=cli_util.override('virtual_network.get_route_table.command_name', 'get'), help=u"""Gets the specified route table's information. \n[Command Reference](getRouteTable)""")
 @cli_util.option('--rt-id', required=True, help=u"""The [OCID] of the route table.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -7338,6 +7388,50 @@ def get_subnet(ctx, from_json, subnet_id):
     kwargs = {}
     client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_subnet(
+        subnet_id=subnet_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@ip_inventory_cidr_utilization_collection_group.command(name=cli_util.override('virtual_network.get_subnet_cidr_utilization.command_name', 'get-subnet-cidr-utilization'), help=u"""Gets the CIDR utilization data of the specified subnet. Specify the [OCID]. \n[Command Reference](getSubnetCidrUtilization)""")
+@cli_util.option('--subnet-id', required=True, help=u"""Specify the [OCID] of the subnet.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'IpInventoryCidrUtilizationCollection'})
+@cli_util.wrap_exceptions
+def get_subnet_cidr_utilization(ctx, from_json, subnet_id):
+
+    if isinstance(subnet_id, six.string_types) and len(subnet_id.strip()) == 0:
+        raise click.UsageError('Parameter --subnet-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    result = client.get_subnet_cidr_utilization(
+        subnet_id=subnet_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@ip_inventory_subnet_resource_collection_group.command(name=cli_util.override('virtual_network.get_subnet_ip_inventory.command_name', 'get-subnet-ip-inventory'), help=u"""Gets the IP Inventory data of the specified subnet. Specify the [OCID]. \n[Command Reference](getSubnetIpInventory)""")
+@cli_util.option('--subnet-id', required=True, help=u"""Specify the [OCID] of the subnet.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'IpInventorySubnetResourceCollection'})
+@cli_util.wrap_exceptions
+def get_subnet_ip_inventory(ctx, from_json, subnet_id):
+
+    if isinstance(subnet_id, six.string_types) and len(subnet_id.strip()) == 0:
+        raise click.UsageError('Parameter --subnet-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    result = client.get_subnet_ip_inventory(
         subnet_id=subnet_id,
         **kwargs
     )
@@ -7522,6 +7616,36 @@ def get_vcn_dns_resolver_association(ctx, from_json, vcn_id):
     client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_vcn_dns_resolver_association(
         vcn_id=vcn_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@ip_inventory_vcn_overlap_collection_group.command(name=cli_util.override('virtual_network.get_vcn_overlap.command_name', 'get-vcn-overlap'), help=u"""Gets the CIDR overlap information of the specified VCN in selected compartments. Specify the [OCID]. \n[Command Reference](getVcnOverlap)""")
+@cli_util.option('--vcn-id', required=True, help=u"""Specify the [OCID] of the VCN.""")
+@cli_util.option('--region-list', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Lists the selected regions.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-list', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of [OCID] of the compartments.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'region-list': {'module': 'core', 'class': 'list[string]'}, 'compartment-list': {'module': 'core', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'region-list': {'module': 'core', 'class': 'list[string]'}, 'compartment-list': {'module': 'core', 'class': 'list[string]'}}, output_type={'module': 'core', 'class': 'IpInventoryVcnOverlapCollection'})
+@cli_util.wrap_exceptions
+def get_vcn_overlap(ctx, from_json, vcn_id, region_list, compartment_list):
+
+    if isinstance(vcn_id, six.string_types) and len(vcn_id.strip()) == 0:
+        raise click.UsageError('Parameter --vcn-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['regionList'] = cli_util.parse_json_parameter("region_list", region_list)
+    _details['compartmentList'] = cli_util.parse_json_parameter("compartment_list", compartment_list)
+
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    result = client.get_vcn_overlap(
+        vcn_id=vcn_id,
+        get_vcn_overlap_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -8811,6 +8935,76 @@ def list_internet_gateways(ctx, from_json, all_pages, page_size, compartment_id,
             compartment_id=compartment_id,
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@vcn_group.command(name=cli_util.override('virtual_network.list_ip_inventory.command_name', 'list-ip-inventory'), help=u"""Lists the IP Inventory information in the selected compartments. \n[Command Reference](listIpInventory)""")
+@cli_util.option('--region-list', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Lists the selected regions.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-list', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List the [OCID] of the compartments.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--override-filters', type=click.BOOL, help=u"""List of selected filters.""")
+@cli_util.option('--utilization', type=click.FLOAT, help=u"""The CIDR utilization of a VCN.""")
+@cli_util.option('--overlapping-vcns-only', type=click.BOOL, help=u"""List of overlapping VCNs.""")
+@cli_util.option('--address-type-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of IP address types used.
+
+This option is a JSON list with items of type AddressType.  For documentation on AddressType please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AddressType.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--resource-type-list', type=custom_types.CliCaseInsensitiveChoice(["Resource"]), help=u"""List of VCN resource types.""")
+@cli_util.option('--search-keyword', help=u"""Filters the results for the specified string.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["DISPLAYNAME", "UTILIZATION", "DNS_HOSTNAME", "REGION"]), help=u"""Provide the sort order (`sortOrder`) to sort the fields such as TIMECREATED in descending or descending order, and DISPLAYNAME in case sensitive.
+
+**Note:** For some \"List\" operations (for example, `ListInstances`), sort resources by an availability domain when the resources belong to a single availability domain. If you sort the \"List\" operations without specifying an availability domain, the resources are grouped by availability domains and then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies the sort order to use. Select either ascending (`ASC`) or descending (`DESC`) order. The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--pagination-offset', type=click.INT, help=u"""Most List operations paginate results. Results are paginated for the ListInstances operations. When you call a paginated List operation, the response indicates more pages of results by including the opc-next-page header. For more information, see [List Pagination].""")
+@cli_util.option('--pagination-limit', type=click.INT, help=u"""Specifies the maximum number of results displayed per page for a paginated \"List\" call. For more information, see [List Pagination]. Example: `50`""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
+@json_skeleton_utils.get_cli_json_input_option({'region-list': {'module': 'core', 'class': 'list[string]'}, 'compartment-list': {'module': 'core', 'class': 'list[string]'}, 'address-type-list': {'module': 'core', 'class': 'list[AddressType]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'region-list': {'module': 'core', 'class': 'list[string]'}, 'compartment-list': {'module': 'core', 'class': 'list[string]'}, 'address-type-list': {'module': 'core', 'class': 'list[AddressType]'}}, output_type={'module': 'core', 'class': 'IpInventoryCollection'})
+@cli_util.wrap_exceptions
+def list_ip_inventory(ctx, from_json, all_pages, region_list, compartment_list, override_filters, utilization, overlapping_vcns_only, address_type_list, resource_type_list, search_keyword, sort_by, sort_order, pagination_offset, pagination_limit):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['regionList'] = cli_util.parse_json_parameter("region_list", region_list)
+    _details['compartmentList'] = cli_util.parse_json_parameter("compartment_list", compartment_list)
+
+    if override_filters is not None:
+        _details['overrideFilters'] = override_filters
+
+    if utilization is not None:
+        _details['utilization'] = utilization
+
+    if overlapping_vcns_only is not None:
+        _details['overlappingVcnsOnly'] = overlapping_vcns_only
+
+    if address_type_list is not None:
+        _details['addressTypeList'] = cli_util.parse_json_parameter("address_type_list", address_type_list)
+
+    if resource_type_list is not None:
+        _details['resourceTypeList'] = cli_util.parse_json_parameter("resource_type_list", resource_type_list)
+
+    if search_keyword is not None:
+        _details['searchKeyword'] = search_keyword
+
+    if sort_by is not None:
+        _details['sortBy'] = sort_by
+
+    if sort_order is not None:
+        _details['sortOrder'] = sort_order
+
+    if pagination_offset is not None:
+        _details['paginationOffset'] = pagination_offset
+
+    if pagination_limit is not None:
+        _details['paginationLimit'] = pagination_limit
+
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    result = client.list_ip_inventory(
+        list_ip_inventory_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 

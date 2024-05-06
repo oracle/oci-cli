@@ -121,21 +121,21 @@ Oracle created the following predefined cipher suites that you can specify when 
 
 *  __oci-default-http2-tls-13-ssl-cipher-suite-v1__
 
-        \"TLS-AES-128-GCM-SHA256\"         \"TLS-AES-256-GCM-SHA384\"         \"TLS-CHACHA20-POLY1305-SHA256\"
+        \"TLS_AES_128_GCM_SHA256\"         \"TLS_AES_256_GCM_SHA384\"         \"TLS_CHACHA20_POLY1305_SHA256\"
 
 *  __oci-default-http2-tls-12-13-ssl-cipher-suite-v1__
 
-        \"ECDHE-RSA-AES256-GCM-SHA384\"         \"ECDHE-ECDSA-AES256-GCM-SHA384\"         \"ECDHE-RSA-AES128-GCM-SHA256\"         \"ECDHE-ECDSA-AES128-GCM-SHA256\"         \"DHE-RSA-AES256-GCM-SHA384\"         \"DHE-RSA-AES128-GCM-SHA256\"         \"TLS-AES-128-GCM-SHA256\"         \"TLS-AES-256-GCM-SHA384\"         \"TLS-CHACHA20-POLY1305-SHA256\"
+        \"ECDHE-RSA-AES256-GCM-SHA384\"         \"ECDHE-ECDSA-AES256-GCM-SHA384\"         \"ECDHE-RSA-AES128-GCM-SHA256\"         \"ECDHE-ECDSA-AES128-GCM-SHA256\"         \"DHE-RSA-AES256-GCM-SHA384\"         \"DHE-RSA-AES128-GCM-SHA256\"         \"TLS_AES_128_GCM_SHA256\"         \"TLS_AES_256_GCM_SHA384\"         \"TLS_CHACHA20_POLY1305_SHA256\"
 
 *  __oci-tls-13-recommended-ssl-cipher-suite-v1__
 
-        \"TLS-AES-128-GCM-SHA256\"         \"TLS-AES-256-GCM-SHA384\"         \"TLS-CHACHA20-POLY1305-SHA256\"
+        \"TLS_AES_128_GCM_SHA256\"         \"TLS_AES_256_GCM_SHA384\"         \"TLS_CHACHA20_POLY1305_SHA256\"
 
 *  __oci-tls-12-13-wider-ssl-cipher-suite-v1__
 
-        \"TLS-AES-128-GCM-SHA256\"         \"TLS-AES-256-GCM-SHA384\"         \"TLS-CHACHA20-POLY1305-SHA256\"         \"ECDHE-ECDSA-AES128-GCM-SHA256\"         \"ECDHE-RSA-AES128-GCM-SHA256\"         \"ECDHE-ECDSA-AES128-SHA256\"         \"ECDHE-RSA-AES128-SHA256\"         \"ECDHE-ECDSA-AES256-GCM-SHA384\"         \"ECDHE-RSA-AES256-GCM-SHA384\"         \"ECDHE-ECDSA-AES256-SHA384\"         \"ECDHE-RSA-AES256-SHA384\"         \"AES128-GCM-SHA256\"         \"AES128-SHA256\"         \"AES256-GCM-SHA384\"         \"AES256-SHA256\"
+        \"TLS_AES_128_GCM_SHA256\"         \"TLS_AES_256_GCM_SHA384\"         \"TLS_CHACHA20_POLY1305_SHA256\"         \"ECDHE-ECDSA-AES128-GCM-SHA256\"         \"ECDHE-RSA-AES128-GCM-SHA256\"         \"ECDHE-ECDSA-AES128-SHA256\"         \"ECDHE-RSA-AES128-SHA256\"         \"ECDHE-ECDSA-AES256-GCM-SHA384\"         \"ECDHE-RSA-AES256-GCM-SHA384\"         \"ECDHE-ECDSA-AES256-SHA384\"         \"ECDHE-RSA-AES256-SHA384\"         \"AES128-GCM-SHA256\"         \"AES128-SHA256\"         \"AES256-GCM-SHA384\"         \"AES256-SHA256\"
 
-  *  __oci-tls-11-12-13-wider-ssl-cipher-suite-v1__         \"TLS-AES-128-GCM-SHA256\"         \"TLS-AES-256-GCM-SHA384\"         \"TLS-CHACHA20-POLY1305-SHA256\"         \"ECDHE-ECDSA-AES128-GCM-SHA256\"         \"ECDHE-RSA-AES128-GCM-SHA256\"         \"ECDHE-ECDSA-AES128-SHA256\"         \"ECDHE-RSA-AES128-SHA256\"         \"ECDHE-ECDSA-AES256-GCM-SHA384\"         \"ECDHE-RSA-AES256-GCM-SHA384\"         \"ECDHE-ECDSA-AES256-SHA384\"         \"ECDHE-RSA-AES256-SHA384\"         \"AES128-GCM-SHA256\"         \"AES128-SHA256\"         \"AES256-GCM-SHA384\"         \"AES256-SHA256\"         \"ECDHE-ECDSA-AES128-SHA\"         \"ECDHE-RSA-AES128-SHA\"         \"ECDHE-RSA-AES256-SHA\"         \"ECDHE-ECDSA-AES256-SHA\"         \"AES128-SHA\"         \"AES256-SHA\"""")
+  *  __oci-tls-11-12-13-wider-ssl-cipher-suite-v1__         \"TLS_AES_128_GCM_SHA256\"         \"TLS_AES_256_GCM_SHA384\"         \"TLS_CHACHA20_POLY1305_SHA256\"         \"ECDHE-ECDSA-AES128-GCM-SHA256\"         \"ECDHE-RSA-AES128-GCM-SHA256\"         \"ECDHE-ECDSA-AES128-SHA256\"         \"ECDHE-RSA-AES128-SHA256\"         \"ECDHE-ECDSA-AES256-GCM-SHA384\"         \"ECDHE-RSA-AES256-GCM-SHA384\"         \"ECDHE-ECDSA-AES256-SHA384\"         \"ECDHE-RSA-AES256-SHA384\"         \"AES128-GCM-SHA256\"         \"AES128-SHA256\"         \"AES256-GCM-SHA384\"         \"AES256-SHA256\"         \"ECDHE-ECDSA-AES128-SHA\"         \"ECDHE-RSA-AES128-SHA\"         \"ECDHE-RSA-AES256-SHA\"         \"ECDHE-ECDSA-AES256-SHA\"         \"AES128-SHA\"         \"AES256-SHA\"""")
 @cli_util.help_option_group
 def ssl_cipher_suite_group():
     pass
@@ -312,6 +312,9 @@ Example: `example_backend_set`""")
 @cli_util.option('--weight', type=click.INT, help=u"""The load balancing policy weight assigned to the server. Backend servers with a higher weight receive a larger proportion of incoming traffic. For example, a server weighted '3' receives 3 times the number of new connections as a server weighted '1'. For more information on load balancing policies, see [How Load Balancing Policies Work].
 
 Example: `3`""")
+@cli_util.option('--max-connections', type=click.INT, help=u"""The maximum number of simultaneous connections the load balancer can make to the backend.
+
+Example: `300`""")
 @cli_util.option('--backup', type=click.BOOL, help=u"""Whether the load balancer should treat this server as a backup unit. If `true`, the load balancer forwards no ingress traffic to this backend server unless all other backend servers not marked as \"backup\" fail the health check policy.
 
 **Note:** You cannot add a backend server marked as `backup` to a backend set that uses the IP Hash policy.
@@ -338,7 +341,7 @@ Example: `example-etag`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def create_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ip_address, port, load_balancer_id, backend_set_name, weight, backup, drain, offline, if_match):
+def create_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ip_address, port, load_balancer_id, backend_set_name, weight, max_connections, backup, drain, offline, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -357,6 +360,9 @@ def create_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
     if weight is not None:
         _details['weight'] = weight
+
+    if max_connections is not None:
+        _details['maxConnections'] = max_connections
 
     if backup is not None:
         _details['backup'] = backup
@@ -418,6 +424,9 @@ Example: `LEAST_CONNECTIONS`""")
 @cli_util.option('--backends', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 
 This option is a JSON list with items of type BackendDetails.  For documentation on BackendDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/BackendDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--backend-max-connections', type=click.INT, help=u"""The maximum number of simultaneous connections the load balancer can make to any backend in the backend set unless the backend has its own maxConnections setting.
+
+Example: `300`""")
 @cli_util.option('--ssl-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--session-persistence-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--lb-cookie-session-persistence-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -436,7 +445,7 @@ Example: `example-etag`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'health-checker': {'module': 'load_balancer', 'class': 'HealthCheckerDetails'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'session-persistence-configuration': {'module': 'load_balancer', 'class': 'SessionPersistenceConfigurationDetails'}, 'lb-cookie-session-persistence-configuration': {'module': 'load_balancer', 'class': 'LBCookieSessionPersistenceConfigurationDetails'}})
 @cli_util.wrap_exceptions
-def create_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, policy, health_checker, load_balancer_id, backends, ssl_configuration, session_persistence_configuration, lb_cookie_session_persistence_configuration, if_match):
+def create_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, policy, health_checker, load_balancer_id, backends, backend_max_connections, ssl_configuration, session_persistence_configuration, lb_cookie_session_persistence_configuration, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -453,6 +462,9 @@ def create_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if backends is not None:
         _details['backends'] = cli_util.parse_json_parameter("backends", backends)
+
+    if backend_max_connections is not None:
+        _details['backendMaxConnections'] = backend_max_connections
 
     if ssl_configuration is not None:
         _details['sslConfiguration'] = cli_util.parse_json_parameter("ssl_configuration", ssl_configuration)
@@ -801,7 +813,7 @@ When you create a load balancer, the system assigns an IP address. To get the IP
 Example: `example_load_balancer`""")
 @cli_util.option('--shape-name', required=True, help=u"""A template that determines the total pre-provisioned bandwidth (ingress plus egress). To get a list of available shapes, use the [ListShapes] operation.
 
-Example: `flexible` NOTE: Starting May 2023, Fixed shapes - 10Mbps, 100Mbps, 400Mbps, 8000Mbps would be deprecated and only shape       allowed would be `Flexible`""")
+Example: `flexible` NOTE: After May 2023, Fixed shapes - 10Mbps, 100Mbps, 400Mbps, 8000Mbps would be deprecated and only shape       allowed would be `Flexible`""")
 @cli_util.option('--subnet-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of subnet [OCIDs].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--shape-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The configuration details to create load balancer using Flexible shape. This is required only if shapeName is `Flexible`.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-private', type=click.BOOL, help=u"""Whether the load balancer has a VCN-local (private) IP address.
@@ -813,6 +825,13 @@ If \"false\", the service assigns a public IP address to the load balancer.
 A public load balancer is accessible from the internet, depending on your VCN's [security list rules]. For more information about public and private load balancers, see [How Load Balancing Works].
 
 Example: `true`""")
+@cli_util.option('--is-delete-protection-enabled', type=click.BOOL, help=u"""Whether or not the load balancer has delete protection enabled.
+
+If \"true\", the loadbalancer will be protected against deletion if configured to accept traffic.
+
+If \"false\", the loadbalancer will not be protected against deletion.
+
+Delete protection will not be enabled unless a value of \"true\" is provided. Example: `true`""")
 @cli_util.option('--ip-mode', type=custom_types.CliCaseInsensitiveChoice(["IPV4", "IPV6"]), help=u"""Whether the load balancer has an IPv4 or IPv6 IP address.
 
 If \"IPV4\", the service assigns an IPv4 address and the load balancer supports IPv4 traffic.
@@ -869,7 +888,7 @@ This option is a JSON dictionary of type dict(str, RuleSetDetails).  For documen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'shape-details': {'module': 'load_balancer', 'class': 'ShapeDetails'}, 'reserved-ips': {'module': 'load_balancer', 'class': 'list[ReservedIP]'}, 'listeners': {'module': 'load_balancer', 'class': 'dict(str, ListenerDetails)'}, 'hostnames': {'module': 'load_balancer', 'class': 'dict(str, HostnameDetails)'}, 'backend-sets': {'module': 'load_balancer', 'class': 'dict(str, BackendSetDetails)'}, 'network-security-group-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'subnet-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'certificates': {'module': 'load_balancer', 'class': 'dict(str, CertificateDetails)'}, 'ssl-cipher-suites': {'module': 'load_balancer', 'class': 'dict(str, SSLCipherSuiteDetails)'}, 'path-route-sets': {'module': 'load_balancer', 'class': 'dict(str, PathRouteSetDetails)'}, 'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'rule-sets': {'module': 'load_balancer', 'class': 'dict(str, RuleSetDetails)'}})
 @cli_util.wrap_exceptions
-def create_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, shape_name, subnet_ids, shape_details, is_private, ip_mode, reserved_ips, listeners, hostnames, backend_sets, network_security_group_ids, certificates, ssl_cipher_suites, path_route_sets, freeform_tags, defined_tags, rule_sets):
+def create_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, shape_name, subnet_ids, shape_details, is_private, is_delete_protection_enabled, ip_mode, reserved_ips, listeners, hostnames, backend_sets, network_security_group_ids, certificates, ssl_cipher_suites, path_route_sets, freeform_tags, defined_tags, rule_sets):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -885,6 +904,9 @@ def create_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if is_private is not None:
         _details['isPrivate'] = is_private
+
+    if is_delete_protection_enabled is not None:
+        _details['isDeleteProtectionEnabled'] = is_delete_protection_enabled
 
     if ip_mode is not None:
         _details['ipMode'] = ip_mode
@@ -1188,7 +1210,7 @@ The following ciphers are valid values for this property:
 
 *  __TLSv1.3 ciphers__
 
-        \"TLS-AES-128-GCM-SHA256\"         \"TLS-AES-256-GCM-SHA384\"         \"TLS-CHACHA20-POLY1305-SHA256\"         \"TLS-AES-128-CCM-SHA256\"         \"TLS-AES-128-CCM-8-SHA256\"
+        \"TLS_AES_128_GCM_SHA256\"         \"TLS_AES_256_GCM_SHA384\"         \"TLS_CHACHA20_POLY1305_SHA256\"         \"TLS_AES_128_CCM_SHA256\"         \"TLS_AES_128_CCM_8_SHA256\"
 
 *  __TLSv1.2 ciphers__
 
@@ -2580,7 +2602,7 @@ def list_hostnames(ctx, from_json, all_pages, load_balancer_id, if_match):
 
 *  Access control rules *  Allow method rules *  Request header rules *  Response header rules \n[Command Reference](listListenerRules)""")
 @cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the listener.""")
-@cli_util.option('--listener-name', required=True, help=u"""The name of the listener the rules are associated with.""")
+@cli_util.option('--listener-name', required=True, help=u"""The name of the listener the rules are associated with. Example: `example_listener`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
 
 For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
@@ -3133,6 +3155,9 @@ Example: `example_backend_set`""")
 @cli_util.option('--backend-name', required=True, help=u"""The IP address and port of the backend server to update.
 
 Example: `10.0.0.3:8080`""")
+@cli_util.option('--max-connections', type=click.INT, help=u"""The maximum number of simultaneous connections the load balancer can make to the backend.
+
+Example: `300`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
 
 For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
@@ -3148,7 +3173,7 @@ Example: `example-etag`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def update_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, weight, backup, drain, offline, load_balancer_id, backend_set_name, backend_name, if_match):
+def update_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, weight, backup, drain, offline, load_balancer_id, backend_set_name, backend_name, max_connections, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -3169,6 +3194,9 @@ def update_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     _details['backup'] = backup
     _details['drain'] = drain
     _details['offline'] = offline
+
+    if max_connections is not None:
+        _details['maxConnections'] = max_connections
 
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.update_backend(
@@ -3218,6 +3246,9 @@ Example: `LEAST_CONNECTIONS`""")
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set to update.
 
 Example: `example_backend_set`""")
+@cli_util.option('--backend-max-connections', type=click.INT, help=u"""The maximum number of simultaneous connections the load balancer can make to any backend in the backend set unless the backend has its own maxConnections setting.
+
+Example: `300`""")
 @cli_util.option('--ssl-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--session-persistence-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--lb-cookie-session-persistence-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3237,7 +3268,7 @@ Example: `example-etag`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'health-checker': {'module': 'load_balancer', 'class': 'HealthCheckerDetails'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'session-persistence-configuration': {'module': 'load_balancer', 'class': 'SessionPersistenceConfigurationDetails'}, 'lb-cookie-session-persistence-configuration': {'module': 'load_balancer', 'class': 'LBCookieSessionPersistenceConfigurationDetails'}})
 @cli_util.wrap_exceptions
-def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, policy, backends, health_checker, load_balancer_id, backend_set_name, ssl_configuration, session_persistence_configuration, lb_cookie_session_persistence_configuration, if_match):
+def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, policy, backends, health_checker, load_balancer_id, backend_set_name, backend_max_connections, ssl_configuration, session_persistence_configuration, lb_cookie_session_persistence_configuration, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -3258,6 +3289,9 @@ def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     _details['policy'] = policy
     _details['backends'] = cli_util.parse_json_parameter("backends", backends)
     _details['healthChecker'] = cli_util.parse_json_parameter("health_checker", health_checker)
+
+    if backend_max_connections is not None:
+        _details['backendMaxConnections'] = backend_max_connections
 
     if ssl_configuration is not None:
         _details['sslConfiguration'] = cli_util.parse_json_parameter("ssl_configuration", ssl_configuration)
@@ -3625,6 +3659,15 @@ def update_listener(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 @cli_util.option('--display-name', help=u"""The user-friendly display name for the load balancer. It does not have to be unique, and it is changeable. Avoid entering confidential information.
 
 Example: `example_load_balancer`""")
+@cli_util.option('--is-delete-protection-enabled', type=click.BOOL, help=u"""Whether or not the load balancer has delete protection enabled.
+
+If \"true\", the loadbalancer will be protected against deletion if configured to accept traffic.
+
+If \"false\", the loadbalancer will not be protected against deletion.
+
+If null or unset, the value for delete protection will not be changed.
+
+Example: `true`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3647,7 +3690,7 @@ Example: `example-etag`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, display_name, freeform_tags, defined_tags, if_match):
+def update_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, display_name, is_delete_protection_enabled, freeform_tags, defined_tags, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -3665,6 +3708,9 @@ def update_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if is_delete_protection_enabled is not None:
+        _details['isDeleteProtectionEnabled'] = is_delete_protection_enabled
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -3718,7 +3764,7 @@ Allowed values are :   *  10Mbps   *  100Mbps   *  400Mbps   *  8000Mbps   *  Fl
 
   Example: `flexible`
 
-  * NOTE: Fixed shapes 10Mbps, 100Mbps, 400Mbps, 8000Mbps will be deprecated from May 2023. This api   * will only support `Flexible` shape after that date.""")
+  * NOTE: Fixed shapes 10Mbps, 100Mbps, 400Mbps, 8000Mbps will be deprecated after May 2023. This api   * will only support `Flexible` shape after that date.""")
 @cli_util.option('--shape-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The configuration details to update load balancer to a different profile.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
 
@@ -4128,7 +4174,7 @@ The following ciphers are valid values for this property:
 
 *  __TLSv1.3 ciphers__
 
-        \"TLS-AES-128-GCM-SHA256\"         \"TLS-AES-256-GCM-SHA384\"         \"TLS-CHACHA20-POLY1305-SHA256\"         \"TLS-AES-128-CCM-SHA256\"         \"TLS-AES-128-CCM-8-SHA256\"
+        \"TLS_AES_128_GCM_SHA256\"         \"TLS_AES_256_GCM_SHA384\"         \"TLS_CHACHA20_POLY1305_SHA256\"         \"TLS_AES_128_CCM_SHA256\"         \"TLS_AES_128_CCM_8_SHA256\"
 
 *  __TLSv1.2 ciphers__
 
