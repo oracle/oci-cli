@@ -394,3 +394,4 @@ os-management-hub, managed-instance-group, install-windows-updates
 data-integration, workspace, create
 db, cluster, update
 db, vm-cluster, update
+network, ipam, list-ip-inventory

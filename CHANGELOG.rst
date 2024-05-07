@@ -6,6 +6,63 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.40.2 - 2024-05-07
+--------------------
+Added
+~~~~~
+* OCI Virtual Cloud Network Service
+
+  * Support for new ip inventory and notification feature
+
+    * ``oci network ipam list-ip-inventory``
+    * ``oci network ipam get-resource-ip-inventory``
+    * ``oci network ipam get-subnet-cidr-utilization``
+    * ``oci network ipam get-subnet-ip-inventory``
+    * ``oci network ipam get-vcn-overlap``
+
+* OCI Load Balancer Service
+
+  * Support for accidental delete protection preventing deletion of a load-balancer and its listeners or backends if they are configured to accept traffic
+
+    * ``oci lb load-balancer create --is-delete-protection-enabled``
+    * ``oci lb load-balancer update --is-delete-protection-enabled``
+
+  * Support for new optional parameter limiting the number of simultaneous connections a load-balancer can make to its backends or listeners
+
+    * ``oci lb backend create --max-connections``
+    * ``oci lb backend update --max-connections``
+    * ``oci lb backend-set create --backend-max-connections``
+    * ``oci lb backend-set update --backend-max-connections``
+
+* OCI Big Data Service
+
+  * Support for new optional parameter for os patching configs
+
+    * ``oci bds instance install-os-patch --patching-configs``
+
+  * Support for new commands for os patching configs
+
+    * ``oci bds instance install-os-patch-batching-based-patching-configs``
+    * ``oci bds instance install-os-patch-downtime-based-patching-configs``
+
+* OCI Disaster Recovery Cloud Service
+
+  * Support for user-defined pause group in disaster recovery plan
+
+    * ``oci disaster-recovery dr-plan update``
+
+* OCI Database Service
+
+  * Support for new optional parameter when creating/updating cloud vm clusters
+
+    * ``oci db cloud-vm-cluster create --file-system-configuration-details``
+    * ``oci db cloud-vm-cluster update --file-system-configuration-details``
+
+Changed
+~~~~~~~
+
+* Upgraded the prompt-toolkit version to (>=3.0.38, <=3.0.43) for Python 3.7 and above
+
 3.40.1 - 2024-04-30
 --------------------
 Added

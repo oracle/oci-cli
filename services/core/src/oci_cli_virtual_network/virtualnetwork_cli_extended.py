@@ -793,3 +793,28 @@ def update_drg_route_table_extended(ctx, **kwargs):
         kwargs.pop('import_route_distribution_id')
 
     ctx.invoke(virtualnetwork_cli.update_drg_route_table, **kwargs)
+
+# oci network ip-inventory-cidr-utilization-collection -> oci network ipam
+
+
+cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.virtual_network_root_group, virtualnetwork_cli.ip_inventory_cidr_utilization_collection_group, "ipam")
+
+
+# oci network vcn list-ip-inventory -> oci network ip-inventory-cidr-utilization-collection
+virtualnetwork_cli.vcn_group.commands.pop(virtualnetwork_cli.list_ip_inventory.name)
+virtualnetwork_cli.ip_inventory_cidr_utilization_collection_group.add_command(virtualnetwork_cli.list_ip_inventory)
+
+
+# Move commands under 'oci network ip-inventory-collection' -> 'oci network ip-inventory-cidr-utilization-collection'
+virtualnetwork_cli.virtual_network_root_group.commands.pop(virtualnetwork_cli.ip_inventory_collection_group.name)
+virtualnetwork_cli.ip_inventory_cidr_utilization_collection_group.add_command(virtualnetwork_cli.get_resource_ip_inventory)
+
+
+# Move commands under 'oci network ip-inventory-subnet-resource-collection' -> 'oci network ip-inventory-cidr-utilization-collection'
+virtualnetwork_cli.virtual_network_root_group.commands.pop(virtualnetwork_cli.ip_inventory_subnet_resource_collection_group.name)
+virtualnetwork_cli.ip_inventory_cidr_utilization_collection_group.add_command(virtualnetwork_cli.get_subnet_ip_inventory)
+
+
+# Move commands under 'oci network ip-inventory-vcn-overlap-collection' -> 'oci network ip-inventory-cidr-utilization-collection'
+virtualnetwork_cli.virtual_network_root_group.commands.pop(virtualnetwork_cli.ip_inventory_vcn_overlap_collection_group.name)
+virtualnetwork_cli.ip_inventory_cidr_utilization_collection_group.add_command(virtualnetwork_cli.get_vcn_overlap)
