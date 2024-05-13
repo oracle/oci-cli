@@ -8,15 +8,15 @@ import click
 import oci  # noqa: F401
 import six  # noqa: F401
 import sys  # noqa: F401
-from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
+from services.marketplace_publisher.src.oci_cli_marketplace_publisher.generated import marketplace_publisher_service_cli
 
 
-@cli.command(cli_util.override('marketplace_publisher.marketplace_publisher_root_group.command_name', 'marketplace-publisher'), cls=CommandGroupWithAlias, help=cli_util.override('marketplace_publisher.marketplace_publisher_root_group.help', """Use the Marketplace Publisher API to manage the publishing of applications in Oracle Cloud Infrastructure Marketplace."""), short_help=cli_util.override('marketplace_publisher.marketplace_publisher_root_group.short_help', """MarketplacePublisherService API"""))
+@click.command(cli_util.override('marketplace_publisher.marketplace_publisher_root_group.command_name', 'marketplace-publisher'), cls=CommandGroupWithAlias, help=cli_util.override('marketplace_publisher.marketplace_publisher_root_group.help', """Use the Marketplace Publisher API to manage the publishing of applications in Oracle Cloud Infrastructure Marketplace."""), short_help=cli_util.override('marketplace_publisher.marketplace_publisher_root_group.short_help', """MarketplacePublisherService API"""))
 @cli_util.help_option_group
 def marketplace_publisher_root_group():
     pass
@@ -184,6 +184,7 @@ def listing_revision_package_group():
     pass
 
 
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(marketplace_publisher_root_group)
 marketplace_publisher_root_group.add_command(market_collection_group)
 marketplace_publisher_root_group.add_command(listing_collection_group)
 marketplace_publisher_root_group.add_command(work_request_group)
@@ -211,6 +212,35 @@ marketplace_publisher_root_group.add_command(publisher_group)
 marketplace_publisher_root_group.add_command(category_collection_group)
 marketplace_publisher_root_group.add_command(category_group)
 marketplace_publisher_root_group.add_command(listing_revision_package_group)
+# oci marketplace_publisher marketplace_publisher --> oci marketplace_publisher
+marketplace_publisher_service_cli.marketplace_publisher_service_group.commands.pop(marketplace_publisher_root_group.name)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(market_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(listing_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(work_request_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(publisher_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(artifact_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(term_version_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(listing_revision_attachment_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(work_request_error_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(term_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(listing_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(listing_revision_note_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(listing_revision_note_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(product_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(listing_revision_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(product_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(work_request_log_entry_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(term_version_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(term_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(artifact_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(market_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(listing_revision_package_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(listing_revision_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(listing_revision_attachment_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(publisher_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(category_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(category_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(listing_revision_package_group)
 
 
 @term_version_group.command(name=cli_util.override('marketplace_publisher.activate_term_version.command_name', 'activate'), help=u"""Mark the Term Version identified by the id as active \n[Command Reference](activateTermVersion)""")

@@ -6,6 +6,45 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.40.3 - 2024-05-14
+--------------------
+Added
+~~~~~
+* Support for new optional parameter --file-system-configuration-details in vm cluster for Database Service
+
+  * ``oci db vm-cluster create --file-system-configuration-details``
+  * ``oci db vm-cluster update --file-system-configuration-details``
+
+* Support for PPv2 ( Proxy protocol version 2) feature for Network Load Balancer
+
+  * ``oci nlb listener create --is-ppv2-enabled``
+  * ``oci nlb listener update --is-ppv2-enabled``
+
+* Support for the Marketplace Private Offer Service
+
+  * ``oci marketplace-private-offer``
+
+* Support for new commands in Marketplace Publisher Service
+
+  * ``oci marketplace-publisher attachment``
+  * ``oci marketplace-publisher offer``
+
+* OCI Email Service
+
+  * Support for Custom Return Path for Sent Emails in Email Delivery Service
+
+    * ``oci email email-return-path``
+
+  * Support for new optional parameter --domain-verification-id in email domain
+
+    * ``oci email domain create --domain-verification-id``
+    * ``oci email domain update --domain-verification-id``
+
+* Support for Session Resumption in Load Balancing service
+
+  * ``oci lb listener create --ssl-session-resumption``
+  * ``oci lb listener update --ssl-session-resumption``
+
 3.40.2 - 2024-05-07
 --------------------
 Added
