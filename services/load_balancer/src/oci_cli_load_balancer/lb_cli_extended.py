@@ -47,6 +47,67 @@ def update_network_security_groups_extended(ctx, **kwargs):
     ctx.invoke(loadbalancer_cli.update_network_security_groups, **kwargs)
 
 
+def process_ssl_configuration_kwargs_for_listener(kwargs):
+    ssl_configuration = {}
+    if kwargs['ssl_certificate_name'] is not None and kwargs['ssl_certificate_ids'] is not None:
+        raise click.UsageError('--ssl-certificate-name and --ssl-certificate-ids option cannot be provided together')
+
+    if kwargs['ssl_certificate_name']:
+        ssl_configuration['certificateName'] = kwargs['ssl_certificate_name']
+
+    if kwargs['ssl_certificate_ids']:
+        ssl_configuration['certificateIds'] = cli_util.parse_json_parameter("ssl_certificate_ids", kwargs['ssl_certificate_ids'])
+
+    if kwargs['ssl_verify_depth'] is not None:
+        if kwargs['ssl_certificate_name'] is None and kwargs['ssl_certificate_ids'] is None:
+            raise click.UsageError('--ssl-certificate-name or --ssl-certificate-ids option must be provided if --ssl-verify-depth is provided')
+
+        ssl_configuration['verifyDepth'] = kwargs['ssl_verify_depth']
+
+    if kwargs['ssl_verify_peer_certificate'] is not None:
+        if kwargs['ssl_certificate_name'] is None and kwargs['ssl_certificate_ids'] is None:
+            raise click.UsageError('--ssl-certificate-name or --ssl-certificate-ids option must be provided if --ssl-verify-peer-certificate is provided')
+
+        ssl_configuration['verifyPeerCertificate'] = kwargs['ssl_verify_peer_certificate']
+
+    if kwargs['protocols'] is not None:
+        if kwargs['ssl_certificate_name'] is None and kwargs['ssl_certificate_ids'] is None:
+            raise click.UsageError('--ssl-certificate-name or --ssl-certificate-ids option must be provided if --protocols is provided')
+
+        ssl_configuration['protocols'] = cli_util.parse_json_parameter("protocols", kwargs['protocols'])
+
+    if kwargs['cipher_suite_name'] is not None:
+        if kwargs['ssl_certificate_name'] is None and kwargs['ssl_certificate_ids'] is None:
+            raise click.UsageError('--ssl-certificate-name or --ssl-certificate-ids option must be provided if --cipher-suite-name is provided')
+
+        ssl_configuration['cipherSuiteName'] = kwargs['cipher_suite_name']
+
+    if kwargs['server_order_preference'] is not None:
+        if kwargs['ssl_certificate_name'] is None and kwargs['ssl_certificate_ids'] is None:
+            raise click.UsageError('--ssl-certificate-name or --ssl-certificate-ids option must be provided if --server-order-preference is provided')
+
+        ssl_configuration['serverOrderPreference'] = kwargs['server_order_preference']
+
+    if kwargs['ssl_session_resumption'] is not None:
+        if kwargs['ssl_certificate_name'] is None and kwargs['ssl_certificate_ids'] is None:
+            raise click.UsageError('--ssl-certificate-name or --ssl-certificate-ids option must be provided if --ssl-session-resumption is provided')
+
+        ssl_configuration['hasSessionResumption'] = kwargs['ssl_session_resumption']
+
+    if len(ssl_configuration) > 0:
+        kwargs['ssl_configuration'] = json.dumps(ssl_configuration)
+
+    # remove kwargs that create_backend_set wont recognize
+    kwargs.pop('ssl_certificate_name')
+    kwargs.pop('ssl_certificate_ids')
+    kwargs.pop('ssl_verify_depth')
+    kwargs.pop('ssl_verify_peer_certificate')
+    kwargs.pop('protocols')
+    kwargs.pop('cipher_suite_name')
+    kwargs.pop('server_order_preference')
+    kwargs.pop('ssl_session_resumption')
+
+
 def process_ssl_configuration_kwargs(kwargs):
     ssl_configuration = {}
     if kwargs['ssl_certificate_name'] is not None and kwargs['ssl_certificate_ids'] is not None:
@@ -285,11 +346,12 @@ Example: ["TLSv1.1","TLSv1.2"]""")
 @cli_util.option('--cipher-suite-name', type=click.STRING, help="""Cipher suite name for listener.""")
 @cli_util.option('--server-order-preference', type=click.STRING, help="""Server order preference for listener.""")
 @cli_util.option('--connection-configuration-idle-timeout', type=click.INT, help="""The maximum idle time, in seconds, allowed between two successive receive or two successive send operations between the client and backend servers.""")
+@cli_util.option('--ssl-session-resumption', type=click.BOOL, help="""Whether the load balancer listener should resume an encrypted session by reusing the cryptographic parameters of a previous TLS session, without having to perform a full handshake again.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'rule-set-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'protocols': {'module': 'load_balancer', 'class': 'list[string]'}, 'ssl-certificate-ids': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def create_listener(ctx, **kwargs):
-    process_ssl_configuration_kwargs(kwargs)
+    process_ssl_configuration_kwargs_for_listener(kwargs)
     process_connection_configuration_kwargs(kwargs)
 
     ctx.invoke(loadbalancer_cli.create_listener, **kwargs)
@@ -308,11 +370,12 @@ Example: ["TLSv1.1","TLSv1.2"]""")
 @cli_util.option('--cipher-suite-name', type=click.STRING, help="""Cipher suite name for listener.""")
 @cli_util.option('--server-order-preference', type=click.STRING, help="""Server order preference for listener.""")
 @cli_util.option('--connection-configuration-idle-timeout', type=click.INT, help="""The maximum idle time, in seconds, allowed between two successive receive or two successive send operations between the client and backend servers.""")
+@cli_util.option('--ssl-session-resumption', type=click.BOOL, help="""Whether the load balancer listener should resume an encrypted session by reusing the cryptographic parameters of a previous TLS session, without having to perform a full handshake again.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'rule-set-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'protocols': {'module': 'load_balancer', 'class': 'list[string]'}, 'ssl-certificate-ids': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def update_listener(ctx, **kwargs):
-    process_ssl_configuration_kwargs(kwargs)
+    process_ssl_configuration_kwargs_for_listener(kwargs)
     process_connection_configuration_kwargs(kwargs)
 
     ctx.invoke(loadbalancer_cli.update_listener, **kwargs)

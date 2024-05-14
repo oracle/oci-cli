@@ -413,6 +413,11 @@ service_mapping = {
         "Marketplace Service",
         "Observability & Management"
     ],
+    "marketplace-private-offer": [
+        "marketplace_private_offer",
+        "MarketplacePrivateOffer",
+        "Others"
+    ],
     "marketplace-publisher": [
         "marketplace_publisher",
         "MarketplacePublisherService",

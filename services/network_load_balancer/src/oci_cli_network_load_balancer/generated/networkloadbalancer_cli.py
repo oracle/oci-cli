@@ -423,6 +423,7 @@ Example: `80`""")
 
 Example: `TCP`""")
 @cli_util.option('--ip-version', type=custom_types.CliCaseInsensitiveChoice(["IPV4", "IPV6"]), help=u"""IP version associated with the listener.""")
+@cli_util.option('--is-ppv2-enabled', type=click.BOOL, help=u"""Property to enable/disable PPv2 feature for this listener.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the current etag value of the resource.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -432,7 +433,7 @@ Example: `TCP`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def create_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, name, default_backend_set_name, port, protocol, ip_version, if_match):
+def create_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, name, default_backend_set_name, port, protocol, ip_version, is_ppv2_enabled, if_match):
 
     if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
@@ -450,6 +451,9 @@ def create_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if ip_version is not None:
         _details['ipVersion'] = ip_version
+
+    if is_ppv2_enabled is not None:
+        _details['isPpv2Enabled'] = is_ppv2_enabled
 
     client = cli_util.build_client('network_load_balancer', 'network_load_balancer', ctx)
     result = client.create_listener(
@@ -2066,6 +2070,7 @@ Example: `80`""")
 
 Example: `TCP`""")
 @cli_util.option('--ip-version', type=custom_types.CliCaseInsensitiveChoice(["IPV4", "IPV6"]), help=u"""IP version associated with the listener.""")
+@cli_util.option('--is-ppv2-enabled', type=click.BOOL, help=u"""Property to enable/disable PPv2 feature for this listener.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the current etag value of the resource.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2075,7 +2080,7 @@ Example: `TCP`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def update_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, listener_name, default_backend_set_name, port, protocol, ip_version, if_match):
+def update_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, listener_name, default_backend_set_name, port, protocol, ip_version, is_ppv2_enabled, if_match):
 
     if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
@@ -2101,6 +2106,9 @@ def update_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if ip_version is not None:
         _details['ipVersion'] = ip_version
+
+    if is_ppv2_enabled is not None:
+        _details['isPpv2Enabled'] = is_ppv2_enabled
 
     client = cli_util.build_client('network_load_balancer', 'network_load_balancer', ctx)
     result = client.update_listener(
