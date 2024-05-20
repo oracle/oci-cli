@@ -588,6 +588,11 @@ service_mapping = {
         "Resource Manager",
         "Developer Services"
     ],
+    "resource-scheduler": [
+        "resource_scheduler",
+        "Resource Scheduler",
+        "Others"
+    ],
     "rover": [
         "rover",
         "RoverCloudService",

@@ -38,15 +38,17 @@ def dkim_group():
     pass
 
 
+@click.command(cli_util.override('email.email_return_path_group.command_name', 'email-return-path'), cls=CommandGroupWithAlias, help="""The properties that define a Email Return Path""")
+@cli_util.help_option_group
+def email_return_path_group():
+    pass
+
+
 @click.command(cli_util.override('email.configuration_group.command_name', 'configuration'), cls=CommandGroupWithAlias, help="""Tenancy level customer email configuration details.""")
 @cli_util.help_option_group
 def configuration_group():
     pass
 
-@click.command(cli_util.override('email.email_return_path_group.command_name', 'email-return-path'), cls=CommandGroupWithAlias, help="""The properties that define a Email Return Path""")
-@cli_util.help_option_group
-def email_return_path_group():
-    pass
 
 @click.command(cli_util.override('email.sender_group.command_name', 'sender'), cls=CommandGroupWithAlias, help="""The full information representing an approved sender.""")
 @cli_util.help_option_group
@@ -86,8 +88,8 @@ def work_request_log_entry_collection_group():
 
 email_root_group.add_command(work_request_error_collection_group)
 email_root_group.add_command(dkim_group)
-email_root_group.add_command(configuration_group)
 email_root_group.add_command(email_return_path_group)
+email_root_group.add_command(configuration_group)
 email_root_group.add_command(sender_group)
 email_root_group.add_command(work_request_summary_collection_group)
 email_root_group.add_command(suppression_group)

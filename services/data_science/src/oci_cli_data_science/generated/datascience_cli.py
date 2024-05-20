@@ -318,12 +318,13 @@ def cancel_job_run(ctx, from_json, job_run_id, if_match):
 @pipeline_run_group.command(name=cli_util.override('data_science.cancel_pipeline_run.command_name', 'cancel'), help=u"""Cancel a PipelineRun. \n[Command Reference](cancelPipelineRun)""")
 @cli_util.option('--pipeline-run-id', required=True, help=u"""The [OCID] of the pipeline run.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--terminate-gracefully', type=click.BOOL, help=u"""A boolean value to specify whether to terminate pipeline run gracefully.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def cancel_pipeline_run(ctx, from_json, pipeline_run_id, if_match):
+def cancel_pipeline_run(ctx, from_json, pipeline_run_id, if_match, terminate_gracefully):
 
     if isinstance(pipeline_run_id, six.string_types) and len(pipeline_run_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-run-id cannot be whitespace or empty string')
@@ -331,6 +332,8 @@ def cancel_pipeline_run(ctx, from_json, pipeline_run_id, if_match):
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if terminate_gracefully is not None:
+        kwargs['terminate_gracefully'] = terminate_gracefully
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.cancel_pipeline_run(
@@ -1336,6 +1339,7 @@ def create_job_artifact(ctx, from_json, job_id, job_artifact, content_length, co
 @cli_util.option('--job-environment-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--opc-parent-rpt-url', help=u"""URL to fetch the Resource Principal Token from the parent resource.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "DELETED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1344,9 +1348,11 @@ def create_job_artifact(ctx, from_json, job_id, job_artifact, content_length, co
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-override-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-log-configuration-override-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-environment-configuration-override-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'JobRun'})
 @cli_util.wrap_exceptions
-def create_job_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_id, display_name, job_configuration_override_details, job_log_configuration_override_details, job_environment_configuration_override_details, freeform_tags, defined_tags):
+def create_job_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_id, display_name, job_configuration_override_details, job_log_configuration_override_details, job_environment_configuration_override_details, freeform_tags, defined_tags, opc_parent_rpt_url):
 
     kwargs = {}
+    if opc_parent_rpt_url is not None:
+        kwargs['opc_parent_rpt_url'] = opc_parent_rpt_url
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -1412,6 +1418,7 @@ def create_job_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.option('--job-environment-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--opc-parent-rpt-url', help=u"""URL to fetch the Resource Principal Token from the parent resource.""")
 @cli_util.option('--job-configuration-override-details-environment-variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Environment variables to set for the job.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-configuration-override-details-command-line-arguments', help=u"""The arguments to pass to the job.""")
 @cli_util.option('--job-configuration-override-details-maximum-runtime-in-minutes', type=click.INT, help=u"""A time bound for the execution of the job. Timer starts when the job becomes active.""")
@@ -1423,9 +1430,11 @@ def create_job_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-log-configuration-override-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-environment-configuration-override-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-configuration-override-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}}, output_type={'module': 'data_science', 'class': 'JobRun'})
 @cli_util.wrap_exceptions
-def create_job_run_default_job_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_id, display_name, job_log_configuration_override_details, job_environment_configuration_override_details, freeform_tags, defined_tags, job_configuration_override_details_environment_variables, job_configuration_override_details_command_line_arguments, job_configuration_override_details_maximum_runtime_in_minutes):
+def create_job_run_default_job_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_id, display_name, job_log_configuration_override_details, job_environment_configuration_override_details, freeform_tags, defined_tags, opc_parent_rpt_url, job_configuration_override_details_environment_variables, job_configuration_override_details_command_line_arguments, job_configuration_override_details_maximum_runtime_in_minutes):
 
     kwargs = {}
+    if opc_parent_rpt_url is not None:
+        kwargs['opc_parent_rpt_url'] = opc_parent_rpt_url
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -1501,6 +1510,7 @@ def create_job_run_default_job_configuration_details(ctx, from_json, wait_for_st
 @cli_util.option('--job-log-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--opc-parent-rpt-url', help=u"""URL to fetch the Resource Principal Token from the parent resource.""")
 @cli_util.option('--job-environment-configuration-override-details-cmd', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The container image run [CMD] as a list of strings. Use `CMD` as arguments to the `ENTRYPOINT` or the only command to run in the absence of an `ENTRYPOINT`. The combined size of `CMD` and `ENTRYPOINT` must be less than 2048 bytes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-environment-configuration-override-details-entrypoint', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The container image run [ENTRYPOINT] as a list of strings. Accept the `CMD` as extra arguments. The combined size of `CMD` and `ENTRYPOINT` must be less than 2048 bytes. More information on how `CMD` and `ENTRYPOINT` interact are [here].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-environment-configuration-override-details-image-digest', help=u"""The digest of the container image. For example, `sha256:881303a6b2738834d795a32b4a98eb0e5e3d1cad590a712d1e04f9b2fa90a030`""")
@@ -1513,9 +1523,11 @@ def create_job_run_default_job_configuration_details(ctx, from_json, wait_for_st
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-override-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-log-configuration-override-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-environment-configuration-override-details-cmd': {'module': 'data_science', 'class': 'list[string]'}, 'job-environment-configuration-override-details-entrypoint': {'module': 'data_science', 'class': 'list[string]'}}, output_type={'module': 'data_science', 'class': 'JobRun'})
 @cli_util.wrap_exceptions
-def create_job_run_ocir_container_job_environment_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_id, job_environment_configuration_override_details_image, display_name, job_configuration_override_details, job_log_configuration_override_details, freeform_tags, defined_tags, job_environment_configuration_override_details_cmd, job_environment_configuration_override_details_entrypoint, job_environment_configuration_override_details_image_digest, job_environment_configuration_override_details_image_signature_id):
+def create_job_run_ocir_container_job_environment_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_id, job_environment_configuration_override_details_image, display_name, job_configuration_override_details, job_log_configuration_override_details, freeform_tags, defined_tags, opc_parent_rpt_url, job_environment_configuration_override_details_cmd, job_environment_configuration_override_details_entrypoint, job_environment_configuration_override_details_image_digest, job_environment_configuration_override_details_image_signature_id):
 
     kwargs = {}
+    if opc_parent_rpt_url is not None:
+        kwargs['opc_parent_rpt_url'] = opc_parent_rpt_url
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -1726,6 +1738,7 @@ def create_model_artifact(ctx, from_json, model_id, model_artifact, content_leng
 @cli_util.option('--category-log-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--opc-parent-rpt-url', help=u"""URL to fetch the Resource Principal Token from the parent resource.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1734,9 +1747,11 @@ def create_model_artifact(ctx, from_json, model_id, model_artifact, content_leng
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'model-deployment-configuration-details': {'module': 'data_science', 'class': 'ModelDeploymentConfigurationDetails'}, 'category-log-details': {'module': 'data_science', 'class': 'CategoryLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'ModelDeployment'})
 @cli_util.wrap_exceptions
-def create_model_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, model_deployment_configuration_details, display_name, description, category_log_details, freeform_tags, defined_tags):
+def create_model_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, model_deployment_configuration_details, display_name, description, category_log_details, freeform_tags, defined_tags, opc_parent_rpt_url):
 
     kwargs = {}
+    if opc_parent_rpt_url is not None:
+        kwargs['opc_parent_rpt_url'] = opc_parent_rpt_url
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -1803,6 +1818,7 @@ def create_model_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--category-log-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--opc-parent-rpt-url', help=u"""URL to fetch the Resource Principal Token from the parent resource.""")
 @cli_util.option('--model-deployment-configuration-details-environment-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1812,9 +1828,11 @@ def create_model_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'category-log-details': {'module': 'data_science', 'class': 'CategoryLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'model-deployment-configuration-details-model-configuration-details': {'module': 'data_science', 'class': 'ModelConfigurationDetails'}, 'model-deployment-configuration-details-environment-configuration-details': {'module': 'data_science', 'class': 'ModelDeploymentEnvironmentConfigurationDetails'}}, output_type={'module': 'data_science', 'class': 'ModelDeployment'})
 @cli_util.wrap_exceptions
-def create_model_deployment_single_model_deployment_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, model_deployment_configuration_details_model_configuration_details, display_name, description, category_log_details, freeform_tags, defined_tags, model_deployment_configuration_details_environment_configuration_details):
+def create_model_deployment_single_model_deployment_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, model_deployment_configuration_details_model_configuration_details, display_name, description, category_log_details, freeform_tags, defined_tags, opc_parent_rpt_url, model_deployment_configuration_details_environment_configuration_details):
 
     kwargs = {}
+    if opc_parent_rpt_url is not None:
+        kwargs['opc_parent_rpt_url'] = opc_parent_rpt_url
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -2264,6 +2282,7 @@ This option is a JSON list with items of type PipelineStepOverrideDetails.  For 
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of system tag keys. These predefined keys are scoped to namespaces. Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--opc-parent-rpt-url', help=u"""URL to fetch the Resource Principal Token from the parent resource.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2272,9 +2291,11 @@ This option is a JSON list with items of type PipelineStepOverrideDetails.  For 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configuration-override-details': {'module': 'data_science', 'class': 'PipelineConfigurationDetails'}, 'log-configuration-override-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'step-override-details': {'module': 'data_science', 'class': 'list[PipelineStepOverrideDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'PipelineRun'})
 @cli_util.wrap_exceptions
-def create_pipeline_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, pipeline_id, project_id, display_name, configuration_override_details, log_configuration_override_details, step_override_details, freeform_tags, defined_tags, system_tags):
+def create_pipeline_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, pipeline_id, project_id, display_name, configuration_override_details, log_configuration_override_details, step_override_details, freeform_tags, defined_tags, system_tags, opc_parent_rpt_url):
 
     kwargs = {}
+    if opc_parent_rpt_url is not None:
+        kwargs['opc_parent_rpt_url'] = opc_parent_rpt_url
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -2348,6 +2369,7 @@ This option is a JSON list with items of type PipelineStepOverrideDetails.  For 
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of system tag keys. These predefined keys are scoped to namespaces. Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--opc-parent-rpt-url', help=u"""URL to fetch the Resource Principal Token from the parent resource.""")
 @cli_util.option('--configuration-override-details-maximum-runtime-in-minutes', type=click.INT, help=u"""A time bound for the execution of the entire Pipeline. Timer starts when the Pipeline Run is in progress.""")
 @cli_util.option('--configuration-override-details-environment-variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Environment variables to set for steps in the pipeline.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-override-details-command-line-arguments', help=u"""The command line arguments to set for steps in the pipeline.""")
@@ -2359,9 +2381,11 @@ This option is a JSON list with items of type PipelineStepOverrideDetails.  For 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'log-configuration-override-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'step-override-details': {'module': 'data_science', 'class': 'list[PipelineStepOverrideDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'configuration-override-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}}, output_type={'module': 'data_science', 'class': 'PipelineRun'})
 @cli_util.wrap_exceptions
-def create_pipeline_run_pipeline_default_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, pipeline_id, project_id, display_name, log_configuration_override_details, step_override_details, freeform_tags, defined_tags, system_tags, configuration_override_details_maximum_runtime_in_minutes, configuration_override_details_environment_variables, configuration_override_details_command_line_arguments):
+def create_pipeline_run_pipeline_default_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, pipeline_id, project_id, display_name, log_configuration_override_details, step_override_details, freeform_tags, defined_tags, system_tags, opc_parent_rpt_url, configuration_override_details_maximum_runtime_in_minutes, configuration_override_details_environment_variables, configuration_override_details_command_line_arguments):
 
     kwargs = {}
+    if opc_parent_rpt_url is not None:
+        kwargs['opc_parent_rpt_url'] = opc_parent_rpt_url
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -6098,8 +6122,9 @@ def update_notebook_session(ctx, from_json, force, wait_for_state, max_wait_seco
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description for the resource.""")
 @cli_util.option('--configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--infrastructure-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--log-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--step-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of update details for each step. Only step configurations are allowed to be updated.
+@cli_util.option('--step-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of update details for each step. Only step configurations and step infrastructure configurations are allowed to be updated.
 
 This option is a JSON list with items of type PipelineStepUpdateDetails.  For documentation on PipelineStepUpdateDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/PipelineStepUpdateDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6109,18 +6134,18 @@ This option is a JSON list with items of type PipelineStepUpdateDetails.  For do
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "FAILED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'configuration-details': {'module': 'data_science', 'class': 'PipelineConfigurationDetails'}, 'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepUpdateDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'configuration-details': {'module': 'data_science', 'class': 'PipelineConfigurationDetails'}, 'infrastructure-configuration-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepUpdateDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configuration-details': {'module': 'data_science', 'class': 'PipelineConfigurationDetails'}, 'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepUpdateDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'Pipeline'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configuration-details': {'module': 'data_science', 'class': 'PipelineConfigurationDetails'}, 'infrastructure-configuration-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepUpdateDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'Pipeline'})
 @cli_util.wrap_exceptions
-def update_pipeline(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, display_name, description, configuration_details, log_configuration_details, step_details, freeform_tags, defined_tags, if_match):
+def update_pipeline(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, display_name, description, configuration_details, infrastructure_configuration_details, log_configuration_details, step_details, freeform_tags, defined_tags, if_match):
 
     if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
     if not force:
-        if configuration_details or log_configuration_details or step_details or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to configuration-details and log-configuration-details and step-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if configuration_details or infrastructure_configuration_details or log_configuration_details or step_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to configuration-details and infrastructure-configuration-details and log-configuration-details and step-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -6138,6 +6163,9 @@ def update_pipeline(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
     if configuration_details is not None:
         _details['configurationDetails'] = cli_util.parse_json_parameter("configuration_details", configuration_details)
+
+    if infrastructure_configuration_details is not None:
+        _details['infrastructureConfigurationDetails'] = cli_util.parse_json_parameter("infrastructure_configuration_details", infrastructure_configuration_details)
 
     if log_configuration_details is not None:
         _details['logConfigurationDetails'] = cli_util.parse_json_parameter("log_configuration_details", log_configuration_details)
@@ -6187,8 +6215,9 @@ def update_pipeline(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 @cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description for the resource.""")
+@cli_util.option('--infrastructure-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--log-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--step-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of update details for each step. Only step configurations are allowed to be updated.
+@cli_util.option('--step-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of update details for each step. Only step configurations and step infrastructure configurations are allowed to be updated.
 
 This option is a JSON list with items of type PipelineStepUpdateDetails.  For documentation on PipelineStepUpdateDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/PipelineStepUpdateDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6201,18 +6230,18 @@ This option is a JSON list with items of type PipelineStepUpdateDetails.  For do
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "FAILED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepUpdateDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'configuration-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'infrastructure-configuration-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepUpdateDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'configuration-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepUpdateDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'configuration-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}}, output_type={'module': 'data_science', 'class': 'Pipeline'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'infrastructure-configuration-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepUpdateDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'configuration-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}}, output_type={'module': 'data_science', 'class': 'Pipeline'})
 @cli_util.wrap_exceptions
-def update_pipeline_pipeline_default_configuration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, display_name, description, log_configuration_details, step_details, freeform_tags, defined_tags, if_match, configuration_details_maximum_runtime_in_minutes, configuration_details_environment_variables, configuration_details_command_line_arguments):
+def update_pipeline_pipeline_default_configuration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, display_name, description, infrastructure_configuration_details, log_configuration_details, step_details, freeform_tags, defined_tags, if_match, configuration_details_maximum_runtime_in_minutes, configuration_details_environment_variables, configuration_details_command_line_arguments):
 
     if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
     if not force:
-        if log_configuration_details or step_details or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to log-configuration-details and step-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if infrastructure_configuration_details or log_configuration_details or step_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to infrastructure-configuration-details and log-configuration-details and step-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -6228,6 +6257,9 @@ def update_pipeline_pipeline_default_configuration_details(ctx, from_json, force
 
     if description is not None:
         _details['description'] = description
+
+    if infrastructure_configuration_details is not None:
+        _details['infrastructureConfigurationDetails'] = cli_util.parse_json_parameter("infrastructure_configuration_details", infrastructure_configuration_details)
 
     if log_configuration_details is not None:
         _details['logConfigurationDetails'] = cli_util.parse_json_parameter("log_configuration_details", log_configuration_details)
