@@ -6,6 +6,45 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.41.0 - 2024-05-21
+--------------------
+Added
+~~~~~
+* Data Science Service
+
+  * Support for Nested Resource Principal
+
+    * ``oci data-science job-run create --opc-parent-rpt-url``
+    * ``oci data-science model-deployment create --opc-parent-rpt-url``
+    * ``oci data-science pipeline-run create --opc-parent-rpt-url``
+
+  * Support for ML Pipelines v2
+
+    * ``oci data-science pipeline update --infrastructure-configuration-details``
+    * ``oci data-science pipeline-run cancel --terminate-gracefully``
+
+* Support for managing Schedules in new Resource Scheduler Service
+
+  * ``oci resource-scheduler``
+
+* Support for backup and replacement of MASTER, UTILITY and EDGE NODES in Big Data Service
+
+  * ``oci bds instance backup-node``
+  * ``oci bds instance create-node-backup-configuration``
+  * ``oci bds instance create-node-replace-configuration``
+  * ``oci bds instance get-node-backup``
+  * ``oci bds instance get-node-backup-configuration``
+  * ``oci bds instance get-node-replace-configuration``
+  * ``oci bds instance list-node-backup-configurations``
+  * ``oci bds instance list-node-backups``
+  * ``oci bds instance list-node-replace-configurations``
+  * ``oci bds instance replace-node``
+  * ``oci bds instance update-node-backup-configuration``
+  * ``oci bds instance update-node-replace-configuration``
+  * ``oci bds node-backup delete``
+  * ``oci bds node-backup-configuration delete``
+  * ``oci bds node-replace-configuration remove``
+
 3.40.3 - 2024-05-14
 --------------------
 Added
