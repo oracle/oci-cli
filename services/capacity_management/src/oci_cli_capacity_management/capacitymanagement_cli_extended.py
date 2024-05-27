@@ -38,6 +38,10 @@ cli_util.rename_command(capacitymanagement_cli, capacitymanagement_cli.occ_avail
 cli_util.rename_command(capacitymanagement_cli, capacitymanagement_cli.occ_availability_collection_group, capacitymanagement_cli.list_occ_availabilities, "list")
 
 
+# oci capacity-management occ-overview-collection list-occ-overviews -> oci capacity-management occ-overview-collection list
+cli_util.rename_command(capacitymanagement_cli, capacitymanagement_cli.occ_overview_collection_group, capacitymanagement_cli.list_occ_overviews, "list")
+
+
 @cli_util.copy_params_from_generated_command(capacitymanagement_cli.create_occ_capacity_request, params_to_exclude=['region_parameterconflict'])
 @capacitymanagement_cli.occ_capacity_request_group.command(name=capacitymanagement_cli.create_occ_capacity_request.name, help=capacitymanagement_cli.create_occ_capacity_request.help)
 @cli_util.option('--target-region', required=True, help=u"""The name of the region for which the capacity request is made. [required]""")

@@ -6,6 +6,60 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.42.0 - 2024-05-28
+--------------------
+Changed
+~~~~~
+* [BREAKING] Capacity Management Service
+
+  * Optional parameter --resource-type accepts only 2 values CAPACITY_CONSTRAINT, SERVER_HW
+  * Optional parameter --workload-type accepts only 3 values GENERIC, ROW, US_PROD
+
+    * ``oci capacity-management occ-availability-collection list``
+    * ``oci capacity-management occ-availability-catalog-collection list-internal``
+
+Added
+~~~~~~~
+* Control Center service
+
+  * Support for Demand Signal features
+
+    * ``oci demand-signal occ-demand-signal-collection list-occ-demand-signals``
+    * ``oci demand-signal occ-demand-signal change-compartment``
+    * ``oci demand-signal occ-demand-signal create``
+    * ``oci demand-signal occ-demand-signal delete``
+    * ``oci demand-signal occ-demand-signal get``
+    * ``oci demand-signal occ-demand-signal update``
+    * ``oci demand-signal occ-demand-signal patch``
+
+  * Support for Capacity Management features
+
+    * ``oci capacity-management occ-capacity-request patch-internal``
+    * ``oci capacity-management occ-overview-collection list-internal-namespace-occ-overviews``
+    * ``oci capacity-management occ-overview-collection list``
+
+* Database Management service
+
+  * Support for Standby Database Monitoring
+
+    * ``oci database-management peer-database-metrics get``
+    * ``oci database-management dataguard-performance-metrics get``
+
+* Database service
+
+  * Support for External Database Connector
+
+    * ``oci db external-db-connector create-macs-connector --connection-credentials``
+    * ``oci db external-db-connector update-macs-connector --connection-credentials``
+
+* Java Management Service
+
+  * Support for tagging related optional parameters in Downloads API
+
+    * ``oci jms-java-downloads java-download-report create --defined-tags, --freeform-tags``
+    * ``oci jms-java-downloads java-license-acceptance-record create --defined-tags, --freeform-tags``
+    * ``oci jms-java-downloads java-license-acceptance-record update --defined-tags, --freeform-tags``
+
 3.41.0 - 2024-05-21
 --------------------
 Added
