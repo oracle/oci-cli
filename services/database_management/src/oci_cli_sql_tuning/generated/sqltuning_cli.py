@@ -185,7 +185,7 @@ def clone_sql_tuning_task_sql_tuning_task_password_credential_details(ctx, from_
 @cli_util.option('--task-description', help=u"""The description of the SQL tuning task.""")
 @cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
@@ -279,7 +279,7 @@ def clone_sql_tuning_task_database_named_credential_details(ctx, from_json, mana
 @cli_util.option('--task-description', help=u"""The description of the SQL tuning task.""")
 @cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
@@ -485,7 +485,7 @@ def create_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, fr
 @cli_util.option('--description', help=u"""The description of the Sql tuning set.""")
 @cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to create the Sql tuning set or just display the plsql used to create Sql tuning set.""")
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
@@ -591,7 +591,7 @@ def create_sql_tuning_set_database_named_credential_details(ctx, from_json, mana
 @cli_util.option('--description', help=u"""The description of the Sql tuning set.""")
 @cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to create the Sql tuning set or just display the plsql used to create Sql tuning set.""")
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
@@ -805,7 +805,7 @@ def drop_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, from
 @cli_util.option('--owner', help=u"""Owner of the Sql tuning set.""")
 @cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to drop  the Sql tuning set or just display the plsql used to drop Sql tuning set.""")
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
@@ -913,7 +913,7 @@ def drop_sql_tuning_set_database_named_credential_details(ctx, from_json, manage
 @cli_util.option('--owner', help=u"""Owner of the Sql tuning set.""")
 @cli_util.option('--show-sql-only', type=click.INT, help=u"""Flag to indicate whether to drop  the Sql tuning set or just display the plsql used to drop Sql tuning set.""")
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
@@ -1086,7 +1086,7 @@ def drop_sql_tuning_task_sql_tuning_task_password_credential_details(ctx, from_j
 @cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
 @cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
@@ -1168,7 +1168,7 @@ def drop_sql_tuning_task_database_named_credential_details(ctx, from_json, manag
 @cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
 @cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
@@ -1386,7 +1386,7 @@ def drop_sqls_in_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(c
 @cli_util.option('--owner', help=u"""The owner of the Sql tuning set.""")
 @cli_util.option('--basic-filter', help=u"""Specifies the Sql predicate to filter the Sql from the Sql tuning set defined on attributes of the SQLSET_ROW. User could use any combination of the following columns with appropriate values as Sql predicate Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/18/arpls/DBMS_SQLTUNE.html#GUID-1F4AFB03-7B29-46FC-B3F2-CB01EC36326C""")
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
@@ -1502,7 +1502,7 @@ def drop_sqls_in_sql_tuning_set_database_named_credential_details(ctx, from_json
 @cli_util.option('--owner', help=u"""The owner of the Sql tuning set.""")
 @cli_util.option('--basic-filter', help=u"""Specifies the Sql predicate to filter the Sql from the Sql tuning set defined on attributes of the SQLSET_ROW. User could use any combination of the following columns with appropriate values as Sql predicate Refer to the documentation https://docs.oracle.com/en/database/oracle/oracle-database/18/arpls/DBMS_SQLTUNE.html#GUID-1F4AFB03-7B29-46FC-B3F2-CB01EC36326C""")
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
@@ -1792,7 +1792,7 @@ def fetch_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, fro
 @cli_util.option('--ranking-measure2', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
 @cli_util.option('--ranking-measure3', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
@@ -1944,7 +1944,7 @@ def fetch_sql_tuning_set_database_named_credential_details(ctx, from_json, manag
 @cli_util.option('--ranking-measure2', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
 @cli_util.option('--ranking-measure3', type=custom_types.CliCaseInsensitiveChoice(["ELAPSED_TIME", "CPU_TIME", "OPTIMIZER_COST", "BUFFER_GETS", "DISK_READS", "DIRECT_WRITES"]), help=u"""Specifies an ORDER BY clause on the selected Sql. User can specify upto three ranking measures.""")
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
@@ -2866,7 +2866,7 @@ def load_sql_tuning_set_sql_tuning_set_admin_secret_credential_details(ctx, from
 @cli_util.option('--end-snapshot', type=click.INT, help=u"""Defines the ending AWR snapshot (inclusive).""")
 @cli_util.option('--baseline-name', help=u"""Specifies the name of the AWR baseline period. When loading the sql statements from AWR, following inputs has to be provided: beginSnapshot and endSnapshot OR baselineName""")
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
@@ -3146,7 +3146,7 @@ def load_sql_tuning_set_database_named_credential_details(ctx, from_json, manage
 @cli_util.option('--end-snapshot', type=click.INT, help=u"""Defines the ending AWR snapshot (inclusive).""")
 @cli_util.option('--baseline-name', help=u"""Specifies the name of the AWR baseline period. When loading the sql statements from AWR, following inputs has to be provided: beginSnapshot and endSnapshot OR baselineName""")
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
@@ -3660,7 +3660,7 @@ def save_sql_tuning_set_as_sql_tuning_set_admin_secret_credential_details(ctx, f
 @cli_util.option('--is-ignore-null', type=click.BOOL, help=u"""Specifies whether to update attributes when the new value is NULL. If TRUE, then the procedure does not update an attribute when the new value is NULL. That is, do not override with NULL values unless intentional. Possible values - true or false""")
 @cli_util.option('--commit-rows', type=click.INT, help=u"""Specifies whether to commit statements after DML. If a value is provided, then the load commits after each specified number of statements is inserted. If NULL is provided, then the load commits only once, at the end of the operation.""")
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
@@ -3912,7 +3912,7 @@ def save_sql_tuning_set_as_database_named_credential_details(ctx, from_json, man
 @cli_util.option('--is-ignore-null', type=click.BOOL, help=u"""Specifies whether to update attributes when the new value is NULL. If TRUE, then the procedure does not update an attribute when the new value is NULL. That is, do not override with NULL values unless intentional. Possible values - true or false""")
 @cli_util.option('--commit-rows', type=click.INT, help=u"""Specifies whether to commit statements after DML. If a value is provided, then the load commits after each specified number of statements is inserted. If NULL is provided, then the load commits only once, at the end of the operation.""")
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
@@ -4238,7 +4238,7 @@ This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For docum
 @cli_util.option('--time-started', type=custom_types.CLI_DATETIME, help=u"""The start time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-ended', type=custom_types.CLI_DATETIME, help=u"""The end time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}, 'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}})
 @cli_util.help_option
 @click.pass_context
@@ -4380,7 +4380,7 @@ This option is a JSON list with items of type SqlTuningTaskSqlDetail.  For docum
 @cli_util.option('--time-started', type=custom_types.CLI_DATETIME, help=u"""The start time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-ended', type=custom_types.CLI_DATETIME, help=u"""The end time of the period in which SQL statements are running.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningTaskCredentialDetails'}, 'sql-tuning-set': {'module': 'database_management', 'class': 'SqlTuningSetInput'}, 'sql-details': {'module': 'database_management', 'class': 'list[SqlTuningTaskSqlDetail]'}})
 @cli_util.help_option
 @click.pass_context
@@ -4593,7 +4593,7 @@ def validate_basic_filter_sql_tuning_set_admin_secret_credential_details(ctx, fr
 @cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
 @cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
@@ -4693,7 +4693,7 @@ def validate_basic_filter_database_named_credential_details(ctx, from_json, mana
 @cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
 @cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'SqlTuningSetAdminCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context

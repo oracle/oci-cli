@@ -16,7 +16,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('jms_java_downloads.jms_java_downloads_root_group.command_name', 'jms-java-downloads'), cls=CommandGroupWithAlias, help=cli_util.override('jms_java_downloads.jms_java_downloads_root_group.help', """The APIs for the download engine of the Java Management Service."""), short_help=cli_util.override('jms_java_downloads.jms_java_downloads_root_group.short_help', """Java Management Service Download API"""))
+@cli.command(cli_util.override('jms_java_downloads.jms_java_downloads_root_group.command_name', 'jms-java-downloads'), cls=CommandGroupWithAlias, help=cli_util.override('jms_java_downloads.jms_java_downloads_root_group.help', """The APIs for the <a href="https://docs.oracle.com/en-us/iaas/jms/doc/java-download.html">Java Download</a> feature of Java Management Service."""), short_help=cli_util.override('jms_java_downloads.jms_java_downloads_root_group.short_help', """Java Management Service Download API"""))
 @cli_util.help_option_group
 def jms_java_downloads_root_group():
     pass
@@ -125,17 +125,19 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.option('--format', required=True, type=custom_types.CliCaseInsensitiveChoice(["CSV"]), help=u"""The format of the report that is generated.""")
 @cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start time from when download records have to be included (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end time until when the download records have to be included (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeDownloaded", "downloadSourceId", "downloadType"]), help=u"""The property to be used for sorting the reports.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order for the reports.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeDownloaded", "downloadSourceId", "downloadType"]), help=u"""The property to be used for sorting the records.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order for the records.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`. (See [Managing Tags and Tag Namespaces].)""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`. (See [Understanding Free-form Tags]).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'jms_java_downloads', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'jms_java_downloads', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'jms_java_downloads', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'jms_java_downloads', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_java_download_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, format, time_start, time_end, sort_by, sort_order):
+def create_java_download_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, format, time_start, time_end, sort_by, sort_order, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -155,6 +157,12 @@ def create_java_download_report(ctx, from_json, wait_for_state, max_wait_seconds
 
     if sort_order is not None:
         _details['sortOrder'] = sort_order
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('jms_java_downloads', 'java_download', ctx)
     result = client.create_java_download_report(
@@ -191,7 +199,7 @@ def create_java_download_report(ctx, from_json, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@java_download_token_group.command(name=cli_util.override('jms_java_downloads.create_java_download_token.command_name', 'create'), help=u"""Creates a new JavaDownloadToken in the tenancy with specified attributes. \n[Command Reference](createJavaDownloadToken)""")
+@java_download_token_group.command(name=cli_util.override('jms_java_downloads.create_java_download_token.command_name', 'create'), help=u"""Creates a new JavaDownloadToken in the tenancy with specified attributes. Ensure that you review the license terms before token generation. Visit the <a href=\"https://www.oracle.com/java/technologies/downloads\"/>Oracle Java Downloads</a> page to understand the license terms of the Java version for which you are generating a token. By generating a token, you agree to the associated license terms. See <a href=\"https://www.oracle.com/cis/java/technologies/javase/jdk-faqs.html\">Oracle JDK Licensing - FAQs</a> for detailed information. \n[Command Reference](createJavaDownloadToken)""")
 @cli_util.option('--display-name', required=True, help=u"""User provided display name of the JavaDownloadToken.""")
 @cli_util.option('--description', required=True, help=u"""User provided description of the JavaDownloadToken.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the tenancy scoped to the JavaDownloadToken.""")
@@ -270,15 +278,17 @@ def create_java_download_token(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.option('--compartment-id', required=True, help=u"""The tenancy [OCID] of the user accepting the license.""")
 @cli_util.option('--license-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["OTN", "NFTC", "RESTRICTED"]), help=u"""License type for the Java version.""")
 @cli_util.option('--license-acceptance-status', required=True, type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "REVOKED"]), help=u"""Status of license acceptance.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`. (See [Managing Tags and Tag Namespaces].)""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`. (See [Understanding Free-form Tags]).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "NEEDS_ATTENTION", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'jms_java_downloads', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'jms_java_downloads', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms_java_downloads', 'class': 'JavaLicenseAcceptanceRecord'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'jms_java_downloads', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'jms_java_downloads', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'jms_java_downloads', 'class': 'JavaLicenseAcceptanceRecord'})
 @cli_util.wrap_exceptions
-def create_java_license_acceptance_record(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, license_type, license_acceptance_status):
+def create_java_license_acceptance_record(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, license_type, license_acceptance_status, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -287,6 +297,12 @@ def create_java_license_acceptance_record(ctx, from_json, wait_for_state, max_wa
     _details['compartmentId'] = compartment_id
     _details['licenseType'] = license_type
     _details['licenseAcceptanceStatus'] = license_acceptance_status
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('jms_java_downloads', 'java_download', ctx)
     result = client.create_java_license_acceptance_record(
@@ -1186,7 +1202,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, id,
 
 @java_download_count_aggregation_group.command(name=cli_util.override('jms_java_downloads.request_summarized_java_download_counts.command_name', 'request-summarized-java-download-counts'), help=u"""Returns list of download counts grouped by the specified property. \n[Command Reference](requestSummarizedJavaDownloadCounts)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID] here should be the tenancy OCID.""")
-@cli_util.option('--group-as', required=True, type=custom_types.CliCaseInsensitiveChoice(["JAVA_FAMILY", "JAVA_RELEASE", "PLATFORM"]), help=u"""Group as property specifying the aggregation type for download counts.""")
+@cli_util.option('--group-as', required=True, type=custom_types.CliCaseInsensitiveChoice(["JAVA_FAMILY", "JAVA_RELEASE", "PLATFORM"]), help=u"""The property that specifies the aggregation type for the download counts.""")
 @cli_util.option('--family-version', help=u"""Unique Java family version identifier.""")
 @cli_util.option('--release-version', help=u"""Unique Java release version identifier.""")
 @cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start time from when download data has to be included (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -1338,19 +1354,26 @@ def update_java_download_token(ctx, from_json, force, wait_for_state, max_wait_s
 @java_license_acceptance_record_group.command(name=cli_util.override('jms_java_downloads.update_java_license_acceptance_record.command_name', 'update'), help=u"""Updates a specific Java license acceptance record in a tenancy. \n[Command Reference](updateJavaLicenseAcceptanceRecord)""")
 @cli_util.option('--java-license-acceptance-record-id', required=True, help=u"""Unique Java license acceptance record identifier.""")
 @cli_util.option('--license-acceptance-status', required=True, type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "REVOKED"]), help=u"""Status of license acceptance.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`. (See [Managing Tags and Tag Namespaces].)""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`. (See [Understanding Free-form Tags]).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the ETag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the ETag you provide matches the resource's current ETag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "NEEDS_ATTENTION", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'jms_java_downloads', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'jms_java_downloads', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms_java_downloads', 'class': 'JavaLicenseAcceptanceRecord'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'jms_java_downloads', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'jms_java_downloads', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'jms_java_downloads', 'class': 'JavaLicenseAcceptanceRecord'})
 @cli_util.wrap_exceptions
-def update_java_license_acceptance_record(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, java_license_acceptance_record_id, license_acceptance_status, if_match):
+def update_java_license_acceptance_record(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, java_license_acceptance_record_id, license_acceptance_status, freeform_tags, defined_tags, if_match):
 
     if isinstance(java_license_acceptance_record_id, six.string_types) and len(java_license_acceptance_record_id.strip()) == 0:
         raise click.UsageError('Parameter --java-license-acceptance-record-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -1359,6 +1382,12 @@ def update_java_license_acceptance_record(ctx, from_json, wait_for_state, max_wa
 
     _details = {}
     _details['licenseAcceptanceStatus'] = license_acceptance_status
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('jms_java_downloads', 'java_download', ctx)
     result = client.update_java_license_acceptance_record(

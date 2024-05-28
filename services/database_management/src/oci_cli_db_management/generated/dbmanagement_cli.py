@@ -78,6 +78,12 @@ def external_database_collection_group():
     pass
 
 
+@click.command(cli_util.override('db_management.peer_database_metrics_group.command_name', 'peer-database-metrics'), cls=CommandGroupWithAlias, help="""The summary of resource usage metrics for the peer database.""")
+@cli_util.help_option_group
+def peer_database_metrics_group():
+    pass
+
+
 @click.command(cli_util.override('db_management.tablespace_group.command_name', 'tablespace'), cls=CommandGroupWithAlias, help="""The details of a tablespace.""")
 @cli_util.help_option_group
 def tablespace_group():
@@ -147,6 +153,12 @@ def historic_addm_result_group():
 @click.command(cli_util.override('db_management.cluster_cache_metric_group.command_name', 'cluster-cache-metric'), cls=CommandGroupWithAlias, help="""The response containing the cluster cache metrics for the Oracle Real Application Clusters (Oracle RAC) database.""")
 @cli_util.help_option_group
 def cluster_cache_metric_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.dataguard_performance_metrics_group.command_name', 'dataguard-performance-metrics'), cls=CommandGroupWithAlias, help="""A summary of Data Guard performance metrics for Managed Databases.""")
+@cli_util.help_option_group
+def dataguard_performance_metrics_group():
     pass
 
 
@@ -250,6 +262,7 @@ db_management_root_group.add_command(pdb_metrics_group)
 db_management_root_group.add_command(work_request_group)
 db_management_root_group.add_command(database_home_metrics_group)
 db_management_root_group.add_command(external_database_collection_group)
+db_management_root_group.add_command(peer_database_metrics_group)
 db_management_root_group.add_command(tablespace_group)
 db_management_root_group.add_command(work_request_error_group)
 db_management_root_group.add_command(db_management_private_endpoint_group)
@@ -262,6 +275,7 @@ db_management_root_group.add_command(snapshot_details_group)
 db_management_root_group.add_command(external_asm_instance_group)
 db_management_root_group.add_command(historic_addm_result_group)
 db_management_root_group.add_command(cluster_cache_metric_group)
+db_management_root_group.add_command(dataguard_performance_metrics_group)
 db_management_root_group.add_command(named_credential_group)
 db_management_root_group.add_command(work_request_log_entry_group)
 db_management_root_group.add_command(external_listener_group)
@@ -478,7 +492,7 @@ Use `MEMORY` to make the change in memory and affect it immediately. Use `SPFILE
 @cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'parameters': {'module': 'database_management', 'class': 'list[ChangeDatabaseParameterDetails]'}})
 @cli_util.help_option
 @click.pass_context
@@ -576,7 +590,7 @@ Use `MEMORY` to make the change in memory and affect it immediately. Use `SPFILE
 @cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'parameters': {'module': 'database_management', 'class': 'list[ChangeDatabaseParameterDetails]'}})
 @cli_util.help_option
 @click.pass_context
@@ -996,7 +1010,7 @@ The database purges plans that have not been used for longer than the plan reten
 @cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -1082,7 +1096,7 @@ The database purges plans that have not been used for longer than the plan reten
 @cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -1245,7 +1259,7 @@ def change_space_budget_managed_database_secret_credential(ctx, from_json, manag
 @cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -1327,7 +1341,7 @@ def change_space_budget_database_named_credential_details(ctx, from_json, manage
 @cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -1548,7 +1562,7 @@ def change_sql_plan_baselines_attributes_managed_database_secret_credential(ctx,
 @cli_util.option('--is-auto-purged', type=click.BOOL, help=u"""Indicates whether the plan is purged if it is not used for a time period.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -1666,7 +1680,7 @@ def change_sql_plan_baselines_attributes_database_named_credential_details(ctx, 
 @cli_util.option('--is-auto-purged', type=click.BOOL, help=u"""Indicates whether the plan is purged if it is not used for a time period.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -1919,7 +1933,7 @@ def configure_automatic_capture_filters_managed_database_secret_credential(ctx, 
 @cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'auto-capture-filters': {'module': 'database_management', 'class': 'list[AutomaticCaptureFilterDetails]'}, 'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -2001,7 +2015,7 @@ def configure_automatic_capture_filters_database_named_credential_details(ctx, f
 @cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'auto-capture-filters': {'module': 'database_management', 'class': 'list[AutomaticCaptureFilterDetails]'}, 'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -2164,7 +2178,7 @@ def configure_automatic_spm_evolve_advisor_task_managed_database_secret_credenti
 @cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'task-parameters': {'module': 'database_management', 'class': 'SpmEvolveTaskParameters'}, 'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -2246,7 +2260,7 @@ def configure_automatic_spm_evolve_advisor_task_database_named_credential_detail
 @cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'task-parameters': {'module': 'database_management', 'class': 'SpmEvolveTaskParameters'}, 'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -3208,7 +3222,7 @@ def create_named_credential(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_DB"]), help=u"""The type of resource associated with the named credential.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the named credential resides.""")
 @cli_util.option('--content-user-name', required=True, help=u"""The user name used to connect to the database.""")
-@cli_util.option('--content-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--content-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @cli_util.option('--content-password-secret-id', required=True, help=u"""The [OCID] of the Vault service secret that contains the database user password.""")
 @cli_util.option('--content-password-secret-access-mode', required=True, type=custom_types.CliCaseInsensitiveChoice(["USER_PRINCIPAL", "RESOURCE_PRINCIPAL"]), help=u"""The mechanism used to access the password plain text value.""")
 @cli_util.option('--description', help=u"""The information specified by the user about the named credential.""")
@@ -4093,7 +4107,7 @@ def disable_automatic_initial_plan_capture_managed_database_secret_credential(ct
 @cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -4171,7 +4185,7 @@ def disable_automatic_initial_plan_capture_database_named_credential_details(ctx
 @cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -4334,7 +4348,7 @@ One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve A
 @cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -4416,7 +4430,7 @@ One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve A
 @cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -4992,7 +5006,7 @@ It is available only on Oracle Exadata Database Machine, Oracle Database Exadata
 @cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -5074,7 +5088,7 @@ It is available only on Oracle Exadata Database Machine, Oracle Database Exadata
 @cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -5298,7 +5312,7 @@ When disabled, the optimizer does not use any SQL plan baselines. \n[Command Ref
 @cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -5380,7 +5394,7 @@ When disabled, the optimizer does not use any SQL plan baselines. \n[Command Ref
 @cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -5603,7 +5617,7 @@ def drop_sql_plan_baselines_managed_database_secret_credential(ctx, from_json, m
 @cli_util.option('--plan-name', help=u"""The plan name. It identifies a specific plan. If `null' then all plans associated with the SQL statement identified by `sqlHandle' are dropped.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -5697,7 +5711,7 @@ def drop_sql_plan_baselines_database_named_credential_details(ctx, from_json, ma
 @cli_util.option('--plan-name', help=u"""The plan name. It identifies a specific plan. If `null' then all plans associated with the SQL statement identified by `sqlHandle' are dropped.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -5913,7 +5927,7 @@ def drop_tablespace_tablespace_admin_secret_credential_details(ctx, from_json, m
 @cli_util.option('--is-dropping-data-files', type=click.BOOL, help=u"""Specifies whether all the associated data files of the tablespace being dropped should be dropped.""")
 @cli_util.option('--is-cascade-constraints', type=click.BOOL, help=u"""Specifies whether all the constraints on the tablespace being dropped should be dropped.""")
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
@@ -6025,7 +6039,7 @@ def drop_tablespace_database_named_credential_details(ctx, from_json, managed_da
 @cli_util.option('--is-dropping-data-files', type=click.BOOL, help=u"""Specifies whether all the associated data files of the tablespace being dropped should be dropped.""")
 @cli_util.option('--is-cascade-constraints', type=click.BOOL, help=u"""Specifies whether all the constraints on the tablespace being dropped should be dropped.""")
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
@@ -6201,7 +6215,7 @@ By default, the database creates a SQL plan baseline for every eligible repeatab
 @cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -6283,7 +6297,7 @@ By default, the database creates a SQL plan baseline for every eligible repeatab
 @cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -6462,7 +6476,7 @@ One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve A
 @cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -6552,7 +6566,7 @@ One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve A
 @cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -7424,7 +7438,7 @@ It is available only on Oracle Exadata Database Machine, Oracle Database Exadata
 @cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -7510,7 +7524,7 @@ It is available only on Oracle Exadata Database Machine, Oracle Database Exadata
 @cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -7806,7 +7820,7 @@ When enabled, the optimizer uses SQL plan baselines to select plans to avoid pot
 @cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -7888,7 +7902,7 @@ When enabled, the optimizer uses SQL plan baselines to select plans to avoid pot
 @cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -8168,6 +8182,38 @@ def get_database_home_metrics(ctx, from_json, managed_database_id, start_time, e
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.get_database_home_metrics(
+        managed_database_id=managed_database_id,
+        start_time=start_time,
+        end_time=end_time,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@dataguard_performance_metrics_group.command(name=cli_util.override('db_management.get_dataguard_performance_metrics.command_name', 'get'), help=u"""Gets a historical summary of the Database Guard performance metrics for Managed Databases. If the peerDatabaseCompartmentId is specified, then the metrics are only retrieved from the specified compartment. If the peerDatabaseCompartmentId is not specified, then the metrics are retrieved from the compartment of the Managed Database specified by the ManagedDatabaseId. \n[Command Reference](getDataguardPerformanceMetrics)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--start-time', required=True, help=u"""The start time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
+@cli_util.option('--end-time', required=True, help=u"""The end time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
+@cli_util.option('--peer-database-compartment-id', help=u"""The [OCID] of the compartment for which peer database metrics are required. This is not a mandatory parameter and in its absence, all the peer database metrics are returned.""")
+@cli_util.option('--filter-by-metric-names', help=u"""The filter used to retrieve a specific set of metrics by passing the desired metric names with a comma separator. Note that, by default, the service returns all supported metrics.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'DataguardPerformanceMetrics'})
+@cli_util.wrap_exceptions
+def get_dataguard_performance_metrics(ctx, from_json, managed_database_id, start_time, end_time, peer_database_compartment_id, filter_by_metric_names):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if peer_database_compartment_id is not None:
+        kwargs['peer_database_compartment_id'] = peer_database_compartment_id
+    if filter_by_metric_names is not None:
+        kwargs['filter_by_metric_names'] = filter_by_metric_names
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_dataguard_performance_metrics(
         managed_database_id=managed_database_id,
         start_time=start_time,
         end_time=end_time,
@@ -8828,6 +8874,41 @@ def get_pdb_metrics(ctx, from_json, managed_database_id, start_time, end_time, c
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.get_pdb_metrics(
+        managed_database_id=managed_database_id,
+        start_time=start_time,
+        end_time=end_time,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@peer_database_metrics_group.command(name=cli_util.override('db_management.get_peer_database_metrics.command_name', 'get'), help=u"""Gets a comparative summary of the baseline and target values of the Data Guard performance metrics for Managed Databases. If the peerDatabaseCompartmentId is specified, then the metrics are only retrieved from the specified compartment. If the peerDatabaseCompartmentId is not specified, then the metrics are retrieved from the compartment of the Managed Database specified by the ManagedDatabaseId. \n[Command Reference](getPeerDatabaseMetrics)""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--start-time', required=True, help=u"""The start time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
+@cli_util.option('--end-time', required=True, help=u"""The end time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
+@cli_util.option('--peer-database-compartment-id', help=u"""The [OCID] of the compartment for which peer database metrics are required. This is not a mandatory parameter and in its absence, all the peer database metrics are returned.""")
+@cli_util.option('--compare-type', type=custom_types.CliCaseInsensitiveChoice(["HOUR", "DAY", "WEEK"]), help=u"""The time window used for metrics comparison.""")
+@cli_util.option('--filter-by-metric-names', help=u"""The filter used to retrieve a specific set of metrics by passing the desired metric names with a comma separator. Note that, by default, the service returns all supported metrics.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'PeerDatabaseMetrics'})
+@cli_util.wrap_exceptions
+def get_peer_database_metrics(ctx, from_json, managed_database_id, start_time, end_time, peer_database_compartment_id, compare_type, filter_by_metric_names):
+
+    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if peer_database_compartment_id is not None:
+        kwargs['peer_database_compartment_id'] = peer_database_compartment_id
+    if compare_type is not None:
+        kwargs['compare_type'] = compare_type
+    if filter_by_metric_names is not None:
+        kwargs['filter_by_metric_names'] = filter_by_metric_names
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_peer_database_metrics(
         managed_database_id=managed_database_id,
         start_time=start_time,
         end_time=end_time,
@@ -12292,7 +12373,7 @@ def load_sql_plan_baselines_from_awr_managed_database_secret_credential(ctx, fro
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Indicates whether the loaded plans are enabled (`true`) or not (`false`). By default, they are enabled.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -12414,7 +12495,7 @@ def load_sql_plan_baselines_from_awr_database_named_credential_details(ctx, from
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Indicates whether the loaded plans are enabled (`true`) or not (`false`). By default, they are enabled.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -12716,7 +12797,7 @@ def load_sql_plan_baselines_from_cursor_cache_managed_database_secret_credential
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Indicates whether the loaded plans are enabled (`true`) or not (`false`). By default, they are enabled.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -12874,7 +12955,7 @@ def load_sql_plan_baselines_from_cursor_cache_database_named_credential_details(
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Indicates whether the loaded plans are enabled (`true`) or not (`false`). By default, they are enabled.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'ManagedDatabaseCredential'}})
 @cli_util.help_option
 @click.pass_context
@@ -13388,7 +13469,7 @@ def remove_data_file_tablespace_admin_secret_credential_details(ctx, from_json, 
 @cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
 @cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
@@ -13484,7 +13565,7 @@ def remove_data_file_database_named_credential_details(ctx, from_json, managed_d
 @cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
 @cli_util.option('--credential-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credential-details': {'module': 'database_management', 'class': 'TablespaceAdminCredentialDetails'}})
 @cli_util.help_option
 @click.pass_context
@@ -13605,7 +13686,7 @@ Use `MEMORY` to make the change in memory and ensure that it takes effect immedi
 @cli_util.option('--database-credential-password-secret-id', required=True, help=u"""The [OCID] of the Secret where the database password is stored.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'parameters': {'module': 'database_management', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
@@ -13695,7 +13776,7 @@ Use `MEMORY` to make the change in memory and ensure that it takes effect immedi
 @cli_util.option('--database-credential-password', required=True, help=u"""The database user's password encoded using BASE64 scheme.""")
 @cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-credential-username', help=u"""The user to connect to the database.""")
-@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--database-credential-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @json_skeleton_utils.get_cli_json_input_option({'credentials': {'module': 'database_management', 'class': 'DatabaseCredentials'}, 'parameters': {'module': 'database_management', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
@@ -14810,7 +14891,7 @@ def test_preferred_credential_test_named_preferred_credential_details(ctx, from_
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential.""")
 @cli_util.option('--user-name', help=u"""The user name used to connect to the database.""")
-@cli_util.option('--role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @cli_util.option('--password-secret-id', help=u"""The [OCID] of the Vault service secret that contains the database user password.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -16522,7 +16603,7 @@ def update_named_credential(ctx, from_json, force, wait_for_state, max_wait_seco
 @named_credential_group.command(name=cli_util.override('db_management.update_named_credential_basic_named_credential_content.command_name', 'update-named-credential-basic-named-credential-content'), help=u"""Updates the named credential specified by namedCredentialId. \n[Command Reference](updateNamedCredential)""")
 @cli_util.option('--named-credential-id', required=True, help=u"""The [OCID] of the named credential.""")
 @cli_util.option('--content-user-name', required=True, help=u"""The user name used to connect to the database.""")
-@cli_util.option('--content-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--content-role', required=True, type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @cli_util.option('--content-password-secret-id', required=True, help=u"""The [OCID] of the Vault service secret that contains the database user password.""")
 @cli_util.option('--content-password-secret-access-mode', required=True, type=custom_types.CliCaseInsensitiveChoice(["USER_PRINCIPAL", "RESOURCE_PRINCIPAL"]), help=u"""The mechanism used to access the password plain text value.""")
 @cli_util.option('--description', help=u"""The information specified by the user about the named credential.""")
@@ -16690,7 +16771,7 @@ def update_preferred_credential_update_named_preferred_credential_details(ctx, f
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--credential-name', required=True, help=u"""The name of the preferred credential.""")
 @cli_util.option('--user-name', help=u"""The user name used to connect to the database.""")
-@cli_util.option('--role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA"]), help=u"""The role of the database user.""")
+@cli_util.option('--role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL", "SYSDBA", "SYSDG"]), help=u"""The role of the database user.""")
 @cli_util.option('--password-secret-id', help=u"""The [OCID] of the Vault service secret that contains the database user password.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})

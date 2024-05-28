@@ -220,7 +220,7 @@ service_mapping = {
     ],
     "database-migration": [
         "database_migration",
-        "Oracle Database Migration Service",
+        "Database Migration",
         "Migration"
     ],
     "db": [
@@ -232,6 +232,11 @@ service_mapping = {
         "database_tools",
         "Database Tools",
         "Developer Services"
+    ],
+    "demand-signal": [
+        "demand_signal",
+        "OCI Control Center Demand Signal",
+        "Others"
     ],
     "desktops": [
         "desktops",
