@@ -606,3 +606,39 @@ cli_util.rename_command(goldengate_cli, goldengate_cli.certificate_collection_gr
 goldengate_cli.goldengate_root_group.commands.pop(goldengate_cli.certificate_collection_group.name)
 goldengate_cli.certificate_group.add_command(goldengate_cli.create_certificate)
 goldengate_cli.certificate_group.add_command(goldengate_cli.list_certificates)
+
+
+# oci goldengate connection add -> oci goldengate connection add-lock
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.add_connection_lock, "add-lock")
+
+
+# oci goldengate connection remove -> oci goldengate connection remove-lock
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.remove_connection_lock, "remove-lock")
+
+
+# oci goldengate deployment add -> oci goldengate deployment add-lock
+cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_group, goldengate_cli.add_deployment_lock, "add-lock")
+
+
+# oci goldengate deployment remove -> oci goldengate deployment remove-lock
+cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_group, goldengate_cli.remove_deployment_lock, "remove-lock")
+
+
+# oci goldengate deployment-backup add -> oci goldengate deployment-backup add-lock
+cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_backup_group, goldengate_cli.add_deployment_backup_lock, "add-lock")
+
+
+# oci goldengate deployment-backup remove -> oci goldengate deployment-backup remove-lock
+cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_backup_group, goldengate_cli.remove_deployment_backup_lock, "remove-lock")
+
+
+# oci goldengate connection create-connection-create-db2-connection-details -> oci goldengate connection create-db2-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_db2_connection_details, "create-db2-connection")
+
+
+# oci goldengate connection update-connection-update-db2-connection-details -> oci goldengate connection update-db2-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_db2_connection_details, "update-db2-connection")
+
+
+# oci goldengate deployment generate-library-url-generate-log-reader-component-library-url-details -> oci goldengate deployment generate-log-reader-component-library-url
+cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_group, goldengate_cli.generate_library_url_generate_log_reader_component_library_url_details, "generate-log-reader-component-library-url")

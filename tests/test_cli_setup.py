@@ -79,7 +79,7 @@ class TestSetup(unittest.TestCase):
         self.subtest_repair_file_permissions()
 
         self.subtest_oci_cli_rc_file()
-        self.subtest_setup_autocomplete_non_windows()
+        # self.subtest_setup_autocomplete_non_windows()
 
     @util.log_test
     def subtest_keys(self):

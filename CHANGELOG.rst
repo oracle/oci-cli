@@ -6,6 +6,57 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.43.0 - 2024-06-04
+--------------------
+Changed
+~~~~~~~
+* Generative AI Service Inference
+
+  * [BREAKING] Optional parameter ``--chat-request`` has now been made required in the following commands
+
+    * ``oci generative-ai-inference chat-result chat``
+    * ``oci generative-ai-inference chat-result chat-dedicated-serving-mode``
+    * ``oci generative-ai-inference chat-result chat-on-demand-serving-mode``
+
+  * Complex parameters --chat-request, --chat-request-chat-history has been updated in the following command
+
+    * ``oci generative-ai-inference chat-result chat-cohere-chat-request``
+
+* Generative AI Service Management
+
+  * Added support of dedicated AI cluster unit shape SMALL_COHERE_V2, LARGE_COHERE_V2, LARGE_COHERE_V2_2 and LARGE_GENERIC in the following command
+ 
+     * ``oci generative-ai dedicated-ai-cluster create`` 
+
+Added
+~~~~~
+* Database Service
+
+  * Support for creating cross tenancy autonomous data guard
+
+    ``oci db autonomous-database create-cross-tenancy-disaster-recovery-details``
+
+  * Support for listing autonomous database peers
+
+    ``oci db autonomous-database list-autonomous-database-peers``
+
+* GoldenGate Service
+
+  * Support for add/remove lock for resources
+
+    ``oci goldengate connection add-lock``
+    ``oci goldengate connection remove-lock``
+    ``oci goldengate deployment add-lock``
+    ``oci goldengate deployment remove-lock``
+    ``oci goldengate deployment-backup add-lock``
+    ``oci goldengate deployment-backup remove-lock``
+
+  * Support for creating/updating new connection types
+
+    ``oci goldengate connection create-db2-connection``
+    ``oci goldengate connection update-db2-connection``
+    ``oci goldengate deployment generate-log-reader-component-library-url``
+
 3.42.0 - 2024-05-28
 --------------------
 Changed

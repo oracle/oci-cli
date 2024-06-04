@@ -2,6 +2,9 @@
 # Copyright (c) 2016, 2024, Oracle and/or its affiliates. All rights reserved.
 
 SDK_client_map = {
+    "goldengate.add_connection_lock": "oci.golden_gate.GoldenGateClient.add_connection_lock",
+    "goldengate.add_deployment_backup_lock": "oci.golden_gate.GoldenGateClient.add_deployment_backup_lock",
+    "goldengate.add_deployment_lock": "oci.golden_gate.GoldenGateClient.add_deployment_lock",
     "goldengate.cancel_deployment_backup": "oci.golden_gate.GoldenGateClient.cancel_deployment_backup",
     "goldengate.cancel_deployment_upgrade": "oci.golden_gate.GoldenGateClient.cancel_deployment_upgrade",
     "goldengate.cancel_snooze_deployment_upgrade": "oci.golden_gate.GoldenGateClient.cancel_snooze_deployment_upgrade",
@@ -25,6 +28,7 @@ SDK_client_map = {
     "goldengate.delete_deployment_backup": "oci.golden_gate.GoldenGateClient.delete_deployment_backup",
     "goldengate.deployment_wallet_exists": "oci.golden_gate.GoldenGateClient.deployment_wallet_exists",
     "goldengate.export_deployment_wallet": "oci.golden_gate.GoldenGateClient.export_deployment_wallet",
+    "goldengate.generate_library_url": "oci.golden_gate.GoldenGateClient.generate_library_url",
     "goldengate.get_certificate": "oci.golden_gate.GoldenGateClient.get_certificate",
     "goldengate.get_connection": "oci.golden_gate.GoldenGateClient.get_connection",
     "goldengate.get_connection_assignment": "oci.golden_gate.GoldenGateClient.get_connection_assignment",
@@ -50,6 +54,9 @@ SDK_client_map = {
     "goldengate.list_work_request_errors": "oci.golden_gate.GoldenGateClient.list_work_request_errors",
     "goldengate.list_work_request_logs": "oci.golden_gate.GoldenGateClient.list_work_request_logs",
     "goldengate.list_work_requests": "oci.golden_gate.GoldenGateClient.list_work_requests",
+    "goldengate.remove_connection_lock": "oci.golden_gate.GoldenGateClient.remove_connection_lock",
+    "goldengate.remove_deployment_backup_lock": "oci.golden_gate.GoldenGateClient.remove_deployment_backup_lock",
+    "goldengate.remove_deployment_lock": "oci.golden_gate.GoldenGateClient.remove_deployment_lock",
     "goldengate.reschedule_deployment_upgrade": "oci.golden_gate.GoldenGateClient.reschedule_deployment_upgrade",
     "goldengate.restore_deployment": "oci.golden_gate.GoldenGateClient.restore_deployment",
     "goldengate.rollback_deployment_upgrade": "oci.golden_gate.GoldenGateClient.rollback_deployment_upgrade",

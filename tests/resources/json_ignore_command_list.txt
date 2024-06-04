@@ -394,4 +394,10 @@ os-management-hub, managed-instance-group, install-windows-updates
 data-integration, workspace, create
 db, cluster, update
 db, vm-cluster, update
+db, vm-cluster, create
 network, ipam, list-ip-inventory
+goldengate, connection, create-postgresql-connection
+goldengate, connection, create-object-storage-connection
+goldengate, connection, create-azure-data-lake-storage-connection
+goldengate, connection, create-oracle-nosql-connection
+goldengate, deployment, create

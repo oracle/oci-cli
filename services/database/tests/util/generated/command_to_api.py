@@ -199,6 +199,7 @@ SDK_client_map = {
     "db.list_autonomous_database_character_sets": "oci.database.DatabaseClient.list_autonomous_database_character_sets",
     "db.list_autonomous_database_clones": "oci.database.DatabaseClient.list_autonomous_database_clones",
     "db.list_autonomous_database_dataguard_associations": "oci.database.DatabaseClient.list_autonomous_database_dataguard_associations",
+    "db.list_autonomous_database_peers": "oci.database.DatabaseClient.list_autonomous_database_peers",
     "db.list_autonomous_database_refreshable_clones": "oci.database.DatabaseClient.list_autonomous_database_refreshable_clones",
     "db.list_autonomous_database_software_images": "oci.database.DatabaseClient.list_autonomous_database_software_images",
     "db.list_autonomous_databases": "oci.database.DatabaseClient.list_autonomous_databases",
