@@ -95,7 +95,7 @@ def delete_message(ctx, from_json, queue_id, message_receipt):
     cli_util.render_response(result, ctx)
 
 
-@get_message_group.command(name=cli_util.override('queue.delete_messages.command_name', 'delete-messages'), help=u"""Deletes multiple messages from the queue. You must use the [messages endpoint] to delete messages. The messages endpoint may be different for different queues. Use [`GetQueue`] to find the queue's `messagesEndpoint`. \n[Command Reference](deleteMessages)""")
+@get_message_group.command(name=cli_util.override('queue.delete_messages.command_name', 'delete-messages'), help=u"""Deletes multiple messages from the queue or the consumer group. Only messages from the same queue/consumer group can be deleted at once. You must use the [messages endpoint] to delete messages. The messages endpoint may be different for different queues. Use [`GetQueue`] to find the queue's `messagesEndpoint`. \n[Command Reference](deleteMessages)""")
 @cli_util.option('--queue-id', required=True, help=u"""The unique queue identifier.""")
 @cli_util.option('--entries', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The array of messages to delete from a queue.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'entries': {'module': 'queue', 'class': 'list[DeleteMessagesDetailsEntry]'}})
@@ -301,7 +301,7 @@ def update_message(ctx, from_json, queue_id, message_receipt, visibility_in_seco
     cli_util.render_response(result, ctx)
 
 
-@get_message_group.command(name=cli_util.override('queue.update_messages.command_name', 'update-messages'), help=u"""Updates multiple messages in the queue. You must use the [messages endpoint] to update messages. The messages endpoint may be different for different queues. Use [`GetQueue`] to find the queue's `messagesEndpoint`. \n[Command Reference](updateMessages)""")
+@get_message_group.command(name=cli_util.override('queue.update_messages.command_name', 'update-messages'), help=u"""Updates multiple messages in the queue or the consumer group. Only messages from the same queue/consumer group can be updated at once. You must use the [messages endpoint] to update messages. The messages endpoint may be different for different queues. Use [`GetQueue`] to find the queue's `messagesEndpoint`. \n[Command Reference](updateMessages)""")
 @cli_util.option('--queue-id', required=True, help=u"""The unique queue identifier.""")
 @cli_util.option('--entries', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The array of messages to update in a queue.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'entries': {'module': 'queue', 'class': 'list[UpdateMessagesDetailsEntry]'}})

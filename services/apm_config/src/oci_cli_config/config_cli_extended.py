@@ -64,3 +64,15 @@ cli_util.rename_command(config_cli, config_cli.metric_group_group, config_cli.re
 
 # oci apm-config span-filter validate-span-filter-pattern -> oci apm-config span-filter validate-pattern
 cli_util.rename_command(config_cli, config_cli.span_filter_group, config_cli.validate_span_filter_pattern, "validate-pattern")
+
+
+# oci apm-config test-output test -> oci apm-config test-output test
+cli_util.rename_command(config_cli, config_cli.test_output_group, config_cli.test, "test")
+
+
+# oci apm-config test-output test-test-span-enrichment-details -> oci apm-config test-output span-enrichment-group
+cli_util.rename_command(config_cli, config_cli.test_output_group, config_cli.test_test_span_enrichment_details, "span-enrichment-group")
+
+
+# oci apm-config test-output -> oci apm-config test
+cli_util.rename_command(config_cli, config_cli.apm_config_root_group, config_cli.test_output_group, "test")

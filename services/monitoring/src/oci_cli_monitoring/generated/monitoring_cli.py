@@ -148,7 +148,7 @@ Example: `High CPU Utilization`""")
 @cli_util.option('--namespace', required=True, help=u"""The source service or application emitting the metric that is evaluated by the alarm.
 
 Example: `oci_computeagent`""")
-@cli_util.option('--query-parameterconflict', required=True, help=u"""The Monitoring Query Language (MQL) expression to evaluate for the alarm. The Alarms feature of the Monitoring service interprets results for each returned time series as Boolean values, where zero represents false and a non-zero value represents true. A true value means that the trigger rule condition has been met. The query must specify a metric, statistic, interval, and trigger rule (threshold or absence). Supported values for interval depend on the specified time range. More interval values are supported for smaller time ranges. You can optionally specify dimensions and grouping functions. Supported grouping functions: `grouping()`, `groupBy()`. For information about writing MQL expressions, see [Editing the MQL Expression for a Query]. For details about MQL, see [Monitoring Query Language (MQL) Reference]. For available dimensions, review the metric definition for the supported service. See [Supported Services].
+@cli_util.option('--query-parameterconflict', required=True, help=u"""The Monitoring Query Language (MQL) expression to evaluate for the alarm. The Alarms feature of the Monitoring service interprets results for each returned time series as Boolean values, where zero represents false and a non-zero value represents true. A true value means that the trigger rule condition has been met. The query must specify a metric, statistic, interval, and trigger rule (threshold or absence). Supported values for interval depend on the specified time range. More interval values are supported for smaller time ranges. You can optionally specify dimensions and grouping functions. Also, you can customize the [absence detection period]. Supported grouping functions: `grouping()`, `groupBy()`. For information about writing MQL expressions, see [Editing the MQL Expression for a Query]. For details about MQL, see [Monitoring Query Language (MQL) Reference]. For available dimensions, review the metric definition for the supported service. See [Supported Services].
 
 Example of threshold alarm:
 
@@ -163,6 +163,12 @@ Example of absence alarm:
   -----
 
     CpuUtilization[1m]{availabilityDomain=\"cumS:PHX-AD-1\"}.absent()
+
+  ----- Example of absence alarm with custom absence detection period of 20 hours:
+
+  -----
+
+    CpuUtilization[1m]{availabilityDomain=\"cumS:PHX-AD-1\"}.absent(20h)
 
   -----""")
 @cli_util.option('--severity', required=True, help=u"""The perceived type of response required when the alarm is in the \"FIRING\" state.
@@ -188,7 +194,7 @@ Under the default value of PT1M, the first evaluation that breaches the alarm up
 The alarm updates its status to \"OK\" when the breaching condition has been clear for the most recent minute.
 
 Example: `PT5M`""")
-@cli_util.option('--body', help=u"""The human-readable content of the delivered alarm notification. Oracle recommends providing guidance to operators for resolving the alarm condition. Consider adding links to standard runbook practices. Avoid entering confidential information.
+@cli_util.option('--body', help=u"""The human-readable content of the delivered alarm notification. Optionally include [dynamic variables]. Oracle recommends providing guidance to operators for resolving the alarm condition. Consider adding links to standard runbook practices. Avoid entering confidential information.
 
 Example: `High CPU usage alert. Follow runbook instructions for resolution.`""")
 @cli_util.option('--is-notifications-per-metric-dimension-enabled', type=click.BOOL, help=u"""When set to `true`, splits alarm notifications per metric stream. When set to `false`, groups alarm notifications across metric streams. Example: `true`""")
@@ -206,8 +212,11 @@ Example: `PT2H`""")
 Each override can specify values for query, severity, body, and pending duration. When an alarm contains overrides, the Monitoring service evaluates each override in order, beginning with the first override in the array (index position `0`), and then evaluates the alarm's base values (`ruleName` value of `BASE`).
 
 This option is a JSON list with items of type AlarmOverride.  For documentation on AlarmOverride please see our API reference: https://docs.cloud.oracle.com/api/#/en/monitoring/20180401/datatypes/AlarmOverride.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--rule-name', help=u"""Identifier of the alarm's base values for alarm evaluation, for use when the alarm contains overrides. A valid ruleName value starts with an alphabetic character and includes only alphanumeric characters, underscores and square brackets. Minimum number of characters: 3. Default value is `BASE`. For information about alarm overrides, see [AlarmOverride].""")
+@cli_util.option('--rule-name', help=u"""Identifier of the alarm's base values for alarm evaluation, for use when the alarm contains overrides. Default value is `BASE`. For information about alarm overrides, see [AlarmOverride].""")
 @cli_util.option('--notification-version', help=u"""The version of the alarm notification to be delivered. Allowed value: `1.X` The value must start with a number (up to four digits), followed by a period and an uppercase X.""")
+@cli_util.option('--notification-title', help=u"""Customizable notification title (`title` [alarm message parameter]). Optionally include [dynamic variables]. The notification title appears as the subject line in a formatted email message and as the title in a Slack message.""")
+@cli_util.option('--evaluation-slack-duration', help=u"""Customizable slack period to wait for metric ingestion before evaluating the alarm. Specify a string in ISO 8601 format (`PT10M` for ten minutes or `PT1H` for one hour). Minimum: PT3M. Maximum: PT2H. Default: PT3M. For more information about the slack period, see [About the Internal Reset Period].""")
+@cli_util.option('--alarm-summary', help=u"""Customizable alarm summary (`alarmSummary` [alarm message parameter]). Optionally include [dynamic variables]. The alarm summary appears within the body of the alarm message and in responses to [ListAlarmStatus] [GetAlarmHistory] and [RetrieveDimensionStates].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -216,7 +225,7 @@ This option is a JSON list with items of type AlarmOverride.  For documentation 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'destinations': {'module': 'monitoring', 'class': 'list[string]'}, 'suppression': {'module': 'monitoring', 'class': 'Suppression'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}, 'overrides': {'module': 'monitoring', 'class': 'list[AlarmOverride]'}}, output_type={'module': 'monitoring', 'class': 'Alarm'})
 @cli_util.wrap_exceptions
-def create_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, metric_compartment_id, namespace, query_parameterconflict, severity, destinations, is_enabled, metric_compartment_id_in_subtree, resource_group, resolution, pending_duration, body, is_notifications_per_metric_dimension_enabled, message_format, repeat_notification_duration, suppression, freeform_tags, defined_tags, overrides, rule_name, notification_version):
+def create_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, metric_compartment_id, namespace, query_parameterconflict, severity, destinations, is_enabled, metric_compartment_id_in_subtree, resource_group, resolution, pending_duration, body, is_notifications_per_metric_dimension_enabled, message_format, repeat_notification_duration, suppression, freeform_tags, defined_tags, overrides, rule_name, notification_version, notification_title, evaluation_slack_duration, alarm_summary):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -272,6 +281,15 @@ def create_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
     if notification_version is not None:
         _details['notificationVersion'] = notification_version
+
+    if notification_title is not None:
+        _details['notificationTitle'] = notification_title
+
+    if evaluation_slack_duration is not None:
+        _details['evaluationSlackDuration'] = evaluation_slack_duration
+
+    if alarm_summary is not None:
+        _details['alarmSummary'] = alarm_summary
 
     client = cli_util.build_client('monitoring', 'monitoring', ctx)
     result = client.create_alarm(
@@ -1321,7 +1339,7 @@ Example: `oci_computeagent`""")
 @cli_util.option('--resource-group', help=u"""Resource group that you want to match. A null value returns only metric data that has no resource groups. The alarm retrieves metric data associated with the specified resource group only. Only one resource group can be applied per metric. A valid resourceGroup value starts with an alphabetical character and includes only alphanumeric characters, periods (.), underscores (_), hyphens (-), and dollar signs ($). Avoid entering confidential information.
 
 Example: `frontend-fleet`""")
-@cli_util.option('--query-parameterconflict', help=u"""The Monitoring Query Language (MQL) expression to evaluate for the alarm. The Alarms feature of the Monitoring service interprets results for each returned time series as Boolean values, where zero represents false and a non-zero value represents true. A true value means that the trigger rule condition has been met. The query must specify a metric, statistic, interval, and trigger rule (threshold or absence). Supported values for interval depend on the specified time range. More interval values are supported for smaller time ranges. You can optionally specify dimensions and grouping functions. Supported grouping functions: `grouping()`, `groupBy()`. For information about writing MQL expressions, see [Editing the MQL Expression for a Query]. For details about MQL, see [Monitoring Query Language (MQL) Reference]. For available dimensions, review the metric definition for the supported service. See [Supported Services].
+@cli_util.option('--query-parameterconflict', help=u"""The Monitoring Query Language (MQL) expression to evaluate for the alarm. The Alarms feature of the Monitoring service interprets results for each returned time series as Boolean values, where zero represents false and a non-zero value represents true. A true value means that the trigger rule condition has been met. The query must specify a metric, statistic, interval, and trigger rule (threshold or absence). Supported values for interval depend on the specified time range. More interval values are supported for smaller time ranges. You can optionally specify dimensions and grouping functions. Also, you can customize the [absence detection period]. Supported grouping functions: `grouping()`, `groupBy()`. For information about writing MQL expressions, see [Editing the MQL Expression for a Query]. For details about MQL, see [Monitoring Query Language (MQL) Reference]. For available dimensions, review the metric definition for the supported service. See [Supported Services].
 
 Example of threshold alarm:
 
@@ -1337,6 +1355,12 @@ Example of absence alarm:
 
     CpuUtilization[1m]{availabilityDomain=\"cumS:PHX-AD-1\"}.absent()
 
+  ----- Example of absence alarm with custom absence detection period of 20 hours:
+
+  -----
+
+    CpuUtilization[1m]{availabilityDomain=\"cumS:PHX-AD-1\"}.absent(20h)
+
   -----""")
 @cli_util.option('--resolution', help=u"""The time between calculated aggregation windows for the alarm. Supported value: `1m`""")
 @cli_util.option('--pending-duration', help=u"""The period of time that the condition defined in the alarm must persist before the alarm state changes from \"OK\" to \"FIRING\". For example, a value of 5 minutes means that the alarm must persist in breaching the condition for five minutes before the alarm updates its state to \"FIRING\".
@@ -1351,7 +1375,7 @@ Example: `PT5M`""")
 @cli_util.option('--severity', help=u"""The perceived severity of the alarm with regard to the affected system.
 
 Example: `CRITICAL`""")
-@cli_util.option('--body', help=u"""The human-readable content of the delivered alarm notification. Oracle recommends providing guidance to operators for resolving the alarm condition. Consider adding links to standard runbook practices. Avoid entering confidential information.
+@cli_util.option('--body', help=u"""The human-readable content of the delivered alarm notification. Optionally include [dynamic variables]. Oracle recommends providing guidance to operators for resolving the alarm condition. Consider adding links to standard runbook practices. Avoid entering confidential information.
 
 Example: `High CPU usage alert. Follow runbook instructions for resolution.`""")
 @cli_util.option('--is-notifications-per-metric-dimension-enabled', type=click.BOOL, help=u"""When set to `true`, splits alarm notifications per metric stream. When set to `false`, groups alarm notifications across metric streams.""")
@@ -1373,8 +1397,11 @@ Example: `true`""")
 Each override can specify values for query, severity, body, and pending duration. When an alarm contains overrides, the Monitoring service evaluates each override in order, beginning with the first override in the array (index position `0`), and then evaluates the alarm's base values (`ruleName` value of `BASE`).
 
 This option is a JSON list with items of type AlarmOverride.  For documentation on AlarmOverride please see our API reference: https://docs.cloud.oracle.com/api/#/en/monitoring/20180401/datatypes/AlarmOverride.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--rule-name', help=u"""Identifier of the alarm's base values for alarm evaluation, for use when the alarm contains overrides. A valid ruleName value starts with an alphabetic character and includes only alphanumeric characters, underscores and square brackets. Minimum number of characters: 3. Default value is `BASE`. For information about alarm overrides, see [AlarmOverride].""")
+@cli_util.option('--rule-name', help=u"""Identifier of the alarm's base values for alarm evaluation, for use when the alarm contains overrides. Default value is `BASE`. For information about alarm overrides, see [AlarmOverride].""")
 @cli_util.option('--notification-version', help=u"""The version of the alarm notification to be delivered. Allowed value: `1.X` The value must start with a number (up to four digits), followed by a period and an uppercase X.""")
+@cli_util.option('--notification-title', help=u"""Customizable notification title (`title` [alarm message parameter]). Optionally include [dynamic variables]. The notification title appears as the subject line in a formatted email message and as the title in a Slack message.""")
+@cli_util.option('--evaluation-slack-duration', help=u"""Customizable slack period to wait for metric ingestion before evaluating the alarm. Specify a string in ISO 8601 format (`PT10M` for ten minutes or `PT1H` for one hour). Minimum: PT3M. Maximum: PT2H. Default: PT3M. For more information about the slack period, see [About the Internal Reset Period].""")
+@cli_util.option('--alarm-summary', help=u"""Customizable alarm summary (`alarmSummary` [alarm message parameter]). Optionally include [dynamic variables]. The alarm summary appears within the body of the alarm message and in responses to [ListAlarmStatus] [GetAlarmHistory] and [RetrieveDimensionStates].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1385,7 +1412,7 @@ This option is a JSON list with items of type AlarmOverride.  For documentation 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'destinations': {'module': 'monitoring', 'class': 'list[string]'}, 'suppression': {'module': 'monitoring', 'class': 'Suppression'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}, 'overrides': {'module': 'monitoring', 'class': 'list[AlarmOverride]'}}, output_type={'module': 'monitoring', 'class': 'Alarm'})
 @cli_util.wrap_exceptions
-def update_alarm(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, alarm_id, display_name, compartment_id, metric_compartment_id, metric_compartment_id_in_subtree, namespace, resource_group, query_parameterconflict, resolution, pending_duration, severity, body, is_notifications_per_metric_dimension_enabled, message_format, destinations, repeat_notification_duration, suppression, is_enabled, freeform_tags, defined_tags, overrides, rule_name, notification_version, if_match):
+def update_alarm(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, alarm_id, display_name, compartment_id, metric_compartment_id, metric_compartment_id_in_subtree, namespace, resource_group, query_parameterconflict, resolution, pending_duration, severity, body, is_notifications_per_metric_dimension_enabled, message_format, destinations, repeat_notification_duration, suppression, is_enabled, freeform_tags, defined_tags, overrides, rule_name, notification_version, notification_title, evaluation_slack_duration, alarm_summary, if_match):
 
     if isinstance(alarm_id, six.string_types) and len(alarm_id.strip()) == 0:
         raise click.UsageError('Parameter --alarm-id cannot be whitespace or empty string')
@@ -1466,6 +1493,15 @@ def update_alarm(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 
     if notification_version is not None:
         _details['notificationVersion'] = notification_version
+
+    if notification_title is not None:
+        _details['notificationTitle'] = notification_title
+
+    if evaluation_slack_duration is not None:
+        _details['evaluationSlackDuration'] = evaluation_slack_duration
+
+    if alarm_summary is not None:
+        _details['alarmSummary'] = alarm_summary
 
     client = cli_util.build_client('monitoring', 'monitoring', ctx)
     result = client.update_alarm(
