@@ -317,7 +317,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 @queue_collection_group.command(name=cli_util.override('queue_admin.list_queues.command_name', 'list-queues'), help=u"""Returns a list of queues. \n[Command Reference](listQueues)""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "INACTIVE"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""The unique queue identifier.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")

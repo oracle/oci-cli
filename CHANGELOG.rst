@@ -6,6 +6,43 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.43.1 - 2024-06-11
+--------------------
+Added
+~~~~~
+* Globally Distributed Database Service
+
+  * Support for new command
+
+    * ``oci gdd private-endpoint reinstate-proxy-instance``
+
+  * Support for new optional parameter
+
+    * ``oci gdd private-endpoint get --if-none-match``
+    * ``oci gdd sharded-database create-sharded-database-create-dedicated-sharded-database --replication-factor, --replication-method, --replication-unit``
+    * ``oci gdd sharded-database generate-gsm-certificate-signing-request --ca-bundle-id``
+    * ``oci gdd sharded-database get --if-none-match``
+
+* Fusion Applications Environment Management Service
+
+  * Support for data dump initiation and extract in the Fusion Application Service
+
+    * ``oci fusion-apps fusion-environment initiate-extract``
+    * ``oci fusion-apps fusion-environment generate-extract-details``
+
+* Support for new Action end point in the Application Performance Monitoring Configuration Service
+
+  * ``oci apm-config test span-enrichment-group``
+
+* Support for new optional parameters in the Create/Update Alarms API in OCI Monitoring Service.
+
+  * ``oci monitoring alarm create --alarm-summary, --evaluation-slack-duration, --notification-title``
+  * ``oci monitoring alarm update --alarm-summary, --evaluation-slack-duration, --notification-title``
+
+* Support for addition of create date timestamp in Oracle Queue Service
+
+  * ``oci queue messages get-messages``
+
 3.43.0 - 2024-06-04
 --------------------
 Changed

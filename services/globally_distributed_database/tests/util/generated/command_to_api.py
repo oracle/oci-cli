@@ -25,6 +25,7 @@ SDK_client_map = {
     "gdd.list_work_requests": "oci.globally_distributed_database.ShardedDatabaseServiceClient.list_work_requests",
     "gdd.patch_sharded_database": "oci.globally_distributed_database.ShardedDatabaseServiceClient.patch_sharded_database",
     "gdd.prevalidate_sharded_database": "oci.globally_distributed_database.ShardedDatabaseServiceClient.prevalidate_sharded_database",
+    "gdd.reinstate_proxy_instance": "oci.globally_distributed_database.ShardedDatabaseServiceClient.reinstate_proxy_instance",
     "gdd.start_sharded_database": "oci.globally_distributed_database.ShardedDatabaseServiceClient.start_sharded_database",
     "gdd.stop_sharded_database": "oci.globally_distributed_database.ShardedDatabaseServiceClient.stop_sharded_database",
     "gdd.update_private_endpoint": "oci.globally_distributed_database.ShardedDatabaseServiceClient.update_private_endpoint",
