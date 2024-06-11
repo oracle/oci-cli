@@ -471,6 +471,9 @@ def create_sharded_database(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--catalog-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of ATP-Dedicated catalogs that needs to be created.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--replication-method', help=u"""The Replication method for sharded database.""")
+@cli_util.option('--replication-factor', type=click.INT, help=u"""The Replication factor for RAFT replication based sharded database. Currently supported values are 3, 5 and 7.""")
+@cli_util.option('--replication-unit', type=click.INT, help=u"""For RAFT replication based sharded database, the value should be atleast twice the number of shards.""")
 @cli_util.option('--cluster-certificate-common-name', help=u"""The certificate common name used in all cloudAutonomousVmClusters for the sharded database topology. Eg. Production. All the clusters used in one sharded database topology shall have same CABundle setup. Valid characterset for clusterCertificateCommonName include uppercase or lowercase letters, numbers, hyphens, underscores, and period.""")
 @cli_util.option('--chunks', type=click.INT, help=u"""The default number of unique chunks in a shardspace. The value of chunks must be greater than 2 times the size of the largest shardgroup in any shardspace.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -481,7 +484,7 @@ def create_sharded_database(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'globally_distributed_database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'globally_distributed_database', 'class': 'dict(str, dict(str, object))'}, 'shard-details': {'module': 'globally_distributed_database', 'class': 'list[CreateDedicatedShardDetail]'}, 'catalog-details': {'module': 'globally_distributed_database', 'class': 'list[CreateDedicatedCatalogDetail]'}}, output_type={'module': 'globally_distributed_database', 'class': 'ShardedDatabase'})
 @cli_util.wrap_exceptions
-def create_sharded_database_create_dedicated_sharded_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, db_workload, sharding_method, db_version, character_set, ncharacter_set, listener_port, listener_port_tls, ons_port_local, ons_port_remote, prefix, shard_details, catalog_details, freeform_tags, defined_tags, cluster_certificate_common_name, chunks):
+def create_sharded_database_create_dedicated_sharded_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, db_workload, sharding_method, db_version, character_set, ncharacter_set, listener_port, listener_port_tls, ons_port_local, ons_port_remote, prefix, shard_details, catalog_details, freeform_tags, defined_tags, replication_method, replication_factor, replication_unit, cluster_certificate_common_name, chunks):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -507,6 +510,15 @@ def create_sharded_database_create_dedicated_sharded_database(ctx, from_json, wa
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if replication_method is not None:
+        _details['replicationMethod'] = replication_method
+
+    if replication_factor is not None:
+        _details['replicationFactor'] = replication_factor
+
+    if replication_unit is not None:
+        _details['replicationUnit'] = replication_unit
 
     if cluster_certificate_common_name is not None:
         _details['clusterCertificateCommonName'] = cluster_certificate_common_name
@@ -782,6 +794,7 @@ def fetch_shardable_cloud_autonomous_vm_clusters(ctx, from_json, compartment_id,
 @sharded_database_group.command(name=cli_util.override('gdd.generate_gsm_certificate_signing_request.command_name', 'generate-gsm-certificate-signing-request'), help=u"""Generate the certificate signing request for GSM instances of the sharded database. Once certificate signing request is generated, then customers can download the certificate signing request using 'downloadGsmCertificateSigningRequest' api call. \n[Command Reference](generateGsmCertificateSigningRequest)""")
 @cli_util.option('--sharded-database-id', required=True, help=u"""Sharded Database identifier""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--ca-bundle-id', help=u"""The ID of the Ca Bundle.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -790,7 +803,7 @@ def fetch_shardable_cloud_autonomous_vm_clusters(ctx, from_json, compartment_id,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def generate_gsm_certificate_signing_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sharded_database_id, if_match):
+def generate_gsm_certificate_signing_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sharded_database_id, if_match, ca_bundle_id):
 
     if isinstance(sharded_database_id, six.string_types) and len(sharded_database_id.strip()) == 0:
         raise click.UsageError('Parameter --sharded-database-id cannot be whitespace or empty string')
@@ -798,6 +811,8 @@ def generate_gsm_certificate_signing_request(ctx, from_json, wait_for_state, max
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if ca_bundle_id is not None:
+        kwargs['ca_bundle_id'] = ca_bundle_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('globally_distributed_database', 'sharded_database_service', ctx)
     result = client.generate_gsm_certificate_signing_request(
@@ -890,17 +905,20 @@ def generate_wallet(ctx, from_json, file, sharded_database_id, password, if_matc
 
 @private_endpoint_group.command(name=cli_util.override('gdd.get_private_endpoint.command_name', 'get'), help=u"""Get the PrivateEndpoint resource. \n[Command Reference](getPrivateEndpoint)""")
 @cli_util.option('--private-endpoint-id', required=True, help=u"""Oracle Sharded Database PrivateEndpoint identifier""")
+@cli_util.option('--if-none-match', help=u"""For conditional requests. In the GET call for a resource, set the `If-None-Match` header to the value of the ETag from a previous GET (or POST or PUT) response for that resource. The server will return with either a 304 Not Modified response if the resource has not changed, or a 200 OK response with the updated representation.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'globally_distributed_database', 'class': 'PrivateEndpoint'})
 @cli_util.wrap_exceptions
-def get_private_endpoint(ctx, from_json, private_endpoint_id):
+def get_private_endpoint(ctx, from_json, private_endpoint_id, if_none_match):
 
     if isinstance(private_endpoint_id, six.string_types) and len(private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if if_none_match is not None:
+        kwargs['if_none_match'] = if_none_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('globally_distributed_database', 'sharded_database_service', ctx)
     result = client.get_private_endpoint(
@@ -913,12 +931,13 @@ def get_private_endpoint(ctx, from_json, private_endpoint_id):
 @sharded_database_group.command(name=cli_util.override('gdd.get_sharded_database.command_name', 'get'), help=u"""Gets the details of the Sharded database identified by given id. \n[Command Reference](getShardedDatabase)""")
 @cli_util.option('--sharded-database-id', required=True, help=u"""Sharded Database identifier""")
 @cli_util.option('--metadata', help=u"""Comma separated names of argument corresponding to which metadata need to be retrived, namely VM_CLUSTER_INFO, ADDITIONAL_RESOURCE_INFO. An example is metadata=VM_CLUSTER_INFO,ADDITIONAL_RESOURCE_INFO.""")
+@cli_util.option('--if-none-match', help=u"""For conditional requests. In the GET call for a resource, set the `If-None-Match` header to the value of the ETag from a previous GET (or POST or PUT) response for that resource. The server will return with either a 304 Not Modified response if the resource has not changed, or a 200 OK response with the updated representation.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'globally_distributed_database', 'class': 'ShardedDatabase'})
 @cli_util.wrap_exceptions
-def get_sharded_database(ctx, from_json, sharded_database_id, metadata):
+def get_sharded_database(ctx, from_json, sharded_database_id, metadata, if_none_match):
 
     if isinstance(sharded_database_id, six.string_types) and len(sharded_database_id.strip()) == 0:
         raise click.UsageError('Parameter --sharded-database-id cannot be whitespace or empty string')
@@ -926,6 +945,8 @@ def get_sharded_database(ctx, from_json, sharded_database_id, metadata):
     kwargs = {}
     if metadata is not None:
         kwargs['metadata'] = metadata
+    if if_none_match is not None:
+        kwargs['if_none_match'] = if_none_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('globally_distributed_database', 'sharded_database_service', ctx)
     result = client.get_sharded_database(
@@ -1399,6 +1420,61 @@ def prevalidate_sharded_database_prevalidate_create_payload(ctx, from_json, comp
         prevalidate_sharded_database_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@private_endpoint_group.command(name=cli_util.override('gdd.reinstate_proxy_instance.command_name', 'reinstate-proxy-instance'), help=u"""API to reinstate the proxy instances associated with the private endpoint. \n[Command Reference](reinstateProxyInstance)""")
+@cli_util.option('--private-endpoint-id', required=True, help=u"""Oracle Sharded Database PrivateEndpoint identifier""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def reinstate_proxy_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, private_endpoint_id, if_match):
+
+    if isinstance(private_endpoint_id, six.string_types) and len(private_endpoint_id.strip()) == 0:
+        raise click.UsageError('Parameter --private-endpoint-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('globally_distributed_database', 'sharded_database_service', ctx)
+    result = client.reinstate_proxy_instance(
+        private_endpoint_id=private_endpoint_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

@@ -47,10 +47,17 @@ def config_group():
     pass
 
 
+@click.command(cli_util.override('apm_config.test_output_group.command_name', 'test-output'), cls=CommandGroupWithAlias, help="""The result of running a test.""")
+@cli_util.help_option_group
+def test_output_group():
+    pass
+
+
 apm_config_root_group.add_command(metric_group_group)
 apm_config_root_group.add_command(span_filter_group)
 apm_config_root_group.add_command(config_collection_group)
 apm_config_root_group.add_command(config_group)
+apm_config_root_group.add_command(test_output_group)
 
 
 @config_group.command(name=cli_util.override('apm_config.create_config.command_name', 'create'), help=u"""Creates a new configuration item. \n[Command Reference](createConfig)""")
@@ -443,6 +450,66 @@ def retrieve_namespaces(ctx, from_json, apm_domain_id):
     client = cli_util.build_client('apm_config', 'config', ctx)
     result = client.retrieve_namespaces(
         apm_domain_id=apm_domain_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@test_output_group.command(name=cli_util.override('apm_config.test.command_name', 'test'), help=u"""Tests a data processing operation on the provided input, returning the potentially modified input as output. Returns 200 on success, 422 when the input can not be processed. \n[Command Reference](test)""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
+@cli_util.option('--test-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SPAN_ENRICHMENT"]), help=u"""The kind of test to run.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'apm_config', 'class': 'TestOutput'})
+@cli_util.wrap_exceptions
+def test(ctx, from_json, apm_domain_id, test_type):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['testType'] = test_type
+
+    client = cli_util.build_client('apm_config', 'config', ctx)
+    result = client.test(
+        apm_domain_id=apm_domain_id,
+        test_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@test_output_group.command(name=cli_util.override('apm_config.test_test_span_enrichment_details.command_name', 'test-test-span-enrichment-details'), help=u"""Tests a data processing operation on the provided input, returning the potentially modified input as output. Returns 200 on success, 422 when the input can not be processed. \n[Command Reference](test)""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
+@cli_util.option('--options', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The span enrichment rules to test in the format of an Options resource.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--span', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The span to test the rules on. This should be a valid JSON object that follows one of the formats used by distributed tracing frameworks, such as OpenTelemetry, Zipkin, or Oracle Application Performance Monitoring.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of filters to try against the given span.
+
+This option is a JSON list with items of type FilterTextOrId.  For documentation on FilterTextOrId please see our API reference: https://docs.cloud.oracle.com/api/#/en/config/20210201/datatypes/FilterTextOrId.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'options': {'module': 'apm_config', 'class': 'object'}, 'filters': {'module': 'apm_config', 'class': 'list[FilterTextOrId]'}, 'span': {'module': 'apm_config', 'class': 'object'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'options': {'module': 'apm_config', 'class': 'object'}, 'filters': {'module': 'apm_config', 'class': 'list[FilterTextOrId]'}, 'span': {'module': 'apm_config', 'class': 'object'}}, output_type={'module': 'apm_config', 'class': 'TestOutput'})
+@cli_util.wrap_exceptions
+def test_test_span_enrichment_details(ctx, from_json, apm_domain_id, options, span, filters):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['options'] = cli_util.parse_json_parameter("options", options)
+    _details['span'] = cli_util.parse_json_parameter("span", span)
+
+    if filters is not None:
+        _details['filters'] = cli_util.parse_json_parameter("filters", filters)
+
+    _details['testType'] = 'SPAN_ENRICHMENT'
+
+    client = cli_util.build_client('apm_config', 'config', ctx)
+    result = client.test(
+        apm_domain_id=apm_domain_id,
+        test_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)

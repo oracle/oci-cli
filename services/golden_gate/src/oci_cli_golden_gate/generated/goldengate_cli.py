@@ -1208,7 +1208,7 @@ The private IP address of the connection's endpoint in the customer's VCN, typic
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'additional-attributes': {'module': 'golden_gate', 'class': 'list[NameValuePair]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_postgresql_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, database_name, username, password, security_protocol, description, freeform_tags, locks, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, host, port, additional_attributes, ssl_mode, ssl_ca, ssl_crl, ssl_cert, ssl_key, private_ip):
+def create_connection_create_postgresql_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, database_name, username, password, security_protocol, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, host, port, additional_attributes, ssl_mode, ssl_ca, ssl_crl, ssl_cert, ssl_key, private_ip, db_system_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2682,6 +2682,9 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
 @cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2696,12 +2699,12 @@ This option is a JSON list with items of type NameValuePair.  For documentation 
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'additional-attributes': {'module': 'golden_gate', 'class': 'list[NameValuePair]'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'additional-attributes': {'module': 'golden_gate', 'class': 'list[NameValuePair]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'additional-attributes': {'module': 'golden_gate', 'class': 'list[NameValuePair]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'additional-attributes': {'module': 'golden_gate', 'class': 'list[NameValuePair]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_db2_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, database_name, host, port, username, password, security_protocol, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, additional_attributes, ssl_client_keystoredb, ssl_client_keystash, ssl_server_certificate):
+def create_connection_create_db2_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, database_name, host, port, username, password, security_protocol, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, additional_attributes, ssl_client_keystoredb, ssl_client_keystash, ssl_server_certificate):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2725,6 +2728,9 @@ def create_connection_create_db2_connection_details(ctx, from_json, wait_for_sta
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
 
     if vault_id is not None:
         _details['vaultId'] = vault_id
@@ -10267,6 +10273,7 @@ This option is a JSON list with items of type NameValuePair.  For documentation 
 @cli_util.option('--ssl-client-keystash', help=u"""The base64 encoded keystash file which contains the encrypted password to the key database file.""")
 @cli_util.option('--ssl-server-certificate', help=u"""The base64 encoded file which contains the self-signed server certificate / Certificate Authority (CA) certificate.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -10276,7 +10283,7 @@ This option is a JSON list with items of type NameValuePair.  For documentation 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'additional-attributes': {'module': 'golden_gate', 'class': 'list[NameValuePair]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_db2_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, database_name, host, port, username, password, additional_attributes, security_protocol, ssl_client_keystoredb, ssl_client_keystash, ssl_server_certificate, if_match):
+def update_connection_update_db2_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, database_name, host, port, username, password, additional_attributes, security_protocol, ssl_client_keystoredb, ssl_client_keystash, ssl_server_certificate, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -10288,6 +10295,8 @@ def update_connection_update_db2_connection_details(ctx, from_json, force, wait_
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
