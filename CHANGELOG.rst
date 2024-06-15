@@ -6,6 +6,32 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.43.2 - 2024-06-18
+--------------------
+Added
+~~~~~
+* OCI AI Document Service
+
+  * Support for new document type ``INSURANCE_CLAIM`` as shown:
+
+    * ``oci ai-document analyze-document-result analyze-document --document-type INSURANCE_CLAIM``
+    * ``oci ai-document analyze-document-result analyze-document-inline-document-details --document-type INSURANCE_CLAIM``
+    * ``oci ai-document analyze-document-result analyze-document-object-storage-document-details --document-type INSURANCE_CLAIM``
+    * ``oci ai-document processor-job create-processor-job-general-processor-config --processor-config-document-type INSURANCE_CLAIM``
+
+* OCI Database Service
+
+  * Support for adding whitelisted ips for private endpoint enabled databases.
+
+    * ``oci db autonomous-database create --whitelisted-ips``
+    * ``oci db autonomous-database update --whitelisted-ips``
+
+* OCI Stack Monitoring Service
+
+  * Support for Microsoft IIS resource type when declaring discovery details.
+
+    * ``oci stack-monitoring discovery-job create --discovery-details``
+
 3.43.1 - 2024-06-11
 --------------------
 Added

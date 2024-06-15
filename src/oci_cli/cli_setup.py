@@ -193,10 +193,10 @@ default_param_aliases = """
 --ingress-rules = --ingress-security-rules
 """
 
-
 NO_PASSPHRASE = 'N/A'
 PUBLIC_KEY_FILENAME_SUFFIX = '_public.pem'
 PRIVATE_KEY_FILENAME_SUFFIX = '.pem'
+PRIVATE_KEY_LABEL = "OCI_API_KEY"
 
 config_generation_canceled_message = "Config creation canceled."
 
@@ -291,6 +291,14 @@ def generate_oci_config():
     else:
         private_key_file, has_passphrase, private_key = click.prompt(text='Enter the location of your API Signing private key file', value_proc=validate_private_key_file)
         private_key_file = os.path.abspath(private_key_file)
+
+        if not validate_label_private_key(private_key_file):
+            private_label_message = (
+                f"To increase security of your API key located at {private_key_file}, "
+                "append an extra line with 'OCI_API_KEY' at the end. For more information, "
+                "refer to https://docs.oracle.com/iaas/Content/API/Concepts/apisigningkey.htm"
+            )
+            click.echo(click.style(f"Warning: {private_label_message}", fg='yellow'))
 
         key_passphrase = None
         if has_passphrase:
@@ -705,6 +713,11 @@ def write_private_key_to_file(filename, private_key, passphrase, overwrite=False
     with open(filename, "wb") as f:
         f.write(cli_util.serialize_key(private_key=private_key, passphrase=passphrase))
 
+    # Open a file in append mode
+    with open(filename, 'a') as file:
+        # add the static label
+        file.write(PRIVATE_KEY_LABEL)
+
     # only user has R/W permissions to the key file
     cli_util.apply_user_only_access_permissions(filename)
 
@@ -721,6 +734,14 @@ def validate_private_key_passphrase(filename, passphrase):
         except ValueError:
             # exception from serialization lib is 'Bad decrpt. Incorrect password?'
             raise click.BadParameter("Incorrect passphrase, could not decrypt private key")
+
+
+def validate_label_private_key(file_path):
+
+    with open(file_path, "r") as file:
+        content = file.read()
+
+    return content.endswith(PRIVATE_KEY_LABEL)
 
 
 def validate_private_key_file(filename):
