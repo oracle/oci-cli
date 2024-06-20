@@ -32,8 +32,6 @@ Added
 
     * ``oci stack-monitoring discovery-job create --discovery-details``
 
-* Security Enhancement: Improved security for API key management.
-
 3.43.1 - 2024-06-11
 --------------------
 Added
