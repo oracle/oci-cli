@@ -244,6 +244,7 @@ IGNORED_COMMANDS = [
     ['database-management', 'managed-database', 'load-spb-from-awr-with-secret'],
     ['database-management', 'managed-database', 'load-spb-from-cc-with-password'],
     ['database-management', 'managed-database', 'load-spb-from-cc-with-secret'],
+    ['database-migration', 'migration-object-type-summary'],
 ]
 
 IGNORED_COMMANDS_DOCS = [

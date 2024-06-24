@@ -6,6 +6,59 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.44.0 - 2024-06-25
+--------------------
+Changed
+~~~~~~~
+* [BREAKING] OCI Database Migration Service
+
+  * Deprecation of Agent resource for `database-migration`. Following commands have changed:
+
+    * ``oci database-migration agent``
+    * ``oci database-migration agent-image-summary``
+    * ``oci database-migration agent-summary``
+    * ``oci database-migration migration create-migration-aws-s3-data-transfer-medium-details``
+    * ``oci database-migration migration create-migration-db-link-data-transfer-medium-details``
+    * ``oci database-migration migration create-migration-nfs-data-transfer-medium-details``
+    * ``oci database-migration migration create-migration-object-storage-data-transfer-medium-details``
+    * ``oci database-migration migration update-migration-aws-s3-data-transfer-medium-details``
+    * ``oci database-migration migration update-migration-db-link-data-transfer-medium-details``
+    * ``oci database-migration migration update-migration-nfs-data-transfer-medium-details``
+    * ``oci database-migration migration update-migration-object-storage-data-transfer-medium-details``
+    * ``oci database-migration connection create``
+    * ``oci database-migration connection update``
+    * ``oci database-migration migration add``
+    * ``oci database-migration migration clone``
+    * ``oci database-migration migration create``
+    * ``oci database-migration migration remove``
+    * ``oci database-migration migration update``
+    * ``oci database-migration migration-object-type-summary list``
+
+Added
+~~~~~
+* OCI Database Migration Service
+
+  * Support for MySQL to MySQL homogeneous migration
+
+    * ``oci database-migration connection create-mysql-connection``
+    * ``oci database-migration connection create-oracle-connection``
+    * ``oci database-migration connection update-mysql-connection``
+    * ``oci database-migration connection update-oracle-connection``
+    * ``oci database-migration migration add-mysql-objects``
+    * ``oci database-migration migration add-oracle-objects``
+    * ``oci database-migration migration clone-mysql-migration``
+    * ``oci database-migration migration clone-oracle-migration``
+    * ``oci database-migration migration create-mysql-migration``
+    * ``oci database-migration migration create-oracle-migration``
+    * ``oci database-migration migration remove-mysql-objects``
+    * ``oci database-migration migration remove-oracle-objects``
+    * ``oci database-migration migration update-mysql-migration``
+    * ``oci database-migration migration update-oracle-migration``
+
+* Support for manual cross-region backup copy in the HeatWave MySQL Service
+
+  * ``oci mysql backup copy``
+
 3.43.2 - 2024-06-18
 --------------------
 Added
