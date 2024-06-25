@@ -97,6 +97,78 @@ def change_backup_compartment(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
+@backup_group.command(name=cli_util.override('db_backups.copy_backup.command_name', 'copy'), help=u"""Creates a copy of a DB system backup available in the specified source region. \n[Command Reference](copyBackup)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment the DB system backup is to be copied to.
+
+**Note:** The compartment must be the same as the compartment of the DB system backup in the source region.""")
+@cli_util.option('--source-backup-id', required=True, help=u"""The OCID of DB system backup to be copied.""")
+@cli_util.option('--source-region', required=True, help=u"""The region identifier of the source region where the DB system backup exists. For more information, please see [Regions and Availability Domains].""")
+@cli_util.option('--description', help=u"""A user-supplied description for the DB system backup. By default, the source backup description will be used.""")
+@cli_util.option('--display-name', help=u"""A user-supplied display name for the DB system backup. By default, the source backup display name will be used.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'mysql', 'class': 'Backup'})
+@cli_util.wrap_exceptions
+def copy_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_backup_id, source_region, description, display_name, if_match):
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['sourceBackupId'] = source_backup_id
+    _details['sourceRegion'] = source_region
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    client = cli_util.build_client('mysql', 'db_backups', ctx)
+    result = client.copy_backup(
+        copy_backup_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        client = cli_util.build_client('mysql', 'work_requests', ctx)
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @backup_group.command(name=cli_util.override('db_backups.create_backup.command_name', 'create'), help=u"""Create a backup of a DB System. \n[Command Reference](createBackup)""")
 @cli_util.option('--db-system-id', required=True, help=u"""The OCID of the DB System the Backup is associated with.""")
 @cli_util.option('--display-name', help=u"""A user-supplied display name for the backup.""")
