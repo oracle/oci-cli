@@ -1122,7 +1122,7 @@ def make_dict_keys_camel_case(original_obj, parameter_name=None, complex_paramet
         new_list = []
         list_type = None
         if complex_type_definition and complex_type_definition['class'].find('list[') == 0:
-            list_type = {'module': complex_type_definition['module'], 'class': re.match('list\[(.*)\]', complex_type_definition['class']).group(1)}  # noqa: W605
+            list_type = {'module': complex_type_definition['module'], 'class': re.match(r'list\[(.*)\]', complex_type_definition['class']).group(1)}  # noqa: W605
 
         for obj in original_obj:
             new_list.append(make_dict_keys_camel_case(obj, complex_parameter_type=list_type))
@@ -2332,7 +2332,7 @@ def stream_page(is_json, page_index, call_result, ctx, previous_page_has_data):
     # first page:       [ {. . .}, {. . .
     # subsequent pages:   }, {. . .}, {. . .
     # last page:          }, {. . .}, {. . .} ]
-    json_page_matcher = re.compile("(^\s*\[)([\s\S]*?)(}\s*\]$)")  # noqa: W605
+    json_page_matcher = re.compile(r"(^\s*\[)([\s\S]*?)(}\s*\]$)")  # noqa: W605
     if is_json:
         if 'skip_deserialization' in ctx.obj:
             display_dictionary = {}
@@ -2383,7 +2383,7 @@ def stream_page_object(page_index, call_result, previous_page_has_data, data_key
     # first page:       [ {. . .}, {. . .
     # subsequent pages:   }, {. . .}, {. . .
     # last page:          }, {. . .}, {. . .} ]
-    json_page_matcher = re.compile("(^[\s\S]*\[\s)([\s\S]*?)(}\s*\]\s*}$)")  # noqa: W605
+    json_page_matcher = re.compile(r"(^[\s\S]*\[\s)([\s\S]*?)(}\s*\]\s*}$)")  # noqa: W605
 
     display_dictionary = {}
     display_dictionary['data'] = to_dict(getattr(call_result.data, data_key))
@@ -2423,8 +2423,8 @@ def build_query_expression(ctx):
             click.echo('In bash or similar "NIX" based shells used in "NIX" environment, escaping can be done by'
                         'using double quotes inside single quotes.\ne.g. --query \'data[*]."display-name"\'',  # noqa: E127
                         file=sys.stderr)
-            click.echo('If using PowerShell in Windows environment, escaping can be done by using double quotes'  # noqa: W605
-                        'with double escape character \`.\ne.g. --query data[*].\`"display-name\`"',  # noqa: E127, W605
+            click.echo(r'If using PowerShell in Windows environment, escaping can be done by using double quotes'  # noqa: W605
+                        r'with double escape character \`.\ne.g. --query data[*].\`"display-name\`"',  # noqa: E127, W605
                         file=sys.stderr)
         raise
     return expression
