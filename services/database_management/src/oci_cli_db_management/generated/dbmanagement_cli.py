@@ -11018,7 +11018,7 @@ def list_managed_database_groups(ctx, from_json, all_pages, page_size, compartme
 @cli_util.option('--id', help=u"""The identifier of the resource.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name.""")
 @cli_util.option('--management-option', type=custom_types.CliCaseInsensitiveChoice(["BASIC", "ADVANCED"]), help=u"""A filter to return Managed Databases with the specified management option.""")
-@cli_util.option('--deployment-type', type=custom_types.CliCaseInsensitiveChoice(["ONPREMISE", "BM", "VM", "EXADATA", "EXADATA_CC", "AUTONOMOUS"]), help=u"""A filter to return Managed Databases of the specified deployment type.""")
+@cli_util.option('--deployment-type', type=custom_types.CliCaseInsensitiveChoice(["ONPREMISE", "BM", "VM", "EXADATA", "EXADATA_CC", "AUTONOMOUS", "EXADATA_XS"]), help=u"""A filter to return Managed Databases of the specified deployment type.""")
 @cli_util.option('--external-exadata-infrastructure-id', help=u"""The [OCID] of the Exadata infrastructure.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")

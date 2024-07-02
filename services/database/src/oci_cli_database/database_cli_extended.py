@@ -3400,13 +3400,14 @@ def convert_to_regular_pluggable_database_extended(ctx, **kwargs):
     ctx.invoke(database_cli.convert_to_regular_pluggable_database, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(database_cli.create_pluggable_database, params_to_exclude=['container_database_id', 'pdb_creation_type_details_source_pluggable_database_id', 'should_create_pdb_backup', 'should_pdb_admin_account_be_locked', 'container_database_admin_password', 'pdb_creation_type_details'])
+@cli_util.copy_params_from_generated_command(database_cli.create_pluggable_database, params_to_exclude=['container_database_id', 'pdb_creation_type_details_source_pluggable_database_id', 'should_create_pdb_backup', 'should_pdb_admin_account_be_locked', 'container_database_admin_password', 'pdb_creation_type_details', 'pdb_creation_type_details_is_thin_clone'])
 @database_cli.pluggable_database_group.command(name=database_cli.create_pluggable_database_create_pluggable_database_from_local_clone_details.name, help=database_cli.create_pluggable_database_create_pluggable_database_from_local_clone_details.help)
 @cli_util.option('--cdb-id', required=True, help=u"""The [OCID] of the CDB [required]""")
 @cli_util.option('--source-pdb-id', required=True, help=u"""The OCID of the Source Pluggable Database. [required]""")
 @cli_util.option('--create-pdb-backup', type=click.BOOL, help=u"""Indicates whether to take Pluggable Database Backup after the operation.""")
 @cli_util.option('--lock-pdb-admin-account', type=click.BOOL, help=u"""The locked mode of the pluggable database admin account. If false, the user needs to provide the PDB Admin Password to connect to it. If true, the pluggable database will be locked and user cannot login to it.""")
 @cli_util.option('--cdb-admin-password', help=u"""The DB system administrator password of the Container Database.""")
+@cli_util.option('--is-thin-clone', type=click.BOOL, help=u"""True if Pluggable Database needs to be thin cloned and false if Pluggable Database needs to be thick cloned.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'PluggableDatabase'})
 @cli_util.wrap_exceptions
@@ -3431,6 +3432,10 @@ def create_pluggable_database_create_pluggable_database_from_local_clone_details
     if 'cdb_admin_password' in kwargs:
         kwargs['container_database_admin_password'] = kwargs['cdb_admin_password']
         kwargs.pop('cdb_admin_password')
+
+    if 'is_thin_clone' in kwargs:
+        kwargs['pdb_creation_type_details_is_thin_clone'] = kwargs['is_thin_clone']
+        kwargs.pop('is_thin_clone')
 
     ctx.invoke(database_cli.create_pluggable_database_create_pluggable_database_from_local_clone_details, **kwargs)
 
@@ -3485,7 +3490,7 @@ def create_pluggable_database_create_pluggable_database_from_relocate_details_ex
     ctx.invoke(database_cli.create_pluggable_database_create_pluggable_database_from_relocate_details, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(database_cli.create_pluggable_database, params_to_exclude=['container_database_id', 'pdb_creation_type_details_source_container_database_admin_password', 'pdb_creation_type_details_source_pluggable_database_id', 'pdb_creation_type_details_dblink_user_password', 'pdb_creation_type_details_dblink_username', 'pdb_creation_type_details_refreshable_clone_details', 'should_create_pdb_backup', 'should_pdb_admin_account_be_locked', 'container_database_admin_password', 'pdb_creation_type_details'])
+@cli_util.copy_params_from_generated_command(database_cli.create_pluggable_database, params_to_exclude=['container_database_id', 'pdb_creation_type_details_source_container_database_admin_password', 'pdb_creation_type_details_source_pluggable_database_id', 'pdb_creation_type_details_dblink_user_password', 'pdb_creation_type_details_dblink_username', 'pdb_creation_type_details_refreshable_clone_details', 'should_create_pdb_backup', 'should_pdb_admin_account_be_locked', 'container_database_admin_password', 'pdb_creation_type_details', 'pdb_creation_type_details_is_thin_clone'])
 @database_cli.pluggable_database_group.command(name=database_cli.create_pluggable_database_create_pluggable_database_from_remote_clone_details.name, help=database_cli.create_pluggable_database_create_pluggable_database_from_remote_clone_details.help)
 @cli_util.option('--cdb-id', required=True, help=u"""The [OCID] of the CDB [required]""")
 @cli_util.option('--source-cdb-admin-password', required=True, help=u"""The DB system administrator password of the source Container Database. [required]""")
@@ -3496,6 +3501,7 @@ def create_pluggable_database_create_pluggable_database_from_relocate_details_ex
 @cli_util.option('--create-pdb-backup', type=click.BOOL, help=u"""Indicates whether to take Pluggable Database Backup after the operation.""")
 @cli_util.option('--lock-pdb-admin-account', type=click.BOOL, help=u"""The locked mode of the pluggable database admin account. If false, the user needs to provide the PDB Admin Password to connect to it. If true, the pluggable database will be locked and user cannot login to it.""")
 @cli_util.option('--cdb-admin-password', help=u"""The DB system administrator password of the Container Database.""")
+@cli_util.option('--is-thin-clone', type=click.BOOL, help=u"""True if Pluggable Database needs to be thin cloned and false if Pluggable Database needs to be thick cloned.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'PluggableDatabase'})
 @cli_util.wrap_exceptions
@@ -3533,6 +3539,10 @@ def create_pluggable_database_create_pluggable_database_from_remote_clone_detail
         kwargs['container_database_admin_password'] = kwargs['cdb_admin_password']
         kwargs.pop('cdb_admin_password')
 
+    if 'is_thin_clone' in kwargs:
+        kwargs['pdb_creation_type_details_is_thin_clone'] = kwargs['is_thin_clone']
+        kwargs.pop('is_thin_clone')
+
     pdb_creation_type_details_refreshable_clone_details = {}
     if 'is_refreshable_clone' in kwargs:
         pdb_creation_type_details_refreshable_clone_details['isRefreshableClone'] = kwargs['is_refreshable_clone']
@@ -3553,3 +3563,132 @@ cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.s
 
 # oci db autonomous-database create-autonomous-database-create-cross-tenancy-disaster-recovery-details -> oci db autonomous-database create-cross-tenancy-disaster-recovery-details
 cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.create_autonomous_database_create_cross_tenancy_disaster_recovery_details, "create-cross-tenancy-disaster-recovery-details")
+
+
+# Renaming the parameter high-capacity-database-storage to high-capacity-db-storage
+# Renaming the parameter additional-flash-cache-in-percent to flash-cache-in-percent
+@cli_util.copy_params_from_generated_command(database_cli.create_exascale_db_storage_vault, params_to_exclude=['high_capacity_database_storage', 'additional_flash_cache_in_percent'])
+@database_cli.exascale_db_storage_vault_group.command('create', help=database_cli.create_exascale_db_storage_vault.help)
+@cli_util.option('--high-capacity-storage-gb', required=True, type=click.INT, help=u"""The size of High Capacity database storage (GB).""")
+@cli_util.option('--flash-cache-in-percent', type=click.INT, help=u"""The size of additional Flash Cache in percentage of High Capacity database storage.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'high-capacity-database-storage': {'module': 'database', 'class': 'ExascaleDbStorageInputDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'ExascaleDbStorageVault'})
+@cli_util.wrap_exceptions
+def create_exascale_db_storage_vault_extended(ctx, **kwargs):
+
+    high_capacity_database_storage = {}
+    if 'high_capacity_storage_gb' in kwargs and kwargs['high_capacity_storage_gb'] is not None:
+        high_capacity_database_storage['total_size_in_gbs'] = kwargs['high_capacity_storage_gb']
+
+    if len(high_capacity_database_storage) > 0:
+        kwargs['high_capacity_database_storage'] = json.dumps(high_capacity_database_storage)
+
+    if 'flash_cache_in_percent' in kwargs:
+        kwargs['additional_flash_cache_in_percent'] = kwargs['flash_cache_in_percent']
+
+    kwargs.pop('high_capacity_storage_gb')
+    kwargs.pop('flash_cache_in_percent')
+    ctx.invoke(database_cli.create_exascale_db_storage_vault, **kwargs)
+
+
+# Renaming the parameter exascale-db-storage-vault-id to vault-id
+# Renaming the parameter additional-flash-cache-in-percent to flash-cache-in-percent
+@cli_util.copy_params_from_generated_command(database_cli.update_exascale_db_storage_vault, params_to_exclude=['high_capacity_database_storage', 'additional_flash_cache_in_percent'])
+@database_cli.exascale_db_storage_vault_group.command('update', help=database_cli.update_exascale_db_storage_vault.help)
+@cli_util.option('--high-capacity-storage-gb', type=click.INT, help=u"""The size of High Capacity database storage (GB).""")
+@cli_util.option('--flash-cache-in-percent', type=click.INT, help=u"""The size of additional Flash Cache in percentage of High Capacity database storage.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'high-capacity-database-storage': {'module': 'database', 'class': 'ExascaleDbStorageInputDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'ExascaleDbStorageVault'})
+@cli_util.wrap_exceptions
+def update_exascale_db_storage_vault_extended(ctx, **kwargs):
+
+    high_capacity_database_storage = {}
+    if 'high_capacity_storage_gb' in kwargs and kwargs['high_capacity_storage_gb'] is not None:
+        high_capacity_database_storage['total_size_in_gbs'] = kwargs['high_capacity_storage_gb']
+
+    if len(high_capacity_database_storage) > 0:
+        kwargs['high_capacity_database_storage'] = json.dumps(high_capacity_database_storage)
+
+    if 'flash_cache_in_percent' in kwargs:
+        kwargs['additional_flash_cache_in_percent'] = kwargs['flash_cache_in_percent']
+
+    kwargs.pop('high_capacity_storage_gb')
+    kwargs.pop('flash_cache_in_percent')
+    ctx.invoke(database_cli.update_exascale_db_storage_vault, **kwargs)
+
+
+# Renaming the parameter scan-listener-port-tcp-ssl to scan-listener-port-tcps
+# Simplifying the parameter ssh_public_keys to take ssh keys as file input parameter (ssh_authorized_keys_file)
+# Renaming the parameter exascale-db-storage-vault-id to vault-id
+@cli_util.copy_params_from_generated_command(database_cli.create_exadb_vm_cluster, params_to_exclude=['scan_listener_port_tcp_ssl', 'ssh_public_keys', 'exascale_db_storage_vault_id'])
+@database_cli.exadb_vm_cluster_group.command('create', help=database_cli.create_exadb_vm_cluster.help)
+@cli_util.option('--scan-listener-port-tcps', type=click.INT, help=u"""The Secured Communication (TCPS) protocol Single Client Access Name (SCAN) port. The default port is 2484.""")
+@cli_util.option('--ssh-authorized-keys-file', required=True, type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the Exadb VM Cluster. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
+@cli_util.option('--vault-id', required=True, help=u"""The [OCID] of the Exadata Database Storage Vault.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'vm-file-system-storage': {'module': 'database', 'class': 'ExadbVmClusterStorageDetails'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}}, output_type={'module': 'database', 'class': 'ExadbVmCluster'})
+@cli_util.wrap_exceptions
+def create_exadb_vm_cluster_extended(ctx, **kwargs):
+    if 'scan_listener_port_tcps' in kwargs:
+        kwargs['scan_listener_port_tcp_ssl'] = kwargs['scan_listener_port_tcps']
+
+    if 'ssh_authorized_keys_file' in kwargs and kwargs['ssh_authorized_keys_file']:
+        content = [line.rstrip('\n') for line in kwargs['ssh_authorized_keys_file']]
+        kwargs['ssh_public_keys'] = json.dumps(content)
+
+    if 'vault_id' in kwargs:
+        kwargs['exascale_db_storage_vault_id'] = kwargs['vault_id']
+
+    kwargs.pop('scan_listener_port_tcps')
+    kwargs.pop('ssh_authorized_keys_file')
+    kwargs.pop('vault_id')
+    ctx.invoke(database_cli.create_exadb_vm_cluster, **kwargs)
+
+
+# Simplifying the parameter ssh_public_keys to take an ssh_authorized_keys_file input parameter
+@cli_util.copy_params_from_generated_command(database_cli.update_exadb_vm_cluster, params_to_exclude=['ssh_public_keys'])
+@database_cli.exadb_vm_cluster_group.command('update', help=database_cli.update_exadb_vm_cluster.help)
+@cli_util.option('--ssh-authorized-keys-file', required=True, type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the Exadb VM Cluster. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'vm-file-system-storage': {'module': 'database', 'class': 'ExadbVmClusterStorageDetails'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}}, output_type={'module': 'database', 'class': 'ExadbVmCluster'})
+@cli_util.wrap_exceptions
+def update_exadb_vm_cluster_extended(ctx, **kwargs):
+
+    if 'ssh_authorized_keys_file' in kwargs and kwargs['ssh_authorized_keys_file']:
+        content = [line.rstrip('\n') for line in kwargs['ssh_authorized_keys_file']]
+        kwargs['ssh_public_keys'] = json.dumps(content)
+
+    kwargs.pop('ssh_authorized_keys_file')
+    ctx.invoke(database_cli.update_exadb_vm_cluster, **kwargs)
+
+
+# Renaming the parameter exascale-db-storage-vault-id to vault-id
+@cli_util.copy_params_from_generated_command(database_cli.list_exadb_vm_clusters, params_to_exclude=['exascale_db_storage_vault_id'])
+@database_cli.exadb_vm_cluster_group.command('list', help=database_cli.list_exadb_vm_clusters.help)
+@cli_util.option('--vault-id', help=u"""A filter to return only Exadata VM clusters on Exascale Infrastructure that match the given Exascale Database Storage Vault ID.""")
+@click.pass_context
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.wrap_exceptions
+def list_exadb_vm_clusters_extended(ctx, **kwargs):
+    if 'vault_id' in kwargs:
+        kwargs['exascale_db_storage_vault_id'] = kwargs['vault_id']
+
+    kwargs.pop('vault_id')
+    ctx.invoke(database_cli.list_exadb_vm_clusters, **kwargs)
+
+
+# move update, update-history to exadb vm cluster group
+# oci db exadb-vm-cluster-update get -> oci db exadb-vm-cluster get-update
+# oci db exadb-vm-cluster-update list -> oci db exadb-vm-cluster list-updates
+# oci db exadb-vm-cluster-update-history-entry get -> oci db exadb-vm-cluster get-update-history
+# oci db exadb-vm-cluster-update-history-entry list -> oci db exadb-vm-cluster list-update-histories
+cli_util.rename_command(database_cli, database_cli.exadb_vm_cluster_update_group, database_cli.get_exadb_vm_cluster_update, "get-update")
+cli_util.rename_command(database_cli, database_cli.exadb_vm_cluster_update_group, database_cli.list_exadb_vm_cluster_updates, "list-updates")
+cli_util.rename_command(database_cli, database_cli.exadb_vm_cluster_update_history_entry_group, database_cli.get_exadb_vm_cluster_update_history_entry, "get-update-history")
+cli_util.rename_command(database_cli, database_cli.exadb_vm_cluster_update_history_entry_group, database_cli.list_exadb_vm_cluster_update_history_entries, "list-update-histories")
+database_cli.exadb_vm_cluster_group.add_command(database_cli.get_exadb_vm_cluster_update)
+database_cli.exadb_vm_cluster_group.add_command(database_cli.list_exadb_vm_cluster_updates)
+database_cli.exadb_vm_cluster_group.add_command(database_cli.get_exadb_vm_cluster_update_history_entry)
+database_cli.exadb_vm_cluster_group.add_command(database_cli.list_exadb_vm_cluster_update_history_entries)
+database_cli.db_root_group.commands.pop(database_cli.exadb_vm_cluster_update_group.name)
+database_cli.db_root_group.commands.pop(database_cli.exadb_vm_cluster_update_history_entry_group.name)

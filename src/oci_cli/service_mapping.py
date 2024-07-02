@@ -115,7 +115,7 @@ service_mapping = {
     ],
     "capacity-management": [
         "capacity_management",
-        "OciControlCenterCp",
+        "OCI Control Center Capacity Management",
         "Governance & Administration"
     ],
     "ccc": [
@@ -515,7 +515,7 @@ service_mapping = {
     ],
     "opsi": [
         "opsi",
-        "Operations Insights",
+        "Ops Insights",
         "Observability & Management"
     ],
     "optimizer": [

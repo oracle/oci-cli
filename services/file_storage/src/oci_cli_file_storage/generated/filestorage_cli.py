@@ -273,9 +273,11 @@ def change_replication_compartment(ctx, from_json, replication_id, compartment_i
 Avoid entering confidential information.
 
 Example: `/mediafiles`""")
-@cli_util.option('--export-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Export options for the new export. If left unspecified, defaults to:
+@cli_util.option('--export-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Export options for the new export. For exports of mount targets with IPv4 address, if client options are left unspecified, client options would default to:
 
        [          {             \"source\" : \"0.0.0.0/0\",             \"requirePrivilegedSourcePort\" : false,             \"access\": \"READ_WRITE\",             \"identitySquash\": \"NONE\",             \"anonymousUid\": 65534,             \"anonymousGid\": 65534,             \"isAnonymousAccessAllowed\": false,             \"allowedAuth\": [\"SYS\"]           }        ]
+
+  For exports of mount targets with IPv6 address, if client options are   left unspecified, client options would be an empty array, i.e. export   would not be visible to any clients.
 
   **Note:** Mount targets do not have Internet-routable IP   addresses.  Therefore they will not be reachable from the   Internet, even if an associated `ClientOptions` item has   a source of `0.0.0.0/0`.
 
@@ -362,10 +364,11 @@ Example: `My file system`""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The [OCID] of the KMS key used to encrypt the encryption keys associated with this file system.""")
 @cli_util.option('--source-snapshot-id', help=u"""The [OCID] of the snapshot used to create a cloned file system. See [Cloning a File System].""")
+@cli_util.option('--clone-attach-status', type=custom_types.CliCaseInsensitiveChoice(["DETACH", "ATTACH"]), help=u"""Specifies whether the clone file system is attached to its parent file system. If the value is set to 'DETACH', then the file system will be created, which is deep copied from the snapshot specified by sourceSnapshotId, else will remain attached to its parent.""")
 @cli_util.option('--filesystem-snapshot-policy-id', help=u"""The [OCID] of the associated file system snapshot policy, which controls the frequency of snapshot creation and retention period of the taken snapshots.
 
 May be unset as a blank value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
@@ -373,7 +376,7 @@ May be unset as a blank value.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'FileSystem'})
 @cli_util.wrap_exceptions
-def create_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, display_name, freeform_tags, defined_tags, kms_key_id, source_snapshot_id, filesystem_snapshot_policy_id):
+def create_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, display_name, freeform_tags, defined_tags, kms_key_id, source_snapshot_id, clone_attach_status, filesystem_snapshot_policy_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -396,6 +399,9 @@ def create_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if source_snapshot_id is not None:
         _details['sourceSnapshotId'] = source_snapshot_id
+
+    if clone_attach_status is not None:
+        _details['cloneAttachStatus'] = clone_attach_status
 
     if filesystem_snapshot_policy_id is not None:
         _details['filesystemSnapshotPolicyId'] = filesystem_snapshot_policy_id
@@ -996,8 +1002,9 @@ def delete_export(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @file_system_group.command(name=cli_util.override('fs.delete_file_system.command_name', 'delete'), help=u"""Deletes the specified file system. Before you delete the file system, verify that no remaining export resources still reference it. Deleting a file system also deletes all of its snapshots. \n[Command Reference](deleteFileSystem)""")
 @cli_util.option('--file-system-id', required=True, help=u"""The [OCID] of the file system.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--can-detach-child-file-system', type=click.BOOL, help=u"""If the value is set to true, then the file system will be deleted by detaching its child file system, turning the child file system into an independent File System.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1005,7 +1012,7 @@ def delete_export(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, file_system_id, if_match):
+def delete_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, file_system_id, if_match, can_detach_child_file_system):
 
     if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
@@ -1013,6 +1020,8 @@ def delete_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if can_detach_child_file_system is not None:
+        kwargs['can_detach_child_file_system'] = can_detach_child_file_system
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.delete_file_system(
@@ -1444,6 +1453,31 @@ def delete_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
+@file_system_group.command(name=cli_util.override('fs.detach_clone.command_name', 'detach'), help=u"""Detaches the file system from its parent file system \n[Command Reference](detachClone)""")
+@cli_util.option('--file-system-id', required=True, help=u"""The [OCID] of the file system.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def detach_clone(ctx, from_json, file_system_id, if_match):
+
+    if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.detach_clone(
+        file_system_id=file_system_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @file_system_group.command(name=cli_util.override('fs.estimate_replication.command_name', 'estimate-replication'), help=u"""Provides estimates for replication created using specific file system. \n[Command Reference](estimateReplication)""")
 @cli_util.option('--file-system-id', required=True, help=u"""The [OCID] of the file system.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1686,7 +1720,7 @@ For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable.
 
 Example: `My resource`""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
 @cli_util.option('--id', help=u"""Filter results by [OCID]. Must be an OCID of the correct type for the resouce type.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide either value, but not both. By default, when you sort by time created, results are shown in descending order. When you sort by display name, results are shown in ascending order.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending. The default order is 'desc' except for numeric values.""")
@@ -1761,7 +1795,7 @@ Example: `500`""")
 For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--export-set-id', help=u"""The [OCID] of the export set.""")
 @cli_util.option('--file-system-id', help=u"""The [OCID] of the file system.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
 @cli_util.option('--id', help=u"""Filter results by [OCID]. Must be an OCID of the correct type for the resouce type.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "PATH"]), help=u"""The field to sort by. You can provide either value, but not both. By default, when you sort by time created, results are shown in descending order. When you sort by path, results are shown in ascending alphanumeric order.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending. The default order is 'desc' except for numeric values.""")
@@ -1836,7 +1870,7 @@ For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable.
 
 Example: `My resource`""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
 @cli_util.option('--id', help=u"""Filter results by [OCID]. Must be an OCID of the correct type for the resouce type.""")
 @cli_util.option('--source-snapshot-id', help=u"""The [OCID] of the snapshot used to create a cloned file system. See [Cloning a File System].""")
 @cli_util.option('--parent-file-system-id', help=u"""The [OCID] of the file system that contains the source snapshot of a cloned file system. See [Cloning a File System].""")
@@ -2004,7 +2038,7 @@ For important details about how pagination works, see [List Pagination].""")
 
 Example: `My resource`""")
 @cli_util.option('--export-set-id', help=u"""The [OCID] of the export set.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
 @cli_util.option('--id', help=u"""Filter results by [OCID]. Must be an OCID of the correct type for the resouce type.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can choose either value, but not both. By default, when you sort by time created, results are shown in descending order. When you sort by display name, results are shown in ascending order.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending. The default order is 'desc' except for numeric values.""")
@@ -2082,7 +2116,7 @@ Example: `500`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable.
 
 Example: `My resource`""")
@@ -2161,7 +2195,7 @@ Example: `500`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable.
 
 Example: `My resource`""")
@@ -2240,7 +2274,7 @@ Example: `500`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable.
 
 Example: `My resource`""")
@@ -2322,7 +2356,7 @@ Example: `100`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
 @cli_util.option('--id', help=u"""Filter results by [OCID]. Must be an OCID of the correct type for the resouce type.""")
 @cli_util.option('--filesystem-snapshot-policy-id', help=u"""The [OCID] of the file system snapshot policy that is used to create the snapshots.""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
@@ -2645,7 +2679,7 @@ If updating to a new Key Management key, the old key must remain enabled so that
 If string is empty, the policy reference (if any) would be removed.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})

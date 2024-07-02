@@ -6,6 +6,83 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.44.1 - 2024-07-02
+-------------------
+Added
+~~~~~
+* OCI Operations Insights Service
+
+  * Support in OPSI Host Capacity Planning to analyze disabled/deleted resources
+
+    * ``oci opsi host-insights list-host-configurations --status``
+    * ``oci opsi host-insights list-hosted-entities --status``
+    * ``oci opsi host-insights summarize-host-insight-disk-statistics --status``
+    * ``oci opsi host-insights summarize-host-insight-network-usage-trend --status``
+    * ``oci opsi host-insights summarize-host-insight-resource-capacity-trend --status``
+    * ``oci opsi host-insights summarize-host-insight-resource-forecast-trend --status``
+    * ``oci opsi host-insights summarize-host-insight-resource-statistics --status``
+    * ``oci opsi host-insights summarize-host-insight-resource-usage --status``
+    * ``oci opsi host-insights summarize-host-insight-resource-usage-trend --status``
+    * ``oci opsi host-insights summarize-host-insight-resource-utilization-insight --status``
+    * ``oci opsi host-insights summarize-host-insight-storage-usage-trend --status``
+    * ``oci opsi host-insights summarize-host-insight-top-processes-usage --status``
+    * ``oci opsi host-insights summarize-host-insight-top-processes-usage-trend --status``
+
+* OCI File Storage Service
+
+  * Support for deleting file system by first detaching child file system
+
+    * ``oci fs file-system delete --can-detach-child-file-system``
+
+  * Support for determining whether the file system is attached to its parent file system
+
+    * ``oci fs file-system create --clone-attach-status``
+
+  * Support for detaching a file sys from parent file system
+
+    * ``oci fs file-system detach --file-system-id``
+
+* OCI Database Migration Service
+
+  * Support for dynamic list of ZDM parameters for Oracle<>Oracle migrations
+
+    * ``oci database-migration migration-parameter-summary list-migration-parameters``
+
+* OCI Exadata Database Service
+
+  * Support for managing Exascale Database Storage Vault resources
+
+    * ``oci db exascale-db-storage-vault``
+
+  * Support for managing VM Cluster resources on Exascale Infrastructure
+
+    * ``oci db exadb-vm-cluster``
+
+  * Support for getting available updates and updating histories for a Exadb VM cluster
+
+    * ``oci db exadb-vm-cluster get-update``
+    * ``oci db exadb-vm-cluster list-updates``
+    * ``oci db exadb-vm-cluster get-update-history``
+    * ``oci db exadb-vm-cluster list-update-histories``
+
+  * Support for getting a list of supported minor GI versions for VM Cluster
+
+    * ``oci db gi-minor-version-summary list-gi-version-minor-versions``
+
+  * Support for getting a list of supported GI versions for VM Cluster
+
+    * ``oci db gi-version list``
+
+  * Support for getting a list of backups based on shape-family
+
+    * ``oci db backup list``
+
+  * Support for new optional parameter is-thin-clone for Pluggable Database resource
+
+    * ``oci db pluggable-database create-local-clone``
+    * ``oci db pluggable-database create-remote-clone``
+
+
 3.44.0 - 2024-06-25
 --------------------
 Changed
