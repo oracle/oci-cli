@@ -16,7 +16,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('capacity_management.capacity_management_root_group.command_name', 'capacity-management'), cls=CommandGroupWithAlias, help=cli_util.override('capacity_management.capacity_management_root_group.help', """A description of the OciControlCenterCp API"""), short_help=cli_util.override('capacity_management.capacity_management_root_group.short_help', """OciControlCenterCp API"""))
+@cli.command(cli_util.override('capacity_management.capacity_management_root_group.command_name', 'capacity-management'), cls=CommandGroupWithAlias, help=cli_util.override('capacity_management.capacity_management_root_group.help', """OCI Control Center (OCC) Capacity Management enables you to manage capacity requests in realms where OCI Control Center Capacity Management is available. For more information, see [OCI Control Center]."""), short_help=cli_util.override('capacity_management.capacity_management_root_group.short_help', """OCI Control Center Capacity Management API"""))
 @cli_util.help_option_group
 def capacity_management_root_group():
     pass

@@ -22,6 +22,7 @@ SDK_client_map = {
     "fs.delete_replication": "oci.file_storage.FileStorageClient.delete_replication",
     "fs.delete_replication_target": "oci.file_storage.FileStorageClient.delete_replication_target",
     "fs.delete_snapshot": "oci.file_storage.FileStorageClient.delete_snapshot",
+    "fs.detach_clone": "oci.file_storage.FileStorageClient.detach_clone",
     "fs.estimate_replication": "oci.file_storage.FileStorageClient.estimate_replication",
     "fs.get_export": "oci.file_storage.FileStorageClient.get_export",
     "fs.get_export_set": "oci.file_storage.FileStorageClient.get_export_set",

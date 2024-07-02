@@ -26,6 +26,7 @@ SDK_client_map = {
     "database_migration.list_jobs": "oci.database_migration.DatabaseMigrationClient.list_jobs",
     "database_migration.list_migration_object_types": "oci.database_migration.DatabaseMigrationClient.list_migration_object_types",
     "database_migration.list_migration_objects": "oci.database_migration.DatabaseMigrationClient.list_migration_objects",
+    "database_migration.list_migration_parameters": "oci.database_migration.DatabaseMigrationClient.list_migration_parameters",
     "database_migration.list_migrations": "oci.database_migration.DatabaseMigrationClient.list_migrations",
     "database_migration.list_work_request_errors": "oci.database_migration.DatabaseMigrationClient.list_work_request_errors",
     "database_migration.list_work_request_logs": "oci.database_migration.DatabaseMigrationClient.list_work_request_logs",

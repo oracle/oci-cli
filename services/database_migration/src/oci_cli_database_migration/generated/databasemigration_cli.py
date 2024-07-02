@@ -64,6 +64,12 @@ def connection_summary_group():
     pass
 
 
+@click.command(cli_util.override('database_migration.migration_parameter_summary_group.command_name', 'migration-parameter-summary'), cls=CommandGroupWithAlias, help="""Migration parameter response object.""")
+@cli_util.help_option_group
+def migration_parameter_summary_group():
+    pass
+
+
 @click.command(cli_util.override('database_migration.job_summary_group.command_name', 'job-summary'), cls=CommandGroupWithAlias, help="""Job description""")
 @cli_util.help_option_group
 def job_summary_group():
@@ -113,6 +119,7 @@ database_migration_root_group.add_command(excluded_object_summary_group)
 database_migration_root_group.add_command(work_request_group)
 database_migration_root_group.add_command(migration_summary_group)
 database_migration_root_group.add_command(connection_summary_group)
+database_migration_root_group.add_command(migration_parameter_summary_group)
 database_migration_root_group.add_command(job_summary_group)
 database_migration_root_group.add_command(migration_object_type_summary_group)
 database_migration_root_group.add_command(work_request_error_group)
@@ -1169,6 +1176,9 @@ def create_migration_create_my_sql_migration_details(ctx, from_json, wait_for_st
 @cli_util.option('--advisor-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--hub-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ggs-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--advanced-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Migration Parameter objects.
+
+This option is a JSON list with items of type MigrationParameterDetails.  For documentation on MigrationParameterDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20230518/datatypes/MigrationParameterDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-container-database-connection-id', help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--exclude-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to exclude from migration, cannot be specified alongside 'includeObjects'
 
@@ -1180,12 +1190,12 @@ This option is a JSON list with items of type OracleDatabaseObject.  For documen
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'CreateOracleDataTransferMediumDetails'}, 'initial-load-settings': {'module': 'database_migration', 'class': 'CreateOracleInitialLoadSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'CreateOracleAdvisorSettings'}, 'hub-details': {'module': 'database_migration', 'class': 'CreateGoldenGateHubDetails'}, 'ggs-details': {'module': 'database_migration', 'class': 'CreateOracleGgsDeploymentDetails'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'CreateOracleDataTransferMediumDetails'}, 'initial-load-settings': {'module': 'database_migration', 'class': 'CreateOracleInitialLoadSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'CreateOracleAdvisorSettings'}, 'hub-details': {'module': 'database_migration', 'class': 'CreateGoldenGateHubDetails'}, 'ggs-details': {'module': 'database_migration', 'class': 'CreateOracleGgsDeploymentDetails'}, 'advanced-parameters': {'module': 'database_migration', 'class': 'list[MigrationParameterDetails]'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'CreateOracleDataTransferMediumDetails'}, 'initial-load-settings': {'module': 'database_migration', 'class': 'CreateOracleInitialLoadSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'CreateOracleAdvisorSettings'}, 'hub-details': {'module': 'database_migration', 'class': 'CreateGoldenGateHubDetails'}, 'ggs-details': {'module': 'database_migration', 'class': 'CreateOracleGgsDeploymentDetails'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}}, output_type={'module': 'database_migration', 'class': 'Migration'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'CreateOracleDataTransferMediumDetails'}, 'initial-load-settings': {'module': 'database_migration', 'class': 'CreateOracleInitialLoadSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'CreateOracleAdvisorSettings'}, 'hub-details': {'module': 'database_migration', 'class': 'CreateGoldenGateHubDetails'}, 'ggs-details': {'module': 'database_migration', 'class': 'CreateOracleGgsDeploymentDetails'}, 'advanced-parameters': {'module': 'database_migration', 'class': 'list[MigrationParameterDetails]'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}}, output_type={'module': 'database_migration', 'class': 'Migration'})
 @cli_util.wrap_exceptions
-def create_migration_create_oracle_migration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, source_database_connection_id, target_database_connection_id, description, display_name, freeform_tags, defined_tags, data_transfer_medium_details, initial_load_settings, advisor_settings, hub_details, ggs_details, source_container_database_connection_id, exclude_objects, include_objects, bulk_include_exclude_data):
+def create_migration_create_oracle_migration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, source_database_connection_id, target_database_connection_id, description, display_name, freeform_tags, defined_tags, data_transfer_medium_details, initial_load_settings, advisor_settings, hub_details, ggs_details, advanced_parameters, source_container_database_connection_id, exclude_objects, include_objects, bulk_include_exclude_data):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1222,6 +1232,9 @@ def create_migration_create_oracle_migration_details(ctx, from_json, wait_for_st
 
     if ggs_details is not None:
         _details['ggsDetails'] = cli_util.parse_json_parameter("ggs_details", ggs_details)
+
+    if advanced_parameters is not None:
+        _details['advancedParameters'] = cli_util.parse_json_parameter("advanced_parameters", advanced_parameters)
 
     if source_container_database_connection_id is not None:
         _details['sourceContainerDatabaseConnectionId'] = source_container_database_connection_id
@@ -2022,6 +2035,62 @@ def list_migration_objects(ctx, from_json, all_pages, page_size, migration_id, i
     else:
         result = client.list_migration_objects(
             migration_id=migration_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@migration_parameter_summary_group.command(name=cli_util.override('database_migration.list_migration_parameters.command_name', 'list-migration-parameters'), help=u"""List of parameters that can be used to customize migrations. \n[Command Reference](listMigrationParameters)""")
+@cli_util.option('--migration-type', type=custom_types.CliCaseInsensitiveChoice(["ONLINE", "OFFLINE"]), help=u"""A filter to return only resources that match a certain Migration Type.""")
+@cli_util.option('--database-combination', type=custom_types.CliCaseInsensitiveChoice(["MYSQL", "ORACLE"]), help=u"""A filter to return only resources that match a certain Database Combination.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_migration', 'class': 'MigrationParameterSummaryCollection'})
+@cli_util.wrap_exceptions
+def list_migration_parameters(ctx, from_json, all_pages, page_size, migration_type, database_combination, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if migration_type is not None:
+        kwargs['migration_type'] = migration_type
+    if database_combination is not None:
+        kwargs['database_combination'] = database_combination
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_migration_parameters,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_migration_parameters,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_migration_parameters(
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -3225,24 +3294,27 @@ def update_migration_update_my_sql_migration_details(ctx, from_json, force, wait
 @cli_util.option('--advisor-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--hub-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ggs-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--advanced-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Migration Parameter objects.
+
+This option is a JSON list with items of type MigrationParameterDetails.  For documentation on MigrationParameterDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20230518/datatypes/MigrationParameterDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-container-database-connection-id', help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'UpdateOracleDataTransferMediumDetails'}, 'initial-load-settings': {'module': 'database_migration', 'class': 'UpdateOracleInitialLoadSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'UpdateOracleAdvisorSettings'}, 'hub-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateHubDetails'}, 'ggs-details': {'module': 'database_migration', 'class': 'UpdateOracleGgsDeploymentDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'UpdateOracleDataTransferMediumDetails'}, 'initial-load-settings': {'module': 'database_migration', 'class': 'UpdateOracleInitialLoadSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'UpdateOracleAdvisorSettings'}, 'hub-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateHubDetails'}, 'ggs-details': {'module': 'database_migration', 'class': 'UpdateOracleGgsDeploymentDetails'}, 'advanced-parameters': {'module': 'database_migration', 'class': 'list[MigrationParameterDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'UpdateOracleDataTransferMediumDetails'}, 'initial-load-settings': {'module': 'database_migration', 'class': 'UpdateOracleInitialLoadSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'UpdateOracleAdvisorSettings'}, 'hub-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateHubDetails'}, 'ggs-details': {'module': 'database_migration', 'class': 'UpdateOracleGgsDeploymentDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'UpdateOracleDataTransferMediumDetails'}, 'initial-load-settings': {'module': 'database_migration', 'class': 'UpdateOracleInitialLoadSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'UpdateOracleAdvisorSettings'}, 'hub-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateHubDetails'}, 'ggs-details': {'module': 'database_migration', 'class': 'UpdateOracleGgsDeploymentDetails'}, 'advanced-parameters': {'module': 'database_migration', 'class': 'list[MigrationParameterDetails]'}})
 @cli_util.wrap_exceptions
-def update_migration_update_oracle_migration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, description, type, display_name, source_database_connection_id, target_database_connection_id, freeform_tags, defined_tags, data_transfer_medium_details, initial_load_settings, advisor_settings, hub_details, ggs_details, source_container_database_connection_id, if_match):
+def update_migration_update_oracle_migration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, description, type, display_name, source_database_connection_id, target_database_connection_id, freeform_tags, defined_tags, data_transfer_medium_details, initial_load_settings, advisor_settings, hub_details, ggs_details, advanced_parameters, source_container_database_connection_id, if_match):
 
     if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags or data_transfer_medium_details or initial_load_settings or advisor_settings or hub_details or ggs_details:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and data-transfer-medium-details and initial-load-settings and advisor-settings and hub-details and ggs-details will replace any existing values. Are you sure you want to continue?"):
+        if freeform_tags or defined_tags or data_transfer_medium_details or initial_load_settings or advisor_settings or hub_details or ggs_details or advanced_parameters:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and data-transfer-medium-details and initial-load-settings and advisor-settings and hub-details and ggs-details and advanced-parameters will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -3287,6 +3359,9 @@ def update_migration_update_oracle_migration_details(ctx, from_json, force, wait
 
     if ggs_details is not None:
         _details['ggsDetails'] = cli_util.parse_json_parameter("ggs_details", ggs_details)
+
+    if advanced_parameters is not None:
+        _details['advancedParameters'] = cli_util.parse_json_parameter("advanced_parameters", advanced_parameters)
 
     if source_container_database_connection_id is not None:
         _details['sourceContainerDatabaseConnectionId'] = source_container_database_connection_id

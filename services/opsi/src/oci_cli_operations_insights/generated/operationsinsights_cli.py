@@ -16,15 +16,15 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('opsi.opsi_root_group.command_name', 'opsi'), cls=CommandGroupWithAlias, help=cli_util.override('opsi.opsi_root_group.help', """Use the Operations Insights API to perform data extraction operations to obtain database
+@cli.command(cli_util.override('opsi.opsi_root_group.command_name', 'opsi'), cls=CommandGroupWithAlias, help=cli_util.override('opsi.opsi_root_group.help', """Use the Ops Insights API to perform data extraction operations to obtain database
 resource utilization, performance statistics, and reference information. For more information,
-see [About Oracle Cloud Infrastructure Operations Insights]."""), short_help=cli_util.override('opsi.opsi_root_group.short_help', """Operations Insights API"""))
+see [About Oracle Cloud Infrastructure Ops Insights]."""), short_help=cli_util.override('opsi.opsi_root_group.short_help', """Ops Insights API"""))
 @cli_util.help_option_group
 def opsi_root_group():
     pass
 
 
-@click.command(cli_util.override('opsi.enterprise_manager_bridges_group.command_name', 'enterprise-manager-bridges'), cls=CommandGroupWithAlias, help="""Logical grouping used for Operations Insights Enterprise Manager Bridge operations.""")
+@click.command(cli_util.override('opsi.enterprise_manager_bridges_group.command_name', 'enterprise-manager-bridges'), cls=CommandGroupWithAlias, help="""Logical grouping used for Ops Insights Enterprise Manager Bridge operations.""")
 @cli_util.help_option_group
 def enterprise_manager_bridges_group():
     pass
@@ -78,7 +78,7 @@ def awr_hub_sources_group():
     pass
 
 
-@click.command(cli_util.override('opsi.operations_insights_warehouses_group.command_name', 'operations-insights-warehouses'), cls=CommandGroupWithAlias, help="""Logical grouping used for Operations Insights Warehouse operations.""")
+@click.command(cli_util.override('opsi.operations_insights_warehouses_group.command_name', 'operations-insights-warehouses'), cls=CommandGroupWithAlias, help="""Logical grouping used for Ops Insights Warehouse operations.""")
 @cli_util.help_option_group
 def operations_insights_warehouses_group():
     pass
@@ -118,7 +118,7 @@ def operations_insights_private_endpoint_group():
     pass
 
 
-@click.command(cli_util.override('opsi.work_requests_group.command_name', 'work-requests'), cls=CommandGroupWithAlias, help="""Logical grouping used for Operations Insights Work Request operations.""")
+@click.command(cli_util.override('opsi.work_requests_group.command_name', 'work-requests'), cls=CommandGroupWithAlias, help="""Logical grouping used for Ops Insights Work Request operations.""")
 @cli_util.help_option_group
 def work_requests_group():
     pass
@@ -990,7 +990,7 @@ def change_operations_insights_private_endpoint_compartment(ctx, from_json, wait
 
 
 @operations_insights_warehouses_group.command(name=cli_util.override('opsi.change_operations_insights_warehouse_compartment.command_name', 'change'), help=u"""Moves a Operations Insights Warehouse resource from one compartment to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeOperationsInsightsWarehouseCompartment)""")
-@cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Operations Insights Warehouse identifier""")
+@cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Ops Insights Warehouse identifier""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1991,7 +1991,7 @@ def create_exadata_insight_create_pe_comanaged_exadata_insight_details(ctx, from
     cli_util.render_response(result, ctx)
 
 
-@host_insights_group.command(name=cli_util.override('opsi.create_host_insight.command_name', 'create'), help=u"""Create a Host Insight resource for a host in Operations Insights. The host will be enabled in Operations Insights. Host metric collection and analysis will be started. \n[Command Reference](createHostInsight)""")
+@host_insights_group.command(name=cli_util.override('opsi.create_host_insight.command_name', 'create'), help=u"""Create a Host Insight resource for a host in Ops Insights. The host will be enabled in Ops Insights. Host metric collection and analysis will be started. \n[Command Reference](createHostInsight)""")
 @cli_util.option('--entity-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["MACS_MANAGED_EXTERNAL_HOST", "EM_MANAGED_EXTERNAL_HOST", "MACS_MANAGED_CLOUD_HOST", "PE_COMANAGED_HOST"]), help=u"""Source of the host entity.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier of host""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2054,7 +2054,7 @@ def create_host_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@host_insights_group.command(name=cli_util.override('opsi.create_host_insight_create_macs_managed_cloud_host_insight_details.command_name', 'create-host-insight-create-macs-managed-cloud-host-insight-details'), help=u"""Create a Host Insight resource for a host in Operations Insights. The host will be enabled in Operations Insights. Host metric collection and analysis will be started. \n[Command Reference](createHostInsight)""")
+@host_insights_group.command(name=cli_util.override('opsi.create_host_insight_create_macs_managed_cloud_host_insight_details.command_name', 'create-host-insight-create-macs-managed-cloud-host-insight-details'), help=u"""Create a Host Insight resource for a host in Ops Insights. The host will be enabled in Ops Insights. Host metric collection and analysis will be started. \n[Command Reference](createHostInsight)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier of host""")
 @cli_util.option('--compute-id', required=True, help=u"""The [OCID] of the Compute Instance""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2119,7 +2119,7 @@ def create_host_insight_create_macs_managed_cloud_host_insight_details(ctx, from
     cli_util.render_response(result, ctx)
 
 
-@host_insights_group.command(name=cli_util.override('opsi.create_host_insight_create_macs_managed_external_host_insight_details.command_name', 'create-host-insight-create-macs-managed-external-host-insight-details'), help=u"""Create a Host Insight resource for a host in Operations Insights. The host will be enabled in Operations Insights. Host metric collection and analysis will be started. \n[Command Reference](createHostInsight)""")
+@host_insights_group.command(name=cli_util.override('opsi.create_host_insight_create_macs_managed_external_host_insight_details.command_name', 'create-host-insight-create-macs-managed-external-host-insight-details'), help=u"""Create a Host Insight resource for a host in Ops Insights. The host will be enabled in Ops Insights. Host metric collection and analysis will be started. \n[Command Reference](createHostInsight)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier of host""")
 @cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2184,7 +2184,7 @@ def create_host_insight_create_macs_managed_external_host_insight_details(ctx, f
     cli_util.render_response(result, ctx)
 
 
-@host_insights_group.command(name=cli_util.override('opsi.create_host_insight_create_em_managed_external_host_insight_details.command_name', 'create-host-insight-create-em-managed-external-host-insight-details'), help=u"""Create a Host Insight resource for a host in Operations Insights. The host will be enabled in Operations Insights. Host metric collection and analysis will be started. \n[Command Reference](createHostInsight)""")
+@host_insights_group.command(name=cli_util.override('opsi.create_host_insight_create_em_managed_external_host_insight_details.command_name', 'create-host-insight-create-em-managed-external-host-insight-details'), help=u"""Create a Host Insight resource for a host in Ops Insights. The host will be enabled in Ops Insights. Host metric collection and analysis will be started. \n[Command Reference](createHostInsight)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier of host""")
 @cli_util.option('--enterprise-manager-identifier', required=True, help=u"""Enterprise Manager Unique Identifier""")
 @cli_util.option('--enterprise-manager-bridge-id', required=True, help=u"""OPSI Enterprise Manager Bridge OCID""")
@@ -2257,7 +2257,7 @@ def create_host_insight_create_em_managed_external_host_insight_details(ctx, fro
     cli_util.render_response(result, ctx)
 
 
-@news_reports_group.command(name=cli_util.override('opsi.create_news_report.command_name', 'create'), help=u"""Create a news report in Operations Insights. The report will be enabled in Operations Insights. Insights will be emailed as per selected frequency. \n[Command Reference](createNewsReport)""")
+@news_reports_group.command(name=cli_util.override('opsi.create_news_report.command_name', 'create'), help=u"""Create a news report in Ops Insights. The report will be enabled in Ops Insights. Insights will be emailed as per selected frequency. \n[Command Reference](createNewsReport)""")
 @cli_util.option('--name', required=True, help=u"""The news report name.""")
 @cli_util.option('--news-frequency', required=True, type=custom_types.CliCaseInsensitiveChoice(["WEEKLY"]), help=u"""News report frequency.""")
 @cli_util.option('--description', required=True, help=u"""The description of the news report.""")
@@ -2342,12 +2342,12 @@ def create_news_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@operations_insights_private_endpoint_group.command(name=cli_util.override('opsi.create_operations_insights_private_endpoint.command_name', 'create'), help=u"""Create a private endpoint resource for the tenant in Operations Insights. This resource will be created in customer compartment. \n[Command Reference](createOperationsInsightsPrivateEndpoint)""")
+@operations_insights_private_endpoint_group.command(name=cli_util.override('opsi.create_operations_insights_private_endpoint.command_name', 'create'), help=u"""Create a private endpoint resource for the tenant in Ops Insights. This resource will be created in customer compartment. \n[Command Reference](createOperationsInsightsPrivateEndpoint)""")
 @cli_util.option('--display-name', required=True, help=u"""The display name for the private endpoint. It is changeable.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID] of the Private service accessed database.""")
 @cli_util.option('--vcn-id', required=True, help=u"""The VCN [OCID] of the Private service accessed database.""")
 @cli_util.option('--subnet-id', required=True, help=u"""The Subnet [OCID] of the Private service accessed database.""")
-@cli_util.option('--is-used-for-rac-dbs', required=True, type=click.BOOL, help=u"""The flag to identify if private endpoint is used for rac database or not""")
+@cli_util.option('--is-used-for-rac-dbs', required=True, type=click.BOOL, help=u"""This flag was previously used to create a private endpoint with scan proxy. Setting this to true will now create a private endpoint with a DNS proxy causing `isProxyEnabled` flag to be true; this is used exclusively for full feature support for dedicated Autonomous Databases.""")
 @cli_util.option('--description', help=u"""The description of the private endpoint.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The [OCID] of the network security groups that the private endpoint belongs to.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2419,9 +2419,9 @@ def create_operations_insights_private_endpoint(ctx, from_json, wait_for_state, 
     cli_util.render_response(result, ctx)
 
 
-@operations_insights_warehouses_group.command(name=cli_util.override('opsi.create_operations_insights_warehouse.command_name', 'create'), help=u"""Create a Operations Insights Warehouse resource for the tenant in Operations Insights. New ADW will be provisioned for this tenant. There is only expected to be 1 warehouse per tenant. The warehouse is expected to be in the root compartment. If the 'opsi-warehouse-type' header is passed to the API, a warehouse resource without ADW or Schema provisioning is created. \n[Command Reference](createOperationsInsightsWarehouse)""")
+@operations_insights_warehouses_group.command(name=cli_util.override('opsi.create_operations_insights_warehouse.command_name', 'create'), help=u"""Create a Ops Insights Warehouse resource for the tenant in Ops Insights. New ADW will be provisioned for this tenant. There is only expected to be 1 warehouse per tenant. The warehouse is expected to be in the root compartment. If the 'opsi-warehouse-type' header is passed to the API, a warehouse resource without ADW or Schema provisioning is created. \n[Command Reference](createOperationsInsightsWarehouse)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--display-name', required=True, help=u"""User-friedly name of Operations Insights Warehouse that does not have to be unique.""")
+@cli_util.option('--display-name', required=True, help=u"""User-friedly name of Ops Insights Warehouse that does not have to be unique.""")
 @cli_util.option('--cpu-allocated', required=True, help=u"""Number of OCPUs allocated to OPSI Warehouse ADW.""")
 @cli_util.option('--storage-allocated-in-gbs', help=u"""Storage allocated to OPSI Warehouse ADW.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2491,8 +2491,8 @@ def create_operations_insights_warehouse(ctx, from_json, wait_for_state, max_wai
 @operations_insights_warehouse_users_group.command(name=cli_util.override('opsi.create_operations_insights_warehouse_user.command_name', 'create'), help=u"""Create a Operations Insights Warehouse user resource for the tenant in Operations Insights. This resource will be created in root compartment. \n[Command Reference](createOperationsInsightsWarehouseUser)""")
 @cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""OPSI Warehouse OCID""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--name', required=True, help=u"""Username for schema which would have access to AWR Data,  Enterprise Manager Data and Operations Insights OPSI Hub.""")
-@cli_util.option('--connection-password', required=True, help=u"""User provided connection password for the AWR Data,  Enterprise Manager Data and Operations Insights OPSI Hub.""")
+@cli_util.option('--name', required=True, help=u"""Username for schema which would have access to AWR Data,  Enterprise Manager Data and Ops Insights OPSI Hub.""")
+@cli_util.option('--connection-password', required=True, help=u"""User provided connection password for the AWR Data,  Enterprise Manager Data and Ops Insights OPSI Hub.""")
 @cli_util.option('--is-awr-data-access', required=True, type=click.BOOL, help=u"""Indicate whether user has access to AWR data.""")
 @cli_util.option('--is-em-data-access', type=click.BOOL, help=u"""Indicate whether user has access to EM data.""")
 @cli_util.option('--is-opsi-data-access', type=click.BOOL, help=u"""Indicate whether user has access to OPSI data.""")
@@ -3235,7 +3235,7 @@ def delete_operations_insights_private_endpoint(ctx, from_json, wait_for_state, 
 
 
 @operations_insights_warehouses_group.command(name=cli_util.override('opsi.delete_operations_insights_warehouse.command_name', 'delete'), help=u"""Deletes an Operations Insights Warehouse. There is only expected to be 1 warehouse per tenant. The warehouse is expected to be in the root compartment. User must delete AWR Hub resource for this warehouse before calling this operation. User must delete the warehouse users before calling this operation. \n[Command Reference](deleteOperationsInsightsWarehouse)""")
-@cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Operations Insights Warehouse identifier""")
+@cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Ops Insights Warehouse identifier""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3622,7 +3622,7 @@ def disable_exadata_insight(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@host_insights_group.command(name=cli_util.override('opsi.disable_host_insight.command_name', 'disable'), help=u"""Disables a host in Operations Insights. Host metric collection and analysis will be stopped. \n[Command Reference](disableHostInsight)""")
+@host_insights_group.command(name=cli_util.override('opsi.disable_host_insight.command_name', 'disable'), help=u"""Disables a host in Ops Insights. Host metric collection and analysis will be stopped. \n[Command Reference](disableHostInsight)""")
 @cli_util.option('--host-insight-id', required=True, help=u"""Unique host insight identifier""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3678,8 +3678,8 @@ def disable_host_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 
 @operations_insights_warehouses_group.command(name=cli_util.override('opsi.download_operations_insights_warehouse_wallet.command_name', 'download'), help=u"""Download the ADW wallet for Operations Insights Warehouse using which the Hub data is exposed. \n[Command Reference](downloadOperationsInsightsWarehouseWallet)""")
-@cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Operations Insights Warehouse identifier""")
-@cli_util.option('--operations-insights-warehouse-wallet-password', required=True, help=u"""User provided ADW wallet password for the Operations Insights Warehouse.""")
+@cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Ops Insights Warehouse identifier""")
+@cli_util.option('--operations-insights-warehouse-wallet-password', required=True, help=u"""User provided ADW wallet password for the Ops Insights Warehouse.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -4396,7 +4396,7 @@ def enable_exadata_insight_enable_em_managed_external_exadata_insight_details(ct
     cli_util.render_response(result, ctx)
 
 
-@host_insights_group.command(name=cli_util.override('opsi.enable_host_insight.command_name', 'enable'), help=u"""Enables a host in Operations Insights. Host metric collection and analysis will be started. \n[Command Reference](enableHostInsight)""")
+@host_insights_group.command(name=cli_util.override('opsi.enable_host_insight.command_name', 'enable'), help=u"""Enables a host in Ops Insights. Host metric collection and analysis will be started. \n[Command Reference](enableHostInsight)""")
 @cli_util.option('--entity-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["MACS_MANAGED_EXTERNAL_HOST", "EM_MANAGED_EXTERNAL_HOST", "MACS_MANAGED_CLOUD_HOST", "PE_COMANAGED_HOST"]), help=u"""Source of the host entity.""")
 @cli_util.option('--host-insight-id', required=True, help=u"""Unique host insight identifier""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -4457,7 +4457,7 @@ def enable_host_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@host_insights_group.command(name=cli_util.override('opsi.enable_host_insight_enable_macs_managed_external_host_insight_details.command_name', 'enable-host-insight-enable-macs-managed-external-host-insight-details'), help=u"""Enables a host in Operations Insights. Host metric collection and analysis will be started. \n[Command Reference](enableHostInsight)""")
+@host_insights_group.command(name=cli_util.override('opsi.enable_host_insight_enable_macs_managed_external_host_insight_details.command_name', 'enable-host-insight-enable-macs-managed-external-host-insight-details'), help=u"""Enables a host in Ops Insights. Host metric collection and analysis will be started. \n[Command Reference](enableHostInsight)""")
 @cli_util.option('--host-insight-id', required=True, help=u"""Unique host insight identifier""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -4518,7 +4518,7 @@ def enable_host_insight_enable_macs_managed_external_host_insight_details(ctx, f
     cli_util.render_response(result, ctx)
 
 
-@host_insights_group.command(name=cli_util.override('opsi.enable_host_insight_enable_macs_managed_cloud_host_insight_details.command_name', 'enable-host-insight-enable-macs-managed-cloud-host-insight-details'), help=u"""Enables a host in Operations Insights. Host metric collection and analysis will be started. \n[Command Reference](enableHostInsight)""")
+@host_insights_group.command(name=cli_util.override('opsi.enable_host_insight_enable_macs_managed_cloud_host_insight_details.command_name', 'enable-host-insight-enable-macs-managed-cloud-host-insight-details'), help=u"""Enables a host in Ops Insights. Host metric collection and analysis will be started. \n[Command Reference](enableHostInsight)""")
 @cli_util.option('--host-insight-id', required=True, help=u"""Unique host insight identifier""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -4579,7 +4579,7 @@ def enable_host_insight_enable_macs_managed_cloud_host_insight_details(ctx, from
     cli_util.render_response(result, ctx)
 
 
-@host_insights_group.command(name=cli_util.override('opsi.enable_host_insight_enable_em_managed_external_host_insight_details.command_name', 'enable-host-insight-enable-em-managed-external-host-insight-details'), help=u"""Enables a host in Operations Insights. Host metric collection and analysis will be started. \n[Command Reference](enableHostInsight)""")
+@host_insights_group.command(name=cli_util.override('opsi.enable_host_insight_enable_em_managed_external_host_insight_details.command_name', 'enable-host-insight-enable-em-managed-external-host-insight-details'), help=u"""Enables a host in Ops Insights. Host metric collection and analysis will be started. \n[Command Reference](enableHostInsight)""")
 @cli_util.option('--host-insight-id', required=True, help=u"""Unique host insight identifier""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -4997,8 +4997,8 @@ def get_operations_insights_private_endpoint(ctx, from_json, operations_insights
     cli_util.render_response(result, ctx)
 
 
-@operations_insights_warehouses_group.command(name=cli_util.override('opsi.get_operations_insights_warehouse.command_name', 'get'), help=u"""Gets details of an Operations Insights Warehouse. There is only expected to be 1 warehouse per tenant. The warehouse is expected to be in the root compartment. \n[Command Reference](getOperationsInsightsWarehouse)""")
-@cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Operations Insights Warehouse identifier""")
+@operations_insights_warehouses_group.command(name=cli_util.override('opsi.get_operations_insights_warehouse.command_name', 'get'), help=u"""Gets details of an Ops Insights Warehouse. There is only expected to be 1 warehouse per tenant. The warehouse is expected to be in the root compartment. \n[Command Reference](getOperationsInsightsWarehouse)""")
+@cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Ops Insights Warehouse identifier""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -5268,7 +5268,7 @@ def ingest_host_metrics(ctx, from_json, id, items, if_match):
     cli_util.render_response(result, ctx)
 
 
-@database_insights_group.command(name=cli_util.override('opsi.ingest_sql_bucket.command_name', 'ingest-sql-bucket'), help=u"""The sqlbucket endpoint takes in a JSON payload, persists it in Operations Insights ingest pipeline. Either databaseId or id must be specified. \n[Command Reference](ingestSqlBucket)""")
+@database_insights_group.command(name=cli_util.override('opsi.ingest_sql_bucket.command_name', 'ingest-sql-bucket'), help=u"""The sqlbucket endpoint takes in a JSON payload, persists it in Ops Insights ingest pipeline. Either databaseId or id must be specified. \n[Command Reference](ingestSqlBucket)""")
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of SQL Bucket Metric Entries.
 
 This option is a JSON list with items of type SqlBucket.  For documentation on SqlBucket please see our API reference: https://docs.cloud.oracle.com/api/#/en/operationsinsights/20200630/datatypes/SqlBucket.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5346,7 +5346,7 @@ def ingest_sql_plan_lines(ctx, from_json, items, compartment_id, database_id, id
     cli_util.render_response(result, ctx)
 
 
-@database_insights_group.command(name=cli_util.override('opsi.ingest_sql_stats.command_name', 'ingest-sql-stats'), help=u"""The SQL Stats endpoint takes in a JSON payload, persists it in Operations Insights ingest pipeline. Either databaseId or id must be specified. \n[Command Reference](ingestSqlStats)""")
+@database_insights_group.command(name=cli_util.override('opsi.ingest_sql_stats.command_name', 'ingest-sql-stats'), help=u"""The SQL Stats endpoint takes in a JSON payload, persists it in Ops Insights ingest pipeline. Either databaseId or id must be specified. \n[Command Reference](ingestSqlStats)""")
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of SQL Stats Metric Entries.
 
 This option is a JSON list with items of type SqlStats.  For documentation on SqlStats please see our API reference: https://docs.cloud.oracle.com/api/#/en/operationsinsights/20200630/datatypes/SqlStats.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6504,7 +6504,7 @@ def list_database_insights(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
-@enterprise_manager_bridges_group.command(name=cli_util.override('opsi.list_enterprise_manager_bridges.command_name', 'list'), help=u"""Gets a list of Operations Insights Enterprise Manager bridges. Either compartmentId or id must be specified. When both compartmentId and compartmentIdInSubtree are specified, a list of bridges in that compartment and in all sub-compartments will be returned. \n[Command Reference](listEnterpriseManagerBridges)""")
+@enterprise_manager_bridges_group.command(name=cli_util.override('opsi.list_enterprise_manager_bridges.command_name', 'list'), help=u"""Gets a list of Ops Insights Enterprise Manager bridges. Either compartmentId or id must be specified. When both compartmentId and compartmentIdInSubtree are specified, a list of bridges in that compartment and in all sub-compartments will be returned. \n[Command Reference](listEnterpriseManagerBridges)""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name.""")
 @cli_util.option('--id', help=u"""Unique Enterprise Manager bridge identifier""")
@@ -6729,6 +6729,7 @@ def list_exadata_insights(ctx, from_json, all_pages, page_size, compartment_id, 
 @cli_util.option('--host-type', multiple=True, help=u"""Filter by one or more host types. Possible values are CLOUD-HOST, EXTERNAL-HOST, COMANAGED-VM-HOST, COMANAGED-BM-HOST, COMANAGED-EXACS-HOST""")
 @cli_util.option('--host-id', help=u"""Optional [OCID] of the host (Compute Id)""")
 @cli_util.option('--vmcluster-name', multiple=True, help=u"""Optional list of Exadata Insight VM cluster name.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'opsi', 'class': 'list[string]'}, 'exadata-insight-id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'host-type': {'module': 'opsi', 'class': 'list[string]'}, 'vmcluster-name': {'module': 'opsi', 'class': 'list[string]'}})
@@ -6736,7 +6737,7 @@ def list_exadata_insights(ctx, from_json, all_pages, page_size, compartment_id, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}, 'exadata-insight-id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'host-type': {'module': 'opsi', 'class': 'list[string]'}, 'vmcluster-name': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'HostConfigurationCollection'})
 @cli_util.wrap_exceptions
-def list_host_configurations(ctx, from_json, all_pages, page_size, compartment_id, enterprise_manager_bridge_id, id, exadata_insight_id, platform_type, limit, page, sort_order, sort_by, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists, compartment_id_in_subtree, host_type, host_id, vmcluster_name):
+def list_host_configurations(ctx, from_json, all_pages, page_size, compartment_id, enterprise_manager_bridge_id, id, exadata_insight_id, platform_type, limit, page, sort_order, sort_by, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists, compartment_id_in_subtree, host_type, host_id, vmcluster_name, status):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -6776,6 +6777,8 @@ def list_host_configurations(ctx, from_json, all_pages, page_size, compartment_i
         kwargs['host_id'] = host_id
     if vmcluster_name is not None and len(vmcluster_name) > 0:
         kwargs['vmcluster_name'] = vmcluster_name
+    if status is not None and len(status) > 0:
+        kwargs['status'] = status
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     if all_pages:
@@ -6891,6 +6894,7 @@ def list_host_insights(ctx, from_json, all_pages, page_size, compartment_id, id,
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["entityName", "entityType"]), help=u"""Hosted entity list sort options.""")
 @cli_util.option('--host-type', multiple=True, help=u"""Filter by one or more host types. Possible values are CLOUD-HOST, EXTERNAL-HOST, COMANAGED-VM-HOST, COMANAGED-BM-HOST, COMANAGED-EXACS-HOST""")
 @cli_util.option('--host-id', help=u"""Optional [OCID] of the host (Compute Id)""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({'host-type': {'module': 'opsi', 'class': 'list[string]'}})
@@ -6898,7 +6902,7 @@ def list_host_insights(ctx, from_json, all_pages, page_size, compartment_id, id,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'host-type': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'HostedEntityCollection'})
 @cli_util.wrap_exceptions
-def list_hosted_entities(ctx, from_json, all_pages, page_size, compartment_id, id, analysis_time_interval, time_interval_start, time_interval_end, platform_type, exadata_insight_id, limit, page, sort_order, sort_by, host_type, host_id):
+def list_hosted_entities(ctx, from_json, all_pages, page_size, compartment_id, id, analysis_time_interval, time_interval_start, time_interval_end, platform_type, exadata_insight_id, limit, page, sort_order, sort_by, host_type, host_id, status):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -6926,6 +6930,8 @@ def list_hosted_entities(ctx, from_json, all_pages, page_size, compartment_id, i
         kwargs['host_type'] = host_type
     if host_id is not None:
         kwargs['host_id'] = host_id
+    if status is not None and len(status) > 0:
+        kwargs['status'] = status
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     if all_pages:
@@ -7126,7 +7132,7 @@ def list_importable_enterprise_manager_entities(ctx, from_json, all_pages, page_
 
 @news_report_group.command(name=cli_util.override('opsi.list_news_reports.command_name', 'list'), help=u"""Gets a list of news reports based on the query parameters specified. Either compartmentId or id query parameter must be specified. \n[Command Reference](listNewsReports)""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--news-report-id', help=u"""Unique Operations Insights news report identifier""")
+@cli_util.option('--news-report-id', help=u"""Unique Ops Insights news report identifier""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help=u"""Lifecycle states""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
@@ -7326,10 +7332,10 @@ def list_operations_insights_warehouse_users(ctx, from_json, all_pages, page_siz
     cli_util.render_response(result, ctx)
 
 
-@operations_insights_warehouses_group.command(name=cli_util.override('opsi.list_operations_insights_warehouses.command_name', 'list'), help=u"""Gets a list of Operations Insights warehouses. Either compartmentId or id must be specified. There is only expected to be 1 warehouse per tenant. The warehouse is expected to be in the root compartment. \n[Command Reference](listOperationsInsightsWarehouses)""")
+@operations_insights_warehouses_group.command(name=cli_util.override('opsi.list_operations_insights_warehouses.command_name', 'list'), help=u"""Gets a list of Ops Insights warehouses. Either compartmentId or id must be specified. There is only expected to be 1 warehouse per tenant. The warehouse is expected to be in the root compartment. \n[Command Reference](listOperationsInsightsWarehouses)""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name.""")
-@cli_util.option('--id', help=u"""Unique Operations Insights Warehouse identifier""")
+@cli_util.option('--id', help=u"""Unique Ops Insights Warehouse identifier""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help=u"""Lifecycle states""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -8330,7 +8336,7 @@ def query_warehouse_data_object_data_data_object_templatized_query(ctx, from_jso
 
 
 @operations_insights_warehouses_group.command(name=cli_util.override('opsi.rotate_operations_insights_warehouse_wallet.command_name', 'rotate'), help=u"""Rotate the ADW wallet for Operations Insights Warehouse using which the Hub data is exposed. \n[Command Reference](rotateOperationsInsightsWarehouseWallet)""")
-@cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Operations Insights Warehouse identifier""")
+@cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Ops Insights Warehouse identifier""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -8523,9 +8529,9 @@ def summarize_addm_db_parameter_changes(ctx, from_json, compartment_id, name, da
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--category-name', help=u"""Optional value filter to match the parameter category exactly. Note the list of possible category names can be retrieved from the following endpoint: /databases/{databaseId}/addmDbParameterCategories.""")
 @cli_util.option('--name-or-value-contains', help=u"""Optional filter to return only resources whose name or value contains the substring given. The match is not case sensitive.""")
-@cli_util.option('--is-changed', type=custom_types.CliCaseInsensitiveChoice(["true", "false"]), help=u"""Optional filter to return only parameters whose value changed in the specified time period. Valid values include: TRUE, FALSE""")
-@cli_util.option('--is-default', type=custom_types.CliCaseInsensitiveChoice(["true", "false"]), help=u"""Optional filter to return only parameters whose end value was set to the default value (TRUE) or was specified in the parameter file (FALSE). Valid values include: TRUE, FALSE""")
-@cli_util.option('--has-recommendations', type=custom_types.CliCaseInsensitiveChoice(["true", "false"]), help=u"""Optional filter to return only parameters which have recommendations in the specified time period. Valid values include: TRUE, FALSE""")
+@cli_util.option('--is-changed', type=custom_types.CliCaseInsensitiveChoice(["TRUE", "FALSE"]), help=u"""Optional filter to return only parameters whose value changed in the specified time period. Valid values include: TRUE, FALSE""")
+@cli_util.option('--is-default', type=custom_types.CliCaseInsensitiveChoice(["TRUE", "FALSE"]), help=u"""Optional filter to return only parameters whose end value was set to the default value (TRUE) or was specified in the parameter file (FALSE). Valid values include: TRUE, FALSE""")
+@cli_util.option('--has-recommendations', type=custom_types.CliCaseInsensitiveChoice(["TRUE", "FALSE"]), help=u"""Optional filter to return only parameters which have recommendations in the specified time period. Valid values include: TRUE, FALSE""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
@@ -10489,12 +10495,13 @@ def summarize_exadata_members(ctx, from_json, exadata_insight_id, exadata_type, 
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--host-id', help=u"""Optional [OCID] of the host (Compute Id)""")
 @cli_util.option('--statistic', type=custom_types.CliCaseInsensitiveChoice(["AVG", "MAX"]), help=u"""Choose the type of statistic metric data to be used for forecasting.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'SummarizeHostInsightsDiskStatisticsCollection'})
 @cli_util.wrap_exceptions
-def summarize_host_insight_disk_statistics(ctx, from_json, compartment_id, id, analysis_time_interval, time_interval_start, time_interval_end, host_id, statistic):
+def summarize_host_insight_disk_statistics(ctx, from_json, compartment_id, id, analysis_time_interval, time_interval_start, time_interval_end, host_id, statistic, status):
 
     kwargs = {}
     if analysis_time_interval is not None:
@@ -10507,6 +10514,8 @@ def summarize_host_insight_disk_statistics(ctx, from_json, compartment_id, id, a
         kwargs['host_id'] = host_id
     if statistic is not None:
         kwargs['statistic'] = statistic
+    if status is not None and len(status) > 0:
+        kwargs['status'] = status
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.summarize_host_insight_disk_statistics(
@@ -10568,12 +10577,13 @@ def summarize_host_insight_host_recommendation(ctx, from_json, compartment_id, i
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
 @cli_util.option('--statistic', type=custom_types.CliCaseInsensitiveChoice(["AVG", "MAX"]), help=u"""Choose the type of statistic metric data to be used for forecasting.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'SummarizeHostInsightNetworkUsageTrendAggregationCollection'})
 @cli_util.wrap_exceptions
-def summarize_host_insight_network_usage_trend(ctx, from_json, compartment_id, id, analysis_time_interval, time_interval_start, time_interval_end, host_id, page, limit, statistic):
+def summarize_host_insight_network_usage_trend(ctx, from_json, compartment_id, id, analysis_time_interval, time_interval_start, time_interval_end, host_id, page, limit, statistic, status):
 
     kwargs = {}
     if analysis_time_interval is not None:
@@ -10590,6 +10600,8 @@ def summarize_host_insight_network_usage_trend(ctx, from_json, compartment_id, i
         kwargs['limit'] = limit
     if statistic is not None:
         kwargs['statistic'] = statistic
+    if status is not None and len(status) > 0:
+        kwargs['status'] = status
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.summarize_host_insight_network_usage_trend(
@@ -10623,12 +10635,13 @@ def summarize_host_insight_network_usage_trend(ctx, from_json, compartment_id, i
 @cli_util.option('--vmcluster-name', multiple=True, help=u"""Optional list of Exadata Insight VM cluster name.""")
 @cli_util.option('--high-utilization-threshold', type=click.INT, help=u"""Percent value in which a resource metric is considered highly utilized.""")
 @cli_util.option('--low-utilization-threshold', type=click.INT, help=u"""Percent value in which a resource metric is considered low utilized.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
 @json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'opsi', 'class': 'list[string]'}, 'exadata-insight-id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'host-type': {'module': 'opsi', 'class': 'list[string]'}, 'vmcluster-name': {'module': 'opsi', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}, 'exadata-insight-id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'host-type': {'module': 'opsi', 'class': 'list[string]'}, 'vmcluster-name': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeHostInsightResourceCapacityTrendAggregationCollection'})
 @cli_util.wrap_exceptions
-def summarize_host_insight_resource_capacity_trend(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, platform_type, id, exadata_insight_id, utilization_level, page, sort_order, sort_by, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists, compartment_id_in_subtree, host_type, host_id, vmcluster_name, high_utilization_threshold, low_utilization_threshold):
+def summarize_host_insight_resource_capacity_trend(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, platform_type, id, exadata_insight_id, utilization_level, page, sort_order, sort_by, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists, compartment_id_in_subtree, host_type, host_id, vmcluster_name, high_utilization_threshold, low_utilization_threshold, status):
 
     kwargs = {}
     if analysis_time_interval is not None:
@@ -10671,6 +10684,8 @@ def summarize_host_insight_resource_capacity_trend(ctx, from_json, compartment_i
         kwargs['high_utilization_threshold'] = high_utilization_threshold
     if low_utilization_threshold is not None:
         kwargs['low_utilization_threshold'] = low_utilization_threshold
+    if status is not None and len(status) > 0:
+        kwargs['status'] = status
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.summarize_host_insight_resource_capacity_trend(
@@ -10708,12 +10723,13 @@ def summarize_host_insight_resource_capacity_trend(ctx, from_json, compartment_i
 @cli_util.option('--low-utilization-threshold', type=click.INT, help=u"""Percent value in which a resource metric is considered low utilized.""")
 @cli_util.option('--mount-point', help=u"""Mount points are specialized NTFS filesystem objects.""")
 @cli_util.option('--interface-name', help=u"""Name of the network interface.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
 @json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'opsi', 'class': 'list[string]'}, 'exadata-insight-id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'host-type': {'module': 'opsi', 'class': 'list[string]'}, 'vmcluster-name': {'module': 'opsi', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}, 'exadata-insight-id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'host-type': {'module': 'opsi', 'class': 'list[string]'}, 'vmcluster-name': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeHostInsightResourceForecastTrendAggregation'})
 @cli_util.wrap_exceptions
-def summarize_host_insight_resource_forecast_trend(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, platform_type, id, exadata_insight_id, statistic, forecast_days, forecast_model, utilization_level, confidence, page, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists, compartment_id_in_subtree, host_type, host_id, vmcluster_name, high_utilization_threshold, low_utilization_threshold, mount_point, interface_name):
+def summarize_host_insight_resource_forecast_trend(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, platform_type, id, exadata_insight_id, statistic, forecast_days, forecast_model, utilization_level, confidence, page, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists, compartment_id_in_subtree, host_type, host_id, vmcluster_name, high_utilization_threshold, low_utilization_threshold, mount_point, interface_name, status):
 
     kwargs = {}
     if analysis_time_interval is not None:
@@ -10764,6 +10780,8 @@ def summarize_host_insight_resource_forecast_trend(ctx, from_json, compartment_i
         kwargs['mount_point'] = mount_point
     if interface_name is not None:
         kwargs['interface_name'] = interface_name
+    if status is not None and len(status) > 0:
+        kwargs['status'] = status
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.summarize_host_insight_resource_forecast_trend(
@@ -10800,12 +10818,13 @@ def summarize_host_insight_resource_forecast_trend(ctx, from_json, compartment_i
 @cli_util.option('--vmcluster-name', multiple=True, help=u"""Optional list of Exadata Insight VM cluster name.""")
 @cli_util.option('--high-utilization-threshold', type=click.INT, help=u"""Percent value in which a resource metric is considered highly utilized.""")
 @cli_util.option('--low-utilization-threshold', type=click.INT, help=u"""Percent value in which a resource metric is considered low utilized.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
 @json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'opsi', 'class': 'list[string]'}, 'exadata-insight-id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'host-type': {'module': 'opsi', 'class': 'list[string]'}, 'vmcluster-name': {'module': 'opsi', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}, 'exadata-insight-id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'host-type': {'module': 'opsi', 'class': 'list[string]'}, 'vmcluster-name': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeHostInsightResourceStatisticsAggregationCollection'})
 @cli_util.wrap_exceptions
-def summarize_host_insight_resource_statistics(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, platform_type, id, exadata_insight_id, percentile, insight_by, forecast_days, limit, page, sort_order, sort_by, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists, compartment_id_in_subtree, host_type, host_id, vmcluster_name, high_utilization_threshold, low_utilization_threshold):
+def summarize_host_insight_resource_statistics(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, platform_type, id, exadata_insight_id, percentile, insight_by, forecast_days, limit, page, sort_order, sort_by, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists, compartment_id_in_subtree, host_type, host_id, vmcluster_name, high_utilization_threshold, low_utilization_threshold, status):
 
     kwargs = {}
     if analysis_time_interval is not None:
@@ -10854,6 +10873,8 @@ def summarize_host_insight_resource_statistics(ctx, from_json, compartment_id, r
         kwargs['high_utilization_threshold'] = high_utilization_threshold
     if low_utilization_threshold is not None:
         kwargs['low_utilization_threshold'] = low_utilization_threshold
+    if status is not None and len(status) > 0:
+        kwargs['status'] = status
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.summarize_host_insight_resource_statistics(
@@ -10883,12 +10904,13 @@ def summarize_host_insight_resource_statistics(ctx, from_json, compartment_id, r
 @cli_util.option('--host-type', multiple=True, help=u"""Filter by one or more host types. Possible values are CLOUD-HOST, EXTERNAL-HOST, COMANAGED-VM-HOST, COMANAGED-BM-HOST, COMANAGED-EXACS-HOST""")
 @cli_util.option('--host-id', help=u"""Optional [OCID] of the host (Compute Id)""")
 @cli_util.option('--vmcluster-name', multiple=True, help=u"""Optional list of Exadata Insight VM cluster name.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
 @json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'opsi', 'class': 'list[string]'}, 'exadata-insight-id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'host-type': {'module': 'opsi', 'class': 'list[string]'}, 'vmcluster-name': {'module': 'opsi', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}, 'exadata-insight-id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'host-type': {'module': 'opsi', 'class': 'list[string]'}, 'vmcluster-name': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeHostInsightResourceUsageAggregation'})
 @cli_util.wrap_exceptions
-def summarize_host_insight_resource_usage(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, platform_type, id, exadata_insight_id, page, percentile, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists, compartment_id_in_subtree, host_type, host_id, vmcluster_name):
+def summarize_host_insight_resource_usage(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, platform_type, id, exadata_insight_id, page, percentile, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists, compartment_id_in_subtree, host_type, host_id, vmcluster_name, status):
 
     kwargs = {}
     if analysis_time_interval is not None:
@@ -10923,6 +10945,8 @@ def summarize_host_insight_resource_usage(ctx, from_json, compartment_id, resour
         kwargs['host_id'] = host_id
     if vmcluster_name is not None and len(vmcluster_name) > 0:
         kwargs['vmcluster_name'] = vmcluster_name
+    if status is not None and len(status) > 0:
+        kwargs['status'] = status
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.summarize_host_insight_resource_usage(
@@ -10953,12 +10977,13 @@ def summarize_host_insight_resource_usage(ctx, from_json, compartment_id, resour
 @cli_util.option('--host-type', multiple=True, help=u"""Filter by one or more host types. Possible values are CLOUD-HOST, EXTERNAL-HOST, COMANAGED-VM-HOST, COMANAGED-BM-HOST, COMANAGED-EXACS-HOST""")
 @cli_util.option('--host-id', help=u"""Optional [OCID] of the host (Compute Id)""")
 @cli_util.option('--vmcluster-name', multiple=True, help=u"""Optional list of Exadata Insight VM cluster name.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
 @json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'opsi', 'class': 'list[string]'}, 'exadata-insight-id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'host-type': {'module': 'opsi', 'class': 'list[string]'}, 'vmcluster-name': {'module': 'opsi', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}, 'exadata-insight-id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'host-type': {'module': 'opsi', 'class': 'list[string]'}, 'vmcluster-name': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeHostInsightResourceUsageTrendAggregationCollection'})
 @cli_util.wrap_exceptions
-def summarize_host_insight_resource_usage_trend(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, platform_type, id, exadata_insight_id, page, sort_order, sort_by, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists, compartment_id_in_subtree, host_type, host_id, vmcluster_name):
+def summarize_host_insight_resource_usage_trend(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, platform_type, id, exadata_insight_id, page, sort_order, sort_by, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists, compartment_id_in_subtree, host_type, host_id, vmcluster_name, status):
 
     kwargs = {}
     if analysis_time_interval is not None:
@@ -10995,6 +11020,8 @@ def summarize_host_insight_resource_usage_trend(ctx, from_json, compartment_id, 
         kwargs['host_id'] = host_id
     if vmcluster_name is not None and len(vmcluster_name) > 0:
         kwargs['vmcluster_name'] = vmcluster_name
+    if status is not None and len(status) > 0:
+        kwargs['status'] = status
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.summarize_host_insight_resource_usage_trend(
@@ -11026,12 +11053,13 @@ def summarize_host_insight_resource_usage_trend(ctx, from_json, compartment_id, 
 @cli_util.option('--vmcluster-name', multiple=True, help=u"""Optional list of Exadata Insight VM cluster name.""")
 @cli_util.option('--high-utilization-threshold', type=click.INT, help=u"""Percent value in which a resource metric is considered highly utilized.""")
 @cli_util.option('--low-utilization-threshold', type=click.INT, help=u"""Percent value in which a resource metric is considered low utilized.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
 @json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'opsi', 'class': 'list[string]'}, 'exadata-insight-id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'host-type': {'module': 'opsi', 'class': 'list[string]'}, 'vmcluster-name': {'module': 'opsi', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'opsi', 'class': 'list[string]'}, 'exadata-insight-id': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-equals': {'module': 'opsi', 'class': 'list[string]'}, 'defined-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'freeform-tag-exists': {'module': 'opsi', 'class': 'list[string]'}, 'host-type': {'module': 'opsi', 'class': 'list[string]'}, 'vmcluster-name': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeHostInsightResourceUtilizationInsightAggregation'})
 @cli_util.wrap_exceptions
-def summarize_host_insight_resource_utilization_insight(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, platform_type, id, exadata_insight_id, forecast_days, page, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists, compartment_id_in_subtree, host_type, host_id, vmcluster_name, high_utilization_threshold, low_utilization_threshold):
+def summarize_host_insight_resource_utilization_insight(ctx, from_json, compartment_id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, platform_type, id, exadata_insight_id, forecast_days, page, defined_tag_equals, freeform_tag_equals, defined_tag_exists, freeform_tag_exists, compartment_id_in_subtree, host_type, host_id, vmcluster_name, high_utilization_threshold, low_utilization_threshold, status):
 
     kwargs = {}
     if analysis_time_interval is not None:
@@ -11070,6 +11098,8 @@ def summarize_host_insight_resource_utilization_insight(ctx, from_json, compartm
         kwargs['high_utilization_threshold'] = high_utilization_threshold
     if low_utilization_threshold is not None:
         kwargs['low_utilization_threshold'] = low_utilization_threshold
+    if status is not None and len(status) > 0:
+        kwargs['status'] = status
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.summarize_host_insight_resource_utilization_insight(
@@ -11090,12 +11120,13 @@ def summarize_host_insight_resource_utilization_insight(ctx, from_json, compartm
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
 @cli_util.option('--statistic', type=custom_types.CliCaseInsensitiveChoice(["AVG", "MAX"]), help=u"""Choose the type of statistic metric data to be used for forecasting.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'SummarizeHostInsightStorageUsageTrendAggregationCollection'})
 @cli_util.wrap_exceptions
-def summarize_host_insight_storage_usage_trend(ctx, from_json, compartment_id, id, analysis_time_interval, time_interval_start, time_interval_end, host_id, page, limit, statistic):
+def summarize_host_insight_storage_usage_trend(ctx, from_json, compartment_id, id, analysis_time_interval, time_interval_start, time_interval_end, host_id, page, limit, statistic, status):
 
     kwargs = {}
     if analysis_time_interval is not None:
@@ -11112,6 +11143,8 @@ def summarize_host_insight_storage_usage_trend(ctx, from_json, compartment_id, i
         kwargs['limit'] = limit
     if statistic is not None:
         kwargs['statistic'] = statistic
+    if status is not None and len(status) > 0:
+        kwargs['status'] = status
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.summarize_host_insight_storage_usage_trend(
@@ -11134,12 +11167,13 @@ def summarize_host_insight_storage_usage_trend(ctx, from_json, compartment_id, i
 @cli_util.option('--host-type', multiple=True, help=u"""Filter by one or more host types. Possible values are CLOUD-HOST, EXTERNAL-HOST, COMANAGED-VM-HOST, COMANAGED-BM-HOST, COMANAGED-EXACS-HOST""")
 @cli_util.option('--host-id', help=u"""Optional [OCID] of the host (Compute Id)""")
 @cli_util.option('--statistic', type=custom_types.CliCaseInsensitiveChoice(["AVG", "MAX"]), help=u"""Choose the type of statistic metric data to be used for forecasting.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
 @json_skeleton_utils.get_cli_json_input_option({'host-type': {'module': 'opsi', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'host-type': {'module': 'opsi', 'class': 'list[string]'}}, output_type={'module': 'opsi', 'class': 'SummarizeHostInsightsTopProcessesUsageTrendCollection'})
 @cli_util.wrap_exceptions
-def summarize_host_insight_top_processes_usage_trend(ctx, from_json, compartment_id, id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, page, limit, host_type, host_id, statistic):
+def summarize_host_insight_top_processes_usage_trend(ctx, from_json, compartment_id, id, resource_metric, analysis_time_interval, time_interval_start, time_interval_end, page, limit, host_type, host_id, statistic, status):
 
     kwargs = {}
     if analysis_time_interval is not None:
@@ -11158,6 +11192,8 @@ def summarize_host_insight_top_processes_usage_trend(ctx, from_json, compartment
         kwargs['host_id'] = host_id
     if statistic is not None:
         kwargs['statistic'] = statistic
+    if status is not None and len(status) > 0:
+        kwargs['status'] = status
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.summarize_host_insight_top_processes_usage_trend(
@@ -11170,7 +11206,7 @@ def summarize_host_insight_top_processes_usage_trend(ctx, from_json, compartment
 
 
 @operations_insights_warehouses_group.command(name=cli_util.override('opsi.summarize_operations_insights_warehouse_resource_usage.command_name', 'summarize-operations-insights-warehouse-resource-usage'), help=u"""Gets the details of resources used by an Operations Insights Warehouse. There is only expected to be 1 warehouse per tenant. The warehouse is expected to be in the root compartment. \n[Command Reference](summarizeOperationsInsightsWarehouseResourceUsage)""")
-@cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Operations Insights Warehouse identifier""")
+@cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Ops Insights Warehouse identifier""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -12919,9 +12955,9 @@ def update_operations_insights_private_endpoint(ctx, from_json, force, wait_for_
     cli_util.render_response(result, ctx)
 
 
-@operations_insights_warehouses_group.command(name=cli_util.override('opsi.update_operations_insights_warehouse.command_name', 'update'), help=u"""Updates the configuration of an Operations Insights Warehouse. There is only expected to be 1 warehouse per tenant. The warehouse is expected to be in the root compartment. \n[Command Reference](updateOperationsInsightsWarehouse)""")
-@cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Operations Insights Warehouse identifier""")
-@cli_util.option('--display-name', help=u"""User-friedly name of Operations Insights Warehouse that does not have to be unique.""")
+@operations_insights_warehouses_group.command(name=cli_util.override('opsi.update_operations_insights_warehouse.command_name', 'update'), help=u"""Updates the configuration of an Ops Insights Warehouse. There is only expected to be 1 warehouse per tenant. The warehouse is expected to be in the root compartment. \n[Command Reference](updateOperationsInsightsWarehouse)""")
+@cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Ops Insights Warehouse identifier""")
+@cli_util.option('--display-name', help=u"""User-friedly name of Ops Insights Warehouse that does not have to be unique.""")
 @cli_util.option('--cpu-allocated', help=u"""Number of OCPUs allocated to OPSI Warehouse ADW.""")
 @cli_util.option('--storage-allocated-in-gbs', help=u"""Storage allocated to OPSI Warehouse ADW.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -13005,7 +13041,7 @@ def update_operations_insights_warehouse(ctx, from_json, force, wait_for_state, 
 
 @operations_insights_warehouse_users_group.command(name=cli_util.override('opsi.update_operations_insights_warehouse_user.command_name', 'update'), help=u"""Updates the configuration of an Operations Insights Warehouse User. \n[Command Reference](updateOperationsInsightsWarehouseUser)""")
 @cli_util.option('--operations-insights-warehouse-user-id', required=True, help=u"""Unique Operations Insights Warehouse User identifier""")
-@cli_util.option('--connection-password', help=u"""User provided connection password for the AWR Data,  Enterprise Manager Data and Operations Insights OPSI Hub.""")
+@cli_util.option('--connection-password', help=u"""User provided connection password for the AWR Data,  Enterprise Manager Data and Ops Insights OPSI Hub.""")
 @cli_util.option('--is-awr-data-access', type=click.BOOL, help=u"""Indicate whether user has access to AWR data.""")
 @cli_util.option('--is-em-data-access', type=click.BOOL, help=u"""Indicate whether user has access to EM data.""")
 @cli_util.option('--is-opsi-data-access', type=click.BOOL, help=u"""Indicate whether user has access to OPSI data.""")
