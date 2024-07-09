@@ -36,6 +36,7 @@ SDK_client_map = {
     "db.complete_external_backup_job": "oci.database.DatabaseClient.complete_external_backup_job",
     "db.configure_autonomous_database_vault_key": "oci.database.DatabaseClient.configure_autonomous_database_vault_key",
     "db.configure_saas_admin_user": "oci.database.DatabaseClient.configure_saas_admin_user",
+    "db.confirm_key_store_details_are_correct": "oci.database.DatabaseClient.confirm_key_store_details_are_correct",
     "db.convert_to_pdb": "oci.database.DatabaseClient.convert_to_pdb",
     "db.convert_to_regular_pluggable_database": "oci.database.DatabaseClient.convert_to_regular_pluggable_database",
     "db.create_application_vip": "oci.database.DatabaseClient.create_application_vip",
@@ -178,11 +179,8 @@ SDK_client_map = {
     "db.get_exadata_infrastructure_un_allocated_resources": "oci.database.DatabaseClient.get_exadata_infrastructure_un_allocated_resources",
     "db.get_exadata_iorm_config": "oci.database.DatabaseClient.get_exadata_iorm_config",
     "db.get_exadb_vm_cluster": "oci.database.DatabaseClient.get_exadb_vm_cluster",
-<<<<<<< HEAD
-=======
     "db.get_exadb_vm_cluster_update": "oci.database.DatabaseClient.get_exadb_vm_cluster_update",
     "db.get_exadb_vm_cluster_update_history_entry": "oci.database.DatabaseClient.get_exadb_vm_cluster_update_history_entry",
->>>>>>> a13abc2276 (Author: DEXREQ Automation <noreply+dexreq@oracle.com>)
     "db.get_exascale_db_storage_vault": "oci.database.DatabaseClient.get_exascale_db_storage_vault",
     "db.get_external_backup_job": "oci.database.DatabaseClient.get_external_backup_job",
     "db.get_external_container_database": "oci.database.DatabaseClient.get_external_container_database",
@@ -252,11 +250,8 @@ SDK_client_map = {
     "db.list_db_systems": "oci.database.DatabaseClient.list_db_systems",
     "db.list_db_versions": "oci.database.DatabaseClient.list_db_versions",
     "db.list_exadata_infrastructures": "oci.database.DatabaseClient.list_exadata_infrastructures",
-<<<<<<< HEAD
-=======
     "db.list_exadb_vm_cluster_update_history_entries": "oci.database.DatabaseClient.list_exadb_vm_cluster_update_history_entries",
     "db.list_exadb_vm_cluster_updates": "oci.database.DatabaseClient.list_exadb_vm_cluster_updates",
->>>>>>> a13abc2276 (Author: DEXREQ Automation <noreply+dexreq@oracle.com>)
     "db.list_exadb_vm_clusters": "oci.database.DatabaseClient.list_exadb_vm_clusters",
     "db.list_exascale_db_storage_vaults": "oci.database.DatabaseClient.list_exascale_db_storage_vaults",
     "db.list_external_container_databases": "oci.database.DatabaseClient.list_external_container_databases",
