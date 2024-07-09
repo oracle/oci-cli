@@ -439,3 +439,4 @@ db, gi-version, list
 db, database-software-image, list
 database-management, managed-database, list
 fs, export-set, list
+db, key-store, confirm-key-store-details-are-correct

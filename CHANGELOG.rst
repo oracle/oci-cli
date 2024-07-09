@@ -6,6 +6,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.44.2 - 2024-07-09
+-------------------
+Added
+~~~~~
+* Database Service
+
+  * Support for create new DB with OKV
+
+    * ``oci db database create --key-store-id``
+
+  * Support for confirm key store details are correct
+
+    * ``oci db key-store confirm-key-store-details-are-correct --key-store-id``
+
 3.44.1 - 2024-07-02
 -------------------
 Added
