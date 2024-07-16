@@ -6,6 +6,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.44.3 - 2024-07-16
+-------------------
+Added
+~~~~~
+* Support for calling Oracle Cloud Infrastructure services in the me-abudhabi-2 region
+
 3.44.2 - 2024-07-09
 -------------------
 Added
